@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Trama — cómo trabajar en este repo
 
-**Trama** es el nombre de esta librería de componentes (el paquete se llama `trama`).
+**Trama** es el nombre de esta librería de componentes (el paquete se llama `trama-ui`).
 
 Este repo es una **librería de componentes** para proyectos Next.js (ASCII, textmode, pixel art y secciones de landing)
 más un sitio que la enseña. Dos tipos de tarea:
@@ -29,7 +29,7 @@ más un sitio que la enseña. Dos tipos de tarea:
    (`glass solid outline neon retro terminal minimal`); color semántico = prop `intent`
    (`accent neutral success info warning danger`), igual en Button, Badge, Alert, TextField, Toast y Modal.
    No añadas colores fijos.
-6. En **otro proyecto**, dos opciones: `npm i trama` (imports `trama` / `trama/X`, CSS `trama/styles.css`,
+6. En **otro proyecto**, dos opciones: `npm i trama-ui` (imports `trama-ui` / `trama-ui/X`, CSS `trama-ui/styles.css`,
    referencia en `node_modules/trama/CATALOG.md`), o `npm run kit:export -- <ruta> [--only A,B]` desde este repo
    para copiar el código y adaptarlo (`import "@/components/ui/styles/kit.css"` y `fontVariables` de `@/lib/ui/fonts`).
 

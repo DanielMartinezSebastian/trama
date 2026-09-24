@@ -9,6 +9,6 @@ renombrados de esta primera versión dejan el nombre antiguo como alias `@deprec
 - 72 componentes en 13 categorías (fondos, texto, tarjetas, interacción, transiciones, datos, navegación,
   formularios, feedback, galerías y vídeo, secciones, overlays, pixel art), 7 estilos (`variant`) y tema por tokens.
 - Vocabulario común de props: `variant`, `intent`, `emphasis`, `tone`, `fill` (ver guía, glosario).
-- Entradas: `trama` (todos los componentes por nombre), `trama/<Componente>`, `trama/styles.css`, `trama/fonts`,
-  `trama/tokens`, `trama/assets/*`; CLI `npx trama assets`.
+- Entradas: `trama-ui` (todos los componentes por nombre), `trama-ui/<Componente>`, `trama-ui/styles.css`, `trama-ui/fonts`,
+  `trama-ui/tokens`, `trama-ui/assets/*`; CLI `npx trama-ui assets`.
 - Probado en un proyecto Next.js 16 vacío instalando el `.tgz`: build con Turbopack y con webpack, sin configuración.

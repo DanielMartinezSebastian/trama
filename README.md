@@ -10,13 +10,13 @@ Este repositorio es la librería **y** el sitio que la enseña: una galería de 
 ## Usarla en un proyecto
 
 ```bash
-npm i trama            # cuando esté publicada; mientras tanto: npm run pkg:pack y npm i ./dist-npm/trama-x.y.z.tgz
-npx trama assets       # copia las imágenes de PixelFrame y Sprite a public/
+npm i trama-ui            # cuando esté publicada; mientras tanto: npm run pkg:pack y npm i ./dist-npm/trama-ui-x.y.z.tgz
+npx trama-ui assets       # copia las imágenes de PixelFrame y Sprite a public/
 ```
 
 ```tsx
-import "trama/styles.css";                      // app/layout.tsx
-import { Hero, PricingSection, Button } from "trama";
+import "trama-ui/styles.css";                      // app/layout.tsx
+import { Hero, PricingSection, Button } from "trama-ui";
 ```
 
 Referencia de props: [`docs/CATALOG.md`](docs/CATALOG.md) (generada; también en `catalog.json`).

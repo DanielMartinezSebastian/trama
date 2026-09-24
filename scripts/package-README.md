@@ -7,7 +7,7 @@ ASCII, secciones de landing completas (hero, precios, FAQ, blog…), formularios
 ## Instalación
 
 ```bash
-npm i trama
+npm i trama-ui
 ```
 
 Requiere React 19. Pensado para **Next.js (App Router)**, sin configuración extra (probado con Turbopack y con
@@ -17,8 +17,8 @@ webpack); los componentes interactivos ya llevan `"use client"`.
 
 ```tsx
 // app/layout.tsx
-import "trama/styles.css";
-import { fontVariables } from "trama/fonts"; // opcional: las fuentes del kit, autoalojadas con next/font
+import "trama-ui/styles.css";
+import { fontVariables } from "trama-ui/fonts"; // opcional: las fuentes del kit, autoalojadas con next/font
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,9 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 // cualquier página
-import { Hero, PricingSection, Button } from "trama";
+import { Hero, PricingSection, Button } from "trama-ui";
 // o, un componente por archivo:
-import FAQSection from "trama/FAQSection";
+import FAQSection from "trama-ui/FAQSection";
 
 export default function Page() {
   return (
@@ -65,12 +65,12 @@ warning danger`) · `emphasis` = énfasis de un botón · `tone` = token de colo
 `PixelFrame` y `Sprite` usan imágenes (Kenney «Pixel UI», CC0) que tienen que servirse desde tu `public/`:
 
 ```bash
-npx trama assets        # copia a ./public/pixel/kenney-pixel-ui
+npx trama-ui assets        # copia a ./public/pixel/kenney-pixel-ui
 ```
 
 ## Referencia completa
 
-`CATALOG.md` (incluido en el paquete; `npx trama catalog` imprime su ruta) lista cada componente con su import, sus
+`CATALOG.md` (incluido en el paquete; `npx trama-ui catalog` imprime su ruta) lista cada componente con su import, sus
 props, tipos y valores por defecto. Es la referencia pensada para agentes de IA.
 
 ## Licencia

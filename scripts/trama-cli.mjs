@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * CLI de Trama (se publica como `bin/trama.mjs`).
+ * CLI de Trama (se publica como `bin/trama-ui.mjs`).
  *
- *   npx trama assets [carpeta-public]   copia los recursos pixel art (PixelFrame, Sprite) a public/pixel/…
- *   npx trama catalog                   imprime la ruta de CATALOG.md (referencia de props para agentes)
+ *   npx trama-ui assets [carpeta-public]   copia los recursos pixel art (PixelFrame, Sprite) a public/pixel/…
+ *   npx trama-ui catalog                   imprime la ruta de CATALOG.md (referencia de props para agentes)
  */
 import { cpSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -22,6 +22,6 @@ if (cmd === "assets") {
   const p = join(pkgRoot, "CATALOG.md");
   console.log(existsSync(p) ? p : "CATALOG.md no encontrado en el paquete");
 } else {
-  console.log("Uso:\n  npx trama assets [carpeta-public]   copia los recursos de PixelFrame/Sprite a public/pixel/\n  npx trama catalog                   ruta de CATALOG.md (props de todos los componentes)");
+  console.log("Uso:\n  npx trama-ui assets [carpeta-public]   copia los recursos de PixelFrame/Sprite a public/pixel/\n  npx trama-ui catalog                   ruta de CATALOG.md (props de todos los componentes)");
   process.exit(cmd ? 1 : 0);
 }

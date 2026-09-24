@@ -27,11 +27,11 @@ se quedan atrás o si un componente no aparece en la tabla de abajo.
 
 ## Dos formas de llevar Trama a un proyecto
 
-| | npm (`npm i trama`) | copia (`npm run kit:export`) |
+| | npm (`npm i trama-ui`) | copia (`npm run kit:export`) |
 |---|---|---|
 | Para qué | usar el kit tal cual y actualizarlo con `npm update` | adaptarlo a fondo en ese proyecto y devolver las mejoras con `kit:pull` |
-| Imports | `import { Hero } from "trama"` · `import Hero from "trama/Hero"` | `import Hero from "@/components/ui/Hero"` |
-| CSS | `import "trama/styles.css"` | `import "@/components/ui/styles/kit.css"` |
+| Imports | `import { Hero } from "trama-ui"` · `import Hero from "trama-ui/Hero"` | `import Hero from "@/components/ui/Hero"` |
+| CSS | `import "trama-ui/styles.css"` | `import "@/components/ui/styles/kit.css"` |
 
 ### Publicar en npm
 
@@ -40,10 +40,10 @@ npm run pkg:build            # construye dist-npm/ desde el kit (alias @/ → ru
 cd dist-npm && npm publish   # requiere `npm login`; `npm publish --dry-run` para comprobar sin subir
 ```
 
-`npm run pkg:pack` genera además el `.tgz` para probarlo en otro proyecto (`npm i ../TESTVISUAL/dist-npm/trama-x.y.z.tgz`).
+`npm run pkg:pack` genera además el `.tgz` para probarlo en otro proyecto (`npm i ../TESTVISUAL/dist-npm/trama-ui-x.y.z.tgz`).
 Antes de publicar: sube `version` en el `package.json` de la raíz y apunta los cambios en `CHANGELOG.md`. El script
 comprueba que ningún archivo pierda `"use client"` y que todos los imports relativos lleven extensión (webpack exige
-rutas completas en paquetes ESM). El paquete incluye `CATALOG.md` con los imports ya como `trama/X`.
+rutas completas en paquetes ESM). El paquete incluye `CATALOG.md` con los imports ya como `trama-ui/X`.
 
 ## Usar el kit en otro proyecto Next.js
 

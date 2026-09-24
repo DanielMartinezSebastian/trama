@@ -3,7 +3,7 @@
  * tocar el sitio de demos. El repo sigue siendo la fuente de verdad; esto solo empaqueta.
  *
  *   npm run pkg:build   → dist-npm/ listo para `npm publish` (o `npm pack`)
- *   npm run pkg:pack    → además genera el .tgz para probarlo en otro proyecto (`npm i ../ruta/trama-x.y.z.tgz`)
+ *   npm run pkg:pack    → además genera el .tgz para probarlo en otro proyecto (`npm i ../ruta/trama-ui-x.y.z.tgz`)
  *
  * Pasos: 1) copia el cierre de dependencias del kit a dist-npm/.src reescribiendo `@/…` a rutas relativas;
  * 2) genera el barrel (index.ts); 3) compila con tsc a ESM + .d.ts (tsc conserva "use client");
@@ -18,7 +18,9 @@ const OUT = "dist-npm";
 const SRC = join(OUT, ".src");
 const root = JSON.parse(readFileSync("package.json", "utf8"));
 
-rmSync(OUT, { recursive: true, force: true });
+// Se vacía el contenido en vez de borrar la carpeta: en Windows no se puede borrar una carpeta que es el directorio
+// actual de otra terminal (p. ej. la que acaba de ejecutar `npm publish` dentro de dist-npm).
+if (existsSync(OUT)) for (const e of readdirSync(OUT)) rmSync(join(OUT, e), { recursive: true, force: true });
 mkdirSync(SRC, { recursive: true });
 
 // ---------- 1. fuentes con imports relativos ----------
@@ -41,7 +43,7 @@ for (const f of files) {
 // ---------- 2. barrel: todos los componentes por nombre + utilidades públicas ----------
 const components = kitComponents().map((f) => posix.basename(f, ".tsx")).sort();
 const barrel = [
-  "/** Punto de entrada de Trama: cada componente por su nombre. También `import X from \"trama/X\"`. */",
+  "/** Punto de entrada de Trama: cada componente por su nombre. También `import X from \"trama-ui/X\"`. */",
   ...components.map((c) => `export { default as ${c} } from "./components/ui/${c}";`),
   `export * from "./components/ui/intent";`,
   `export * from "./components/ui/fill";`,
@@ -105,11 +107,11 @@ if (missing.length) throw new Error(`"use client" perdido en: ${missing.join(", 
 // ---------- 4. CSS, recursos, docs, CLI ----------
 for (const f of files.filter((x) => x.endsWith(".css"))) cpSync(f, join(OUT, "dist", f));
 cpSync("public/pixel/kenney-pixel-ui", join(OUT, "assets/pixel/kenney-pixel-ui"), { recursive: true });
-cpSync("scripts/trama-cli.mjs", join(OUT, "bin/trama.mjs"));
-// Catálogo para agentes con las rutas del paquete: `@/components/ui/X` → `trama/X`
+cpSync("scripts/trama-cli.mjs", join(OUT, "bin/trama-ui.mjs"));
+// Catálogo para agentes con las rutas del paquete: `@/components/ui/X` → `trama-ui/X`
 const catalogMd = readFileSync("docs/CATALOG.md", "utf8")
-  .replace(/import (\w+) from "@\/components\/ui\/(\w+)"/g, 'import $1 from "trama/$2"')
-  .replace(/"@\/components\/ui\/styles\/kit\.css"/g, '"trama/styles.css"')
+  .replace(/import (\w+) from "@\/components\/ui\/(\w+)"/g, 'import $1 from "trama-ui/$2"')
+  .replace(/"@\/components\/ui\/styles\/kit\.css"/g, '"trama-ui/styles.css"')
   .replace(/Vista previa en vivo: `\/componentes#<id>`\./, "");
 writeFileSync(join(OUT, "CATALOG.md"), catalogMd);
 cpSync("scripts/package-README.md", join(OUT, "README.md"));
@@ -145,7 +147,7 @@ const pkg = {
     "./*": { types: "./dist/components/ui/*.d.ts", default: "./dist/components/ui/*.js" },
     "./package.json": "./package.json",
   },
-  bin: { trama: "./bin/trama.mjs" },
+  bin: { "trama-ui": "bin/trama-ui.mjs" },
   files: ["dist", "assets", "bin", "CATALOG.md", "THIRD-PARTY.md"],
   keywords: ["react", "nextjs", "components", "ascii", "textmode", "pixel-art", "ui-kit", "landing"],
   peerDependencies: { react: ">=19", "react-dom": ">=19", next: ">=15" },
