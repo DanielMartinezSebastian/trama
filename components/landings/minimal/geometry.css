@@ -1,0 +1,59 @@
+/* Landing de geometrías (2000dvh): 8 capítulos de 250dvh con el texto fijo mientras el fondo evoluciona */
+.mx__chap { height: 250vh; height: 250dvh; }
+.mx__stick { position: sticky; top: 0; height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: flex-start; padding: 90px clamp(16px, 8vw, 120px); }
+.mx__in { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+
+/* El tinte del fondo cambia de acento a saltos duros, no en fundido */
+.mx .ui-pal__a { transition: none; }
+
+/* El texto no debe tapar el fondo: deja pasar el puntero (el hover de cada figura lo lee el canvas) y solo los bloques de texto lo capturan */
+.mx .mn__main, .mx__chap, .mx__stick, .mx__in { pointer-events: none; }
+.mx__in > * { pointer-events: auto; }
+
+/* Cada capítulo fija su lado: el cartel no salta de lado, entra ya en su sitio y sale hacia su borde */
+.mx__chap[data-side="r"] .mx__stick { justify-content: flex-end; }
+.mx__chap[data-side="r"] .mx__in { align-items: flex-end; text-align: right; }
+.mx__chap[data-side="r"] .mn__h1, .mx__chap[data-side="r"] .mn__h2 { align-items: flex-end; }
+
+/* ---------- Efectos de aparición por capítulo (data-fx). El de por defecto es "glitch" (minimal.css) ---------- */
+
+/* wipe: el bloque se abre de izquierda a derecha, por pasos */
+[data-fx="wipe"] .mn-g__c, [data-fx="slide"] .mn-g__c, [data-fx="zoom"] .mn-g__c { opacity: 1; animation: none !important; }
+[data-fx="wipe"] .mn-g { display: inline-block; clip-path: inset(0 100% 0 0); }
+[data-fx="wipe"][data-in] .mn-g { animation: mx-wipe 700ms steps(10, end) both; }
+[data-fx="wipe"][data-in] .mn__p .mn-g { animation-delay: 300ms; }
+@keyframes mx-wipe { to { clip-path: inset(0 0 0 0); } }
+
+/* drop: cada letra cae desde arriba */
+[data-fx="drop"][data-in] .mn-g__c { animation: mx-drop 420ms steps(6, end) var(--d, 0ms) both; }
+@keyframes mx-drop { from { opacity: 0; transform: translateY(-2.2em); } to { opacity: 1; transform: none; } }
+
+/* rise: cada letra sube desde abajo estirándose */
+[data-fx="rise"][data-in] .mn-g__c { animation: mx-rise 420ms steps(5, end) var(--d, 0ms) both; }
+@keyframes mx-rise { from { opacity: 0; transform: translateY(1.6em) scaleY(1.8); } to { opacity: 1; transform: none; } }
+
+/* type: máquina de escribir, letra a letra sin parpadeo */
+[data-fx="type"][data-in] .mn-g__c { animation: mx-type 1ms steps(1, end) calc(var(--d, 0ms) * 0.6) both; }
+@keyframes mx-type { from { opacity: 0; } to { opacity: 1; } }
+
+/* slide: el bloque entra desde su borde de pantalla, por pasos (--dir: -1 izquierda, 1 derecha) */
+[data-fx="slide"] .mn-g { display: inline-block; transform: translateX(calc(var(--dir, 1) * 70vw)); }
+[data-fx="slide"][data-in] .mn-g { animation: mx-slide 800ms steps(12, end) both; }
+[data-fx="slide"][data-in] .mn__p .mn-g { animation-delay: 200ms; }
+@keyframes mx-slide { to { transform: none; } }
+
+/* zoom: el bloque llega grande y se encaja */
+[data-fx="zoom"] .mn-g { display: inline-block; opacity: 0; transform: scale(3); transform-origin: 0 50%; }
+.mx__chap[data-side="r"] [data-fx="zoom"] .mn-g { transform-origin: 100% 50%; }
+[data-fx="zoom"][data-in] .mn-g { animation: mx-zoom 600ms steps(6, end) both; }
+[data-fx="zoom"][data-in] .mn__p .mn-g { animation-delay: 250ms; }
+@keyframes mx-zoom { to { transform: none; opacity: 1; } }
+
+/* scramble: lo descifra GSAP (ScrambleText); aquí solo se oculta hasta entrar */
+[data-fx="scramble"] .mn-scr { visibility: hidden; }
+[data-fx="scramble"][data-in] .mn-scr { visibility: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mx .mn-g { clip-path: none !important; transform: none !important; opacity: 1 !important; animation: none !important; }
+  [data-fx] .mn-scr { visibility: visible; }
+}

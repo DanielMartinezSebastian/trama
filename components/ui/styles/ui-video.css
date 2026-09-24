@@ -1,0 +1,75 @@
+/* =====================================================================
+   VideoPlayer (prefijo ui-vid). Controles propios sobre el <video> nativo: solo consumen tokens y --s-*.
+   Todo cuadrado y sin transiciones suaves: los cambios de estado son por pasos, como el resto del lenguaje pixel.
+   ===================================================================== */
+
+.ui-vid { position: relative; width: 100%; max-width: var(--vid-max, 980px); margin-inline: auto; aspect-ratio: var(--vid-ratio, 16 / 9); overflow: hidden; background: #000; color: var(--fg); font-family: var(--s-ff, inherit); -webkit-tap-highlight-color: transparent; }
+.ui-vid:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+.ui-vid__video { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; }
+.ui-vid.is-idle { cursor: none; }
+
+/* Modo fondo: rellena el contenedor, sin marco, decorativo */
+.ui-vid--bg { position: absolute; inset: 0; max-width: none; aspect-ratio: auto; margin: 0; border: 0; box-shadow: none; pointer-events: none; }
+.ui-vid--bg .ui-vid__video { object-fit: cover; }
+
+/* Carátula antes de empezar: botón grande de play y título en bloque duro */
+.ui-vid__cover, .ui-vid__facade { position: absolute; inset: 0; width: 100%; display: grid; place-items: center; padding: 0; border: 0; background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.6)); color: inherit; font: inherit; cursor: pointer; }
+.ui-vid__facade { background: #000; }
+.ui-vid__facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: 0.85; }
+.ui-vid__big { position: relative; display: grid; place-items: center; width: 84px; height: 84px; background: var(--s-pri-bg, var(--acc)); color: var(--s-pri-fg, var(--bg)); border: var(--s-pri-bd, 3px solid var(--bg)); box-shadow: 6px 6px 0 var(--bg); }
+.ui-vid__cover:hover .ui-vid__big, .ui-vid__facade:hover .ui-vid__big { translate: 3px 3px; box-shadow: 3px 3px 0 var(--bg); }
+.ui-vid__cover:focus-visible, .ui-vid__facade:focus-visible { outline: 3px solid var(--fg); outline-offset: -6px; }
+.ui-vid__title, .ui-vid__tag { position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 28px); padding: 6px 12px; background: var(--bg); color: var(--fg); border: 2px solid var(--fg); font-size: 14px; letter-spacing: 0.06em; text-align: left; text-transform: none; }
+.ui-vid__tag { font-size: 12px; color: var(--acc); }
+.ui-vid__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.ui-vid__scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }
+.ui-vid__err { position: absolute; inset: 0; display: grid; place-content: center; gap: 6px; padding: 20px; text-align: center; background: var(--bg); }
+.ui-vid__err strong { color: var(--acc); }
+.ui-vid__err span { color: var(--mut); font-size: 12px; word-break: break-all; }
+
+/* Barra de controles: pegada abajo; se retira por completo (sin fundido) al quedar inactiva mientras se reproduce */
+.ui-vid__ctl { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--bg); border-top: 2px solid var(--fg); text-transform: none; }
+.ui-vid.is-idle .ui-vid__ctl { transform: translateY(100%); }
+.ui-vid__ctl:focus-within { transform: none !important; }
+.ui-vid__btn { position: relative; display: grid; place-items: center; flex: none; min-width: 34px; height: 34px; padding: 0 6px; background: transparent; color: var(--fg); border: 2px solid transparent; font: inherit; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; }
+.ui-vid__btn:hover { background: var(--acc); color: var(--bg); }
+.ui-vid__btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 1px; }
+.ui-vid__btn.is-on { color: var(--acc); border-color: var(--acc); }
+.ui-vid__btn.is-off svg { opacity: 0.4; }
+.ui-vid__btn.is-off::after { content: ""; position: absolute; left: 6px; right: 6px; top: 50%; height: 2px; background: var(--acc); transform: rotate(-45deg); }
+.ui-vid__time { flex: none; min-width: 40px; font-size: 12px; letter-spacing: 0.06em; color: var(--fg); font-variant-numeric: tabular-nums; }
+
+/* Barra de valor (progreso y volumen) */
+.ui-vid__bar { position: relative; flex: 1; min-width: 40px; height: 14px; background: var(--ln); border: 2px solid var(--fg); cursor: pointer; touch-action: none; }
+.ui-vid__bar:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.ui-vid__vol { flex: none; width: 72px; }
+.ui-vid__bar-buf, .ui-vid__bar-fill { position: absolute; left: 0; top: 0; bottom: 0; }
+.ui-vid__bar-buf { background: var(--fg); opacity: 0.25; }
+.ui-vid__bar-fill { background: var(--acc); }
+.ui-vid__bar-thumb { position: absolute; top: -5px; width: 8px; height: 18px; background: var(--fg); translate: -50% 0; pointer-events: none; }
+
+/* Pantalla completa: sin marco ni límite de tamaño */
+.ui-vid.is-full { max-width: none; width: 100vw; height: 100vh; aspect-ratio: auto; border: 0; box-shadow: none; }
+
+@media (max-width: 640px) {
+  .ui-vid__vol, .ui-vid__btn--txt { display: none; }
+  .ui-vid__big { width: 64px; height: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-vid.is-idle .ui-vid__ctl { transform: none; }
+}
+
+/* Efecto ASCII: lienzo de asciify-engine sobre el vídeo, que sigue reproduciéndose debajo (útil para revelarlo con hover más adelante) */
+.ui-vid__ascii { position: absolute; inset: 0; pointer-events: none; }
+/* Con hover, el lienzo recibe el puntero (lo lee el motor) y el clic se reenvía al reproductor desde el componente */
+.ui-vid__ascii.has-hover { pointer-events: auto; }
+.ui-vid__ascii .ui-fill-canvas { display: block; width: 100%; height: 100%; }
+.ui-vid__tag--top { top: 14px; bottom: auto; }
+/* La carátula y la barra de controles quedan por encima del ASCII; el título de la carátula no debe ocultarse */
+.ui-vid__cover { z-index: 2; }
+.ui-vid__ctl { z-index: 3; }
+
+/* Enlace para abrir el vídeo en su web: siempre a mano por si el autor no permite incrustarlo */
+.ui-vid__tag--link { top: 10px; bottom: auto; left: auto; right: 10px; z-index: 2; text-decoration: none; }
+.ui-vid__tag--link:hover { background: var(--acc); color: var(--bg); }
+.ui-vid__tag--note { top: 10px; bottom: auto; left: 10px; z-index: 2; font-size: 11px; pointer-events: none; }

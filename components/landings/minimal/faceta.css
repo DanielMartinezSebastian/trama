@@ -1,0 +1,110 @@
+/* FACETA — landing larga: carteles (geometry.css) + paneles con componentes del kit en estilo pixel duro */
+
+/* Tokens que los componentes del kit esperan y .mn no define */
+.mz { --mut: #8fb3c9; --card: rgba(255, 255, 255, 0.07); --ln: rgba(255, 255, 255, 0.28); --r: 0px; }
+
+/*
+ * Los componentes van con variant="retro" (esquinas rectas, borde duro, sombra desplazada). Aquí solo se cambian
+ * las variables --s-* de esa variante, para que hereden el lenguaje de la landing: fuente pixel, borde de 2 px,
+ * fondo del propio --bg, sombra dura con el acento. Ningún componente se modifica.
+ */
+.mz .ui-s--retro {
+  --s-bg: color-mix(in srgb, var(--acc) 8%, var(--bg));
+  --s-bd: 2px solid var(--fg);
+  --s-r: 0px;
+  --s-sh: 5px 5px 0 var(--acc);
+  --s-ff: var(--font-pixelify-sans), "Courier New", monospace;
+  --s-tt: none;
+  --s-ls: 0.03em;
+  --s-fw: 600;
+  --s-pri-bg: var(--acc);
+  --s-pri-fg: var(--bg);
+  --s-pri-bd: 2px solid var(--bg);
+  --s-pri-sh: 4px 4px 0 var(--bg);
+}
+.mz input, .mz textarea, .mz button, .mz select { font-family: inherit; border-radius: 0; }
+.mz .ui-tone--acc { color: var(--acc); }
+
+/* ---------- Actos de contenido ---------- */
+.mz__chap.mx__chap { height: 190vh; height: 190dvh; }
+
+.mz__act { display: flex; flex-direction: column; gap: 7vh; padding: 14vh clamp(16px, 8vw, 120px); pointer-events: none; }
+.mz__act[data-side="l"] { align-items: flex-start; }
+.mz__act[data-side="r"] { align-items: flex-end; }
+.mz__act[data-side="c"] { align-items: center; }
+.mz__act > * { pointer-events: auto; }
+
+/* Panel sólido de esquinas rectas: fondo opaco para que el texto sea legible sobre cualquier celda */
+.mz__panel {
+  width: min(880px, 100%);
+  padding: clamp(16px, 3vw, 32px);
+  background: var(--bg);
+  border: 2px solid var(--fg);
+  box-shadow: 8px 8px 0 var(--acc);
+  display: flex; flex-direction: column; gap: 26px;
+}
+.mz__panel--wide { width: min(1080px, 100%); }
+.mz__stack { display: grid; gap: 16px; }
+.mz__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+.mz__band { width: 100%; border-block: 2px solid var(--fg); background: var(--bg); overflow: hidden; }
+.mz__foot { width: 100%; }
+
+/* ---------- Galerías ---------- */
+.mz__panel--full { width: min(1240px, 100%); }
+.mz__panel--full .ui-gal { --gal-max: 100%; }
+.mz__panel--full .ui-gal--creative, .mz__panel--full .ui-gal--fade { --gal-max: 860px; }
+
+/* Dos paneles en columna (baraja + fundido); en móvil, uno debajo de otro */
+.mz__duo { width: min(1240px, 100%); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7vh 32px; align-items: start; }
+.mz__duo > .mz__panel { width: 100%; }
+@media (max-width: 900px) { .mz__duo { grid-template-columns: 1fr; } }
+
+/* Coverflow grande: diapositivas más anchas para que la central llene el panel */
+.mz .mz__gal--big.ui-gal--coverflow .swiper-slide { width: min(58%, 640px); }
+
+/*
+ * Cubo grande: sin panel, directamente sobre el fondo. Ocupa casi todo el ancho pero nunca más alto que la ventana:
+ * el ancho se limita por la altura disponible (proporción 21/9), así se ve entero sin pasar del 92 % del ancho.
+ */
+.mz__act--cube { padding-block: 16vh; align-items: center; }
+.mz__label { align-self: center; letter-spacing: 0.14em; }
+.mz__cube { width: 100%; display: flex; justify-content: center; }
+.mz .mz__gal--cube { --gal-max: min(92vw, calc((100vh - 140px) * 21 / 9), calc((100dvh - 140px) * 21 / 9)); }
+.mz .mz__gal--cube .swiper { width: 100%; }
+.mz .mz__gal--cube .ui-gal__cap { font-size: 14px; }
+
+/* Vídeo de fondo dentro de un panel: caja con altura propia (el modo fondo rellena su contenedor) */
+.mz__vidbg { position: relative; height: clamp(300px, 55vh, 480px); border: 2px solid var(--fg); overflow: hidden; background: #000; }
+.mz__vidbg-tag { position: absolute; left: 14px; bottom: 14px; letter-spacing: 0.12em; pointer-events: none; }
+
+/* ---------- Aparición de los bloques por pasos duros (data-blk) ---------- */
+[data-blk="wipe"] { clip-path: inset(0 100% 0 0); }
+[data-blk="wipe"][data-in] { animation: mz-wipe 800ms steps(12, end) both; }
+@keyframes mz-wipe { to { clip-path: inset(-30px -30px -30px -30px); } }
+
+[data-blk="slide"] { transform: translateX(calc(var(--dir, 1) * 60vw)); }
+[data-blk="slide"][data-in] { animation: mz-slide 800ms steps(12, end) both; }
+@keyframes mz-slide { to { transform: none; } }
+
+[data-blk="drop"] { opacity: 0; transform: translateY(-70px); }
+[data-blk="drop"][data-in] { animation: mz-drop 600ms steps(8, end) both; }
+@keyframes mz-drop { to { opacity: 1; transform: none; } }
+
+[data-blk="rise"] { opacity: 0; transform: translateY(90px); }
+[data-blk="rise"][data-in] { animation: mz-rise 600ms steps(8, end) both; }
+@keyframes mz-rise { to { opacity: 1; transform: none; } }
+
+[data-blk="zoom"] { opacity: 0; transform: scale(0.85); }
+[data-blk="zoom"][data-in] { animation: mz-zoom 500ms steps(6, end) both; }
+@keyframes mz-zoom { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-blk] { clip-path: none !important; opacity: 1 !important; transform: none !important; animation: none !important; }
+}
+
+/* En móvil no hay lado libre: los paneles ocupan todo el ancho */
+@media (max-width: 720px) {
+  .mz__act { padding-inline: 12px; }
+  .mz__act[data-side] { align-items: stretch; }
+}

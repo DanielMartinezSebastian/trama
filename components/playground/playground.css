@@ -1,0 +1,219 @@
+/* =====================================================================
+   Catálogo (playground) — prefijo pg-
+   Los componentes viven en ui-kit.css
+   ===================================================================== */
+.pg {
+  position: fixed; inset: 0; z-index: 5; display: flex; flex-direction: column;
+  background: #06070d; color: var(--fg); font-family: var(--mono);
+}
+.pg__body { flex: 1; }
+.pg__top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 10px 16px; border-bottom: 1px solid var(--ln); background: rgba(255, 255, 255, 0.02); }
+.pg__top h1 { margin: 0; font-size: 16px; letter-spacing: 0.04em; }
+/*
+ * Ojo: acotado a la propia cabecera y al panel de props (.pg__search, .pg__theme, .pg-field),
+ * nunca a ".pg" entero — un ".pg input[type=text]" genérico alcanzaría también los <input> que
+ * pintan en vivo los componentes del catálogo dentro de .pg__stage (p. ej. TextField) y les
+ * impondría esta caja por encima de la suya, con más especificidad que ".ui-field input".
+ */
+.pg__search, .pg__theme select, .pg-field select, .pg-field textarea, .pg-field input[type="text"] {
+  font: inherit; font-size: 13px; color: var(--fg); background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--ln); border-radius: 8px; padding: 8px 10px; outline: none;
+  appearance: none; -webkit-appearance: none;
+}
+.pg__search { flex: 1; min-width: 160px; max-width: 320px; }
+.pg select option { background: #0b0e18; }
+.pg input:focus, .pg select:focus, .pg textarea:focus { border-color: rgba(255, 255, 255, 0.55); }
+.pg__theme, .pg__color { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mut); }
+.pg__color input { width: 34px; height: 28px; padding: 0; border: 1px solid var(--ln); border-radius: 6px; background: none; cursor: pointer; }
+
+/* Panel de tokens */
+.pg-tokens {
+  display: grid; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--ln); background: rgba(255, 255, 255, 0.03);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); align-items: end;
+}
+.pg-tokens label { display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.06em; color: var(--mut); text-transform: uppercase; }
+.pg-tokens label > span { display: flex; justify-content: space-between; }
+.pg-tokens input[type="color"] { width: 100%; height: 30px; padding: 0; border: 1px solid var(--ln); border-radius: 6px; background: none; cursor: pointer; }
+.pg-tokens input[type="range"] { width: 100%; accent-color: #e8ecf4; }
+.pg-tokens .pg-tokens__reset { align-self: end; }
+
+.pg__body { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 0; }
+.pg__side { overflow: auto; padding: 14px; border-right: 1px solid var(--ln); }
+.pg__side h2 { margin: 16px 0 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); }
+.pg__side h2:first-child { margin-top: 0; }
+.pg__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pg-chip {
+  font: inherit; font-size: 12px; color: var(--fg); cursor: pointer; padding: 5px 10px; border-radius: 999px;
+  border: 1px solid var(--ln); background: transparent; transition: background 0.15s, border-color 0.15s;
+}
+.pg-chip:hover { border-color: rgba(255, 255, 255, 0.45); }
+.pg-chip.is-on { background: #e8ecf4; color: #06070d; border-color: #e8ecf4; }
+.pg-chip small { opacity: 0.6; margin-left: 4px; }
+.pg-guide { margin-top: 12px; padding: 12px; border: 1px solid var(--ln); border-radius: 10px; background: rgba(255, 255, 255, 0.03); font-size: 12px; line-height: 1.5; }
+.pg-guide dl { margin: 8px 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+.pg-guide dt { color: var(--mut); }
+.pg-guide dd { margin: 0; }
+.pg-guide small { color: var(--mut); }
+.pg__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pg-item { width: 100%; text-align: left; font: inherit; color: var(--fg); cursor: pointer; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--ln); background: transparent; display: grid; gap: 6px; }
+.pg-item:hover { border-color: rgba(255, 255, 255, 0.4); }
+.pg-item.is-on { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.6); }
+.pg-item__name { font-size: 13px; font-weight: 600; }
+.pg-item__tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.pg-item__tags em, .pg-item__tags i { font-style: normal; font-size: 10px; letter-spacing: 0.05em; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--ln); color: var(--mut); }
+.pg-item__tags em { color: var(--fg); }
+.pg__empty { font-size: 13px; color: var(--mut); padding: 8px; }
+
+.pg__main { overflow: auto; padding: 16px 20px 40px; min-width: 0; }
+.pg__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.pg__head h2 { margin: 0 0 4px; font-size: 22px; }
+.pg__head p { margin: 0 0 8px; max-width: 640px; font-size: 13px; line-height: 1.5; color: #c7cddb; }
+.pg__head code { font-size: 11px; color: var(--mut); }
+.pg__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+.pg__stage { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); }
+.pg__cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+.pg__panel { border: 1px solid var(--ln); border-radius: 14px; padding: 14px; background: rgba(255, 255, 255, 0.02); min-width: 0; }
+.pg__panel h3 { margin: 0 0 10px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); }
+.pg__panel h3:not(:first-child) { margin-top: 16px; }
+.pg__panelhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pg__panelhead h3 { margin: 0; }
+.pg__fields { display: grid; gap: 12px; }
+.pg-field { display: grid; gap: 5px; }
+.pg-field label { display: flex; justify-content: space-between; font-size: 12px; color: #c7cddb; }
+.pg-field output { color: var(--mut); font-variant-numeric: tabular-nums; }
+.pg-field small { font-size: 11px; color: var(--mut); }
+.pg-field input[type="range"] { width: 100%; accent-color: #e8ecf4; }
+.pg-switch { width: 42px; height: 24px; border-radius: 999px; border: 1px solid var(--ln); background: rgba(255, 255, 255, 0.06); padding: 2px; cursor: pointer; }
+.pg-switch span { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--mut); transition: transform 0.15s, background 0.15s; }
+.pg-switch.is-on { background: rgba(255, 255, 255, 0.85); }
+.pg-switch.is-on span { transform: translateX(18px); background: #06070d; }
+.pg__code { margin: 0; padding: 12px; overflow: auto; border-radius: 10px; background: rgba(0, 0, 0, 0.45); border: 1px solid var(--ln); font-size: 12px; line-height: 1.55; color: #d8e0f0; white-space: pre; }
+.pg__notes { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #c7cddb; }
+.pg__gallery { display: grid; gap: 10px; margin-top: 16px; }
+
+@media (max-width: 900px) {
+  .pg__body { grid-template-columns: 1fr; grid-template-rows: minmax(0, 40%) minmax(0, 1fr); }
+  .pg__side { border-right: 0; border-bottom: 1px solid var(--ln); }
+  .pg__cols { grid-template-columns: 1fr; }
+}
+
+/* Comparador de estilos */
+/*
+ * Una columna, no una rejilla de tarjetas: una celda de ~280px vale para un botón o una badge, pero
+ * no para un componente pensado para ocupar todo el ancho (NavBar, cualquier "sección") ni para uno
+ * con su propia rejilla interna (PricingSection, 3 columnas) — siempre habría algo que no cupiese y
+ * apareciera con scroll o recortado. Cada variante usa el mismo ancho que ya funciona en la vista
+ * aislada (la del escenario principal), así que aquí se apila a ancho completo en vez de encogerse.
+ */
+.pg__compare { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.pg__cell { position: relative; border: 1px solid var(--ln); border-radius: 12px; background: var(--bg); overflow: hidden; }
+.pg__cellname { position: absolute; left: 10px; top: 8px; z-index: 6; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); pointer-events: none; }
+.pg__cellstage { position: relative; }
+.chip--on { background: #e8ecf4; color: #06070d; }
+
+/* Panel FX (entrada/salida y hover globales, aplicables a cualquier componente) */
+.pg-chip--active { border-color: var(--acc, #7cc4ff); color: var(--acc, #7cc4ff); }
+.pg-fx {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 22px 28px;
+  padding: 12px 16px; border-bottom: 1px solid var(--ln); background: rgba(255, 255, 255, 0.03);
+}
+.pg-fx__group { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.pg-fx__switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #c7cddb; }
+.pg-fx__range { display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.06em; color: var(--mut); text-transform: uppercase; min-width: 140px; }
+.pg-fx__range output { color: var(--fg); font-variant-numeric: tabular-nums; margin-left: 4px; }
+.pg-fx__range input[type="range"] { width: 100%; accent-color: #e8ecf4; }
+.pg-fx select:disabled, .pg-fx input:disabled { opacity: 0.4; }
+.pg-fx__hint { flex: 1 1 240px; margin: 0; font-size: 12px; line-height: 1.5; color: var(--mut); }
+
+/* ---------- Escenas "caso real" (una por categoría, ver lib/catalog/scenarios.tsx) ---------- */
+.pg-scn { width: 100%; color: var(--fg); }
+.pg-scn__slot { position: relative; min-height: 160px; }
+.pg-scn__center { display: flex; justify-content: center; }
+.pg-scn__eyebrow { display: block; margin-bottom: 14px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut); }
+
+/* fondos: hero de landing */
+.pg-scn--hero { position: relative; height: 300px; overflow: hidden; border-radius: 10px; }
+.pg-scn__bg { position: absolute; inset: 0; }
+.pg-scn__navbar { position: absolute; left: 14px; right: 14px; top: 12px; z-index: 5; }
+.pg-scn__herocopy { position: absolute; left: 22px; top: 68px; z-index: 5; display: grid; gap: 10px; max-width: min(60%, 320px); }
+.pg-scn__kicker { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--acc); text-shadow: 0 1px 10px #000; }
+.pg-scn__herocopy h2 { margin: 0; font-size: 21px; line-height: 1.15; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75); }
+.pg-scn__herocopy p { margin: 0; font-size: 12px; line-height: 1.5; opacity: 0.85; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75); }
+.pg-scn__herocopy .ui-button { justify-self: start; }
+
+/* texto: sección con titular en vivo */
+.pg-scn--section { max-width: 520px; margin: 0 auto; text-align: center; padding: 8px 0; }
+.pg-scn--section .pg-scn__slot { min-height: 110px; }
+.pg-scn__tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+
+/* tarjetas: grid de 3 */
+.pg-scn--grid { text-align: center; }
+.pg-scn__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pg-scn__cardslot { position: relative; min-height: 280px; }
+@media (max-width: 720px) { .pg-scn__cards { grid-template-columns: 1fr; } }
+
+/* interacción: panel con acción */
+.pg-scn--panel { display: flex; justify-content: center; padding: 12px 0; }
+.pg-scn__card { width: min(360px, 100%); padding: 22px; border: 1px solid var(--ln); border-radius: var(--r, 12px); background: var(--card); }
+.pg-scn__card strong { display: block; font-size: 16px; margin-bottom: 8px; }
+.pg-scn__card p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; opacity: 0.8; }
+.pg-scn__slot--action { min-height: 60px; display: flex; align-items: center; }
+
+/* transiciones: ventana de navegador */
+.pg-scn--frame { border: 1px solid var(--ln); border-radius: 10px; overflow: hidden; }
+.pg-scn__chrome { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: rgba(255, 255, 255, 0.06); font-size: 11px; color: var(--mut); }
+.pg-scn__chrome i { width: 9px; height: 9px; border-radius: 50%; }
+.pg-scn__chrome span { margin-left: 6px; }
+.pg-scn__slot--frame { min-height: 300px; }
+
+/* datos: panel de control */
+.pg-scn__dashgrid { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: 14px; align-items: start; }
+.pg-scn__slot--wide { min-height: 220px; }
+.pg-scn__side { display: grid; gap: 10px; }
+.pg-scn__widget { padding: 14px; border: 1px solid var(--ln); border-radius: 10px; background: var(--card); font-size: 12px; color: var(--mut); display: grid; gap: 8px; }
+.pg-scn__widget--badges { flex-direction: row; }
+@media (max-width: 640px) { .pg-scn__dashgrid { grid-template-columns: 1fr; } }
+
+/* navegación: barra + contenido de página */
+.pg-scn__pagebody { margin-top: 18px; padding: 18px; border: 1px dashed var(--ln); border-radius: 10px; display: grid; gap: 10px; }
+.pg-scn__placeholder { height: 10px; border-radius: 4px; background: color-mix(in srgb, var(--fg) 12%, transparent); }
+
+/* formularios: alta de cuenta */
+.pg-scn--form { max-width: 320px; margin: 0 auto; display: grid; gap: 14px; }
+.pg-scn--form strong { font-size: 16px; }
+.pg-scn__slot--form { min-height: 70px; }
+
+/* feedback: pila de notificaciones */
+.pg-scn--stack { max-width: 380px; margin: 0 auto; }
+.pg-scn__ghost { margin-top: 8px; padding: 10px 14px; border: 1px solid var(--ln); border-radius: 10px; font-size: 12px; color: var(--mut); opacity: 0.6; }
+
+.pg__stage--scenario { padding: 24px; overflow: auto; }
+.pg__stage--scenario .pg-scn--hero { margin: -24px -24px 0; width: calc(100% + 48px); }
+
+/* En el hero de "fondos" la tarjeta de ejemplo del propio componente sobra: el hero ya trae su copy */
+.pg-scn__bg .ui-sample { display: none; }
+
+/* galerías: ficha de producto (galería a la izquierda, datos a la derecha) */
+.pg-scn--product { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.pg-scn__productinfo { display: grid; gap: 10px; justify-items: start; }
+.pg-scn__productinfo strong { font-size: 18px; }
+.pg-scn__productinfo p { margin: 0; font-size: 13px; line-height: 1.6; opacity: 0.8; }
+.pg-scn__price { font-size: 22px; font-weight: 700; color: var(--acc); }
+@media (max-width: 720px) { .pg-scn--product { grid-template-columns: 1fr; } }
+
+/* overlays: filas de ajustes antes del disparador */
+.pg-scn__rows { display: grid; gap: 10px; margin-bottom: 14px; }
+
+/* demo de Reveal: con scroll, el contenido empieza por debajo del escenario */
+.pg-rv { display: grid; align-content: center; justify-items: center; gap: 22px; }
+.pg-rv--scroll { align-content: start; }
+.pg-rv--scroll > .pg-rv__hint:first-child { margin-bottom: 520px; }
+.pg-rv--scroll > .pg-rv__hint:last-child { margin-top: 260px; }
+.pg-rv__hint { margin: 0; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); }
+.pg-rv__title { margin: 0; max-width: 560px; text-align: center; font-size: clamp(22px, 3.2vw, 34px); line-height: 1.15; color: var(--fg); }
+.pg-rv__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; width: min(640px, 100%); }
+
+/* demo de Button: matriz color × énfasis */
+.pg-btns { display: grid; grid-template-columns: auto repeat(5, auto); gap: 10px 12px; align-items: center; justify-items: start; max-width: 100%; overflow-x: auto; }
+.pg-btns__head { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); }
+

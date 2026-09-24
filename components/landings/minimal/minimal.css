@@ -1,0 +1,88 @@
+/* Landing minimal — Maré Surf Club · fondo dither, cuadrados duros, tipografía pixel */
+.mn {
+  --bg: #04121c;
+  --fg: #eaf6ff;
+  --acc: #ff8a5c;
+  --acc2: #3fd0c9;
+  position: relative;
+  color: var(--fg);
+  font-family: var(--font-pixelify-sans), "Courier New", monospace;
+  font-size: clamp(16px, 1.6vw, 20px);
+  image-rendering: pixelated;
+}
+.mn *, .mn *::before, .mn *::after { border-radius: 0 !important; }
+
+.mn__bg { position: fixed; inset: 0; z-index: 0; background: var(--bg); }
+
+/* ---------- cabecera + barra de progreso ---------- */
+.mn__top { position: fixed; z-index: 10; inset: 0 0 auto 0; display: flex; justify-content: space-between; padding: 20px clamp(16px, 4vw, 40px); font-size: 14px; letter-spacing: 0.12em; pointer-events: none; }
+.mn__bar { position: fixed; z-index: 10; right: clamp(16px, 4vw, 40px); top: 50%; translate: 0 -50%; width: 8px; height: 30vh; background: rgba(4, 18, 28, 0.85); border: 2px solid var(--fg); }
+.mn__bar i { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--acc); transform-origin: top; transform: scaleY(var(--p, 0)); }
+
+/* ---------- bloques de texto: rectángulo sólido, sin bordes suaves ---------- */
+.mn-hl { background: var(--bg); color: var(--fg); padding: 0.06em 0.28em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.mn-hl--alt { background: var(--acc); color: var(--bg); }
+
+/* ---------- secciones ---------- */
+.mn__main { position: relative; z-index: 5; }
+.mn__sec { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 22px; padding: 90px clamp(16px, 8vw, 120px); }
+.mn__h1, .mn__h2 { margin: 0; font-weight: 700; line-height: 1.25; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.mn__h1 { font-size: clamp(34px, 8vw, 104px); }
+.mn__h2 { font-size: clamp(30px, 6vw, 76px); }
+.mn-line { display: block; }
+.mn__kicker { margin: 0; font-size: 14px; letter-spacing: 0.16em; color: var(--acc2); text-shadow: 2px 2px 0 var(--bg); }
+.mn__p { margin: 0; max-width: 32ch; line-height: 1.7; }
+.mn__num { font-size: 14px; letter-spacing: 0.2em; background: var(--acc2); color: var(--bg); padding: 2px 10px; }
+.mn__cue { margin-top: 40px; font-size: 13px; letter-spacing: 0.2em; animation: mn-blink 1s steps(2) infinite; text-shadow: 2px 2px 0 var(--bg); }
+
+.mn__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.mn__list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; }
+.mn__li-t { font-size: clamp(26px, 5vw, 60px); font-weight: 700; }
+.mn__li-m { font-size: 14px; letter-spacing: 0.1em; color: var(--acc2); text-shadow: 2px 2px 0 var(--bg); }
+
+/* ---------- botón: rectángulo duro con sombra desplazada ---------- */
+.mn-btn { display: inline-block; padding: 12px 22px; background: var(--acc); color: var(--bg); text-decoration: none; font-weight: 700; letter-spacing: 0.08em; border: 2px solid var(--bg); box-shadow: 6px 6px 0 var(--bg); }
+.mn-btn:hover { translate: 3px 3px; box-shadow: 3px 3px 0 var(--bg); background: var(--acc2); }
+
+/* ---------- efecto glitch: aparece por pasos, con parpadeo y desplazamiento de un "píxel" ---------- */
+.mn-g__c { display: inline-block; opacity: 0; }
+[data-in] .mn-g__c, .mn-rot .mn-g__c { animation: mn-glitch 420ms steps(1, end) var(--d, 0ms) both; }
+@keyframes mn-glitch {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; color: var(--acc); transform: translate(-4px, 0); }
+  30%  { opacity: 0; }
+  45%  { opacity: 1; color: var(--acc2); transform: translate(4px, -3px); }
+  60%  { opacity: 0; }
+  75%  { opacity: 1; color: var(--acc); transform: translate(0, 3px); }
+  100% { opacity: 1; color: inherit; transform: none; }
+}
+
+/* ---------- palabra rotativa: barrido de bloque + re-escritura ---------- */
+.mn-rot { position: relative; display: inline-block; }
+.mn-rot__w { display: inline-block; animation: mn-swipe 2600ms steps(1, end) both; }
+.mn-rot .mn-hl { background: var(--acc); color: var(--bg); }
+@keyframes mn-swipe {
+  0%   { clip-path: inset(0 100% 0 0); }
+  8%   { clip-path: inset(0 75% 0 0); }
+  16%  { clip-path: inset(0 50% 0 0); }
+  24%  { clip-path: inset(0 25% 0 0); }
+  32%  { clip-path: inset(0 0 0 0); }
+  92%  { clip-path: inset(0 0 0 0); }
+  96%  { clip-path: inset(0 0 0 50%); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+
+/* ---------- cinta rotativa inferior ---------- */
+.mn__ticker { position: fixed; z-index: 10; inset: auto 0 0 0; overflow: hidden; background: var(--bg); border-top: 2px solid var(--fg); font-size: 13px; letter-spacing: 0.2em; padding: 8px 0; white-space: nowrap; }
+.mn__ticker-in { display: inline-flex; gap: 28px; animation: mn-tick 28s linear infinite; }
+@keyframes mn-tick { to { transform: translateX(-25%); } }
+@keyframes mn-blink { 50% { opacity: 0; } }
+
+/* dentro del visor de la galería: no pisar sus barras superior/inferior */
+.mn--hud .mn__top { top: 64px; }
+.mn--hud .mn__ticker { bottom: 96px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mn-g__c { opacity: 1 !important; animation: none !important; }
+  .mn-rot__w, .mn__ticker-in, .mn__cue { animation: none !important; }
+}

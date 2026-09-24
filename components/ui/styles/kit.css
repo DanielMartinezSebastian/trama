@@ -1,0 +1,31 @@
+/* =====================================================================
+   Punto de entrada único del CSS del kit. En un proyecto nuevo basta con:
+
+     // app/layout.tsx
+     import "@/components/ui/styles/kit.css";
+
+   1) tokens por defecto (tema neutro oscuro) — con :where() para que cualquier tema
+      del proyecto los sobrescriba sin pelear por especificidad ni por orden de carga
+   2) sistema de estilos --s-* y componentes (ui-kit.css)
+   3) carruseles y galerías sobre Swiper (ui-carousel.css) y reproductor de vídeo (ui-video.css)
+   ===================================================================== */
+@import "./ui-kit.css";
+@import "./ui-carousel.css";
+@import "./ui-video.css";
+
+/* Mismos valores que `neutralTokens` en lib/ui/tokens.ts */
+:where(:root) {
+  --bg: #07080f;
+  --fg: #e8ecf4;
+  --mut: #9aa3b5;
+  --acc: #7cc4ff;
+  --acc2: #c084fc;
+  --card: rgba(255, 255, 255, 0.06);
+  --ln: rgba(255, 255, 255, 0.16);
+  --r: 14px;
+  /* colores semánticos (intent.ts); .ui-s los repite para las superficies */
+  --ok: #3ddc84;
+  --info: #4cb8ff;
+  --warn: #ffb020;
+  --bad: #ff5470;
+}
