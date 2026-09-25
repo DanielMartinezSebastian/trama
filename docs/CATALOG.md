@@ -117,11 +117,39 @@ Lienzo react-three-fiber con filtro de pixel art, ASCII y scanlines: cualquier e
 | `rain` | number 0–1 | 0 |
 | `glitch` | number 0–1 | 0 |
 | `aberration` | number 0–1 | 0 |
+| `pointerFx` | `none` · `parallax` · `orbit` · `tilt` | "none" |
+| `pointerStrength` | number 0.2–2.5 | 1 |
+| `fps` | number 0–60 | 30 |
+| `scrollFps` | number 0–60 | 20 |
+| `adaptive` | boolean | true |
+| `sceneScale` | number 0–1 | 0 |
 
 - Requiere `three` y `@react-three/fiber` (dependencias opcionales de trama-ui). Importa `trama-ui/RetroCanvas`, no el barrel.
 - Los hijos son la escena R3F (luces + mallas); sin hijos se muestra `RetroShapes`. Para un `<Canvas>` propio, `RetroFX` es solo el post-proceso.
 - Rellena su contenedor (position: relative y tamaño). Pausa fuera de pantalla; con prefers-reduced-motion dibuja bajo demanda.
+- Pensado para ir de fondo en móvil: 30 fps (`fps`), 20 durante el scroll (`scrollFps`), dpr ≤ 1,5 en táctil y bajada adaptativa (`adaptive`). No le pongas `backdrop-filter` encima (guía §22.1).
 - Los colores salen de los tokens --fg, --bg y --acc; `fg`, `bg` y `accent` los sustituyen.
+
+### Modelo 3D retro — `RetroModel`
+
+Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y le pone un material mate que se lee bien como ASCII o píxeles. Con la cámara siguiendo al ratón.
+
+| prop | tipo | default |
+|---|---|---|
+| `src` | `/models/turbina.obj` · `/models/asteroide.gltf` · `/models/ciudad.glb` · `/models/suzanne.glb` · `/models/farol.glb` | "/models/turbina.obj" |
+| `material` | `clay` · `original` · `wire` | "clay" |
+| `flat` | boolean | false |
+| `extent` | number 1–7 | 4 |
+| `spin` | number 0–30 | 6 |
+| `spinAxis` | `x` · `y` · `z` | "y" |
+| `float` | boolean | true |
+| `rotation` | text | "0,0,0" |
+
+- Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx="orbit"><RetroModel src="/models/turbina.obj" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.
+- Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.
+- `npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).
+- `material="clay"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint="scene"`).
+- Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.
 
 ## Texto (`texto`)
 
@@ -1450,7 +1478,7 @@ Landing de un productor de hard techno con minimalismo extremo: negro, blanco y 
 
 Archivo: `components/landings/SiloLanding.tsx`
 
-`RetroCanvas` → `ScrollProgress` → `Toast` → `NavBar` → `Marquee` → `Reveal` ×2 → `Button` → `AudioPlayer` → `Table` → `ContactForm` → `Footer`
+`ScrollProgress` → `Toast` → `NavBar` → `Marquee` → `Reveal` ×2 → `Button` → `AudioPlayer` → `Table` → `ContactForm` → `Footer` → `RetroCanvas` → `RetroModel`
 
 ### MARÉ · minimal pixel — `/demo/th-minimal`
 

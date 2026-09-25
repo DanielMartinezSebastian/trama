@@ -85,7 +85,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
-| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`) |
+| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` |
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` |

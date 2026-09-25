@@ -50,6 +50,11 @@ export type RetroFXProps = {
   glow?: number;
   /** lluvia de código sobre la escena, 0–1 */
   rain?: number;
+  /**
+   * resolución de la escena intermedia respecto al lienzo, 0–1. 0 (por defecto) = automática: unas 3 muestras por celda ASCII
+   * o 2 por bloque de pixel art, que es todo lo que el filtro llega a leer. Subirla solo añade coste de GPU
+   */
+  sceneScale?: number;
   /** colores CSS; por defecto blanco sobre negro (RetroCanvas los toma de los tokens del tema) */
   fg?: string;
   bg?: string;
@@ -81,6 +86,7 @@ export const RETRO_FX_DEFAULTS = {
   aberration: 0,
   glow: 0,
   rain: 0,
+  sceneScale: 0,
   fg: "#e9e9e9",
   bg: "#000000",
   accent: "#8a8a8a",
@@ -104,7 +110,8 @@ export default function RetroFX(props: RetroFXProps) {
 
   // el objetivo de render, el quad y el material viven mientras viva el componente
   const [fx] = useState(() => {
-    const target = new WebGLRenderTarget(4, 4, { samples: 4 });
+    // sin MSAA (`samples`): en GPUs móviles resolverlo cuesta más que todo el filtro y el ASCII/pixel art ya lo disimula
+    const target = new WebGLRenderTarget(4, 4);
     const material = new ShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -177,7 +184,14 @@ export default function RetroFX(props: RetroFXProps) {
     const u = fx.material.uniforms;
     const dpr = gl.getPixelRatio();
     gl.getDrawingBufferSize(fx.size);
-    if (fx.target.width !== fx.size.x || fx.target.height !== fx.size.y) fx.target.setSize(fx.size.x, fx.size.y);
+    // la escena se dibuja a la resolución que el filtro llega a leer (guía §22.1): con celdas de 3 px a dpr 2, ~1/3 por lado
+    const cellPx = Math.max(2, o.cellSize) * dpr;
+    const pixPx = Math.max(1, o.pixelSize) * dpr;
+    const auto = o.mode === "pixel" ? 2 / pixPx : o.mode === "ascii" ? 3 / cellPx : Math.max(3 / cellPx, 2 / pixPx);
+    const k = Math.min(1, Math.max(0.05, o.sceneScale > 0 ? o.sceneScale : auto));
+    const tw = Math.max(1, Math.round(fx.size.x * k));
+    const th = Math.max(1, Math.round(fx.size.y * k));
+    if (fx.target.width !== tw || fx.target.height !== th) fx.target.setSize(tw, th);
 
     u.tGlyph.value = atlas.texture;
     u.uRes.value.copy(fx.size);

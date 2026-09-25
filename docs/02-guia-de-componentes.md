@@ -401,6 +401,8 @@ conviene saber para usarlo bien:
 - `prefers-reduced-motion`: fondos estáticos, sin scramble ni tilt.
 - Táctil: sin cursor personalizado ni magnetismo; hover sustituido por el puntero automático del fondo.
 - Contraste ≥ 4.5:1 para texto de cuerpo sobre cualquier fotograma del fondo.
+- Fondos WebGL (react-three-fiber) detrás de una página con scroll: reglas en §22.1. La principal es que la GPU es compartida;
+  si el lienzo la satura, el scroll va a tirones aunque el JavaScript esté libre.
 
 ## 9. Añadir un componente al catálogo
 
@@ -441,6 +443,7 @@ sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente
 | Animaciones "paradas" al probar | Pestañas ocultas pausan RAF | Forzar `redraw()` / `gsap.ticker.tick()` |
 | Texto corrupto en `StatCounter`/cifras ASCII | La fuente bitmap 7×7 de `asciifyText` no cubre letras acentuadas ni símbolos como «★» | Usar solo dígitos y símbolos simples (`+ % / -`) en lo que se convierte a bitmap; cualquier palabra va en un `label` de texto normal |
 | Un componente no llega al ancho de su contenedor en un proyecto | Un tope de ancho pensado para la vista previa del catálogo (`Table` tenía `width: min(100%, 520px)`) | Los componentes llenan su contenedor; si la vista previa necesita un tope, se lo pone el `render` de su entrada en `lib/catalog/entries/`, nunca el CSS del componente. `Table` tiene `width="full"` (defecto) o `"auto"` |
+| El scroll va a tirones en móvil con un fondo 3D, aunque en escritorio vaya fino | El compositor del navegador (el que mueve el scroll) comparte la GPU con el WebGL: lienzo a pantalla completa a dpr 2–3, MSAA en el render target, 60–120 fps y `backdrop-filter` encima la saturan | §22.1: `RetroCanvas` ya limita fps, dpr y resolución interna; no pongas `backdrop-filter` sobre el lienzo ni vuelvas a renderizar la página al cambiar de escena |
 | Una barra de borde a borde se queda con márgenes | El layout que la contiene tiene `max-width` o `padding` | `NavBar bleed` ocupa el ancho de la ventana desde cualquier contenedor; `shape="contained"` alinea su contenido con `--nav-max` |
 | Doble caja en un `<input>`/`<textarea>` del catálogo | Una regla `.pg` demasiado amplia (pensada para el propio panel) alcanza con descendientes genéricos (`.pg input[type="text"]`) el `<input>` que un componente del catálogo pinta en vivo dentro de `.pg__stage`, y le gana en especificidad a `.ui-field input` | El CSS del panel (`components/playground/playground.css`) nunca usa selectores genéricos `.pg <elemento>`: se ata a clases propias (`.pg__search`, `.pg__theme`, `.pg-field`) que no existen dentro de `.pg__stage` |
 | Scroll o recorte en una celda de «Comparar los 7 estilos» | La celda topaba su alto en `Math.min(stageHeight, 460)` y además vivía en una rejilla de columnas de ~280px — ambos límites pensados para componentes pequeños (botón, campo, tarjeta), que un componente ancho por diseño (`NavBar`, cualquier "sección") o con rejilla propia (`PricingSection`) no puede respetar | Sin alto tope (`entry.stageHeight` a secas) y sin columnas: `.pg__compare` es una sola columna a ancho completo, el mismo que ya funciona en la vista aislada |
@@ -928,7 +931,7 @@ congelar la página. La celda es unos 0,6× más ancha que alta.
 
 `RetroCanvas` convierte cualquier escena de react-three-fiber en pixel art, ASCII o ambos, con scanlines, viñeta, curvatura y
 ruido de monitor CRT. Es la única parte del kit que usa `three` y `@react-three/fiber`; en el paquete npm son **dependencias
-opcionales** y estos tres componentes (`RetroCanvas`, `RetroFX`, `RetroShapes`) quedan fuera del barrel: se importan por
+opcionales** y estos cuatro componentes (`RetroCanvas`, `RetroFX`, `RetroShapes`, `RetroModel`) quedan fuera del barrel: se importan por
 subruta (`trama-ui/RetroCanvas`).
 
 | Pieza | Para qué |
@@ -936,6 +939,7 @@ subruta (`trama-ui/RetroCanvas`).
 | `RetroCanvas` | `<Canvas>` + `RetroFX` + tokens del tema + pausa fuera de pantalla + `prefers-reduced-motion`. Lo normal. |
 | `RetroFX` | Solo el post-proceso, para meterlo en un `<Canvas>` que ya tengas. |
 | `RetroShapes` | Escenas de ejemplo con la iluminación que mejor se lee como caracteres: `chevrons`, `knot`, `cube`, `icosahedron`, `torus`, `pyramid`, `cage` (jaula), `helix` (ADN), `rings` (giroscopio), `terrain` (relieve animado), `globe` (globo facetado) y `tunnel` (túnel de marcos). |
+| `RetroModel` | Un modelo `.glb`, `.gltf` u `.obj`: lo carga, lo centra, lo escala a `extent` y le pone material `clay` (gris mate), `original` o `wire`. Trae luces (`lights={false}` si pones las tuyas). |
 
 ```tsx
 <div style={{ position: "relative", height: 480 }}>
@@ -953,9 +957,64 @@ Cómo funciona (`lib/retro3d/`): `RetroFX` se engancha a `useFrame` con priorida
 escena en un `WebGLRenderTarget` y un quad de pantalla completa la pasa por `shader.ts`. La rampa de glifos es un atlas
 (`glyphAtlas.ts`, canvas 2D) con un glifo por nivel de luz; los colores CSS de los tokens se resuelven con `color.ts`.
 
+**Modelos y ratón.** `<RetroCanvas pointerFx="orbit"><RetroModel src="/models/turbina.obj" /></RetroCanvas>`.
+`pointerFx` mueve la cámara hacia el puntero con suavizado: `parallax` (se desplaza), `orbit` (gira alrededor del origen) o
+`tilt` (solo apunta); `pointerStrength` escala el recorrido. Escucha en la ventana, como los demás fondos (§20), así que
+funciona con contenido encima; `interaction="canvas"` (por defecto si no es fixed) solo cuenta el puntero sobre el lienzo y,
+al salir, la cámara vuelve al centro. Con `prefers-reduced-motion` queda quieta. Modelos de ejemplo en `public/models/`
+(`asteroide.gltf` ~19k triángulos, `turbina.obj` ~9k en piezas, `ciudad.glb`), generados con `scripts/gen-retro-models.mts`
+(geometría propia, sin licencias), más `suzanne.glb` y `farol.glb` de Khronos glTF-Sample-Assets (CC0, créditos en
+`public/models/LICENSES.md`). `scripts/strip-gltf.mts <entrada> <salida.glb>` deja solo la geometría (sin texturas, UV ni
+animaciones): el farol baja de 9,5 MB a 131 KB. No descarta modelos con licencia no comercial por ti: revísala antes. Tras el filtro, texturas y colores casi no se ven: lo que se lee es la luz sobre la forma,
+por eso `clay` es el material por defecto. glTF con Draco/meshopt no está soportado (no se incluye el decodificador).
+
 Trampas: la luz importa más que el material (contraste alto y una luz direccional fuerte; con luz plana todo sale del mismo
 carácter); los sólidos de aristas vivas se leen mejor que las esferas; los cálculos van en espacio lineal y la luminosidad se
 pasa a perceptual antes de elegir glifo — si añades pasos al shader, mantén esa conversión. Un solo `RetroCanvas` pesado por vista.
+
+### 22.1 Rendimiento: un fondo 3D que no frene el scroll (móvil y GPU modesta)
+
+**Por qué pasa.** En móvil el scroll lo mueve el compositor del navegador, que usa la **misma GPU** que el WebGL. Si un fotograma
+del lienzo tarda más que un refresco de pantalla, el compositor también pierde fotogramas y el scroll va a saltos aunque el hilo
+principal esté libre. El cuello de botella casi nunca son los triángulos, sino la **cantidad de píxeles** (fill-rate): un lienzo a
+pantalla completa a dpr 2 ronda 1,5 millones de píxeles, y la pasada ASCII lee 5 veces la textura por cada uno. Caso real:
+`/demo/th-silo` iba a tirones en un Android de gama alta hasta aplicar lo de abajo.
+
+**Lo que ya hace el kit (no lo deshagas):**
+
+| Medida | Dónde | Por qué |
+|---|---|---|
+| Escena intermedia **sin MSAA** | `RetroFX` (`WebGLRenderTarget` sin `samples`) | En GPUs móviles resolver MSAA ×4 cuesta más que el filtro entero; el ASCII/pixel art ya disimula los bordes. |
+| Escena intermedia a **la resolución que el filtro lee** | `RetroFX`, prop `sceneScale` (0 = auto) | ~3 muestras por celda ASCII o 2 por bloque de pixel art. Con celdas de 3 px a dpr 2 es 1/3 por lado, ~9× menos píxeles. |
+| **30 fps** (`fps`) en vez de los 60–120 Hz de la pantalla | `RetroCanvas` (`frameloop="demand"` + `Pacer`) | Un fondo no necesita más; en una pantalla de 120 Hz es 4× menos trabajo. `fps={0}` = sin límite. |
+| **20 fps durante el scroll** (`scrollFps`) y 200 ms después | `RetroCanvas` | Deja la GPU al compositor justo cuando la necesita. `scrollFps={0}` congela el fondo mientras se desplaza. |
+| **dpr ≤ 1,5 en pantallas táctiles** (2 con ratón) | `RetroCanvas`, `maxDpr` | Con celdas de caracteres la diferencia no se ve. |
+| **Densidad adaptativa** (`adaptive`) | `RetroCanvas` | Si en una ventana de 2 s se consigue menos del 80 % de los fps pedidos, baja el dpr 0,25 (hasta 1). La primera ventana no cuenta (compilación de shaders). |
+| Pausa fuera de pantalla y con `prefers-reduced-motion` | `RetroCanvas` | `IntersectionObserver` → `frameloop="never"`. |
+| Deformaciones en el **vertex shader**, no en la CPU | `RetroShapes` `terrain` (`onBeforeCompile`) | Antes eran 1.681 vértices + `computeVertexNormals()` por fotograma en el hilo principal. Con `flatShading` la normal sale de derivadas: no hace falta recalcularla. |
+| Piezas repetidas **fundidas** en una geometría | `RetroShapes` `cage`, `helix`, `tunnel` (`mergeGeometries`) | De ~80 llamadas de dibujo a 1–9. Si cada pieza se mueve por separado, `InstancedMesh`. |
+
+**Lo que depende de la página que monta el fondo:**
+
+1. **Nada de `backdrop-filter`, `filter` ni `mix-blend-mode` encima de un lienzo animado** (docks, navbars, tarjetas `glass`): el
+   desenfoque se recalcula en cada fotograma del fondo. Usa un fondo casi opaco (`color-mix(in srgb, var(--bg) 94%, transparent)`).
+2. **Cambiar de escena no debe volver a renderizar la página.** El estado «sección activa» va en un componente pequeño que
+   contiene el lienzo (patrón `SiloStage` en `components/landings/SiloLanding.tsx`): el `IntersectionObserver` lo actualiza por un ref.
+3. **Monta todas las escenas desde el principio y alterna `visible`** (lo invisible no se dibuja) y **precompila** una vez con
+   `gl.compile(scene, camera)`, escena a escena (el número de luces forma parte del shader). Así los modelos se descargan al cargar y
+   la GPU no compila en mitad del scroll (patrón `SiloScenes`).
+4. **Nunca `setState` dentro de `useFrame`**; lo que cambia cada fotograma va en refs o uniforms.
+5. Un solo lienzo WebGL pesado por vista; si hacen falta dos fondos, que uno sea CSS o 2D.
+6. `position: fixed` para el fondo (el compositor lo trata como una capa aparte) y sin transforms ligados al scroll.
+
+**Cómo comprobarlo.** El Chrome de escritorio no reproduce el problema (GPU potente, 60 Hz). Usa un móvil real con depuración
+remota (`chrome://inspect`) y mira en *Performance* los fotogramas perdidos durante el scroll. Para contar los fotogramas del
+lienzo desde la consola, envuelve `gl.bindFramebuffer` y cuenta las llamadas con `null` (una por fotograma de `RetroFX`).
+Esperado: 30/s en reposo y 20/s mientras se desplaza.
+
+**Más allá, si aún no basta:** `@react-three/offscreen` (render en un worker; libera el hilo principal, **no** la GPU), detectar
+gama baja (`navigator.hardwareConcurrency <= 4`, `deviceMemory <= 4`, cabecera `Save-Data`) para servir `fps={20}` o una imagen
+estática, o `scrollFps={0}`.
 
 ## 23. Tema y variante «dot matrix»
 

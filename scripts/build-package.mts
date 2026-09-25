@@ -43,7 +43,7 @@ for (const f of files) {
 // ---------- 2. barrel: todos los componentes por nombre + utilidades públicas ----------
 // Componentes que necesitan dependencias opcionales (three, @react-three/fiber): fuera del barrel para que `import … from "trama-ui"`
 // no obligue a instalarlas; se importan por subruta (`trama-ui/RetroCanvas`).
-const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes"]);
+const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes", "RetroModel"]);
 const OPTIONAL_PEERS = { three: ">=0.170", "@react-three/fiber": ">=9" };
 const components = kitComponents().map((f) => posix.basename(f, ".tsx")).filter((c) => !OPTIONAL_PEER_COMPONENTS.has(c)).sort();
 const barrel = [

@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { DoubleSide, Shape, type Group, type Mesh, type PlaneGeometry } from "three";
+import { BoxGeometry, BufferGeometry, CylinderGeometry, DoubleSide, Euler, Matrix4, MeshStandardMaterial, Quaternion, Shape, SphereGeometry, Vector3, type Group } from "three";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 export const RETRO_SHAPES = ["chevrons", "knot", "cube", "icosahedron", "cage", "helix", "rings", "terrain", "globe", "tunnel", "pyramid", "torus"] as const;
 
@@ -34,17 +35,79 @@ function cageBars(a: number, t: number): { pos: [number, number, number]; size: 
 const TUNNEL_FRAMES = 9;
 const TUNNEL_SPAN = 14;
 
+/** matriz de posición + giro + escala (lo que haría un `<group>`), para hornear piezas en una sola geometría */
+function trs(pos: [number, number, number], rot: [number, number, number] = [0, 0, 0], scale = 1): Matrix4 {
+  return new Matrix4().compose(new Vector3(...pos), new Quaternion().setFromEuler(new Euler(...rot)), new Vector3(scale, scale, scale));
+}
+
+/**
+ * Las figuras de muchas piezas iguales (jaula, ADN, marcos del túnel) se funden en una geometría: una llamada de dibujo en vez
+ * de decenas, que en móvil es tiempo de CPU por fotograma (guía §22.1).
+ */
+function bake(parts: BufferGeometry[]): BufferGeometry {
+  const g = mergeGeometries(parts);
+  parts.forEach((p) => p.dispose());
+  return g;
+}
+
+/** relieve: la altura se calcula en el vertex shader (antes, 1.681 vértices + normales en la CPU cada fotograma). Con
+ * `flatShading` three saca la normal de las derivadas en el fragment shader, así que no hace falta recalcularla. */
+function terrainMaterial(time: { value: number }): MeshStandardMaterial {
+  const m = new MeshStandardMaterial({ color: "#ffffff", roughness: 0.6, metalness: 0.05, flatShading: true, side: DoubleSide });
+  m.onBeforeCompile = (sh) => {
+    sh.uniforms.uT = time;
+    sh.vertexShader =
+      "uniform float uT;\n" +
+      sh.vertexShader.replace(
+        "#include <begin_vertex>",
+        `#include <begin_vertex>
+        transformed.z = max(0.0, sin(position.x * 0.9 + uT) * cos(position.y * 0.7 - uT * 0.8) * 0.9 + sin(position.x * 0.3 - position.y * 0.5 + uT * 0.5) * 0.6);`,
+      );
+  };
+  m.customProgramCacheKey = () => "trama-retro-terrain";
+  return m;
+}
+
 /**
  * Escenas de ejemplo para `RetroCanvas`: formas de aristas vivas con luz direccional, que son las que mejor se leen como
  * caracteres. Sirven de modelo para montar la tuya (luces + mallas dentro del `Canvas`).
  */
 export default function RetroShapes({ shape = "chevrons", speed = 1 }: RetroShapesProps) {
   const group = useRef<Group>(null);
-  const terrain = useRef<Mesh<PlaneGeometry>>(null);
   const tunnel = useRef<Group>(null);
   const cs = useMemo(chevron, []);
-  const bars = useMemo(() => cageBars(2.6, 0.14), []);
-  const helix = useMemo(() => Array.from({ length: 26 }, (_, i) => ({ y: (i - 12.5) * 0.28, a: i * 0.5 })), []);
+  const terrainTime = useMemo(() => ({ value: 0 }), []);
+  const terrainMat = useMemo(() => terrainMaterial(terrainTime), [terrainTime]);
+  // geometrías horneadas: solo la de la figura en uso
+  const cage = useMemo(() => (shape === "cage" ? bake(cageBars(2.6, 0.14).map((b) => new BoxGeometry(...b.size).applyMatrix4(trs(b.pos)))) : null), [shape]);
+  const frame = useMemo(
+    () =>
+      shape === "tunnel"
+        ? bake(
+            cageBars(3.4, 0.16)
+              .filter((b) => b.size[2] < 0.5 && b.pos[2] < 0)
+              .map((b) => new BoxGeometry(b.size[0], b.size[1], 0.16).applyMatrix4(trs([b.pos[0], b.pos[1], 0])))
+          )
+        : null,
+    [shape],
+  );
+  const helix = useMemo(() => {
+    if (shape !== "helix") return null;
+    const parts: BufferGeometry[] = [];
+    for (let i = 0; i < 26; i++) {
+      const y = (i - 12.5) * 0.28, a = i * 0.5;
+      const x = Math.cos(a) * 1.1, z = Math.sin(a) * 1.1;
+      const group = trs([0, y * 0.62, 0], [0, 0, 0], 0.7);
+      parts.push(new SphereGeometry(0.17, 12, 10).applyMatrix4(trs([x, 0, z])).applyMatrix4(group));
+      parts.push(new SphereGeometry(0.17, 12, 10).applyMatrix4(trs([-x, 0, -z])).applyMatrix4(group));
+      parts.push(new CylinderGeometry(0.035, 0.035, 2.2, 6).applyMatrix4(trs([0, 0, 0], [0, -a, Math.PI / 2])).applyMatrix4(group));
+    }
+    return bake(parts);
+  }, [shape]);
+  useEffect(() => () => cage?.dispose(), [cage]);
+  useEffect(() => () => frame?.dispose(), [frame]);
+  useEffect(() => () => helix?.dispose(), [helix]);
+  useEffect(() => () => terrainMat.dispose(), [terrainMat]);
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime * speed;
@@ -66,17 +129,8 @@ export default function RetroShapes({ shape = "chevrons", speed = 1 }: RetroShap
         g.rotation.x = t * 0.3;
       }
     }
-    // relieve: la altura de cada vértice avanza con el tiempo
-    const m = terrain.current;
-    if (m && shape === "terrain") {
-      const pos = m.geometry.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        const x = pos.getX(i), y = pos.getY(i);
-        pos.setZ(i, Math.max(0, Math.sin(x * 0.9 + t) * Math.cos(y * 0.7 - t * 0.8) * 0.9 + Math.sin(x * 0.3 - y * 0.5 + t * 0.5) * 0.6));
-      }
-      pos.needsUpdate = true;
-      m.geometry.computeVertexNormals();
-    }
+    // relieve: la altura de cada vértice avanza con el tiempo (en el vertex shader, ver terrainMaterial)
+    terrainTime.value = t;
     // túnel: los marcos se acercan a cámara y reaparecen al fondo
     if (tunnel.current && shape === "tunnel") {
       tunnel.current.children.forEach((f, i) => {
@@ -153,40 +207,16 @@ export default function RetroShapes({ shape = "chevrons", speed = 1 }: RetroShap
             </mesh>
           </>
         )}
-        {shape === "cage" && (
+        {shape === "cage" && cage && (
           <>
-            {bars.map((b, i) => (
-              <mesh key={i} position={b.pos}>
-                <boxGeometry args={b.size} />
-                {mat}
-              </mesh>
-            ))}
+            <mesh geometry={cage}>{mat}</mesh>
             <mesh rotation={[0.6, 0.6, 0]}>
               <octahedronGeometry args={[0.8, 0]} />
               {flat}
             </mesh>
           </>
         )}
-        {shape === "helix" &&
-          helix.map((h, i) => {
-            const x = Math.cos(h.a) * 1.1, z = Math.sin(h.a) * 1.1;
-            return (
-              <group key={i} position={[0, h.y * 0.62, 0]} scale={0.7}>
-                <mesh position={[x, 0, z]}>
-                  <sphereGeometry args={[0.17, 12, 10]} />
-                  {mat}
-                </mesh>
-                <mesh position={[-x, 0, -z]}>
-                  <sphereGeometry args={[0.17, 12, 10]} />
-                  {mat}
-                </mesh>
-                <mesh rotation={[0, -h.a, Math.PI / 2]}>
-                  <cylinderGeometry args={[0.035, 0.035, 2.2, 6]} />
-                  {mat}
-                </mesh>
-              </group>
-            );
-          })}
+        {shape === "helix" && helix && <mesh geometry={helix}>{mat}</mesh>}
         {shape === "rings" &&
           [1.0, 1.6, 2.2].map((r, i) => (
             <mesh key={r} rotation={[i * 1.05, i * 0.7, i * 0.4]}>
@@ -195,25 +225,18 @@ export default function RetroShapes({ shape = "chevrons", speed = 1 }: RetroShap
             </mesh>
           ))}
         {shape === "terrain" && (
-          <mesh ref={terrain} position={[0, 0, -1]}>
+          // la altura la pone el shader: la esfera envolvente del plano no la incluye, así que sin descarte por frustum
+          <mesh position={[0, 0, -1]} material={terrainMat} frustumCulled={false}>
             <planeGeometry args={[9, 9, 40, 40]} />
-            {flat}
           </mesh>
         )}
       </group>
-      {shape === "tunnel" && (
-        <group ref={tunnel} position={[0, 0, 0]}>
+      {shape === "tunnel" && frame && (
+        <group ref={tunnel}>
           {Array.from({ length: TUNNEL_FRAMES }, (_, i) => (
-            <group key={i}>
-              {cageBars(3.4, 0.16)
-                .filter((b) => b.size[2] < 0.5 && b.pos[2] < 0)
-                .map((b, k) => (
-                  <mesh key={k} position={[b.pos[0], b.pos[1], 0]}>
-                    <boxGeometry args={[b.size[0], b.size[1], 0.16]} />
-                    {mat}
-                  </mesh>
-                ))}
-            </group>
+            <mesh key={i} geometry={frame}>
+              {mat}
+            </mesh>
           ))}
         </group>
       )}

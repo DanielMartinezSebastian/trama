@@ -31,7 +31,8 @@
         "textmode-background",
         "grid-background",
         "crt-overlay",
-        "retro-canvas"
+        "retro-canvas",
+        "retro-model"
       ]
     },
     {
@@ -896,16 +897,162 @@
           "label": "Aberración cromática",
           "min": 0,
           "max": 1
+        },
+        {
+          "key": "pointerFx",
+          "type": "select",
+          "default": "none",
+          "label": "Cámara con el ratón",
+          "options": [
+            "none",
+            "parallax",
+            "orbit",
+            "tilt"
+          ]
+        },
+        {
+          "key": "pointerStrength",
+          "type": "number",
+          "default": 1,
+          "label": "Intensidad del ratón",
+          "min": 0.2,
+          "max": 2.5
+        },
+        {
+          "key": "fps",
+          "type": "number",
+          "default": 30,
+          "label": "Fotogramas por segundo (0 = pantalla)",
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "scrollFps",
+          "type": "number",
+          "default": 20,
+          "label": "Fps durante el scroll (0 = congela)",
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "adaptive",
+          "type": "boolean",
+          "default": true,
+          "label": "Densidad adaptativa"
+        },
+        {
+          "key": "sceneScale",
+          "type": "number",
+          "default": 0,
+          "label": "Resolución de la escena (0 = auto)",
+          "min": 0,
+          "max": 1
         }
       ],
       "notes": [
         "Requiere `three` y `@react-three/fiber` (dependencias opcionales de trama-ui). Importa `trama-ui/RetroCanvas`, no el barrel.",
         "Los hijos son la escena R3F (luces + mallas); sin hijos se muestra `RetroShapes`. Para un `<Canvas>` propio, `RetroFX` es solo el post-proceso.",
         "Rellena su contenedor (position: relative y tamaño). Pausa fuera de pantalla; con prefers-reduced-motion dibuja bajo demanda.",
+        "Pensado para ir de fondo en móvil: 30 fps (`fps`), 20 durante el scroll (`scrollFps`), dpr ≤ 1,5 en táctil y bajada adaptativa (`adaptive`). No le pongas `backdrop-filter` encima (guía §22.1).",
         "Los colores salen de los tokens --fg, --bg y --acc; `fg`, `bg` y `accent` los sustituyen."
       ],
       "example": "import RetroCanvas from \"@/components/ui/RetroCanvas\";\n\n<RetroCanvas />",
       "preview": "/componentes#retro-canvas"
+    },
+    {
+      "id": "retro-model",
+      "name": "Modelo 3D retro",
+      "component": "RetroModel",
+      "import": "import RetroModel from \"@/components/ui/RetroModel\";",
+      "category": "fondos",
+      "styles": [
+        "retro",
+        "terminal",
+        "neon",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y le pone un material mate que se lee bien como ASCII o píxeles. Con la cámara siguiendo al ratón.",
+      "props": [
+        {
+          "key": "src",
+          "type": "select",
+          "default": "/models/turbina.obj",
+          "label": "Modelo",
+          "options": [
+            "/models/turbina.obj",
+            "/models/asteroide.gltf",
+            "/models/ciudad.glb",
+            "/models/suzanne.glb",
+            "/models/farol.glb"
+          ]
+        },
+        {
+          "key": "material",
+          "type": "select",
+          "default": "clay",
+          "label": "Material",
+          "options": [
+            "clay",
+            "original",
+            "wire"
+          ]
+        },
+        {
+          "key": "flat",
+          "type": "boolean",
+          "default": false,
+          "label": "Facetado"
+        },
+        {
+          "key": "extent",
+          "type": "number",
+          "default": 4,
+          "label": "Tamaño (unidades de escena)",
+          "min": 1,
+          "max": 7
+        },
+        {
+          "key": "spin",
+          "type": "number",
+          "default": 6,
+          "label": "Giro (rpm)",
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "spinAxis",
+          "type": "select",
+          "default": "y",
+          "label": "Eje del giro",
+          "options": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        {
+          "key": "float",
+          "type": "boolean",
+          "default": true,
+          "label": "Balanceo"
+        },
+        {
+          "key": "rotation",
+          "type": "text",
+          "default": "0,0,0",
+          "label": "Orientación (x,y,z en grados)"
+        }
+      ],
+      "notes": [
+        "Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx=\"orbit\"><RetroModel src=\"/models/turbina.obj\" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.",
+        "Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.",
+        "`npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).",
+        "`material=\"clay\"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint=\"scene\"`).",
+        "Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión."
+      ],
+      "example": "import RetroModel from \"@/components/ui/RetroModel\";\n\n<RetroModel />",
+      "preview": "/componentes#retro-model"
     },
     {
       "id": "scramble-text",
@@ -9436,11 +9583,6 @@
       "description": "Landing de un productor de hard techno con minimalismo extremo: negro, blanco y un gris, tipografía enorme y un único RetroCanvas de fondo (ASCII de puntos invertido, scanlines de 1 px en barrido y glitch leve) que cambia de figura en cada sección.",
       "components": [
         {
-          "component": "RetroCanvas",
-          "id": "retro-canvas",
-          "uses": 1
-        },
-        {
           "component": "ScrollProgress",
           "id": "scroll-progress",
           "uses": 1
@@ -9488,6 +9630,16 @@
         {
           "component": "Footer",
           "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "RetroCanvas",
+          "id": "retro-canvas",
+          "uses": 1
+        },
+        {
+          "component": "RetroModel",
+          "id": "retro-model",
           "uses": 1
         }
       ]

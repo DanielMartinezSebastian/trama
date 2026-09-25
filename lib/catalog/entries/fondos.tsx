@@ -5,6 +5,7 @@ import AsciiBackground, { ASCII_CHARSETS, ASCII_SCENES, ASCII_STYLES, type Ascii
 import CrtOverlay from "@/components/ui/CrtOverlay";
 import GridBackground from "@/components/ui/GridBackground";
 import RetroCanvas from "@/components/ui/RetroCanvas";
+import RetroModel from "@/components/ui/RetroModel";
 import RetroShapes, { RETRO_SHAPES } from "@/components/ui/RetroShapes";
 import TerminalTyper from "@/components/ui/TerminalTyper";
 import TextmodeBackground, { TEXTMODE_SKETCHES } from "@/components/ui/TextmodeBackground";
@@ -206,6 +207,7 @@ export const fondos: CatalogEntry[] = [
       "Requiere `three` y `@react-three/fiber` (dependencias opcionales de trama-ui). Importa `trama-ui/RetroCanvas`, no el barrel.",
       "Los hijos son la escena R3F (luces + mallas); sin hijos se muestra `RetroShapes`. Para un `<Canvas>` propio, `RetroFX` es solo el post-proceso.",
       "Rellena su contenedor (position: relative y tamaño). Pausa fuera de pantalla; con prefers-reduced-motion dibuja bajo demanda.",
+      "Pensado para ir de fondo en móvil: 30 fps (`fps`), 20 durante el scroll (`scrollFps`), dpr ≤ 1,5 en táctil y bajada adaptativa (`adaptive`). No le pongas `backdrop-filter` encima (guía §22.1).",
       "Los colores salen de los tokens --fg, --bg y --acc; `fg`, `bg` y `accent` los sustituyen.",
     ],
     props: [
@@ -232,9 +234,21 @@ export const fondos: CatalogEntry[] = [
       { key: "rain", label: "Lluvia de código", type: "number", default: 0, min: 0, max: 1, step: 0.05, when: (p) => p.mode !== "pixel" },
       { key: "glitch", label: "Glitch", type: "number", default: 0, min: 0, max: 1, step: 0.05 },
       { key: "aberration", label: "Aberración cromática", type: "number", default: 0, min: 0, max: 1, step: 0.05 },
+      { key: "pointerFx", label: "Cámara con el ratón", type: "select", default: "none", options: ["none", "parallax", "orbit", "tilt"], labels: { none: "quieta", parallax: "parallax", orbit: "órbita", tilt: "inclinación" } },
+      { key: "pointerStrength", label: "Intensidad del ratón", type: "number", default: 1, min: 0.2, max: 2.5, step: 0.1, when: (p) => p.pointerFx !== "none" },
+      { key: "fps", label: "Fotogramas por segundo (0 = pantalla)", type: "number", default: 30, min: 0, max: 60, step: 5 },
+      { key: "scrollFps", label: "Fps durante el scroll (0 = congela)", type: "number", default: 20, min: 0, max: 60, step: 5, when: (p) => (p.fps as number) > 0 },
+      { key: "adaptive", label: "Densidad adaptativa", type: "boolean", default: true, when: (p) => (p.fps as number) > 0 },
+      { key: "sceneScale", label: "Resolución de la escena (0 = auto)", type: "number", default: 0, min: 0, max: 1, step: 0.05 },
     ],
     render: (p) => (
       <RetroCanvas
+        fps={p.fps as number}
+        scrollFps={p.scrollFps as number}
+        adaptive={p.adaptive as boolean}
+        sceneScale={p.sceneScale as number}
+        pointerFx={p.pointerFx as never}
+        pointerStrength={p.pointerStrength as number}
         mode={p.mode as never}
         tint={p.tint as never}
         ramp={p.ramp as never}
@@ -260,6 +274,45 @@ export const fondos: CatalogEntry[] = [
         label="Escena 3D con filtro retro"
       >
         <RetroShapes shape={p.shape as never} />
+      </RetroCanvas>
+    ),
+  },
+  {
+    id: "retro-model",
+    component: "RetroModel",
+    path: "@/components/ui/RetroModel",
+    name: "Modelo 3D retro",
+    category: "fondos",
+    styles: ["retro", "terminal", "neon", "minimal", "dotmatrix"],
+    description: "Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y le pone un material mate que se lee bien como ASCII o píxeles. Con la cámara siguiendo al ratón.",
+    stageHeight: 460,
+    notes: [
+      "Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx=\"orbit\"><RetroModel src=\"/models/turbina.obj\" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.",
+      "Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.",
+      "`npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).",
+      "`material=\"clay\"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint=\"scene\"`).",
+      "Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.",
+    ],
+    props: [
+      { key: "src", label: "Modelo", type: "select", default: "/models/turbina.obj", options: ["/models/turbina.obj", "/models/asteroide.gltf", "/models/ciudad.glb", "/models/suzanne.glb", "/models/farol.glb"], labels: { "/models/turbina.obj": "turbina (.obj)", "/models/asteroide.gltf": "asteroide (.gltf)", "/models/ciudad.glb": "ciudad (.glb)", "/models/suzanne.glb": "Suzanne · Khronos, CC0 (.glb)", "/models/farol.glb": "farol · Khronos, CC0 (.glb)" } },
+      { key: "url", label: "…o tu URL (.glb, .gltf, .obj)", type: "text", default: "", noCode: true },
+      { key: "material", label: "Material", type: "select", default: "clay", options: ["clay", "original", "wire"] },
+      { key: "flat", label: "Facetado", type: "boolean", default: false, when: (p) => p.material === "clay" },
+      { key: "extent", label: "Tamaño (unidades de escena)", type: "number", default: 4, min: 1, max: 7, step: 0.1 },
+      { key: "spin", label: "Giro (rpm)", type: "number", default: 6, min: 0, max: 30, step: 1 },
+      { key: "spinAxis", label: "Eje del giro", type: "select", default: "y", options: ["x", "y", "z"], when: (p) => (p.spin as number) > 0 },
+      { key: "float", label: "Balanceo", type: "boolean", default: true },
+      { key: "rotation", label: "Orientación (x,y,z en grados)", type: "text", default: "0,0,0" },
+      { key: "pointerFx", label: "Cámara con el ratón (RetroCanvas)", type: "select", default: "orbit", options: ["none", "parallax", "orbit", "tilt"], labels: { none: "quieta", parallax: "parallax", orbit: "órbita", tilt: "inclinación" }, noCode: true },
+      { key: "pointerStrength", label: "Intensidad del ratón", type: "number", default: 1, min: 0.2, max: 2.5, step: 0.1, when: (p) => p.pointerFx !== "none", noCode: true },
+      { key: "mode", label: "Modo (RetroCanvas)", type: "select", default: "ascii", options: ["ascii", "pixel", "both"], noCode: true },
+      { key: "ramp", label: "Rampa de glifos", type: "select", default: "classic", options: ["classic", "dots", "braille", "blocks", "binary", "hex", "code", "hatch", "circuit"], when: (p) => p.mode !== "pixel", noCode: true },
+      { key: "cellSize", label: "Celda ASCII (px)", type: "number", default: 6, min: 3, max: 20, step: 1, when: (p) => p.mode !== "pixel", noCode: true },
+      { key: "tint", label: "Tinte", type: "select", default: "mono", options: ["mono", "scene", "gradient"], noCode: true },
+    ],
+    render: (p) => (
+      <RetroCanvas mode={p.mode as never} ramp={p.ramp as never} cellSize={p.cellSize as number} tint={p.tint as never} pointerFx={p.pointerFx as never} pointerStrength={p.pointerStrength as number} label="Modelo 3D con filtro retro">
+        <RetroModel src={(p.url as string).trim() || (p.src as string)} material={p.material as never} flat={p.flat as boolean} extent={p.extent as number} spin={p.spin as number} spinAxis={p.spinAxis as never} float={p.float as boolean} rotation={p.rotation as string} />
       </RetroCanvas>
     ),
   },

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useThree } from "@react-three/fiber";
+import type { Group } from "three";
 import { toast as sonnerToast } from "sonner";
 import AudioPlayer from "@/components/ui/AudioPlayer";
 import Button from "@/components/ui/Button";
@@ -9,6 +11,7 @@ import Footer from "@/components/ui/Footer";
 import Marquee from "@/components/ui/Marquee";
 import NavBar from "@/components/ui/NavBar";
 import RetroCanvas from "@/components/ui/RetroCanvas";
+import RetroModel from "@/components/ui/RetroModel";
 import RetroShapes, { type RetroShapesProps } from "@/components/ui/RetroShapes";
 import Reveal from "@/components/ui/Reveal";
 import ScrollProgress from "@/components/ui/ScrollProgress";
@@ -37,10 +40,11 @@ const TOKENS = tokensToStyle({
   display: 'var(--font-inter), ui-sans-serif, system-ui, sans-serif',
 });
 
-type Act = { shape: NonNullable<RetroShapesProps["shape"]>; label: string };
+// cada sección, una figura; la música gira con una turbina (modelo .obj de public/models, ver RetroModel)
+type Act = { shape: NonNullable<RetroShapesProps["shape"]>; model?: string; label: string };
 const ACTS: Act[] = [
   { shape: "tunnel", label: "01 — SILO" },
-  { shape: "rings", label: "02 — MÚSICA" },
+  { shape: "rings", model: "/models/turbina.obj", label: "02 — MÚSICA" },
   { shape: "terrain", label: "03 — FECHAS" },
   { shape: "cage", label: "04 — BOOKING" },
 ];
@@ -56,14 +60,8 @@ const TRACKS = RELEASES.map((r) => `${r.title}|SILO · ${r.label}|${r.src}|${r.l
 const DATES = "Fecha, Ciudad, Sala\n03.10, Madrid, Nave 12\n11.10, Berlín, Bunker Süd\n18.10, Lisboa, Hangar 9\n25.10, Rotterdam, Graansilo\n08.11, Bruselas, Dépôt\n22.11, Barcelona, Sala Vapor";
 
 export default function SiloLanding({ hud }: { hud: boolean }) {
-  const [act, setAct] = useState(0);
-  // cuántas veces ha cambiado de sección: el corte a negro solo aparece en los cambios, no al cargar
-  const [cuts, setCuts] = useState(0);
-  const lastAct = useRef(0);
-  useEffect(() => {
-    if (act !== lastAct.current) setCuts((n) => n + 1);
-    lastAct.current = act;
-  }, [act]);
+  // la sección activa vive en SiloStage: cambiarla solo repinta el fondo, no la página entera (guía §22.1)
+  const stage = useRef<((i: number) => void) | null>(null);
   const marks = useRef<Array<HTMLElement | null>>([]);
   // disco elegido en la lista: `playKey` sube en cada clic para que el reproductor lo cargue y lo haga sonar
   const [track, setTrack] = useState(0);
@@ -89,7 +87,7 @@ export default function SiloLanding({ hud }: { hud: boolean }) {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
           const i = Number((e.target as HTMLElement).dataset.act);
-          if (!Number.isNaN(i)) setAct(i);
+          if (!Number.isNaN(i)) stage.current?.(i);
         }),
       { rootMargin: "-45% 0px -45% 0px" },
     );
@@ -106,17 +104,7 @@ export default function SiloLanding({ hud }: { hud: boolean }) {
 
   return (
     <div className={`slo ${hud ? "" : "slo--hidden"}`} style={TOKENS} data-theme="silo">
-      {/* ---------- fondo: un solo lienzo, una figura por sección ---------- */}
-      <div className="slo__bg" aria-hidden>
-        <RetroCanvas tint="scene" cellSize={3} cellAspect={1} dither={0.65} invert scanlines={0.6} scanlineSize={1} scanlineRoll={0.65} vignette={0} flicker={0} glitch={0.05} cameraZ={9}>
-          <RetroShapes shape={ACTS[act].shape} speed={0.7} />
-        </RetroCanvas>
-        {/* corte al cambiar de sección: una capa negra que se desvanece a saltos; el lienzo (y su contexto WebGL) no se remonta */}
-        {cuts > 0 && <div key={cuts} className="slo__bg-cut" />}
-      </div>
-      <div className="slo__tag" aria-hidden>
-        {ACTS[act].label}
-      </div>
+      <SiloStage api={stage} />
       <ScrollProgress placement="top" size="sm" variant="minimal" tone="fg" smooth label="Progreso de la página" />
       <Toast id="slo-toast" position="bottom-center" variant="minimal" intentStyle="mono" icons="none" showTrigger={false} />
 
@@ -188,4 +176,73 @@ export default function SiloLanding({ hud }: { hud: boolean }) {
       </div>
     </div>
   );
+}
+
+/** Fondo, corte y etiqueta de sección: el único trozo de la página que cambia con la sección activa. */
+function SiloStage({ api }: { api: { current: ((i: number) => void) | null } }) {
+  const [act, setAct] = useState(0);
+  // cuántas veces ha cambiado de sección: el corte a negro solo aparece en los cambios, no al cargar
+  const [cuts, setCuts] = useState(0);
+  const lastAct = useRef(0);
+  useEffect(() => {
+    api.current = setAct;
+    return () => {
+      api.current = null;
+    };
+  }, [api]);
+  useEffect(() => {
+    if (act !== lastAct.current) setCuts((n) => n + 1);
+    lastAct.current = act;
+  }, [act]);
+
+  return (
+    <>
+      {/* ---------- fondo: un solo lienzo, una figura por sección ---------- */}
+      <div className="slo__bg" aria-hidden>
+        <RetroCanvas tint="scene" cellSize={3} cellAspect={1} dither={0.65} invert scanlines={0.6} scanlineSize={1} scanlineRoll={0.65} vignette={0} flicker={0} glitch={0.05} cameraZ={9} pointerFx="parallax" pointerStrength={0.7} interaction="window">
+          <SiloScenes act={act} />
+        </RetroCanvas>
+        {/* corte al cambiar de sección: una capa negra que se desvanece a saltos; el lienzo (y su contexto WebGL) no se remonta */}
+        {cuts > 0 && <div key={cuts} className="slo__bg-cut" />}
+      </div>
+      <div className="slo__tag" aria-hidden>
+        {ACTS[act].label}
+      </div>
+    </>
+  );
+}
+
+/**
+ * Las cuatro figuras montadas desde el principio y solo la activa visible (lo invisible no se dibuja). Así el modelo se descarga
+ * al cargar y los shaders se compilan una vez al montar, figura a figura; si no, la GPU compila en mitad del scroll y el fondo
+ * da un tirón justo al cambiar de sección.
+ */
+function SiloScenes({ act }: { act: number }) {
+  const groups = useRef<Array<Group | null>>([]);
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
+
+  useEffect(() => {
+    const g = groups.current;
+    const shown = g.map((x) => x?.visible ?? false);
+    // una figura cada vez: cada una trae sus luces y el número de luces forma parte del shader
+    g.forEach((_, i) => {
+      g.forEach((x, j) => x && (x.visible = i === j));
+      gl.compile(scene, camera);
+    });
+    g.forEach((x, i) => x && (x.visible = shown[i]));
+  }, [gl, scene, camera]);
+
+  return ACTS.map((a, i) => (
+    <group
+      key={a.label}
+      visible={i === act}
+      ref={(el) => {
+        groups.current[i] = el;
+      }}
+    >
+      {a.model ? <RetroModel src={a.model} extent={5.2} spin={14} spinAxis="z" rotation="-24,28,0" /> : <RetroShapes shape={a.shape} speed={0.7} />}
+    </group>
+  ));
 }

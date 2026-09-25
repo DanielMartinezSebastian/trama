@@ -108,6 +108,18 @@
 /* minimal no tiene borde en ninguna superficie; solo los campos de formulario conservan una línea inferior, que es
  * lo único que los delimita (sin fondo ni borde, no se vería dónde escribir) */
 .ui-s--minimal:is(.ui-field__box, .ui-select__trigger, .ui-otp__box) { border-width: 0 0 1px; border-color: var(--ln); border-style: solid; }
+/* y el foco tampoco dibuja una caja: la línea inferior cambia de color y engorda a 2 px (sin mover el texto) */
+.ui-s--minimal:is(.ui-field__box, .ui-otp__box, .ui-select__trigger) { transition: border-color 0.15s, box-shadow 0.15s; }
+.ui-s--minimal.ui-field__box:focus-within { border-color: var(--tone, var(--acc)); box-shadow: 0 1px 0 0 var(--tone, var(--acc)); }
+.ui-s--minimal.ui-otp__box:focus, .ui-s--minimal.ui-select__trigger:is(:focus-visible, [aria-expanded="true"]) { outline: none; border-color: var(--acc); box-shadow: 0 1px 0 0 var(--acc); }
+/* casillas, radios, interruptor y deslizador: sin anillo de foco; el propio control toma el acento */
+.ui-s--minimal :is(.ui-cgroup__box, .ui-rgroup__dot):focus-visible { outline: none; border-color: var(--acc); }
+.ui-s--minimal.ui-toggle:focus-visible { outline: none; }
+.ui-s--minimal.ui-toggle:focus-visible .ui-toggle__track { border-color: var(--acc); }
+.ui-s--minimal.ui-toggle:focus-visible .ui-toggle__text { color: var(--acc); }
+.ui-range.ui-s--minimal input:focus-visible { outline: none; }
+.ui-range.ui-s--minimal input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--acc) 30%, transparent); }
+.ui-range.ui-s--minimal input:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--acc) 30%, transparent); }
 
 /* ---------- Fondos de tarjeta (components/ui/fill.ts) ----------
  * Independientes de la variante: la variante pone borde, radio, sombra y tipografía; el fill, lo que hay detrás.
