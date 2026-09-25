@@ -48,6 +48,14 @@ Antes de publicar: sube `version` en el `package.json` de la raíz y apunta los 
 comprueba que ningún archivo pierda `"use client"` y que todos los imports relativos lleven extensión (webpack exige
 rutas completas en paquetes ESM). El paquete incluye `CATALOG.md` con los imports ya como `trama-ui/X`.
 
+## Desplegar la web
+
+`npm run build && npm start` (o cualquier hosting de Next.js). Define `NEXT_PUBLIC_SITE_URL` con el dominio público
+(p. ej. `https://trama.dev`): de ella salen las URL absolutas de `sitemap.xml`, `robots.txt` y la vista previa al
+compartir (`metadataBase`). En Vercel no hace falta: se usa su dominio de producción. Icono (`app/icon.svg`,
+`app/favicon.ico`, `app/apple-icon.tsx`), imagen de vista previa (`app/opengraph-image.tsx`) y 404 (`app/not-found.tsx`)
+van en `app/`.
+
 ## Usar el kit en otro proyecto Next.js
 
 ```bash

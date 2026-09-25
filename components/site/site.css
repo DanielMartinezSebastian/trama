@@ -245,3 +245,7 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 .tr-foot__col a:hover { color: var(--acc); }
 .tr-foot__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 40px 0 0; font: 500 10px/1.4 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--mut); }
 @media (max-width: 760px) { .tr-foot__top { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tr-foot__top > :first-child { grid-column: 1 / -1; } }
+
+/* ---------- 404 ---------- */
+.tr-404 { display: grid; gap: 24px; align-content: center; min-height: 80vh; }
+.tr-404__code { margin: 0 0 0 -0.05em; font-size: clamp(120px, 26vw, 380px); line-height: 0.78; font-weight: 900; letter-spacing: -0.075em; color: var(--acc); }
