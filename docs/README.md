@@ -11,6 +11,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [catalog.json](./catalog.json) | Lo mismo en datos, para herramientas. |
 | [02-guia-de-componentes.md](./02-guia-de-componentes.md) | Cómo **crear** componentes coherentes: tokens, sistema de estilos `--s-*`, reglas, trampas conocidas. |
 | [01-evaluacion.md](./01-evaluacion.md) | Historial de decisiones: por qué el kit es como es. Los conteos de cada apartado son los de su fecha. |
+| [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
 se quedan atrás o si un componente no aparece en la tabla de abajo.
