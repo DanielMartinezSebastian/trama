@@ -3,6 +3,8 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import { painters, type Painter, type Progress, type SourceKind } from "@/lib/asciify/painters";
 import { createPointerTracker } from "@/lib/asciify/pointer";
+import { ENGINE_MAX_DIMENSION, planResolution, type ResolutionInfo, type ResolutionPlan } from "@/lib/asciify/resolution";
+import { bridgePointer, type BackgroundInteraction, type BackgroundPosition } from "@/lib/ui/pointerBridge";
 import type { StudioInput } from "asciify-engine/studio";
 
 /** Escenas disponibles. `progress: true` = la escena cambia con la prop `progress`. */
@@ -53,7 +55,12 @@ export type AsciiBackgroundProps = {
   asciiStyle?: (typeof ASCII_STYLES)[number];
   /** @deprecated usa `asciiStyle` */
   style?: (typeof ASCII_STYLES)[number];
-  /** tamaño de celda en px (más pequeño = más detalle y más coste) */
+  /**
+   * Tamaño de celda en px CSS (más pequeño = más detalle y más coste). Admite decimales y valores por debajo del mínimo del
+   * motor (3 px; 1 px con dither): el componente sobremuestrea para que la celda sea la pedida. El límite real lo pone el tope de
+   * celdas del motor (160 000): la celda mínima posible es √(ancho·alto / 160 000) px — unos 3 px a pantalla completa, 1 px en
+   * un elemento de 400×400. Por debajo de 0,1 se ignora.
+   */
   cellSize?: number;
   colorMode?: "source" | "accent" | "gray";
   charset?: keyof typeof ASCII_CHARSETS;
@@ -74,20 +81,43 @@ export type AsciiBackgroundProps = {
   glitch?: number;
   /** multiplicador de velocidad de la escena */
   speed?: number;
-  /** máximo de fotogramas por segundo */
+  /** fotogramas por segundo de la escena (1–60): con pocos se ve «a saltos» y cuesta menos; el hover del motor sigue a 60 */
   fps?: number;
   opacity?: number;
   /** 0–1; solo lo usan las escenas con `progress: true` */
   progress?: number;
+  /**
+   * absolute (por defecto) = rellena su contenedor, que debe tener `position: relative` y tamaño · fixed = cubre la ventana entera
+   * y se queda quieto al hacer scroll: el fondo de una página larga. Con `fixed`, pon el contenido encima con
+   * `position: relative` (y `z-index: 10` si hace falta) y sin fondo opaco.
+   */
+  position?: BackgroundPosition;
+  /**
+   * canvas = el lienzo recibe el puntero él mismo: solo reacciona si nada se le pone encima · window = escucha el puntero en
+   * toda la ventana y se lo reenvía al lienzo, así reacciona aunque haya contenido encima y nunca bloquea clics ni hover del
+   * contenido. Por defecto `window` con `position="fixed"` y `canvas` en el resto.
+   */
+  interaction?: BackgroundInteraction;
+  /**
+   * Máximo de celdas de la rejilla (el motor admite hasta 160 000). Por defecto se calcula solo: lo justo para que quepa la
+   * celda pedida (12 000 como mínimo). Ponlo para acotar el coste.
+   */
+  maxCells?: number;
+  /** El motor baja la resolución solo si los fotogramas tardan demasiado (por defecto sí). Solo se lee al montar. */
+  adaptive?: boolean;
+  /** Se llama con la celda pedida y la que se dibuja de verdad cada vez que cambia (útil para vistas previas y depuración). */
+  onResolution?: (info: ResolutionInfo) => void;
   className?: string;
 };
 
-type Live = Required<Omit<AsciiBackgroundProps, "asciiStyle" | "asciiHover" | "className" | "progress" | "scene" | "palette" | "tintAmount" | "speed" | "fps" | "opacity">>;
+type Live = Required<Omit<AsciiBackgroundProps, "asciiStyle" | "asciiHover" | "className" | "position" | "interaction" | "maxCells" | "adaptive" | "onResolution" | "progress" | "scene" | "palette" | "tintAmount" | "speed" | "fps" | "opacity">>;
 
-function toSettings(p: Live, accent: string): StudioInput {
+function toSettings(p: Live, accent: string, plan: ResolutionPlan): StudioInput {
   return {
     style: p.style,
-    cellSize: p.cellSize,
+    // Con dither manda `dither.scale` (entero) y cellSize no se lee; el plan da el valor válido para cada estilo
+    cellSize: plan.unit,
+    ...(p.style === "dither" ? { dither: { scale: plan.unit } } : {}),
     colorMode: p.colorMode,
     ink: accent,
     charset: ASCII_CHARSETS[p.charset],
@@ -122,17 +152,57 @@ export default function AsciiBackground({
   fps = 60,
   opacity = 1,
   progress,
+  position = "absolute",
+  interaction,
+  maxCells,
+  adaptive = true,
+  onResolution,
   className = "",
 }: AsciiBackgroundProps) {
+  const passive = (interaction ?? (position === "fixed" ? "window" : "canvas")) === "window";
   const hover = asciiHover ?? legacyHover ?? "water";
   const style = asciiStyle ?? legacyStyle ?? "ascii";
   const host = useRef<HTMLDivElement>(null);
   const paint = useRef<Painter | null>(null);
-  const player = useRef<{ update: (p: StudioInput) => void } | null>(null);
-  const speedRef = useRef(speed);
-  speedRef.current = speed;
   const latest = useRef<Live>({ style, cellSize, colorMode, charset, hover, hoverStrength, hoverRadius, bloom, scanlines, vignette, grain, glitch });
   latest.current = { style, cellSize, colorMode, charset, hover, hoverStrength, hoverRadius, bloom, scanlines, vignette, grain, glitch };
+  type Player = { update: (p: StudioInput) => void; resize: (w: number, h: number, r?: number) => void; setBudget: (cells: number) => void };
+  const player = useRef<Player | null>(null);
+  const size = useRef({ w: 0, h: 0 });
+  const maxCellsRef = useRef(maxCells);
+  maxCellsRef.current = maxCells;
+  const onResRef = useRef(onResolution);
+  onResRef.current = onResolution;
+  const engine = useRef<typeof import("asciify-engine/studio") | null>(null);
+  const plan = useRef<ResolutionPlan | null>(null);
+  const fitSrc = useRef<((srcWidth: number) => void) | null>(null);
+  const dprOf = () => Math.min(window.devicePixelRatio || 1, 2);
+
+  /** Recalcula el plan con el tamaño y los ajustes vigentes, y lo aplica al lienzo fuente. */
+  const replan = () => {
+    const { w, h } = size.current;
+    const l = latest.current;
+    const p = planResolution(w, h, l.cellSize, l.style, maxCellsRef.current);
+    plan.current = p;
+    fitSrc.current?.(p.srcWidth);
+    return p;
+  };
+
+  /** Avisa a quien lo pida de la celda real: la rejilla que sale con estos límites, la misma cuenta que hace el motor. */
+  const report = (p: ResolutionPlan, budget = p.maxCells, degraded = false) => {
+    const cb = onResRef.current;
+    const eng = engine.current;
+    if (!cb || !eng) return;
+    const dpr = dprOf();
+    const accent = host.current ? getComputedStyle(host.current).getPropertyValue("--acc").trim() || "#7cc4ff" : "#7cc4ff";
+    const st = eng.normalizeStudioSettings(toSettings(latest.current, accent, p));
+    // El motor recorta el lienzo a maxDimension antes de calcular la rejilla
+    const k = Math.min(1, ENGINE_MAX_DIMENSION / Math.max(p.width * dpr, p.height * dpr));
+    const g = eng.studioGrid(Math.max(2, Math.round(p.width * dpr * k)), Math.max(2, Math.round(p.height * dpr * k)), st, budget, dpr);
+    cb({ requested: p.requested, effective: g.cell / (dpr * p.s * k), columns: g.columns, rows: g.rows, limited: g.limited || k < 1, maxCells: budget, degraded });
+  };
+  const speedRef = useRef(speed);
+  speedRef.current = speed;
   const fpsRef = useRef(fps);
   fpsRef.current = fps;
 
@@ -143,9 +213,16 @@ export default function AsciiBackground({
 
   // Ajustes en caliente
   useEffect(() => {
+    const pl = player.current;
+    if (!pl || !size.current.w) return;
     const accent = host.current ? getComputedStyle(host.current).getPropertyValue("--acc").trim() || "#7cc4ff" : "#7cc4ff";
-    player.current?.update(toSettings(latest.current, accent));
-  }, [style, cellSize, colorMode, charset, hover, hoverStrength, hoverRadius, bloom, scanlines, vignette, grain, glitch]);
+    const p = replan();
+    pl.update(toSettings(latest.current, accent, p));
+    pl.resize(p.width, p.height, dprOf());
+    pl.setBudget(p.maxCells);
+    report(p);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [style, cellSize, maxCells, colorMode, charset, hover, hoverStrength, hoverRadius, bloom, scanlines, vignette, grain, glitch]);
 
   // Progreso propio de esta instancia para las escenas temáticas: se pasa al painter en cada fotograma,
   // así dos fondos en la misma página no se pisan. Sin `progress`, la escena lee el `scrollState` global
@@ -172,16 +249,23 @@ export default function AsciiBackground({
 
     let started = false;
     let lastFrame = 0;
-    const fit = (w: number, h: number) => {
-      src.width = 480;
-      src.height = Math.max(2, Math.round((480 * h) / w));
+    // Lienzo fuente en el que dibujan las escenas: más ancho cuanto más fina es la celda, para que el detalle llegue
+    const fit = (srcWidth: number) => {
+      const { w, h } = size.current;
+      src.width = srcWidth;
+      src.height = Math.max(2, Math.round((srcWidth * h) / Math.max(1, w)));
     };
+    fitSrc.current = fit;
+    cleanups.push(() => (fitSrc.current = null));
 
     const start = async (w: number, h: number) => {
       started = true;
-      const { mountStudioMedia, normalizeStudioSettings } = await import("asciify-engine/studio");
+      const eng = await import("asciify-engine/studio");
+      const { mountStudioMedia, normalizeStudioSettings } = eng;
       if (disposed) return;
-      fit(w, h);
+      engine.current = eng;
+      size.current = { w, h };
+      const first = replan();
       const media = {
         source: src,
         width: src.width,
@@ -191,7 +275,7 @@ export default function AsciiBackground({
         seek: async () => {},
         frame: (time: number) => {
           // Límite de fps: si es pronto, se reutiliza el fotograma anterior
-          if (fpsRef.current < 60 && time - lastFrame < 1 / fpsRef.current) return src;
+          if (fpsRef.current < 60 && time - lastFrame < 1 / Math.max(0.1, fpsRef.current)) return src;
           lastFrame = time;
           tracker.update(time);
           paint.current?.(sctx, src.width, src.height, time * speedRef.current, tracker.pointer, progressRef.current);
@@ -201,14 +285,20 @@ export default function AsciiBackground({
       };
       const accent = getComputedStyle(el).getPropertyValue("--acc").trim() || "#7cc4ff";
       const p = mountStudioMedia(canvas, media, {
-        settings: normalizeStudioSettings(toSettings(latest.current, accent)),
-        width: w,
-        height: h,
+        settings: normalizeStudioSettings(toSettings(latest.current, accent, first)),
+        width: first.width,
+        height: first.height,
         fps: 60,
+        // Por defecto el motor recorta el lienzo a 960 px y la rejilla a 12 000 celdas, y agranda la celda sin avisar
+        maxDimension: ENGINE_MAX_DIMENSION,
+        maxCells: first.maxCells,
+        adaptive,
+        onQualityChange: (cells: number) => plan.current && report(plan.current, cells, true),
         onError: (e) => console.error("[AsciiBackground]", e),
       });
-      p.resize(w, h, Math.min(window.devicePixelRatio || 1, 2));
-      player.current = p;
+      p.resize(first.width, first.height, dprOf());
+      report(first);
+      player.current = p as unknown as Player;
       cleanups.push(() => {
         player.current = null;
         p.destroy();
@@ -220,12 +310,11 @@ export default function AsciiBackground({
       if (width < 4 || height < 4) return;
       if (!started) void start(Math.round(width), Math.round(height));
       else if (player.current) {
-        fit(width, height);
-        (player.current as unknown as { resize: (w: number, h: number, r?: number) => void }).resize(
-          Math.round(width),
-          Math.round(height),
-          Math.min(window.devicePixelRatio || 1, 2),
-        );
+        size.current = { w: Math.round(width), h: Math.round(height) };
+        const p = replan();
+        player.current.resize(p.width, p.height, dprOf());
+        player.current.setBudget(p.maxCells);
+        report(p);
       }
     });
     ro.observe(el);
@@ -244,8 +333,16 @@ export default function AsciiBackground({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Va DESPUÉS del montaje: el lienzo lo crea el efecto de montaje, y un efecto anterior no lo encontraría
+  // Puntero desde la ventana: el motor y el rastreador de puntero escuchan su lienzo; se les reenvía lo que ocurre encima
+  useEffect(() => {
+    if (!passive) return;
+    const canvas = host.current?.querySelector("canvas");
+    return canvas ? bridgePointer(canvas) : undefined;
+  }, [passive]);
+
   return (
-    <div className={`ui-fill ui-pal ui-pal--${palette} ${className}`} style={{ "--tint": tintAmount, "--op": opacity } as CSSProperties} aria-hidden>
+    <div className={`ui-fill ui-pal ui-pal--${palette} ${position === "fixed" ? "ui-fill--fixed" : ""} ${passive ? "ui-fill--passive" : ""} ${className}`} style={{ "--tint": tintAmount, "--op": opacity } as CSSProperties} aria-hidden>
       <div ref={host} className="ui-fill__media" />
       <i className="ui-pal__a" />
       <i className="ui-pal__b" />

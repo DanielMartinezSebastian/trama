@@ -25,7 +25,6 @@ import LogoCloud from "@/components/ui/LogoCloud";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Modal from "@/components/ui/Modal";
 import NavBar from "@/components/ui/NavBar";
-import Drawer from "@/components/ui/Drawer";
 import GridBackground from "@/components/ui/GridBackground";
 import NeonSign from "@/components/ui/NeonSign";
 import OtpInput from "@/components/ui/OtpInput";
@@ -223,9 +222,6 @@ export default function MycelLanding({ hud }: { hud: boolean }) {
       {/* ---------- Cabecera ---------- */}
       <div className="myc__nav">
         <NavBar brand="MYCEL" links="Red, Precios, Documentación, Diario de campo" cta="Unirse al vivero" variant="glass" />
-        <div className="myc__nav-drawer">
-          <Drawer triggerLabel="☰" side="right" title="MYCEL" body="Red · Precios · Documentación · Diario de campo · Unirse al vivero" variant="glass" />
-        </div>
       </div>
 
       <main className="myc__main">

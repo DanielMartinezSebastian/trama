@@ -106,7 +106,7 @@ export const feedback: CatalogEntry[] = [
     path: "@/components/ui/Skeleton",
     name: "Esqueleto de carga",
     category: "feedback",
-    styles: ["minimal", "neon", "terminal", "retro"],
+    styles: ["minimal", "neon", "terminal", "retro", "dotmatrix"],
     description: "Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta, avatar o filas de tabla.",
     stageHeight: 220,
     props: [

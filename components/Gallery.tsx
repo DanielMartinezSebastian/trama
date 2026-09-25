@@ -30,7 +30,7 @@ const sections: { family: Family; title: string; blurb: string }[] = [
     family: "landing",
     title: "Landings temáticas",
     blurb:
-      "Seis landings de 300vh con estilos distintos (cards con efectos ASCII, revelados propios, fondo que cambia de escena) más tres construidas enteramente con el kit de components/ui/: CIPHERGRID (retrowave/cyberpunk), MYCEL (red de sensores orgánica) y FOLIO (editorial de tema claro), cada una con casi todo el catálogo en una sola página. Cierran MARÉ minimal (fondo dither y tipografía pixel) y FORMAS, un demo de 2000dvh donde el scroll cambia el tamaño de celda y salta entre ocho geometrías, cada una con su hover, y FACETA, una landing larga que mezcla ese fondo con componentes del kit en estilo pixel duro.",
+      "Seis landings de 300vh con estilos distintos (cards con efectos ASCII, revelados propios, fondo que cambia de escena) más tres construidas enteramente con el kit de components/ui/: CIPHERGRID (retrowave/cyberpunk), MYCEL (red de sensores orgánica) y FOLIO (editorial de tema claro), cada una con casi todo el catálogo en una sola página, más SIGNAL, la de referencia del tema dot matrix: monocromo, variante dotmatrix y un fondo 3D de react-three-fiber con filtro ASCII y scanlines. Cierran MARÉ minimal (fondo dither y tipografía pixel) y FORMAS, un demo de 2000dvh donde el scroll cambia el tamaño de celda y salta entre ocho geometrías, cada una con su hover, y FACETA, una landing larga que mezcla ese fondo con componentes del kit en estilo pixel duro.",
   },
 ];
 

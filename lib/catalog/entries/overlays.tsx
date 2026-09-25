@@ -60,8 +60,9 @@ export const overlays: CatalogEntry[] = [
     stageHeight: 220,
     replayable: true,
     notes: [
+      "Se adapta a cualquier tema: hereda la tipografía del contenedor, lleva siempre una base opaca bajo la superficie de la variante y el color de estado se puede atenuar (intentStyle=mono) en temas monocromos.",
       "Usa la librería sonner (toast/Toaster): sin ella habría que reimplementar apilado, gestos táctiles, temporizador y accesibilidad.",
-      "Cada instancia lleva un id propio para no cruzarse con otras — importante en «Comparar los 7 estilos», donde conviven 7 Toaster a la vez.",
+      "Cada instancia lleva un id propio para no cruzarse con otras — importante en «Comparar los estilos», donde conviven varios Toaster a la vez.",
     ],
     props: [
       intentProp("success", undefined, { when: (p) => p.loading !== true }),
@@ -70,10 +71,16 @@ export const overlays: CatalogEntry[] = [
       { key: "description", label: "Descripción", type: "text", default: "Tu perfil se actualizó correctamente." },
       { key: "position", label: "Posición", type: "select", default: "bottom-right", options: ["top-left", "top-center", "top-right", "bottom-left", "bottom-center", "bottom-right"] },
       variantProp("glass"),
+      { key: "intentStyle", label: "Color de estado", type: "select", default: "bar", options: ["bar", "icon", "tint", "mono"], labels: { bar: "barra lateral", icon: "solo icono", tint: "fondo teñido", mono: "sin color (monocromo)" } },
+      { key: "icons", label: "Iconos", type: "select", default: "auto", options: ["auto", "svg", "glyph", "none"], labels: { auto: "auto (glifos en terminal, retro y dotmatrix)", svg: "svg", glyph: "glifos de texto", none: "ninguno" } },
+      { key: "actionLabel", label: "Botón de acción", type: "text", default: "" },
+      { key: "closeButton", label: "Botón de cerrar", type: "boolean", default: false },
+      { key: "duration", label: "Duración (s)", type: "number", default: 4, min: 1, max: 20, step: 1 },
+      { key: "expand", label: "Pila desplegada", type: "boolean", default: false },
     ],
     render: (p, { replay }) => (
       <div className="ui-center">
-        <Toast intent={p.intent as never} loading={p.loading as boolean} title={p.title as string} description={p.description as string} position={p.position as never} variant={p.variant as never} playKey={replay} />
+        <Toast intent={p.intent as never} loading={p.loading as boolean} title={p.title as string} description={p.description as string} position={p.position as never} variant={p.variant as never} intentStyle={p.intentStyle as never} icons={p.icons as never} actionLabel={p.actionLabel as string} closeButton={p.closeButton as boolean} duration={p.duration as number} expand={p.expand as boolean} playKey={replay} />
       </div>
     ),
   },
@@ -84,20 +91,29 @@ export const overlays: CatalogEntry[] = [
     name: "Tooltip",
     category: "overlays",
     styles: ALL_STYLES,
-    description: "Texto de ayuda al posar el ratón o el foco. Envuelve el disparador real (botón, icono, enlace) o pinta un texto subrayado. Solo CSS, sin JavaScript.",
+    description: "Texto de ayuda al posar el ratón o el foco. Envuelve el disparador real (botón, icono, enlace) o pinta un texto subrayado. Por defecto flota junto al ratón y lo sigue con inercia; con follow={false} queda fijo sobre el disparador y funciona solo con CSS.",
     stageHeight: 200,
     children: (p) => (p.demo === "button" ? '<Button label="Exportar" glyph="icon:download" />' : undefined),
-    notes: ["Con un único elemento como hijo, este recibe aria-describedby apuntando al tooltip; el foco lo pone el propio botón, sin paradas de tabulador extra."],
+    notes: [
+      "Con un único elemento como hijo, este recibe aria-describedby apuntando al tooltip; el foco lo pone el propio botón, sin paradas de tabulador extra.",
+      "Con follow, el tooltip sigue al ratón (se da la vuelta en los bordes de la ventana y sin inercia con prefers-reduced-motion). Con teclado o en táctil se coloca sobre el disparador, como con follow={false}.",
+    ],
     props: [
       { key: "demo", label: "Disparador", type: "select", default: "button", options: ["button", "text"], labels: { button: "un botón (children)", text: "texto (label)" }, noCode: true },
       { key: "label", label: "Texto disparador", type: "text", default: "Pasa el ratón por aquí", when: (p) => p.demo === "text" },
       { key: "content", label: "Contenido del tooltip", type: "text", default: "Descarga el informe en CSV." },
-      { key: "side", label: "Lado", type: "select", default: "top", options: ["top", "right", "bottom", "left"] },
+      { key: "side", label: "Lado", type: "select", default: "top", options: ["top", "right", "bottom", "left"], hint: "Con «flotar con el ratón», lado del puntero en el que aparece" },
+      { key: "follow", label: "Flotar con el ratón", type: "boolean", default: true, hint: "Desactívalo para que quede fijo sobre el disparador" },
+      { key: "align", label: "Alineación respecto al puntero", type: "select", default: "center", options: ["start", "center", "end"], when: (p) => p.follow === true, hint: "start = a la derecha/abajo del puntero, end = a la izquierda/arriba; con «Lado» da 12 posiciones" },
+      { key: "gap", label: "Distancia al puntero (px)", type: "number", default: 16, min: 0, max: 80, step: 2, when: (p) => p.follow === true },
+      { key: "offsetX", label: "Desplazamiento X (px)", type: "number", default: 0, min: -80, max: 80, step: 2, when: (p) => p.follow === true, hint: "Positivo = a la derecha" },
+      { key: "offsetY", label: "Desplazamiento Y (px)", type: "number", default: 0, min: -80, max: 80, step: 2, when: (p) => p.follow === true, hint: "Positivo = hacia abajo" },
+      { key: "inertia", label: "Inercia", type: "number", default: 0.72, min: 0, max: 0.95, step: 0.01, when: (p) => p.follow === true, hint: "0 = pegado al puntero" },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center">
-        <Tooltip label={p.label as string} content={p.content as string} side={p.side as never} variant={p.variant as never}>
+        <Tooltip follow={p.follow as boolean} align={p.align as never} gap={p.gap as number} offsetX={p.offsetX as number} offsetY={p.offsetY as number} inertia={p.inertia as number} label={p.label as string} content={p.content as string} side={p.side as never} variant={p.variant as never}>
           {p.demo === "button" ? <Button label="Exportar" glyph="icon:download" variant={p.variant as never} /> : undefined}
         </Tooltip>
       </div>

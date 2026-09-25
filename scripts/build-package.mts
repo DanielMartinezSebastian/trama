@@ -41,14 +41,18 @@ for (const f of files) {
 }
 
 // ---------- 2. barrel: todos los componentes por nombre + utilidades públicas ----------
-const components = kitComponents().map((f) => posix.basename(f, ".tsx")).sort();
+// Componentes que necesitan dependencias opcionales (three, @react-three/fiber): fuera del barrel para que `import … from "trama-ui"`
+// no obligue a instalarlas; se importan por subruta (`trama-ui/RetroCanvas`).
+const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes"]);
+const OPTIONAL_PEERS = { three: ">=0.170", "@react-three/fiber": ">=9" };
+const components = kitComponents().map((f) => posix.basename(f, ".tsx")).filter((c) => !OPTIONAL_PEER_COMPONENTS.has(c)).sort();
 const barrel = [
   "/** Punto de entrada de Trama: cada componente por su nombre. También `import X from \"trama-ui/X\"`. */",
   ...components.map((c) => `export { default as ${c} } from "./components/ui/${c}";`),
   `export * from "./components/ui/intent";`,
   `export * from "./components/ui/fill";`,
   `export * from "./components/ui/variants";`,
-  `export { tokensToStyle, neutralTokens, FONT_PRESETS, type TokenSet } from "./lib/ui/tokens";`,
+  `export { tokensToStyle, neutralTokens, dotmatrixTokens, FONT_PRESETS, type TokenSet } from "./lib/ui/tokens";`,
   "",
 ].join("\n");
 writeFileSync(join(SRC, "index.ts"), barrel);
@@ -123,12 +127,12 @@ writeFileSync(
 
 // ---------- 5. package.json ----------
 const used = [...new Set(files.filter((f) => /\.tsx?$/.test(f)).flatMap(packageImports))].sort();
-const PEERS = ["react", "react-dom", "next"];
+const PEERS = ["react", "react-dom", "next", ...Object.keys(OPTIONAL_PEERS)];
 const deps = Object.fromEntries(used.filter((p) => !PEERS.includes(p) && root.dependencies[p]).map((p) => [p, root.dependencies[p]]));
 const pkg = {
   name: root.name,
   version: root.version,
-  description: "Componentes React/Next.js de ASCII, textmode y pixel art: fondos de caracteres, tarjetas, secciones de landing y más, con 7 estilos y tema por tokens CSS.",
+  description: "Componentes React/Next.js de ASCII, textmode y pixel art: fondos de caracteres, tarjetas, secciones de landing y más, con 8 estilos y tema por tokens CSS.",
   license: root.license ?? "MIT",
   author: root.author,
   repository: { type: "git", url: "git+https://github.com/DanielMartinezSebastian/trama.git" },
@@ -150,8 +154,8 @@ const pkg = {
   bin: { "trama-ui": "bin/trama-ui.mjs" },
   files: ["dist", "assets", "bin", "CATALOG.md", "THIRD-PARTY.md"],
   keywords: ["react", "nextjs", "components", "ascii", "textmode", "pixel-art", "ui-kit", "landing"],
-  peerDependencies: { react: ">=19", "react-dom": ">=19", next: ">=15" },
-  peerDependenciesMeta: { next: { optional: true } },
+  peerDependencies: { react: ">=19", "react-dom": ">=19", next: ">=15", ...OPTIONAL_PEERS },
+  peerDependenciesMeta: { next: { optional: true }, three: { optional: true }, "@react-three/fiber": { optional: true } },
   dependencies: deps,
 };
 writeFileSync(join(OUT, "package.json"), JSON.stringify(pkg, null, 2) + "\n");

@@ -93,7 +93,7 @@ export default function ShapeStage({ looks }: { looks: ShapeLook[] }) {
           scene: A.scene,
           style: A.style,
           hover: A.hover,
-          cell: Math.max(3, Math.round(lerp(base, CELL_PEAK, e))),
+          cell: Math.max(1, q(lerp(base, CELL_PEAK, e), 0.5)),
           bloom: q(lerp(A.bloom, B.bloom, k), 0.05),
           grain: q(lerp(A.grain, B.grain, k), 0.05),
           scan: q(lerp(A.scan, B.scan, k) + e * 0.25, 0.05),

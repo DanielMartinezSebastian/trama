@@ -2,7 +2,7 @@
 
 Componentes React / Next.js de **ASCII, textmode y pixel art**: fondos de caracteres animados, tarjetas con capas
 ASCII, secciones de landing completas (hero, precios, FAQ, blog…), formularios, overlays y más. Siete estilos
-(`glass solid outline neon retro terminal minimal`) y tema por tokens CSS.
+(`glass solid outline neon retro terminal minimal dotmatrix`) y tema por tokens CSS.
 
 ## Instalación
 

@@ -85,13 +85,13 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
-| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` |
+| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`) |
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` |
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` |
 | Transiciones | `SceneFlash` · `Reveal` · `Presence` |
 | Datos | `StatCounter` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
 | Galerías y vídeo | `ImageGallery` · `Carousel` · `VideoPlayer` |

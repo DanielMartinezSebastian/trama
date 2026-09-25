@@ -16,6 +16,10 @@ export type PricingCardProps = {
   /** una característica por línea; empezar la línea con «-» la marca como no incluida */
   features?: string;
   cta?: string;
+  /** al pulsar el botón del plan */
+  onSelect?: () => void;
+  /** el botón como enlace (p. ej. "#contacto" o "/alta?plan=pro") */
+  ctaHref?: string;
   highlighted?: boolean;
   /** cómo se destaca: glow = borde y halo de acento · invert = fondo de acento (paleta invertida) · border = solo borde grueso */
   highlight?: "glow" | "invert" | "border";
@@ -40,6 +44,8 @@ export default function PricingCard({
   note = "",
   features = "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG",
   cta = "Empezar ahora",
+  onSelect,
+  ctaHref,
   highlighted = true,
   highlight = "glow",
   badge = "Más popular",
@@ -88,7 +94,7 @@ export default function PricingCard({
         ))}
       </ul>
     );
-  const button = <Button label={cta} variant={variant} emphasis={highlighted ? "primary" : "secondary"} fullWidth />;
+  const button = <Button label={cta} variant={variant} emphasis={highlighted ? "primary" : "secondary"} fullWidth href={ctaHref} onClick={onSelect} />;
 
   return (
     <article className={`ui-price ui-price--${layout} ${hl} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={f.style}>

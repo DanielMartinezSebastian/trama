@@ -14,7 +14,7 @@ export type ToggleProps = {
   className?: string;
 };
 
-/** Interruptor accesible (`role="switch"`). Retro y terminal lo muestran como texto `[ON ]`/`[OFF]`. */
+/** Interruptor accesible (`role="switch"`). Retro, terminal y dotmatrix lo muestran como texto `[ON ]`/`[OFF]`. */
 export default function Toggle({ label = "Notificaciones", defaultChecked = true, variant = "glass", size = "md", onText = "ON ", offText = "OFF", className = "" }: ToggleProps) {
   const [on, setOn] = useState(defaultChecked);
   useEffect(() => setOn(defaultChecked), [defaultChecked]);

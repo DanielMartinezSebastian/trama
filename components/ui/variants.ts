@@ -1,8 +1,8 @@
 /**
- * Las siete variantes de estilo del sistema (ver `docs/02-guia-de-componentes.md` §5).
+ * Las ocho variantes de estilo del sistema (ver `docs/02-guia-de-componentes.md` §5).
  * Cada una fija las variables `--s-*` en `components/ui/styles/ui-kit.css`; los componentes solo eligen la variante.
  */
-export const VARIANTS = ["glass", "solid", "outline", "neon", "retro", "terminal", "minimal"] as const;
+export const VARIANTS = ["glass", "solid", "outline", "neon", "retro", "terminal", "minimal", "dotmatrix"] as const;
 export type Variant = (typeof VARIANTS)[number];
 
 /** Clases del contenedor raíz de un componente con variante. */

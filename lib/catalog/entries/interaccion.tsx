@@ -120,7 +120,7 @@ export const interaccion: CatalogEntry[] = [
     path: "@/components/ui/GlyphCursor",
     name: "Cursor personalizado",
     category: "interaccion",
-    styles: ["neon", "minimal", "terminal", "retro"],
+    styles: ["neon", "minimal", "terminal", "retro", "dotmatrix"],
     description: "Un carácter, un anillo o un punto que persigue al puntero dentro de su contenedor. Colócalo como hijo del área donde debe actuar.",
     stageHeight: 260,
     props: [

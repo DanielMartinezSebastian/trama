@@ -43,6 +43,18 @@ export const kitLandingDemos: DemoMeta[] = [
     accent: "#a3311f",
   },
   {
+    slug: "th-dotmatrix",
+    family: "landing",
+    render: "kit",
+    reactive: true,
+    lib: "three.js",
+    title: "SIGNAL · dot matrix",
+    blurb:
+      "Landing de referencia del tema dot matrix: monocromo, variante dotmatrix en todo el kit y un único RetroCanvas (react-three-fiber con filtro ASCII y scanlines) de fondo que cambia de figura en cada acto.",
+    hint: "Desplaza para cambiar la figura del fondo · pasa el puntero por las tarjetas",
+    accent: "#ff3b3b",
+  },
+  {
     slug: "th-minimal",
     family: "landing",
     render: "kit",

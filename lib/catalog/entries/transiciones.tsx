@@ -19,7 +19,7 @@ export const transiciones: CatalogEntry[] = [
     path: "@/components/ui/SceneFlash",
     name: "Transición de escena",
     category: "transiciones",
-    styles: ["neon", "retro", "minimal", "outline"],
+    styles: ["neon", "retro", "minimal", "outline", "dotmatrix"],
     description: "Barrido, iris, rebanadas, persianas o mosaico de píxeles para acompañar un cambio de sección. Usa --acc y --acc2.",
     stageHeight: 300,
     replayable: true,
@@ -116,7 +116,7 @@ export const transiciones: CatalogEntry[] = [
       "El contenido está siempre en el DOM; con movimiento reducido se muestra u oculta sin animar.",
       "Con «Bucle automático» activado se repite sola; desactívalo para controlarla con «Mostrar contenido».",
       "chars, celda y rastro solo aplican a los efectos «ascii-*»; columnas a fragmentos; bandas a datamosh; alto de barra y texto a censura; líneas a arranque.",
-      "13 efectos, 7 estilos de superficie para el contenido de ejemplo: 91 combinaciones.",
+      "13 efectos, 8 estilos de superficie para el contenido de ejemplo: 104 combinaciones.",
     ],
     props: [
       { key: "effect", label: "Efecto", type: "select", default: "ascii-rain", options: PRESENCE_EFFECTS.map((e) => e.id) },

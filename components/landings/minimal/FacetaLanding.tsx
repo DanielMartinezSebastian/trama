@@ -44,7 +44,7 @@ type L = Omit<ShapeLook, "acc"> & { acc: [number, number, number] };
 const look = (o: L): ShapeLook => o;
 
 const LOOKS: ShapeLook[] = [
-  /* 0  cartel · hero */ look({ scene: "cube", style: "dither", cell: 3, bloom: 0, grain: 0, scan: 0, vig: 0, tint: 0.9, acc: [255, 138, 92], x: 0.7, y: 0.5, s: 1.15, fx: "repel", hover: "trail" }),
+  /* 0  cartel · hero */ look({ scene: "cube", style: "dither", cell: 2, bloom: 0, grain: 0, scan: 0, vig: 0, tint: 0.9, acc: [255, 138, 92], x: 0.7, y: 0.5, s: 1.15, fx: "repel", hover: "trail" }),
   /* 1  cartel */ look({ scene: "pyramid", style: "mosaic", cell: 5, bloom: 0.2, grain: 0, scan: 0, vig: 0.25, tint: 0.75, acc: [63, 208, 201], x: 0.96, y: 0.52, s: 2.1, fx: "magnify", hover: "water" }),
   /* 2  panel: features */ look({ scene: "sphere", style: "dots", cell: 4, bloom: 0.45, grain: 0.1, scan: 0, vig: 0.35, tint: 0.85, acc: [255, 212, 59], x: 0.04, y: 0.6, s: 2.2, fx: "twist", hover: "vortex" }),
   /* 3  cartel */ look({ scene: "octahedron", style: "lego", cell: 8, bloom: 0.1, grain: 0, scan: 0.15, vig: 0.2, tint: 0.55, acc: [255, 79, 163], x: 0.03, y: 0.48, s: 2.1, fx: "explode", hover: "dissolve" }),
@@ -56,17 +56,17 @@ const LOOKS: ShapeLook[] = [
   /* 8b panel: galería */ look({ scene: "cube", style: "pixel", cell: 4, bloom: 0.2, grain: 0, scan: 0.05, vig: 0.3, tint: 0.85, acc: [255, 200, 90], x: 0.95, y: 0.55, s: 1.7, fx: "repel", hover: "silk" }),
   /* G1 cartel */ look({ scene: "pyramid", style: "blocks", cell: 4, bloom: 0.25, grain: 0, scan: 0.05, vig: 0.3, tint: 0.85, acc: [255, 120, 180], x: 0.05, y: 0.5, s: 2.0, fx: "magnify", hover: "water" }),
   /* G2 coverflow */ look({ scene: "sphere", style: "mosaic", cell: 4, bloom: 0.3, grain: 0.05, scan: 0, vig: 0.35, tint: 0.85, acc: [90, 220, 255], x: 0.5, y: -0.05, s: 2.3, fx: "twist", hover: "vortex" }),
-  /* G3 cubo */ look({ scene: "octahedron", style: "dither", cell: 3, bloom: 0.1, grain: 0, scan: 0, vig: 0.2, tint: 0.9, acc: [255, 90, 90], x: 0.08, y: 0.5, s: 2.4, fx: "explode", hover: "dissolve" }),
+  /* G3 cubo */ look({ scene: "octahedron", style: "dither", cell: 2, bloom: 0.1, grain: 0, scan: 0, vig: 0.2, tint: 0.9, acc: [255, 90, 90], x: 0.08, y: 0.5, s: 2.4, fx: "explode", hover: "dissolve" }),
   /* G4 tira + mosaico */ look({ scene: "cone", style: "lines", cell: 4, bloom: 0.3, grain: 0, scan: 0.1, vig: 0.3, tint: 0.85, acc: [200, 255, 120], x: 0.96, y: 0.9, s: 2.0, fx: "stretch", hover: "contour" }),
   /* G5 baraja + fundido + creativa */ look({ scene: "hexprism", style: "voxel", cell: 4, bloom: 0.2, grain: 0, scan: 0, vig: 0.3, tint: 0.8, acc: [255, 190, 80], x: 0.04, y: 0.3, s: 1.8, fx: "magnet", hover: "silk" }),
-  /* V1 cartel */ look({ scene: "diamond", style: "dither", cell: 3, bloom: 0.15, grain: 0, scan: 0, vig: 0.25, tint: 0.9, acc: [255, 95, 130], x: 0.9, y: 0.45, s: 1.6, fx: "twist", hover: "vortex" }),
+  /* V1 cartel */ look({ scene: "diamond", style: "dither", cell: 2, bloom: 0.15, grain: 0, scan: 0, vig: 0.25, tint: 0.9, acc: [255, 95, 130], x: 0.9, y: 0.45, s: 1.6, fx: "twist", hover: "vortex" }),
   /* V2 demos de vídeo */ look({ scene: "torusknot", style: "mosaic", cell: 4, bloom: 0.25, grain: 0, scan: 0, vig: 0.35, tint: 0.85, acc: [120, 255, 200], x: 0.03, y: 0.7, s: 1.9, fx: "snap", hover: "water" }),
   /* 9  cartel */ look({ scene: "tetrahedron", style: "cross", cell: 4, bloom: 0.25, grain: 0, scan: 0.1, vig: 0.3, tint: 0.8, acc: [200, 255, 90], x: 0.05, y: 0.5, s: 2.0, fx: "snap", hover: "water" }),
   /* 10 panel: precios */ look({ scene: "cylinder", style: "voxel", cell: 4, bloom: 0.2, grain: 0, scan: 0, vig: 0.35, tint: 0.8, acc: [255, 170, 80], x: 0.97, y: 0.4, s: 1.8, fx: "stretch", hover: "contour" }),
   /* 11 cartel */ look({ scene: "icosahedron", style: "mixed", cell: 4, bloom: 0.3, grain: 0.05, scan: 0, vig: 0.3, tint: 0.85, acc: [90, 200, 255], x: 0.8, y: 0.5, s: 1.4, fx: "wave", hover: "silk" }),
   /* 12 panel: voces + faq */ look({ scene: "torusknot", style: "ascii", cell: 5, bloom: 0.3, grain: 0.1, scan: 0.1, vig: 0.4, tint: 0.9, acc: [255, 138, 92], x: 0.04, y: 0.5, s: 1.6, fx: "twist", hover: "trail" }),
-  /* 13 cartel */ look({ scene: "sphere", style: "dots", cell: 3, bloom: 0.4, grain: 0.1, scan: 0, vig: 0.35, tint: 0.85, acc: [63, 208, 201], x: 0.5, y: 1.1, s: 2.4, fx: "repel", hover: "vortex" }),
-  /* 14 panel: cierre */ look({ scene: "octahedron", style: "dither", cell: 3, bloom: 0.1, grain: 0, scan: 0, vig: 0.2, tint: 0.9, acc: [255, 79, 163], x: 0.96, y: 0.12, s: 1.6, fx: "explode", hover: "dissolve" }),
+  /* 13 cartel */ look({ scene: "sphere", style: "dots", cell: 2, bloom: 0.4, grain: 0.1, scan: 0, vig: 0.35, tint: 0.85, acc: [63, 208, 201], x: 0.5, y: 1.1, s: 2.4, fx: "repel", hover: "vortex" }),
+  /* 14 panel: cierre */ look({ scene: "octahedron", style: "dither", cell: 2, bloom: 0.1, grain: 0, scan: 0, vig: 0.2, tint: 0.9, acc: [255, 79, 163], x: 0.96, y: 0.12, s: 1.6, fx: "explode", hover: "dissolve" }),
 ];
 
 const IMG_PORT =

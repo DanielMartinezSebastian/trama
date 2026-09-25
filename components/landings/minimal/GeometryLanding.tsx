@@ -31,7 +31,7 @@ type Chapter = {
 };
 
 const CHAPTERS: Chapter[] = [
-  { scene: "cube", style: "dither", name: "Cubo", line: "dither · celda de 3 px · el puntero lo repele", cell: 3, bloom: 0, grain: 0, scan: 0, vig: 0, tint: 0.9, acc: [255, 138, 92], x: 0.7, y: 0.5, s: 1.15, side: "l", fx: "repel", intro: "glitch", hover: "trail" },
+  { scene: "cube", style: "dither", name: "Cubo", line: "dither · celda de 3 px · el puntero lo repele", cell: 2, bloom: 0, grain: 0, scan: 0, vig: 0, tint: 0.9, acc: [255, 138, 92], x: 0.7, y: 0.5, s: 1.15, side: "l", fx: "repel", intro: "glitch", hover: "trail" },
   { scene: "pyramid", style: "mosaic", name: "Pirámide", line: "mosaico · celda de 5 px · lupa bajo el puntero", cell: 5, bloom: 0.2, grain: 0, scan: 0, vig: 0.25, tint: 0.75, acc: [63, 208, 201], x: 0.96, y: 0.52, s: 2.1, side: "l", fx: "magnify", intro: "wipe", hover: "water" },
   { scene: "sphere", style: "dots", name: "Esfera", line: "puntos · celda de 4 px · el puntero la retuerce", cell: 4, bloom: 0.45, grain: 0.1, scan: 0, vig: 0.35, tint: 0.85, acc: [255, 212, 59], x: 0.5, y: 1.12, s: 2.6, side: "l", fx: "twist", intro: "drop", hover: "vortex" },
   { scene: "octahedron", style: "lego", name: "Octaedro", line: "lego · celda de 8 px · estalla al pasar el puntero", cell: 8, bloom: 0.1, grain: 0, scan: 0.15, vig: 0.2, tint: 0.55, acc: [255, 79, 163], x: 0.03, y: 0.48, s: 2.1, side: "r", fx: "explode", intro: "slide", hover: "dissolve" },
@@ -85,7 +85,7 @@ function Stage() {
         scene: A.scene,
         style: A.style,
         hover: A.hover,
-        cell: Math.max(3, Math.round(lerp(base, CELL_PEAK, e))),
+        cell: Math.max(1, q(lerp(base, CELL_PEAK, e), 0.5)),
         bloom: q(lerp(A.bloom, B.bloom, k), 0.05),
         grain: q(lerp(A.grain, B.grain, k), 0.05),
         scan: q(lerp(A.scan, B.scan, k) + e * 0.25, 0.05),

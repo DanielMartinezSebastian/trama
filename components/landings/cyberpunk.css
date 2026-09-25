@@ -16,11 +16,6 @@
 /* ---------- Cabecera fija ---------- */
 .cg__nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px; padding: 10px clamp(16px, 4vw, 40px); backdrop-filter: blur(10px); background: color-mix(in srgb, var(--bg) 70%, transparent); border-bottom: 1px solid var(--ln); }
 .cg__nav > .ui-nav { flex: 1; }
-.cg__nav-drawer { display: none; }
-@media (max-width: 760px) {
-  .cg__nav .ui-nav__links { display: none; }
-  .cg__nav-drawer { display: block; }
-}
 
 /* ---------- Estructura general ---------- */
 .cg__main { position: relative; z-index: 5; }

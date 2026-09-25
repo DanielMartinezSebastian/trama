@@ -8,7 +8,7 @@ import { ICON_GROUPS, ICON_NAMES, type IconName } from "@/lib/ui/icons";
 import type { CatalogEntry } from "../schema";
 import { ALL_STYLES, toneProp } from "./shared";
 
-const PIXEL_STYLES = ["retro", "terminal", "minimal"] as const;
+const PIXEL_STYLES = ["retro", "terminal", "minimal", "dotmatrix"] as const;
 const FRAME_COLORS = Array.from(new Set(Object.values(PIXEL_FRAME_SKINS).flatMap((s) => Object.keys(s.fills))));
 
 /** El icono elegido en grande y, debajo, el set curado entero por grupos: el propio catálogo hace de navegador de iconos. */

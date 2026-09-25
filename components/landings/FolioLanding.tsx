@@ -24,7 +24,6 @@ import LogoCloud from "@/components/ui/LogoCloud";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Modal from "@/components/ui/Modal";
 import NavBar from "@/components/ui/NavBar";
-import Drawer from "@/components/ui/Drawer";
 import GridBackground from "@/components/ui/GridBackground";
 import NeonSign from "@/components/ui/NeonSign";
 import OtpInput from "@/components/ui/OtpInput";
@@ -158,9 +157,6 @@ export default function FolioLanding({ hud }: { hud: boolean }) {
       {/* ---------- Cabecera ---------- */}
       <div className="fol__nav">
         <NavBar brand="FOLIO" links="Editorial, Precios, Documentación, Revista" cta="Empezar a escribir" variant="solid" />
-        <div className="fol__nav-drawer">
-          <Drawer triggerLabel="☰" side="right" title="FOLIO" body="Editorial · Precios · Documentación · Revista · Empezar a escribir" variant="solid" />
-        </div>
       </div>
 
       <main className="fol__main">

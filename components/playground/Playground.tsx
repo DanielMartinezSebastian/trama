@@ -335,7 +335,7 @@ export default function Playground() {
                   <span className="pg-item__name">{e.name}</span>
                   <span className="pg-item__tags">
                     <em>{CATEGORIES.find((c) => c.id === e.category)?.label}</em>
-                    {e.styles.length === VARIANTS.length ? <i>7 estilos</i> : e.styles.map((s) => <i key={s}>{s}</i>)}
+                    {e.styles.length === VARIANTS.length ? <i>{VARIANTS.length} estilos</i> : e.styles.map((s) => <i key={s}>{s}</i>)}
                   </span>
                 </button>
               </li>
@@ -369,7 +369,7 @@ export default function Playground() {
                       className={`chip ${compare ? "chip--on" : ""}`}
                       onClick={() => setCompare((v) => { const next = !v; if (next) setScenario(false); return next; })}
                     >
-                      {compare ? "Ver uno solo" : "Comparar los 7 estilos"}
+                      {compare ? "Ver uno solo" : `Comparar los ${VARIANTS.length} estilos`}
                     </button>
                   )}
                   {entry.replayable && (

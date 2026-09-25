@@ -156,7 +156,7 @@ export const secciones: CatalogEntry[] = [
     path: "@/components/ui/StatsSection",
     name: "Sección de cifras",
     category: "secciones",
-    styles: ["minimal", "neon", "terminal", "retro"],
+    styles: ["minimal", "neon", "terminal", "retro", "dotmatrix"],
     description: "Cabecera de sección más una fila de cifras ASCII que cuentan hacia arriba (StatCounter): la sección de «resultados» típica.",
     stageHeight: 320,
     replayable: true,
@@ -204,6 +204,7 @@ export const secciones: CatalogEntry[] = [
       { key: "highlight", label: "Plan destacado", type: "select", default: "invert", options: ["invert", "glow", "border"], labels: { invert: "invertido (fondo de acento)", glow: "halo de acento", border: "borde grueso" } },
       { key: "fill", label: "Fondo del resto", type: "select", default: "surface", options: ["surface", "tint", "gradient", "pattern"], labels: { surface: "el de la variante", tint: "tinte de acento", gradient: "degradado", pattern: "trama" } },
       { key: "yearlyNote", label: "Etiqueta de ahorro anual", type: "text", default: "2 meses gratis" },
+      { key: "cta", label: "Botón de cada plan", type: "text", default: "Empezar ahora" },
       { key: "perView", label: "Visibles en pantalla ancha", type: "number", default: 3, min: 1, max: 4, step: 1, when: (p) => p.layout === "carousel" },
       { key: "autoplay", label: "Reproducción automática (s, 0 = manual)", type: "number", default: 0, min: 0, max: 8, step: 1, when: (p) => p.layout === "carousel" },
       variantProp("glass"),
@@ -220,6 +221,7 @@ export const secciones: CatalogEntry[] = [
           highlight={p.highlight as never}
           fill={p.fill as never}
           yearlyNote={p.yearlyNote as string}
+          cta={p.cta as string}
           perView={p.perView as number}
           autoplay={p.autoplay as number}
           variant={p.variant as never}

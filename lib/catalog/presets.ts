@@ -1,8 +1,8 @@
 import { themes } from "@/lib/themes/themes";
-import { neutralTokens, type TokenSet } from "@/lib/ui/tokens";
+import { dotmatrixTokens, neutralTokens, type TokenSet } from "@/lib/ui/tokens";
 
 /**
- * Presets del selector de tema de `/componentes`: el neutro del kit + los seis temas de las landings.
+ * Presets del selector de tema de `/componentes`: el neutro y el dot matrix del kit + los seis temas de las landings.
  * Vive en el catálogo (no en `lib/ui/`) para que el kit no dependa de los datos de las demos.
  */
 export type TokenPreset = { id: string; label: string; tokens: TokenSet };
@@ -11,6 +11,7 @@ const neutral: TokenPreset = { id: "neutro", label: "Neutro oscuro", tokens: neu
 
 export const tokenPresets: TokenPreset[] = [
   neutral,
+  { id: "dotmatrix", label: "Dot matrix (mono)", tokens: dotmatrixTokens },
   ...themes.map((t) => ({
     id: t.id,
     label: t.brand,

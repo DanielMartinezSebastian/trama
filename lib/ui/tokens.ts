@@ -15,6 +15,8 @@ export type TokenSet = {
   /** radio en px */
   r: number;
   font: string;
+  /** fuente de los titulares (h1–h3); sin ella heredan `font` */
+  display?: string;
 };
 
 /** Tema por defecto del kit: el mismo que fija `:root` en `components/ui/styles/kit.css`. */
@@ -30,6 +32,23 @@ export const neutralTokens: TokenSet = {
   font: 'var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", sans-serif',
 };
 
+/**
+ * Tema monocromo de matriz de puntos: negro puro, texto gris claro, acento blanco. Pensado para la variante `dotmatrix` y para
+ * `RetroCanvas` (ASCII de puntos + scanlines), pero es un tema más: vale con cualquier variante.
+ */
+export const dotmatrixTokens: TokenSet = {
+  bg: "#000000",
+  fg: "#e6e6e6",
+  mut: "#8c8c8c",
+  acc: "#ffffff",
+  acc2: "#a3a3a3",
+  card: "rgba(255,255,255,0.035)",
+  ln: "rgba(255,255,255,0.22)",
+  r: 0,
+  font: 'var(--font-ibm-plex-mono), var(--font-jetbrains-mono), ui-monospace, Consolas, monospace',
+  display: 'var(--font-doto), var(--font-major-mono-display), ui-monospace, monospace',
+};
+
 /** Convierte tokens en variables CSS para el contenedor (`style={tokensToStyle(...)}`). */
 export function tokensToStyle(t: TokenSet): CSSProperties {
   return {
@@ -41,6 +60,7 @@ export function tokensToStyle(t: TokenSet): CSSProperties {
     "--card": t.card,
     "--ln": t.ln,
     "--r": `${t.r}px`,
+    ...(t.display ? { "--display": t.display } : {}),
     fontFamily: t.font,
     color: t.fg,
   } as CSSProperties;
@@ -69,6 +89,9 @@ export const FONT_PRESETS: { id: string; label: string; stack: string }[] = [
   { id: "instrument-serif", label: "Serif — Instrument Serif", stack: 'var(--font-instrument-serif), Georgia, serif' },
   { id: "jetbrains-mono", label: "Mono — JetBrains Mono", stack: 'var(--font-jetbrains-mono), ui-monospace, Consolas, monospace' },
   { id: "space-mono", label: "Mono — Space Mono", stack: 'var(--font-space-mono), ui-monospace, Consolas, monospace' },
+  { id: "ibm-plex-mono", label: "Mono — IBM Plex Mono", stack: 'var(--font-ibm-plex-mono), ui-monospace, Consolas, monospace' },
+  { id: "share-tech-mono", label: "Mono — Share Tech Mono", stack: 'var(--font-share-tech-mono), ui-monospace, Consolas, monospace' },
+  { id: "major-mono-display", label: "Display — Major Mono Display", stack: 'var(--font-major-mono-display), ui-monospace, monospace' },
   { id: "mono-sistema", label: "Monoespaciada del sistema", stack: 'ui-monospace, "Cascadia Code", Consolas, monospace' },
   // Pixel — las 46 familias de fonts.google.com/?categoryFilters=Appearance:/Theme/Pixel (lib/ui/fonts.ts).
   { id: "press-start-2p", label: "Pixel — Press Start 2P", stack: 'var(--font-press-start-2p), monospace' },

@@ -18,7 +18,7 @@ export const texto: CatalogEntry[] = [
     path: "@/components/ui/ScrambleText",
     name: "Texto que se descifra",
     category: "texto",
-    styles: ["minimal", "neon", "terminal", "retro"],
+    styles: ["minimal", "neon", "terminal", "retro", "dotmatrix"],
     description: "Titular que se resuelve entre glifos aleatorios (GSAP ScrambleText). El texto real está siempre en el DOM.",
     stageHeight: 260,
     replayable: true,
@@ -109,7 +109,7 @@ export const texto: CatalogEntry[] = [
     path: "@/components/ui/BitmapText",
     name: "Titular ASCII (bitmap / FIGlet)",
     category: "texto",
-    styles: ["retro", "neon", "terminal"],
+    styles: ["retro", "neon", "terminal", "dotmatrix"],
     description: "Arte de texto generado por asciify-engine: fuente bitmap 7×7 o 21 fuentes FIGlet.",
     stageHeight: 260,
     props: [

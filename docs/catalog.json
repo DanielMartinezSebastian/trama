@@ -18,7 +18,8 @@
     "neon",
     "retro",
     "terminal",
-    "minimal"
+    "minimal",
+    "dotmatrix"
   ],
   "categories": [
     {
@@ -29,7 +30,8 @@
         "ascii-background",
         "textmode-background",
         "grid-background",
-        "crt-overlay"
+        "crt-overlay",
+        "retro-canvas"
       ]
     },
     {
@@ -104,7 +106,8 @@
         "accordion",
         "breadcrumbs",
         "pagination",
-        "dropdown"
+        "dropdown",
+        "scroll-progress"
       ]
     },
     {
@@ -196,7 +199,8 @@
         "terminal",
         "retro",
         "neon",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Escena procedural convertida en caracteres con asciify-engine. 15 estilos de render, hover, acabado óptico y paleta del tema.",
       "props": [
@@ -281,9 +285,26 @@
           "key": "cellSize",
           "type": "number",
           "default": 8,
-          "label": "Tamaño de celda",
-          "min": 4,
+          "label": "Tamaño de celda (px)",
+          "hint": "Admite decimales. El indicador de la vista previa muestra la celda real y si el motor la ha limitado",
+          "min": 0.1,
           "max": 24
+        },
+        {
+          "key": "maxCells",
+          "type": "number",
+          "default": 0,
+          "label": "Máximo de celdas (0 = automático)",
+          "hint": "Por defecto se sube solo lo justo para la celda pedida; el motor admite hasta 160 000",
+          "min": 0,
+          "max": 160000
+        },
+        {
+          "key": "adaptive",
+          "type": "boolean",
+          "default": true,
+          "label": "Resolución adaptativa",
+          "hint": "Baja la resolución sola si los fotogramas tardan demasiado (se lee al montar)"
         },
         {
           "key": "colorMode",
@@ -342,6 +363,17 @@
           "max": 0.6
         },
         {
+          "key": "interaction",
+          "type": "select",
+          "default": "canvas",
+          "label": "Puntero",
+          "hint": "Con «window» el fondo reacciona aunque el puntero esté sobre otro elemento y no bloquea clics",
+          "options": [
+            "canvas",
+            "window"
+          ]
+        },
+        {
           "key": "speed",
           "type": "number",
           "default": 1,
@@ -353,8 +385,9 @@
           "key": "fps",
           "type": "number",
           "default": 60,
-          "label": "Fotogramas por segundo",
-          "min": 10,
+          "label": "Fotogramas por segundo de la escena",
+          "hint": "Con pocos fotogramas la escena se ve «a saltos»; el hover del motor sigue fluido",
+          "min": 1,
           "max": 60
         },
         {
@@ -433,7 +466,8 @@
         "terminal",
         "neon",
         "retro",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Simulaciones por celda con textmode.js: plasma, lluvia, fuego, vida… El puntero interactúa y la paleta sigue el tema.",
       "props": [
@@ -480,16 +514,38 @@
           "key": "fontSize",
           "type": "number",
           "default": 14,
-          "label": "Tamaño de celda",
-          "min": 8,
+          "label": "Tamaño de celda (px)",
+          "hint": "Admite decimales. Con celdas muy finas se agranda sola si la rejilla pasa del máximo de celdas",
+          "min": 1,
           "max": 28
+        },
+        {
+          "key": "maxCells",
+          "type": "number",
+          "default": 250000,
+          "label": "Máximo de celdas",
+          "hint": "Protege de rejillas que congelarían la página; sube el valor si tu equipo lo aguanta",
+          "min": 20000,
+          "max": 1000000
+        },
+        {
+          "key": "interaction",
+          "type": "select",
+          "default": "canvas",
+          "label": "Puntero",
+          "hint": "Con «window» el fondo reacciona aunque el puntero esté sobre otro elemento y no bloquea clics",
+          "options": [
+            "canvas",
+            "window"
+          ]
         },
         {
           "key": "frameRate",
           "type": "number",
           "default": 60,
           "label": "Fotogramas por segundo",
-          "min": 10,
+          "hint": "Cambiarlo recrea el lienzo",
+          "min": 1,
           "max": 60
         },
         {
@@ -518,7 +574,8 @@
         "minimal",
         "outline",
         "retro",
-        "terminal"
+        "terminal",
+        "dotmatrix"
       ],
       "description": "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos.",
       "props": [
@@ -575,7 +632,8 @@
       "styles": [
         "retro",
         "terminal",
-        "neon"
+        "neon",
+        "dotmatrix"
       ],
       "description": "Capa de monitor antiguo: líneas de barrido, viñeta, parpadeo y barra de refresco. Se superpone a cualquier contenido.",
       "props": [
@@ -618,6 +676,224 @@
       "preview": "/componentes#crt-overlay"
     },
     {
+      "id": "retro-canvas",
+      "name": "Escena 3D retro",
+      "component": "RetroCanvas",
+      "import": "import RetroCanvas from \"@/components/ui/RetroCanvas\";",
+      "category": "fondos",
+      "styles": [
+        "retro",
+        "terminal",
+        "neon",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Lienzo react-three-fiber con filtro de pixel art, ASCII y scanlines: cualquier escena 3D se ve como caracteres o píxeles con acabado de monitor CRT.",
+      "props": [
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "ascii",
+          "label": "Modo",
+          "options": [
+            "ascii",
+            "pixel",
+            "both"
+          ]
+        },
+        {
+          "key": "tint",
+          "type": "select",
+          "default": "mono",
+          "label": "Tinte",
+          "options": [
+            "mono",
+            "scene",
+            "gradient"
+          ]
+        },
+        {
+          "key": "ramp",
+          "type": "select",
+          "default": "dots",
+          "label": "Rampa de glifos",
+          "options": [
+            "classic",
+            "dots",
+            "braille",
+            "blocks",
+            "binary",
+            "hex",
+            "code",
+            "hatch",
+            "circuit"
+          ]
+        },
+        {
+          "key": "cellSize",
+          "type": "number",
+          "default": 7,
+          "label": "Celda ASCII (px)",
+          "min": 3,
+          "max": 20
+        },
+        {
+          "key": "cellAspect",
+          "type": "number",
+          "default": 1.4,
+          "label": "Alto/ancho de celda",
+          "min": 1,
+          "max": 2.4
+        },
+        {
+          "key": "pixelSize",
+          "type": "number",
+          "default": 4,
+          "label": "Píxel (px)",
+          "min": 1,
+          "max": 16
+        },
+        {
+          "key": "levels",
+          "type": "number",
+          "default": 4,
+          "label": "Niveles de paleta",
+          "min": 2,
+          "max": 12
+        },
+        {
+          "key": "dither",
+          "type": "number",
+          "default": 0.6,
+          "label": "Dither",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "ditherPattern",
+          "type": "select",
+          "default": "bayer",
+          "label": "Patrón de dither",
+          "options": [
+            "bayer",
+            "hatch",
+            "halftone",
+            "noise"
+          ]
+        },
+        {
+          "key": "contrast",
+          "type": "number",
+          "default": 1.25,
+          "label": "Contraste",
+          "min": 0.5,
+          "max": 2.5
+        },
+        {
+          "key": "invert",
+          "type": "boolean",
+          "default": false,
+          "label": "Invertir"
+        },
+        {
+          "key": "scanlines",
+          "type": "number",
+          "default": 0.35,
+          "label": "Scanlines",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "scanlineSize",
+          "type": "number",
+          "default": 3,
+          "label": "Paso de scanline (px)",
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "scanlineRoll",
+          "type": "number",
+          "default": 0,
+          "label": "Barrido brillante",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "vignette",
+          "type": "number",
+          "default": 0.45,
+          "label": "Viñeta",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "curvature",
+          "type": "number",
+          "default": 0,
+          "label": "Curvatura CRT",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "noise",
+          "type": "number",
+          "default": 0,
+          "label": "Ruido",
+          "min": 0,
+          "max": 0.3
+        },
+        {
+          "key": "flicker",
+          "type": "number",
+          "default": 0.04,
+          "label": "Parpadeo",
+          "min": 0,
+          "max": 0.3
+        },
+        {
+          "key": "glow",
+          "type": "number",
+          "default": 0,
+          "label": "Glow de fósforo",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "rain",
+          "type": "number",
+          "default": 0,
+          "label": "Lluvia de código",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "glitch",
+          "type": "number",
+          "default": 0,
+          "label": "Glitch",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "aberration",
+          "type": "number",
+          "default": 0,
+          "label": "Aberración cromática",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "notes": [
+        "Requiere `three` y `@react-three/fiber` (dependencias opcionales de trama-ui). Importa `trama-ui/RetroCanvas`, no el barrel.",
+        "Los hijos son la escena R3F (luces + mallas); sin hijos se muestra `RetroShapes`. Para un `<Canvas>` propio, `RetroFX` es solo el post-proceso.",
+        "Rellena su contenedor (position: relative y tamaño). Pausa fuera de pantalla; con prefers-reduced-motion dibuja bajo demanda.",
+        "Los colores salen de los tokens --fg, --bg y --acc; `fg`, `bg` y `accent` los sustituyen."
+      ],
+      "example": "import RetroCanvas from \"@/components/ui/RetroCanvas\";\n\n<RetroCanvas />",
+      "preview": "/componentes#retro-canvas"
+    },
+    {
       "id": "scramble-text",
       "name": "Texto que se descifra",
       "component": "ScrambleText",
@@ -627,7 +903,8 @@
         "minimal",
         "neon",
         "terminal",
-        "retro"
+        "retro",
+        "dotmatrix"
       ],
       "description": "Titular que se resuelve entre glifos aleatorios (GSAP ScrambleText). El texto real está siempre en el DOM.",
       "props": [
@@ -755,7 +1032,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Titular de héroe con frases que se escriben y se borran en bucle.",
       "props": [
@@ -828,7 +1106,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -903,7 +1182,8 @@
       "styles": [
         "retro",
         "neon",
-        "terminal"
+        "terminal",
+        "dotmatrix"
       ],
       "description": "Arte de texto generado por asciify-engine: fuente bitmap 7×7 o 21 fuentes FIGlet.",
       "props": [
@@ -1031,7 +1311,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Filas de texto en bucle, en CSS puro y sin JS. Siete estilos y color por token.",
       "props": [
@@ -1054,7 +1335,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -1148,7 +1430,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Sobretítulo, titular, subtítulo y regla decorativa.",
       "props": [
@@ -1205,7 +1488,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -1225,7 +1509,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Separador con etiqueta. El modo texto dibuja la regla con caracteres.",
       "props": [
@@ -1264,7 +1549,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -1284,7 +1570,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Número bitmap, fondo ASCII (15 campos procedurales animados × 8 juegos de caracteres, texto repetido o una escena de AsciiBackground), revelado e inclinación hacia el puntero. Siete estilos.",
       "props": [
@@ -1319,7 +1606,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -1699,7 +1987,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Superficie genérica con barra opcional, título, cuerpo y pie. Base de cualquier tarjeta simple.",
       "props": [
@@ -1791,7 +2080,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -1811,7 +2101,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, tres formas de destacar (halo, invertida, borde), precio tachado y nota.",
       "props": [
@@ -1910,7 +2201,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -1974,7 +2266,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cita con avatar de iniciales, autor, cargo y valoración.",
       "props": [
@@ -2061,7 +2354,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -2081,7 +2375,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Artículo con cabecera (imagen, trama de CSS o caracteres), categoría, titular, extracto, autor y meta. Cuatro maquetaciones: apilada, horizontal, superpuesta (imagen de fondo) y mínima. Con href, toda la tarjeta es un enlace.",
       "props": [
@@ -2190,7 +2485,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -2232,7 +2528,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Botón del sistema: 6 colores (acento, neutro, éxito, info, aviso, peligro) × 5 énfasis (relleno, superficie, borde, fantasma, enlace), estados pulsado, cargando y deshabilitado, solo icono y como enlace. Siete estilos.",
       "props": [
@@ -2255,7 +2552,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -2370,7 +2668,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Button que se desplaza (y gira un poco) hacia el puntero cuando se acerca. Sin efecto en táctil.",
       "props": [
@@ -2393,7 +2692,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -2462,7 +2762,8 @@
         "neon",
         "minimal",
         "terminal",
-        "retro"
+        "retro",
+        "dotmatrix"
       ],
       "description": "Un carácter, un anillo o un punto que persigue al puntero dentro de su contenedor. Colócalo como hijo del área donde debe actuar.",
       "props": [
@@ -2549,7 +2850,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Superficie con un foco de luz (y borde iluminado) bajo el puntero. Envuelve cualquier contenido.",
       "props": [
@@ -2599,7 +2901,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -2619,7 +2922,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Envoltorio de hover reutilizable en cualquier contenido: elevación, escala, inclinación 3D, brillo que sigue al puntero, destello, barrido de escaneo, micro-glitch, corchetes de objetivo o subrayado.",
       "props": [
@@ -2690,7 +2994,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -2715,7 +3020,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Caja de contenido largo (registro de cambios, comentarios, salida de terminal…) con su propia barra de desplazamiento, distinta en cada estilo.",
       "props": [
@@ -2746,7 +3052,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -2766,7 +3073,8 @@
         "neon",
         "retro",
         "minimal",
-        "outline"
+        "outline",
+        "dotmatrix"
       ],
       "description": "Barrido, iris, rebanadas, persianas o mosaico de píxeles para acompañar un cambio de sección. Usa --acc y --acc2.",
       "props": [
@@ -2814,7 +3122,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Revela lo que envuelve al montar, al entrar en pantalla o siguiendo el scroll: 7 efectos × 4 direcciones, escalonado de hijos o de palabras/letras, curvas con rebote y repetición al volver a entrar.",
       "props": [
@@ -2927,7 +3236,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -2953,7 +3263,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Envuelve cualquier contenido y anima su entrada y salida: capas de glifos que se descifran, glitch con separación RGB y corrupción, datamosh, fragmentos, encendido CRT, parpadeo de neón, estática de TV, censura o arranque de sistema.",
       "props": [
@@ -3094,7 +3405,7 @@
         "El contenido está siempre en el DOM; con movimiento reducido se muestra u oculta sin animar.",
         "Con «Bucle automático» activado se repite sola; desactívalo para controlarla con «Mostrar contenido».",
         "chars, celda y rastro solo aplican a los efectos «ascii-*»; columnas a fragmentos; bandas a datamosh; alto de barra y texto a censura; líneas a arranque.",
-        "13 efectos, 7 estilos de superficie para el contenido de ejemplo: 91 combinaciones."
+        "13 efectos, 8 estilos de superficie para el contenido de ejemplo: 104 combinaciones."
       ],
       "example": "import Presence from \"@/components/ui/Presence\";\n\n<Presence>\n  <Panel title=\"ACCESO_CONCEDIDO.sh\" body=\"usuario: root…\" variant=\"terminal\" />\n</Presence>",
       "preview": "/componentes#presence"
@@ -3109,7 +3420,8 @@
         "retro",
         "neon",
         "minimal",
-        "terminal"
+        "terminal",
+        "dotmatrix"
       ],
       "description": "Número grande en fuente bitmap de asciify-engine que cuenta hacia arriba con GSAP.",
       "props": [
@@ -3232,7 +3544,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Barras verticales, horizontales, área o sparkline dibujados con caracteres, con animación de crecimiento.",
       "props": [
@@ -3293,7 +3606,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3313,7 +3627,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Terminal con escritura carácter a carácter. En estilo retro es un monitor de fósforo con el color de --acc.",
       "props": [
@@ -3336,7 +3651,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         },
         {
@@ -3399,7 +3715,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Proceso, hoja de ruta o historial en vertical, con marcadores numerados, punto o carácter.",
       "props": [
@@ -3439,7 +3756,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3459,7 +3777,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Tabla a partir de texto CSV. La cabecera y las filas se adaptan a la variante.",
       "props": [
@@ -3488,7 +3807,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3508,7 +3828,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Código con cabecera, numeración de línea opcional y botón de copiar. Sin resaltado de sintaxis.",
       "props": [
@@ -3549,7 +3870,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3569,10 +3891,83 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
-      "description": "Marca, enlaces y llamada a la acción. El enlace activo se marca de forma distinta en cada estilo.",
+      "description": "Barra de navegación completa: siete disposiciones (o piezas en el orden que quieras), seis formas de barra, submenús desplegables o mega menú con categorías, barra de búsqueda o paleta ⌘K, menú móvil propio, anuncio, dos llamadas a la acción y comportamiento al hacer scroll.",
       "props": [
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "classic",
+          "label": "Disposición",
+          "options": [
+            "classic",
+            "left",
+            "right",
+            "center",
+            "split",
+            "stacked",
+            "minimal"
+          ]
+        },
+        {
+          "key": "slots",
+          "type": "text",
+          "default": "",
+          "label": "Piezas a medida (sustituye a la disposición)",
+          "hint": "brand links search actions spacer menu · | nueva fila · / columnas"
+        },
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "island",
+          "label": "Forma de la barra",
+          "options": [
+            "island",
+            "full",
+            "contained",
+            "floating",
+            "transparent",
+            "underline"
+          ]
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Densidad",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "search",
+          "type": "select",
+          "default": "bar",
+          "label": "Búsqueda",
+          "options": [
+            "none",
+            "bar",
+            "inline",
+            "button",
+            "command"
+          ]
+        },
+        {
+          "key": "searchPlaceholder",
+          "type": "text",
+          "default": "Buscar clases, tablas…",
+          "label": "Texto de la búsqueda"
+        },
+        {
+          "key": "searchItems",
+          "type": "text",
+          "default": "Horarios, Mareas de hoy, Bonos regalo",
+          "label": "Entradas extra de búsqueda"
+        },
         {
           "key": "brand",
           "type": "text",
@@ -3582,14 +3977,76 @@
         {
           "key": "links",
           "type": "text",
-          "default": "Clases, Tablas, Reservas, Contacto",
-          "label": "Enlaces (separados por comas)"
+          "default": "Clases > Iniciación|Grupos de seis y espuma blanda|icon:users; Perfeccionamiento|Vídeo-análisis de tus olas|icon:video; Privadas|Un monitor solo para ti|icon:user\nTienda > #Tablas; Softboard; Longboard; Shortboard; #Neoprenos; Primavera 3/2; Invierno 4/3; #Accesorios; Quillas; Leash; Parafina\nReservas=#reservas\nContacto [nuevo]",
+          "label": "Enlaces (una sección por línea)"
+        },
+        {
+          "key": "menuStyle",
+          "type": "select",
+          "default": "auto",
+          "label": "Submenús",
+          "options": [
+            "auto",
+            "dropdown",
+            "mega"
+          ]
+        },
+        {
+          "key": "openOn",
+          "type": "select",
+          "default": "hover",
+          "label": "Abrir submenús con",
+          "options": [
+            "hover",
+            "click"
+          ]
+        },
+        {
+          "key": "linksAlign",
+          "type": "select",
+          "default": "center",
+          "label": "Alinear enlaces (clásica)",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ]
         },
         {
           "key": "cta",
           "type": "text",
           "default": "Reservar",
-          "label": "Botón"
+          "label": "Botón principal"
+        },
+        {
+          "key": "secondaryCta",
+          "type": "text",
+          "default": "Entrar",
+          "label": "Botón secundario"
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "default": "",
+          "label": "Anuncio"
+        },
+        {
+          "key": "collapseAt",
+          "type": "number",
+          "default": 760,
+          "label": "Plegar por debajo de (px)",
+          "min": 0,
+          "max": 1400
+        },
+        {
+          "key": "mobileMenu",
+          "type": "select",
+          "default": "drawer",
+          "label": "Menú móvil",
+          "options": [
+            "drawer",
+            "sheet"
+          ]
         },
         {
           "key": "defaultActive",
@@ -3598,12 +4055,6 @@
           "label": "Enlace activo",
           "min": 0,
           "max": 5
-        },
-        {
-          "key": "floating",
-          "type": "boolean",
-          "default": false,
-          "label": "Flotante (píldora)"
         },
         {
           "key": "variant",
@@ -3618,9 +4069,17 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
+      ],
+      "notes": [
+        "Enlaces como texto, una sección por línea: `Sección > Hijo|descripción|icon:nombre; Hijo=/ruta`. Dentro de un submenú, `#Categoría` abre una columna con título. `Etiqueta=#id` es un enlace real y `Etiqueta [nuevo]` lleva insignia.",
+        "layout elige una disposición; slots la sustituye pieza a pieza: brand, links, search, actions, spacer y menu separadas por espacios, `|` para otra fila y `/` para columnas alineadas a izquierda, centro y derecha. Ej.: \"brand / links / search actions\".",
+        "Se pliega en menú móvil según el ancho de su contenedor (collapseAt), no de la ventana: baja «Ancho de la vista previa» para verlo.",
+        "Con search=\"button\" o \"command\" (y siempre en móvil), ⌘K / Ctrl+K y «/» abren la paleta; busca en los enlaces, sus categorías y searchItems.",
+        "La paleta y el cajón móvil salen a document.body con los tokens copiados: un ancestro con backdrop-filter (glass, cabeceras con blur) atraparía su position: fixed."
       ],
       "example": "import NavBar from \"@/components/ui/NavBar\";\n\n<NavBar />",
       "preview": "/componentes#navbar"
@@ -3638,7 +4097,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Pestañas con teclado (←/→) y panel. El indicador de la activa cambia con el estilo.",
       "props": [
@@ -3675,7 +4135,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3695,7 +4156,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Preguntas frecuentes con paneles animados por CSS.",
       "props": [
@@ -3732,7 +4194,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3752,7 +4215,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Ruta de navegación. El último elemento es la página actual, sin enlace.",
       "props": [
@@ -3781,7 +4245,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3801,7 +4266,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Números de página con elipsis cuando hay muchas. Gestiona su propia página activa.",
       "props": [
@@ -3842,7 +4308,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -3862,7 +4329,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Botón que abre una lista de acciones (⋮). Para elegir un valor de formulario, ver Select en Formularios.",
       "props": [
@@ -3901,12 +4369,139 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
       "example": "import Dropdown from \"@/components/ui/Dropdown\";\n\n<Dropdown\n  label=\"⋮\"\n/>",
       "preview": "/componentes#dropdown"
+    },
+    {
+      "id": "scroll-progress",
+      "name": "Progreso del scroll",
+      "component": "ScrollProgress",
+      "import": "import ScrollProgress from \"@/components/ui/ScrollProgress\";",
+      "category": "navegacion",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cualquier borde o esquina (de la ventana o de su contenedor) o va en el flujo, como barra, tramos, puntos, caracteres o anillo.",
+      "props": [
+        {
+          "key": "placement",
+          "type": "select",
+          "default": "top",
+          "label": "Posición",
+          "options": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+            "inline"
+          ]
+        },
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "bar",
+          "label": "Forma",
+          "options": [
+            "bar",
+            "segments",
+            "dots",
+            "ascii",
+            "ring"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "steps",
+          "type": "number",
+          "default": 24,
+          "label": "Tramos / caracteres",
+          "min": 4,
+          "max": 60
+        },
+        {
+          "key": "chars",
+          "type": "text",
+          "default": "",
+          "label": "Caracteres (lleno y vacío)",
+          "hint": "vacío = los de la variante"
+        },
+        {
+          "key": "showValue",
+          "type": "boolean",
+          "default": false,
+          "label": "Mostrar porcentaje"
+        },
+        {
+          "key": "smooth",
+          "type": "boolean",
+          "default": true,
+          "label": "Suavizado"
+        }
+      ],
+      "notes": [
+        "Por defecto mide la página y se fija arriba de la ventana: <ScrollProgress /> en el layout basta.",
+        "target=\"parent\" mide el ancestro con scroll más cercano; un selector (\"#articulo\") mide ese elemento. Con position=\"absolute\" se ancla al contenedor con position: relative.",
+        "El avance se escribe como variable CSS en un rAF, sin re-renderizar React; con prefers-reduced-motion no se suaviza.",
+        "En la vista previa la barra sigue la caja con scroll, no la página."
+      ],
+      "example": "import ScrollProgress from \"@/components/ui/ScrollProgress\";\n\n<ScrollProgress />",
+      "preview": "/componentes#scroll-progress"
     },
     {
       "id": "text-field",
@@ -3921,7 +4516,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Entrada con etiqueta, ayuda, prefijo y estados de error o éxito. El foco usa --acc. Con multiline dibuja un textarea (ver Formulario de contacto).",
       "props": [
@@ -4019,7 +4615,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4039,7 +4636,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Interruptor accesible. Retro y terminal lo muestran como texto [ON ]/[OFF].",
       "props": [
@@ -4091,7 +4689,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4111,7 +4710,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Deslizador con pista y pulgar propios de cada estilo.",
       "props": [
@@ -4178,7 +4778,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4198,9 +4799,10 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
-      "description": "Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en los 7 estilos, abierto o cerrado.",
+      "description": "Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en los 8 estilos, abierto o cerrado.",
       "props": [
         {
           "key": "label",
@@ -4250,7 +4852,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4270,7 +4873,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Casillas independientes. Retro y terminal las muestran como texto [x]/[ ].",
       "props": [
@@ -4305,7 +4909,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4325,7 +4930,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Selección única entre varias opciones. Retro y terminal las muestran como texto (•)/( ).",
       "props": [
@@ -4360,7 +4966,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4380,7 +4987,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Indicador de progreso por pasos (alta, checkout, onboarding…). No gestiona el contenido de cada paso.",
       "props": [
@@ -4411,7 +5019,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4431,7 +5040,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Casillas de código (SMS, autenticación en dos pasos): el foco avanza solo al escribir.",
       "props": [
@@ -4467,7 +5077,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4487,7 +5098,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Etiqueta de estado en cinco tonos, con punto opcional.",
       "props": [
@@ -4541,7 +5153,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4561,7 +5174,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Barra con franjas animadas o dibujada con caracteres. Retro la dibuja por bloques.",
       "props": [
@@ -4622,7 +5236,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4642,7 +5257,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Mensaje inline con icono según el tipo, permanente (no desaparece solo). Para una notificación temporal, ver Toast en Overlays.",
       "props": [
@@ -4692,7 +5308,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4712,7 +5329,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Anillo CSS o animaciones de texto: línea, braille, puntos, barra y bloques.",
       "props": [
@@ -4765,7 +5383,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4782,7 +5401,8 @@
         "minimal",
         "neon",
         "terminal",
-        "retro"
+        "retro",
+        "dotmatrix"
       ],
       "description": "Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta, avatar o filas de tabla.",
       "props": [
@@ -4836,7 +5456,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas. Táctil, con teclado y flechas; sin imágenes propias usa escenas pixel art generadas.",
       "props": [
@@ -4915,7 +5536,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -4940,7 +5562,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Carrusel genérico sobre Swiper: cada hijo es una diapositiva. Diapositivas visibles responsivas, reproducción automática, bucle, fundido, baraja apilada o cinta continua, con flechas y puntos cuadrados del estilo activo.",
       "props": [
@@ -5029,7 +5652,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5053,7 +5677,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.",
       "props": [
@@ -5246,7 +5871,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5273,7 +5899,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera de landing: sobretítulo, titular, subtítulo, una o dos llamadas a la acción e insignias de confianza. El fondo decorativo es CSS puro.",
       "props": [
@@ -5348,7 +5975,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5368,7 +5996,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio. Conecta el envío real con la prop `onSubmit`.",
       "props": [
@@ -5429,7 +6058,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5449,7 +6079,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cierre de página: titular corto, una frase y uno o dos botones sobre una superficie destacada.",
       "props": [
@@ -5506,7 +6137,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5526,7 +6158,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.",
       "props": [
@@ -5567,7 +6200,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5584,7 +6218,8 @@
         "minimal",
         "neon",
         "terminal",
-        "retro"
+        "retro",
+        "dotmatrix"
       ],
       "description": "Cabecera de sección más una fila de cifras ASCII que cuentan hacia arriba (StatCounter): la sección de «resultados» típica.",
       "props": [
@@ -5637,7 +6272,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo o con borde) y características no incluidas. Rejilla, lista horizontal o carrusel.",
       "props": [
@@ -5716,6 +6352,12 @@
           "label": "Etiqueta de ahorro anual"
         },
         {
+          "key": "cta",
+          "type": "text",
+          "default": "Empezar ahora",
+          "label": "Botón de cada plan"
+        },
+        {
           "key": "perView",
           "type": "number",
           "default": 3,
@@ -5744,7 +6386,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5764,7 +6407,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista para pegar.",
       "props": [
@@ -5838,7 +6482,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5858,7 +6503,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing.",
       "props": [
@@ -5905,7 +6551,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -5925,7 +6572,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera de sección + rejilla de «por qué elegirnos» (glifo + título + texto): la sección más pedida en cualquier landing.",
       "props": [
@@ -5987,7 +6635,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6007,7 +6656,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.",
       "props": [
@@ -6069,7 +6719,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6089,7 +6740,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "«Con la confianza de…»: marcas en texto, sin depender de imágenes que el kit no tiene.",
       "props": [
@@ -6129,7 +6781,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6149,7 +6802,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con imagen de fondo), lista o carrusel. Cada tarjeta varía trama y acento sola.",
       "props": [
@@ -6240,7 +6894,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6260,7 +6915,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed, sin portal.",
       "props": [
@@ -6333,7 +6989,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6353,7 +7010,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Notificación temporal apilable, construida sobre sonner (apilado, gestos y temporizador ya resueltos) con el aspecto del kit por encima.",
       "props": [
@@ -6417,13 +7075,65 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
+        },
+        {
+          "key": "intentStyle",
+          "type": "select",
+          "default": "bar",
+          "label": "Color de estado",
+          "options": [
+            "bar",
+            "icon",
+            "tint",
+            "mono"
+          ]
+        },
+        {
+          "key": "icons",
+          "type": "select",
+          "default": "auto",
+          "label": "Iconos",
+          "options": [
+            "auto",
+            "svg",
+            "glyph",
+            "none"
+          ]
+        },
+        {
+          "key": "actionLabel",
+          "type": "text",
+          "default": "",
+          "label": "Botón de acción"
+        },
+        {
+          "key": "closeButton",
+          "type": "boolean",
+          "default": false,
+          "label": "Botón de cerrar"
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 4,
+          "label": "Duración (s)",
+          "min": 1,
+          "max": 20
+        },
+        {
+          "key": "expand",
+          "type": "boolean",
+          "default": false,
+          "label": "Pila desplegada"
         }
       ],
       "notes": [
+        "Se adapta a cualquier tema: hereda la tipografía del contenedor, lleva siempre una base opaca bajo la superficie de la variante y el color de estado se puede atenuar (intentStyle=mono) en temas monocromos.",
         "Usa la librería sonner (toast/Toaster): sin ella habría que reimplementar apilado, gestos táctiles, temporizador y accesibilidad.",
-        "Cada instancia lleva un id propio para no cruzarse con otras — importante en «Comparar los 7 estilos», donde conviven 7 Toaster a la vez."
+        "Cada instancia lleva un id propio para no cruzarse con otras — importante en «Comparar los estilos», donde conviven varios Toaster a la vez."
       ],
       "example": "import Toast from \"@/components/ui/Toast\";\n\n<Toast\n  title=\"Cambios guardados\"\n/>",
       "preview": "/componentes#toast"
@@ -6441,9 +7151,10 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
-      "description": "Texto de ayuda al posar el ratón o el foco. Envuelve el disparador real (botón, icono, enlace) o pinta un texto subrayado. Solo CSS, sin JavaScript.",
+      "description": "Texto de ayuda al posar el ratón o el foco. Envuelve el disparador real (botón, icono, enlace) o pinta un texto subrayado. Por defecto flota junto al ratón y lo sigue con inercia; con follow={false} queda fijo sobre el disparador y funciona solo con CSS.",
       "props": [
         {
           "key": "label",
@@ -6462,12 +7173,67 @@
           "type": "select",
           "default": "top",
           "label": "Lado",
+          "hint": "Con «flotar con el ratón», lado del puntero en el que aparece",
           "options": [
             "top",
             "right",
             "bottom",
             "left"
           ]
+        },
+        {
+          "key": "follow",
+          "type": "boolean",
+          "default": true,
+          "label": "Flotar con el ratón",
+          "hint": "Desactívalo para que quede fijo sobre el disparador"
+        },
+        {
+          "key": "align",
+          "type": "select",
+          "default": "center",
+          "label": "Alineación respecto al puntero",
+          "hint": "start = a la derecha/abajo del puntero, end = a la izquierda/arriba; con «Lado» da 12 posiciones",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ]
+        },
+        {
+          "key": "gap",
+          "type": "number",
+          "default": 16,
+          "label": "Distancia al puntero (px)",
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "offsetX",
+          "type": "number",
+          "default": 0,
+          "label": "Desplazamiento X (px)",
+          "hint": "Positivo = a la derecha",
+          "min": -80,
+          "max": 80
+        },
+        {
+          "key": "offsetY",
+          "type": "number",
+          "default": 0,
+          "label": "Desplazamiento Y (px)",
+          "hint": "Positivo = hacia abajo",
+          "min": -80,
+          "max": 80
+        },
+        {
+          "key": "inertia",
+          "type": "number",
+          "default": 0.72,
+          "label": "Inercia",
+          "hint": "0 = pegado al puntero",
+          "min": 0,
+          "max": 0.95
         },
         {
           "key": "variant",
@@ -6482,12 +7248,14 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
       "notes": [
-        "Con un único elemento como hijo, este recibe aria-describedby apuntando al tooltip; el foco lo pone el propio botón, sin paradas de tabulador extra."
+        "Con un único elemento como hijo, este recibe aria-describedby apuntando al tooltip; el foco lo pone el propio botón, sin paradas de tabulador extra.",
+        "Con follow, el tooltip sigue al ratón (se da la vuelta en los bordes de la ventana y sin inercia con prefers-reduced-motion). Con teclado o en táctil se coloca sobre el disparador, como con follow={false}."
       ],
       "example": "import Tooltip from \"@/components/ui/Tooltip\";\n\n<Tooltip\n  content=\"Descarga el informe en CSV.\"\n>\n  <Button label=\"Exportar\" glyph=\"icon:download\" />\n</Tooltip>",
       "preview": "/componentes#tooltip"
@@ -6505,7 +7273,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Panel deslizante desde un lateral (menú móvil, carrito, filtros). Se cierra con el fondo, Escape o su botón.",
       "props": [
@@ -6550,7 +7319,8 @@
             "neon",
             "retro",
             "terminal",
-            "minimal"
+            "minimal",
+            "dotmatrix"
           ]
         }
       ],
@@ -6570,7 +7340,8 @@
         "neon",
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Icono SVG de Pixelarticons sobre rejilla de 24 px. Se tiñe con un token del tema o con el color del texto que lo rodea.",
       "props": [
@@ -6750,7 +7521,8 @@
       "styles": [
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Panel de 9 cortes (border-image) con las piezas de Kenney «Pixel UI». Trae fondo propio y una paleta de tinta local: se lee igual sobre cualquier tema.",
       "props": [
@@ -6830,7 +7602,8 @@
       "styles": [
         "retro",
         "terminal",
-        "minimal"
+        "minimal",
+        "dotmatrix"
       ],
       "description": "Una baldosa 16×16 de la hoja de Kenney «Pixel UI»: flechas, casillas, punteros. Píxeles ya coloreados, no se tiñen con el tema.",
       "props": [
@@ -6909,11 +7682,6 @@
         {
           "component": "NavBar",
           "id": "navbar",
-          "uses": 1
-        },
-        {
-          "component": "Drawer",
-          "id": "drawer",
           "uses": 1
         },
         {
@@ -7211,11 +7979,6 @@
           "uses": 1
         },
         {
-          "component": "Drawer",
-          "id": "drawer",
-          "uses": 1
-        },
-        {
           "component": "Hero",
           "id": "hero",
           "uses": 1
@@ -7505,11 +8268,6 @@
           "uses": 1
         },
         {
-          "component": "Drawer",
-          "id": "drawer",
-          "uses": 1
-        },
-        {
           "component": "Hero",
           "id": "hero",
           "uses": 1
@@ -7742,6 +8500,195 @@
         {
           "component": "ContactForm",
           "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "CTASection",
+          "id": "cta-section",
+          "uses": 1
+        },
+        {
+          "component": "Divider",
+          "id": "divider",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "th-dotmatrix",
+      "title": "SIGNAL · dot matrix",
+      "url": "/demo/th-dotmatrix",
+      "file": "components/landings/DotmatrixLanding.tsx",
+      "description": "Landing de referencia del tema dot matrix: monocromo, variante dotmatrix en todo el kit y un único RetroCanvas (react-three-fiber con filtro ASCII y scanlines) de fondo que cambia de figura en cada acto.",
+      "components": [
+        {
+          "component": "RetroCanvas",
+          "id": "retro-canvas",
+          "uses": 1
+        },
+        {
+          "component": "SceneFlash",
+          "id": "scene-flash",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "ScrollProgress",
+          "id": "scroll-progress",
+          "uses": 1
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "Reveal",
+          "id": "reveal",
+          "uses": 13
+        },
+        {
+          "component": "TerminalTyper",
+          "id": "terminal-typer",
+          "uses": 1
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "StatsSection",
+          "id": "stats-section",
+          "uses": 1
+        },
+        {
+          "component": "FeatureGrid",
+          "id": "feature-grid",
+          "uses": 1
+        },
+        {
+          "component": "AsciiCard",
+          "id": "ascii-card",
+          "uses": 3
+        },
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 4
+        },
+        {
+          "component": "Tabs",
+          "id": "tabs",
+          "uses": 1
+        },
+        {
+          "component": "CodeBlock",
+          "id": "code-block",
+          "uses": 2
+        },
+        {
+          "component": "Timeline",
+          "id": "timeline",
+          "uses": 1
+        },
+        {
+          "component": "AsciiChart",
+          "id": "ascii-chart",
+          "uses": 1
+        },
+        {
+          "component": "Progress",
+          "id": "progress",
+          "uses": 1
+        },
+        {
+          "component": "Badge",
+          "id": "badge",
+          "uses": 3
+        },
+        {
+          "component": "Alert",
+          "id": "alert",
+          "uses": 1
+        },
+        {
+          "component": "Spinner",
+          "id": "spinner",
+          "uses": 1
+        },
+        {
+          "component": "Table",
+          "id": "table",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "Select",
+          "id": "select",
+          "uses": 1
+        },
+        {
+          "component": "CheckboxGroup",
+          "id": "checkbox-group",
+          "uses": 1
+        },
+        {
+          "component": "RadioGroup",
+          "id": "radio-group",
+          "uses": 1
+        },
+        {
+          "component": "Toggle",
+          "id": "toggle",
+          "uses": 1
+        },
+        {
+          "component": "MagneticButton",
+          "id": "magnetic-button",
+          "uses": 1
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 1
+        },
+        {
+          "component": "TestimonialSection",
+          "id": "testimonial-section",
+          "uses": 1
+        },
+        {
+          "component": "LogoCloud",
+          "id": "logo-cloud",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
           "uses": 1
         },
         {

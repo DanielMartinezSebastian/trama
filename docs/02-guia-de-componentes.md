@@ -35,6 +35,9 @@ propio CSS (`app/globals.css`): no hay un segundo vocabulario (`--muted`, `--lin
 | `--ln` | Bordes | `rgba(255,255,255,.18)` |
 | `--r` | Radio | `18px` |
 | `font-family` | Tipografía del tema | `var(--font-manrope), sans-serif` |
+| `--display` (opcional) | Tipografía de titulares `h1–h3`; la pone `tokensToStyle` si el tema trae `display` | `var(--font-doto), monospace` |
+
+**Selección de texto**: `::selection` (en `kit.css`) usa `--acc` de fondo y `--bg` de texto, leídos del elemento seleccionado; cada tema tiene su selección y dentro de una tarjeta `fill="accent"` sale invertida sola. No añadas `::selection` por componente.
 
 Regla: **un tema = un objeto de tokens**. Cambiar de tema no toca componentes (ver `lib/themes/themes.ts`).
 Para leerlos desde canvas: `getComputedStyle(el).getPropertyValue("--acc")`.
@@ -58,7 +61,7 @@ El catálogo permite además editar los tokens uno a uno (`bg fg mut acc acc2 r 
 
 ### 2.2 Sistema de estilos (`--s-*`)
 
-Las siete variantes (`glass solid outline neon retro terminal minimal`) se definen **una sola vez** en `components/ui/styles/ui-kit.css`
+Las ocho variantes (`glass solid outline neon retro terminal minimal dotmatrix`) se definen **una sola vez** en `components/ui/styles/ui-kit.css`
 como variables `--s-*` sobre la clase `ui-s ui-s--<variante>`. Los componentes no conocen el estilo: consumen las variables.
 
 | Variable | Significado |
@@ -80,7 +83,7 @@ tema: significan lo mismo en todos. **Nunca se usan por su nombre de token en un
 
 | Prop | Qué decide | Valores |
 |---|---|---|
-| `variant` | el estilo visual de la superficie | `glass solid outline neon retro terminal minimal` |
+| `variant` | el estilo visual de la superficie | `glass solid outline neon retro terminal minimal dotmatrix` |
 | `intent` | el color semántico | `accent neutral success info warning danger` |
 | `emphasis` (`Button`, `MagneticButton`) | el énfasis del botón | `primary secondary outline ghost link` |
 | `tone` | qué token de color usa una pieza (decorativas y tarjetas) | `acc acc2 fg mut` |
@@ -170,14 +173,15 @@ build y se sirven desde este dominio, sin `<link>` a `fonts.googleapis.com` ni p
 `display: "swap"` y métricas de *fallback* automáticas (cero salto de layout). "De Google" y "en local" dejan de ser
 cosas distintas — siempre se sirven en local, la fuente la elija Google o no.
 
-Catálogo curado (8 familias base + las 46 de la categoría Pixel de Google Fonts — ver más abajo):
+Catálogo curado (11 familias base + las 46 de la categoría Pixel de Google Fonts — ver más abajo):
 
 | Rol | Fuente | Variable CSS |
 |---|---|---|
 | Sans | Inter, Manrope | `--font-inter`, `--font-manrope` |
 | Display | Space Grotesk, Syne | `--font-space-grotesk`, `--font-syne` |
 | Serif | Fraunces, Instrument Serif | `--font-fraunces`, `--font-instrument-serif` |
-| Mono | JetBrains Mono, Space Mono | `--font-jetbrains-mono`, `--font-space-mono` |
+| Mono | JetBrains Mono, Space Mono, IBM Plex Mono, Share Tech Mono | `--font-jetbrains-mono`, `--font-space-mono`, `--font-ibm-plex-mono`, `--font-share-tech-mono` |
+| Display mono | Major Mono Display | `--font-major-mono-display` |
 | Pixel | las 46 de Google Fonts › Appearance › Theme › Pixel (Press Start 2P, VT323, Silkscreen, Pixelify Sans, Jersey, Bitcount, Jacquard…) | `--font-press-start-2p`, `--font-vt323`, … (kebab-case del nombre) |
 
 **Las fuentes Pixel** (`lib/ui/fonts.ts` + `FONT_PRESETS`, etiquetadas «Pixel — …» en el selector de `/componentes`) llevan `preload: false`, a diferencia de las 8 base: son 46 fuentes decorativas para elegir una a una, y con precarga cada carga de *cualquier* página del sitio encadenaría 46 `<link rel="preload">` aunque no use ninguna. Sin precarga el `@font-face` sigue disponible y se aplica al instante al elegirla. La lista sale de la propia página de Google Fonts (no de memoria) y cada nombre se comprobó contra los tipos instalados de `next/font/google`, que fijan qué `weight` es obligatorio y qué `subsets` existen. Al compilar salen 16 avisos «Failed to find font override values» (familias muy recientes, como Bitcount, sin métricas de *fallback* todavía): no rompen nada, solo omiten el ajuste anti-salto de layout de esas familias.
@@ -193,6 +197,10 @@ Catálogo curado (8 familias base + las 46 de la categoría Pixel de Google Font
   Space Mono para Pixel Club) en vez de una fuente de sistema.
 - **`.ui-s--retro`** (`components/ui/styles/ui-kit.css`) — su `--s-ff` usa `var(--font-space-mono)` con `"Courier New"` como *fallback*,
   para un aspecto de máquina de escribir sin depender de que el sistema tenga Courier.
+- **`.ui-s--dotmatrix`** — cuerpo en `var(--font-ibm-plex-mono)` y titulares (`h1–h3`, marca de `NavBar`) en
+  `--dm-display` = Doto (matriz de puntos, de las Pixel) → Major Mono Display → `--mono`. IBM Plex Mono, Share Tech Mono y
+  Major Mono Display también van con `preload: false`: solo se descargan donde se usan. Ojo: Doto es muy fina en pesos
+  bajos; la variante la fuerza a 800 y solo en titulares, nunca en texto de cuerpo.
 
 **Fuente local propia** (de marca, con licencia, no en Google Fonts): añade `next/font/local` en `lib/ui/fonts.ts`
 exportando su propia variable igual que las de arriba, súmala a `fontVariables` y regístrala en `FONT_PRESETS` (o
@@ -266,6 +274,7 @@ Cada estilo fija: superficie, borde, radio, tipografía, efecto ASCII recomendad
 | **neon** | Vida nocturna, gaming | Oscuro + halo `text-shadow`/`box-shadow` del acento | Mono | Bloom + glitch + parpadeo | Más de 2 colores de acento |
 | **retro** | Arcade, píxel | Paleta cerrada (4 tonos), bordes gruesos, sin degradados | Monoespaciada gruesa | Estilo `pixel`/`dither`, scanlines | Antialias suave, sombras difuminadas |
 | **terminal** | Herramientas para devs | Fondo oscuro, barra de título, cursor parpadeante | Mono | Escritura carácter a carácter, CRT | Iconos de color |
+| **dotmatrix** | Tecnología, seguridad, IA, datos: hacker sobrio | Negro con trama de puntos (5 px) · borde 1 px punteado · radio 0 · sin sombras | Titulares Doto, cuerpo IBM Plex Mono en mayúsculas espaciadas (párrafos en minúscula) | `RetroCanvas` con rampa `dots` + scanlines; fondos en paleta `duotone` | Acentos saturados y degradados: es monocromo (tema `dotmatrixTokens`) |
 | **minimal** | Contenido primero | Sin superficie ni borde (los campos de formulario conservan una línea inferior) | Sans neutra | Solo `ScrambleText` en el titular | Efectos en texto largo |
 
 Convenciones de tema: **≤ 2 acentos**, un radio para todo el tema, una sola tipografía, y todo movimiento con
@@ -399,7 +408,7 @@ conviene saber para usarlo bien:
    estilo, aceptar `variant?: Variant` y poner `vcls(variant)` (+ `ui-surface` si es superficie) en el raíz.
 2. Añadir estilos en `components/ui/styles/ui-kit.css` con prefijo `ui-`, leyendo tokens y `--s-*` (nunca colores fijos).
 3. Registrar en la lista de su categoría, `lib/catalog/entries/<categoria>.tsx`:
-   - `id`, `name`, `component`, `path`, `category`, `styles[]` (`ALL_STYLES` si admite las siete), `description`
+   - `id`, `name`, `component`, `path`, `category`, `styles[]` (`ALL_STYLES` si admite todas), `description`
    - `props[]`: `{ key, label, type: text|number|boolean|select, default, when? }`. Atajos en `entries/shared.tsx`:
      `variantProp("glass")` y `toneProp("acc")`.
    - `render(props, { replay })` que devuelve el componente con esas props (`replay` cambia al pulsar «Repetir animación»).
@@ -414,7 +423,7 @@ Categorías: `fondos`, `texto`, `tarjetas`, `interaccion`, `transiciones`, `dato
 Estilos: `glass`, `solid`, `outline`, `neon`, `retro`, `terminal`, `minimal`.
 
 **Cobertura de estilos.** Cada estilo debe tener al menos un componente de cada grupo funcional (acción, entrada,
-superficie, navegación, feedback, datos). Los componentes con `variant` cubren los siete de golpe; los que solo tienen
+superficie, navegación, feedback, datos). Los componentes con `variant` cubren los ocho de golpe; los que solo tienen
 sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente los que ilustran.
 
 ## 10. Trampas conocidas
@@ -500,8 +509,10 @@ fondo lo cierran) y pintan un fondo + panel con `position: fixed`. Al ser `fixed
 `overflow` — incluido `.ui-center` (`overflow: auto`) y `.pg__cell` (`overflow: hidden`) del propio catálogo — sin
 necesitar `createPortal`: verificado en Chrome, el fondo cubre el viewport completo y el panel se centra respecto a
 él, no respecto al escenario donde vive el botón que lo abre. Sí haría falta un portal si contenedores intermedios
-usaran `transform`/`filter`/`will-change` (crean un nuevo *containing block* que `fixed` no puede atravesar); el kit
-no lo hace en ningún componente, así que no hace falta.
+usaran `transform`/`filter`/`backdrop-filter`/`will-change` (crean un nuevo *containing block* que `fixed` no puede
+atravesar). Ojo: la variante `glass` lleva `backdrop-filter`, igual que muchas cabeceras con blur. Un overlay que viva
+*dentro* de una superficie así (la paleta ⌘K y el cajón móvil de `NavBar`) sale a `document.body` con `createPortal` y
+lleva los tokens copiados en línea con `themeSnapshot(el)` (`lib/ui/themeSnapshot.ts`), para no perder el tema.
 
 **`Toast` se apoya en una librería consolidada (`sonner`) en vez de reimplementarla.** Apilado de varias
 notificaciones, gestos táctiles para descartar, temporizador de autocierre, pausa al pasar el ratón y accesibilidad
@@ -510,7 +521,20 @@ kit. Lo que sí es del kit es el aspecto: `<Toaster toastOptions={{ unstyled: tr
 estilos propios de sonner y les pone las clases `ui-toast*`, que leen los mismos tokens y `--s-*` que todo lo demás
 — por fuera es indistinguible de un componente nativo del kit, por dentro delega en sonner. Cada instancia lleva su
 propio `id` (`useId()`) pasado como `toasterId` en cada llamada a `toast()`, para no cruzarse con otras instancias:
-importa en «Comparar los 7 estilos», donde conviven 7 `<Toaster>` a la vez.
+importa en «Comparar los estilos», donde conviven varios `<Toaster>` a la vez.
+
+**Toast en cualquier tema** — tres trampas resueltas en el componente, no en cada proyecto:
+- `unstyled` no quita la fuente que sonner fija en `[data-sonner-toaster]` (sans del sistema): `Toast` pasa
+  `style={{ fontFamily: "inherit" }}` al `<Toaster>` y `.ui-toast` usa `--s-ff`, así sale en la fuente de la variante o del tema.
+- Un toast flota sobre contenido arbitrario, pero `outline`/`minimal` tienen `--s-bg` transparente y `glass`/`neon` casi:
+  `.ui-toast` redefine `--s-bg` opaco en esas variantes (glass al 72 % para que se note el blur) y el tinte de
+  `intentStyle="tint"` es una capa de gradiente más del `background`. **Nunca `::before`/`::after` en el toast**: sonner
+  los usa como zona de gesto (al arrastrar los estira a 3× y al cerrar a 2×) y lo que se pinte ahí se desborda. Tampoco se
+  toca `position`: sonner necesita el toast en `absolute` para apilarlo y animarlo.
+- El color de estado choca en temas monocromos: `intentStyle` = `bar` (barra con el estilo de borde de la variante,
+  punteada en dotmatrix) · `icon` · `tint` · `mono` (sin color de estado). `icons` = `auto` (glifos de texto `✓ i ! ×` en
+  terminal, retro y dotmatrix; svg en el resto) · `svg` · `glyph` · `none`. Además `closeButton`, `duration` (s),
+  `actionLabel` + `onAction` y `expand`.
 
 **Cuándo usar cada uno.** `Alert` (Feedback) es inline y permanente — vive en el sitio, no desaparece solo. `Toast`
 (Overlays) es flotante y temporal — se autodestruye. `Modal` interrumpe y exige una decisión antes de seguir.
@@ -526,6 +550,29 @@ controles para tipos primitivos, así que una lista sigue siendo editable como t
 cuándo NO usar el elemento nativo: un `<select>` no se puede reskinar por dentro (la lista abierta la pinta el
 sistema operativo), así que es un botón + una lista absoluta con `role="listbox"`, para tener el mismo aspecto en
 los 7 estilos abierto o cerrado — `Dropdown` (menú de acciones, no de valores) sigue el mismo patrón.
+
+**`NavBar` lleva la sintaxis más completa del patrón**, porque una barra moderna necesita jerarquía: enlaces simples
+separados por comas (lo de siempre) o una sección por línea con submenú, `Sección > Hijo; Hijo|descripción|icon:nombre`
+(hijos por `;`, campos por `|`). Dentro de un submenú, `#Categoría` abre una columna con título (mega menú por
+categorías; en móvil, subtítulos dentro del acordeón). `Etiqueta=/ruta` o `=#id` lo convierte en enlace real (sin `=`,
+un botón que solo marca el activo) y `Etiqueta [nuevo]` le pone insignia.
+
+Tres ejes independientes de aspecto, además de la variante:
+- **`layout`** (disposición): `classic` · `left` · `right` · `center` · `split` (marca centrada) · `stacked` (dos filas:
+  marca, búsqueda ancha y acciones; debajo las secciones) · `minimal` (marca + menú, siempre plegada).
+- **`slots`** (orden libre, sustituye a `layout`): piezas `brand links search actions spacer menu` separadas por espacios;
+  `|` abre otra fila y `/` separa columnas (grid `1fr auto 1fr`: izquierda · centro · derecha). `layout` no es más que
+  un nombre para un `slots` (`LAYOUTS` en `NavBar.tsx`); una disposición nueva es una línea ahí.
+- **`shape`**: `island` (por defecto: el aspecto de siempre, con el radio de la variante) · `full` · `contained` (contenido
+  a `--nav-max`) · `floating` (píldora) · `transparent` (sin fondo hasta bajar) · `underline`. Y `size` = densidad.
+
+Búsqueda: `search` = `bar` (barra ancha) · `inline` (campo compacto) · `button` / `command` (paleta ⌘K y «/»); busca en
+secciones, hijos, categorías y `searchItems`. Plegada, cualquier búsqueda pasa a icono → paleta y además aparece como
+campo arriba del menú móvil. Resto: `onNavigate`, `onSearch`, `activeOn="scroll"`, CTA secundaria, `announcement`,
+`sticky` + `scrollFx`, `children` para acciones propias. El plegado mide el **contenedor** (`collapseAt`), no la ventana,
+y deja una sola fila (marca · búsqueda · menú); el menú móvil (`drawer` o `sheet`) lleva búsqueda, secciones en acordeón
+y botones a todo el ancho. El activo se marca con `[data-current]` (vale para `<a>` y `<button>`): no uses
+`aria-current` en CSS.
 
 ## 14. Scrollbars personalizadas
 
@@ -804,3 +851,120 @@ vídeo original sigue reproduciéndose debajo, sin ocultar. Se elige el estilo (
 - No aplica a YouTube/Vimeo (el iframe no da acceso a los píxeles).
 - La capa superpuesta deja pasar los clics, así que el vídeo original está listo para revelarse en una iteración futura (por ejemplo, con una máscara
   radial que siga al puntero sobre el lienzo).
+
+## 20. Fondo de página detrás del contenido (`position` e `interaction`)
+
+Caso de uso habitual: un fondo (`TextmodeBackground`, `AsciiBackground`, `GridBackground`) que cubre toda una página larga, con secciones
+y tarjetas encima. Con el comportamiento por defecto choca con dos cosas, y las dos son **normales, no un fallo de uso**:
+
+1. **Colocación.** Por defecto un fondo es `position: absolute; inset: 0` y rellena su contenedor. Dentro de un contenedor que no mide
+   lo que la página (un flex centrado, un `<main>` sin altura), se queda corto o desplazado. Un `z-index: -1` lo mete detrás del fondo
+   del `<body>`, y un `bg-white` en el `<main>` lo tapa.
+2. **Puntero.** Los motores (textmode.js y asciify-engine) escuchan el puntero **en su propio lienzo**. Si hay contenido encima, el
+   lienzo no es el elemento bajo el puntero y no recibe nada: el fondo «no reacciona». Antes había que reenviar los eventos a mano
+   desde la aplicación, con un selector interno (`.mi-fondo canvas`) y una página cliente solo para eso.
+
+**Receta:**
+
+```tsx
+<div className="relative isolate">
+  <TextmodeBackground sketch="starfield" position="fixed" />   {/* interaction pasa a "window" solo */}
+  <main className="relative z-10">…contenido, sin fondo opaco…</main>
+</div>
+```
+
+- **`position="fixed"`** (`absolute` por defecto): cubre la ventana y no se mueve con el scroll, sin depender del alto de ningún
+  contenedor. Usa `z-index: 0`: el contenido debe llevar `position: relative` (y `z-index: 10` si hace falta) y ningún fondo opaco.
+  Está en `TextmodeBackground`, `AsciiBackground` y `GridBackground` (este último es CSS puro y no recibe puntero).
+- **`interaction`** (`canvas` | `window`): con `window` el fondo escucha el puntero en toda la ventana y se lo reenvía al lienzo
+  (`lib/ui/pointerBridge.ts`), así reacciona aunque haya botones, tarjetas o texto encima, y **no bloquea ningún clic ni hover** (el
+  lienzo pasa a `pointer-events: none`). Por defecto es `window` si `position="fixed"` y `canvas` en el resto.
+- **Cómo funciona el puente:** escucha `pointermove/down/up/cancel` en la ventana y reenvía al lienzo, con `bubbles: false` y solo si
+  el puntero está dentro de él, cada evento en su forma `pointer*` (asciify-engine) y `mouse*` (textmode.js). Al salir manda un solo
+  `pointerleave`/`mouseleave`. Se limpia al desmontar y no duplica listeners si la prop cambia. Con dedo o lápiz reenvía también, pero
+  textmode.js lee el táctil por sus propios eventos `touch*`, que no se reenvían.
+- **Comprobado** (Chrome, con un elemento opaco encima del lienzo): `interaction="canvas"` → 0 eventos recibidos; `interaction="window"` →
+  llegan `pointermove` y `mousemove`.
+
+**Sigue siendo tu responsabilidad:** cargar el CSS del kit (`trama-ui/styles.css`) y el de tu aplicación, y no dar fondo opaco a las
+capas de contenido. Con `interaction="window"` un fondo detrás no captura nada, pero las capas de contenido siguen recibiendo su hover.
+
+## 21. Resolución de los fondos de caracteres (celda fina y decimales)
+
+`cellSize` (`AsciiBackground`) y `fontSize` (`TextmodeBackground`) son **px CSS reales** y admiten decimales: desde 0,1 en la celda ASCII (suelo absoluto) y desde 1 en textmode.js.
+Pasarle al motor el número tal cual no bastaba, porque asciify-engine (Studio) lo modifica sin avisar:
+
+| Límite del motor | Efecto | Qué hace el componente |
+|---|---|---|
+| `cellSize` se recorta a **3–60** | «celda 1» se quedaba en 3 | **Sobremuestrea**: el motor pinta en un lienzo `s` veces mayor y el CSS lo reduce, así `unit / s` es la celda pedida. |
+| Con `dither` se ignora `cellSize`; manda `dither.scale` (**entero 1–12**) | En dither la celda pedida no tenía efecto | Manda `dither.scale` y sobremuestrea para los decimales. |
+| Lienzo interno de **960 px** (`maxDimension`) | En pantalla completa la celda salía ~1,8× mayor | Pasa `maxDimension: 4096`. |
+| Rejilla de **12 000 celdas** (`maxCells`, máximo **160 000**) | Una celda «de 4 px» a pantalla completa acababa siendo de ~11 px | Sube `maxCells` lo justo para que quepa la celda pedida, hasta 160 000. Prop `maxCells` para acotarlo. |
+| Modo adaptativo: baja el presupuesto (hasta 3 000 celdas) si el fotograma pasa de 13 ms | La resolución cae en equipos justos | Prop `adaptive` (por defecto sí, se lee al montar). |
+
+**El límite real es el tope de 160 000 celdas:** la celda mínima alcanzable es √(ancho·alto / 160 000) px (×√1,65 en estilos de texto, que usan
+celdas más altas que anchas): ≈ 3 px a pantalla completa (1736×808), ≈ 1,5 px en un escenario de 1390×420 y 1 px solo en elementos de
+unos 400×400. Pedir menos no da error: la celda se agranda hasta ese mínimo. `lib/asciify/resolution.ts` (`planResolution`) hace la cuenta.
+
+**Ver lo que pasa:** la vista previa de `/componentes` (Fondo ASCII) muestra «Celda X px pedida → Y px real», la rejilla resultante y un aviso
+si el motor la ha limitado o si el modo adaptativo ha bajado el presupuesto (`onResolution` da esos datos a cualquier componente).
+
+**Coste.** Con la celda fina hay más celdas por fotograma y las escenas se dibujan en un lienzo fuente más ancho (480 → hasta 1024 px). Antes, el
+límite de 12 000 celdas y los 960 px hacían que el coste fuera casi el mismo con cualquier `cellSize`; ahora, celdas pequeñas = más GPU/CPU. Para
+acotar: `maxCells`, o `adaptive` (dejar que el motor baje solo).
+
+**textmode.js:** `fontSize` desde 1 con decimales; el componente agranda la celda si la rejilla pasaría de `maxCells` (por defecto 250 000) para no
+congelar la página. La celda es unos 0,6× más ancha que alta.
+
+## 22. Escenas 3D con filtro retro (react-three-fiber)
+
+`RetroCanvas` convierte cualquier escena de react-three-fiber en pixel art, ASCII o ambos, con scanlines, viñeta, curvatura y
+ruido de monitor CRT. Es la única parte del kit que usa `three` y `@react-three/fiber`; en el paquete npm son **dependencias
+opcionales** y estos tres componentes (`RetroCanvas`, `RetroFX`, `RetroShapes`) quedan fuera del barrel: se importan por
+subruta (`trama-ui/RetroCanvas`).
+
+| Pieza | Para qué |
+|---|---|
+| `RetroCanvas` | `<Canvas>` + `RetroFX` + tokens del tema + pausa fuera de pantalla + `prefers-reduced-motion`. Lo normal. |
+| `RetroFX` | Solo el post-proceso, para meterlo en un `<Canvas>` que ya tengas. |
+| `RetroShapes` | Escenas de ejemplo con la iluminación que mejor se lee como caracteres: `chevrons`, `knot`, `cube`, `icosahedron`, `torus`, `pyramid`, `cage` (jaula), `helix` (ADN), `rings` (giroscopio), `terrain` (relieve animado), `globe` (globo facetado) y `tunnel` (túnel de marcos). |
+
+```tsx
+<div style={{ position: "relative", height: 480 }}>
+  <RetroCanvas mode="ascii" ramp="dots" cellSize={7} scanlines={0.35}>
+    <ambientLight intensity={0.3} />
+    <directionalLight position={[3, 4, 5]} intensity={2.5} />
+    <mesh><torusKnotGeometry args={[1.2, 0.4, 160, 24]} /><meshStandardMaterial color="white" /></mesh>
+  </RetroCanvas>
+</div>
+```
+
+Rampas de glifos: `classic`, `dots`, `braille`, `blocks`, `binary`, `hex`, `code`, `hatch` (trama diagonal) y `circuit` (pistas de placa); las dibujadas a mano no dependen de ninguna fuente. Patrones de dither (`ditherPattern`): `bayer`, `hatch`, `halftone`, `noise`. Efectos: `scanlines`, `scanlineRoll`, `vignette`, `curvature`, `noise`, `flicker`, `glow` (halo de fósforo), `rain` (lluvia de código), `glitch` y `aberration`. Sobrios por defecto (todos a 0 salvo los del CRT básico); en un fondo de landing conviene `glow` ≤ 0.4, `rain` ≤ 0.3 y sin `glitch` permanente.
+
+Cómo funciona (`lib/retro3d/`): `RetroFX` se engancha a `useFrame` con prioridad 1 —R3F deja de renderizar solo—, dibuja la
+escena en un `WebGLRenderTarget` y un quad de pantalla completa la pasa por `shader.ts`. La rampa de glifos es un atlas
+(`glyphAtlas.ts`, canvas 2D) con un glifo por nivel de luz; los colores CSS de los tokens se resuelven con `color.ts`.
+
+Trampas: la luz importa más que el material (contraste alto y una luz direccional fuerte; con luz plana todo sale del mismo
+carácter); los sólidos de aristas vivas se leen mejor que las esferas; los cálculos van en espacio lineal y la luminosidad se
+pasa a perceptual antes de elegir glifo — si añades pasos al shader, mantén esa conversión. Un solo `RetroCanvas` pesado por vista.
+
+## 23. Tema y variante «dot matrix»
+
+La estética de `RetroCanvas` (puntos blancos sobre negro, scanlines) como sistema completo, en las dos capas del kit:
+
+- **Tema** `dotmatrixTokens` (`lib/ui/tokens.ts`, exportado también en `trama-ui/tokens`): `--bg #000`, `--fg #e6e6e6`,
+  `--mut #8c8c8c`, `--acc #fff`, `--acc2 #a3a3a3`, radio 0, fuente IBM Plex Mono. En `/componentes` es el preset
+  «Dot matrix (mono)». Aplicarlo: `<div style={tokensToStyle(dotmatrixTokens)}>`.
+  Trae `display` (Doto): los titulares `h1–h3` de cualquier componente pasan a matriz de puntos sea cual sea la variante
+  (regla `:where(h1, h2, h3)` de especificidad 0 en `ui-kit.css`, prioridad `--s-df` de la variante → `--display` del tema →
+  heredada). Por eso llega también a titulares sin raíz `.ui-s`, como el de `Hero` o el `SectionHeader` fijado a `minimal`
+  dentro de las secciones.
+- **Variante** `variant="dotmatrix"` (`.ui-s--dotmatrix` en `ui-kit.css`): la aceptan todos los componentes con `variant`
+  porque solo fija `--s-*`, más un bloque de detalles al final del CSS (marcadores `•`/`○`/`[•]` en pestañas, navegación,
+  checkboxes, radios, precios y paginación; badges y alertas con borde punteado; cursor `_` parpadeante en el botón activo).
+  Los componentes sin `variant` (fondos, pixel, texto decorativo) la «aceptan» por tokens: llevan la etiqueta en el catálogo.
+
+Las dos capas son independientes: `dotmatrix` sobre el tema Neutro toma su acento azul; el tema mono con `terminal` o
+`outline` también funciona. La combinación de referencia es tema + variante + `RetroCanvas mode="ascii" ramp="dots"`.
+

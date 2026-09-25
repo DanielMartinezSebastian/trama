@@ -13,7 +13,7 @@
  * Fonts): usa `next/font/local` en este mismo archivo, exporta su variable igual
  * que las de abajo y regístrala en `FONT_PRESETS`. Ver guía §11.
  */
-import { Fraunces, Inter, Instrument_Serif, JetBrains_Mono, Manrope, Space_Grotesk, Space_Mono, Syne } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Inter, Instrument_Serif, JetBrains_Mono, Major_Mono_Display, Manrope, Share_Tech_Mono, Space_Grotesk, Space_Mono, Syne } from "next/font/google";
 
 export const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 export const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
@@ -23,6 +23,16 @@ export const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunce
 export const instrumentSerif = Instrument_Serif({ subsets: ["latin"], weight: ["400"], variable: "--font-instrument-serif", display: "swap" });
 export const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono", display: "swap" });
 export const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono", display: "swap" });
+
+/**
+ * Monoespaciadas técnicas de la variante `dotmatrix` (y del tema `dotmatrixTokens`): IBM Plex Mono para el cuerpo (legible
+ * en tamaños pequeños y con acentos), Share Tech Mono para etiquetas estrechas y Major Mono Display como titular alternativo.
+ * El titular por defecto de la variante es Doto (matriz de puntos), más abajo con las pixel. Sin precarga: solo se descargan
+ * en las páginas que las usan.
+ */
+export const ibmPlexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-ibm-plex-mono", display: "swap", preload: false });
+export const shareTechMono = Share_Tech_Mono({ subsets: ["latin"], weight: "400", variable: "--font-share-tech-mono", display: "swap", preload: false });
+export const majorMonoDisplay = Major_Mono_Display({ subsets: ["latin"], weight: "400", variable: "--font-major-mono-display", display: "swap", preload: false });
 
 /**
  * Fuentes "Pixel" — las 46 familias que Google Fonts agrupa bajo Appearance › Theme › Pixel
@@ -94,6 +104,7 @@ export const rubikBrokenFax = Rubik_Broken_Fax({ weight: "400", subsets: ["latin
 /** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
 export const fontVariables = [
   inter, manrope, spaceGrotesk, syne, fraunces, instrumentSerif, jetbrainsMono, spaceMono,
+  ibmPlexMono, shareTechMono, majorMonoDisplay,
   pressStart2P, vt323, geistPixel, jersey25, pixelifySans, dotGothic16,
   silkscreen, bitcountSingle, jersey10, doto, tiny5, bitcountPropSingle,
   handjet, bitcountGridDouble, jacquard12, jersey20, jersey15, jacquardaBastarda9,

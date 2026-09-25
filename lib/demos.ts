@@ -26,7 +26,7 @@ export type DemoMeta = {
   reactive: boolean;
   accent: string;
   /** Qué librería(s) renderizan; se muestra en la tarjeta */
-  lib?: "textmode.js" | "asciify" | "ambas";
+  lib?: "textmode.js" | "asciify" | "ambas" | "three.js";
   /** Componente de render; por defecto se deduce de la familia. "kit" = landing construida con components/ui/ */
   render?: "textmode" | "asciify" | "layers" | "kit";
   /** Selectores extra junto al cajón de texto (solo demos de texto) */

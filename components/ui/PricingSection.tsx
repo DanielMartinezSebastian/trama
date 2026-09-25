@@ -29,6 +29,12 @@ export type PricingSectionProps = {
   yearlyPeriod?: string;
   /** etiqueta del ahorro junto a «Anual» (vacío = sin etiqueta) */
   yearlyNote?: string;
+  /** texto del botón de cada plan */
+  cta?: string;
+  /** el botón de cada plan como enlace ("#contacto", "/alta"); se le añade `?plan=<nombre>&billing=monthly|yearly` si no lleva ya `?` ni `#` */
+  ctaHref?: string;
+  /** al elegir un plan: su nombre, el precio y el periodo mostrados y si la facturación es anual */
+  onSelectPlan?: (plan: { name: string; price: string; period: string; yearly: boolean }) => void;
   /** con layout="carousel": tarjetas visibles en pantallas anchas */
   perView?: number;
   /** con layout="carousel": segundos entre tarjetas (0 = manual) */
@@ -54,6 +60,9 @@ export default function PricingSection({
   fill = "surface",
   yearlyPeriod = "/ año",
   yearlyNote = "2 meses gratis",
+  cta = "Empezar ahora",
+  ctaHref,
+  onSelectPlan,
   perView = 3,
   autoplay = 0,
   variant = "glass",
@@ -65,13 +74,19 @@ export default function PricingSection({
 
   const cards = rows.map(([plan, price, period, hl, features, description, yearlyPrice], i) => {
     const useYear = yearly && !!yearlyPrice;
+    const shownPrice = useYear ? yearlyPrice : price;
+    const shownPeriod = useYear ? yearlyPeriod : period;
+    const href = ctaHref && !/[?#]/.test(ctaHref) ? `${ctaHref}?plan=${encodeURIComponent(plan)}&billing=${useYear ? "yearly" : "monthly"}` : ctaHref;
     return (
       <PricingCard
         key={plan + i}
         plan={plan}
         description={description}
-        price={useYear ? yearlyPrice : price}
-        period={useYear ? yearlyPeriod : period}
+        price={shownPrice}
+        period={shownPeriod}
+        cta={cta}
+        ctaHref={href}
+        onSelect={onSelectPlan ? () => onSelectPlan({ name: plan, price: shownPrice, period: shownPeriod, yearly: useYear }) : undefined}
         note={useYear ? `equivale a ${price} ${period}`.replace(/\s+/g, " ") : ""}
         highlighted={hl === "si"}
         highlight={highlight}

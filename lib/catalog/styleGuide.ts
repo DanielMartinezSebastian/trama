@@ -71,4 +71,12 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     avoid: "Efectos sobre texto largo.",
     preset: "neutro",
   },
+  dotmatrix: {
+    when: "Tecnología, seguridad, IA, herramientas de datos: estética hacker sobria.",
+    surface: "Negro con trama de puntos · borde punteado 1 px · radio 0 · sin sombras.",
+    type: "Titulares Doto (matriz de puntos) · cuerpo IBM Plex Mono en mayúsculas espaciadas.",
+    ascii: "RetroCanvas con rampa dots + scanlines; fondos en paleta duotone o tint.",
+    avoid: "Colores de acento saturados y degradados: es monocromo.",
+    preset: "dotmatrix",
+  },
 };

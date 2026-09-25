@@ -107,7 +107,7 @@ export const formularios: CatalogEntry[] = [
     name: "Desplegable",
     category: "formularios",
     styles: ALL_STYLES,
-    description: "Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en los 7 estilos, abierto o cerrado.",
+    description: "Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en los 8 estilos, abierto o cerrado.",
     stageHeight: 280,
     props: [
       { key: "label", label: "Etiqueta", type: "text", default: "País" },

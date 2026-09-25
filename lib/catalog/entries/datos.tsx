@@ -16,7 +16,7 @@ export const datos: CatalogEntry[] = [
     path: "@/components/ui/StatCounter",
     name: "Cifra ASCII que cuenta",
     category: "datos",
-    styles: ["retro", "neon", "minimal", "terminal"],
+    styles: ["retro", "neon", "minimal", "terminal", "dotmatrix"],
     description: "Número grande en fuente bitmap de asciify-engine que cuenta hacia arriba con GSAP.",
     stageHeight: 280,
     replayable: true,
