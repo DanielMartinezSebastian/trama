@@ -1,0 +1,106 @@
+/* Pixelforge (prefijo pf-): tienda de assets. Solo organiza piezas del kit sobre los tokens de la web. */
+.pf { --st-max: 1240px; }
+.pf img { image-rendering: pixelated; }
+.pf__header { display: flex; align-items: flex-end; gap: 12px; }
+/* el carrito se alinea con la barra (abajo), no con el bloque anuncio + barra */
+.pf__header > .pf__cartbtn { margin-bottom: 4px; }
+.pf__header > .ui-nav { flex: 1; min-width: 0; }
+.pf__cartbtn { position: relative; flex: none; display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; font: 700 13px/1 var(--font-space-mono), monospace; text-transform: uppercase; color: var(--bg); text-decoration: none; background: var(--acc); border: 3px solid var(--fg); box-shadow: 3px 3px 0 var(--acc2); }
+.pf__cartbtn:active { translate: 2px 2px; box-shadow: 1px 1px 0 var(--acc2); }
+.pf__cartbtn b { display: grid; place-content: center; min-width: 22px; height: 22px; padding: 0 5px; font-size: 12px; color: var(--fg); background: var(--acc2); border: 2px solid var(--fg); }
+@media (max-width: 560px) { .pf__cartbtn span { display: none; } }
+
+.pf__hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); align-items: center; gap: 32px; }
+.pf__hero .ui-hero h1 { font-family: var(--display); font-weight: 400; line-height: 1.15; }
+.pf__hero-art { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 4px solid var(--fg); box-shadow: 8px 8px 0 var(--acc2); }
+@media (max-width: 860px) { .pf__hero { grid-template-columns: minmax(0, 1fr); } .pf__hero-art { max-width: 420px; } }
+
+.pf__cats { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); }
+.pf__cat { display: grid; gap: 6px; padding: 10px 10px 14px; color: var(--fg); text-decoration: none; transition: translate 0.15s; }
+.pf__cat:hover { translate: 0 -3px; }
+.pf__cat img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.pf__cat span { font-family: var(--display); font-size: 16px; }
+.pf__cat small { color: var(--mut); font-size: 12px; }
+.pf__row-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+
+.pf__card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+.pf__card-media { position: relative; display: block; }
+.pf__card-media img { border: 0; border-radius: 0; border-bottom: 3px solid var(--acc); }
+.pf__new { position: absolute; top: 10px; left: 10px; padding: 3px 8px; font: 700 11px/1.2 var(--font-space-mono), monospace; text-transform: uppercase; color: var(--bg); background: var(--acc2); border: 2px solid var(--fg); }
+.pf__card-body { display: grid; align-content: start; gap: 8px; padding: 14px; }
+.pf__card-body .ui-badge { justify-self: start; }
+.pf__card-body h3 { margin: 0; font-size: 18px; text-transform: none; letter-spacing: 0; }
+.pf__card-body h3 a { color: inherit; text-decoration: none; }
+.pf__card-body h3 a:hover { color: var(--acc); }
+.pf__card-body p { margin: 0; font-size: 14px; line-height: 1.5; text-transform: none; letter-spacing: normal; font-weight: 400; }
+.pf__card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
+.pf__price { font-size: 13px; color: var(--mut); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.pf__price strong { font-size: 18px; color: var(--acc); }
+.pf__rating { font-size: 12px; color: var(--mut); text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+.pf__shop { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; align-items: start; }
+.pf__filters { position: sticky; top: 120px; display: grid; gap: 18px; padding: 16px; }
+.pf__filters .ui-field { width: 100%; }
+.pf__filter-group { display: grid; gap: 4px; }
+.pf__filter-group .ui-button { justify-content: flex-start; }
+.pf__filter-title { margin-bottom: 4px; font-size: 12px; color: var(--mut); text-transform: uppercase; letter-spacing: 0.08em; }
+.pf__toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.pf__toolbar p { margin: 0; }
+.pf__toolbar .ui-select { width: 240px; }
+@media (max-width: 900px) { .pf__shop { grid-template-columns: minmax(0, 1fr); } .pf__filters { position: static; } .pf__filter-group { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+
+.pf__crumbs { margin-bottom: 18px; }
+.pf__product { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+@media (max-width: 900px) { .pf__product { grid-template-columns: minmax(0, 1fr); } }
+.pf__buy { display: grid; gap: 14px; }
+.pf__buy .ui-badge { justify-self: start; }
+.pf__buy h1 { margin: 0; font-family: var(--display); font-size: clamp(28px, 4vw, 42px); font-weight: 400; line-height: 1.1; }
+.pf__buy .pf__rating { display: flex; align-items: center; gap: 10px; margin: 0; }
+.pf__licnote { margin: -6px 0 0; font-size: 13px; }
+.pf__buy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding-top: 6px; }
+.pf__bigprice { font-family: var(--display); font-size: 34px; color: var(--acc); }
+.pf__formats { margin: 0; font-size: 13px; }
+
+.pf__stepper { max-width: 640px; margin-bottom: 28px; }
+.pf__checkout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: start; }
+@media (max-width: 900px) { .pf__checkout { grid-template-columns: minmax(0, 1fr); } }
+.pf__lines { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.pf__line { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto auto auto; align-items: center; gap: 16px; padding: 10px 14px 10px 10px; }
+.pf__line img { width: 72px; height: 54px; object-fit: cover; }
+.pf__line > div:nth-child(2) { display: grid; gap: 4px; min-width: 0; }
+.pf__line a { color: inherit; text-decoration: none; }
+.pf__line .st-muted { font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 400; }
+.pf__line-total { min-width: 90px; text-align: right; }
+@media (max-width: 640px) { .pf__line { grid-template-columns: 56px minmax(0, 1fr) auto; } .pf__line img { width: 56px; height: 42px; } .pf__line-total { grid-column: 2; text-align: left; } }
+.pf__qty { display: inline-flex; align-items: center; border: 2px solid var(--fg); }
+.pf__qty button { width: 32px; height: 32px; font: 700 16px/1 var(--font-space-mono), monospace; color: var(--fg); background: none; border: 0; cursor: pointer; }
+.pf__qty button:disabled { opacity: 0.35; cursor: default; }
+.pf__qty output { min-width: 28px; text-align: center; font-weight: 700; }
+.pf__form { display: grid; gap: 16px; padding: 20px; }
+.pf__form h2, .pf__summary h2 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 400; }
+.pf__form .ui-field, .pf__form .ui-select { width: 100%; }
+.pf__summary { position: sticky; top: 120px; display: grid; gap: 16px; padding: 20px; }
+.pf__summary dl { display: grid; gap: 10px; margin: 0; }
+.pf__summary dl > div { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; text-transform: none; letter-spacing: 0; font-weight: 400; }
+.pf__summary dd { margin: 0; }
+.pf__discount dd { color: var(--ok); }
+.pf__total { padding-top: 10px; border-top: 3px solid var(--acc); font-size: 19px !important; font-weight: 800 !important; }
+.pf__coupon { display: flex; align-items: flex-end; gap: 8px; }
+.pf__coupon .ui-field { flex: 1; width: auto; }
+.pf__nav { display: grid; gap: 10px; }
+.pf__empty, .pf__done { display: grid; justify-items: start; gap: 18px; max-width: 720px; padding: clamp(20px, 4vw, 36px); }
+.pf__done h1 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(26px, 4vw, 38px); }
+
+.pf__faq { display: grid; gap: 32px; max-width: 820px; }
+.pf__faq h2 { margin: 0 0 12px; font-family: var(--display); font-weight: 400; font-size: 22px; }
+.pf__legal { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; align-items: start; }
+.pf__legal aside { position: sticky; top: 120px; display: grid; gap: 24px; }
+.pf__legal .ui-toc--sticky { position: static; }
+.pf__legal-nav { display: grid; gap: 6px; font-size: 13px; }
+.pf__legal-nav a { color: var(--mut); text-decoration: none; }
+.pf__legal-nav a[aria-current] { color: var(--acc); }
+@media (max-width: 860px) { .pf__legal { grid-template-columns: minmax(0, 1fr); } .pf__legal aside { position: static; } }
+.pf__footer { padding-block: 24px 40px; }
+
+/* retro pone en mayúsculas el texto de sus superficies: los párrafos vuelven a minúsculas para leerse */
+.pf .ui-s--retro :is(p, .st-lead, dd, dt, li) { text-transform: none; letter-spacing: normal; }

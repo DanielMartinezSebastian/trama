@@ -126,11 +126,14 @@ export const datos: CatalogEntry[] = [
     props: [
       { key: "csv", label: "CSV (primera línea = cabecera)", type: "text", multiline: true, default: "Plan, Clases, Precio\nIniciación, 1, 35 €\nBono 5, 5, 150 €\nSurf trip, 6, 240 €" },
       { key: "striped", label: "Filas alternas", type: "boolean", default: true },
+      { key: "width", label: "Ancho", type: "select", default: "full", options: ["full", "auto"], labels: { full: "todo el ancho disponible", auto: "el del contenido" } },
       variantProp("solid"),
     ],
     render: (p) => (
       <div className="ui-center">
-        <Table csv={p.csv as string} striped={p.striped as boolean} variant={p.variant as never} />
+        <div style={{ width: 760, maxWidth: "100%" }}>
+          <Table csv={p.csv as string} striped={p.striped as boolean} width={p.width as never} variant={p.variant as never} />
+        </div>
       </div>
     ),
   },

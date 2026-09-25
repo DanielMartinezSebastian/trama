@@ -7,14 +7,20 @@ export type PaginationProps = {
   total?: number;
   defaultPage?: number;
   siblingCount?: number;
+  /** al cambiar de página */
+  onChange?: (page: number) => void;
   variant?: Variant;
   className?: string;
 };
 
 /** Paginación numérica con elipsis cuando hay muchas páginas. Gestiona su propia página activa. */
-export default function Pagination({ total = 9, defaultPage = 1, siblingCount = 1, variant = "glass", className = "" }: PaginationProps) {
-  const [page, setPage] = useState(() => Math.min(Math.max(1, defaultPage), Math.max(1, total)));
-  useEffect(() => setPage(Math.min(Math.max(1, defaultPage), Math.max(1, total))), [defaultPage, total]);
+export default function Pagination({ total = 9, defaultPage = 1, siblingCount = 1, onChange, variant = "glass", className = "" }: PaginationProps) {
+  const [page, setInner] = useState(() => Math.min(Math.max(1, defaultPage), Math.max(1, total)));
+  const setPage = (p: number) => {
+    setInner(p);
+    onChange?.(p);
+  };
+  useEffect(() => setInner(Math.min(Math.max(1, defaultPage), Math.max(1, total))), [defaultPage, total]);
 
   const pages = new Set<number>([1, total, page]);
   for (let d = 1; d <= siblingCount; d++) {
@@ -32,7 +38,7 @@ export default function Pagination({ total = 9, defaultPage = 1, siblingCount = 
 
   return (
     <nav aria-label="Paginación" className={`ui-page ${vcls(variant)} ${className}`}>
-      <button type="button" className="ui-page__nav" disabled={page <= 1} onClick={() => setPage((p) => p - 1)} aria-label="Página anterior">
+      <button type="button" className="ui-page__nav" disabled={page <= 1} onClick={() => setPage(page - 1)} aria-label="Página anterior">
         ‹
       </button>
       {withGaps.map((p, i) =>
@@ -46,7 +52,7 @@ export default function Pagination({ total = 9, defaultPage = 1, siblingCount = 
           </button>
         ),
       )}
-      <button type="button" className="ui-page__nav" disabled={page >= total} onClick={() => setPage((p) => p + 1)} aria-label="Página siguiente">
+      <button type="button" className="ui-page__nav" disabled={page >= total} onClick={() => setPage(page + 1)} aria-label="Página siguiente">
         ›
       </button>
     </nav>

@@ -336,6 +336,7 @@ export default function FacetaLanding({ hud = false }: { hud?: boolean }) {
         <Act side="l">
           <Panel blk="drop" className="mz__panel--wide">
             <PricingSection
+              ctaHref="#contacto"
               variant="retro"
               kicker="PRECIOS"
               title="Tres planes"
@@ -381,7 +382,7 @@ export default function FacetaLanding({ hud = false }: { hud?: boolean }) {
             <CTASection variant="retro" kicker="ÚLTIMO PASO" title="Elige forma y celda" subtitle="Te lo montamos en una tarde." primaryCta="Empezar gratis" secondaryCta="Ver la demo" align="left" />
           </Panel>
           <Panel blk="slide" side="l">
-            <ContactForm variant="retro" title="Cuéntanos tu caso" subtitle="Respondemos en un día." fields="name,email,message" submitLabel="Enviar" />
+            <div id="contacto"><ContactForm variant="retro" title="Cuéntanos tu caso" subtitle="Respondemos en un día." fields="name,email,message" submitLabel="Enviar" /></div>
           </Panel>
           <Panel blk="rise" side="l">
             <Accordion variant="retro" items={"¿Qué formato tiene la prueba?|Un fondo en tu web durante 14 días.\n¿Puedo cancelar?|Cuando quieras, sin permanencia."} />

@@ -8,6 +8,8 @@ export type CheckboxGroupProps = {
   options?: string;
   /** valores marcados al inicio, separados por comas */
   defaultValue?: string;
+  /** al marcar o desmarcar, con todos los valores marcados */
+  onChange?: (values: string[]) => void;
   variant?: Variant;
   className?: string;
 };
@@ -17,6 +19,7 @@ export default function CheckboxGroup({
   label = "Notificaciones",
   options = "Email, SMS, Push, Newsletter",
   defaultValue = "Email, Push",
+  onChange,
   variant = "glass",
   className = "",
 }: CheckboxGroupProps) {
@@ -25,13 +28,13 @@ export default function CheckboxGroup({
   const [checked, setChecked] = useState(initial);
   useEffect(() => setChecked(initial), [initial]);
 
-  const toggle = (o: string) =>
-    setChecked((s) => {
-      const next = new Set(s);
-      if (next.has(o)) next.delete(o);
-      else next.add(o);
-      return next;
-    });
+  const toggle = (o: string) => {
+    const next = new Set(checked);
+    if (next.has(o)) next.delete(o);
+    else next.add(o);
+    setChecked(next);
+    onChange?.(list.filter((x) => next.has(x)));
+  };
 
   return (
     <fieldset className={`ui-cgroup ${vcls(variant)} ${className}`}>

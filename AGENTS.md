@@ -22,7 +22,9 @@ más un sitio que la enseña. Dos tipos de tarea:
 2. Compón con **Secciones** primero (`Hero`, `FeatureGrid`, `PricingSection`, `FAQSection`, `ContactForm`, `Footer`…)
    y baja a piezas sueltas solo para lo que falte.
 3. Si el usuario da como referencia una demo (`/demo/th-folio`, «como CIPHERGRID»…), busca su receta en la sección
-   «Landings de referencia» de `CATALOG.md` y abre el archivo de la landing solo para copiar estructura.
+   «Landings de referencia» de `CATALOG.md` y abre el archivo de la landing solo para copiar estructura. Para una web
+   de varias páginas (blog, tienda con carrito, servicios con chatbot, fabricante, portfolio minimalista) parte de
+   «Webs completas de referencia» (`/sitios/<slug>`, `components/sites/`; ver `docs/03-webs-completas.md`).
 4. **Pasa siempre las props de texto**: los defaults son copy de demostración (escuela de surf…). Pasa `""` para
    ocultar un texto opcional.
 5. Tema = tokens CSS `--bg --fg --mut --acc --acc2 --card --ln --r` en un contenedor; estilo = prop `variant`

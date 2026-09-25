@@ -7,6 +7,11 @@ export type CTASectionProps = {
   subtitle?: string;
   primaryCta?: string;
   secondaryCta?: string;
+  /** enlaces de los botones (sin ellos, `onPrimary`/`onSecondary` o nada) */
+  primaryHref?: string;
+  secondaryHref?: string;
+  onPrimary?: () => void;
+  onSecondary?: () => void;
   align?: "left" | "center";
   variant?: Variant;
   className?: string;
@@ -18,6 +23,10 @@ export default function CTASection({
   title = "El swell llega el sábado",
   subtitle = "Quedan doce plazas. Trae toalla, nosotros ponemos el resto.",
   primaryCta = "Apuntarme",
+  primaryHref,
+  secondaryHref,
+  onPrimary,
+  onSecondary,
   secondaryCta = "",
   align = "center",
   variant = "neon",
@@ -30,8 +39,8 @@ export default function CTASection({
       {subtitle && <p>{subtitle}</p>}
       {(primaryCta || secondaryCta) && (
         <div className="ui-cta__actions">
-          {primaryCta && <Button label={primaryCta} variant={variant} emphasis="primary" glyph="→" />}
-          {secondaryCta && <Button label={secondaryCta} variant={variant} emphasis="ghost" />}
+          {primaryCta && <Button label={primaryCta} variant={variant} emphasis="primary" glyph="→" href={primaryHref} onClick={onPrimary} />}
+          {secondaryCta && <Button label={secondaryCta} variant={variant} emphasis="ghost" href={secondaryHref} onClick={onSecondary} />}
         </div>
       )}
     </section>

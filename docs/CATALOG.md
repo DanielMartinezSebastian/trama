@@ -607,6 +607,7 @@ Tabla a partir de texto CSV. La cabecera y las filas se adaptan a la variante.
 |---|---|---|
 | `csv` | text | "Plan, Clases, Precio\nIniciación, 1, 35 €\nBono 5, 5, 150 €\nSurf trip, 6, 240 €" |
 | `striped` | boolean | true |
+| `width` | `full` · `auto` | "full" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "solid" |
 
 ### Bloque de código — `CodeBlock`
@@ -635,6 +636,7 @@ Barra de navegación completa: siete disposiciones (o piezas en el orden que qui
 | `slots` | text | "" |
 | `shape` | `island` · `full` · `contained` · `floating` · `transparent` · `underline` | "island" |
 | `size` | `sm` · `md` · `lg` | "md" |
+| `bleed` | boolean | false |
 | `search` | `none` · `bar` · `inline` · `button` · `command` | "bar" |
 | `searchPlaceholder` | text | "Buscar clases, tablas…" |
 | `searchItems` | text | "Horarios, Mareas de hoy, Bonos regalo" |
@@ -1153,6 +1155,99 @@ Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con im
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
 
+## Contenido (`contenido`)
+
+Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.
+
+### Texto con formato (Prose) — `Prose`
+
+La tipografía de un artículo o una página de documentación: títulos con ancla, párrafos, listas anidadas y de tareas, citas con firma, avisos, código, tablas, imágenes con pie, resaltado y teclas. Desde Markdown o desde tu propio HTML/MDX.
+
+| prop | tipo | default |
+|---|---|---|
+| `markdown` | text | "# Tu primera clase de surf\n\nTodo lo que necesitas saber **antes de meterte al agua**…" |
+| `size` | `sm` · `md` · `lg` | "md" |
+| `measure` | `narrow` · `normal` · `wide` · `full` | "normal" |
+| `dropCap` | boolean | false |
+| `anchors` | boolean | true |
+| `tone` | `acc` · `acc2` · `fg` | "acc" |
+| `codeVariant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+
+- Markdown → elementos React, sin HTML crudo: un texto de un CMS o de un usuario no puede inyectar marcado, y los enlaces solo admiten http(s), mailto, rutas y anclas.
+- Avisos al estilo GitHub: `> [!NOTE] Título`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`. Código: ```lenguaje archivo. Imágenes: `![alt](url "pie")`, con `gen:N` para las de ejemplo.
+- Con children en lugar de markdown, cualquier HTML o MDX recibe la misma tipografía.
+- Los títulos llevan id (los mismos que calcula TableOfContents con el mismo Markdown).
+
+### Aviso de documentación — `Callout`
+
+Nota, consejo, importante, cuidado o peligro dentro de un texto largo. Es contenido (lleva párrafos y no se descarta), no un estado de la interfaz como Alert. Puede plegarse.
+
+| prop | tipo | default |
+|---|---|---|
+| `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "info" |
+| `title` | text | "Antes de entrar al agua" |
+| `text` | text | "Revisa el **parte de olas** del día y avisa al monitor si es tu primera clase. Tienes …" |
+| `kind` | `bar` · `soft` · `outline` | "bar" |
+| `icon` | text | "" |
+| `collapsible` | boolean | false |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+
+- En Prose se escribe `> [!NOTE] Título` (o TIP, IMPORTANT, WARNING, CAUTION) seguido de las líneas del aviso.
+- El texto admite Markdown de línea; una línea en blanco separa párrafos. Con children se pinta lo que pases.
+
+### Índice de la página — `TableOfContents`
+
+«En esta página»: las secciones de un texto largo, con la que se está leyendo marcada. Sale del mismo Markdown que Prose, de los títulos de un contenedor de la página o de una lista a mano.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "En esta página" |
+| `kind` | `rail` · `list` · `numbered` | "rail" |
+| `depth` | `2` · `3` | "3" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+
+- markdown = mismos ids que Prose con ese texto · target = selector de un contenedor ya pintado (lee sus h2/h3 con id) · items = a mano, `## Título` por línea.
+- En la vista previa, desplaza el texto: el índice marca la sección visible.
+
+### Cabecera de artículo — `ArticleHeader`
+
+Categoría, título, entradilla, autor con cargo, fecha, tiempo de lectura, etiquetas y portada de una entrada de blog o una página de documentación.
+
+| prop | tipo | default |
+|---|---|---|
+| `kicker` | text | "Guías" |
+| `title` | text | "Tu primera clase de surf" |
+| `subtitle` | text | "Qué traer, cómo es la clase y qué hacer si algo sale mal. Todo en cinco minutos." |
+| `author` | text | "Lucía Ferrán" |
+| `authorRole` | text | "Monitora jefe" |
+| `date` | text | "12 sep 2026" |
+| `readTime` | text | "5 min" |
+| `tags` | text | "Iniciación, Seguridad, Material" |
+| `cover` | text | "gen:1" |
+| `align` | `left` · `center` | "left" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+
+### Artículo completo — `Article`
+
+La sección lista para un blog o una documentación: cabecera, índice lateral que sigue la lectura, cuerpo en Markdown con formato y barra de progreso de lectura opcional. En contenedores estrechos el índice sube sobre el texto.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Tu primera clase de surf" |
+| `kicker` | text | "Guías" |
+| `markdown` | text | "# Tu primera clase de surf\n\nTodo lo que necesitas saber **antes de meterte al agua**…" |
+| `toc` | `right` · `left` · `none` | "right" |
+| `tocKind` | `rail` · `list` · `numbered` | "rail" |
+| `cover` | text | "gen:1" |
+| `dropCap` | boolean | false |
+| `progress` | boolean | false |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+
+- Un «# Título» al principio del Markdown se quita: el título ya lo pone la cabecera.
+- readTime="auto" calcula los minutos del propio texto.
+- progress pinta una barra fija arriba de la ventana: en la vista previa la sigue la página, no la caja.
+
 ## Overlays (`overlays`)
 
 Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.
@@ -1228,6 +1323,24 @@ Panel deslizante desde un lateral (menú móvil, carrito, filtros). Se cierra co
 | `title` | text | "Menú" |
 | `body` | text | "Clases, Tablas, Reservas, Contacto, Ayuda." |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+
+### Chat de ayuda (chatbot) — `ChatWidget`
+
+Asistente flotante en una esquina: responde por reglas (palabras clave → respuesta, con respuestas rápidas) o, con onMessage, conectado a un modelo o servicio real. Indicador de escritura, aviso de no leídos y teclado.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Asistente Maré" |
+| `subtitle` | text | "Responde al momento · o te pasa con el equipo" |
+| `greeting` | text | "¡Hola! Soy el asistente de la escuela. Pregúntame por **clases**, **precios** o **mate…" |
+| `quickReplies` | text | "Precios, Horarios, Reservar, Hablar con una persona" |
+| `launcherLabel` | text | "¿Te ayudo?" |
+| `position` | `bottom-right` · `bottom-left` | "bottom-right" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+
+- Reglas, una por línea: `precio, cuesta => Cuesta **35 €**. || Reservar, Horarios`. Gana la que tiene más claves en el mensaje (sin tildes ni mayúsculas); tras `||`, las respuestas rápidas siguientes.
+- onMessage(texto, historial) → texto o { text, quickReplies } (puede ser async): sustituye a las reglas para usar un backend.
+- Flota sobre la ventana (portal a document.body con los tokens copiados): en la vista previa aparece en la esquina de la pantalla, no en el escenario.
 
 ## Pixel art (`pixel`)
 
@@ -1337,3 +1450,47 @@ Landing de prueba de más de 3000dvh: dieciséis actos con el fondo de formas 3D
 Archivo: `components/landings/minimal/FacetaLanding.tsx`
 
 `FeatureGrid` → `StatsSection` → `SectionHeader` ×18 → `VideoPlayer` ×9 → `Marquee` → `Timeline` → `Stepper` → `Tabs` → `Progress` ×3 → `Badge` ×4 → `ImageGallery` ×8 → `LogoCloud` → `PricingSection` → `TestimonialSection` → `FAQSection` → `CTASection` → `ContactForm` → `Accordion` → `Button` → `Footer`
+
+## Webs completas de referencia
+
+Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.
+
+### Kernel Log · blog de tecnología — `/sitios/kernel-log`
+
+El blog de una ingeniera de plataformas: artículos largos con código, índice y barra de lectura, buscador por temas, newsletter con archivo y página personal.
+
+Carpeta: `components/sites/kernel-log/` · 10 páginas: Inicio · Artículos · Lo que aprendí migrando 40 servicios a Kubernetes · Cómo bajé el tiempo de carga de una SPA de 6 s a 1,4 s · Server Components sin mitos: cuándo sí y cuándo no · RAG en producción: los tres fallos que nadie te cuenta · Escribir un informe de incidentes que alguien quiera leer · SQLite es suficiente (hasta que deja de serlo) · Newsletter · Sobre mí
+
+`SectionHeader` ×5 · `Button` ×5 · `ContactForm` ×4 · `Table` ×2 · `BlogCard` · `Timeline` · `NavBar` · `Pagination` · `TextField` · `StatsSection` · `Footer` · `FeatureGrid` · `Prose` · `Article` · `Toast`
+
+### Pixelforge · tienda de assets — `/sitios/pixelforge`
+
+Tienda de assets para videojuegos: catálogo con filtros, orden y búsqueda, fichas con licencias, carrito que se guarda entre páginas, cupón, pago en pasos, FAQ y páginas legales.
+
+Carpeta: `components/sites/pixelforge/` · 15 páginas: Inicio · Tienda · Héroes 16-bit · Mazmorra modular · Retro SFX · 300 · Pixel Sans · Interfaz RPG · Magia y partículas · Bosque encantado · Monstruos vol. 1 · Carrito · Preguntas frecuentes · Términos y condiciones · Política de privacidad · Licencias
+
+`Button` ×13 · `TextField` ×4 · `SectionHeader` ×3 · `Badge` ×3 · `Select` ×2 · `RadioGroup` ×2 · `Stepper` ×2 · `Alert` ×2 · `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `ImageGallery` · `Hero` · `CTASection` · `TestimonialSection` · `Footer` · `LogoCloud` · `Prose` · `TableOfContents` · `Toast`
+
+### Vigía · videovigilancia — `/sitios/vigia`
+
+Empresa de seguridad con chatbot en todas las páginas: servicios con ficha propia, planes mensual/anual que llevan al presupuesto, formulario de presupuesto en cuatro pasos con estimación y contacto.
+
+Carpeta: `components/sites/vigia/` · 9 páginas: Inicio · Servicios · Videovigilancia CCTV · Alarmas conectadas · Control de accesos · Central receptora 24 h · Planes y precios · Pide tu presupuesto · Contacto
+
+`Button` ×8 · `SectionHeader` ×5 · `TextField` ×4 · `Table` ×2 · `Stepper` ×2 · `Timeline` · `NavBar` · `Accordion` · `Select` · `CheckboxGroup` · `RadioGroup` · `Alert` · `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `Toast` · `ChatWidget`
+
+### Onda Instruments · equipos para DJ y músicos — `/sitios/onda`
+
+Fabricante de controladoras, sintetizadores, cajas de ritmos, monitores y auriculares: catálogo por categorías, fichas con especificaciones y descargas, artistas y soporte con registro de producto.
+
+Carpeta: `components/sites/onda/` · 12 páginas: Inicio · Productos · Polar 8 · DX-2 · DX-4 Pro · MX-4 · Nano · Pulse 16 · S5 · H1 · Artistas · Soporte
+
+`Button` ×7 · `SectionHeader` ×6 · `Table` ×3 · `TextField` ×2 · `ImageGallery` ×2 · `CTASection` ×2 · `FeatureGrid` ×2 · `Marquee` · `NavBar` · `Tabs` · `Select` · `Badge` · `Carousel` · `ContactForm` · `FAQSection` · `TestimonialSection` · `Footer` · `Toast`
+
+### Clara Vidal · estilismo — `/sitios/clara-vidal`
+
+Web de una estilista con estética minimalista (fondo claro, mucho aire, tipografía grande): servicios con precios, lookbook, diario con artículos, página personal y reserva de cita con huecos disponibles.
+
+Carpeta: `components/sites/clara-vidal/` · 9 páginas: Inicio · Servicios · Lookbook · Diario · Treinta prendas, cien combinaciones · Cómo elegir un abrigo que dure diez años · Los colores que te favorecen, sin test de estaciones · Sobre mí · Reservar
+
+`Button` ×6 · `TextField` ×2 · `BlogCard` · `NavBar` · `Select` · `RadioGroup` · `ImageGallery` · `FAQSection` · `Footer` · `LogoCloud` · `Prose` · `Article` · `Modal` · `Toast`

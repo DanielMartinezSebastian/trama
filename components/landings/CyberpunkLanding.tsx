@@ -375,6 +375,7 @@ export default function CyberpunkLanding({ hud }: { hud: boolean }) {
         <section className="cg__section">
           <Reveal trigger="inview" kind="fade">
             <PricingSection
+              ctaHref="#acceso"
               kicker="Acceso"
               title="Elige tu nivel de acceso"
               subtitle="Cambia o revoca el acceso cuando quieras."
@@ -395,6 +396,7 @@ export default function CyberpunkLanding({ hud }: { hud: boolean }) {
               <p className="cg__lead">Rellena tu perfil operativo. Revisamos cada solicitud manualmente en menos de 24 horas.</p>
             </div>
             <form
+              id="acceso"
               className="ui-surface ui-s ui-s--neon cg__access"
               onSubmit={(e) => {
                 e.preventDefault();

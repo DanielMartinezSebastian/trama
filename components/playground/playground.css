@@ -223,3 +223,6 @@
 .pg-sprog__box::-webkit-scrollbar { display: none; }
 .pg-sprog__box h3 { margin: 18px 0 6px; color: var(--fg); font-size: 18px; }
 .pg-sprog__box p { margin: 0 0 12px; }
+
+/* Vista previa de Prose: el texto (que tiene su propio ancho de línea) centrado en el escenario */
+.pg-center-x { margin-inline: auto; }

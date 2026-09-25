@@ -1,0 +1,42 @@
+/* Vigía (prefijo vg-): seguridad y videovigilancia. Solo organiza piezas del kit sobre los tokens de la web. */
+.vg { --st-max: 1200px; background: radial-gradient(ellipse 80% 50% at 70% -10%, color-mix(in srgb, var(--acc) 14%, transparent), transparent 70%), var(--bg); }
+.vg__hero-img { box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--acc) 60%, transparent); }
+.vg__svcs { margin-top: 24px; }
+.vg__svc { display: grid; grid-template-rows: auto 1fr; overflow: hidden; color: var(--fg); text-decoration: none; transition: translate 0.2s, border-color 0.2s; }
+.vg__svc:hover { translate: 0 -4px; border-color: color-mix(in srgb, var(--acc) 50%, var(--ln)); }
+.vg__svc img { border: 0; border-radius: 0; }
+.vg__svc > div { display: grid; gap: 8px; padding: 16px 18px 20px; }
+.vg__svc h3 { margin: 0; font-size: 18px; }
+.vg__svc p { margin: 0; font-size: 14px; line-height: 1.55; }
+.vg__more { font-size: 13px; font-weight: 700; color: var(--acc); }
+.vg__svclist { display: grid; gap: clamp(40px, 7vw, 80px); margin-top: 24px; }
+.vg__svcrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 56px); align-items: center; }
+.vg__svcrow--rev > img { order: 2; }
+.vg__svcrow h2 { margin: 0; font-size: clamp(24px, 3vw, 32px); }
+@media (max-width: 860px) { .vg__svcrow { grid-template-columns: minmax(0, 1fr); } .vg__svcrow--rev > img { order: 0; } }
+.vg__checks { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.vg__checks li { display: flex; gap: 10px; line-height: 1.5; }
+.vg__checks li::before { content: "✓"; flex: none; display: grid; place-content: center; width: 22px; height: 22px; font-size: 12px; font-weight: 800; color: var(--bg); background: var(--acc2); border-radius: 50%; }
+.vg__box { display: grid; align-content: start; gap: 16px; padding: 24px; }
+.vg__box h2 { margin: 0; font-size: 20px; }
+.vg__box .ui-table { width: 100%; }
+.vg__quote { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .vg__quote { grid-template-columns: minmax(0, 1fr); } }
+.vg__quote-main { display: grid; gap: 24px; padding: clamp(20px, 4vw, 32px); }
+.vg__fields { display: grid; gap: 20px; }
+.vg__fields--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.vg__fields .ui-field, .vg__fields .ui-select { width: 100%; }
+.vg__quote-nav { justify-content: flex-end; }
+.vg__estimate { position: sticky; top: 110px; display: grid; gap: 8px; padding: 22px; }
+.vg__estimate strong { font-size: 34px; color: var(--acc); }
+.vg__estimate small { font-size: 14px; color: var(--mut); font-weight: 600; }
+.vg__estimate p { margin: 0; font-size: 13px; line-height: 1.5; }
+.vg__summary { display: grid; gap: 14px; margin: 0; }
+.vg__summary > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--ln); }
+.vg__summary dt { color: var(--mut); }
+.vg__summary dd { margin: 0; }
+.vg__done { display: grid; justify-items: start; gap: 18px; max-width: 760px; padding: clamp(22px, 4vw, 36px); }
+.vg__done h1 { margin: 0; font-size: clamp(26px, 4vw, 40px); }
+.vg__contact { align-items: start; }
+.vg__info { display: grid; gap: 4px; padding: 16px 18px; }
+.vg__footer { padding-block: 24px 110px; }

@@ -8,6 +8,11 @@ export type HeroProps = {
   subtitle?: string;
   primaryCta?: string;
   secondaryCta?: string;
+  /** enlaces de los botones (sin ellos, `onPrimary`/`onSecondary` o nada) */
+  primaryHref?: string;
+  secondaryHref?: string;
+  onPrimary?: () => void;
+  onSecondary?: () => void;
   /** insignias de confianza separadas por comas; vacío = ninguna */
   badges?: string;
   align?: "left" | "center";
@@ -27,6 +32,10 @@ export default function Hero({
   title = "Aprende a leer el mar",
   subtitle = "Del primer remo a tu primera ola verde. Neopreno, tabla y monitores titulados incluidos.",
   primaryCta = "Reservar clase",
+  primaryHref,
+  secondaryHref,
+  onPrimary,
+  onSecondary,
   secondaryCta = "Ver horarios",
   badges = "+500 alumnos, 4.9 ★ valoración, Grupos de 6",
   align = "center",
@@ -43,8 +52,8 @@ export default function Hero({
         {subtitle && <p>{subtitle}</p>}
         {(primaryCta || secondaryCta) && (
           <div className="ui-hero__cta">
-            {primaryCta && <Button label={primaryCta} variant={variant} emphasis="primary" glyph="→" />}
-            {secondaryCta && <Button label={secondaryCta} variant={variant} emphasis="secondary" />}
+            {primaryCta && <Button label={primaryCta} variant={variant} emphasis="primary" glyph="→" href={primaryHref} onClick={onPrimary} />}
+            {secondaryCta && <Button label={secondaryCta} variant={variant} emphasis="secondary" href={secondaryHref} onClick={onSecondary} />}
           </div>
         )}
         {chips.length > 0 && (

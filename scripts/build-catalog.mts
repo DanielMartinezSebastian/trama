@@ -5,10 +5,11 @@
  *   npm run catalog          → escribe docs/catalog.json y docs/CATALOG.md
  *   npm run catalog:check    → falla si están desactualizados o si alguna validación no pasa
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { CATEGORIES, STYLES, defaultsOf, snippet, type PropSpec } from "@/lib/catalog/schema";
 import { catalog } from "@/lib/catalog/catalog";
 import { demos } from "@/lib/demos";
+import { sites } from "@/lib/sites";
 import { closure, kitComponents } from "./kit-lib.mts";
 
 const CHECK = process.argv.includes("--check");
@@ -47,7 +48,7 @@ for (const d of demos.filter((d) => d.render === "kit")) {
 }
 
 // El kit no puede depender del sitio: si lo hiciera, kit:export arrastraría catálogo, demos o landings.
-const FORBIDDEN = ["lib/catalog/", "lib/demos", "lib/themes/", "components/landings/", "components/playground/", "app/"];
+const FORBIDDEN = ["lib/catalog/", "lib/demos", "lib/themes/", "lib/sites/", "components/landings/", "components/sites/", "components/playground/", "app/"];
 for (const f of closure(kitComponents())) {
   if (FORBIDDEN.some((x) => f.startsWith(x))) errors.push(`el kit depende de ${f} (components/ui/ no puede importar del sitio)`);
 }
@@ -99,6 +100,31 @@ const landings = demos
     };
   });
 
+// ---------- Webs completas (varias páginas): componentes del kit que usa cada una ----------
+const siteRecipes = sites.map((site) => {
+  const files = readdirSync(site.dir).filter((f) => f.endsWith(".tsx")).map((f) => `${site.dir}/${f}`);
+  if (!files.length) errors.push(`web ${site.slug}: no hay archivos .tsx en ${site.dir}`);
+  const uses = new Map<string, number>();
+  for (const file of files) {
+    const src = readFileSync(file, "utf8");
+    const imported = new Set([...src.matchAll(/import\s+(\w+)(?:\s*,\s*\{[^}]*\})?\s+from\s+"@\/components\/ui\/(\w+)"/g)].map((m) => m[2]));
+    for (const [name] of byComponent) {
+      if (!imported.has(name)) continue;
+      const n = [...src.matchAll(new RegExp(`<${name}[\\s/>]`, "g"))].length;
+      if (n) uses.set(name, (uses.get(name) ?? 0) + n);
+    }
+  }
+  return {
+    slug: site.slug,
+    title: site.title,
+    url: `/sitios/${site.slug}`,
+    dir: site.dir,
+    description: site.blurb,
+    pages: site.routes.map((r) => ({ path: `/sitios/${site.slug}${r.path ? `/${r.path}` : ""}`, title: r.title })),
+    components: [...uses].sort((a, b) => b[1] - a[1]).map(([component, n]) => ({ component, id: byComponent.get(component)!.id, uses: n })),
+  };
+});
+
 // ---------- Salida ----------
 const propOut = (p: PropSpec) => ({
   key: p.key,
@@ -130,6 +156,7 @@ const json = {
     preview: `/componentes#${e.id}`,
   })),
   landings,
+  sites: siteRecipes,
 };
 
 const md: string[] = [
@@ -167,6 +194,16 @@ for (const l of landings) {
   md.push(`### ${l.title} — \`${l.url}\``, "", l.description, "", `Archivo: \`${l.file}\``, "", l.components.map((c) => `\`${c.component}\`${c.uses > 1 ? ` ×${c.uses}` : ""}`).join(" → "), "");
 }
 
+md.push(
+  "## Webs completas de referencia",
+  "",
+  "Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.",
+  "",
+);
+for (const w of siteRecipes) {
+  md.push(`### ${w.title} — \`${w.url}\``, "", w.description, "", `Carpeta: \`${w.dir}/\` · ${w.pages.length} páginas: ${w.pages.map((p) => p.title).join(" · ")}`, "", w.components.map((c) => `\`${c.component}\`${c.uses > 1 ? ` ×${c.uses}` : ""}`).join(" · "), "");
+}
+
 const outputs: [string, string][] = [
   ["docs/catalog.json", JSON.stringify(json, null, 2) + "\n"],
   ["docs/CATALOG.md", md.join("\n")],
@@ -184,4 +221,4 @@ if (errors.length) {
   console.error(`✗ ${errors.length} problema(s):\n  - ${errors.join("\n  - ")}`);
   process.exit(1);
 }
-console.log(`✓ ${catalog.length} componentes, ${CATEGORIES.length} categorías, ${landings.length} landings${CHECK ? " (al día)" : " → docs/catalog.json, docs/CATALOG.md"}`);
+console.log(`✓ ${catalog.length} componentes, ${CATEGORIES.length} categorías, ${landings.length} landings, ${siteRecipes.length} webs${CHECK ? " (al día)" : " → docs/catalog.json, docs/CATALOG.md"}`);

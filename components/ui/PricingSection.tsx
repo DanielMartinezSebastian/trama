@@ -100,7 +100,7 @@ export default function PricingSection({
 
   return (
     <section className={`ui-pricing ${className}`}>
-      <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align="center" variant="minimal" />
+      {(kicker || title || subtitle) && <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align="center" variant="minimal" />}
       {hasYearly && (
         <div className={`ui-billing ui-surface ${vcls(variant)}`} role="group" aria-label="Periodo de facturación">
           <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>

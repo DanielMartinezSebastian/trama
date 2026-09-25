@@ -355,6 +355,7 @@ export default function FolioLanding({ hud }: { hud: boolean }) {
         <section className="fol__section">
           <Reveal trigger="inview" kind="fade">
             <PricingSection
+              ctaHref="#acceso"
               kicker="Planes"
               title="Elige cómo quieres escribir"
               subtitle="Cambia o cancela cuando quieras, sin permanencia."
@@ -375,6 +376,7 @@ export default function FolioLanding({ hud }: { hud: boolean }) {
               <p className="fol__lead">Cuéntanos qué estás escribiendo. Tu primer borrador estará listo en menos de un minuto.</p>
             </div>
             <form
+              id="acceso"
               className="ui-surface ui-s ui-s--solid fol__access"
               onSubmit={(e) => {
                 e.preventDefault();

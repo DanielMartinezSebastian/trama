@@ -422,6 +422,7 @@ export default function MycelLanding({ hud }: { hud: boolean }) {
         <section className="myc__section">
           <Reveal trigger="inview" kind="fade">
             <PricingSection
+              ctaHref="#acceso"
               kicker="Planes"
               title="Elige cuánto quieres crecer"
               subtitle="Cambia o cancela cuando quieras, sin permanencia."
@@ -442,6 +443,7 @@ export default function MycelLanding({ hud }: { hud: boolean }) {
               <p className="myc__lead">Rellena tu parcela. Un agrónomo de la red revisa cada solicitud en menos de 48 horas.</p>
             </div>
             <form
+              id="acceso"
               className="ui-surface ui-s ui-s--glass myc__access"
               onSubmit={(e) => {
                 e.preventDefault();

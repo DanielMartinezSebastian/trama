@@ -10,6 +10,10 @@ export type SelectProps = {
   placeholder?: string;
   size?: "sm" | "md" | "lg";
   variant?: Variant;
+  /** valor controlado desde fuera (con `onChange`) */
+  value?: string;
+  /** al elegir una opción */
+  onChange?: (value: string) => void;
   className?: string;
 };
 
@@ -26,10 +30,13 @@ export default function Select({
   placeholder = "Elige una opción",
   size = "md",
   variant = "glass",
+  value: controlled,
+  onChange,
   className = "",
 }: SelectProps) {
   const list = useMemo(() => options.split(",").map((s) => s.trim()).filter(Boolean), [options]);
-  const [value, setValue] = useState(defaultValue);
+  const [inner, setValue] = useState(defaultValue);
+  const value = controlled ?? inner;
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
@@ -63,6 +70,7 @@ export default function Select({
                 className={`ui-select__opt ${o === value ? "is-selected" : ""}`}
                 onClick={() => {
                   setValue(o);
+                  onChange?.(o);
                   setOpen(false);
                 }}
               >

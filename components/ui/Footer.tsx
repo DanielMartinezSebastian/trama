@@ -4,7 +4,7 @@ import { vcls, type Variant } from "./variants";
 export type FooterProps = {
   brand?: string;
   tagline?: string;
-  /** columnas separadas por «;», cada una «Título: enlace1, enlace2, enlace3» */
+  /** columnas separadas por «;», cada una «Título: enlace1, enlace2=/ruta, enlace3=https://…» (`=` convierte el texto en enlace) */
   columns?: string;
   /** iniciales o siglas de redes, separadas por comas; vacío = ninguna. Cada una puede ser un icono pixel art: `icon:github` (ver Icon) */
   social?: string;
@@ -56,9 +56,12 @@ export default function Footer({
               <div key={c.title}>
                 <span>{c.title}</span>
                 <ul>
-                  {c.links.map((l) => (
-                    <li key={l}>{l}</li>
-                  ))}
+                  {c.links.map((l) => {
+                    const eq = l.indexOf("=");
+                    const label = eq > 0 ? l.slice(0, eq).trim() : l;
+                    const href = eq > 0 ? l.slice(eq + 1).trim() : "";
+                    return <li key={l}>{href ? <a href={href}>{label}</a> : label}</li>;
+                  })}
                 </ul>
               </div>
             ))}

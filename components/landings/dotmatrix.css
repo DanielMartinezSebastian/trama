@@ -28,7 +28,7 @@
 .dmx__nav {
   position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
   padding: 10px clamp(16px, 4vw, 40px); background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: blur(6px); border-bottom: 1px dotted var(--ln);
+  backdrop-filter: blur(6px);
 }
 .dmx__nav > .ui-nav { flex: 1; }
 

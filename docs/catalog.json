@@ -167,6 +167,18 @@
       ]
     },
     {
+      "id": "contenido",
+      "label": "Contenido",
+      "blurb": "Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.",
+      "components": [
+        "prose",
+        "callout",
+        "table-of-contents",
+        "article-header",
+        "article"
+      ]
+    },
+    {
       "id": "overlays",
       "label": "Overlays",
       "blurb": "Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.",
@@ -174,7 +186,8 @@
         "modal",
         "toast",
         "tooltip",
-        "drawer"
+        "drawer",
+        "chat-widget"
       ]
     },
     {
@@ -3795,6 +3808,16 @@
           "label": "Filas alternas"
         },
         {
+          "key": "width",
+          "type": "select",
+          "default": "full",
+          "label": "Ancho",
+          "options": [
+            "full",
+            "auto"
+          ]
+        },
+        {
           "key": "variant",
           "type": "select",
           "default": "solid",
@@ -3942,6 +3965,13 @@
             "md",
             "lg"
           ]
+        },
+        {
+          "key": "bleed",
+          "type": "boolean",
+          "default": false,
+          "label": "Ocupar el ancho de la ventana",
+          "hint": "sale de los márgenes de su contenedor"
         },
         {
           "key": "search",
@@ -6903,6 +6933,487 @@
       "preview": "/componentes#articles-section"
     },
     {
+      "id": "prose",
+      "name": "Texto con formato (Prose)",
+      "component": "Prose",
+      "import": "import Prose from \"@/components/ui/Prose\";",
+      "category": "contenido",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "La tipografía de un artículo o una página de documentación: títulos con ancla, párrafos, listas anidadas y de tareas, citas con firma, avisos, código, tablas, imágenes con pie, resaltado y teclas. Desde Markdown o desde tu propio HTML/MDX.",
+      "props": [
+        {
+          "key": "markdown",
+          "type": "text",
+          "default": "# Tu primera clase de surf\n\nTodo lo que necesitas saber **antes de meterte al agua**: qué traer, cómo es la clase y qué hacer si algo sale mal. Léelo con calma; son *cinco minutos* y te ahorran la mitad de los revolcones.\n\n## Qué traer\n\n- Bañador y una toalla grande\n- Crema solar resistente al agua (==factor 50==)\n- Agua y algo de comer para después\n  - Fruta o frutos secos\n  - Nada pesado justo antes de entrar\n\nEl neopreno, la tabla y el leash los ponemos nosotros. Si tienes tu propio material, tráelo y lo revisamos.\n\n## Cómo es la clase\n\n1. **Calentamiento** en la arena, diez minutos.\n2. **Técnica en seco**: remada, *take-off* y posición sobre la tabla.\n3. **Agua**: espuma blanda, siempre con un monitor a menos de cinco metros.\n\n> [!TIP] Lo que más ayuda\n> Mira siempre hacia donde quieres ir, no a tus pies. La tabla sigue a la cabeza.\n\n### Horarios\n\n| Turno | Hora | Plazas |\n|:--|:--:|--:|\n| Mañana | 9:30 | 6 |\n| Mediodía | 12:00 | 6 |\n| Tarde | 17:30 | 4 |\n\n## Antes de reservar\n\n- [x] Saber nadar 50 metros\n- [x] Tener más de 8 años\n- [ ] Traer autorización si eres menor\n\n> [!WARNING]\n> Si hay bandera roja, la clase se aplaza sin coste. Te avisamos por mensaje antes de las 8:00.\n\n![Pico de la playa al amanecer](gen:0 \"La playa de la escuela, con marea baja.\")\n\n## Si reservas desde la web\n\nPulsa [[Reservar]] y elige turno. Si integras las reservas en tu propia web, este es el formato del aviso que enviamos:\n\n```ts reserva.ts\nexport type Reserva = {\n  turno: \"mañana\" | \"mediodía\" | \"tarde\";\n  plazas: number;\n};\n```\n\n---\n\n> El mar no se domina: se aprende a leer. La primera ola que coges de verdad no se olvida.\n> — Lucía Ferrán, monitora jefe\n\n¿Dudas? Escríbenos a [hola@mare.surf](mailto:hola@mare.surf) o pásate por la escuela. ~~Abrimos los lunes~~ Abrimos todos los días.",
+          "label": "Markdown"
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño del texto",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "measure",
+          "type": "select",
+          "default": "normal",
+          "label": "Ancho de línea",
+          "options": [
+            "narrow",
+            "normal",
+            "wide",
+            "full"
+          ]
+        },
+        {
+          "key": "dropCap",
+          "type": "boolean",
+          "default": false,
+          "label": "Letra capital"
+        },
+        {
+          "key": "anchors",
+          "type": "boolean",
+          "default": true,
+          "label": "Anclas en los títulos"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "acc",
+            "acc2",
+            "fg"
+          ]
+        },
+        {
+          "key": "codeVariant",
+          "type": "select",
+          "default": "terminal",
+          "label": "Variante del código",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "notes": [
+        "Markdown → elementos React, sin HTML crudo: un texto de un CMS o de un usuario no puede inyectar marcado, y los enlaces solo admiten http(s), mailto, rutas y anclas.",
+        "Avisos al estilo GitHub: `> [!NOTE] Título`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`. Código: ```lenguaje archivo. Imágenes: `![alt](url \"pie\")`, con `gen:N` para las de ejemplo.",
+        "Con children en lugar de markdown, cualquier HTML o MDX recibe la misma tipografía.",
+        "Los títulos llevan id (los mismos que calcula TableOfContents con el mismo Markdown)."
+      ],
+      "example": "import Prose from \"@/components/ui/Prose\";\n\n<Prose />",
+      "preview": "/componentes#prose"
+    },
+    {
+      "id": "callout",
+      "name": "Aviso de documentación",
+      "component": "Callout",
+      "import": "import Callout from \"@/components/ui/Callout\";",
+      "category": "contenido",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Nota, consejo, importante, cuidado o peligro dentro de un texto largo. Es contenido (lleva párrafos y no se descarta), no un estado de la interfaz como Alert. Puede plegarse.",
+      "props": [
+        {
+          "key": "intent",
+          "type": "select",
+          "default": "info",
+          "label": "Tipo",
+          "options": [
+            "accent",
+            "neutral",
+            "success",
+            "info",
+            "warning",
+            "danger"
+          ]
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Antes de entrar al agua",
+          "label": "Título"
+        },
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Revisa el **parte de olas** del día y avisa al monitor si es tu primera clase. Tienes la tabla de mareas en [Reservas](#reservas).",
+          "label": "Texto"
+        },
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "bar",
+          "label": "Aspecto",
+          "options": [
+            "bar",
+            "soft",
+            "outline"
+          ]
+        },
+        {
+          "key": "icon",
+          "type": "text",
+          "default": "",
+          "label": "Icono (vacío = el del tipo)"
+        },
+        {
+          "key": "collapsible",
+          "type": "boolean",
+          "default": false,
+          "label": "Plegable"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "notes": [
+        "En Prose se escribe `> [!NOTE] Título` (o TIP, IMPORTANT, WARNING, CAUTION) seguido de las líneas del aviso.",
+        "El texto admite Markdown de línea; una línea en blanco separa párrafos. Con children se pinta lo que pases."
+      ],
+      "example": "import Callout from \"@/components/ui/Callout\";\n\n<Callout\n  text=\"Revisa el **parte de olas** del día y avisa al monitor si es tu primera clase. Tienes la tabla de mareas en [Reservas](#reservas).\"\n  title=\"Antes de entrar al agua\"\n/>",
+      "preview": "/componentes#callout"
+    },
+    {
+      "id": "table-of-contents",
+      "name": "Índice de la página",
+      "component": "TableOfContents",
+      "import": "import TableOfContents from \"@/components/ui/TableOfContents\";",
+      "category": "contenido",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "«En esta página»: las secciones de un texto largo, con la que se está leyendo marcada. Sale del mismo Markdown que Prose, de los títulos de un contenedor de la página o de una lista a mano.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "En esta página",
+          "label": "Título"
+        },
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "rail",
+          "label": "Estilo",
+          "options": [
+            "rail",
+            "list",
+            "numbered"
+          ]
+        },
+        {
+          "key": "depth",
+          "type": "select",
+          "default": "3",
+          "label": "Profundidad",
+          "options": [
+            "2",
+            "3"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "notes": [
+        "markdown = mismos ids que Prose con ese texto · target = selector de un contenedor ya pintado (lee sus h2/h3 con id) · items = a mano, `## Título` por línea.",
+        "En la vista previa, desplaza el texto: el índice marca la sección visible."
+      ],
+      "example": "import TableOfContents from \"@/components/ui/TableOfContents\";\n\n<TableOfContents\n  title=\"En esta página\"\n/>",
+      "preview": "/componentes#table-of-contents"
+    },
+    {
+      "id": "article-header",
+      "name": "Cabecera de artículo",
+      "component": "ArticleHeader",
+      "import": "import ArticleHeader from \"@/components/ui/ArticleHeader\";",
+      "category": "contenido",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Categoría, título, entradilla, autor con cargo, fecha, tiempo de lectura, etiquetas y portada de una entrada de blog o una página de documentación.",
+      "props": [
+        {
+          "key": "kicker",
+          "type": "text",
+          "default": "Guías",
+          "label": "Categoría"
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Tu primera clase de surf",
+          "label": "Título"
+        },
+        {
+          "key": "subtitle",
+          "type": "text",
+          "default": "Qué traer, cómo es la clase y qué hacer si algo sale mal. Todo en cinco minutos.",
+          "label": "Entradilla"
+        },
+        {
+          "key": "author",
+          "type": "text",
+          "default": "Lucía Ferrán",
+          "label": "Autor"
+        },
+        {
+          "key": "authorRole",
+          "type": "text",
+          "default": "Monitora jefe",
+          "label": "Cargo"
+        },
+        {
+          "key": "date",
+          "type": "text",
+          "default": "12 sep 2026",
+          "label": "Fecha"
+        },
+        {
+          "key": "readTime",
+          "type": "text",
+          "default": "5 min",
+          "label": "Tiempo de lectura"
+        },
+        {
+          "key": "tags",
+          "type": "text",
+          "default": "Iniciación, Seguridad, Material",
+          "label": "Etiquetas (comas)"
+        },
+        {
+          "key": "cover",
+          "type": "text",
+          "default": "gen:1",
+          "label": "Portada (URL o gen:N)"
+        },
+        {
+          "key": "align",
+          "type": "select",
+          "default": "left",
+          "label": "Alineación",
+          "options": [
+            "left",
+            "center"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "example": "import ArticleHeader from \"@/components/ui/ArticleHeader\";\n\n<ArticleHeader\n  title=\"Tu primera clase de surf\"\n/>",
+      "preview": "/componentes#article-header"
+    },
+    {
+      "id": "article",
+      "name": "Artículo completo",
+      "component": "Article",
+      "import": "import Article from \"@/components/ui/Article\";",
+      "category": "contenido",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "La sección lista para un blog o una documentación: cabecera, índice lateral que sigue la lectura, cuerpo en Markdown con formato y barra de progreso de lectura opcional. En contenedores estrechos el índice sube sobre el texto.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Tu primera clase de surf",
+          "label": "Título"
+        },
+        {
+          "key": "kicker",
+          "type": "text",
+          "default": "Guías",
+          "label": "Categoría"
+        },
+        {
+          "key": "markdown",
+          "type": "text",
+          "default": "# Tu primera clase de surf\n\nTodo lo que necesitas saber **antes de meterte al agua**: qué traer, cómo es la clase y qué hacer si algo sale mal. Léelo con calma; son *cinco minutos* y te ahorran la mitad de los revolcones.\n\n## Qué traer\n\n- Bañador y una toalla grande\n- Crema solar resistente al agua (==factor 50==)\n- Agua y algo de comer para después\n  - Fruta o frutos secos\n  - Nada pesado justo antes de entrar\n\nEl neopreno, la tabla y el leash los ponemos nosotros. Si tienes tu propio material, tráelo y lo revisamos.\n\n## Cómo es la clase\n\n1. **Calentamiento** en la arena, diez minutos.\n2. **Técnica en seco**: remada, *take-off* y posición sobre la tabla.\n3. **Agua**: espuma blanda, siempre con un monitor a menos de cinco metros.\n\n> [!TIP] Lo que más ayuda\n> Mira siempre hacia donde quieres ir, no a tus pies. La tabla sigue a la cabeza.\n\n### Horarios\n\n| Turno | Hora | Plazas |\n|:--|:--:|--:|\n| Mañana | 9:30 | 6 |\n| Mediodía | 12:00 | 6 |\n| Tarde | 17:30 | 4 |\n\n## Antes de reservar\n\n- [x] Saber nadar 50 metros\n- [x] Tener más de 8 años\n- [ ] Traer autorización si eres menor\n\n> [!WARNING]\n> Si hay bandera roja, la clase se aplaza sin coste. Te avisamos por mensaje antes de las 8:00.\n\n![Pico de la playa al amanecer](gen:0 \"La playa de la escuela, con marea baja.\")\n\n## Si reservas desde la web\n\nPulsa [[Reservar]] y elige turno. Si integras las reservas en tu propia web, este es el formato del aviso que enviamos:\n\n```ts reserva.ts\nexport type Reserva = {\n  turno: \"mañana\" | \"mediodía\" | \"tarde\";\n  plazas: number;\n};\n```\n\n---\n\n> El mar no se domina: se aprende a leer. La primera ola que coges de verdad no se olvida.\n> — Lucía Ferrán, monitora jefe\n\n¿Dudas? Escríbenos a [hola@mare.surf](mailto:hola@mare.surf) o pásate por la escuela. ~~Abrimos los lunes~~ Abrimos todos los días.",
+          "label": "Cuerpo (Markdown)"
+        },
+        {
+          "key": "toc",
+          "type": "select",
+          "default": "right",
+          "label": "Índice",
+          "options": [
+            "right",
+            "left",
+            "none"
+          ]
+        },
+        {
+          "key": "tocKind",
+          "type": "select",
+          "default": "rail",
+          "label": "Estilo del índice",
+          "options": [
+            "rail",
+            "list",
+            "numbered"
+          ]
+        },
+        {
+          "key": "cover",
+          "type": "text",
+          "default": "gen:1",
+          "label": "Portada (URL o gen:N)"
+        },
+        {
+          "key": "dropCap",
+          "type": "boolean",
+          "default": false,
+          "label": "Letra capital"
+        },
+        {
+          "key": "progress",
+          "type": "boolean",
+          "default": false,
+          "label": "Barra de lectura"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "notes": [
+        "Un «# Título» al principio del Markdown se quita: el título ya lo pone la cabecera.",
+        "readTime=\"auto\" calcula los minutos del propio texto.",
+        "progress pinta una barra fija arriba de la ventana: en la vista previa la sigue la página, no la caja."
+      ],
+      "example": "import Article from \"@/components/ui/Article\";\n\n<Article\n  title=\"Tu primera clase de surf\"\n/>",
+      "preview": "/componentes#article"
+    },
+    {
       "id": "modal",
       "name": "Modal",
       "component": "Modal",
@@ -7326,6 +7837,90 @@
       ],
       "example": "import Drawer from \"@/components/ui/Drawer\";\n\n<Drawer\n  title=\"Menú\"\n/>",
       "preview": "/componentes#drawer"
+    },
+    {
+      "id": "chat-widget",
+      "name": "Chat de ayuda (chatbot)",
+      "component": "ChatWidget",
+      "import": "import ChatWidget from \"@/components/ui/ChatWidget\";",
+      "category": "overlays",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Asistente flotante en una esquina: responde por reglas (palabras clave → respuesta, con respuestas rápidas) o, con onMessage, conectado a un modelo o servicio real. Indicador de escritura, aviso de no leídos y teclado.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Asistente Maré",
+          "label": "Nombre"
+        },
+        {
+          "key": "subtitle",
+          "type": "text",
+          "default": "Responde al momento · o te pasa con el equipo",
+          "label": "Subtítulo"
+        },
+        {
+          "key": "greeting",
+          "type": "text",
+          "default": "¡Hola! Soy el asistente de la escuela. Pregúntame por **clases**, **precios** o **material**.",
+          "label": "Saludo"
+        },
+        {
+          "key": "quickReplies",
+          "type": "text",
+          "default": "Precios, Horarios, Reservar, Hablar con una persona",
+          "label": "Respuestas rápidas"
+        },
+        {
+          "key": "launcherLabel",
+          "type": "text",
+          "default": "¿Te ayudo?",
+          "label": "Texto del botón"
+        },
+        {
+          "key": "position",
+          "type": "select",
+          "default": "bottom-right",
+          "label": "Esquina",
+          "options": [
+            "bottom-right",
+            "bottom-left"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "glass",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "notes": [
+        "Reglas, una por línea: `precio, cuesta => Cuesta **35 €**. || Reservar, Horarios`. Gana la que tiene más claves en el mensaje (sin tildes ni mayúsculas); tras `||`, las respuestas rápidas siguientes.",
+        "onMessage(texto, historial) → texto o { text, quickReplies } (puede ser async): sustituye a las reglas para usar un backend.",
+        "Flota sobre la ventana (portal a document.body con los tokens copiados): en la vista previa aparece en la esquina de la pantalla, no en el escenario."
+      ],
+      "example": "import ChatWidget from \"@/components/ui/ChatWidget\";\n\n<ChatWidget\n  title=\"Asistente Maré\"\n/>",
+      "preview": "/componentes#chat-widget"
     },
     {
       "id": "icon",
@@ -8841,6 +9436,738 @@
         {
           "component": "Footer",
           "id": "footer",
+          "uses": 1
+        }
+      ]
+    }
+  ],
+  "sites": [
+    {
+      "slug": "kernel-log",
+      "title": "Kernel Log · blog de tecnología",
+      "url": "/sitios/kernel-log",
+      "dir": "components/sites/kernel-log",
+      "description": "El blog de una ingeniera de plataformas: artículos largos con código, índice y barra de lectura, buscador por temas, newsletter con archivo y página personal.",
+      "pages": [
+        {
+          "path": "/sitios/kernel-log",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos",
+          "title": "Artículos"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/migrar-40-servicios-a-kubernetes",
+          "title": "Lo que aprendí migrando 40 servicios a Kubernetes"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/bajar-el-tiempo-de-carga-de-6-a-1-4-segundos",
+          "title": "Cómo bajé el tiempo de carga de una SPA de 6 s a 1,4 s"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/server-components-sin-mitos",
+          "title": "Server Components sin mitos: cuándo sí y cuándo no"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/rag-en-produccion-tres-fallos",
+          "title": "RAG en producción: los tres fallos que nadie te cuenta"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/informes-de-incidentes-que-se-leen",
+          "title": "Escribir un informe de incidentes que alguien quiera leer"
+        },
+        {
+          "path": "/sitios/kernel-log/articulos/sqlite-es-suficiente",
+          "title": "SQLite es suficiente (hasta que deja de serlo)"
+        },
+        {
+          "path": "/sitios/kernel-log/newsletter",
+          "title": "Newsletter"
+        },
+        {
+          "path": "/sitios/kernel-log/sobre-mi",
+          "title": "Sobre mí"
+        }
+      ],
+      "components": [
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 5
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 5
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 4
+        },
+        {
+          "component": "Table",
+          "id": "table",
+          "uses": 2
+        },
+        {
+          "component": "BlogCard",
+          "id": "blog-card",
+          "uses": 1
+        },
+        {
+          "component": "Timeline",
+          "id": "timeline",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Pagination",
+          "id": "pagination",
+          "uses": 1
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "StatsSection",
+          "id": "stats-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "FeatureGrid",
+          "id": "feature-grid",
+          "uses": 1
+        },
+        {
+          "component": "Prose",
+          "id": "prose",
+          "uses": 1
+        },
+        {
+          "component": "Article",
+          "id": "article",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "pixelforge",
+      "title": "Pixelforge · tienda de assets",
+      "url": "/sitios/pixelforge",
+      "dir": "components/sites/pixelforge",
+      "description": "Tienda de assets para videojuegos: catálogo con filtros, orden y búsqueda, fichas con licencias, carrito que se guarda entre páginas, cupón, pago en pasos, FAQ y páginas legales.",
+      "pages": [
+        {
+          "path": "/sitios/pixelforge",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/pixelforge/tienda",
+          "title": "Tienda"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/heroes-16-bit",
+          "title": "Héroes 16-bit"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/mazmorra-modular",
+          "title": "Mazmorra modular"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/retro-sfx",
+          "title": "Retro SFX · 300"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/pixel-sans",
+          "title": "Pixel Sans"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/interfaz-rpg",
+          "title": "Interfaz RPG"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/magia-y-particulas",
+          "title": "Magia y partículas"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/bosque-encantado",
+          "title": "Bosque encantado"
+        },
+        {
+          "path": "/sitios/pixelforge/producto/monstruos-vol-1",
+          "title": "Monstruos vol. 1"
+        },
+        {
+          "path": "/sitios/pixelforge/carrito",
+          "title": "Carrito"
+        },
+        {
+          "path": "/sitios/pixelforge/faq",
+          "title": "Preguntas frecuentes"
+        },
+        {
+          "path": "/sitios/pixelforge/legal/terminos",
+          "title": "Términos y condiciones"
+        },
+        {
+          "path": "/sitios/pixelforge/legal/privacidad",
+          "title": "Política de privacidad"
+        },
+        {
+          "path": "/sitios/pixelforge/legal/licencias",
+          "title": "Licencias"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 13
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 4
+        },
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 3
+        },
+        {
+          "component": "Badge",
+          "id": "badge",
+          "uses": 3
+        },
+        {
+          "component": "Select",
+          "id": "select",
+          "uses": 2
+        },
+        {
+          "component": "RadioGroup",
+          "id": "radio-group",
+          "uses": 2
+        },
+        {
+          "component": "Stepper",
+          "id": "stepper",
+          "uses": 2
+        },
+        {
+          "component": "Alert",
+          "id": "alert",
+          "uses": 2
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Tabs",
+          "id": "tabs",
+          "uses": 1
+        },
+        {
+          "component": "Accordion",
+          "id": "accordion",
+          "uses": 1
+        },
+        {
+          "component": "Breadcrumbs",
+          "id": "breadcrumbs",
+          "uses": 1
+        },
+        {
+          "component": "ImageGallery",
+          "id": "image-gallery",
+          "uses": 1
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "CTASection",
+          "id": "cta-section",
+          "uses": 1
+        },
+        {
+          "component": "TestimonialSection",
+          "id": "testimonial-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "LogoCloud",
+          "id": "logo-cloud",
+          "uses": 1
+        },
+        {
+          "component": "Prose",
+          "id": "prose",
+          "uses": 1
+        },
+        {
+          "component": "TableOfContents",
+          "id": "table-of-contents",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "vigia",
+      "title": "Vigía · videovigilancia",
+      "url": "/sitios/vigia",
+      "dir": "components/sites/vigia",
+      "description": "Empresa de seguridad con chatbot en todas las páginas: servicios con ficha propia, planes mensual/anual que llevan al presupuesto, formulario de presupuesto en cuatro pasos con estimación y contacto.",
+      "pages": [
+        {
+          "path": "/sitios/vigia",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/vigia/servicios",
+          "title": "Servicios"
+        },
+        {
+          "path": "/sitios/vigia/servicios/videovigilancia",
+          "title": "Videovigilancia CCTV"
+        },
+        {
+          "path": "/sitios/vigia/servicios/alarmas",
+          "title": "Alarmas conectadas"
+        },
+        {
+          "path": "/sitios/vigia/servicios/control-de-accesos",
+          "title": "Control de accesos"
+        },
+        {
+          "path": "/sitios/vigia/servicios/central-24h",
+          "title": "Central receptora 24 h"
+        },
+        {
+          "path": "/sitios/vigia/planes",
+          "title": "Planes y precios"
+        },
+        {
+          "path": "/sitios/vigia/presupuesto",
+          "title": "Pide tu presupuesto"
+        },
+        {
+          "path": "/sitios/vigia/contacto",
+          "title": "Contacto"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 8
+        },
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 5
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 4
+        },
+        {
+          "component": "Table",
+          "id": "table",
+          "uses": 2
+        },
+        {
+          "component": "Stepper",
+          "id": "stepper",
+          "uses": 2
+        },
+        {
+          "component": "Timeline",
+          "id": "timeline",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Accordion",
+          "id": "accordion",
+          "uses": 1
+        },
+        {
+          "component": "Select",
+          "id": "select",
+          "uses": 1
+        },
+        {
+          "component": "CheckboxGroup",
+          "id": "checkbox-group",
+          "uses": 1
+        },
+        {
+          "component": "RadioGroup",
+          "id": "radio-group",
+          "uses": 1
+        },
+        {
+          "component": "Alert",
+          "id": "alert",
+          "uses": 1
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "CTASection",
+          "id": "cta-section",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "StatsSection",
+          "id": "stats-section",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "TestimonialSection",
+          "id": "testimonial-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "FeatureGrid",
+          "id": "feature-grid",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        },
+        {
+          "component": "ChatWidget",
+          "id": "chat-widget",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "onda",
+      "title": "Onda Instruments · equipos para DJ y músicos",
+      "url": "/sitios/onda",
+      "dir": "components/sites/onda",
+      "description": "Fabricante de controladoras, sintetizadores, cajas de ritmos, monitores y auriculares: catálogo por categorías, fichas con especificaciones y descargas, artistas y soporte con registro de producto.",
+      "pages": [
+        {
+          "path": "/sitios/onda",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/onda/productos",
+          "title": "Productos"
+        },
+        {
+          "path": "/sitios/onda/productos/polar-8",
+          "title": "Polar 8"
+        },
+        {
+          "path": "/sitios/onda/productos/dx-2",
+          "title": "DX-2"
+        },
+        {
+          "path": "/sitios/onda/productos/dx-4-pro",
+          "title": "DX-4 Pro"
+        },
+        {
+          "path": "/sitios/onda/productos/mx-4",
+          "title": "MX-4"
+        },
+        {
+          "path": "/sitios/onda/productos/nano",
+          "title": "Nano"
+        },
+        {
+          "path": "/sitios/onda/productos/pulse-16",
+          "title": "Pulse 16"
+        },
+        {
+          "path": "/sitios/onda/productos/s5",
+          "title": "S5"
+        },
+        {
+          "path": "/sitios/onda/productos/h1",
+          "title": "H1"
+        },
+        {
+          "path": "/sitios/onda/artistas",
+          "title": "Artistas"
+        },
+        {
+          "path": "/sitios/onda/soporte",
+          "title": "Soporte"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 7
+        },
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 6
+        },
+        {
+          "component": "Table",
+          "id": "table",
+          "uses": 3
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "ImageGallery",
+          "id": "image-gallery",
+          "uses": 2
+        },
+        {
+          "component": "CTASection",
+          "id": "cta-section",
+          "uses": 2
+        },
+        {
+          "component": "FeatureGrid",
+          "id": "feature-grid",
+          "uses": 2
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Tabs",
+          "id": "tabs",
+          "uses": 1
+        },
+        {
+          "component": "Select",
+          "id": "select",
+          "uses": 1
+        },
+        {
+          "component": "Badge",
+          "id": "badge",
+          "uses": 1
+        },
+        {
+          "component": "Carousel",
+          "id": "carousel",
+          "uses": 1
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "TestimonialSection",
+          "id": "testimonial-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "clara-vidal",
+      "title": "Clara Vidal · estilismo",
+      "url": "/sitios/clara-vidal",
+      "dir": "components/sites/clara-vidal",
+      "description": "Web de una estilista con estética minimalista (fondo claro, mucho aire, tipografía grande): servicios con precios, lookbook, diario con artículos, página personal y reserva de cita con huecos disponibles.",
+      "pages": [
+        {
+          "path": "/sitios/clara-vidal",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/clara-vidal/servicios",
+          "title": "Servicios"
+        },
+        {
+          "path": "/sitios/clara-vidal/lookbook",
+          "title": "Lookbook"
+        },
+        {
+          "path": "/sitios/clara-vidal/diario",
+          "title": "Diario"
+        },
+        {
+          "path": "/sitios/clara-vidal/diario/armario-capsula-30-prendas",
+          "title": "Treinta prendas, cien combinaciones"
+        },
+        {
+          "path": "/sitios/clara-vidal/diario/abrigo-que-dure",
+          "title": "Cómo elegir un abrigo que dure diez años"
+        },
+        {
+          "path": "/sitios/clara-vidal/diario/colores-que-te-favorecen",
+          "title": "Los colores que te favorecen, sin test de estaciones"
+        },
+        {
+          "path": "/sitios/clara-vidal/sobre-mi",
+          "title": "Sobre mí"
+        },
+        {
+          "path": "/sitios/clara-vidal/reservar",
+          "title": "Reservar"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 6
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "BlogCard",
+          "id": "blog-card",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Select",
+          "id": "select",
+          "uses": 1
+        },
+        {
+          "component": "RadioGroup",
+          "id": "radio-group",
+          "uses": 1
+        },
+        {
+          "component": "ImageGallery",
+          "id": "image-gallery",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "LogoCloud",
+          "id": "logo-cloud",
+          "uses": 1
+        },
+        {
+          "component": "Prose",
+          "id": "prose",
+          "uses": 1
+        },
+        {
+          "component": "Article",
+          "id": "article",
+          "uses": 1
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
           "uses": 1
         }
       ]

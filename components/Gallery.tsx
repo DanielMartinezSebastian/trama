@@ -1,6 +1,7 @@
 import Link from "next/link";
 import TextmodeCanvas from "@/components/TextmodeCanvas";
 import { demos, type DemoMeta, type Family } from "@/lib/demos";
+import { sites } from "@/lib/sites";
 
 const sections: { family: Family; title: string; blurb: string }[] = [
   {
@@ -81,6 +82,26 @@ export default function Gallery() {
             </section>
           );
         })}
+        <section className="gallery__section">
+          <h2>
+            Webs completas <span className="count">{sites.length}</span>
+          </h2>
+          <p className="gallery__sub">
+            Sitios de varias páginas construidos con el kit, como casos de uso reales: navegación entre páginas, estado compartido (carrito, suscripción, chat) y contenido propio. Cada uno con su tema, su variante y sus tipografías.
+          </p>
+          <ul className="cards">
+            {sites.map((s) => (
+              <li key={s.slug}>
+                <Link href={`/sitios/${s.slug}`} className="card" style={{ ["--accent" as string]: s.accent }}>
+                  <span className="card__n">{String(++n).padStart(2, "0")}</span>
+                  <span className="card__title">{s.title}</span>
+                  <span className="card__blurb">{s.blurb}</span>
+                  <span className="tag">{`${s.tag} · ${s.routes.length} páginas`}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </>
   );

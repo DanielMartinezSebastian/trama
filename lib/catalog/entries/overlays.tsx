@@ -1,5 +1,6 @@
 "use client";
 
+import ChatWidget from "@/components/ui/ChatWidget";
 import Button from "@/components/ui/Button";
 import Drawer from "@/components/ui/Drawer";
 import Modal from "@/components/ui/Modal";
@@ -139,6 +140,45 @@ export const overlays: CatalogEntry[] = [
     render: (p, { replay }) => (
       <div className="ui-center">
         <Drawer triggerLabel={p.triggerLabel as string} side={p.side as never} title={p.title as string} body={p.body as string} variant={p.variant as never} playKey={replay} />
+      </div>
+    ),
+  },
+  {
+    id: "chat-widget",
+    component: "ChatWidget",
+    path: "@/components/ui/ChatWidget",
+    name: "Chat de ayuda (chatbot)",
+    category: "overlays",
+    styles: ALL_STYLES,
+    description: "Asistente flotante en una esquina: responde por reglas (palabras clave → respuesta, con respuestas rápidas) o, con onMessage, conectado a un modelo o servicio real. Indicador de escritura, aviso de no leídos y teclado.",
+    stageHeight: 220,
+    notes: [
+      "Reglas, una por línea: `precio, cuesta => Cuesta **35 €**. || Reservar, Horarios`. Gana la que tiene más claves en el mensaje (sin tildes ni mayúsculas); tras `||`, las respuestas rápidas siguientes.",
+      "onMessage(texto, historial) → texto o { text, quickReplies } (puede ser async): sustituye a las reglas para usar un backend.",
+      "Flota sobre la ventana (portal a document.body con los tokens copiados): en la vista previa aparece en la esquina de la pantalla, no en el escenario.",
+    ],
+    props: [
+      { key: "title", label: "Nombre", type: "text", default: "Asistente Maré" },
+      { key: "subtitle", label: "Subtítulo", type: "text", default: "Responde al momento · o te pasa con el equipo" },
+      { key: "greeting", label: "Saludo", type: "text", default: "¡Hola! Soy el asistente de la escuela. Pregúntame por **clases**, **precios** o **material**." },
+      { key: "quickReplies", label: "Respuestas rápidas", type: "text", default: "Precios, Horarios, Reservar, Hablar con una persona" },
+      { key: "launcherLabel", label: "Texto del botón", type: "text", default: "¿Te ayudo?" },
+      { key: "position", label: "Esquina", type: "select", default: "bottom-right", options: ["bottom-right", "bottom-left"] },
+      variantProp("glass"),
+    ],
+    render: (p) => (
+      <div className="ui-center">
+        <p className="ui-hint">El chat flota en la esquina de la ventana →</p>
+        <ChatWidget
+          title={p.title as string}
+          subtitle={p.subtitle as string}
+          greeting={p.greeting as string}
+          quickReplies={p.quickReplies as string}
+          launcherLabel={p.launcherLabel as string}
+          position={p.position as never}
+          variant={p.variant as never}
+          defaultOpen
+        />
       </div>
     ),
   },

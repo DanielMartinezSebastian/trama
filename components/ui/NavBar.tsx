@@ -42,6 +42,8 @@ export type NavBarProps = {
   /** forma de la barra: full = de borde a borde · contained = de borde a borde con el contenido centrado · floating = píldora ·
    * island = tarjeta con el radio de la variante (por defecto) · transparent = sin fondo (lo gana al bajar con sticky) · underline = solo una línea inferior */
   shape?: "full" | "contained" | "floating" | "island" | "transparent" | "underline";
+  /** ocupa el ancho de la ventana aunque su contenedor sea más estrecho (para barras de borde a borde dentro de un layout con márgenes) */
+  bleed?: boolean;
   /** @deprecated usa `shape="floating"` */
   floating?: boolean;
   /** densidad */
@@ -175,6 +177,7 @@ export default function NavBar({
   layout = "classic",
   slots = "",
   shape,
+  bleed = false,
   floating = false,
   size = "md",
   linksAlign = "center",
@@ -225,6 +228,9 @@ export default function NavBar({
       setNarrow(false);
       return;
     }
+    // medida inmediata al montar (sin esperar al primer aviso del observador, que en móvil dejaba ver un instante la
+    // barra de escritorio) y después, a cada cambio de tamaño
+    setNarrow(parent.getBoundingClientRect().width < collapseAt);
     const ro = new ResizeObserver(([e]) => setNarrow(e.contentRect.width < collapseAt));
     ro.observe(parent);
     return () => ro.disconnect();
@@ -546,6 +552,7 @@ export default function NavBar({
     "ui-nav",
     `ui-nav--${barShape}`,
     `ui-nav--${size}`,
+    bleed && "ui-nav--bleed",
     collapsed && "ui-nav--collapsed",
     sticky && "ui-nav--sticky",
     scrolled && "ui-nav--scrolled",

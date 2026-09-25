@@ -419,7 +419,7 @@ conviene saber para usarlo bien:
 Si el componente nació en un proyecto (copiado con `kit:export` y mejorado allí), `npm run kit:pull -- <proyecto> --apply`
 lo trae a `components/ui/`; desde ahí, los pasos 3–5.
 
-Categorías: `fondos`, `texto`, `tarjetas`, `interaccion`, `transiciones`, `datos`, `navegacion`, `formularios`, `feedback`, `galerias`, `secciones`, `overlays`, `pixel`.
+Categorías: `fondos`, `texto`, `tarjetas`, `interaccion`, `transiciones`, `datos`, `navegacion`, `formularios`, `feedback`, `galerias`, `secciones`, `contenido`, `overlays`, `pixel`.
 Estilos: `glass`, `solid`, `outline`, `neon`, `retro`, `terminal`, `minimal`.
 
 **Cobertura de estilos.** Cada estilo debe tener al menos un componente de cada grupo funcional (acción, entrada,
@@ -440,6 +440,8 @@ sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente
 | El servidor de dev se cuelga | `next dev \| head` cierra el pipe | Redirigir a un archivo |
 | Animaciones "paradas" al probar | Pestañas ocultas pausan RAF | Forzar `redraw()` / `gsap.ticker.tick()` |
 | Texto corrupto en `StatCounter`/cifras ASCII | La fuente bitmap 7×7 de `asciifyText` no cubre letras acentuadas ni símbolos como «★» | Usar solo dígitos y símbolos simples (`+ % / -`) en lo que se convierte a bitmap; cualquier palabra va en un `label` de texto normal |
+| Un componente no llega al ancho de su contenedor en un proyecto | Un tope de ancho pensado para la vista previa del catálogo (`Table` tenía `width: min(100%, 520px)`) | Los componentes llenan su contenedor; si la vista previa necesita un tope, se lo pone el `render` de su entrada en `lib/catalog/entries/`, nunca el CSS del componente. `Table` tiene `width="full"` (defecto) o `"auto"` |
+| Una barra de borde a borde se queda con márgenes | El layout que la contiene tiene `max-width` o `padding` | `NavBar bleed` ocupa el ancho de la ventana desde cualquier contenedor; `shape="contained"` alinea su contenido con `--nav-max` |
 | Doble caja en un `<input>`/`<textarea>` del catálogo | Una regla `.pg` demasiado amplia (pensada para el propio panel) alcanza con descendientes genéricos (`.pg input[type="text"]`) el `<input>` que un componente del catálogo pinta en vivo dentro de `.pg__stage`, y le gana en especificidad a `.ui-field input` | El CSS del panel (`components/playground/playground.css`) nunca usa selectores genéricos `.pg <elemento>`: se ata a clases propias (`.pg__search`, `.pg__theme`, `.pg-field`) que no existen dentro de `.pg__stage` |
 | Scroll o recorte en una celda de «Comparar los 7 estilos» | La celda topaba su alto en `Math.min(stageHeight, 460)` y además vivía en una rejilla de columnas de ~280px — ambos límites pensados para componentes pequeños (botón, campo, tarjeta), que un componente ancho por diseño (`NavBar`, cualquier "sección") o con rejilla propia (`PricingSection`) no puede respetar | Sin alto tope (`entry.stageHeight` a secas) y sin columnas: `.pg__compare` es una sola columna a ancho completo, el mismo que ya funciona en la vista aislada |
 
@@ -550,6 +552,12 @@ controles para tipos primitivos, así que una lista sigue siendo editable como t
 cuándo NO usar el elemento nativo: un `<select>` no se puede reskinar por dentro (la lista abierta la pinta el
 sistema operativo), así que es un botón + una lista absoluta con `role="listbox"`, para tener el mismo aspecto en
 los 7 estilos abierto o cerrado — `Dropdown` (menú de acciones, no de valores) sigue el mismo patrón.
+
+**Listas que avisan.** Los campos siguen gestionando su propio estado (el catálogo no necesita cablear nada), pero ya no
+son solo decorativos: `TextField`, `Select`, `CheckboxGroup`, `RadioGroup`, `Tabs` y `Pagination` aceptan `onChange`, y
+`TextField`/`Select` también `value` para controlarlos desde fuera. `Hero` y `CTASection` llevan `primaryHref`/`secondaryHref`
+(u `onPrimary`/`onSecondary`), `Footer` admite `Etiqueta=/ruta` en sus columnas y `PricingSection`, `cta`, `ctaHref` y
+`onSelectPlan`. Es lo que usan las webs completas (`docs/03-webs-completas.md`) para buscar, filtrar, paginar y navegar.
 
 **`NavBar` lleva la sintaxis más completa del patrón**, porque una barra moderna necesita jerarquía: enlaces simples
 separados por comas (lo de siempre) o una sección por línea con submenú, `Sección > Hijo; Hijo|descripción|icon:nombre`
@@ -967,4 +975,35 @@ La estética de `RetroCanvas` (puntos blancos sobre negro, scanlines) como siste
 
 Las dos capas son independientes: `dotmatrix` sobre el tema Neutro toma su acento azul; el tema mono con `terminal` o
 `outline` también funciona. La combinación de referencia es tema + variante + `RetroCanvas mode="ascii" ramp="dots"`.
+
+## 24. Contenido: texto largo con formato (docs y blog)
+
+Categoría `contenido` (`lib/catalog/entries/contenido.tsx`): lo que hace falta para una página de documentación o una
+entrada de blog. De menor a mayor:
+
+| Pieza | Para qué |
+|---|---|
+| `Prose` | La tipografía del texto largo. `markdown="…"` o `children` (HTML/MDX propio): los dos reciben el mismo estilo. |
+| `Callout` | Nota, consejo, importante, cuidado o peligro (`intent`), en `bar`, `soft` u `outline`; plegable. Contenido, no estado (eso es `Alert`). |
+| `TableOfContents` | «En esta página», con la sección que se lee marcada. Estilos `rail`, `list` y `numbered`. |
+| `ArticleHeader` | Categoría, título, entradilla, autor, fecha, tiempo de lectura, etiquetas y portada (`gen:N` o URL). |
+| `Article` | Todo junto: cabecera + índice lateral (sube sobre el texto en contenedores de menos de 860 px) + cuerpo + barra de lectura opcional. |
+
+**Markdown sin HTML crudo.** `lib/ui/markdown.tsx` (bloques) y `lib/ui/markdownInline.tsx` (línea) construyen elementos
+React: un texto de un CMS o de un usuario no puede inyectar marcado, y los enlaces solo admiten http(s), mailto, rutas y
+anclas (el resto pasa a `#`). Soporta títulos `#`–`####` con id, listas anidadas (2 espacios) y de tareas `- [x]`, citas
+con firma (última línea `— Autor`), avisos al estilo GitHub `> [!NOTE] Título` (NOTE · TIP · IMPORTANT · WARNING ·
+CAUTION → `Callout`), código ```` ```lenguaje archivo ```` (→ `CodeBlock`), tablas con alineación (`|:--|:--:|--:|`),
+imágenes con pie `![alt](url "pie")`, `---`, y en línea `**negrita**`, `*cursiva*`, `~~tachado~~`, `==resaltado==`,
+`` `código` ``, `[[Tecla]]` y `[enlaces](…)`. Para algo que no cubre (componentes a medida, MDX), pasa `children`.
+
+**Ids compartidos.** `Prose` y `TableOfContents` usan el mismo generador de ids (`createSlugger`): con el mismo Markdown,
+el índice apunta a los títulos sin configurar nada. Con `target` el índice lee los h2/h3 con id de un contenedor ya
+pintado; con `items`, una lista a mano. La sección activa se mide respecto a lo que se desplaza (la ventana o el
+contenedor con scroll del texto), así que funciona también dentro de una caja con scroll.
+
+Trampas: el cuerpo nunca toma `--s-tt`/`--s-ls` (mayúsculas espaciadas de outline o dotmatrix se leerían mal en un
+párrafo), los títulos sí. La columna del índice en `Article` se estira a todo el alto (`align-self: stretch`): sin
+recorrido, un `position: sticky` no se queda fijo. `Prose`, `Callout`, `ArticleHeader` y `Article` no llevan
+`"use client"`: se renderizan en el servidor (el texto llega indexable); solo el índice es de cliente.
 

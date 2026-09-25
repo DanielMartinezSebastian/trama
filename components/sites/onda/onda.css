@@ -1,0 +1,57 @@
+/* Onda Instruments (prefijo on-): fabricante musical. Solo organiza piezas del kit sobre los tokens de la web. */
+.on { --st-max: 1280px; }
+.on .st-header { border-bottom: 1px solid var(--ln); }
+.on__hero { position: relative; overflow: hidden; background: radial-gradient(ellipse 60% 70% at 75% 40%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 70%); }
+.on__hero-in { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; min-height: min(86vh, 760px); padding-block: 48px; }
+.on__hero h1 { margin: 0; font-size: clamp(44px, 6.4vw, 88px); line-height: 0.95; font-weight: 800; letter-spacing: -0.04em; text-wrap: balance; }
+.on__hero .ui-badge { justify-self: start; }
+.on__hero-img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 24px; }
+@media (max-width: 900px) { .on__hero-in { grid-template-columns: minmax(0, 1fr); min-height: 0; } }
+.on__cats { display: grid; gap: 12px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 900px) { .on__cats { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+.on__catcard { position: relative; display: block; overflow: hidden; color: var(--fg); text-decoration: none; border-radius: var(--r); border: 1px solid var(--ln); }
+.on__catcard img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; transition: scale 0.4s; }
+.on__catcard:hover img { scale: 1.06; }
+.on__catcard span { position: absolute; left: 12px; right: 12px; bottom: 10px; font-family: var(--display); font-weight: 800; font-size: clamp(14px, 3.6vw, 18px); line-height: 1.1; overflow-wrap: anywhere; }
+.on__row-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.on__card { display: grid; gap: 0; color: var(--fg); text-decoration: none; border-radius: var(--r); border: 1px solid var(--ln); background: var(--card); overflow: hidden; transition: border-color 0.2s, translate 0.2s; }
+.on__card:hover { border-color: var(--acc); translate: 0 -3px; }
+.on__card-img { position: relative; }
+.on__card-img img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.on__new { position: absolute; top: 12px; left: 12px; padding: 4px 10px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #111; background: var(--acc); border-radius: 999px; }
+.on__card-body { display: grid; gap: 6px; padding: 16px 18px 20px; }
+.on__cat { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); }
+.on__card-body h3 { margin: 0; font-family: var(--display); font-size: 24px; font-weight: 800; }
+.on__card-body p { margin: 0; font-size: 14px; line-height: 1.5; }
+.on__card-body strong { margin-top: 6px; font-size: 16px; }
+.on__tabs { margin-bottom: 24px; }
+.on__tabs .ui-tabs { width: 100%; }
+.on__phero { border-bottom: 1px solid var(--ln); }
+.on__phero-in { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(24px, 5vw, 56px); align-items: center; padding-block: clamp(24px, 4vw, 48px); }
+@media (max-width: 900px) { .on__phero-in { grid-template-columns: minmax(0, 1fr); } }
+.on__phero .st-phead { padding-block: 0; }
+.on__phero .st-phead h1 { font-size: clamp(44px, 7vw, 84px); }
+.on__body { margin: 0; line-height: 1.7; color: color-mix(in srgb, var(--fg) 85%, var(--mut)); }
+.on__buy { display: grid; gap: 2px; }
+.on__buy strong { font-family: var(--display); font-size: 36px; font-weight: 800; }
+.on__buy span { font-size: 13px; }
+.on__box { display: grid; align-content: start; gap: 16px; padding: 24px; border: 1px solid var(--ln); border-radius: var(--r); background: var(--card); }
+.on__box h2 { margin: 0; font-size: 20px; }
+.on__box .ui-table { width: 100%; }
+.on__dl { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.on__dl li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--ln); }
+.on__dl li span { display: inline-flex; align-items: center; gap: 8px; }
+.on__inbox { margin: 0; padding-left: 1.2em; line-height: 1.9; }
+.on__inbox li::marker { color: var(--acc); }
+.on__artists { margin-top: 24px; }
+.on__artist { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: center; padding: 18px; border: 1px solid var(--ln); border-radius: var(--r); background: var(--card); }
+.on__artist img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: calc(var(--r) - 2px); }
+.on__artist h2 { margin: 4px 0 10px; font-family: var(--display); font-size: 26px; }
+.on__artist blockquote { margin: 0 0 10px; font-size: 16px; line-height: 1.6; }
+.on__artist p { margin: 0; font-size: 13px; }
+@media (max-width: 560px) { .on__artist { grid-template-columns: minmax(0, 1fr); } }
+.on__register { align-items: start; }
+.on__regform .ui-field, .on__regform .ui-select { width: 100%; }
+.on__contact { max-width: 680px; }
+.on__marquee { border-block: 1px solid var(--ln); padding-block: 14px; }
+.on__footer { padding-block: 32px 48px; }

@@ -96,7 +96,8 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
 | Galerías y vídeo | `ImageGallery` · `Carousel` · `VideoPlayer` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` |
-| Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` |
+| Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
+| Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |
 
 **Secciones** son bloques compuestos (hero, contacto, precios, FAQ, cifras, testimonios, equipo, marcas, blog, pie)
@@ -119,6 +120,19 @@ Seis landings construidas **solo** con `components/ui/`, en `components/landings
 | `th-faceta` | FACETA: landing larga que mezcla ese fondo con secciones del kit en estilo pixel duro. |
 
 Las otras seis landings de la galería (`th-tide`, `th-brew`…) usan el sistema antiguo `ThemedLanding` (no el kit).
+
+## Webs completas de referencia
+
+Cinco sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y servidos en `/sitios/<slug>/…`
+(arquitectura y plan en [`03-webs-completas.md`](./03-webs-completas.md); páginas y componentes de cada una en `CATALOG.md`).
+
+| Slug | Qué demuestra |
+|---|---|
+| `kernel-log` | Blog de tecnología: `Article` con índice y barra de lectura, búsqueda y filtro por temas, paginación, newsletter con archivo. |
+| `pixelforge` | Tienda de assets: filtros y orden, fichas con licencias, **carrito** en `localStorage`, cupón, pago en pasos, FAQ y legales. |
+| `vigia` | Seguridad: `ChatWidget` en todas las páginas, planes → presupuesto con el plan elegido, presupuesto en 4 pasos con estimación. |
+| `onda` | Fabricante musical: mega menú por categorías, catálogo con `Tabs`, fichas con especificaciones y descargas, registro de producto. |
+| `clara-vidal` | Estilista, estética minimalista en claro: bandas alternas, tipografía grande, lookbook, diario y reserva con huecos + `Modal`. |
 
 ## Deuda conocida
 

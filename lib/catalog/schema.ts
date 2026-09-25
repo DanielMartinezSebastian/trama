@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type Category = "fondos" | "texto" | "tarjetas" | "interaccion" | "transiciones" | "datos" | "navegacion" | "formularios" | "feedback" | "galerias" | "secciones" | "overlays" | "pixel";
+export type Category = "fondos" | "texto" | "tarjetas" | "interaccion" | "transiciones" | "datos" | "navegacion" | "formularios" | "feedback" | "galerias" | "secciones" | "overlays" | "pixel" | "contenido";
 export type StyleTag = "glass" | "solid" | "outline" | "neon" | "retro" | "terminal" | "minimal" | "dotmatrix";
 
 export const CATEGORIES: { id: Category; label: string; blurb: string }[] = [
@@ -15,6 +15,7 @@ export const CATEGORIES: { id: Category; label: string; blurb: string }[] = [
   { id: "feedback", label: "Feedback", blurb: "Estados, avisos y carga." },
   { id: "galerias", label: "Galerías y vídeo", blurb: "Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas) y reproductor de vídeo." },
   { id: "secciones", label: "Secciones", blurb: "Bloques compuestos, listos para pegar en una landing: hero, contacto, precios, FAQ…" },
+  { id: "contenido", label: "Contenido", blurb: "Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo." },
   { id: "overlays", label: "Overlays", blurb: "Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda." },
   { id: "pixel", label: "Pixel art", blurb: "Iconos SVG que se tiñen con el tema, marcos de 9 cortes y sprites: píxeles hechos a mano, no filtros." },
 ];

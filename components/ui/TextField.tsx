@@ -24,6 +24,10 @@ export type TextFieldProps = {
   multiline?: boolean;
   rows?: number;
   required?: boolean;
+  /** valor controlado desde fuera (con `onChange`); sin él, el campo guarda el suyo desde `defaultValue` */
+  value?: string;
+  /** a cada cambio, con el texto nuevo */
+  onChange?: (value: string) => void;
   className?: string;
 };
 
@@ -43,9 +47,16 @@ export default function TextField({
   multiline = false,
   rows = 4,
   required = false,
+  value: controlled,
+  onChange,
   className = "",
 }: TextFieldProps) {
-  const [value, setValue] = useState(defaultValue);
+  const [inner, setInner] = useState(defaultValue);
+  const value = controlled ?? inner;
+  const change = (v: string) => {
+    setInner(v);
+    onChange?.(v);
+  };
   const raw = intent ?? (state && state !== "default" ? state : undefined);
   const i = raw ? toIntent(raw, "info") : undefined;
   const invalid = i === "danger" || undefined;
@@ -55,9 +66,9 @@ export default function TextField({
       <span className={`ui-field__box ui-surface ${vcls(variant)}`}>
         {prefix && <span className="ui-field__prefix" aria-hidden>{prefix}</span>}
         {multiline ? (
-          <textarea key={defaultValue} aria-invalid={invalid} name={name} rows={rows} placeholder={placeholder} value={value} required={required} onChange={(e) => setValue(e.target.value)} />
+          <textarea key={defaultValue} aria-invalid={invalid} name={name} rows={rows} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         ) : (
-          <input key={defaultValue} aria-invalid={invalid} type={type} name={name} placeholder={placeholder} value={value} required={required} onChange={(e) => setValue(e.target.value)} />
+          <input key={defaultValue} aria-invalid={invalid} type={type} name={name} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         )}
       </span>
       {hint && <span className="ui-field__hint">{hint}</span>}
