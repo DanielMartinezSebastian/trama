@@ -10,7 +10,7 @@ estado compartido (carrito, suscripción) y contenido propio.
 |---|---|---|
 | Rutas | `app/sitios/[site]/[[...path]]/page.tsx` | Todas las páginas de todas las webs, estáticas (`generateStaticParams` + `dynamicParams = false`) |
 | Registro | `lib/sites.ts` | Slug, título, resumen, acento y lista de páginas (con su título) de cada web; lo leen las rutas, la galería y el catálogo |
-| Marco común | `components/sites/` (`SiteShell`, `SitePage`, `shared.tsx`, `sites.css`) | Tema por web, scroll de página, enlaces internos sin recarga (`router.push`), cabecera de página, botón de vuelta a la galería |
+| Marco común | `components/sites/` (`SiteShell`, `SitePage`, `shared.tsx`, `sites.css`) | Tema por web, scroll de página, enlaces internos sin recarga (`router.push`), cabecera de página |
 | Cada web | `components/sites/<slug>/` | `data.ts` (contenido y rutas), `Shell.tsx` (barra, pie, estado), una página por archivo, CSS con prefijo propio |
 | Imágenes | `lib/sites/art.ts` | Ilustraciones SVG generadas (portadas de blog, sprites, aparatos de audio, cámaras, composiciones de moda): sin depender de imágenes externas |
 

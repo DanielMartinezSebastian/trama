@@ -82,8 +82,9 @@ function parseList(lines: string[]): ListNode {
       const n = RE.list.exec(lines[i]);
       const indent = (lines[i].match(/^\s*/) ?? [""])[0].length;
       if (n && n[1].length <= base) break;
-      if (!n && indent <= base) {
-        text += " " + lines[i].trim(); // continuación del mismo ítem
+      // continuación del mismo ítem: sin sangría extra o, si aún no hay sublista, con ella (`- texto\n  sigue`)
+      if (!n && (indent <= base || !sub.length)) {
+        text += " " + lines[i].trim();
         i++;
         continue;
       }

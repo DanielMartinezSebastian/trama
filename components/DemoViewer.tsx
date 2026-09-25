@@ -57,7 +57,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
       else if (e.key === "ArrowLeft") router.push(`/demo/${prev.slug}`);
       else if (e.key === "h" || e.key === "H") setHud((v) => !v);
       else if (e.key === "f" || e.key === "F") toggleFullscreen();
-      else if (e.key === "Escape" && !document.fullscreenElement) router.push("/");
+      else if (e.key === "Escape" && !document.fullscreenElement) router.push("/demos");
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -88,7 +88,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
         <>
           <div className={`hud ${hud ? "" : "hud--hidden"}`}>
             <header className="hud__top">
-              <Link href="/" className="chip">← Galería</Link>
+              <Link href="/demos" className="chip">← Demos</Link>
               <div className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
                 <span className="dot" />
                 {demo.title}

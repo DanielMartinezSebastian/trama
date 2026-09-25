@@ -2,13 +2,15 @@
    Catálogo (playground) — prefijo pg-
    Los componentes viven en ui-kit.css
    ===================================================================== */
+/* Dentro del marco de la web (SiteChrome app): ocupa lo que queda bajo la cabecera, con el tema de la web (negro, gris y
+   el rojo de acento solo en lo activo). Esquinas rectas y etiquetas monoespaciadas, como el resto del sitio. */
 .pg {
-  position: fixed; inset: 0; z-index: 5; display: flex; flex-direction: column;
-  background: #06070d; color: var(--fg); font-family: var(--mono);
+  position: fixed; inset: var(--tr-nav-h, 0px) 0 0 0; z-index: 5; display: flex; flex-direction: column;
+  background: var(--bg); color: var(--fg); font-family: var(--mono);
 }
 .pg__body { flex: 1; }
 .pg__top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 10px 16px; border-bottom: 1px solid var(--ln); background: rgba(255, 255, 255, 0.02); }
-.pg__top h1 { margin: 0; font-size: 16px; letter-spacing: 0.04em; }
+.pg__top h1 { margin: 0; font: 600 11px/1 var(--mono); letter-spacing: 0.32em; text-transform: uppercase; }
 /*
  * Ojo: acotado a la propia cabecera y al panel de props (.pg__search, .pg__theme, .pg-field),
  * nunca a ".pg" entero — un ".pg input[type=text]" genérico alcanzaría también los <input> que
@@ -17,14 +19,14 @@
  */
 .pg__search, .pg__theme select, .pg-field select, .pg-field textarea, .pg-field input[type="text"] {
   font: inherit; font-size: 13px; color: var(--fg); background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--ln); border-radius: 8px; padding: 8px 10px; outline: none;
+  border: 1px solid var(--ln); border-radius: 0; padding: 8px 10px; outline: none;
   appearance: none; -webkit-appearance: none;
 }
 .pg__search { flex: 1; min-width: 160px; max-width: 320px; }
-.pg select option { background: #0b0e18; }
+.pg select option { background: #0a0a0a; }
 .pg input:focus, .pg select:focus, .pg textarea:focus { border-color: rgba(255, 255, 255, 0.55); }
 .pg__theme, .pg__color { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mut); }
-.pg__color input { width: 34px; height: 28px; padding: 0; border: 1px solid var(--ln); border-radius: 6px; background: none; cursor: pointer; }
+.pg__color input { width: 34px; height: 28px; padding: 0; border: 1px solid var(--ln); border-radius: 0; background: none; cursor: pointer; }
 
 /* Panel de tokens */
 .pg-tokens {
@@ -33,7 +35,7 @@
 }
 .pg-tokens label { display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.06em; color: var(--mut); text-transform: uppercase; }
 .pg-tokens label > span { display: flex; justify-content: space-between; }
-.pg-tokens input[type="color"] { width: 100%; height: 30px; padding: 0; border: 1px solid var(--ln); border-radius: 6px; background: none; cursor: pointer; }
+.pg-tokens input[type="color"] { width: 100%; height: 30px; padding: 0; border: 1px solid var(--ln); border-radius: 0; background: none; cursor: pointer; }
 .pg-tokens input[type="range"] { width: 100%; accent-color: #e8ecf4; }
 .pg-tokens .pg-tokens__reset { align-self: end; }
 
@@ -43,24 +45,24 @@
 .pg__side h2:first-child { margin-top: 0; }
 .pg__chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .pg-chip {
-  font: inherit; font-size: 12px; color: var(--fg); cursor: pointer; padding: 5px 10px; border-radius: 999px;
+  font: inherit; font-size: 12px; color: var(--fg); cursor: pointer; padding: 5px 10px; border-radius: 0;
   border: 1px solid var(--ln); background: transparent; transition: background 0.15s, border-color 0.15s;
 }
 .pg-chip:hover { border-color: rgba(255, 255, 255, 0.45); }
-.pg-chip.is-on { background: #e8ecf4; color: #06070d; border-color: #e8ecf4; }
+.pg-chip.is-on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .pg-chip small { opacity: 0.6; margin-left: 4px; }
-.pg-guide { margin-top: 12px; padding: 12px; border: 1px solid var(--ln); border-radius: 10px; background: rgba(255, 255, 255, 0.03); font-size: 12px; line-height: 1.5; }
+.pg-guide { margin-top: 12px; padding: 12px; border: 1px solid var(--ln); border-radius: 0; background: rgba(255, 255, 255, 0.03); font-size: 12px; line-height: 1.5; }
 .pg-guide dl { margin: 8px 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
 .pg-guide dt { color: var(--mut); }
 .pg-guide dd { margin: 0; }
 .pg-guide small { color: var(--mut); }
 .pg__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.pg-item { width: 100%; text-align: left; font: inherit; color: var(--fg); cursor: pointer; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--ln); background: transparent; display: grid; gap: 6px; }
+.pg-item { width: 100%; text-align: left; font: inherit; color: var(--fg); cursor: pointer; padding: 10px 12px; border-radius: 0; border: 1px solid var(--ln); background: transparent; display: grid; gap: 6px; }
 .pg-item:hover { border-color: rgba(255, 255, 255, 0.4); }
-.pg-item.is-on { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.6); }
+.pg-item.is-on { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.6); box-shadow: inset 2px 0 0 var(--acc); }
 .pg-item__name { font-size: 13px; font-weight: 600; }
 .pg-item__tags { display: flex; flex-wrap: wrap; gap: 4px; }
-.pg-item__tags em, .pg-item__tags i { font-style: normal; font-size: 10px; letter-spacing: 0.05em; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--ln); color: var(--mut); }
+.pg-item__tags em, .pg-item__tags i { font-style: normal; font-size: 10px; letter-spacing: 0.05em; padding: 1px 7px; border-radius: 0; border: 1px solid var(--ln); color: var(--mut); }
 .pg-item__tags em { color: var(--fg); }
 .pg__empty { font-size: 13px; color: var(--mut); padding: 8px; }
 
@@ -70,9 +72,9 @@
 .pg__head p { margin: 0 0 8px; max-width: 640px; font-size: 13px; line-height: 1.5; color: #c7cddb; }
 .pg__head code { font-size: 11px; color: var(--mut); }
 .pg__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
-.pg__stage { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); }
+.pg__stage { position: relative; overflow: hidden; border-radius: 0; border: 1px solid var(--ln); background: var(--bg); }
 .pg__cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; }
-.pg__panel { border: 1px solid var(--ln); border-radius: 14px; padding: 14px; background: rgba(255, 255, 255, 0.02); min-width: 0; }
+.pg__panel { border: 1px solid var(--ln); border-radius: 0; padding: 14px; background: rgba(255, 255, 255, 0.02); min-width: 0; }
 .pg__panel h3 { margin: 0 0 10px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); }
 .pg__panel h3:not(:first-child) { margin-top: 16px; }
 .pg__panelhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -83,11 +85,11 @@
 .pg-field output { color: var(--mut); font-variant-numeric: tabular-nums; }
 .pg-field small { font-size: 11px; color: var(--mut); }
 .pg-field input[type="range"] { width: 100%; accent-color: #e8ecf4; }
-.pg-switch { width: 42px; height: 24px; border-radius: 999px; border: 1px solid var(--ln); background: rgba(255, 255, 255, 0.06); padding: 2px; cursor: pointer; }
-.pg-switch span { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--mut); transition: transform 0.15s, background 0.15s; }
+.pg-switch { width: 42px; height: 24px; border-radius: 0; border: 1px solid var(--ln); background: rgba(255, 255, 255, 0.06); padding: 2px; cursor: pointer; }
+.pg-switch span { display: block; width: 18px; height: 18px; border-radius: 0; background: var(--mut); transition: transform 0.15s, background 0.15s; }
 .pg-switch.is-on { background: rgba(255, 255, 255, 0.85); }
-.pg-switch.is-on span { transform: translateX(18px); background: #06070d; }
-.pg__code { margin: 0; padding: 12px; overflow: auto; border-radius: 10px; background: rgba(0, 0, 0, 0.45); border: 1px solid var(--ln); font-size: 12px; line-height: 1.55; color: #d8e0f0; white-space: pre; }
+.pg-switch.is-on span { transform: translateX(18px); background: var(--bg); }
+.pg__code { margin: 0; padding: 12px; overflow: auto; border-radius: 0; background: rgba(0, 0, 0, 0.45); border: 1px solid var(--ln); font-size: 12px; line-height: 1.55; color: #d8e0f0; white-space: pre; }
 .pg__notes { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; color: #c7cddb; }
 .pg__gallery { display: grid; gap: 10px; margin-top: 16px; }
 
@@ -106,13 +108,17 @@
  * aislada (la del escenario principal), así que aquí se apila a ancho completo en vez de encogerse.
  */
 .pg__compare { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.pg__cell { position: relative; border: 1px solid var(--ln); border-radius: 12px; background: var(--bg); overflow: hidden; }
+.pg__cell { position: relative; border: 1px solid var(--ln); border-radius: 0; background: var(--bg); overflow: hidden; }
 .pg__cellname { position: absolute; left: 10px; top: 8px; z-index: 6; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); pointer-events: none; }
 .pg__cellstage { position: relative; }
-.chip--on { background: #e8ecf4; color: #06070d; }
+.chip--on { background: var(--fg); color: var(--bg); }
+/* los .chip globales (acciones del escenario) con la forma del resto del catálogo */
+.pg .chip { border-radius: 0; font-size: 12px; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.pg .chip:hover { background: rgba(255, 255, 255, 0.06); }
+.pg .chip.chip--on { background: var(--fg); color: var(--bg); }
 
 /* Panel FX (entrada/salida y hover globales, aplicables a cualquier componente) */
-.pg-chip--active { border-color: var(--acc, #7cc4ff); color: var(--acc, #7cc4ff); }
+.pg-chip--active { border-color: var(--acc); color: var(--acc); }
 .pg-fx {
   display: flex; flex-wrap: wrap; align-items: flex-end; gap: 22px 28px;
   padding: 12px 16px; border-bottom: 1px solid var(--ln); background: rgba(255, 255, 255, 0.03);

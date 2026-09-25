@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Playground from "@/components/playground/Playground";
+import SiteChrome from "@/components/site/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Componentes · Trama",
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function ComponentesPage() {
-  return <Playground />;
+  return (
+    <SiteChrome app>
+      <Playground />
+    </SiteChrome>
+  );
 }

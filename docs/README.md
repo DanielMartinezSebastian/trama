@@ -1,10 +1,12 @@
 # Trama · documentación
 
 Librería de componentes React/Next.js (ASCII, textmode, pixel art y secciones de landing) + un sitio que la
-enseña: galería de demos (`/`), catálogo interactivo (`/componentes`) y landings de referencia (`/demo/<slug>`).
+enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), catálogo interactivo (`/componentes`),
+índice de demos (`/demos`), landings de referencia (`/demo/<slug>`) y webs completas (`/sitios/<slug>`).
 
 | Documento | Para qué |
 |---|---|
+| [00-empezar.md](./00-empezar.md) | **Primeros pasos**: instalar, tema, `variant`/`intent` y la primera página. Se publica en `/docs/empezar`. |
 | [CATALOG.md](./CATALOG.md) | **Referencia rápida** (generada): cada componente con su import, props, tipos y defaults, y las landings de referencia con los componentes que usan. Es lo primero que debe leer un agente. |
 | [catalog.json](./catalog.json) | Lo mismo en datos, para herramientas. |
 | [02-guia-de-componentes.md](./02-guia-de-componentes.md) | Cómo **crear** componentes coherentes: tokens, sistema de estilos `--s-*`, reglas, trampas conocidas. |
@@ -22,7 +24,8 @@ se quedan atrás o si un componente no aparece en la tabla de abajo.
 | **Kit** — tokens, fuentes, iconos, utilidades | `lib/ui/` | Sí |
 | **Kit** — motores de fondos | `lib/asciify/`, `lib/sketches/`, `lib/scroll/`, `lib/text/` | Sí, solo lo que usen los componentes elegidos |
 | Catálogo `/componentes` | `lib/catalog/` (esquema, entradas, escenas, presets), `components/playground/` | No |
-| Galería y demos | `app/`, `components/*.tsx`, `lib/demos*.ts`, `lib/themes/` | No |
+| Web de la librería (portada, docs, demos) | `components/site/`, `lib/docs.ts`, `lib/site-data.ts` | No |
+| Demos | `app/`, `components/*.tsx`, `lib/demos*.ts`, `lib/themes/` | No |
 | Landings de referencia | `components/landings/` | No (son ejemplos para copiar ideas) |
 
 ## Dos formas de llevar Trama a un proyecto

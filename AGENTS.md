@@ -38,7 +38,8 @@ más un sitio que la enseña. Dos tipos de tarea:
 ## 2. Cambiar o ampliar la librería
 
 - Kit = `components/ui/` + `components/ui/styles/` + `lib/ui/` + motores (`lib/asciify`, `lib/sketches`, `lib/scroll`,
-  `lib/text`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Galería y landings = el resto.
+  `lib/text`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Web de la librería (`/`, `/docs`, `/demos`) = `components/site/` + `lib/docs.ts`
+  (las páginas de `/docs` son los `.md` de `docs/`). Demos y landings = el resto.
   El kit **no** puede importar del catálogo, de las landings ni de `lib/themes`/`lib/demos`.
 - Componente nuevo o cambio de props: sigue `docs/02-guia-de-componentes.md` §3 y §9, regístralo en
   `lib/catalog/entries/<categoría>.tsx`, añádelo a la tabla de `docs/README.md` y ejecuta `npm run catalog`.

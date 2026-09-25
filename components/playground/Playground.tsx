@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import HoverFX, { HOVERFX_EFFECTS, type HoverEffectKind } from "@/components/ui/HoverFX";
 import Presence, { PRESENCE_EFFECTS, type PresenceEffect } from "@/components/ui/Presence";
@@ -73,6 +72,12 @@ export default function Playground() {
   const [replay, setReplay] = useState(0);
   const [copied, setCopied] = useState(false);
 
+  // Categoría de entrada desde la URL (/componentes?c=fondos), p. ej. desde el índice de la portada
+  useEffect(() => {
+    const c = new URLSearchParams(window.location.search).get("c");
+    if (c && CATEGORIES.some((x) => x.id === c)) setCat(c as Category);
+  }, []);
+
   // Componente abierto desde el hash de la URL (#ascii-card), también si cambia con la página abierta (enlaces, atrás/adelante)
   useEffect(() => {
     const fromHash = () => {
@@ -120,7 +125,7 @@ export default function Playground() {
   const select = (id: string) => {
     setSel(id);
     setReplay(0);
-    window.history.replaceState(null, "", `#${id}`);
+    window.history.replaceState(null, "", `${window.location.search}#${id}`);
     document.querySelector(".pg__main")?.scrollTo({ top: 0 });
   };
   const setValue = (key: string, v: string | number | boolean) => entry && setStore((s) => ({ ...s, [entry.id]: { ...s[entry.id], [key]: v } }));
@@ -163,7 +168,6 @@ export default function Playground() {
   return (
     <div className="pg">
       <header className="pg__top">
-        <Link href="/" className="chip">← Galería</Link>
         <h1>Componentes</h1>
         <input className="pg__search" type="search" placeholder={`Buscar entre ${total} componentes…`} value={q} onChange={(e) => setQ(e.target.value)} aria-label="Buscar" />
         <label className="pg__theme">

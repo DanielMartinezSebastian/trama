@@ -1,5 +1,11 @@
-import Gallery from "@/components/Gallery";
+import HomePage from "@/components/site/HomePage";
+import SiteChrome from "@/components/site/SiteChrome";
+import { homeData } from "@/lib/site-data";
 
 export default function Home() {
-  return <Gallery />;
+  return (
+    <SiteChrome>
+      <HomePage data={homeData()} />
+    </SiteChrome>
+  );
 }
