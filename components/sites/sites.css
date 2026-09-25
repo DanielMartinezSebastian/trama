@@ -42,5 +42,3 @@
 .st-media--43 { aspect-ratio: 4 / 3; } .st-media--11 { aspect-ratio: 1; } .st-media--169 { aspect-ratio: 16 / 9; } .st-media--45 { aspect-ratio: 4 / 5; }
 
 /* vuelta a la galería de Trama (no forma parte de la web de ejemplo) */
-.st-back { position: fixed; left: 60px; bottom: 14px; z-index: 800; padding: 6px 12px; font: 600 12px/1.4 var(--font-jetbrains-mono), ui-monospace, monospace; color: #e8ecf4; text-decoration: none; background: rgba(7, 8, 15, 0.78); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0.7; transition: opacity 0.15s; }
-.st-back:hover, .st-back:focus-visible { opacity: 1; }

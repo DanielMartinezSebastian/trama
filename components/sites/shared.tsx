@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, type CSSProperties, type ReactNode } from "react";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -42,7 +41,7 @@ export function useActiveIndex(hrefs: string[]) {
 
 /**
  * Marco común de las webs completas: tema (tokens en línea), scroll de página (las demos a pantalla completa lo bloquean en
- * `<html>`), enlaces internos sin recarga y botón de vuelta a la galería. Los enlaces `<a href="/sitios/…">` que pintan los
+ * `<html>`), enlaces internos sin recarga. Los enlaces `<a href="/sitios/…">` que pintan los
  * componentes del kit (Button con href, BlogCard, Prose…) se interceptan aquí y van por `router.push`, así el estado de la web
  * (carrito, chat) sobrevive al cambiar de página. Los de la barra no: NavBar ya navega con `onNavigate`.
  */
@@ -68,9 +67,6 @@ export function SiteFrame({ tokens, className = "", children }: { tokens: CSSPro
   return (
     <div className={`st-page ${className}`} style={tokens}>
       {children}
-      <Link href="/" className="st-back" aria-label="Volver a la galería de Trama">
-        ← Trama
-      </Link>
     </div>
   );
 }

@@ -38,6 +38,8 @@ export default function DemoViewer({ slug }: { slug: string }) {
   const demo = getDemo(slug);
   const prev = demos[(index - 1 + demos.length) % demos.length];
   const next = demos[(index + 1) % demos.length];
+  // Las landings se ven como resultado final: sin HUD ni navegación entre demos
+  const bare = demo?.family === "landing";
 
   const toggleFullscreen = useCallback(() => {
     if (document.fullscreenElement) void document.exitFullscreen();
@@ -45,6 +47,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
   }, []);
 
   useEffect(() => {
+    if (bare) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       // No secuestrar las teclas mientras se escribe en el cajón de texto
@@ -58,7 +61,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [router, next.slug, prev.slug, toggleFullscreen]);
+  }, [bare, router, next.slug, prev.slug, toggleFullscreen]);
 
   if (!demo) return null;
 
@@ -81,26 +84,30 @@ export default function DemoViewer({ slug }: { slug: string }) {
         <ThemedLanding key={`landing-${slug}`} themeId={demo.theme} hud={hud} />
       )}
       {demo.family === "scroll" && <ScrollStage key={`scroll-${slug}`} demo={demo} hud={hud} />}
-      <div className={`hud ${hud ? "" : "hud--hidden"}`}>
-        <header className="hud__top">
-          <Link href="/" className="chip">← Galería</Link>
-          <div className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
-            <span className="dot" />
-            {demo.title}
-            <span className="tag">{tag}</span>
+      {!bare && (
+        <>
+          <div className={`hud ${hud ? "" : "hud--hidden"}`}>
+            <header className="hud__top">
+              <Link href="/" className="chip">← Galería</Link>
+              <div className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
+                <span className="dot" />
+                {demo.title}
+                <span className="tag">{tag}</span>
+              </div>
+              <button className="chip" onClick={toggleFullscreen} title="Pantalla completa (F)">⛶</button>
+            </header>
+            {(demo.family === "text" || demo.text) && <TextControls controls={demo.controls ?? []} />}
+            <footer className="hud__bottom">
+              <Link href={`/demo/${prev.slug}`} className="chip" title="Anterior (←)">← {prev.title}</Link>
+              <p className="hud__hint">{demo.hint}</p>
+              <Link href={`/demo/${next.slug}`} className="chip" title="Siguiente (→)">{next.title} →</Link>
+            </footer>
           </div>
-          <button className="chip" onClick={toggleFullscreen} title="Pantalla completa (F)">⛶</button>
-        </header>
-        {(demo.family === "text" || demo.text) && <TextControls controls={demo.controls ?? []} />}
-        <footer className="hud__bottom">
-          <Link href={`/demo/${prev.slug}`} className="chip" title="Anterior (←)">← {prev.title}</Link>
-          <p className="hud__hint">{demo.hint}</p>
-          <Link href={`/demo/${next.slug}`} className="chip" title="Siguiente (→)">{next.title} →</Link>
-        </footer>
-      </div>
-      <button className="hud-toggle" onClick={() => setHud((v) => !v)} title="Mostrar u ocultar interfaz (H)">
-        {hud ? "ocultar" : "mostrar"}
-      </button>
+          <button className="hud-toggle" onClick={() => setHud((v) => !v)} title="Mostrar u ocultar interfaz (H)">
+            {hud ? "ocultar" : "mostrar"}
+          </button>
+        </>
+      )}
     </>
   );
 }
