@@ -294,7 +294,7 @@ function About() {
             <PageHeader crumbs="Inicio, Sobre mí" title="Sobre mí" />
             <Prose markdown={BIO} size="lg" measure="normal" variant="minimal" />
           </div>
-          <img className="st-media st-media--45" src={techCover(11, "AR")} alt="Ilustración con las iniciales de Ada Ríos" />
+          <img className="st-media st-media--45 kl__portrait" src={techCover(11, "AR")} alt="Ilustración con las iniciales de Ada Ríos" />
         </div>
       </Section>
       <Section tight>

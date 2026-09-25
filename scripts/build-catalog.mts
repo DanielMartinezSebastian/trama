@@ -21,6 +21,7 @@ const KIT_LANDING_FILES: Record<string, string> = {
   "th-mycel": "components/landings/MycelLanding.tsx",
   "th-folio": "components/landings/FolioLanding.tsx",
   "th-dotmatrix": "components/landings/DotmatrixLanding.tsx",
+  "th-silo": "components/landings/SiloLanding.tsx",
   "th-minimal": "components/landings/minimal/MinimalLanding.tsx",
   "th-geometry": "components/landings/minimal/GeometryLanding.tsx",
   "th-faceta": "components/landings/minimal/FacetaLanding.tsx",

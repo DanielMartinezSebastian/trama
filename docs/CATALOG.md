@@ -904,9 +904,9 @@ Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta
 | `lines` | number 1–6 | 3 |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
 
-## Galerías y vídeo (`galerias`)
+## Galerías, vídeo y audio (`galerias`)
 
-Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas) y reproductor de vídeo.
+Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas), reproductor de vídeo y reproductor de música.
 
 ### Galería de imágenes — `ImageGallery`
 
@@ -979,6 +979,23 @@ Reproductor sobre el <video> nativo, sin dependencias, con controles propios del
 - Muestras: dos vídeos de Cloudinary (cld-sample-video y sea-turtle), uno local generado con ffmpeg (public/video/pixel-life.mp4, 8 s, sin audio) y un enlace de YouTube. La carátula de los de Cloudinary sale de un fotograma del propio vídeo (cloudinaryPoster).
 - El efecto ASCII pinta el vídeo como caracteres encima del original (que sigue reproduciéndose debajo). Exige que el servidor del vídeo permita CORS: Cloudinary y los archivos del propio sitio sí; si no, avisa y muestra el vídeo normal.
 - Con prefers-reduced-motion el autoplay y el modo fondo no arrancan; fuera de pantalla el vídeo se pausa solo (pauseOffscreen).
+
+### Reproductor de música — `AudioPlayer`
+
+Lista de pistas con visualizador (barras, onda o puntos), repetición, volumen y teclado (espacio, flechas, M). Reproduce archivos o música sintetizada en el navegador (`synth:estilo:bpm:semilla`) para demos sin audio.
+
+| prop | tipo | default |
+|---|---|---|
+| `tracks` | text | "Mar de fondo\|Maré Surf Club\|synth:ambient:80:2\|1:40\nSerie grande\|Maré Surf Club\|…" |
+| `layout` | `full` · `bar` · `minimal` | "full" |
+| `visualizer` | `bars` · `wave` · `dots` · `none` | "bars" |
+| `showPlaylist` | boolean | true |
+| `repeat` | `off` · `all` · `one` | "all" |
+| `defaultVolume` | number 0–1 | 0.8 |
+| `dock` | `none` · `bottom` · `top` · `bottom-left` · `bottom-right` | "none" |
+| `dockDraggable` | boolean | true |
+| `dockVisualizer` | `bars` · `wave` · `dots` · `none` | "bars" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
 
 ## Secciones (`secciones`)
 
@@ -1427,6 +1444,14 @@ Archivo: `components/landings/DotmatrixLanding.tsx`
 
 `RetroCanvas` → `SceneFlash` → `Toast` → `NavBar` → `ScrollProgress` → `Hero` → `Reveal` ×13 → `TerminalTyper` → `Marquee` → `StatsSection` → `FeatureGrid` → `AsciiCard` ×3 → `SectionHeader` ×4 → `Tabs` → `CodeBlock` ×2 → `Timeline` → `AsciiChart` → `Progress` → `Badge` ×3 → `Alert` → `Spinner` → `Table` → `PricingSection` → `TextField` → `Select` → `CheckboxGroup` → `RadioGroup` → `Toggle` → `MagneticButton` → `Modal` → `TestimonialSection` → `LogoCloud` → `FAQSection` → `CTASection` → `Divider` → `Footer`
 
+### SILO · hard techno minimal — `/demo/th-silo`
+
+Landing de un productor de hard techno con minimalismo extremo: negro, blanco y un gris, tipografía enorme y un único RetroCanvas de fondo (ASCII de puntos invertido, scanlines de 1 px en barrido y glitch leve) que cambia de figura en cada sección.
+
+Archivo: `components/landings/SiloLanding.tsx`
+
+`RetroCanvas` → `ScrollProgress` → `Toast` → `NavBar` → `Marquee` → `Reveal` ×2 → `Button` → `AudioPlayer` → `Table` → `ContactForm` → `Footer`
+
 ### MARÉ · minimal pixel — `/demo/th-minimal`
 
 Landing mínima de Maré Surf Club: fondo dither de cuadrados duros que evoluciona de amanecer a noche con el scroll, tipografía pixel, titulares con aparición glitch y palabra rotativa.
@@ -1461,7 +1486,7 @@ El blog de una ingeniera de plataformas: artículos largos con código, índice 
 
 Carpeta: `components/sites/kernel-log/` · 10 páginas: Inicio · Artículos · Lo que aprendí migrando 40 servicios a Kubernetes · Cómo bajé el tiempo de carga de una SPA de 6 s a 1,4 s · Server Components sin mitos: cuándo sí y cuándo no · RAG en producción: los tres fallos que nadie te cuenta · Escribir un informe de incidentes que alguien quiera leer · SQLite es suficiente (hasta que deja de serlo) · Newsletter · Sobre mí
 
-`SectionHeader` ×5 · `Button` ×5 · `ContactForm` ×4 · `Table` ×2 · `BlogCard` · `Timeline` · `NavBar` · `Pagination` · `TextField` · `StatsSection` · `Footer` · `FeatureGrid` · `Prose` · `Article` · `Toast`
+`SectionHeader` ×5 · `Button` ×5 · `ContactForm` ×4 · `Table` ×2 · `TextmodeBackground` · `BlogCard` · `Timeline` · `NavBar` · `Pagination` · `TextField` · `StatsSection` · `Footer` · `FeatureGrid` · `Prose` · `Article` · `Toast`
 
 ### Pixelforge · tienda de assets — `/sitios/pixelforge`
 

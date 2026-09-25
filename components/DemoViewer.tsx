@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import AsciifyCanvas from "@/components/AsciifyCanvas";
 import CyberpunkLanding from "@/components/landings/CyberpunkLanding";
+import SiloLanding from "@/components/landings/SiloLanding";
 import DotmatrixLanding from "@/components/landings/DotmatrixLanding";
 import FolioLanding from "@/components/landings/FolioLanding";
 import FacetaLanding from "@/components/landings/minimal/FacetaLanding";
@@ -24,6 +25,7 @@ const KIT_LANDINGS: Record<string, (props: { hud: boolean }) => React.JSX.Elemen
   "th-mycel": MycelLanding,
   "th-folio": FolioLanding,
   "th-dotmatrix": DotmatrixLanding,
+  "th-silo": SiloLanding,
   "th-minimal": MinimalLanding,
   "th-geometry": GeometryLanding,
   "th-faceta": FacetaLanding,

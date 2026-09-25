@@ -13,7 +13,7 @@ export const CATEGORIES: { id: Category; label: string; blurb: string }[] = [
   { id: "navegacion", label: "Navegación", blurb: "Barras, pestañas y acordeones." },
   { id: "formularios", label: "Formularios", blurb: "Campos, interruptores y deslizadores." },
   { id: "feedback", label: "Feedback", blurb: "Estados, avisos y carga." },
-  { id: "galerias", label: "Galerías y vídeo", blurb: "Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas) y reproductor de vídeo." },
+  { id: "galerias", label: "Galerías, vídeo y audio", blurb: "Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas), reproductor de vídeo y reproductor de música." },
   { id: "secciones", label: "Secciones", blurb: "Bloques compuestos, listos para pegar en una landing: hero, contacto, precios, FAQ…" },
   { id: "contenido", label: "Contenido", blurb: "Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo." },
   { id: "overlays", label: "Overlays", blurb: "Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda." },

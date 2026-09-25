@@ -1,0 +1,98 @@
+/* SILO (prefijo slo-): minimalismo extremo. Negro, blanco y un gris; sin superficies ni bordes; vacío como material.
+   Solo organiza piezas del kit sobre los tokens de la landing. */
+
+.slo { --gutter: clamp(20px, 5vw, 72px); --mono: var(--font-jetbrains-mono), ui-monospace, monospace; position: relative; min-height: 100vh; color: var(--fg); background: var(--bg); }
+.slo--hidden .slo__tag { opacity: 0; }
+
+/* fondo fijo: un solo RetroCanvas; al cambiar de sección, un corte breve a negro (sin fundidos largos) */
+.slo__bg { position: fixed; inset: 0; z-index: 0; background: var(--bg); }
+.slo__bg-cut { position: absolute; inset: 0; z-index: 1; background: var(--bg); opacity: 0; pointer-events: none; animation: slo-cut 0.45s steps(3) both; }
+@keyframes slo-cut { from { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .slo__bg-cut { animation: none; } }
+/* velo: el texto está a la izquierda y abajo; ahí el fondo se calma */
+.slo__bg::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, color-mix(in srgb, var(--bg) 70%, transparent) 0%, transparent 60%), linear-gradient(0deg, color-mix(in srgb, var(--bg) 60%, transparent) 0%, transparent 40%); }
+.slo__tag { position: fixed; right: var(--gutter); bottom: 22px; z-index: 6; font: 500 10px/1 var(--mono); letter-spacing: 0.32em; color: var(--mut); pointer-events: none; transition: opacity 0.3s; }
+
+/* barra: sin superficie, solo texto */
+.slo__nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; padding: 14px var(--gutter) 0; }
+.slo__nav .ui-nav__bar { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.slo__nav .ui-nav__row { padding-inline: 0; }
+.slo__nav .ui-nav__brand { font: 700 12px/1 var(--mono); letter-spacing: 0.4em; }
+.slo__nav .ui-nav__link { font: 500 11px/1 var(--mono); letter-spacing: 0.28em; text-transform: uppercase; color: var(--mut); padding-inline: 10px; }
+.slo__nav .ui-nav__link:hover { color: var(--fg); }
+
+/* estructura */
+.slo__main { position: relative; z-index: 5; }
+.slo__label { margin: 0; font: 500 11px/1.4 var(--mono); letter-spacing: 0.32em; text-transform: uppercase; color: var(--mut); }
+.slo__label span { color: var(--fg); }
+.slo__section { min-height: 100vh; display: grid; align-content: center; gap: clamp(40px, 7vw, 88px); padding: clamp(120px, 16vw, 200px) var(--gutter); }
+.slo__section--last { padding-bottom: clamp(80px, 10vw, 140px); }
+
+/* portada: el nombre como único gesto */
+.slo__hero { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(96px, 12vw, 140px) var(--gutter) 40px; }
+.slo__name { align-self: center; margin: 0; font-size: clamp(120px, 31vw, 520px); line-height: 0.78; font-weight: 900; letter-spacing: -0.075em; margin-left: -0.05em; }
+.slo__hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.slo__strip { position: relative; z-index: 5; padding-block: 14px; }
+.slo__strip .ui-marquee { font-family: var(--mono); letter-spacing: 0.3em; }
+
+/* música: una lista, sin tarjetas */
+.slo__releases { display: grid; gap: clamp(28px, 4vw, 48px); margin: 0; padding: 0; list-style: none; }
+.slo__release { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 4px 20px; }
+.slo__n { font: 500 11px/1 var(--mono); letter-spacing: 0.2em; color: var(--mut); }
+.slo__release h2 { margin: 0; font-size: clamp(44px, 9vw, 132px); line-height: 0.9; font-weight: 900; letter-spacing: -0.06em; }
+.slo__meta { grid-column: 2; font: 500 11px/1.4 var(--mono); letter-spacing: 0.24em; text-transform: uppercase; color: var(--mut); }
+.slo__release .ui-button { grid-column: 3; grid-row: 1; align-self: center; font-family: var(--mono); letter-spacing: 0.24em; text-transform: uppercase; font-size: 11px; color: var(--fg); }
+.slo__release h2 { transition: color 0.2s; }
+.slo__releases:has(.is-current) .slo__release:not(.is-current) h2 { color: color-mix(in srgb, var(--fg) 38%, transparent); }
+/* reproductor: una línea bajo la lista, en mono diminuta; el botón es un cuadrado blanco */
+.slo__player { max-width: 720px; }
+.slo__player .ui-audio__meta strong { font: 700 12px/1.3 var(--mono); letter-spacing: 0.28em; }
+.slo__player .ui-audio__meta span { font: 500 10px/1.3 var(--mono); letter-spacing: 0.24em; text-transform: uppercase; }
+.slo__player .ui-audio__play { background: var(--fg); color: var(--bg); border: 0; border-radius: 0; }
+.slo__player .ui-audio__time { font-size: 11px; letter-spacing: 0.12em; }
+@media (max-width: 640px) { .slo__release { grid-template-columns: 40px minmax(0, 1fr); } .slo__release .ui-button { grid-column: 2; grid-row: auto; justify-self: start; } }
+
+/* fechas: la tabla del kit sin cabecera visible ni superficie */
+.slo__dates { max-width: 1100px; background: none; border: 0; box-shadow: none; padding: 0 !important; }
+.slo__dates .ui-table { font-size: clamp(16px, 2vw, 22px); }
+.slo__dates .ui-table th { padding: 0 0 18px; font: 500 10px/1 var(--mono); letter-spacing: 0.32em; color: var(--mut); border-bottom: 1px solid var(--ln); }
+.slo__dates .ui-table td { padding: 22px 0; font-weight: 600; letter-spacing: -0.01em; border-bottom: 1px solid var(--ln); }
+.slo__dates .ui-table td:first-child { font: 500 13px/1 var(--mono); letter-spacing: 0.2em; color: var(--mut); width: 120px; }
+.slo__dates .ui-table tbody tr:hover td { background: none; color: #fff; }
+
+/* booking */
+.slo__statement { margin: 0; max-width: 14ch; font-size: clamp(40px, 7vw, 104px); line-height: 0.92; font-weight: 900; letter-spacing: -0.055em; }
+.slo__form { max-width: 560px; }
+.slo__form .ui-contact { padding: 0; background: none; border: 0; box-shadow: none; }
+.slo__form .ui-field__box { border-width: 0 0 1px; border-radius: 0; background: none; }
+.slo__form .ui-button { border-radius: 0; font-family: var(--mono); letter-spacing: 0.28em; text-transform: uppercase; font-size: 11px; }
+
+.slo__footer { position: relative; z-index: 5; padding: 0 var(--gutter) 28px; }
+.slo__footer .ui-footer { padding: 24px 0 0; background: none; border: 0; border-top: 1px solid var(--ln); border-radius: 0; box-shadow: none; }
+.slo__footer .ui-footer__brand strong { font: 700 12px/1 var(--mono); letter-spacing: 0.4em; }
+.slo__footer .ui-footer__bottom { font: 500 10px/1.4 var(--mono); letter-spacing: 0.2em; color: var(--mut); }
+
+/* la selección también en blanco y negro */
+.slo ::selection { background: var(--fg); color: var(--bg); }
+
+/* con los controles del visor de la galería visibles (arriba y abajo), la barra, el pie de la portada y la etiqueta se apartan */
+.slo:not(.slo--hidden) .slo__nav { top: 46px; }
+.slo:not(.slo--hidden) .slo__hero { padding-bottom: 86px; }
+.slo:not(.slo--hidden) .slo__tag { bottom: 70px; }
+
+/* dock del reproductor (portal en body, por eso sin prefijo .slo): una línea negra, mono diminuta, botón cuadrado blanco */
+.slo-dock { background: color-mix(in srgb, var(--bg) 88%, transparent) !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding-block: 10px; padding-inline: clamp(20px, 5vw, 72px) !important; gap: 14px; }
+.slo-dock .ui-audio__play { background: var(--fg); color: var(--bg); border: 0; border-radius: 0; width: 28px; height: 28px; }
+.slo-dock .ui-audio-dock__meta { display: flex; align-items: baseline; gap: 14px; }
+.slo-dock .ui-audio-dock__meta strong { font: 700 11px/1.3 var(--font-jetbrains-mono), monospace; letter-spacing: 0.28em; }
+.slo-dock .ui-audio-dock__meta span { font: 500 10px/1.3 var(--font-jetbrains-mono), monospace; letter-spacing: 0.24em; text-transform: uppercase; }
+.slo-dock .ui-audio__time { letter-spacing: 0.12em; }
+.slo-dock .ui-audio-dock__line { height: 1px; background: linear-gradient(90deg, var(--fg) var(--p, 0%), transparent var(--p, 0%)); }
+@media (max-width: 560px) { .slo-dock .ui-audio-dock__meta span { display: none; } }
+/* con el dock abajo, la etiqueta de sección sube por encima */
+body:has(.slo-dock) .slo__tag { bottom: 70px; }
+body:has(.slo-dock) .slo:not(.slo--hidden) .slo__tag { bottom: 128px; }
+.slo-dock.ui-audio-dock--free { padding-inline: 10px 12px !important; border: 1px solid var(--ln) !important; }
+.slo-dock .ui-audio-dock__grip { color: var(--mut); }
+.slo-dock.ui-audio-dock--free .ui-audio-dock__meta span { display: none; }
+.slo-dock .ui-audio-dock__viz { height: 20px; }

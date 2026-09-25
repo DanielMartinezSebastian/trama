@@ -139,12 +139,13 @@
     },
     {
       "id": "galerias",
-      "label": "Galerías y vídeo",
-      "blurb": "Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas) y reproductor de vídeo.",
+      "label": "Galerías, vídeo y audio",
+      "blurb": "Galerías de imágenes y carruseles sobre Swiper (coverflow, baraja, cubo, mosaico, cintas continuas), reproductor de vídeo y reproductor de música.",
       "components": [
         "image-gallery",
         "carousel",
-        "video-player"
+        "video-player",
+        "audio-player"
       ]
     },
     {
@@ -5917,6 +5918,130 @@
       "preview": "/componentes#video-player"
     },
     {
+      "id": "audio-player",
+      "name": "Reproductor de música",
+      "component": "AudioPlayer",
+      "import": "import AudioPlayer from \"@/components/ui/AudioPlayer\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Lista de pistas con visualizador (barras, onda o puntos), repetición, volumen y teclado (espacio, flechas, M). Reproduce archivos o música sintetizada en el navegador (`synth:estilo:bpm:semilla`) para demos sin audio.",
+      "props": [
+        {
+          "key": "tracks",
+          "type": "text",
+          "default": "Mar de fondo|Maré Surf Club|synth:ambient:80:2|1:40\nSerie grande|Maré Surf Club|synth:techno:124:5|2:10\nMarea viva|Maré Surf Club|synth:hardtechno:150:7|2:30",
+          "label": "Pistas (Título|Artista|src|duración|portada)"
+        },
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "full",
+          "label": "Disposición",
+          "options": [
+            "full",
+            "bar",
+            "minimal"
+          ]
+        },
+        {
+          "key": "visualizer",
+          "type": "select",
+          "default": "bars",
+          "label": "Visualizador",
+          "options": [
+            "bars",
+            "wave",
+            "dots",
+            "none"
+          ]
+        },
+        {
+          "key": "showPlaylist",
+          "type": "boolean",
+          "default": true,
+          "label": "Lista de pistas"
+        },
+        {
+          "key": "repeat",
+          "type": "select",
+          "default": "all",
+          "label": "Repetir",
+          "options": [
+            "off",
+            "all",
+            "one"
+          ]
+        },
+        {
+          "key": "defaultVolume",
+          "type": "number",
+          "default": 0.8,
+          "label": "Volumen inicial",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "dock",
+          "type": "select",
+          "default": "none",
+          "label": "Mini reproductor fijo al salir de pantalla",
+          "options": [
+            "none",
+            "bottom",
+            "top",
+            "bottom-left",
+            "bottom-right"
+          ]
+        },
+        {
+          "key": "dockDraggable",
+          "type": "boolean",
+          "default": true,
+          "label": "Mini reproductor arrastrable"
+        },
+        {
+          "key": "dockVisualizer",
+          "type": "select",
+          "default": "bars",
+          "label": "Visualizador del mini reproductor",
+          "options": [
+            "bars",
+            "wave",
+            "dots",
+            "none"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "glass",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix"
+          ]
+        }
+      ],
+      "example": "import AudioPlayer from \"@/components/ui/AudioPlayer\";\n\n<AudioPlayer />",
+      "preview": "/componentes#audio-player"
+    },
+    {
       "id": "hero",
       "name": "Hero",
       "component": "Hero",
@@ -9304,6 +9429,70 @@
       ]
     },
     {
+      "slug": "th-silo",
+      "title": "SILO · hard techno minimal",
+      "url": "/demo/th-silo",
+      "file": "components/landings/SiloLanding.tsx",
+      "description": "Landing de un productor de hard techno con minimalismo extremo: negro, blanco y un gris, tipografía enorme y un único RetroCanvas de fondo (ASCII de puntos invertido, scanlines de 1 px en barrido y glitch leve) que cambia de figura en cada sección.",
+      "components": [
+        {
+          "component": "RetroCanvas",
+          "id": "retro-canvas",
+          "uses": 1
+        },
+        {
+          "component": "ScrollProgress",
+          "id": "scroll-progress",
+          "uses": 1
+        },
+        {
+          "component": "Toast",
+          "id": "toast",
+          "uses": 1
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "Reveal",
+          "id": "reveal",
+          "uses": 2
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 1
+        },
+        {
+          "component": "AudioPlayer",
+          "id": "audio-player",
+          "uses": 1
+        },
+        {
+          "component": "Table",
+          "id": "table",
+          "uses": 1
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        }
+      ]
+    },
+    {
       "slug": "th-minimal",
       "title": "MARÉ · minimal pixel",
       "url": "/demo/th-minimal",
@@ -9510,6 +9699,11 @@
           "component": "Table",
           "id": "table",
           "uses": 2
+        },
+        {
+          "component": "TextmodeBackground",
+          "id": "textmode-background",
+          "uses": 1
         },
         {
           "component": "BlogCard",

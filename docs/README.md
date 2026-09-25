@@ -94,7 +94,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
-| Galerías y vídeo | `ImageGallery` · `Carousel` · `VideoPlayer` |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `VideoPlayer` · `AudioPlayer` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` |

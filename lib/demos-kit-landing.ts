@@ -55,6 +55,18 @@ export const kitLandingDemos: DemoMeta[] = [
     accent: "#ff3b3b",
   },
   {
+    slug: "th-silo",
+    family: "landing",
+    render: "kit",
+    reactive: true,
+    lib: "three.js",
+    title: "SILO · hard techno minimal",
+    blurb:
+      "Landing de un productor de hard techno con minimalismo extremo: negro, blanco y un gris, tipografía enorme y un único RetroCanvas de fondo (ASCII de puntos invertido, scanlines de 1 px en barrido y glitch leve) que cambia de figura en cada sección.",
+    hint: "Desplaza: cada sección cambia la figura del fondo",
+    accent: "#f2f2f2",
+  },
+  {
     slug: "th-minimal",
     family: "landing",
     render: "kit",

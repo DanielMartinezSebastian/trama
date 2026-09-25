@@ -1007,3 +1007,42 @@ párrafo), los títulos sí. La columna del índice en `Article` se estira a tod
 recorrido, un `position: sticky` no se queda fijo. `Prose`, `Callout`, `ArticleHeader` y `Article` no llevan
 `"use client"`: se renderizan en el servidor (el texto llega indexable); solo el índice es de cliente.
 
+
+## 25. Audio: `AudioPlayer` y la música sintetizada
+
+`AudioPlayer` (`@/components/ui/AudioPlayer`) es un reproductor de lista con tres disposiciones (`full` tarjeta, `bar`
+barra, `minimal` botón + título + línea) y un visualizador en canvas (`bars`, `wave`, `dots`) que toma los colores de
+los tokens con `useTokens`. Los motores están en `lib/ui/audio.ts`:
+
+- **Archivos** (`src` = URL): un `<audio>` conectado a un `AnalyserNode` por `createMediaElementSource`. Si el archivo
+  está en otro dominio necesita CORS (`Access-Control-Allow-Origin`); sin él suena, pero el visualizador queda plano.
+- **Sintetizada** (`src` = `synth:<estilo>:<bpm>:<semilla>`, estilos `hardtechno`, `techno`, `ambient`): música
+  generada con Web Audio (bombo distorsionado, rumble, hats, palmas, pads) con un planificador de 25 ms y 120 ms de
+  margen. Sirve para demos sin archivos; la semilla cambia el patrón y la tonalidad. Exige la duración en la pista
+  (`Título|Artista|synth:hardtechno:156:3|3:40`).
+
+Trampas:
+
+1. **Gesto del usuario.** Los navegadores no dejan sonar audio sin un clic previo. El reproductor nunca arranca solo;
+   para lanzarlo desde fuera (una lista de discos de la página) usa `track` + `playKey` (un contador que el clic
+   incrementa): el `play()` ocurre justo después de ese clic y cuenta como gesto.
+2. **Un solo `AudioContext`** compartido (`audioContext()`): crear uno por pista agota el límite del navegador.
+3. **Pestaña en segundo plano:** el reloj va por `setInterval` (sigue contando) y el visualizador por rAF (se para).
+4. Teclado con el foco dentro: espacio/K reproduce o pausa, flechas ±5 s, M silencia. Integra Media Session (teclas
+   multimedia y pantalla de bloqueo).
+5. **Dock** (`dock="bottom" | "top" | "bottom-left" | "bottom-right"`): cuando el reproductor sale de la pantalla y ya
+   ha sonado, aparece un mini reproductor fijo (pausa, pista siguiente, silencio, parar y cerrar; el título vuelve al
+   reproductor). Es el mismo motor, no una copia: no se corta el audio. Sale en un portal a `body` con
+   `themeSnapshot` (§12), así que para estilarlo desde la página usa `dockClassName`; `dockOffset` lo separa del
+   borde si la página tiene otra barra fija ahí.
+6. **Dock arrastrable** (`dockDraggable`): añade un asa de puntos; al arrastrarla, la barra se convierte en una píldora
+   flotante que se queda donde la sueltes (siempre dentro de la pantalla, también al cambiar el tamaño de la ventana).
+   La posición se guarda en `localStorage` (`trama-audio-dock`, envuelto en try/catch: sin almacenamiento, vuelve a su
+   sitio). Con el asa enfocada, flechas ±16 px (Mayús ±64); doble clic o Supr la devuelven a la posición de `dock`.
+7. **Visualizador mini** (`dockVisualizer`, por defecto el mismo que el reproductor): el dock lleva su propio lienzo
+   pequeño que pinta la misma señal en el mismo bucle de rAF (un solo `getByteFrequencyData` por fotograma para los dos).
+   Con menos de 40 px de alto la densidad se adapta (puntos cada 4 px, barras de 5 px).
+8. **Pistas sintetizadas distintas:** la semilla fija tonalidad, bombo, patrones (hats, rumble, acid, acordes,
+   percusión), timbres y el orden en que entran las capas; `semilla % 4` elige la entrada (0 bombo y rumble, 1 acid sola,
+   2 acordes con eco, 3 percusión). Para una lista de demo, usa semillas con restos distintos (4, 5, 14…): si todas
+   tienen el mismo resto, empiezan igual.

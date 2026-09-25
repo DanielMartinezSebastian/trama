@@ -28,3 +28,5 @@
 .kl__backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 40%, color-mix(in srgb, var(--bg) 45%, transparent) 62%, transparent 85%); }
 @media (max-width: 860px) { .kl__backdrop::after { background: color-mix(in srgb, var(--bg) 62%, transparent); } }
 
+/* la ilustración es apaisada: en el hueco vertical se encuadra sobre las iniciales */
+.kl__portrait { object-position: 74% 50%; }

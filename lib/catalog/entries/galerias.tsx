@@ -1,5 +1,6 @@
 "use client";
 
+import AudioPlayer from "@/components/ui/AudioPlayer";
 import Carousel from "@/components/ui/Carousel";
 import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
@@ -207,5 +208,34 @@ export const galerias: CatalogEntry[] = [
         </div>
       );
     },
+  },
+  {
+    id: "audio-player",
+    component: "AudioPlayer",
+    path: "@/components/ui/AudioPlayer",
+    name: "Reproductor de música",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description: "Lista de pistas con visualizador (barras, onda o puntos), repetición, volumen y teclado (espacio, flechas, M). Reproduce archivos o música sintetizada en el navegador (`synth:estilo:bpm:semilla`) para demos sin audio.",
+    stageHeight: 600,
+    props: [
+      { key: "tracks", label: "Pistas (Título|Artista|src|duración|portada)", type: "text", multiline: true, default: "Mar de fondo|Maré Surf Club|synth:ambient:80:2|1:40\nSerie grande|Maré Surf Club|synth:techno:124:5|2:10\nMarea viva|Maré Surf Club|synth:hardtechno:150:7|2:30" },
+      { key: "layout", label: "Disposición", type: "select", default: "full", options: ["full", "bar", "minimal"], labels: { full: "tarjeta", bar: "barra", minimal: "mínima" } },
+      { key: "visualizer", label: "Visualizador", type: "select", default: "bars", options: ["bars", "wave", "dots", "none"] },
+      { key: "showPlaylist", label: "Lista de pistas", type: "boolean", default: true, when: (p) => p.layout !== "minimal" },
+      { key: "repeat", label: "Repetir", type: "select", default: "all", options: ["off", "all", "one"] },
+      { key: "defaultVolume", label: "Volumen inicial", type: "number", default: 0.8, min: 0, max: 1, step: 0.05 },
+      { key: "dock", label: "Mini reproductor fijo al salir de pantalla", type: "select", default: "none", options: ["none", "bottom", "top", "bottom-left", "bottom-right"] },
+      { key: "dockDraggable", label: "Mini reproductor arrastrable", type: "boolean", default: true, when: (p) => p.dock !== "none" },
+      { key: "dockVisualizer", label: "Visualizador del mini reproductor", type: "select", default: "bars", options: ["bars", "wave", "dots", "none"], when: (p) => p.dock !== "none" },
+      variantProp("glass"),
+    ],
+    render: (p) => (
+      <div className="ui-center" style={{ padding: 8 }}>
+        <div style={{ width: p.layout === "full" ? 420 : 720, maxWidth: "100%", display: "grid" }}>
+          <AudioPlayer tracks={p.tracks as string} layout={p.layout as never} visualizer={p.visualizer as never} showPlaylist={p.showPlaylist as boolean} repeat={p.repeat as never} defaultVolume={p.defaultVolume as number} dock={p.dock as never} dockDraggable={p.dockDraggable as boolean} dockVisualizer={p.dockVisualizer as never} variant={p.variant as never} />
+        </div>
+      </div>
+    ),
   },
 ];
