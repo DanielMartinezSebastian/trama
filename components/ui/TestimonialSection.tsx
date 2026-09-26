@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import Carousel from "./Carousel";
 import SectionHeader from "./SectionHeader";
 import Testimonial from "./Testimonial";
@@ -42,7 +39,7 @@ export default function TestimonialSection({
   variant = "glass",
   className = "",
 }: TestimonialSectionProps) {
-  const rows = useMemo(() => items.split("\n").map((l) => l.split("|")).filter((r) => r[0]?.trim()), [items]);
+  const rows = items.split("\n").map((l) => l.split("|")).filter((r) => r[0]?.trim());
   const cards = rows.map(([quote, author, role, rating], i) => (
     <Testimonial key={author + i} quote={quote} author={author} role={role} rating={parseInt(rating, 10) || 0} variant={variant} />
   ));

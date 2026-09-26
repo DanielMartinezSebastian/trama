@@ -1,5 +1,3 @@
-"use client";
-
 import { forwardRef, type AriaAttributes, type Ref } from "react";
 import { renderGlyph } from "./Icon";
 import { INTENTS, type Intent } from "./intent";

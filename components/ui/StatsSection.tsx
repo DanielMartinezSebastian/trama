@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import SectionHeader from "./SectionHeader";
 import StatCounter from "./StatCounter";
 import type { Tone } from "./variants";
@@ -31,7 +28,7 @@ export default function StatsSection({
   playKey = 0,
   className = "",
 }: StatsSectionProps) {
-  const rows = useMemo(() => stats.split("\n").map((l) => l.split("|")).filter((r) => r[0]?.trim()), [stats]);
+  const rows = stats.split("\n").map((l) => l.split("|")).filter((r) => r[0]?.trim());
   return (
     <section className={`ui-stats ${className}`}>
       <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align="center" variant="minimal" />

@@ -67,6 +67,9 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [ ] **Clara Vidal:** la etiqueta de `LogoCloud` («Me han leído en…») no llega a 4.5:1; axe mide contra el halo de
       `--legibility-ts`, pensado para fondos oscuros. Probar `--legibility-ts: 0 0 transparent` en el tema claro de esa web.
 
+- [ ] **Peso de `/componentes`** (≈ 620 KB de JS comprimido, three.js incluido): el catálogo importa todas sus entradas.
+      Cargar con `next/dynamic` las más pesadas (fondos 3D, `RetroCanvas`, `AsciiBackground`) solo al seleccionarlas.
+
 ## 3. Documentación (`docs/`)
 
 - [ ] **`README.md` desactualizado:** dice «comparador de los 7 estilos» (son 8) y «Seis landings construidas solo con

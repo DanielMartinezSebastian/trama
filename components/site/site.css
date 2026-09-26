@@ -48,7 +48,7 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
   font: 500 12px/1 var(--mono); color: var(--fg); background: transparent; border: var(--dots); border-radius: 0;
   transition: border-color 0.15s;
 }
-.tr-install > span { color: var(--acc); }
+.tr-install > span:first-child { color: var(--acc); }
 .tr-install em { font-style: normal; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mut); }
 .tr-install:hover { border: 1px solid var(--fg); }
 

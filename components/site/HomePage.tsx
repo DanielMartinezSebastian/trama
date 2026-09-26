@@ -1,16 +1,16 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import CodeBlock from "@/components/ui/CodeBlock";
 import Marquee from "@/components/ui/Marquee";
-import RetroCanvas from "@/components/ui/RetroCanvas";
-import RetroShapes, { type RetroShapesProps } from "@/components/ui/RetroShapes";
 import Reveal from "@/components/ui/Reveal";
-import SceneFlash from "@/components/ui/SceneFlash";
-import Tabs from "@/components/ui/Tabs";
-import { InstallChip } from "./SiteChrome";
+import HomeStage from "./HomeStage";
+import InstallChip from "./InstallChip";
+import StartSteps from "./StartSteps";
 import VariantLab from "./VariantLab";
+
+/*
+ * Portada de la web: componente de servidor. El texto, las listas y los enlaces llegan como HTML sin JavaScript propio;
+ * solo son cliente las islas interactivas: el fondo (HomeStage), el banco de variantes, las pestañas de «Empezar» y el
+ * botón de copiar.
+ */
 
 export type HomeData = {
   counts: { components: number; categories: number; styles: number; demos: number; sites: number };
@@ -20,80 +20,18 @@ export type HomeData = {
   componentNames: string[];
 };
 
-// un acto por sección: el fondo cambia de figura al entrar en cada una (como SILO y SIGNAL)
-type Act = { shape: NonNullable<RetroShapesProps["shape"]>; label: string };
-const ACTS: Act[] = [
-  { shape: "knot", label: "trama" },
-  { shape: "cage", label: "componentes" },
-  { shape: "globe", label: "landings" },
-  { shape: "terrain", label: "webs completas" },
-  { shape: "tunnel", label: "empezar" },
-];
-
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const NPM = `npm i trama-ui
-
-// app/layout.tsx
-import "trama-ui/styles.css";
-
-// cualquier página
-import { Hero, FeatureGrid, Footer } from "trama-ui";`;
-
-const COPY = `# desde este repo: copia el código a tu proyecto
-npm run kit:export -- ../mi-web --only Hero,PricingSection,Footer
-
-// app/layout.tsx
-import "@/components/ui/styles/kit.css";
-import { fontVariables } from "@/lib/ui/fonts";`;
-
-const THEME = `<main style={{
-  "--bg": "#000", "--fg": "#ededed", "--mut": "#8a8a8a",
-  "--acc": "#ff3b3b", "--acc2": "#8a8a8a",
-  "--card": "transparent", "--ln": "rgba(255,255,255,.14)", "--r": "0px",
-}}>
-  <Hero variant="minimal" title="Tu producto" subtitle="" />
-</main>`;
-
-const STEPS: [string, string, string][] = [
-  [NPM, "tsx", "terminal · layout.tsx"],
-  [COPY, "bash", "kit:export"],
-  [THEME, "tsx", "page.tsx"],
-];
-
 export default function HomePage({ data }: { data: HomeData }) {
-  // la sección activa vive en HomeStage: cambiarla solo repinta el fondo, no la página entera (guía §22.1)
-  const stage = useRef<((i: number) => void) | null>(null);
-  const marks = useRef<Array<HTMLElement | null>>([]);
-  const [step, setStep] = useState(0);
   const { counts } = data;
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          const i = Number((e.target as HTMLElement).dataset.act);
-          if (!Number.isNaN(i)) stage.current?.(i);
-        }),
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    marks.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
-  }, []);
-  const mark = (i: number) => (el: HTMLElement | null) => {
-    marks.current[i] = el;
-  };
-
-  const [code, lang, file] = STEPS[step];
 
   return (
     <>
-      <HomeStage api={stage} />
+      <HomeStage />
 
       <main className="tr-home">
         {/* ---------- 00 · portada ---------- */}
-        <section className="tr-hero" data-act={0} ref={mark(0)}>
+        <section className="tr-hero" data-act={0}>
           <p className="tr-label">Librería de componentes · React / Next.js</p>
           <div className="tr-hero__body">
             <h1 className="tr-hero__name">TRAMA</h1>
@@ -139,7 +77,7 @@ export default function HomePage({ data }: { data: HomeData }) {
         </div>
 
         {/* ---------- 01 · componentes ---------- */}
-        <section id="componentes" className="tr-sec" data-act={1} ref={mark(1)}>
+        <section id="componentes" className="tr-sec" data-act={1}>
           <header className="tr-sec__head">
             <p className="tr-label">01 — Componentes</p>
             <h2 className="tr-statement">
@@ -178,7 +116,7 @@ export default function HomePage({ data }: { data: HomeData }) {
         </section>
 
         {/* ---------- 02 · landings ---------- */}
-        <section id="landings" className="tr-sec" data-act={2} ref={mark(2)}>
+        <section id="landings" className="tr-sec" data-act={2}>
           <header className="tr-sec__head">
             <p className="tr-label">02 — Landings de referencia</p>
             <h2 className="tr-statement">Hechas solo con el kit.</h2>
@@ -207,7 +145,7 @@ export default function HomePage({ data }: { data: HomeData }) {
         </section>
 
         {/* ---------- 03 · webs completas ---------- */}
-        <section id="webs" className="tr-sec" data-act={3} ref={mark(3)}>
+        <section id="webs" className="tr-sec" data-act={3}>
           <header className="tr-sec__head">
             <p className="tr-label">03 — Webs completas</p>
             <h2 className="tr-statement">Varias páginas, estado real.</h2>
@@ -230,16 +168,13 @@ export default function HomePage({ data }: { data: HomeData }) {
         </section>
 
         {/* ---------- 04 · empezar ---------- */}
-        <section id="empezar" className="tr-sec tr-sec--last" data-act={4} ref={mark(4)}>
+        <section id="empezar" className="tr-sec tr-sec--last" data-act={4}>
           <header className="tr-sec__head">
             <p className="tr-label">04 — Empezar</p>
             <h2 className="tr-statement">Instala. Pon tus tokens. Compón.</h2>
           </header>
           <div className="tr-start">
-            <div className="tr-start__steps">
-              <Tabs items="npm, Copiar el código, Tema" content="" variant="minimal" onChange={(i) => setStep(i)} />
-              <CodeBlock code={code} language={lang} filename={file} variant="minimal" />
-            </div>
+            <StartSteps />
             <ol className="tr-steps">
               <li>
                 <span className="tr-n">01</span>
@@ -271,45 +206,6 @@ export default function HomePage({ data }: { data: HomeData }) {
           </div>
         </section>
       </main>
-    </>
-  );
-}
-
-/** Fondo, corte y etiqueta de sección: lo único que cambia con la sección activa. */
-function HomeStage({ api }: { api: { current: ((i: number) => void) | null } }) {
-  const [act, setAct] = useState(0);
-  const [wide, setWide] = useState(true);
-  useEffect(() => {
-    api.current = setAct;
-    return () => {
-      api.current = null;
-    };
-  }, [api]);
-  useEffect(() => {
-    const mq = matchMedia("(min-width: 900px)");
-    const sync = () => setWide(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  const a = ACTS[act];
-  // en la portada la figura se aparta a la derecha del titular
-  const offset: [number, number, number] = act === 0 && wide ? [2.4, 0, 0] : [0, 0, 0];
-
-  return (
-    <>
-      <div className={`tr-bg ${act === 0 ? "tr-bg--hero" : ""}`} aria-hidden>
-        <RetroCanvas mode="ascii" ramp="dots" tint="scene" cellSize={6} cellAspect={1.2} scanlines={0.4} scanlineSize={1} scanlineRoll={0.5} vignette={0.5} glow={0.15} flicker={0} glitch={0.03} fov={35} cameraZ={9} pointerFx="parallax" pointerStrength={0.6} interaction="window">
-          <group position={offset} scale={act === 0 ? 0.95 : 0.8}>
-            <RetroShapes shape={a.shape} speed={0.7} />
-          </group>
-        </RetroCanvas>
-      </div>
-      <SceneFlash className="tr-flash" kind="slices" duration={0.45} playKey={act} />
-      <div className="tr-scene" aria-hidden>
-        [{pad(act + 1)}/{pad(ACTS.length)}] {a.label}
-      </div>
     </>
   );
 }

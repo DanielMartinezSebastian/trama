@@ -403,6 +403,17 @@ conviene saber para usarlo bien:
 - Contraste ≥ 4.5:1 para texto de cuerpo sobre cualquier fotograma del fondo.
 - Fondos WebGL (react-three-fiber) detrás de una página con scroll: reglas en §22.1. La principal es que la GPU es compartida;
   si el lienzo la satura, el scroll va a tirones aunque el JavaScript esté libre.
+- **`"use client"` solo donde hace falta.** Un componente es cliente si usa estado, efectos, refs, eventos que define él
+  mismo o APIs del navegador. Uno que solo pinta props (aunque reciba un `onClick` para pasarlo a un `<button>`, como
+  `Button`) no lo lleva: así funciona en páginas de servidor y no manda JavaScript propio. Un `useMemo` sobre las props
+  no justifica la directiva: calcúlalo directamente.
+- **Nada de «routers» con imports estáticos.** Un componente cliente que elige entre muchos (una demo por slug, una web
+  por ruta) no importa todas las opciones arriba del archivo: cada página las descargaría todas. O decide en el servidor,
+  o usa `next/dynamic` por opción (`components/DemoViewer.tsx`, `components/sites/SiteRouter.tsx`). Lo pesado que no hace
+  falta para el primer pintado (un lienzo three.js de fondo), con `dynamic(…, { ssr: false })`.
+- **Páginas de servidor con islas.** El texto de una página va en un componente de servidor; las partes interactivas son
+  componentes cliente pequeños dentro (portada de la web: `components/site/HomePage.tsx` con `HomeStage`, `StartSteps`,
+  `VariantLab` e `InstallChip`).
 
 ### 8.1. Accesibilidad y SEO: reglas del kit
 

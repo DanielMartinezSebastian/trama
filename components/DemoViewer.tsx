@@ -3,33 +3,34 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import AsciifyCanvas from "@/components/AsciifyCanvas";
-import CyberpunkLanding from "@/components/landings/CyberpunkLanding";
-import SiloLanding from "@/components/landings/SiloLanding";
-import DotmatrixLanding from "@/components/landings/DotmatrixLanding";
-import FolioLanding from "@/components/landings/FolioLanding";
-import FacetaLanding from "@/components/landings/minimal/FacetaLanding";
-import GeometryLanding from "@/components/landings/minimal/GeometryLanding";
-import MinimalLanding from "@/components/landings/minimal/MinimalLanding";
-import MycelLanding from "@/components/landings/MycelLanding";
-import LayersCanvas from "@/components/LayersCanvas";
-import ScrollStage from "@/components/ScrollStage";
+import dynamic from "next/dynamic";
 import TextControls from "@/components/TextControls";
-import ThemedLanding from "@/components/ThemedLanding";
-import TextmodeCanvas from "@/components/TextmodeCanvas";
 import { demos, getDemo } from "@/lib/demos";
 
+/*
+ * Cada demo carga solo su código. Con imports estáticos, las 64 demos descargaban las ocho landings, los tres motores de
+ * lienzo y three.js (≈ 630 KB comprimidos) aunque mostraran una sola cosa. `next/dynamic` separa cada una en su propio
+ * fragmento: se sigue renderizando en el servidor y el navegador solo pide el de la demo abierta.
+ */
+type LandingProps = { hud: boolean };
+
 /** Landings "kit" (construidas solo con components/ui/): una por slug, todas con la misma forma de props. */
-const KIT_LANDINGS: Record<string, (props: { hud: boolean }) => React.JSX.Element> = {
-  "th-ciphergrid": CyberpunkLanding,
-  "th-mycel": MycelLanding,
-  "th-folio": FolioLanding,
-  "th-dotmatrix": DotmatrixLanding,
-  "th-silo": SiloLanding,
-  "th-minimal": MinimalLanding,
-  "th-geometry": GeometryLanding,
-  "th-faceta": FacetaLanding,
+const KIT_LANDINGS: Record<string, React.ComponentType<LandingProps>> = {
+  "th-ciphergrid": dynamic<LandingProps>(() => import("@/components/landings/CyberpunkLanding")),
+  "th-mycel": dynamic<LandingProps>(() => import("@/components/landings/MycelLanding")),
+  "th-folio": dynamic<LandingProps>(() => import("@/components/landings/FolioLanding")),
+  "th-dotmatrix": dynamic<LandingProps>(() => import("@/components/landings/DotmatrixLanding")),
+  "th-silo": dynamic<LandingProps>(() => import("@/components/landings/SiloLanding")),
+  "th-minimal": dynamic<LandingProps>(() => import("@/components/landings/minimal/MinimalLanding")),
+  "th-geometry": dynamic<LandingProps>(() => import("@/components/landings/minimal/GeometryLanding")),
+  "th-faceta": dynamic<LandingProps>(() => import("@/components/landings/minimal/FacetaLanding")),
 };
+
+const AsciifyCanvas = dynamic(() => import("@/components/AsciifyCanvas"));
+const LayersCanvas = dynamic(() => import("@/components/LayersCanvas"));
+const TextmodeCanvas = dynamic(() => import("@/components/TextmodeCanvas"));
+const ThemedLanding = dynamic(() => import("@/components/ThemedLanding"));
+const ScrollStage = dynamic(() => import("@/components/ScrollStage"));
 
 export default function DemoViewer({ slug }: { slug: string }) {
   const router = useRouter();
