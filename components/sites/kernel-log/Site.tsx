@@ -46,8 +46,9 @@ function subscribe(email?: string) {
   sonnerToast.success("Suscripción hecha", { description: `${email ? `${email}: ` : ""}recibirás el próximo número el viernes. Sin spam, te das de baja en un clic.`, toasterId: TOAST });
 }
 
-function PostCard({ p, layout = "stacked" }: { p: Post; layout?: "stacked" | "horizontal" | "overlay" | "minimal" }) {
-  return <BlogCard category={p.topic} title={p.title} excerpt={p.excerpt} author="Ada Ríos" date={p.date} readTime={minutes(p)} image={cover(p)} href={href(`articulos/${p.slug}`)} layout={layout} variant="outline" />;
+/** `level`: nivel del título según dónde vaya la tarjeta (2 justo bajo el h1 de la página, 3 bajo una sección). */
+function PostCard({ p, layout = "stacked", level = 3 }: { p: Post; layout?: "stacked" | "horizontal" | "overlay" | "minimal"; level?: 2 | 3 }) {
+  return <BlogCard headingLevel={level} category={p.topic} title={p.title} excerpt={p.excerpt} author="Ada Ríos" date={p.date} readTime={minutes(p)} image={cover(p)} href={href(`articulos/${p.slug}`)} layout={layout} variant="outline" />;
 }
 
 /* ---------- marco: barra y pie en todas las páginas ---------- */
@@ -123,7 +124,7 @@ function Home() {
 
       <Section tight>
         <div className="kl__label">Último artículo</div>
-        <PostCard p={featured} layout="horizontal" />
+        <PostCard p={featured} layout="horizontal" level={2} />
       </Section>
 
       <Section tight>
@@ -198,7 +199,7 @@ function Articles() {
       </p>
       <div className="kl__list">
         {shown.map((p) => (
-          <PostCard key={p.slug} p={p} layout="horizontal" />
+          <PostCard key={p.slug} p={p} layout="horizontal" level={2} />
         ))}
       </div>
       {pages > 1 && (

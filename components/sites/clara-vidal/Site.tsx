@@ -89,11 +89,13 @@ export function Shell({ children }: { children: ReactNode }) {
 }
 
 /* ---------- piezas ---------- */
-function Headline({ eyebrow, title, lead, children }: { eyebrow?: string; title: ReactNode; lead?: string; children?: ReactNode }) {
+/** Titular de página (h1) o de banda dentro de una página (`level={2}`): un solo h1 por página. */
+function Headline({ eyebrow, title, lead, children, level = 1 }: { eyebrow?: string; title: ReactNode; lead?: string; children?: ReactNode; level?: 1 | 2 }) {
+  const H = level === 1 ? "h1" : "h2";
   return (
     <div className="cv__headline">
       {eyebrow && <p className="cv__eyebrow">{eyebrow}</p>}
-      <h1>{title}</h1>
+      <H>{title}</H>
       {lead && <p className="cv__lead">{lead}</p>}
       {children && <div className="cv__actions">{children}</div>}
     </div>
@@ -128,7 +130,7 @@ function Home() {
 
       <section className="cv__band cv__band--alt">
         <div className="st-wrap">
-          <Headline title="Tres maneras de empezar." lead="Todas terminan igual: con menos dudas delante del espejo." />
+          <Headline level={2} title="Tres maneras de empezar." lead="Todas terminan igual: con menos dudas delante del espejo." />
           <div className="cv__tiles">
             {SERVICES.map((s) => (
               <Link key={s.slug} href={`${href("servicios")}#${s.slug}`} className="cv__tile">
@@ -158,7 +160,7 @@ function Home() {
       <section className="cv__band cv__band--alt">
         <div className="st-wrap">
           <div className="cv__row-head">
-            <Headline title="Lookbook." />
+            <Headline level={2} title="Lookbook." />
             <MoreLink to={href("lookbook")}>Ver todo</MoreLink>
           </div>
           <div className="cv__looks">
@@ -177,7 +179,7 @@ function Home() {
       <section className="cv__band">
         <div className="st-wrap">
           <div className="cv__row-head">
-            <Headline title="Del diario." />
+            <Headline level={2} title="Del diario." />
             <MoreLink to={href("diario")}>Todas las entradas</MoreLink>
           </div>
           <div className="st-grid st-grid--3">
@@ -195,7 +197,7 @@ function Home() {
       </section>
 
       <section className="cv__band cv__final">
-        <Headline title="¿Empezamos?" lead="La primera conversación es gratis: quince minutos por videollamada para ver qué necesitas.">
+        <Headline level={2} title="¿Empezamos?" lead="La primera conversación es gratis: quince minutos por videollamada para ver qué necesitas.">
           <Button label="Reservar" href={href("reservar")} variant="glass" size="lg" />
         </Headline>
       </section>

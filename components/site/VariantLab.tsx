@@ -34,21 +34,21 @@ export default function VariantLab() {
   return (
     <div className="tr-lab">
       <div className="tr-lab__controls">
-        <div className="tr-lab__group" role="radiogroup" aria-label="Variante">
+        <div className="tr-lab__group" role="group" aria-label="Variante (prop variant)">
           <p className="tr-label">variant</p>
           <div className="tr-chips">
             {VARIANTS.map((v) => (
-              <button key={v} type="button" role="radio" aria-checked={v === variant} className={`tr-chip ${v === variant ? "is-on" : ""}`} onClick={() => setVariant(v)}>
+              <button key={v} type="button" aria-pressed={v === variant} className={`tr-chip ${v === variant ? "is-on" : ""}`} onClick={() => setVariant(v)}>
                 {v}
               </button>
             ))}
           </div>
         </div>
-        <div className="tr-lab__group" role="radiogroup" aria-label="Intención">
+        <div className="tr-lab__group" role="group" aria-label="Intención (prop intent)">
           <p className="tr-label">intent</p>
           <div className="tr-chips">
             {INTENTS.map((k) => (
-              <button key={k} type="button" role="radio" aria-checked={k === intent} className={`tr-chip ${k === intent ? "is-on" : ""}`} onClick={() => setIntent(k)}>
+              <button key={k} type="button" aria-pressed={k === intent} className={`tr-chip ${k === intent ? "is-on" : ""}`} onClick={() => setIntent(k)}>
                 {k}
               </button>
             ))}

@@ -13,8 +13,8 @@
 
 .cv__headline { display: grid; justify-items: center; gap: 14px; text-align: center; }
 .cv__eyebrow { margin: 0; font-size: 17px; font-weight: 600; color: #bf4800; }
-.cv__headline h1 { margin: 0; max-width: 16ch; font-size: clamp(44px, 8vw, 96px); line-height: 1.03; font-weight: 700; letter-spacing: -0.045em; text-wrap: balance; }
-.cv__band .cv__headline h1, .cv__row-head .cv__headline h1 { font-size: clamp(36px, 5.4vw, 64px); }
+.cv__headline :is(h1, h2) { margin: 0; max-width: 16ch; font-size: clamp(44px, 8vw, 96px); line-height: 1.03; font-weight: 700; letter-spacing: -0.045em; text-wrap: balance; }
+.cv__band .cv__headline :is(h1, h2), .cv__row-head .cv__headline :is(h1, h2) { font-size: clamp(36px, 5.4vw, 64px); }
 .cv__lead { margin: 0; max-width: 34ch; font-size: clamp(19px, 2.4vw, 26px); line-height: 1.35; font-weight: 500; letter-spacing: -0.01em; color: var(--mut); text-wrap: balance; }
 .cv__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 28px; margin-top: 12px; }
 .cv__more { font-size: 19px; color: var(--acc2); text-decoration: none; }

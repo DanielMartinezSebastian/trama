@@ -60,9 +60,13 @@ export default function Typewriter({ phrases = "surf en Cantabria\nolas para tod
   }, [list, typeSpeed, deleteSpeed, pause]);
 
   return (
-    <p className={`ui-type ${vcls(variant)} ${className}`} style={{ fontSize: size, margin: 0 }} aria-label={`${prefix}${list[0] ?? ""}`}>
-      {prefix}
-      <span style={{ color: "var(--acc)" }}>{text}</span>
+    <p className={`ui-type ${vcls(variant)} ${className}`} style={{ fontSize: size, margin: 0 }}>
+      {/* el lector de pantalla recibe la frase entera con todas las palabras, no cada letra que se escribe y se borra */}
+      <span className="ui-sr-only">{`${prefix}${list.join(" / ")}`}</span>
+      <span aria-hidden>
+        {prefix}
+        <span style={{ color: "var(--acc)" }}>{text}</span>
+      </span>
       {cursor !== "none" && <i className={`ui-type__cursor ui-type__cursor--${cursor}`} aria-hidden />}
     </p>
   );

@@ -43,7 +43,7 @@ export default function Footer({
           {soc.length > 0 && (
             <div className="ui-footer__social">
               {soc.map((s) => (
-                <span key={s} aria-label={s.startsWith("icon:") ? s.slice(5).replace(/:sharp$/, "") : undefined}>
+                <span key={s} {...(s.startsWith("icon:") ? { role: "img", "aria-label": s.slice(5).replace(/:sharp$/, "") } : {})}>
                   {renderGlyph(s, 18)}
                 </span>
               ))}

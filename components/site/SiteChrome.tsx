@@ -16,6 +16,9 @@ export default function SiteChrome({ children, app = false }: { children: ReactN
 
   return (
     <div className={`tr ${app ? "tr--app" : ""}`} style={SITE_STYLE} data-theme="trama">
+      <a href="#contenido" className="tr-skip">
+        Saltar al contenido
+      </a>
       <header className="tr-nav">
         <Link href="/" className="tr-nav__brand" aria-label="Trama, inicio">
           <span className="tr-nav__mark" aria-hidden />
@@ -23,18 +26,21 @@ export default function SiteChrome({ children, app = false }: { children: ReactN
         </Link>
         <nav className="tr-nav__links" aria-label="Secciones">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className={`tr-nav__link ${path === n.href || path.startsWith(`${n.href}/`) ? "is-on" : ""}`}>
+            <Link key={n.href} href={n.href} className={`tr-nav__link ${path === n.href || path.startsWith(`${n.href}/`) ? "is-on" : ""}`} aria-current={path === n.href || path.startsWith(`${n.href}/`) ? "page" : undefined}>
               {n.label}
             </Link>
           ))}
           <a href={GITHUB} className="tr-nav__link" target="_blank" rel="noopener noreferrer">
-            GitHub ↗
+            GitHub <span aria-hidden>↗</span>
+            <span className="ui-sr-only"> (se abre en otra pestaña)</span>
           </a>
         </nav>
         <InstallChip className="tr-nav__install" />
       </header>
 
-      {children}
+      <div id="contenido" tabIndex={-1} className="tr-content">
+        {children}
+      </div>
 
       {!app && (
         <footer className="tr-foot">
@@ -66,7 +72,8 @@ function FootCol({ title, links }: { title: string; links: [string, string][] })
           <li key={label}>
             {href.startsWith("http") ? (
               <a href={href} target="_blank" rel="noopener noreferrer">
-                {label} ↗
+                {label} <span aria-hidden>↗</span>
+                <span className="ui-sr-only"> (se abre en otra pestaña)</span>
               </a>
             ) : (
               <Link href={href}>{label}</Link>
@@ -91,9 +98,12 @@ export function InstallChip({ className = "", command = "npm i trama-ui" }: { cl
     }
   };
   return (
-    <button type="button" className={`tr-install ${className}`} onClick={copy} title="Copiar">
-      <span aria-hidden>$</span> {command}
-      <em>{copied ? "copiado" : "copiar"}</em>
+    <button type="button" className={`tr-install ${className}`} onClick={copy} aria-label={`Copiar el comando ${command}`}>
+      <span aria-hidden>$</span> <span aria-hidden>{command}</span>
+      <em aria-hidden>{copied ? "copiado" : "copiar"}</em>
+      <span className="ui-sr-only" role="status">
+        {copied ? "Comando copiado" : ""}
+      </span>
     </button>
   );
 }

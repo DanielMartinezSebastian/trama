@@ -48,12 +48,12 @@ export default function DemosIndex({ groups }: { groups: DemoGroup[] }) {
       </header>
 
       <div className="tr-filter">
-        <div className="tr-chips" role="radiogroup" aria-label="Grupo">
-          <button type="button" role="radio" aria-checked={group === "all"} className={`tr-chip ${group === "all" ? "is-on" : ""}`} onClick={() => pick("all")}>
+        <div className="tr-chips" role="group" aria-label="Filtrar por grupo">
+          <button type="button" aria-pressed={group === "all"} className={`tr-chip ${group === "all" ? "is-on" : ""}`} onClick={() => pick("all")}>
             Todas <small>{total}</small>
           </button>
           {groups.map((g) => (
-            <button key={g.id} type="button" role="radio" aria-checked={group === g.id} className={`tr-chip ${group === g.id ? "is-on" : ""}`} onClick={() => pick(g.id)}>
+            <button key={g.id} type="button" aria-pressed={group === g.id} className={`tr-chip ${group === g.id ? "is-on" : ""}`} onClick={() => pick(g.id)}>
               {g.label} <small>{g.items.length}</small>
             </button>
           ))}

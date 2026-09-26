@@ -183,7 +183,8 @@ export default function ChatWidget({
               </p>
             ))}
             {typing && (
-              <p className="ui-chat__msg ui-chat__msg--bot ui-chat__typing" aria-label={`${title} está escribiendo`}>
+              <p className="ui-chat__msg ui-chat__msg--bot ui-chat__typing" role="status">
+                <span className="ui-sr-only">{`${title} está escribiendo`}</span>
                 <i />
                 <i />
                 <i />
@@ -217,8 +218,9 @@ export default function ChatWidget({
         {renderGlyph(open ? "icon:close" : "icon:message", 20)}
         {launcherLabel && !open && <span>{launcherLabel}</span>}
         {unread > 0 && !open && (
-          <span className="ui-chat__badge" aria-label={`${unread} sin leer`}>
-            {unread}
+          <span className="ui-chat__badge">
+            <span aria-hidden>{unread}</span>
+            <span className="ui-sr-only">{`, ${unread} sin leer`}</span>
           </span>
         )}
       </button>

@@ -9,6 +9,9 @@ export type Variant = (typeof VARIANTS)[number];
 export const vcls = (variant: Variant) => `ui-s ui-s--${variant}`;
 
 /** Colores de un componente: cuál de los tokens usa como color principal. */
+/** Nivel de título que un componente con encabezado propio puede pintar (h1 queda para la página). */
+export type HeadingLevel = 2 | 3 | 4 | 5 | 6;
+
 export const TONES = ["fg", "acc", "acc2", "mut"] as const;
 export type Tone = (typeof TONES)[number];
 export const tcls = (tone: Tone) => `ui-tone--${tone}`;

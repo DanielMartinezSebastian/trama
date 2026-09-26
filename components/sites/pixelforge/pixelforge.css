@@ -29,9 +29,9 @@
 .pf__new { position: absolute; top: 10px; left: 10px; padding: 3px 8px; font: 700 11px/1.2 var(--font-space-mono), monospace; text-transform: uppercase; color: var(--bg); background: var(--acc2); border: 2px solid var(--fg); }
 .pf__card-body { display: grid; align-content: start; gap: 8px; padding: 14px; }
 .pf__card-body .ui-badge { justify-self: start; }
-.pf__card-body h3 { margin: 0; font-size: 18px; text-transform: none; letter-spacing: 0; }
-.pf__card-body h3 a { color: inherit; text-decoration: none; }
-.pf__card-body h3 a:hover { color: var(--acc); }
+.pf__card-body :is(h2, h3) { margin: 0; font-size: 18px; text-transform: none; letter-spacing: 0; }
+.pf__card-body :is(h2, h3) a { color: inherit; text-decoration: none; }
+.pf__card-body :is(h2, h3) a:hover { color: var(--acc); }
 .pf__card-body p { margin: 0; font-size: 14px; line-height: 1.5; text-transform: none; letter-spacing: normal; font-weight: 400; }
 .pf__card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
 .pf__price { font-size: 13px; color: var(--mut); text-transform: none; letter-spacing: 0; font-weight: 400; }

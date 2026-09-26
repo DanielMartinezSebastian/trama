@@ -13,7 +13,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const demo = getDemo((await params).slug);
-  return { title: demo ? `${demo.title} · Trama` : "Trama" };
+  if (!demo) return { title: "Trama" };
+  return { title: `${demo.title} · Demo de Trama`, description: demo.blurb, alternates: { canonical: `/demo/${demo.slug}` } };
 }
 
 export default async function DemoPage({ params }: Props) {

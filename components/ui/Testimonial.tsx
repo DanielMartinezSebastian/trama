@@ -24,7 +24,7 @@ export default function Testimonial({ quote = "Levanté la tabla el primer día.
   return (
     <figure className={`ui-quote ui-surface ${f.className} ${vcls(variant)} ${className}`} style={{ margin: 0, ...f.style }}>
       {rating > 0 && (
-        <div className="ui-quote__stars" aria-label={`${rating} de 5`}>
+        <div className="ui-quote__stars" role="img" aria-label={`${rating} de 5 estrellas`}>
           {"★".repeat(Math.min(5, rating))}
           <span style={{ opacity: 0.25 }}>{"★".repeat(5 - Math.min(5, rating))}</span>
         </div>

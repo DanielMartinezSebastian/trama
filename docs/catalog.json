@@ -2160,6 +2160,15 @@
           "label": "Título"
         },
         {
+          "key": "headingLevel",
+          "type": "number",
+          "default": 3,
+          "label": "Nivel del título",
+          "hint": "h2–h6 según el orden de títulos de la página (accesibilidad y SEO); el aspecto no cambia",
+          "min": 2,
+          "max": 6
+        },
+        {
           "key": "body",
           "type": "text",
           "default": "Dos clases de iniciación el sábado por la mañana, con neopreno y tabla incluidos.",
@@ -2602,6 +2611,15 @@
           "type": "text",
           "default": "Cinco errores al remar que te frenan la primera ola",
           "label": "Titular"
+        },
+        {
+          "key": "headingLevel",
+          "type": "number",
+          "default": 3,
+          "label": "Nivel del título",
+          "hint": "h2–h6 según el orden de títulos de la página (accesibilidad y SEO); el aspecto no cambia",
+          "min": 2,
+          "max": 6
         },
         {
           "key": "excerpt",

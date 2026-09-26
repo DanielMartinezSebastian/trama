@@ -1,10 +1,12 @@
 import { resolveImage } from "@/lib/ui/placeholder";
 import { fillProps, type CardFill, type CardPattern, type CardTone } from "./fill";
-import { vcls, type Variant } from "./variants";
+import { vcls, type HeadingLevel, type Variant } from "./variants";
 
 export type BlogCardProps = {
   category?: string;
   title?: string;
+  /** nivel del título (h2–h6) para respetar el orden de la página; el aspecto no cambia */
+  headingLevel?: HeadingLevel;
   excerpt?: string;
   date?: string;
   readTime?: string;
@@ -36,6 +38,7 @@ export type BlogCardProps = {
 export default function BlogCard({
   category = "Técnica",
   title = "Cinco errores al remar que te frenan la primera ola",
+  headingLevel = 3,
   excerpt = "El remo cuenta más que la fuerza: la postura y el timing son lo que de verdad te sube a la tabla.",
   date = "12 mar 2026",
   readTime = "4 min",
@@ -55,6 +58,7 @@ export default function BlogCard({
   const overlayImage = layout === "overlay" && head === "image" && image;
   const f = fillProps({ fill: overlayImage ? "image" : layout === "overlay" && fill === "surface" ? "gradient" : fill, pattern, tone, image });
   const Root = href ? "a" : "article";
+  const Heading = `h${headingLevel}` as const;
   const initials = author.split(" ").map((w) => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase();
 
   return (
@@ -70,7 +74,7 @@ export default function BlogCard({
       )}
       <div className="ui-blog__body">
         {category && <span className="ui-blog__cat">{category}</span>}
-        <h4>{title}</h4>
+        <Heading className="ui-blog__title">{title}</Heading>
         {excerpt && <p>{excerpt}</p>}
         <div className="ui-blog__meta">
           {author && (

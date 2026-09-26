@@ -25,7 +25,8 @@ const DEFAULT_CONTENT =
 export default function ScrollArea({ content = DEFAULT_CONTENT, height = 220, variant = "glass", className = "" }: ScrollAreaProps) {
   const lines = content.split("\n").filter((l) => l.trim());
   return (
-    <div className={`ui-scroll ui-surface ${vcls(variant)} ${className}`} style={{ height }}>
+    // enfocable y con nombre (su primera línea): así se desplaza también con el teclado
+    <div className={`ui-scroll ui-surface ${vcls(variant)} ${className}`} style={{ height }} tabIndex={0} role="group" aria-label={lines[0] ?? "Contenido desplazable"}>
       {lines.map((l, i) => (
         <p key={i} className={i === 0 ? "ui-scroll__head" : undefined}>
           {l}

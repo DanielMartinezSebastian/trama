@@ -199,15 +199,21 @@ function renderBlocks(lines: string[], opts: MarkdownOptions, slug: (t: string) 
       const rows: string[][] = [];
       while (i < lines.length && lines[i].trim().startsWith("|")) rows.push(cells(lines[i++]));
       out.push(
-        <div key={k++} className="ui-prose__table">
+        // con scroll horizontal en pantallas estrechas: la caja es enfocable para poder desplazarla con el teclado
+        <div key={k++} className="ui-prose__table" role="group" tabIndex={0} aria-label={`Tabla: ${head.map(plain).filter(Boolean).join(", ")}`}>
           <table>
             <thead>
               <tr>
-                {head.map((c, j) => (
-                  <th key={j} style={{ textAlign: align[j] }}>
-                    {inline(c)}
-                  </th>
-                ))}
+                {head.map((c, j) =>
+                  c ? (
+                    <th key={j} scope="col" style={{ textAlign: align[j] }}>
+                      {inline(c)}
+                    </th>
+                  ) : (
+                    // una cabecera vacía (la esquina de una tabla de doble entrada) no es un encabezado
+                    <td key={j} />
+                  ),
+                )}
               </tr>
             </thead>
             <tbody>

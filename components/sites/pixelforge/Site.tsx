@@ -157,7 +157,9 @@ export function Shell({ children }: { children: ReactNode }) {
   );
 }
 
-function ProductCard({ p }: { p: Product }) {
+/** `level`: nivel del título según dónde vaya la tarjeta (2 en el listado de la tienda, bajo el h1; 3 bajo una sección). */
+function ProductCard({ p, level = 3 }: { p: Product; level?: 2 | 3 }) {
+  const H = level === 2 ? "h2" : "h3";
   const { add } = useCart();
   return (
     <article className="pf__card ui-surface ui-s ui-s--retro">
@@ -167,9 +169,9 @@ function ProductCard({ p }: { p: Product }) {
       </Link>
       <div className="pf__card-body">
         <Badge text={p.category} variant="retro" intent="neutral" />
-        <h3>
+        <H>
           <Link href={href(`producto/${p.slug}`)}>{p.name}</Link>
-        </h3>
+        </H>
         <p className="st-muted">{p.short}</p>
         <div className="pf__card-foot">
           <span className="pf__price">
@@ -299,7 +301,7 @@ function Shop() {
           {list.length ? (
             <div className="st-grid st-grid--3">
               {list.map((p) => (
-                <ProductCard key={p.slug} p={p} />
+                <ProductCard key={p.slug} p={p} level={2} />
               ))}
             </div>
           ) : (

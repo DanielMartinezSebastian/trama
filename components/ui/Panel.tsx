@@ -1,8 +1,10 @@
 import { fillProps, type CardFill, type CardPattern, type CardTone } from "./fill";
-import { vcls, type Variant } from "./variants";
+import { vcls, type HeadingLevel, type Variant } from "./variants";
 
 export type PanelProps = {
   title?: string;
+  /** nivel del título (h2–h6) para respetar el orden de la página; el aspecto no cambia */
+  headingLevel?: HeadingLevel;
   body?: string;
   footer?: string;
   /** texto de la barra superior; vacío = sin barra */
@@ -20,8 +22,9 @@ export type PanelProps = {
 };
 
 /** Superficie genérica del sistema: barra opcional, título, cuerpo y pie. Base de cualquier tarjeta simple. */
-export default function Panel({ title = "Resumen de reserva", body = "Dos clases de iniciación el sábado por la mañana, con neopreno y tabla incluidos.", footer = "Cancelación gratuita hasta 24 h antes", bar = "reserva.txt", variant = "glass", cornerGlyph = "", fill, pattern, tone, image, className = "" }: PanelProps) {
+export default function Panel({ title = "Resumen de reserva", headingLevel = 3, body = "Dos clases de iniciación el sábado por la mañana, con neopreno y tabla incluidos.", footer = "Cancelación gratuita hasta 24 h antes", bar = "reserva.txt", variant = "glass", cornerGlyph = "", fill, pattern, tone, image, className = "" }: PanelProps) {
   const f = fillProps({ fill, pattern, tone, image });
+  const Heading = `h${headingLevel}` as const;
   return (
     <section className={`ui-panel ui-surface ${f.className} ${vcls(variant)} ${className}`} style={f.style} data-corners={cornerGlyph || undefined}>
       {bar && (
@@ -33,7 +36,7 @@ export default function Panel({ title = "Resumen de reserva", body = "Dos clases
         </div>
       )}
       <div className="ui-panel__body">
-        {title && <h4>{title}</h4>}
+        {title && <Heading className="ui-panel__title">{title}</Heading>}
         {body && <p>{body}</p>}
       </div>
       {footer && <div className="ui-panel__foot">{footer}</div>}

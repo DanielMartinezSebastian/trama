@@ -70,7 +70,7 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 }
 .tr-chip:hover { color: var(--fg); border: 1px solid var(--mut); }
 .tr-chip.is-on { color: var(--bg); background: var(--fg); border: 1px solid var(--fg); }
-.tr-chip small { margin-left: 4px; font-size: 10px; opacity: 0.6; }
+.tr-chip small { margin-left: 4px; font-size: 10px; }
 
 /* ---------- Fondo de la portada: un RetroCanvas fijo, una figura por sección ---------- */
 .tr-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--bg); }
@@ -249,3 +249,22 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 /* ---------- 404 ---------- */
 .tr-404 { display: grid; gap: 24px; align-content: center; min-height: 80vh; }
 .tr-404__code { margin: 0 0 0 -0.05em; font-size: clamp(120px, 26vw, 380px); line-height: 0.78; font-weight: 900; letter-spacing: -0.075em; color: var(--acc); }
+
+/* ---------- Accesibilidad ---------- */
+/* enlace «Saltar al contenido»: invisible hasta que recibe el foco del teclado (primer Tab de la página) */
+.tr-skip {
+  position: fixed; left: 12px; top: 10px; z-index: 100; padding: 10px 14px; transform: translateY(-160%);
+  font: 600 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+  color: var(--bg); background: var(--fg); transition: transform 0.15s;
+}
+.tr-skip:focus { transform: none; outline: 2px solid var(--acc); outline-offset: 2px; }
+.tr-content:focus { outline: none; }
+/* foco visible en todos los controles propios de la web (los del kit traen el suyo) */
+.tr :is(.tr-nav__brand, .tr-nav__link, .tr-btn, .tr-chip, .tr-install, .tr-link, .tr-index__row, .tr-release, .tr-demo, .tr-docs__group a, .tr-docs__pager a, .tr-foot__col a):focus-visible,
+.tr .tr-search:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.tr-chip:focus-visible, .tr-search:focus-visible { outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .tr-skip { transition: none; }
+  .tr-strip .ui-marquee__track { animation-play-state: paused; }
+}
+

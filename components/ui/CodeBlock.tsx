@@ -47,7 +47,8 @@ export default function CodeBlock({
           {copied ? "Copiado ✓" : "Copiar"}
         </button>
       </div>
-      <pre className="ui-code__pre">
+      {/* enfocable: si una línea no cabe, el bloque se desplaza también con el teclado */}
+      <pre className="ui-code__pre" tabIndex={0} aria-label={`Código${filename ? ` · ${filename}` : language ? ` · ${language}` : ""}`}>
         <code>
           {lines.map((line, i) => (
             <span key={i} className="ui-code__line">

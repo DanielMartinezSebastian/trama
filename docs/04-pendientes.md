@@ -29,8 +29,9 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
 
 ## 2. Web de la librería (`components/site/`)
 
-- [ ] **Foco visible.** `.tr-btn`, `.tr-chip`, `.tr-nav__link`, `.tr-index__row`, `.tr-release` y `.tr-demo` no tienen
-      estilo `:focus-visible` propio: añadir un contorno de 1 px en `var(--acc)` y recorrer la web solo con teclado.
+- [x] **Foco visible** en los controles de la web y regla base en el kit; enlace «Saltar al contenido».
+- [ ] **Recorrer la web solo con teclado** (Tab, Mayús+Tab, Intro, Esc) y con un lector de pantalla real (VoiceOver o
+      NVDA): la auditoría automática no cubre el orden de foco ni lo que se anuncia.
 - [ ] **`/componentes` en móvil.** No está revisado a 390 px (la barra lateral ocupa el 40 % de alto). Valorar un
       selector plegable en lugar de la lista.
 - [ ] **Categoría en la URL.** El catálogo lee `?c=<categoría>` al entrar pero no la actualiza al cambiar de filtro
@@ -46,6 +47,25 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
       `app/demo/[slug]/` con el título de cada una.
 - [ ] **Banco de variantes.** Añadir un selector de tema (preset de tokens) junto a `variant` e `intent` para enseñar
       también el tercer eje.
+
+## 2b. SEO y accesibilidad (seguimiento)
+
+Hecho: título, descripción y URL canónica por página; un solo `h1` por página; JSON-LD (`WebSite`, `SoftwareSourceCode`,
+`TechArticle`, `BreadcrumbList`) en `lib/seo.tsx`; manifiesto; reglas del kit en la guía §8.1. Para repetir la auditoría:
+axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
+
+- [ ] **Google Search Console.** Dar de alta el dominio y enviar `/sitemap.xml`; revisar «Páginas» y «Experiencia» al
+      cabo de unos días.
+- [ ] **`StatCounter`:** el número ASCII (`.ui-stat__art`, `role="img"`) tiene scroll horizontal si no cabe, y una imagen
+      no debería desplazarse. Escalarlo al ancho disponible en lugar de desplazarlo.
+- [ ] **Elementos fijos fuera de un landmark** (aviso menor de axe): barra de `ScrollProgress` en SILO, botón del carrito
+      de Pixelforge y marquesina de Onda.
+- [ ] **Landings temáticas antiguas** (`th-tide`, `th-brew`…, `ThemedLanding`): títulos vacíos al cargar y contenido
+      fuera de landmarks. Se arreglan solos si se migran al kit o se retiran (ver «Deuda conocida»).
+- [ ] **Contraste decorativo:** las reglas de `Divider` y las iniciales del avatar de `Testimonial` son decorativas
+      (`aria-hidden`) pero axe las marca en temas oscuros; valorar subir su contraste igualmente.
+- [ ] **Clara Vidal:** la etiqueta de `LogoCloud` («Me han leído en…») no llega a 4.5:1; axe mide contra el halo de
+      `--legibility-ts`, pensado para fondos oscuros. Probar `--legibility-ts: 0 0 transparent` en el tema claro de esa web.
 
 ## 3. Documentación (`docs/`)
 

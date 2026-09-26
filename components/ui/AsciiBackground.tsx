@@ -6,6 +6,7 @@ import { createPointerTracker } from "@/lib/asciify/pointer";
 import { ENGINE_MAX_DIMENSION, planResolution, type ResolutionInfo, type ResolutionPlan } from "@/lib/asciify/resolution";
 import { bridgePointer, type BackgroundInteraction, type BackgroundPosition } from "@/lib/ui/pointerBridge";
 import type { StudioInput } from "asciify-engine/studio";
+import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 /** Escenas disponibles. `progress: true` = la escena cambia con la prop `progress`. */
 export const ASCII_SCENES: { id: SourceKind; label: string; progress?: boolean }[] = [
@@ -201,10 +202,12 @@ export default function AsciiBackground({
     const g = eng.studioGrid(Math.max(2, Math.round(p.width * dpr * k)), Math.max(2, Math.round(p.height * dpr * k)), st, budget, dpr);
     cb({ requested: p.requested, effective: g.cell / (dpr * p.s * k), columns: g.columns, rows: g.rows, limited: g.limited || k < 1, maxCells: budget, degraded });
   };
+  // con «reducir movimiento» la escena sigue viva pero casi quieta: un quinto de velocidad y como mucho 12 fps
+  const reduced = useReducedMotion();
   const speedRef = useRef(speed);
-  speedRef.current = speed;
+  speedRef.current = reduced ? speed * 0.2 : speed;
   const fpsRef = useRef(fps);
-  fpsRef.current = fps;
+  fpsRef.current = reduced ? Math.min(fps, 12) : fps;
 
   // La escena se cambia sin remontar el motor
   useEffect(() => {

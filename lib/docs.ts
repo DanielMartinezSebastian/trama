@@ -7,31 +7,32 @@ import { headingsOf } from "@/lib/ui/markdown";
  * lee un agente en el repo es lo que se publica. Solo para componentes de servidor (usa `fs`).
  */
 
-export type DocPage = { slug: string; file: string; title: string; blurb: string };
+/** `blurb` = entradilla visible; `description` = meta descripción para buscadores (70–160 caracteres). */
+export type DocPage = { slug: string; file: string; title: string; blurb: string; description: string };
 export type DocGroup = { label: string; pages: DocPage[] };
 
 export const DOC_GROUPS: DocGroup[] = [
   {
     label: "Empezar",
     pages: [
-      { slug: "empezar", file: "00-empezar.md", title: "Primeros pasos", blurb: "Instalar, poner el tema y montar la primera página." },
-      { slug: "", file: "README.md", title: "Visión general", blurb: "Qué es librería y qué es sitio, npm o copia, scripts." },
+      { slug: "empezar", file: "00-empezar.md", title: "Primeros pasos", blurb: "Instalar, poner el tema y montar la primera página.", description: "Instala Trama con npm o copiando el código, define los ocho tokens de tema, elige variant e intent y monta tu primera landing en Next.js." },
+      { slug: "", file: "README.md", title: "Visión general", blurb: "Qué es librería y qué es sitio, npm o copia, scripts.", description: "Visión general de Trama: qué es librería y qué es sitio, instalación con npm o kit:export, catálogo interactivo, landings y webs de referencia." },
     ],
   },
   {
     label: "Referencia",
-    pages: [{ slug: "catalogo", file: "CATALOG.md", title: "Catálogo de props", blurb: "Cada componente con su import, props, tipos y defaults." }],
+    pages: [{ slug: "catalogo", file: "CATALOG.md", title: "Catálogo de props", blurb: "Cada componente con su import, props, tipos y defaults.", description: "Referencia de todos los componentes de Trama: import, props con tipos y valores por defecto, y las recetas de las landings de referencia." }],
   },
   {
     label: "Guías",
     pages: [
-      { slug: "guia", file: "02-guia-de-componentes.md", title: "Crear componentes", blurb: "Tokens, sistema de estilos, reglas y trampas conocidas." },
-      { slug: "webs-completas", file: "03-webs-completas.md", title: "Webs completas", blurb: "Sitios de varias páginas: estructura y estado compartido." },
+      { slug: "guia", file: "02-guia-de-componentes.md", title: "Crear componentes", blurb: "Tokens, sistema de estilos, reglas y trampas conocidas.", description: "Guía para crear y ampliar componentes de Trama: tokens, sistema de estilos, variantes, accesibilidad, rendimiento y trampas conocidas." },
+      { slug: "webs-completas", file: "03-webs-completas.md", title: "Webs completas", blurb: "Sitios de varias páginas: estructura y estado compartido.", description: "Cómo están hechas las webs completas de ejemplo de Trama: varias páginas, navegación sin recarga y estado compartido (carrito, chat)." },
     ],
   },
   {
     label: "Historia",
-    pages: [{ slug: "decisiones", file: "01-evaluacion.md", title: "Decisiones", blurb: "Por qué el kit es como es." }],
+    pages: [{ slug: "decisiones", file: "01-evaluacion.md", title: "Decisiones", blurb: "Por qué el kit es como es.", description: "Historial de decisiones de diseño de Trama: por qué el kit de componentes es como es, con la evaluación de cada etapa." }],
   },
 ];
 

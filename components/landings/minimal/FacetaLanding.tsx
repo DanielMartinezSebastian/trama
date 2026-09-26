@@ -92,20 +92,22 @@ type Intro = "glitch" | "wipe" | "drop" | "slide" | "type" | "rise" | "scramble"
 type Blk = "wipe" | "slide" | "drop" | "rise" | "zoom";
 
 /** Cartel a pantalla completa (acto). `side` es el lado del texto; la figura del fondo va al contrario. */
-function Poster({ intro, side, kicker, lines, sub, children }: { intro: Intro; side: "l" | "r"; kicker: string; lines: string[]; sub?: string; children?: ReactNode }) {
+function Poster({ intro, side, kicker, lines, sub, children, level = 2 }: { intro: Intro; side: "l" | "r"; kicker: string; lines: string[]; sub?: string; children?: ReactNode; level?: 1 | 2 }) {
+  // el primer cartel es el titular de la página (h1); el resto, secciones (h2)
+  const H = level === 1 ? "h1" : "h2";
   const t = (text: string, delay = 0, className = "") => (intro === "scramble" ? <Scramble text={text} className={className} /> : <Glitch text={text} className={className} delay={delay} />);
   return (
     <section className="mx__chap mz__chap" data-act data-side={side}>
       <div className="mx__stick" data-reveal data-fx={intro} style={{ "--dir": side === "l" ? -1 : 1 } as CSSProperties}>
         <div className="mx__in">
           <span className="mn__kicker">{t(kicker, 100)}</span>
-          <h2 className="mn__h2">
+          <H className="mn__h2">
             {lines.map((l, i) => (
               <span key={l} className="mn-line">
                 {t(l, 250 + i * 250, "mn-hl")}
               </span>
             ))}
-          </h2>
+          </H>
           {sub && <p className="mn__p mn-hl">{t(sub, 700)}</p>}
           {children}
         </div>
@@ -147,7 +149,7 @@ export default function FacetaLanding({ hud = false }: { hud?: boolean }) {
 
       <main className="mn__main">
         {/* 0 */}
-        <Poster intro="glitch" side="l" kicker="FACETA · FONDOS 3D EN CARACTERES" lines={["Formas que", "se escriben"]} sub="Un motor de fondos que convierte geometría en píxeles duros.">
+        <Poster level={1} intro="glitch" side="l" kicker="FACETA · FONDOS 3D EN CARACTERES" lines={["Formas que", "se escriben"]} sub="Un motor de fondos que convierte geometría en píxeles duros.">
           <span className="mn__cue">▼ scroll</span>
         </Poster>
 

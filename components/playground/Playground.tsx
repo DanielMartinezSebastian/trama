@@ -167,7 +167,7 @@ export default function Playground() {
 
   return (
     <div className="pg">
-      <header className="pg__top">
+      <section className="pg__top" aria-label="Controles del catálogo">
         <h1>Componentes</h1>
         <input className="pg__search" type="search" placeholder={`Buscar entre ${total} componentes…`} value={q} onChange={(e) => setQ(e.target.value)} aria-label="Buscar" />
         <label className="pg__theme">
@@ -194,7 +194,7 @@ export default function Playground() {
         <button className={`pg-chip ${showFx ? "is-on" : ""} ${animOn || hoverOn ? "pg-chip--active" : ""}`} onClick={() => setShowFx((v) => !v)}>
           FX {showFx ? "▴" : "▾"}
         </button>
-      </header>
+      </section>
 
       {showFx && (
         <section className="pg-fx" aria-label="Animaciones de entrada, salida y hover">
@@ -287,11 +287,11 @@ export default function Playground() {
         <aside className="pg__side">
           <h2>Categoría</h2>
           <div className="pg__chips">
-            <button className={`pg-chip ${cat === "all" ? "is-on" : ""}`} onClick={() => setCat("all")}>
+            <button className={`pg-chip ${cat === "all" ? "is-on" : ""}`} aria-pressed={cat === "all"} onClick={() => setCat("all")}>
               Todas
             </button>
             {CATEGORIES.map((c) => (
-              <button key={c.id} className={`pg-chip ${cat === c.id ? "is-on" : ""}`} onClick={() => setCat(c.id)} title={c.blurb}>
+              <button key={c.id} className={`pg-chip ${cat === c.id ? "is-on" : ""}`} aria-pressed={cat === c.id} onClick={() => setCat(c.id)} title={c.blurb}>
                 {c.label}
                 <small>{countBy[c.id]}</small>
               </button>
@@ -299,11 +299,11 @@ export default function Playground() {
           </div>
           <h2>Estilo</h2>
           <div className="pg__chips">
-            <button className={`pg-chip ${sty === "all" ? "is-on" : ""}`} onClick={() => applyStyle("all")}>
+            <button className={`pg-chip ${sty === "all" ? "is-on" : ""}`} aria-pressed={sty === "all"} onClick={() => applyStyle("all")}>
               Todos
             </button>
             {STYLES.map((s) => (
-              <button key={s.id} className={`pg-chip ${sty === s.id ? "is-on" : ""}`} onClick={() => applyStyle(s.id)}>
+              <button key={s.id} className={`pg-chip ${sty === s.id ? "is-on" : ""}`} aria-pressed={sty === s.id} onClick={() => applyStyle(s.id)}>
                 {s.label}
                 <small>{catalog.filter((e) => e.styles.includes(s.id)).length}</small>
               </button>
@@ -335,7 +335,7 @@ export default function Playground() {
           <ul className="pg__list">
             {filtered.map((e) => (
               <li key={e.id}>
-                <button className={`pg-item ${entry?.id === e.id ? "is-on" : ""}`} onClick={() => select(e.id)}>
+                <button className={`pg-item ${entry?.id === e.id ? "is-on" : ""}`} aria-current={entry?.id === e.id ? "true" : undefined} onClick={() => select(e.id)}>
                   <span className="pg-item__name">{e.name}</span>
                   <span className="pg-item__tags">
                     <em>{CATEGORIES.find((c) => c.id === e.category)?.label}</em>
@@ -426,9 +426,9 @@ export default function Playground() {
                       {copied ? "Copiado ✓" : "Copiar"}
                     </button>
                   </div>
-                  <pre className="pg__code">{code}</pre>
+                  <pre className="pg__code" tabIndex={0} aria-label="Código de uso">{code}</pre>
                   <h3>Tokens del escenario</h3>
-                  <pre className="pg__code">{tokenCode}</pre>
+                  <pre className="pg__code" tabIndex={0} aria-label="Tokens del escenario">{tokenCode}</pre>
                   {entry.notes && (
                     <>
                       <h3>Notas</h3>

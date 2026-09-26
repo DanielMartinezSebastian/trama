@@ -30,9 +30,9 @@ import "./silo.css";
 const TOKENS = tokensToStyle({
   bg: "#000000",
   fg: "#f2f2f2",
-  mut: "#6f6f6f",
+  mut: "#7a7a7a",
   acc: "#ffffff",
-  acc2: "#6f6f6f",
+  acc2: "#7a7a7a",
   card: "transparent",
   ln: "rgba(255,255,255,0.14)",
   r: 0,

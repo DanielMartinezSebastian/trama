@@ -321,6 +321,7 @@ Superficie genérica con barra opcional, título, cuerpo y pie. Base de cualquie
 | prop | tipo | default |
 |---|---|---|
 | `title` | text | "Resumen de reserva" |
+| `headingLevel` | number 2–6 | 3 |
 | `body` | text | "Dos clases de iniciación el sábado por la mañana, con neopreno y tabla incluidos." |
 | `footer` | text | "Cancelación gratuita hasta 24 h antes" |
 | `bar` | text | "reserva.txt" |
@@ -384,6 +385,7 @@ Artículo con cabecera (imagen, trama de CSS o caracteres), categoría, titular,
 | `glyph` | text | "~" |
 | `category` | text | "Técnica" |
 | `title` | text | "Cinco errores al remar que te frenan la primera ola" |
+| `headingLevel` | number 2–6 | 3 |
 | `excerpt` | text | "El remo cuenta más que la fuerza: la postura y el timing son lo que de verdad te sube …" |
 | `author` | text | "Nora Vidal" |
 | `date` | text | "12 mar 2026" |

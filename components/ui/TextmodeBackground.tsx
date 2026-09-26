@@ -4,6 +4,7 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { sketches } from "@/lib/sketches/registry";
 import { bridgePointer, type BackgroundInteraction, type BackgroundPosition } from "@/lib/ui/pointerBridge";
 import type { Palette } from "./AsciiBackground";
+import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 /** Sketches generativos de textmode.js que no dependen del texto del usuario ni del scroll. */
 export const TEXTMODE_SKETCHES = [
@@ -57,7 +58,10 @@ export type TextmodeBackgroundProps = {
  * `palette` reinterpreta los colores con los tokens del tema (CSS), sin recrear el lienzo.
  * Al cambiar `sketch`, `fontSize` o `frameRate` se recrea.
  */
-export default function TextmodeBackground({ sketch = "plasma", fontSize = 14, maxCells = 250000, palette = "tint", tintAmount = 0.6, frameRate = 60, opacity = 1, position = "absolute", interaction, className = "" }: TextmodeBackgroundProps) {
+export default function TextmodeBackground({ sketch = "plasma", fontSize = 14, maxCells = 250000, palette = "tint", tintAmount = 0.6, frameRate: frameRateProp = 60, opacity = 1, position = "absolute", interaction, className = "" }: TextmodeBackgroundProps) {
+  // con «reducir movimiento» el sketch sigue, pero a como mucho 8 fotogramas por segundo
+  const reduced = useReducedMotion();
+  const frameRate = reduced ? Math.min(frameRateProp, 8) : frameRateProp;
   const passive = (interaction ?? (position === "fixed" ? "window" : "canvas")) === "window";
   const host = useRef<HTMLDivElement>(null);
 

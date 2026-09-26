@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Prose from "@/components/ui/Prose";
 import TableOfContents from "@/components/ui/TableOfContents";
 import { DOC_GROUPS, DOC_PAGES, docHref, getDoc, loadDoc } from "@/lib/docs";
+import { JsonLd, docJsonLd } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
@@ -15,7 +16,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getDoc((await params).slug?.join("/") ?? "");
-  return { title: page ? `${page.title} · Docs · Trama` : "Docs · Trama", description: page?.blurb };
+  if (!page) return { title: "Docs · Trama" };
+  return { title: `${page.title} · Docs · Trama`, description: page.description, alternates: { canonical: docHref(page.slug) } };
 }
 
 export default async function DocPage({ params }: Props) {
@@ -30,6 +32,7 @@ export default async function DocPage({ params }: Props) {
 
   return (
     <main className="tr-docs">
+      <JsonLd data={docJsonLd({ title: page.title, description: page.description, path: docHref(page.slug), section: group?.label ?? "Docs" })} />
       <aside className="tr-docs__side" aria-label="Documentación">
         {DOC_GROUPS.map((g) => (
           <div key={g.label} className="tr-docs__group">

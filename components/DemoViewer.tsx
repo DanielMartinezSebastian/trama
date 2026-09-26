@@ -89,11 +89,11 @@ export default function DemoViewer({ slug }: { slug: string }) {
           <div className={`hud ${hud ? "" : "hud--hidden"}`}>
             <header className="hud__top">
               <Link href="/demos" className="chip">← Demos</Link>
-              <div className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
+              <h1 className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
                 <span className="dot" />
                 {demo.title}
                 <span className="tag">{tag}</span>
-              </div>
+              </h1>
               <button className="chip" onClick={toggleFullscreen} title="Pantalla completa (F)">⛶</button>
             </header>
             {(demo.family === "text" || demo.text) && <TextControls controls={demo.controls ?? []} />}

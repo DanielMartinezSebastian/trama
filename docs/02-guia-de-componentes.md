@@ -404,6 +404,34 @@ conviene saber para usarlo bien:
 - Fondos WebGL (react-three-fiber) detrás de una página con scroll: reglas en §22.1. La principal es que la GPU es compartida;
   si el lienzo la satura, el scroll va a tirones aunque el JavaScript esté libre.
 
+### 8.1. Accesibilidad y SEO: reglas del kit
+
+Lo comprueba una auditoría con axe-core (WCAG 2.1 AA) sobre la web, las landings y las webs completas. Al crear o cambiar
+un componente:
+
+- **Un solo `h1` por página.** Solo `Hero` y `ArticleHeader` lo pintan. Un componente con título propio que puede ir a
+  distintas profundidades acepta `headingLevel` (tipo `HeadingLevel` de `variants.ts`, h2–h6, por defecto 3) y pinta ese
+  nivel con una clase propia (`.ui-panel__title`), nunca con el selector de etiqueta: el nivel no debe cambiar el aspecto.
+  Así lo hacen `Panel` y `BlogCard`. En una página, los niveles no saltan (h1 → h2 → h3).
+- **Texto animado letra a letra** (scramble, glitch, máquina de escribir): el texto legible va en un
+  `<span className="ui-sr-only">` y la parte animada lleva `aria-hidden`. Nunca `aria-label` en un `<span>` o `<div>` sin
+  `role`: los lectores de pantalla lo ignoran (así era `Typewriter`, y el texto no se leía).
+- **Iconos y gráficos con significado** (estrellas de valoración, redes del pie): `role="img"` y `aria-label`. Decorativos:
+  `aria-hidden`.
+- **Lo que desplaza debe poder enfocarse.** Una caja con scroll propio (`CodeBlock`, `ScrollArea`, tablas de `Prose`) lleva
+  `tabIndex={0}` y nombre (`aria-label`, o `role="group"` + `aria-label` si es un `<div>`) para poder desplazarla con el
+  teclado.
+- **Foco visible.** `ui-kit.css` trae una regla base (con `:where()`, especificidad cero) que da contorno de acento a
+  cualquier control enfocado dentro de un componente del kit. Si un componente quita el `outline`, debe dar otro indicador
+  (borde, subrayado) en `:focus-visible`.
+- **Reducir movimiento.** En JS, `useReducedMotion()` de `lib/ui/useReducedMotion.ts` (se actualiza en vivo). Fondos
+  continuos: más lentos y a pocos fps (`AsciiBackground`, `TextmodeBackground`) o bajo demanda (`RetroCanvas`). Destellos y
+  barridos (`SceneFlash`), fuera. En CSS, el bloque «Reducir movimiento» del final de `ui-kit.css` para bucles y parpadeos.
+- **Contraste.** `--mut` sobre `--bg` ≥ 4.5:1 en cada tema: es el color de etiquetas pequeñas y números de línea. Los grises
+  por debajo de `#777` sobre negro no llegan.
+- **Contenido en el HTML.** Los textos van en el DOM desde el servidor (los componentes con `"use client"` también se
+  prerenderizan): nada de pintar texto importante solo en un canvas, porque ni buscadores ni lectores de pantalla lo ven.
+
 ## 9. Añadir un componente al catálogo
 
 1. Crear `components/ui/MiComponente.tsx` siguiendo §3 (props con default, tokens, cleanup). Si tiene variantes de

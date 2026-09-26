@@ -79,7 +79,7 @@ import "./folio.css";
 const TOKENS: CSSProperties = {
   "--bg": "#f5f1e6",
   "--fg": "#241d14",
-  "--mut": "#6c5f4c",
+  "--mut": "#5a4e3d",
   "--acc": "#a3311f",
   "--acc2": "#1f4d6b",
   "--card": "rgba(255,255,255,0.55)",

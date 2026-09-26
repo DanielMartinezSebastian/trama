@@ -120,6 +120,7 @@ export const tarjetas: CatalogEntry[] = [
     stageHeight: 340,
     props: [
       { key: "title", label: "Título", type: "text", default: "Resumen de reserva" },
+      { key: "headingLevel", label: "Nivel del título", type: "number", default: 3, min: 2, max: 6, hint: "h2–h6 según el orden de títulos de la página (accesibilidad y SEO); el aspecto no cambia" },
       { key: "body", label: "Cuerpo", type: "text", multiline: true, default: "Dos clases de iniciación el sábado por la mañana, con neopreno y tabla incluidos." },
       { key: "footer", label: "Pie", type: "text", default: "Cancelación gratuita hasta 24 h antes" },
       { key: "bar", label: "Texto de la barra", type: "text", default: "reserva.txt", hint: "Vacío = sin barra" },
@@ -129,7 +130,7 @@ export const tarjetas: CatalogEntry[] = [
     ],
     render: (p) => (
       <div className="ui-center">
-        <Panel title={p.title as string} body={p.body as string} footer={p.footer as string} bar={p.bar as string} cornerGlyph={p.cornerGlyph as string} variant={p.variant as never} {...fillValues(p)} />
+        <Panel title={p.title as string} headingLevel={p.headingLevel as never} body={p.body as string} footer={p.footer as string} bar={p.bar as string} cornerGlyph={p.cornerGlyph as string} variant={p.variant as never} {...fillValues(p)} />
       </div>
     ),
   },
@@ -221,6 +222,7 @@ export const tarjetas: CatalogEntry[] = [
       { key: "glyph", label: "Carácter del patrón", type: "text", default: "~", when: (p) => p.media === "glyph" && p.layout !== "minimal" },
       { key: "category", label: "Categoría", type: "text", default: "Técnica" },
       { key: "title", label: "Titular", type: "text", default: "Cinco errores al remar que te frenan la primera ola" },
+      { key: "headingLevel", label: "Nivel del título", type: "number", default: 3, min: 2, max: 6, hint: "h2–h6 según el orden de títulos de la página (accesibilidad y SEO); el aspecto no cambia" },
       { key: "excerpt", label: "Extracto", type: "text", multiline: true, default: "El remo cuenta más que la fuerza: la postura y el timing son lo que de verdad te sube a la tabla." },
       { key: "author", label: "Autor", type: "text", default: "Nora Vidal" },
       { key: "date", label: "Fecha", type: "text", default: "12 mar 2026" },
@@ -241,6 +243,7 @@ export const tarjetas: CatalogEntry[] = [
             glyph={p.glyph as string}
             category={p.category as string}
             title={p.title as string}
+            headingLevel={p.headingLevel as never}
             excerpt={p.excerpt as string}
             author={p.author as string}
             date={p.date as string}
