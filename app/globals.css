@@ -50,88 +50,6 @@ a { color: inherit; text-decoration: none; }
 }
 .chip:hover { border-color: rgba(255, 255, 255, 0.5); background: rgba(20, 24, 40, 0.8); }
 
-.tag {
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--mut);
-  border: 1px solid var(--ln);
-  border-radius: 999px;
-  padding: 2px 8px;
-}
-
-/* ---------- HUD de la demo ---------- */
-.hud {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 16px;
-  pointer-events: none;
-  transition: opacity 0.25s;
-}
-.hud--hidden { opacity: 0; }
-.hud--hidden .chip { pointer-events: none; }
-.hud__top, .hud__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.hud__title {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border: 1px solid var(--ln);
-  border-radius: 999px;
-  background: var(--panel);
-  backdrop-filter: blur(8px);
-  font-size: 14px;
-  font-weight: 600;
-}
-.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-.hud__hint {
-  margin: 0;
-  flex: 1;
-  text-align: center;
-  font-size: 12px;
-  color: #c7cddb;
-  text-shadow: 0 1px 10px #000, 0 0 3px #000;
-}
-.hud-toggle {
-  position: fixed;
-  right: 16px;
-  bottom: 60px;
-  z-index: 3;
-  font: inherit;
-  font-size: 11px;
-  color: var(--mut);
-  background: none;
-  border: none;
-  cursor: pointer;
-  opacity: 0.6;
-  text-shadow: 0 1px 6px #000;
-}
-.hud-toggle:hover { opacity: 1; }
-
-@media (max-width: 640px) {
-  .hud { padding: 10px; }
-  .hud__top { gap: 8px; }
-  /* el título era una píldora flex que se partía en 4 líneas y se montaba sobre la cabecera de la página */
-  .hud__title { display: block; flex: 1 1 0; min-width: 0; padding: 6px 12px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .hud__title .dot { display: inline-block; margin-right: 8px; vertical-align: middle; }
-  .hud__title .tag { display: none; }
-  .chip { flex: none; font-size: 12px; padding: 6px 10px; }
-  .hud__bottom { flex-wrap: wrap; justify-content: center; gap: 8px; }
-  .hud__bottom .chip { flex: 0 1 auto; max-width: 48%; overflow: hidden; text-overflow: ellipsis; }
-  .hud__hint { order: -1; flex-basis: 100%; }
-  .hud-toggle { bottom: 100px; }
-}
-
 /* ---------- Puerta de la cámara ---------- */
 .cam-gate {
   position: fixed;
@@ -160,60 +78,11 @@ a { color: inherit; text-decoration: none; }
 }
 .cam-gate__btn:hover { background: #fbcfe8; }
 
-/* ---------- Cajón de texto ---------- */
-.controls {
-  position: fixed;
-  left: 50%;
-  bottom: 68px;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: flex;
-  gap: 8px;
-  width: min(680px, calc(100vw - 32px));
-  pointer-events: auto;
-}
-.hud--hidden .controls { pointer-events: none; }
-.controls__input {
-  flex: 1;
-  min-width: 0;
-  font: inherit;
-  font-size: 16px;
-  color: var(--fg);
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  padding: 11px 18px;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-}
-.controls__input::placeholder { color: var(--mut); }
-.controls__input:focus { border-color: rgba(255, 255, 255, 0.7); }
-.controls__select {
-  font: inherit;
-  font-size: 13px;
-  color: var(--fg);
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--ln);
-  border-radius: 999px;
-  padding: 0 12px;
-  cursor: pointer;
-  max-width: 180px;
-}
-.controls__select option { background: #0b0e18; }
-
 /* Capa superior del combo: se funde con la de abajo */
 .stage--overlay {
   z-index: 1;
   background: transparent;
   mix-blend-mode: screen;
-}
-
-@media (max-width: 640px) {
-  .controls { bottom: 108px; flex-wrap: wrap; }
-  .controls__select { flex: 1; max-width: none; padding: 9px 12px; }
 }
 
 /* ---------- Páginas con scroll (300vh) ---------- */
@@ -277,6 +146,7 @@ html.scrollable::-webkit-scrollbar-thumb:hover, html.scrollable body::-webkit-sc
   letter-spacing: -0.02em;
 }
 .landing h2 { font-size: clamp(22px, 3vw, 30px); }
+.landing h2.landing__title { font-size: clamp(26px, 4vw, 40px); }
 .landing__sub { margin: 0 0 16px; font-size: 14px; line-height: 1.55; color: #c7cddb; }
 .landing__cta {
   display: inline-block;

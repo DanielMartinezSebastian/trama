@@ -120,7 +120,8 @@ export default function ScrollStage({ demo, hud }: { demo: DemoMeta; hud: boolea
         <section className="landing__section landing__section--hero">
           <p className="landing__kicker">{landing?.kicker}</p>
           {/* Con texto editable no se trocea: React y SplitText se pisarían el DOM */}
-          <h1 data-split={demo.text ? undefined : ""}>{title}</h1>
+          {/* el h1 de la página es el título de la demo (en el visor): el de la landing de ejemplo es de segundo nivel */}
+          <h2 className="landing__title" data-split={demo.text ? undefined : ""}>{title}</h2>
           <p className="landing__sub">{landing?.sub}</p>
           <span className="landing__cta">{landing?.cta}</span>
         </section>

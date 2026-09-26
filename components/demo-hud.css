@@ -1,0 +1,72 @@
+/* =====================================================================
+   Visor de demos de efectos (prefijo dh-): la estética de la web de Trama sobre el lienzo a pantalla completa.
+   Franjas negras con línea punteada, etiquetas monoespaciadas y el rojo como único acento; los controles son del kit
+   (variante minimal) y leen los tokens de components/site/theme.ts.
+   ===================================================================== */
+
+.dh {
+  --dh-h: 56px;
+  --dh-gutter: clamp(12px, 3vw, 40px);
+  --dh-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --dh-dots: 1px dotted var(--ln);
+  position: fixed; inset: 0; z-index: 20; pointer-events: none; color: var(--fg); font-family: var(--dh-mono);
+}
+.dh__top, .dh__bottom, .dh__text { pointer-events: auto; transition: opacity 0.25s; }
+.dh--hidden :is(.dh__top, .dh__bottom, .dh__text) { opacity: 0; }
+
+/* los botones del kit con la voz de la web: mono, mayúsculas, espaciado */
+.dh .ui-button { font-family: var(--dh-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 0; }
+
+/* ---------- franja superior: marca, volver, título, pantalla completa ---------- */
+.dh__top {
+  position: absolute; top: 0; left: 0; right: 0; height: var(--dh-h);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px;
+  padding-inline: var(--dh-gutter); background: color-mix(in srgb, var(--bg) 88%, transparent); border-bottom: var(--dh-dots);
+}
+.dh__left { display: flex; align-items: center; gap: clamp(8px, 2vw, 24px); min-width: 0; }
+.dh__brand { display: inline-flex; align-items: center; gap: 10px; flex: none; font: 700 12px/1 var(--dh-mono); letter-spacing: 0.4em; color: var(--fg); text-decoration: none; }
+.dh__mark { width: 8px; height: 8px; background: var(--acc); }
+.dh__title { display: grid; justify-items: center; gap: 4px; min-width: 0; text-align: center; }
+.dh__title h1 { margin: 0; max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 800 17px/1.1 var(--font-inter), ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; }
+.dh__label { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
+.dh__accent { width: 6px; height: 6px; flex: none; }
+.dh__right { justify-self: end; display: flex; align-items: center; gap: 8px; }
+
+/* ---------- franja inferior: anterior, pista, siguiente ---------- */
+.dh__bottom {
+  position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 6px;
+  padding: 10px var(--dh-gutter) 12px; background: color-mix(in srgb, var(--bg) 88%, transparent); border-top: var(--dh-dots);
+}
+.dh__nav { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); align-items: center; gap: 16px; }
+.dh__prev { justify-self: start; }
+.dh__next { justify-self: end; }
+.dh__prev, .dh__next { max-width: 100%; }
+.dh__prev .ui-button__label, .dh__next .ui-button__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dh__hint { margin: 0; text-align: center; font-size: 12px; line-height: 1.5; color: var(--mut); }
+.dh__keys { margin: 0; text-align: center; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mut); }
+
+/* ---------- texto de las demos de texto: a la derecha (a la izquierda van las tarjetas de las demos de scroll) ---------- */
+.dh__text {
+  position: absolute; right: var(--dh-gutter); bottom: calc(var(--dh-bottom, 92px) + 12px);
+  display: flex; flex-wrap: wrap; align-items: end; gap: 12px 16px; width: min(520px, calc(100% - 2 * var(--dh-gutter)));
+  padding: 12px 14px; background: color-mix(in srgb, var(--bg) 90%, transparent); border: var(--dh-dots);
+}
+.dh__text > * { flex: 1 1 160px; min-width: 0; }
+.dh__text > :first-child { flex-basis: 220px; }
+
+/* ---------- mostrar (solo con la interfaz oculta) ---------- */
+.dh__show { position: absolute; right: var(--dh-gutter); bottom: 14px; pointer-events: auto; opacity: 0.55; background: color-mix(in srgb, var(--bg) 80%, transparent); }
+.dh__show:hover, .dh__show:focus-visible { opacity: 1; }
+
+@media (max-width: 720px) {
+  .dh { --dh-bottom: 104px; }
+  .dh__top { grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; }
+  .dh__brand, .dh__tag, .dh__hide, .dh__back .ui-button__label { display: none; }
+  .dh__title { justify-items: start; text-align: left; }
+  .dh__title h1 { font-size: 15px; max-width: 100%; }
+  .dh__nav { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .dh__hint { grid-column: 1 / -1; grid-row: 1; font-size: 11px; }
+  .dh__keys { display: none; }
+  .dh__text { top: calc(var(--dh-h) + 10px); bottom: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .dh__top, .dh__bottom, .dh__text { transition: none; } }

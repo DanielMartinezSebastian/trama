@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import TextControls from "@/components/TextControls";
+import DemoHud from "@/components/DemoHud";
 import { demos, getDemo } from "@/lib/demos";
 
 /*
@@ -32,13 +31,16 @@ const TextmodeCanvas = dynamic(() => import("@/components/TextmodeCanvas"));
 const ThemedLanding = dynamic(() => import("@/components/ThemedLanding"));
 const ScrollStage = dynamic(() => import("@/components/ScrollStage"));
 
+const NAV_DEMOS = demos.filter((d) => d.family !== "landing");
+
 export default function DemoViewer({ slug }: { slug: string }) {
   const router = useRouter();
   const [hud, setHud] = useState(true);
-  const index = demos.findIndex((d) => d.slug === slug);
   const demo = getDemo(slug);
-  const prev = demos[(index - 1 + demos.length) % demos.length];
-  const next = demos[(index + 1) % demos.length];
+  // anterior/siguiente recorre solo las demos de efectos: las landings (y las webs, que no son demos) se abren desde /demos
+  const index = NAV_DEMOS.findIndex((d) => d.slug === slug);
+  const prev = NAV_DEMOS[(Math.max(index, 0) - 1 + NAV_DEMOS.length) % NAV_DEMOS.length];
+  const next = NAV_DEMOS[(index + 1) % NAV_DEMOS.length];
   // Las landings se ven como resultado final: sin HUD ni navegación entre demos
   const bare = demo?.family === "landing";
 
@@ -67,7 +69,6 @@ export default function DemoViewer({ slug }: { slug: string }) {
   if (!demo) return null;
 
   const render = demo.render ?? (demo.family === "asciify" ? "asciify" : "textmode");
-  const tag = [demo.lib, demo.reactive ? "reactivo" : "ambiente"].filter(Boolean).join(" · ");
   const KitLanding = render === "kit" ? KIT_LANDINGS[slug] : undefined;
 
   return (
@@ -86,28 +87,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
       )}
       {demo.family === "scroll" && <ScrollStage key={`scroll-${slug}`} demo={demo} hud={hud} />}
       {!bare && (
-        <>
-          <div className={`hud ${hud ? "" : "hud--hidden"}`}>
-            <header className="hud__top">
-              <Link href="/demos" className="chip">← Demos</Link>
-              <h1 className="hud__title" style={{ ["--accent" as string]: demo.accent }}>
-                <span className="dot" />
-                {demo.title}
-                <span className="tag">{tag}</span>
-              </h1>
-              <button className="chip" onClick={toggleFullscreen} title="Pantalla completa (F)">⛶</button>
-            </header>
-            {(demo.family === "text" || demo.text) && <TextControls controls={demo.controls ?? []} />}
-            <footer className="hud__bottom">
-              <Link href={`/demo/${prev.slug}`} className="chip" title="Anterior (←)">← {prev.title}</Link>
-              <p className="hud__hint">{demo.hint}</p>
-              <Link href={`/demo/${next.slug}`} className="chip" title="Siguiente (→)">{next.title} →</Link>
-            </footer>
-          </div>
-          <button className="hud-toggle" onClick={() => setHud((v) => !v)} title="Mostrar u ocultar interfaz (H)">
-            {hud ? "ocultar" : "mostrar"}
-          </button>
-        </>
+        <DemoHud demo={demo} index={index} total={NAV_DEMOS.length} prev={prev} next={next} visible={hud} onToggle={() => setHud((v) => !v)} onFullscreen={toggleFullscreen} />
       )}
     </>
   );
