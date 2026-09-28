@@ -37,7 +37,7 @@ export const secciones: CatalogEntry[] = [
       { key: "subtitle", label: "Subtítulo", type: "text", multiline: true, default: "Del primer remo a tu primera ola verde. Neopreno, tabla y monitores titulados incluidos." },
       { key: "primaryCta", label: "CTA principal", type: "text", default: "Reservar clase" },
       { key: "secondaryCta", label: "CTA secundaria", type: "text", default: "Ver horarios" },
-      { key: "badges", label: "Insignias (separadas por comas)", type: "text", default: "+500 alumnos, 4.9 ★ valoración, Grupos de 6" },
+      { key: "badges", label: "Insignias (separadas por comas)", type: "text", default: "+500 alumnos, 4.9 ★ valoración, Grupos de 6", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "align", label: "Alineación", type: "select", default: "center", options: ["left", "center"] },
       { key: "backdrop", label: "Fondo decorativo", type: "select", default: "grid", options: ["none", "grid", "dots", "glow"] },
       variantProp("minimal"),
@@ -65,8 +65,12 @@ export const secciones: CatalogEntry[] = [
     name: "Formulario de contacto",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio. Conecta el envío real con la prop `onSubmit`.",
+    description: "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio (carga, error y éxito). Conecta el envío real con la prop `onSubmit`.",
     stageHeight: 580,
+    notes: [
+      "`onSubmit(data)` puede ser `async`: mientras la promesa está pendiente el botón muestra la carga; si resuelve `{ ok: false, message }` o lanza, sale un `Alert` danger (`role=\"alert\"`) con `errorTitle` y el mensaje (o `errorMessage`) y lo escrito se conserva; si resuelve `{ ok: true }` o nada, el estado de éxito. Sin `onSubmit`, o con uno síncrono sin retorno, siempre éxito (como la demo).",
+      "Ej.: `onSubmit={async (d) => { const r = await fetch(\"/api/contacto\", { method: \"POST\", body: JSON.stringify(d) }); return r.ok ? { ok: true } : { ok: false, message: \"El servidor no respondió.\" }; }}`",
+    ],
     props: [
       { key: "title", label: "Título", type: "text", default: "Escríbenos" },
       { key: "subtitle", label: "Subtítulo", type: "text", default: "Te respondemos en menos de 24 horas." },
@@ -74,11 +78,20 @@ export const secciones: CatalogEntry[] = [
       { key: "layout", label: "Disposición", type: "select", default: "stacked", options: ["stacked", "inline"] },
       { key: "submitLabel", label: "Botón", type: "text", default: "Enviar mensaje" },
       { key: "successMessage", label: "Mensaje de éxito", type: "text", default: "Gracias, te contestaremos pronto." },
+      { key: "errorTitle", label: "Título del error", type: "text", default: "No se pudo enviar" },
+      { key: "simulate", label: "Simular envío", type: "select", default: "ok", options: ["ok", "error"], labels: { ok: "éxito inmediato", error: "fallo tras 1 s" }, noCode: true },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center">
         <ContactForm
+          key={p.simulate as string}
+          errorTitle={p.errorTitle as string}
+          onSubmit={
+            p.simulate === "error"
+              ? () => new Promise((r) => setTimeout(() => r({ ok: false, message: "El servidor no respondió (simulado)." }), 1000))
+              : undefined
+          }
           title={p.title as string}
           subtitle={p.subtitle as string}
           fields={p.fields as string}
@@ -280,7 +293,7 @@ export const secciones: CatalogEntry[] = [
         multiline: true,
         default: "Escuela: Clases, Monitores, Ubicación; Ayuda: Reservas, Cancelaciones, FAQ; Legal: Privacidad, Términos, Cookies",
       },
-      { key: "social", label: "Redes (separadas por comas)", type: "text", default: "X, IG, YT" },
+      { key: "social", label: "Redes (separadas por comas)", type: "text", default: "X, IG, YT", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "copyright", label: "Copyright", type: "text", default: "© 2026 Maré Surf Club. Todos los derechos reservados." },
       variantProp("minimal"),
     ],
@@ -369,7 +382,7 @@ export const secciones: CatalogEntry[] = [
     stageHeight: 180,
     props: [
       { key: "label", label: "Etiqueta", type: "text", default: "Con la confianza de" },
-      { key: "brands", label: "Marcas (separadas por comas)", type: "text", default: "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar" },
+      { key: "brands", label: "Marcas (separadas por comas)", type: "text", default: "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "layout", label: "Disposición", type: "select", default: "row", options: ["row", "ticker"], hint: "ticker = cinta continua con Swiper" },
       variantProp("minimal"),
     ],

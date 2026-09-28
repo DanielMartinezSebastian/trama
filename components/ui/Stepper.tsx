@@ -1,3 +1,4 @@
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type StepperProps = {
@@ -10,7 +11,7 @@ export type StepperProps = {
 
 /** Indicador de progreso por pasos (alta, checkout, onboarding…). No gestiona el contenido de cada paso. */
 export default function Stepper({ steps = "Datos, Envío, Pago, Confirmación", current = 1, variant = "glass", className = "" }: StepperProps) {
-  const list = steps.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = splitList(steps);
   return (
     <ol className={`ui-steps ${vcls(variant)} ${className}`}>
       {list.map((s, i) => (

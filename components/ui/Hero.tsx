@@ -1,6 +1,7 @@
 import Badge from "./Badge";
 import Button from "./Button";
 import type { Variant } from "./variants";
+import { splitList } from "@/lib/ui/list";
 
 export type HeroProps = {
   kicker?: string;
@@ -13,7 +14,7 @@ export type HeroProps = {
   secondaryHref?: string;
   onPrimary?: () => void;
   onSecondary?: () => void;
-  /** insignias de confianza separadas por comas; vacío = ninguna */
+  /** insignias de confianza separadas por comas (`\,` para una coma dentro de una: "99\,5 % disponibilidad"); vacío = ninguna */
   badges?: string;
   align?: "left" | "center";
   /** patrón decorativo de fondo, solo CSS (sin canvas) */
@@ -43,7 +44,7 @@ export default function Hero({
   variant = "minimal",
   className = "",
 }: HeroProps) {
-  const chips = badges.split(",").map((s) => s.trim()).filter(Boolean);
+  const chips = splitList(badges);
   return (
     <section className={`ui-hero ui-hero--${align} ui-hero--bd-${backdrop} ${className}`}>
       <div className="ui-hero__inner">

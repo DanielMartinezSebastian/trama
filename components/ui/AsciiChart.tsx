@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type AsciiChartProps = {
@@ -24,7 +25,7 @@ const SPARK = "▁▂▃▄▅▆▇█";
 /** Gráfico dibujado con caracteres: barras verticales, horizontales, sparkline o área. */
 export default function AsciiChart({ data = "12, 18, 9, 24, 31, 27, 40, 36", labels = "L,M,X,J,V,S,D,L", kind = "bars", height = 10, fillChar = "█", animate = true, playKey = 0, variant = "terminal", className = "" }: AsciiChartProps) {
   const values = useMemo(() => data.split(",").map((s) => parseFloat(s)).filter((n) => Number.isFinite(n)), [data]);
-  const names = useMemo(() => labels.split(",").map((s) => s.trim()), [labels]);
+  const names = useMemo(() => splitEscaped(labels, ",").map((s) => s.trim()), [labels]);
   const [k, setK] = useState(animate ? 0 : 1);
 
   useEffect(() => {

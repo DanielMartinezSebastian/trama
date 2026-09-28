@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import { A11y, Autoplay, EffectCards, EffectCoverflow, EffectCreative, EffectCube, EffectFade, FreeMode, Grid, Keyboard, Navigation, Pagination, Thumbs, Zoom } from "swiper/modules";
 import { Swiper, SwiperSlide, type SwiperProps } from "swiper/react";
+import { splitEscaped } from "@/lib/ui/list";
 import { resolveImage } from "@/lib/ui/placeholder";
 import "./swiperCss";
 import { vcls, type Variant } from "./variants";
@@ -73,7 +74,7 @@ export default function ImageGallery({ images = DEFAULT_IMAGES, layout = "thumbs
     () =>
       images
         .split("\n")
-        .map((l) => l.split("|"))
+        .map((l) => splitEscaped(l, "|"))
         .filter((r) => r[0]?.trim())
         .map(([src, title = "", text = ""]) => ({ src, title: title.trim(), text: text.trim() })),
     [images],

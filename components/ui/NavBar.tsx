@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import Button from "./Button";
 import { renderGlyph } from "./Icon";
+import { splitEscaped, splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type NavBarLayout = "classic" | "left" | "right" | "center" | "split" | "stacked" | "minimal";
@@ -126,7 +127,7 @@ function parseLabel(raw: string): NavChild {
 }
 
 function parseLinks(links: string): NavItem[] {
-  const rows = (links.includes("\n") ? links.split("\n") : links.split(",")).map((r) => r.trim()).filter(Boolean);
+  const rows = (links.includes("\n") ? links.split("\n") : splitEscaped(links, ",")).map((r) => r.trim()).filter(Boolean);
   return rows.map((row) => {
     const gt = row.indexOf(">");
     const head = parseLabel(gt >= 0 ? row.slice(0, gt) : row);
@@ -134,13 +135,13 @@ function parseLinks(links: string): NavItem[] {
     if (gt >= 0) {
       let cur: NavGroup = { items: [] };
       groups.push(cur);
-      for (const raw of row.slice(gt + 1).split(";").map((c) => c.trim()).filter(Boolean)) {
+      for (const raw of splitList(row.slice(gt + 1), ";")) {
         if (raw.startsWith("#") && !raw.includes("=")) {
           cur = { title: raw.slice(1).trim(), items: [] };
           groups.push(cur);
           continue;
         }
-        const [title, ...rest] = raw.split("|").map((x) => x.trim());
+        const [title, ...rest] = splitEscaped(raw, "|").map((x) => x.trim());
         const child = parseLabel(title);
         for (const f of rest) {
           if (/^icon:/.test(f)) child.icon = f;
@@ -315,7 +316,7 @@ export default function NavBar({
       out.push({ label: it.label, href: it.href });
       for (const g of it.groups) for (const c of g.items) out.push({ label: c.label, href: c.href, path: g.title ? `${it.label} › ${g.title}` : it.label });
     }
-    for (const raw of (searchItems.includes("\n") ? searchItems.split("\n") : searchItems.split(",")).filter((s) => s.trim())) {
+    for (const raw of (searchItems.includes("\n") ? searchItems.split("\n") : splitEscaped(searchItems, ",")).filter((s) => s.trim())) {
       const { label, href } = parseLabel(raw);
       out.push({ label, href });
     }

@@ -1,3 +1,4 @@
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type BreadcrumbsProps = {
@@ -9,7 +10,7 @@ export type BreadcrumbsProps = {
 
 /** Ruta de navegación. El último elemento es la página actual: texto, sin enlace. */
 export default function Breadcrumbs({ items = "Inicio, Cursos, Iniciación al surf", separator = "/", variant = "minimal", className = "" }: BreadcrumbsProps) {
-  const list = items.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = splitList(items);
   return (
     <nav aria-label="Ruta de navegación" className={`ui-crumbs ${vcls(variant)} ${className}`}>
       {list.map((item, i) => (

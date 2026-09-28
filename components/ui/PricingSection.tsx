@@ -5,6 +5,7 @@ import PricingCard, { type PricingCardProps } from "./PricingCard";
 import Carousel from "./Carousel";
 import type { CardFill } from "./fill";
 import SectionHeader from "./SectionHeader";
+import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type PricingSectionProps = {
@@ -68,7 +69,7 @@ export default function PricingSection({
   variant = "glass",
   className = "",
 }: PricingSectionProps) {
-  const rows = useMemo(() => plans.split("\n").map((l) => l.split("|").map((x) => x.trim())).filter((r) => r[0]), [plans]);
+  const rows = useMemo(() => plans.split("\n").map((l) => splitEscaped(l, "|").map((x) => x.trim())).filter((r) => r[0]), [plans]);
   const hasYearly = rows.some((r) => r[6]);
   const [yearly, setYearly] = useState(false);
 
@@ -90,7 +91,7 @@ export default function PricingSection({
         note={useYear ? `equivale a ${price} ${period}`.replace(/\s+/g, " ") : ""}
         highlighted={hl === "si"}
         highlight={highlight}
-        features={(features ?? "").split(";").filter(Boolean).join("\n")}
+        features={splitEscaped(features ?? "", ";").filter(Boolean).join("\n")}
         layout={layout === "list" ? "horizontal" : cardLayout}
         fill={fill}
         variant={variant}

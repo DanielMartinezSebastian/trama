@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type DropdownProps = {
@@ -13,7 +14,7 @@ export type DropdownProps = {
 
 /** Menú de acciones (⋮): un botón que abre una lista de comandos, no un formulario de selección (ver Select). */
 export default function Dropdown({ label = "⋮", items = "Editar, Duplicar, Archivar, Eliminar", align = "right", variant = "glass", className = "" }: DropdownProps) {
-  const list = items.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = splitList(items);
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 

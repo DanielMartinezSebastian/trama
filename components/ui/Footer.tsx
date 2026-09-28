@@ -1,4 +1,5 @@
 import { renderGlyph } from "./Icon";
+import { splitEscaped, splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type FooterProps = {
@@ -25,14 +26,13 @@ export default function Footer({
   variant = "minimal",
   className = "",
 }: FooterProps) {
-  const cols = columns
-    .split(";")
+  const cols = splitEscaped(columns, ";")
     .map((c) => {
       const [head, rest] = c.split(":");
-      return { title: head?.trim() ?? "", links: (rest ?? "").split(",").map((l) => l.trim()).filter(Boolean) };
+      return { title: head?.trim() ?? "", links: splitList(rest ?? "") };
     })
     .filter((c) => c.title);
-  const soc = social.split(",").map((s) => s.trim()).filter(Boolean);
+  const soc = splitList(social);
 
   return (
     <footer className={`ui-footer ui-surface ${vcls(variant)} ${className}`}>

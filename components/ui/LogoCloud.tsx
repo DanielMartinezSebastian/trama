@@ -1,4 +1,5 @@
 import Carousel from "./Carousel";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type LogoCloudProps = {
@@ -13,7 +14,7 @@ export type LogoCloudProps = {
 
 /** Tira de marcas en texto — "con la confianza de…" — sin depender de imágenes que el kit no tiene. */
 export default function LogoCloud({ label = "Con la confianza de", brands = "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar", layout = "row", variant = "minimal", className = "" }: LogoCloudProps) {
-  const list = brands.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = splitList(brands);
   const brandEls = list.map((b) => (
     <span key={b} className="ui-logos__brand">
       {b}

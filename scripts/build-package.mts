@@ -53,6 +53,8 @@ const barrel = [
   `export * from "./components/ui/fill";`,
   `export * from "./components/ui/variants";`,
   `export { tokensToStyle, neutralTokens, dotmatrixTokens, FONT_PRESETS, type TokenSet } from "./lib/ui/tokens";`,
+  `export { splitList, splitEscaped } from "./lib/ui/list";`,
+  `export type { ContactFormProps, ContactFormResult } from "./components/ui/ContactForm";`,
   "",
 ].join("\n");
 writeFileSync(join(SRC, "index.ts"), barrel);

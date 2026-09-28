@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { intentCls, toIntent, type Intent, type LegacyIntent } from "./intent";
 import { vcls, type Variant } from "./variants";
 
@@ -60,18 +60,32 @@ export default function TextField({
   const raw = intent ?? (state && state !== "default" ? state : undefined);
   const i = raw ? toIntent(raw, "info") : undefined;
   const invalid = i === "danger" || undefined;
+  // La ayuda (o el error) se enlaza al campo con aria-describedby para que el lector de pantalla la anuncie al
+  // enfocarlo; el nombre accesible sale solo de la etiqueta (aria-labelledby), no de todo el texto del <label>.
+  const id = useId();
+  const labelId = `${id}-label`;
+  const hintId = `${id}-hint`;
+  const a11y = { "aria-invalid": invalid, "aria-describedby": hint ? hintId : undefined, "aria-labelledby": label ? labelId : undefined };
   return (
     <label className={`ui-field ui-field--${size} ${i ? `ui-field--state ${intentCls(i)}` : ""} ${multiline ? "ui-field--multiline" : ""} ${className}`}>
-      {label && <span className="ui-field__label">{label}</span>}
+      {label && (
+        <span id={labelId} className="ui-field__label">
+          {label}
+        </span>
+      )}
       <span className={`ui-field__box ui-surface ${vcls(variant)}`}>
         {prefix && <span className="ui-field__prefix" aria-hidden>{prefix}</span>}
         {multiline ? (
-          <textarea key={defaultValue} aria-invalid={invalid} name={name} rows={rows} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
+          <textarea key={defaultValue} {...a11y} name={name} rows={rows} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         ) : (
-          <input key={defaultValue} aria-invalid={invalid} type={type} name={name} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
+          <input key={defaultValue} {...a11y} type={type} name={name} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         )}
       </span>
-      {hint && <span className="ui-field__hint">{hint}</span>}
+      {hint && (
+        <span id={hintId} className="ui-field__hint">
+          {hint}
+        </span>
+      )}
     </label>
   );
 }

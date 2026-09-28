@@ -168,7 +168,7 @@ const md: string[] = [
   "",
   "Todos los componentes: `import X from \"@/components/ui/X\"`, CSS una vez con `import \"@/components/ui/styles/kit.css\"`,",
   "tema con los tokens `--bg --fg --mut --acc --acc2 --card --ln --r` en cualquier contenedor, estilo con",
-  `\`variant\` (${STYLES.map((s) => s.id).join(" · ")}). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con \`|\`), tal como muestran los defaults.`,
+  `\`variant\` (${STYLES.map((s) => s.id).join(" · ")}). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con \`|\`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: \`\\,\` (coma), \`\\|\` (barra) o \`\\;\` (punto y coma), p. ej. \`badges="+12 proyectos, 99\\,5 % disponibilidad"\` (atributo JSX entre comillas; dentro de una cadena JS, \`{"…"}\`, la barra va doble: \`"99\\\\,5 %"\`).`,
   "",
 ];
 for (const c of CATEGORIES) {

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { createPortal } from "react-dom";
 import { createEngine, formatTime, parseTime, type AudioEngine } from "@/lib/ui/audio";
+import { splitEscaped } from "@/lib/ui/list";
 import { resolveImage } from "@/lib/ui/placeholder";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import { useTokens } from "@/lib/ui/useTokens";
@@ -64,7 +65,7 @@ const DEFAULT_TRACKS =
 function parseTracks(s: string): Track[] {
   return s
     .split("\n")
-    .map((l) => l.split("|").map((x) => x.trim()))
+    .map((l) => splitEscaped(l, "|").map((x) => x.trim()))
     .filter((r) => r[0] && r[2])
     .map(([title, artist = "", src, dur = "", cover = ""]) => ({ title, artist, src, duration: parseTime(dur), cover: cover || undefined }));
 }

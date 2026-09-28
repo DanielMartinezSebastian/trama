@@ -1,5 +1,6 @@
 import Carousel from "./Carousel";
 import SectionHeader from "./SectionHeader";
+import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type TeamSectionProps = {
@@ -22,7 +23,7 @@ const DEFAULT_PEOPLE = "Marta Solé|Directora y monitora\nEnzo Rial|Monitor de i
 
 /** Cabecera de sección + grid de perfiles. Sin fotos: usa el mismo avatar de iniciales que `Testimonial`. */
 export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, layout = "grid", perView = 3, autoplay = 0, variant = "glass", className = "" }: TeamSectionProps) {
-  const rows = people.split("\n").map((l) => l.split("|")).filter((r) => r[0]?.trim());
+  const rows = people.split("\n").map((l) => splitEscaped(l, "|")).filter((r) => r[0]?.trim());
   const cards = rows.map(([name, role], i) => {
     const initials = (name ?? "")
       .split(" ")

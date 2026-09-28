@@ -1,4 +1,5 @@
 import { resolveImage } from "@/lib/ui/placeholder";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type ArticleHeaderProps = {
@@ -48,7 +49,7 @@ export default function ArticleHeader({
   variant = "minimal",
   className = "",
 }: ArticleHeaderProps) {
-  const tagList = tags.split(",").map((t) => t.trim()).filter(Boolean);
+  const tagList = splitList(tags);
   const meta = [date, readTime && `${readTime} de lectura`].filter(Boolean);
   return (
     <header className={`ui-arthead ui-arthead--${align} ${vcls(variant)} ${className}`}>

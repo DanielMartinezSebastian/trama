@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type SelectProps = {
@@ -34,11 +35,15 @@ export default function Select({
   onChange,
   className = "",
 }: SelectProps) {
-  const list = useMemo(() => options.split(",").map((s) => s.trim()).filter(Boolean), [options]);
+  const list = useMemo(() => splitList(options), [options]);
   const [inner, setValue] = useState(defaultValue);
   const value = controlled ?? inner;
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  // la etiqueta es un <span>, no un <label>: se enlaza a mano al botón (junto al valor elegido) y a la lista
+  const id = useId();
+  const labelId = label ? `${id}-label` : undefined;
+  const valueId = `${id}-value`;
 
   useEffect(() => setValue(defaultValue), [defaultValue]);
   useEffect(() => {
@@ -52,15 +57,28 @@ export default function Select({
 
   return (
     <div ref={root} className={`ui-select ui-select--${size} ${className}`}>
-      {label && <span className="ui-select__label">{label}</span>}
-      <button type="button" className={`ui-select__trigger ui-surface ${vcls(variant)}`} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-        <span className={value ? undefined : "ui-select__placeholder"}>{value || placeholder}</span>
+      {label && (
+        <span id={labelId} className="ui-select__label">
+          {label}
+        </span>
+      )}
+      <button
+        type="button"
+        className={`ui-select__trigger ui-surface ${vcls(variant)}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-labelledby={labelId ? `${labelId} ${valueId}` : undefined}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span id={valueId} className={value ? undefined : "ui-select__placeholder"}>
+          {value || placeholder}
+        </span>
         <span className="ui-select__mark" aria-hidden>
           ▾
         </span>
       </button>
       {open && (
-        <ul className={`ui-select__list ui-surface ${vcls(variant)}`} role="listbox">
+        <ul className={`ui-select__list ui-surface ${vcls(variant)}`} role="listbox" aria-labelledby={labelId}>
           {list.map((o) => (
             <li key={o}>
               <button

@@ -6,6 +6,20 @@ cuando quede vacía. Orden dentro de cada bloque: de más a menos importante.
 Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y, si tocaste rutas o CSS,
 `npm run build` (con el `next dev` parado).
 
+## 0. Publicación del paquete
+
+- [ ] **Publicar `trama-ui@0.3.0` en npm.** Está construido y empaquetado (rama `fix/mejoras-desde-web`), pero no
+      publicado: en el registro sigue la 0.2.0. Pasos (ver «Publicar en npm» en `README.md`):
+  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.3.0"` y que `CHANGELOG.md` tiene su entrada.
+  2. `npm login` (cuenta dueña de `trama-ui`; `npm whoami` para confirmarlo).
+  3. `npm run pkg:build` (vacía y regenera `dist-npm/`).
+  4. `cd dist-npm && npm publish --dry-run` para revisar la lista de archivos, y después `npm publish`.
+  5. Comprobar con `npm view trama-ui version` (debe decir `0.3.0`).
+  6. **Web martinezsebastian.com:** de momento usa la 0.3.0 desde un `.tgz` incluido en su propio repo
+     (`dist-npm/trama-ui-0.3.0.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
+     (`npm i trama-ui@^0.3.0` en ese proyecto), borrar el `.tgz` de su repo y comprobar que el `package-lock.json`
+     apunta a `registry.npmjs.org`.
+
 ## 1. Publicación de la web
 
 - [ ] **Dominio.** Definir `NEXT_PUBLIC_SITE_URL` (p. ej. `https://trama.dev`) en el hosting. Sin ella, fuera de Vercel,
@@ -88,5 +102,15 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
       de `/componentes#<id>` en las 8 variantes.
 - [ ] **Deuda conocida** (ver «Deuda conocida» en `README.md`): `ThemedLanding` y las seis landings temáticas antiguas
       no usan el kit; migrarlas o retirarlas (junto con `app/landings.css`) si ya no aportan.
+- [ ] **Aviso `THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.`** en la consola al
+      montar `RetroCanvas` (o cualquier `<Canvas>`) con three ≥ 0.18x. No es código de Trama: lo lanza
+      `@react-three/fiber` 9.x, cuyo store crea `clock: new THREE.Clock()` al montar el `<Canvas>`
+      (`node_modules/@react-three/fiber/dist/events-*.js`). Trama solo *lee* `state.clock.elapsedTime` en `useFrame`
+      (`RetroFX`, `RetroShapes`, `RetroModel`), que no dispara el aviso. Es inofensivo (Clock sigue funcionando) y no se
+      parchea. La 9.8.1 (última estable a 28-09-2026, la instalada) aún lo tiene; la línea 10 (`10.0.0-alpha.5`,
+      `canary`) ya no usa `THREE.Clock`, pero es una versión mayor en alfa con cambios de API (planificador `@pmndrs/scheduler`;
+      el tiempo pasa a `elapsed` del estado del frame, sin `state.clock`). Al pasar a R3F 10 estable: subir el peer
+      `@react-three/fiber` en `scripts/build-package.mts` y cambiar esos `clock.elapsedTime` por el tiempo de la nueva
+      API (o acumular el `delta` de `useFrame`).
 - [ ] **Imágenes ASCII sin JS.** Los componentes con lienzo no tienen alternativa estática cuando falla WebGL o está
       activo `prefers-reduced-motion`; revisar `RetroCanvas`, `AsciiBackground` y `TextmodeBackground`.

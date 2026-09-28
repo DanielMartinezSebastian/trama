@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type RadioGroupProps = {
@@ -15,7 +16,7 @@ export type RadioGroupProps = {
 
 /** Selección única entre varias opciones. Retro y terminal las muestran como texto `(•)`/`( )`. */
 export default function RadioGroup({ label = "Plan", options = "Mensual, Anual", defaultValue = "Mensual", onChange, variant = "glass", className = "" }: RadioGroupProps) {
-  const list = useMemo(() => options.split(",").map((s) => s.trim()).filter(Boolean), [options]);
+  const list = useMemo(() => splitList(options), [options]);
   const [value, setValue] = useState(defaultValue);
   useEffect(() => setValue(defaultValue), [defaultValue]);
 

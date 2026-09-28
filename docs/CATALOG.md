@@ -5,7 +5,7 @@
 
 Todos los componentes: `import X from "@/components/ui/X"`, CSS una vez con `import "@/components/ui/styles/kit.css"`,
 tema con los tokens `--bg --fg --mut --acc --acc2 --card --ln --r` en cualquier contenedor, estilo con
-`variant` (glass · solid · outline · neon · retro · terminal · minimal · dotmatrix). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con `|`), tal como muestran los defaults.
+`variant` (glass · solid · outline · neon · retro · terminal · minimal · dotmatrix). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con `|`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: `\,` (coma), `\|` (barra) o `\;` (punto y coma), p. ej. `badges="+12 proyectos, 99\,5 % disponibilidad"` (atributo JSX entre comillas; dentro de una cadena JS, `{"…"}`, la barra va doble: `"99\\,5 %"`).
 
 ## Fondos (`fondos`)
 
@@ -1049,7 +1049,7 @@ Cabecera de landing: sobretítulo, titular, subtítulo, una o dos llamadas a la 
 
 ### Formulario de contacto — `ContactForm`
 
-Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio. Conecta el envío real con la prop `onSubmit`.
+Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio (carga, error y éxito). Conecta el envío real con la prop `onSubmit`.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1059,7 +1059,11 @@ Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado d
 | `layout` | `stacked` · `inline` | "stacked" |
 | `submitLabel` | text | "Enviar mensaje" |
 | `successMessage` | text | "Gracias, te contestaremos pronto." |
+| `errorTitle` | text | "No se pudo enviar" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+
+- `onSubmit(data)` puede ser `async`: mientras la promesa está pendiente el botón muestra la carga; si resuelve `{ ok: false, message }` o lanza, sale un `Alert` danger (`role="alert"`) con `errorTitle` y el mensaje (o `errorMessage`) y lo escrito se conserva; si resuelve `{ ok: true }` o nada, el estado de éxito. Sin `onSubmit`, o con uno síncrono sin retorno, siempre éxito (como la demo).
+- Ej.: `onSubmit={async (d) => { const r = await fetch("/api/contacto", { method: "POST", body: JSON.stringify(d) }); return r.ok ? { ok: true } : { ok: false, message: "El servidor no respondió." }; }}`
 
 ### Banner de llamada a la acción — `CTASection`
 

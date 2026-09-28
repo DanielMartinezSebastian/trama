@@ -111,7 +111,7 @@ export const formularios: CatalogEntry[] = [
     stageHeight: 280,
     props: [
       { key: "label", label: "Etiqueta", type: "text", default: "País" },
-      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "España, Francia, Portugal, Italia, Alemania" },
+      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "España, Francia, Portugal, Italia, Alemania", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "defaultValue", label: "Valor inicial", type: "text", default: "" },
       { key: "placeholder", label: "Placeholder", type: "text", default: "Elige una opción" },
       { key: "size", label: "Tamaño", type: "select", default: "md", options: ["sm", "md", "lg"] },
@@ -134,8 +134,8 @@ export const formularios: CatalogEntry[] = [
     stageHeight: 260,
     props: [
       { key: "label", label: "Etiqueta", type: "text", default: "Notificaciones" },
-      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "Email, SMS, Push, Newsletter" },
-      { key: "defaultValue", label: "Marcadas al inicio (separadas por comas)", type: "text", default: "Email, Push" },
+      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "Email, SMS, Push, Newsletter", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
+      { key: "defaultValue", label: "Marcadas al inicio (separadas por comas)", type: "text", default: "Email, Push", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       variantProp("glass"),
     ],
     render: (p) => (
@@ -155,7 +155,7 @@ export const formularios: CatalogEntry[] = [
     stageHeight: 220,
     props: [
       { key: "label", label: "Etiqueta", type: "text", default: "Plan" },
-      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "Mensual, Anual" },
+      { key: "options", label: "Opciones (separadas por comas)", type: "text", default: "Mensual, Anual", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "defaultValue", label: "Valor inicial", type: "text", default: "Mensual" },
       variantProp("glass"),
     ],
@@ -175,7 +175,7 @@ export const formularios: CatalogEntry[] = [
     description: "Indicador de progreso por pasos (alta, checkout, onboarding…). No gestiona el contenido de cada paso.",
     stageHeight: 180,
     props: [
-      { key: "steps", label: "Pasos (separados por comas)", type: "text", default: "Datos, Envío, Pago, Confirmación" },
+      { key: "steps", label: "Pasos (separados por comas)", type: "text", default: "Datos, Envío, Pago, Confirmación", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "current", label: "Paso activo", type: "number", default: 1, min: 0, max: 5, step: 1 },
       variantProp("glass"),
     ],

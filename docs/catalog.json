@@ -4302,7 +4302,8 @@
           "key": "items",
           "type": "text",
           "default": "Resumen, Detalles, Reseñas",
-          "label": "Pestañas (separadas por comas)"
+          "label": "Pestañas (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "content",
@@ -4420,7 +4421,8 @@
           "key": "items",
           "type": "text",
           "default": "Inicio, Cursos, Iniciación al surf",
-          "label": "Ruta (separada por comas)"
+          "label": "Ruta (separada por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "separator",
@@ -4540,7 +4542,8 @@
           "key": "items",
           "type": "text",
           "default": "Editar, Duplicar, Archivar, Eliminar",
-          "label": "Acciones (separadas por comas)"
+          "label": "Acciones (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "align",
@@ -5010,7 +5013,8 @@
           "key": "options",
           "type": "text",
           "default": "España, Francia, Portugal, Italia, Alemania",
-          "label": "Opciones (separadas por comas)"
+          "label": "Opciones (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "defaultValue",
@@ -5084,13 +5088,15 @@
           "key": "options",
           "type": "text",
           "default": "Email, SMS, Push, Newsletter",
-          "label": "Opciones (separadas por comas)"
+          "label": "Opciones (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "defaultValue",
           "type": "text",
           "default": "Email, Push",
-          "label": "Marcadas al inicio (separadas por comas)"
+          "label": "Marcadas al inicio (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "variant",
@@ -5141,7 +5147,8 @@
           "key": "options",
           "type": "text",
           "default": "Mensual, Anual",
-          "label": "Opciones (separadas por comas)"
+          "label": "Opciones (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "defaultValue",
@@ -5192,7 +5199,8 @@
           "key": "steps",
           "type": "text",
           "default": "Datos, Envío, Pago, Confirmación",
-          "label": "Pasos (separados por comas)"
+          "label": "Pasos (separados por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "current",
@@ -6258,7 +6266,8 @@
           "key": "badges",
           "type": "text",
           "default": "+500 alumnos, 4.9 ★ valoración, Grupos de 6",
-          "label": "Insignias (separadas por comas)"
+          "label": "Insignias (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "align",
@@ -6319,7 +6328,7 @@
         "minimal",
         "dotmatrix"
       ],
-      "description": "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio. Conecta el envío real con la prop `onSubmit`.",
+      "description": "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio (carga, error y éxito). Conecta el envío real con la prop `onSubmit`.",
       "props": [
         {
           "key": "title",
@@ -6366,6 +6375,12 @@
           "label": "Mensaje de éxito"
         },
         {
+          "key": "errorTitle",
+          "type": "text",
+          "default": "No se pudo enviar",
+          "label": "Título del error"
+        },
+        {
           "key": "variant",
           "type": "select",
           "default": "glass",
@@ -6382,6 +6397,10 @@
             "dotmatrix"
           ]
         }
+      ],
+      "notes": [
+        "`onSubmit(data)` puede ser `async`: mientras la promesa está pendiente el botón muestra la carga; si resuelve `{ ok: false, message }` o lanza, sale un `Alert` danger (`role=\"alert\"`) con `errorTitle` y el mensaje (o `errorMessage`) y lo escrito se conserva; si resuelve `{ ok: true }` o nada, el estado de éxito. Sin `onSubmit`, o con uno síncrono sin retorno, siempre éxito (como la demo).",
+        "Ej.: `onSubmit={async (d) => { const r = await fetch(\"/api/contacto\", { method: \"POST\", body: JSON.stringify(d) }); return r.ok ? { ok: true } : { ok: false, message: \"El servidor no respondió.\" }; }}`"
       ],
       "example": "import ContactForm from \"@/components/ui/ContactForm\";\n\n<ContactForm\n  title=\"Escríbenos\"\n/>",
       "preview": "/componentes#contact-form"
@@ -6850,7 +6869,8 @@
           "key": "social",
           "type": "text",
           "default": "X, IG, YT",
-          "label": "Redes (separadas por comas)"
+          "label": "Redes (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "copyright",
@@ -7075,7 +7095,8 @@
           "key": "brands",
           "type": "text",
           "default": "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar",
-          "label": "Marcas (separadas por comas)"
+          "label": "Marcas (separadas por comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "layout",
@@ -7562,7 +7583,8 @@
           "key": "tags",
           "type": "text",
           "default": "Iniciación, Seguridad, Material",
-          "label": "Etiquetas (comas)"
+          "label": "Etiquetas (comas)",
+          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
         },
         {
           "key": "cover",

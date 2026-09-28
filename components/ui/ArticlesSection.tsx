@@ -4,6 +4,7 @@ import Carousel from "./Carousel";
 import { CARD_PATTERNS, pick, type CardFill } from "./fill";
 import SectionHeader from "./SectionHeader";
 import type { Variant } from "./variants";
+import { splitEscaped } from "@/lib/ui/list";
 
 export type ArticlesSectionProps = {
   kicker?: string;
@@ -50,7 +51,7 @@ export default function ArticlesSection({
   variant = "glass",
   className = "",
 }: ArticlesSectionProps) {
-  const rows = articles.split("\n").map((l) => l.split("|").map((x) => x.trim())).filter((r) => r[0] || r[1]);
+  const rows = articles.split("\n").map((l) => splitEscaped(l, "|").map((x) => x.trim())).filter((r) => r[0] || r[1]);
   const cards = rows.map(([category, t, excerpt, date, readTime, image, href], i) => {
     const cardLayout_: BlogCardProps["layout"] =
       layout === "featured" ? (i === 0 ? "overlay" : "horizontal") : layout === "list" ? "horizontal" : cardLayout;

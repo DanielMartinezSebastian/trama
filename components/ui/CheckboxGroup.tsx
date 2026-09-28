@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type CheckboxGroupProps = {
@@ -23,8 +24,8 @@ export default function CheckboxGroup({
   variant = "glass",
   className = "",
 }: CheckboxGroupProps) {
-  const list = useMemo(() => options.split(",").map((s) => s.trim()).filter(Boolean), [options]);
-  const initial = useMemo(() => new Set(defaultValue.split(",").map((s) => s.trim()).filter(Boolean)), [defaultValue]);
+  const list = useMemo(() => splitList(options), [options]);
+  const initial = useMemo(() => new Set(splitList(defaultValue)), [defaultValue]);
   const [checked, setChecked] = useState(initial);
   useEffect(() => setChecked(initial), [initial]);
 

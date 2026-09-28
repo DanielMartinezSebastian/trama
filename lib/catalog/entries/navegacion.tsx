@@ -122,7 +122,7 @@ export const navegacion: CatalogEntry[] = [
     description: "Pestañas con teclado (←/→) y panel. El indicador de la activa cambia con el estilo.",
     stageHeight: 300,
     props: [
-      { key: "items", label: "Pestañas (separadas por comas)", type: "text", default: "Resumen, Detalles, Reseñas" },
+      { key: "items", label: "Pestañas (separadas por comas)", type: "text", default: "Resumen, Detalles, Reseñas", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "content", label: "Contenido (una línea por pestaña)", type: "text", multiline: true, default: "Una vista general del producto.\nEspecificaciones técnicas y medidas.\nLo que dicen quienes ya lo usan." },
       { key: "defaultIndex", label: "Pestaña inicial", type: "number", default: 0, min: 0, max: 5, step: 1 },
       variantProp("glass"),
@@ -164,7 +164,7 @@ export const navegacion: CatalogEntry[] = [
     description: "Ruta de navegación. El último elemento es la página actual, sin enlace.",
     stageHeight: 180,
     props: [
-      { key: "items", label: "Ruta (separada por comas)", type: "text", default: "Inicio, Cursos, Iniciación al surf" },
+      { key: "items", label: "Ruta (separada por comas)", type: "text", default: "Inicio, Cursos, Iniciación al surf", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "separator", label: "Separador", type: "text", default: "/" },
       variantProp("minimal"),
     ],
@@ -206,7 +206,7 @@ export const navegacion: CatalogEntry[] = [
     stageHeight: 220,
     props: [
       { key: "label", label: "Botón", type: "text", default: "⋮" },
-      { key: "items", label: "Acciones (separadas por comas)", type: "text", default: "Editar, Duplicar, Archivar, Eliminar" },
+      { key: "items", label: "Acciones (separadas por comas)", type: "text", default: "Editar, Duplicar, Archivar, Eliminar", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "align", label: "Alineación del menú", type: "select", default: "right", options: ["left", "right"] },
       variantProp("glass"),
     ],

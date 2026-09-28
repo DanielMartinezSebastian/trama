@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type TabsProps = {
@@ -24,7 +25,7 @@ export default function Tabs({
   variant = "glass",
   className = "",
 }: TabsProps) {
-  const tabs = useMemo(() => items.split(",").map((s) => s.trim()).filter(Boolean), [items]);
+  const tabs = useMemo(() => splitList(items), [items]);
   const panels = useMemo(() => content.split("\n"), [content]);
   const [i, setI] = useState(defaultIndex);
   useEffect(() => setI(Math.min(defaultIndex, Math.max(0, tabs.length - 1))), [defaultIndex, tabs.length]);

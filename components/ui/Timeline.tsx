@@ -1,4 +1,5 @@
 import { renderGlyph } from "./Icon";
+import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type TimelineProps = {
@@ -14,7 +15,7 @@ export type TimelineProps = {
 
 /** Línea de pasos vertical: proceso, hoja de ruta o historial. */
 export default function Timeline({ steps = "Reserva|Eliges día y nivel en menos de un minuto.\nLlegada|Recibes neopreno y tabla en la playa.\nClase|Dos horas con monitor titulado.\nRepite|Bono de cinco clases con descuento.", marker = "number", glyph = "*", variant = "minimal", className = "" }: TimelineProps) {
-  const rows = steps.split("\n").map((l) => l.split("|")).filter((p) => p[0]?.trim());
+  const rows = steps.split("\n").map((l) => splitEscaped(l, "|")).filter((p) => p[0]?.trim());
   return (
     <ol className={`ui-tl ${vcls(variant)} ${className}`}>
       {rows.map(([t, d], i) => (

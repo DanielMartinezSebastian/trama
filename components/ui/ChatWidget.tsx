@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { inline } from "@/lib/ui/markdownInline";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import { renderGlyph } from "./Icon";
+import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type ChatReply = string | { text: string; quickReplies?: string[] };
@@ -42,7 +43,7 @@ type Msg = { id: number; from: "bot" | "user"; text: string };
 type Rule = { keys: string[]; text: string; quick: string[] };
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-const list = (s: string) => s.split(",").map((x) => x.trim()).filter(Boolean);
+const list = (s: string) => splitList(s);
 
 function parseRules(rules: string): Rule[] {
   return rules

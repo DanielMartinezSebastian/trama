@@ -126,7 +126,7 @@ export const contenido: CatalogEntry[] = [
       { key: "authorRole", label: "Cargo", type: "text", default: "Monitora jefe" },
       { key: "date", label: "Fecha", type: "text", default: "12 sep 2026" },
       { key: "readTime", label: "Tiempo de lectura", type: "text", default: "5 min" },
-      { key: "tags", label: "Etiquetas (comas)", type: "text", default: "Iniciación, Seguridad, Material" },
+      { key: "tags", label: "Etiquetas (comas)", type: "text", default: "Iniciación, Seguridad, Material", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "cover", label: "Portada (URL o gen:N)", type: "text", default: "gen:1" },
       { key: "align", label: "Alineación", type: "select", default: "left", options: ["left", "center"] },
       variantProp("minimal"),

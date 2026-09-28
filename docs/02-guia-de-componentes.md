@@ -440,6 +440,11 @@ un componente:
   barridos (`SceneFlash`), fuera. En CSS, el bloque «Reducir movimiento» del final de `ui-kit.css` para bucles y parpadeos.
 - **Contraste.** `--mut` sobre `--bg` ≥ 4.5:1 en cada tema: es el color de etiquetas pequeñas y números de línea. Los grises
   por debajo de `#777` sobre negro no llegan.
+- **Ayudas y errores enlazados al campo.** Un texto de ayuda o de error junto a un control lleva un id estable
+  (`useId()`) y el control lo referencia con `aria-describedby` (solo cuando hay texto); si la etiqueta es un `<span>`
+  o el `<label>` envuelve más cosas que el nombre, el control usa `aria-labelledby` hacia la etiqueta. Así lo hacen
+  `TextField` (`hint`, junto a `aria-invalid` con `intent="danger"`) y `Select`. Un error que aparece tras enviar un
+  formulario va en un `Alert` `intent="danger"` (`role="alert"`, se anuncia solo), como en `ContactForm`.
 - **Contenido en el HTML.** Los textos van en el DOM desde el servidor (los componentes con `"use client"` también se
   prerenderizan): nada de pintar texto importante solo en un canvas, porque ni buscadores ni lectores de pantalla lo ven.
 
@@ -509,7 +514,9 @@ de otras categorías con sus props en vivo:
 
 Por eso `Button` ganó una prop `type` (`"submit"` para que `ContactForm` pueda enviarse de forma nativa) y `TextField`
 ganó `name`/`multiline`/`rows` (para el campo de mensaje) en vez de crear un `Textarea` aparte: extender lo que ya
-existe, no duplicar.
+existe, no duplicar. `ContactForm.onSubmit` puede ser `async` y devolver `{ ok, message }`: mientras espera, el botón
+usa su `loading`; si falla (`ok: false` o excepción) pinta un `Alert` danger y conserva lo escrito; si no, el estado de
+éxito. Sin `onSubmit`, o con uno síncrono sin retorno, pasa directo al éxito (compatibilidad con 0.2).
 
 **Listas como datos, no como children.** Igual que `Accordion` (`"Pregunta|Respuesta"` por línea) o `Tabs`, las
 secciones con varias tarjetas codifican la lista en una prop de texto con un formato simple y la parten en el
@@ -594,6 +601,17 @@ controles para tipos primitivos, así que una lista sigue siendo editable como t
 cuándo NO usar el elemento nativo: un `<select>` no se puede reskinar por dentro (la lista abierta la pinta el
 sistema operativo), así que es un botón + una lista absoluta con `role="listbox"`, para tener el mismo aspecto en
 los 7 estilos abierto o cerrado — `Dropdown` (menú de acciones, no de valores) sigue el mismo patrón.
+
+**Escapar el separador.** Todas estas listas se parten con `splitList` / `splitEscaped` de `lib/ui/list.ts` (no con
+`.split(",")` a mano: un componente nuevo que reciba una lista debe usarlas). Para escribir el separador dentro de un
+elemento se escapa con barra invertida: `\,` es una coma literal en una lista por comas, `\|` una barra en un campo
+separado por `|` y `\;` un punto y coma en una lista por `;` (`Footer.columns`, características de `PricingSection`,
+hijos de `NavBar`). Ejemplo: `<Hero badges="+12 proyectos, 99\,5 % disponibilidad" />` da dos insignias, no tres. Solo
+se quita el escape del separador del nivel que se está partiendo; en formatos anidados cada nivel escapa el suyo
+(`"Plan|9\,99 €|/mes"` no necesita escape, porque ese campo no se parte por comas). Ojo con JSX: en un atributo entre
+comillas (`badges="…"`) la barra se escribe una vez; dentro de una cadena JS (`badges={"…"}` o una plantilla `` `…` ``)
+hay que duplicarla (`"99\\,5 %"`), porque `"\,"` en JS es solo `","`. Los valores numéricos (`AsciiChart.data`,
+`RetroModel.rotation`) no admiten escape: son números.
 
 **Listas que avisan.** Los campos siguen gestionando su propio estado (el catálogo no necesita cablear nada), pero ya no
 son solo decorativos: `TextField`, `Select`, `CheckboxGroup`, `RadioGroup`, `Tabs` y `Pagination` aceptan `onChange`, y

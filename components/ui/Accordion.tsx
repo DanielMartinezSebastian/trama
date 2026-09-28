@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
 export type AccordionProps = {
@@ -21,7 +22,7 @@ export default function Accordion({
   variant = "glass",
   className = "",
 }: AccordionProps) {
-  const rows = useMemo(() => items.split("\n").map((l) => l.split("|")).filter((p) => p[0]?.trim()), [items]);
+  const rows = useMemo(() => items.split("\n").map((l) => splitEscaped(l, "|")).filter((p) => p[0]?.trim()), [items]);
   const [open, setOpen] = useState<number[]>([defaultOpen]);
   useEffect(() => setOpen([defaultOpen]), [defaultOpen, multiple]);
   const toggle = (i: number) => setOpen((o) => (o.includes(i) ? o.filter((x) => x !== i) : multiple ? [...o, i] : [i]));
