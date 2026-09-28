@@ -4,6 +4,25 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.6.0 — transiciones `scan` y `stack`
+
+Incluye todo lo de 0.3.0, 0.4.0 y 0.5.0, que no llegaron a publicarse en npm: quien pase de 0.2.0 a 0.6.0 recibe los
+cuatro bloques (abajo, como referencia).
+
+- **Dos animaciones nuevas con dirección** en `PageTransition` y `ElementTransition` (`kind`, `pageTransitionType`,
+  `types`), con `pace`, `tone` y el fundido de 120 ms de «reducir movimiento» como el resto:
+  - `scan` (`scan-down` · `scan-up` · `scan-left` · `scan-right`): una línea brillante del color `tone`, con halo
+    suave, recorre la página una vez; detrás ya está la nueva y delante sigue la vieja. Sin el apagado/encendido CRT de
+    `scanline`. Por defecto baja (`down`); `left`/`right` barren en horizontal con la línea en vertical.
+  - `stack` (`stack-left` · `stack-right` · `stack-up` · `stack-down`): una pila de 5 barras de grandes a pequeñas
+    (`--acc`, `--acc2` y su mezcla, con huecos del color de la página) entra escalonada tapando la vieja; con la nueva
+    ya debajo, se comprime hasta juntarse y sale por el lado de la dirección. Dura 1,6 veces el ritmo.
+- `direction` ya no tiene un valor fijo por defecto: sin ella, `scan` usa `down` y el resto `left` (igual que antes).
+  `nav-back` invierte la dirección que toque. Nuevas utilidades `DIRECTIONAL_TRANSITION_KINDS` y
+  `defaultDirection(kind)`.
+- CSS: `ui-view-transitions.css` añade `ui-vt-scan-*` y `ui-vt-stack-*` (pseudo-elementos de la transición, degradados y
+  máscaras con propiedades registradas `@property`; sin JavaScript ni nodos extra).
+
 ## 0.5.0 — transiciones de página a pantalla completa
 
 Incluye todo lo de 0.3.0 y 0.4.0, que no llegaron a publicarse en npm: quien pase de 0.2.0 a 0.5.0 recibe los tres

@@ -10,8 +10,10 @@
    · ui-vt-in / ui-vt-out: un elemento suelto que entra o sale (ElementTransition); son grupos distintos.
    · Los pseudo-elementos heredan de <html>, no del contenedor del tema: los tokens (--bg, --acc, --acc2, --fg) se leen
      de :root. Si el tema vive en un contenedor, repite en :root al menos --acc y el fondo (o --ui-vt-page).
-   · --ui-vt-page: color de fondo de la página: tapa los huecos de los efectos de cobertura (wipe, blinds, pixelate,
-     iris, terminal, scanline). Por defecto, --bg.
+   · --ui-vt-page: color de fondo de la página: tapa los huecos de los efectos de cobertura (wipe, scan, stack, blinds,
+     pixelate, iris, terminal, scanline) y separa las barras de stack. Por defecto, --bg.
+   · --ui-vt-to: sentido de los degradados de scan y stack (`to bottom`, `to left`…); lo pone el grupo según la
+     dirección y lo heredan la vieja y la nueva.
    ===================================================================== */
 
 /* Progreso (0 → 116 %) de barridos y persianas; el 16 % extra es el ancho de la banda de color. Hereda: el grupo lo
@@ -19,6 +21,17 @@
 @property --ui-vt-k { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
 /* Radio del iris */
 @property --ui-vt-r { syntax: "<length>"; inherits: true; initial-value: 0px; }
+/* scan: posición de la línea desde el borde de salida; longitud y porcentaje para que el halo quede fuera al empezar
+   y al terminar */
+@property --ui-vt-s { syntax: "<length-percentage>"; inherits: true; initial-value: 0%; }
+/* stack: cola de la pila (hasta dónde se ve la nueva), final de cada una de las 5 barras y hueco entre ellas */
+@property --ui-vt-t { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-b1 { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-b2 { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-b3 { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-b4 { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-b5 { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+@property --ui-vt-g { syntax: "<length>"; inherits: true; initial-value: 0px; }
 /* Opacidad de los cuatro píxeles de cada bloque de 2×2 (pixelate) */
 @property --ui-vt-a1 { syntax: "<number>"; inherits: false; initial-value: 1; }
 @property --ui-vt-a2 { syntax: "<number>"; inherits: false; initial-value: 1; }
@@ -68,6 +81,14 @@
 ::view-transition-new(.ui-vt-wipe-right),
 ::view-transition-new(.ui-vt-wipe-up),
 ::view-transition-new(.ui-vt-wipe-down),
+::view-transition-new(.ui-vt-scan-left),
+::view-transition-new(.ui-vt-scan-right),
+::view-transition-new(.ui-vt-scan-up),
+::view-transition-new(.ui-vt-scan-down),
+::view-transition-new(.ui-vt-stack-left),
+::view-transition-new(.ui-vt-stack-right),
+::view-transition-new(.ui-vt-stack-up),
+::view-transition-new(.ui-vt-stack-down),
 ::view-transition-new(.ui-vt-blinds),
 ::view-transition-new(.ui-vt-pixelate),
 ::view-transition-new(.ui-vt-scanline),
@@ -136,6 +157,112 @@
 ::view-transition-group(.ui-vt-root.ui-vt-wipe-down) { background: linear-gradient(to bottom, transparent calc(var(--ui-vt-k) - 16%), var(--ui-vt-c) 0 var(--ui-vt-k), transparent 0); }
 ::view-transition-old(.ui-vt-wipe-down) { clip-path: inset(min(var(--ui-vt-k), 100%) 0 0 0); }
 ::view-transition-new(.ui-vt-wipe-down) { clip-path: inset(0 0 calc(100% - max(var(--ui-vt-k) - 16%, 0%)) 0); }
+
+/* ---------- scan-*: una línea del color del tono (3 px, con halo suave) recorre la página una sola vez; detrás de ella
+   ya está la nueva y delante sigue la vieja, que se funden en el halo. Sin apagado ni encendido CRT. `down` baja de
+   arriba abajo, `up` sube, `left`/`right` barren en horizontal con la línea en vertical. La línea y el halo son el fondo
+   del grupo (en un elemento, de los dos grupos: se ve también si solo entra o solo sale). ---------- */
+::view-transition-group(.ui-vt-scan-left) { --ui-vt-to: to left; }
+::view-transition-group(.ui-vt-scan-right) { --ui-vt-to: to right; }
+::view-transition-group(.ui-vt-scan-up) { --ui-vt-to: to top; }
+::view-transition-group(.ui-vt-scan-down) { --ui-vt-to: to bottom; }
+::view-transition-group(.ui-vt-scan-left),
+::view-transition-group(.ui-vt-scan-right),
+::view-transition-group(.ui-vt-scan-up),
+::view-transition-group(.ui-vt-scan-down) {
+  animation: ui-vt-scan calc(var(--ui-vt-d) * 1.25) cubic-bezier(0.45, 0, 0.55, 1) both;
+  background: linear-gradient(
+    var(--ui-vt-to),
+    transparent calc(var(--ui-vt-s) - 28px),
+    color-mix(in srgb, var(--ui-vt-c) 30%, transparent) calc(var(--ui-vt-s) - 2px),
+    var(--ui-vt-c) 0 calc(var(--ui-vt-s) + 1px),
+    color-mix(in srgb, var(--ui-vt-c) 30%, transparent) 0,
+    transparent calc(var(--ui-vt-s) + 16px)
+  );
+}
+::view-transition-old(.ui-vt-scan-left),
+::view-transition-old(.ui-vt-scan-right),
+::view-transition-old(.ui-vt-scan-up),
+::view-transition-old(.ui-vt-scan-down) {
+  animation: none;
+  -webkit-mask-image: linear-gradient(var(--ui-vt-to), transparent calc(var(--ui-vt-s) + 1px), #000 calc(var(--ui-vt-s) + 16px));
+  mask-image: linear-gradient(var(--ui-vt-to), transparent calc(var(--ui-vt-s) + 1px), #000 calc(var(--ui-vt-s) + 16px));
+}
+::view-transition-new(.ui-vt-scan-left),
+::view-transition-new(.ui-vt-scan-right),
+::view-transition-new(.ui-vt-scan-up),
+::view-transition-new(.ui-vt-scan-down) {
+  animation: none;
+  -webkit-mask-image: linear-gradient(var(--ui-vt-to), #000 calc(var(--ui-vt-s) - 28px), transparent calc(var(--ui-vt-s) - 2px));
+  mask-image: linear-gradient(var(--ui-vt-to), #000 calc(var(--ui-vt-s) - 28px), transparent calc(var(--ui-vt-s) - 2px));
+}
+/* de -20 px (antes del borde) a 100 % + 32 px (el halo ya ha salido): sin saltos al empezar ni al terminar */
+@keyframes ui-vt-scan { from { --ui-vt-s: -20px; } to { --ui-vt-s: calc(100% + 32px); } }
+
+/* ---------- stack-*: pila de 5 barras de grandes a pequeñas (--ui-vt-c, --ui-vt-c2, su mezcla, --ui-vt-c, --ui-vt-c2)
+   separadas por huecos del color de la página. Entran escalonadas desde el borde de salida (primero la pequeña, que va
+   delante) hasta tapar la vieja (a mitad: 34/25/18/13/10 %); con la nueva ya debajo, se comprimen y se juntan (las
+   grandes alcanzan a las pequeñas y los huecos se cierran) y salen todas juntas por el lado de la dirección. La
+   dirección es hacia dónde se mueve la pila, como en wipe. Las barras son el fondo del grupo; la vieja solo se ve por
+   delante de la pila y la nueva solo por detrás. ---------- */
+::view-transition-group(.ui-vt-stack-left) { --ui-vt-to: to left; }
+::view-transition-group(.ui-vt-stack-right) { --ui-vt-to: to right; }
+::view-transition-group(.ui-vt-stack-up) { --ui-vt-to: to top; }
+::view-transition-group(.ui-vt-stack-down) { --ui-vt-to: to bottom; }
+::view-transition-group(.ui-vt-stack-left),
+::view-transition-group(.ui-vt-stack-right),
+::view-transition-group(.ui-vt-stack-up),
+::view-transition-group(.ui-vt-stack-down) {
+  animation: ui-vt-stack calc(var(--ui-vt-d) * 1.6) linear both;
+  background: linear-gradient(
+    var(--ui-vt-to),
+    transparent var(--ui-vt-t),
+    var(--ui-vt-c) 0 calc(var(--ui-vt-b1) - var(--ui-vt-g)),
+    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b1),
+    var(--ui-vt-c2) 0 calc(var(--ui-vt-b2) - var(--ui-vt-g)),
+    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b2),
+    color-mix(in srgb, var(--ui-vt-c) 50%, var(--ui-vt-c2)) 0 calc(var(--ui-vt-b3) - var(--ui-vt-g)),
+    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b3),
+    var(--ui-vt-c) 0 calc(var(--ui-vt-b4) - var(--ui-vt-g)),
+    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b4),
+    var(--ui-vt-c2) 0 var(--ui-vt-b5),
+    transparent 0
+  );
+}
+::view-transition-old(.ui-vt-stack-left),
+::view-transition-old(.ui-vt-stack-right),
+::view-transition-old(.ui-vt-stack-up),
+::view-transition-old(.ui-vt-stack-down) {
+  animation: none;
+  -webkit-mask-image: linear-gradient(var(--ui-vt-to), transparent var(--ui-vt-b5), #000 0);
+  mask-image: linear-gradient(var(--ui-vt-to), transparent var(--ui-vt-b5), #000 0);
+}
+::view-transition-new(.ui-vt-stack-left),
+::view-transition-new(.ui-vt-stack-right),
+::view-transition-new(.ui-vt-stack-up),
+::view-transition-new(.ui-vt-stack-down) {
+  animation: none;
+  -webkit-mask-image: linear-gradient(var(--ui-vt-to), #000 var(--ui-vt-t), transparent 0);
+  mask-image: linear-gradient(var(--ui-vt-to), #000 var(--ui-vt-t), transparent 0);
+}
+/* Cada propiedad se interpola entre los fotogramas que la nombran: el escalonado sale de sus momentos de salida y
+   llegada. 0–46 %: entrada (b5 la primera, b1 la última); 52 %: pila completa; 84 %: comprimida y sin huecos;
+   100 %: fuera por el borde de la dirección. */
+@keyframes ui-vt-stack {
+  0% { --ui-vt-t: 0%; --ui-vt-b1: 0%; --ui-vt-b2: 0%; --ui-vt-b3: 0%; --ui-vt-b4: 0%; --ui-vt-b5: 0%; --ui-vt-g: 5px; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); }
+  5% { --ui-vt-b4: 0%; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); }
+  10% { --ui-vt-b3: 0%; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); }
+  15% { --ui-vt-b2: 0%; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); }
+  20% { --ui-vt-b1: 0%; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); }
+  30% { --ui-vt-b5: 100%; }
+  34% { --ui-vt-b4: 90%; }
+  38% { --ui-vt-b3: 77%; }
+  42% { --ui-vt-b2: 59%; }
+  46% { --ui-vt-b1: 34%; }
+  52% { --ui-vt-t: 0%; --ui-vt-b1: 34%; --ui-vt-b2: 59%; --ui-vt-b3: 77%; --ui-vt-b4: 90%; --ui-vt-b5: 100%; --ui-vt-g: 5px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  84% { --ui-vt-t: 66%; --ui-vt-b1: 78%; --ui-vt-b2: 87%; --ui-vt-b3: 93%; --ui-vt-b4: 97%; --ui-vt-b5: 100%; --ui-vt-g: 0px; animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.6); }
+  100% { --ui-vt-t: 100%; --ui-vt-b1: 112%; --ui-vt-b2: 121%; --ui-vt-b3: 127%; --ui-vt-b4: 131%; --ui-vt-b5: 134%; --ui-vt-g: 0px; }
+}
 
 /* ---------- blinds: persianas horizontales de 28 px que se abren a la vez ---------- */
 ::view-transition-new(.ui-vt-blinds) {

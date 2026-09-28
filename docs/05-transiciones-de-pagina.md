@@ -2,8 +2,8 @@
 
 Trama anima la navegación con la [View Transitions API](https://developer.mozilla.org/es/docs/Web/API/View_Transition_API)
 del navegador, a través del `<ViewTransition>` de React. Las animaciones son CSS puro con los tokens del tema y la
-estética del kit: barrido de color, persianas, disolución por píxeles, encendido de CRT, glitch, iris o escritura de
-terminal. Hay tres piezas:
+estética del kit: barrido de color, línea de escaneo, pila de barras, persianas, disolución por píxeles, encendido de
+CRT, glitch, iris o escritura de terminal. Hay tres piezas:
 
 | Componente | Qué anima |
 |---|---|
@@ -111,14 +111,18 @@ los `searchParams` (`/tienda?p=2`): no remontan ni la página ni el template, as
 
 ## Animaciones
 
-`kind` elige la familia; `slide` y `wipe` usan además `direction` (hacia dónde se mueve el contenido). Todas cubren la
-ventana entera con `PageTransition` y la caja del elemento con `ElementTransition`.
+`kind` elige la familia; `slide`, `wipe`, `scan` y `stack` usan además `direction` (hacia dónde se mueve el contenido,
+la banda, la línea o la pila). Sin `direction`, `scan` baja (`down`) y el resto va a la izquierda (`left`); `nav-back`
+invierte la que toque. Todas cubren la ventana entera con `PageTransition` y la caja del elemento con
+`ElementTransition`.
 
 | `kind` | Qué hace |
 |---|---|
 | `fade` | Fundido cruzado; la salida es más rápida que la entrada. Por defecto. |
 | `slide` | Desplazamiento corto (48 px en horizontal, 32 px en vertical) con fundido. |
 | `wipe` | Una banda del color `tone` barre la ventana: la vieja se recorta delante y la nueva aparece detrás. |
+| `scan` | Una línea brillante del color `tone` (con halo suave) recorre la ventana una vez: detrás ya está la nueva, delante sigue la vieja. Sin apagado ni encendido CRT. `down` (por defecto) de arriba abajo, `up` de abajo arriba; `left`/`right` barren en horizontal con la línea en vertical. |
+| `stack` | Una pila de 5 barras de grandes a pequeñas (`--acc`, `--acc2` y su mezcla, separadas por el fondo) entra escalonada tapando la vieja; con la nueva ya debajo, las barras se comprimen hasta juntarse y salen todas por el lado de `direction`. Dura 1,6 veces `pace`. |
 | `blinds` | Persianas horizontales de 28 px que se abren sobre la página vieja. |
 | `pixelate` | Disolución por bloques de 12 px en tramado ordenado 2×2: cuatro pasos, como un dither de pixel art. |
 | `scanline` | CRT: la vieja se deshace en líneas de barrido y la nueva se enciende desde una línea horizontal. |
@@ -138,8 +142,8 @@ componente de la página de destino elige la animación según esos tipos, por e
 | Tipo | Animación |
 |---|---|
 | los de `types` | lo que digas: `types={{ "abrir-ficha": "iris" }}` |
-| `trama-<animación>` (`pageTransitionType("glitch")`) | esa animación, sea cual sea `kind`: `trama-iris`, `trama-slide-up`, `trama-wipe`… |
-| `nav-back` (`NAV_BACK`) | `kind` con la dirección contraria (`slide`/`wipe`); el resto, igual |
+| `trama-<animación>` (`pageTransitionType("glitch")`) | esa animación, sea cual sea `kind`: `trama-iris`, `trama-slide-up`, `trama-scan-up`, `trama-stack`… |
+| `nav-back` (`NAV_BACK`) | `kind` con la dirección contraria (`slide`/`wipe`/`scan`/`stack`); el resto, igual |
 | `nav-forward` (`NAV_FORWARD`) o ninguno | `kind` con `direction` |
 
 ```tsx
@@ -244,7 +248,8 @@ con `style={tokensToStyle(…)}`), repite en `:root` al menos el acento y el fon
 ```
 
 `--ui-vt-page` (por defecto `--bg`) es el color de fondo de la página: queda debajo de la animación de la raíz y hace
-opaca la página nueva en los efectos que la tapan (`wipe`, `blinds`, `pixelate`, `scanline`, `iris`, `terminal`).
+opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `pixelate`, `scanline`, `iris`,
+`terminal`); en `stack`, además, es el color de los huecos entre barras.
 
 ## Accesibilidad y soporte
 
@@ -253,8 +258,8 @@ opaca la página nueva en los efectos que la tapan (`wipe`, `blinds`, `pixelate`
 - **Sin destellos** (WCAG 2.3.1): `glitch` y `scanline` suben el brillo o desplazan como mucho una vez; lo que se muestra
   no se vuelve a ocultar y ninguna dura más de medio segundo.
 - **Navegadores**: Chromium 125+, Safari 18.2+ y Firefox recientes (tipos de transición y `view-transition-class`). Sin
-  la API, la página cambia sin animar. Sin `@property` (necesario para `wipe`, `blinds`, `pixelate`, `iris`), el efecto
-  salta a mitad en vez de interpolar.
+  la API, la página cambia sin animar. Sin `@property` (necesario para `wipe`, `scan`, `stack`, `blinds`, `pixelate`,
+  `iris`), el efecto salta a mitad en vez de interpolar.
 - **React**: `ViewTransition` está en el React que trae el App Router de Next y en React ≥ 19.3. En 19.0–19.2 estable
   (Pages Router, Vite…) no existe: los tres componentes devuelven sus hijos tal cual y `markPageTransition` no hace
   nada. `pageTransitionsSupported` dice si este React puede animar.

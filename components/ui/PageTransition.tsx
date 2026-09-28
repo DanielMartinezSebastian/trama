@@ -17,6 +17,8 @@ export {
   PAGE_TRANSITION_ANIMATIONS,
   NAV_FORWARD,
   NAV_BACK,
+  DIRECTIONAL_TRANSITION_KINDS,
+  defaultDirection,
   pageTransitionType,
   pickTransitionAnimation,
   markPageTransition,
@@ -31,7 +33,7 @@ export {
 export type PageTransitionProps = {
   /** animación de las navegaciones sin tipo (y base de `nav-forward` / `nav-back`); `none` = la página cambia sin animar salvo en navegaciones con tipo */
   kind?: PageTransitionKind;
-  /** hacia dónde se mueve el contenido en `slide` y `wipe`; `nav-back` usa la contraria */
+  /** hacia dónde se mueve el contenido, la banda, la línea o la pila en `slide`, `wipe`, `scan` y `stack` (por defecto `down` en `scan` y `left` en el resto); `nav-back` usa la contraria */
   direction?: PageTransitionDirection;
   /** duración: `fast` ≈ 240 ms, `normal` ≈ 380 ms, `slow` ≈ 560 ms */
   pace?: PageTransitionPace;
@@ -47,7 +49,7 @@ export type PageTransitionProps = {
  * en un `layout`, que no se vuelve a montar). La animación la decide la página de DESTINO. No añade nodos al DOM.
  * Sin soporte (React sin `ViewTransition` o navegador sin la API), la página cambia sin animar.
  */
-export default function PageTransition({ kind = "fade", direction = "left", pace = "normal", tone = "acc", types, children }: PageTransitionProps) {
+export default function PageTransition({ kind = "fade", direction, pace = "normal", tone = "acc", types, children }: PageTransitionProps) {
   if (!ViewTransition) return <Fragment>{children}</Fragment>;
   // El `<ViewTransition>` con todas las clases a "none" no captura nada por su cuenta: solo hace que React envuelva la
   // navegación en `document.startViewTransition` (se monta un boundary). La animación es la de la raíz.

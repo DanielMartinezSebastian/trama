@@ -2,9 +2,10 @@ import { Fragment, type ReactNode } from "react";
 import {
   NAV_BACK,
   NAV_FORWARD,
-  OPPOSITE,
+  DIRECTIONAL_TRANSITION_KINDS,
   PAGE_TRANSITION_ANIMATIONS,
   ViewTransition,
+  backDirection,
   pageTransitionType,
   vtClasses,
   withDirection,
@@ -18,14 +19,14 @@ import {
 /*
  * Transiciones de ELEMENTOS sueltos con la View Transitions API, a través del `<ViewTransition>` de React: la animación
  * ocupa la caja del elemento que envuelve (una tarjeta, un panel, el contenido de una pestaña), no la ventana. Mismas
- * 9 animaciones que PageTransition. Para la página entera, usa PageTransition.
+ * 11 animaciones que PageTransition. Para la página entera, usa PageTransition.
  * Sin "use client": funciona en componentes de servidor.
  */
 
 export type ElementTransitionProps = {
   /** animación de las transiciones sin tipo (y base de `nav-forward` / `nav-back`); `none` = solo animan las que llevan tipo */
   kind?: PageTransitionKind;
-  /** hacia dónde se mueve el contenido en `slide` y `wipe`; `nav-back` usa la contraria */
+  /** hacia dónde se mueve el contenido, la banda, la línea o la pila en `slide`, `wipe`, `scan` y `stack` (por defecto `down` en `scan` y `left` en el resto); `nav-back` usa la contraria */
   direction?: PageTransitionDirection;
   /** duración: `fast` ≈ 240 ms, `normal` ≈ 380 ms, `slow` ≈ 560 ms */
   pace?: PageTransitionPace;
@@ -39,13 +40,12 @@ export type ElementTransitionProps = {
 const cls = (a: PageTransitionAnimation, phase: "in" | "out", pace: PageTransitionPace, tone: PageTransitionTone) => (a === "none" ? "none" : vtClasses(a, phase, pace, tone));
 
 /** Mapa tipo de transición → clases, para `enter` / `exit` del `<ViewTransition>` de React. */
-function classMap(phase: "in" | "out", kind: PageTransitionKind, direction: PageTransitionDirection, pace: PageTransitionPace, tone: PageTransitionTone, types: ElementTransitionProps["types"]) {
+function classMap(phase: "in" | "out", kind: PageTransitionKind, direction: PageTransitionDirection | undefined, pace: PageTransitionPace, tone: PageTransitionTone, types: ElementTransitionProps["types"]) {
   const map: Record<string, string> = {};
   for (const a of PAGE_TRANSITION_ANIMATIONS) map[pageTransitionType(a)] = cls(a, phase, pace, tone);
-  map[pageTransitionType("slide")] = cls(withDirection("slide", direction), phase, pace, tone);
-  map[pageTransitionType("wipe")] = cls(withDirection("wipe", direction), phase, pace, tone);
+  for (const k of DIRECTIONAL_TRANSITION_KINDS) map[pageTransitionType(k)] = cls(withDirection(k, direction), phase, pace, tone);
   map[NAV_FORWARD] = cls(withDirection(kind, direction), phase, pace, tone);
-  map[NAV_BACK] = cls(withDirection(kind, OPPOSITE[direction]), phase, pace, tone);
+  map[NAV_BACK] = cls(withDirection(kind, backDirection(kind, direction)), phase, pace, tone);
   for (const [type, a] of Object.entries(types ?? {})) map[type] = cls(withDirection(a, direction), phase, pace, tone);
   map.default = cls(withDirection(kind, direction), phase, pace, tone);
   return map;
@@ -56,7 +56,7 @@ function classMap(phase: "in" | "out", kind: PageTransitionKind, direction: Page
  * (`startTransition`, una navegación del App Router, `<Suspense>`). Para cambiar de contenido, cambia su `key`. No añade
  * nodos al DOM. Sin soporte, el cambio es inmediato.
  */
-export default function ElementTransition({ kind = "fade", direction = "left", pace = "normal", tone = "acc", types, children }: ElementTransitionProps) {
+export default function ElementTransition({ kind = "fade", direction, pace = "normal", tone = "acc", types, children }: ElementTransitionProps) {
   if (!ViewTransition) return <Fragment>{children}</Fragment>;
   return (
     <ViewTransition enter={classMap("in", kind, direction, pace, tone, types)} exit={classMap("out", kind, direction, pace, tone, types)} update="none" default="none">

@@ -394,7 +394,8 @@ conviene saber al ampliarlo:
   tipos, `pickTransitionAnimation`) está en `lib/ui/viewTransitions.ts`.
 - Las animaciones son CSS puro en `components/ui/styles/ui-view-transitions.css`, sobre `::view-transition-old/new/group`
   con clases (`view-transition-class`): `ui-vt` + `ui-vt-root|ui-vt-in|ui-vt-out` + `ui-vt-<animación>` + ritmo y tono.
-  Una animación nueva = un bloque CSS con ese prefijo + su nombre en `PAGE_TRANSITION_KINDS`. Ojo: en la raíz vieja y
+  Una animación nueva = un bloque CSS con ese prefijo + su nombre en `PAGE_TRANSITION_KINDS` (y en
+  `DIRECTIONAL_TRANSITION_KINDS` si lleva dirección: entonces el CSS es por `ui-vt-<animación>-<dirección>`). Ojo: en la raíz vieja y
   nueva comparten grupo (el fondo del grupo queda *debajo* de la vieja: el aro del iris, por ejemplo, agujerea la
   vieja para verse), y en un elemento son grupos distintos.
 - Los pseudo-elementos heredan de `<html>`: los tokens se leen de `:root` (no del contenedor del tema). Los efectos que

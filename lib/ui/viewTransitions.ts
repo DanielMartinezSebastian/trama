@@ -7,24 +7,28 @@ import type { ComponentType, ReactNode } from "react";
  * Sin "use client": lo importan tanto componentes de servidor como de cliente.
  */
 
-/** Familias de animación. `slide` y `wipe` tienen dirección; el resto no. */
-export const PAGE_TRANSITION_KINDS = ["none", "fade", "slide", "wipe", "blinds", "pixelate", "scanline", "glitch", "iris", "terminal"] as const;
+/** Familias de animación. `slide`, `wipe`, `scan` y `stack` tienen dirección; el resto no. */
+export const PAGE_TRANSITION_KINDS = ["none", "fade", "slide", "wipe", "scan", "stack", "blinds", "pixelate", "scanline", "glitch", "iris", "terminal"] as const;
 export type PageTransitionKind = (typeof PAGE_TRANSITION_KINDS)[number];
 export type PageTransitionDirection = "left" | "right" | "up" | "down";
-/** Animación concreta: una familia sin dirección, o `slide-*` / `wipe-*` con la suya. */
-export type PageTransitionAnimation =
-  | Exclude<PageTransitionKind, "slide" | "wipe">
-  | `slide-${PageTransitionDirection}`
-  | `wipe-${PageTransitionDirection}`;
+/** Familias con dirección (hacia dónde se mueve el contenido, la banda, la línea o la pila). */
+export const DIRECTIONAL_TRANSITION_KINDS = ["slide", "wipe", "scan", "stack"] as const;
+type DirectionalKind = (typeof DIRECTIONAL_TRANSITION_KINDS)[number];
+/** Animación concreta: una familia sin dirección, o `slide-*` / `wipe-*` / `scan-*` / `stack-*` con la suya. */
+export type PageTransitionAnimation = Exclude<PageTransitionKind, DirectionalKind> | `${DirectionalKind}-${PageTransitionDirection}`;
 export type PageTransitionTone = "acc" | "acc2" | "fg";
 export type PageTransitionPace = "fast" | "normal" | "slow";
 
 const DIRS: readonly PageTransitionDirection[] = ["left", "right", "up", "down"];
 export const OPPOSITE: Record<PageTransitionDirection, PageTransitionDirection> = { left: "right", right: "left", up: "down", down: "up" };
+const isDirectional = (k: string): k is DirectionalKind => (DIRECTIONAL_TRANSITION_KINDS as readonly string[]).includes(k);
+
+/** Dirección de una familia cuando no se indica: `down` en `scan` (la línea baja), `left` en el resto. */
+export const defaultDirection = (a: PageTransitionAnimation | PageTransitionKind): PageTransitionDirection => (a === "scan" ? "down" : "left");
 
 /** Todas las animaciones concretas (lo que aceptan `types` y `pageTransitionType`). */
 export const PAGE_TRANSITION_ANIMATIONS: readonly PageTransitionAnimation[] = PAGE_TRANSITION_KINDS.flatMap((k) =>
-  k === "slide" || k === "wipe" ? DIRS.map((d) => `${k}-${d}` as PageTransitionAnimation) : [k as PageTransitionAnimation],
+  isDirectional(k) ? DIRS.map((d) => `${k}-${d}` as PageTransitionAnimation) : [k as PageTransitionAnimation],
 );
 
 /** Tipos de transición convencionales para la dirección de la navegación (los de la guía de Next). */
@@ -33,8 +37,8 @@ export const NAV_BACK = "nav-back";
 
 /**
  * Tipo de transición que elige una animación concreta para una navegación, sin configurar nada en la página:
- * `<Link href="/x" transitionTypes={[pageTransitionType("glitch")]}>` → `"trama-glitch"`. `slide`/`wipe` sin
- * dirección usan la `direction` del componente de destino.
+ * `<Link href="/x" transitionTypes={[pageTransitionType("glitch")]}>` → `"trama-glitch"`. `slide`/`wipe`/`scan`/`stack`
+ * sin dirección usan la `direction` del componente de destino (o la de la familia, ver `defaultDirection`).
  */
 export const pageTransitionType = (animation: PageTransitionAnimation | PageTransitionKind) => `trama-${animation}`;
 
@@ -48,22 +52,26 @@ export type TransitionChoice = {
 
 const KNOWN = new Set<string>([...PAGE_TRANSITION_KINDS, ...PAGE_TRANSITION_ANIMATIONS]);
 
-/** `slide`/`wipe` sin dirección → con la dirección dada; el resto, igual. */
-export const withDirection = (a: PageTransitionAnimation | PageTransitionKind, dir: PageTransitionDirection): PageTransitionAnimation =>
-  a === "slide" || a === "wipe" ? `${a}-${dir}` : a;
+/** Familia con dirección sin ella (`slide`, `wipe`, `scan`, `stack`) → con la dada (o la suya por defecto); el resto, igual. */
+export const withDirection = (a: PageTransitionAnimation | PageTransitionKind, dir?: PageTransitionDirection): PageTransitionAnimation =>
+  isDirectional(a) ? `${a}-${dir ?? defaultDirection(a)}` : (a as PageTransitionAnimation);
+
+/** Dirección contraria a la que usaría `kind` (para `nav-back`). */
+export const backDirection = (kind: PageTransitionAnimation | PageTransitionKind, dir?: PageTransitionDirection): PageTransitionDirection =>
+  OPPOSITE[dir ?? defaultDirection(kind)];
 
 /**
  * Animación de una transición según sus tipos. Prioridad: los `types` propios › `trama-<animación>` › `nav-back`
  * (dirección contraria) › `nav-forward` / sin tipo (`kind` con `direction`). Función pura: se puede probar sin navegador.
  */
-export function pickTransitionAnimation(transitionTypes: Iterable<string>, { kind = "fade", direction = "left", types }: TransitionChoice = {}): PageTransitionAnimation {
+export function pickTransitionAnimation(transitionTypes: Iterable<string>, { kind = "fade", direction, types }: TransitionChoice = {}): PageTransitionAnimation {
   const list = [...transitionTypes];
   for (const t of list) if (types && Object.prototype.hasOwnProperty.call(types, t)) return withDirection(types[t], direction);
   for (const t of list) {
     const a = t.startsWith("trama-") ? t.slice(6) : null;
     if (a && KNOWN.has(a)) return withDirection(a as PageTransitionKind, direction);
   }
-  if (list.includes(NAV_BACK)) return withDirection(kind, OPPOSITE[direction]);
+  if (list.includes(NAV_BACK)) return withDirection(kind, backDirection(kind, direction));
   return withDirection(kind, direction);
 }
 

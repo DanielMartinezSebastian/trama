@@ -1,6 +1,6 @@
 {
   "name": "trama-ui",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Trama: librería de componentes React/Next.js (ASCII, textmode, pixel art, secciones de landing). Ver docs/README.md y AGENTS.md.",
   "license": "MIT",
   "author": "Daniel Martínez Sebastián",

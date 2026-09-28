@@ -514,34 +514,35 @@ Barrido, iris, rebanadas, persianas o mosaico de píxeles para acompañar un cam
 
 ### Transición de página — `PageTransition`
 
-Anima la ventana entera al navegar (todo salvo la cabecera y lo que envuelvas en PageTransitionPersist) con la View Transitions API y el <ViewTransition> de React, sin configurar en el App Router de Next: fundido, deslizamiento, barrido de color, persianas, disolución por píxeles, encendido CRT, glitch, iris o escritura de terminal. CSS puro con los tokens del tema; una animación fija o una por tipo de navegación.
+Anima la ventana entera al navegar (todo salvo la cabecera y lo que envuelvas en PageTransitionPersist) con la View Transitions API y el <ViewTransition> de React, sin configurar en el App Router de Next: fundido, deslizamiento, barrido de color, línea de escaneo, pila de barras, persianas, disolución por píxeles, encendido CRT, glitch, iris o escritura de terminal. CSS puro con los tokens del tema; una animación fija o una por tipo de navegación.
 
 Envuelve contenido (`children`), p. ej.: `{/* contenido de la página */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
-| `direction` | `left` · `right` · `up` · `down` | "left" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
 
 - Anima la raíz del documento (::view-transition-old/new(root)): fondos fijos, pie y márgenes incluidos. En este ejemplo, al cambiar de página se anima toda la ventana del catálogo; las cabeceras quedan quietas.
 - Va en cada page.tsx (o en un template.tsx), nunca en un layout. La animación la elige la página de destino. Sin nodos extra en el DOM.
-- Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria; `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType("glitch")`) elige la animación de esa navegación; `types={{ "mi-tipo": "iris" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`.
+- `scan`: una línea brillante del color `tone` recorre la pantalla (de arriba abajo por defecto) y deja detrás la página nueva, sin apagado CRT. `stack`: una pila de barras de grandes a pequeñas (--acc, --acc2 y su mezcla) tapa la página, se comprime y se va por el lado de `direction`.
+- Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria (`slide`, `wipe`, `scan`, `stack`; sin `direction` —«auto» en este catálogo—, `down` en scan y `left` en el resto); `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType("glitch")`) elige la animación de esa navegación; `types={{ "mi-tipo": "iris" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`.
 - Cabecera, barra o cualquier elemento fijo que deba quedarse quieto: envuélvelo en `<PageTransitionPersist name="cabecera">` (un `name` único por elemento).
 - Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).
 - Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar.
 
 ### Transición de elemento — `ElementTransition`
 
-Las mismas 9 animaciones de PageTransition, pero sobre la caja de un elemento suelto (una tarjeta, un panel, el contenido de una pestaña) cuando entra o sale dentro de una transición de React. Incluye SharedTransition para elementos compartidos que se transforman de una vista a otra.
+Las mismas 11 animaciones de PageTransition, pero sobre la caja de un elemento suelto (una tarjeta, un panel, el contenido de una pestaña) cuando entra o sale dentro de una transición de React. Incluye SharedTransition para elementos compartidos que se transforman de una vista a otra.
 
 Envuelve contenido (`children`), p. ej.: `{/* el elemento que entra o sale */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
-| `direction` | `left` · `right` · `up` · `down` | "left" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
 
