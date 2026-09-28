@@ -512,6 +512,25 @@ Barrido, iris, rebanadas, persianas o mosaico de píxeles para acompañar un cam
 | `duration` | number 0.3–3 | 1 |
 | `loop` | boolean | false |
 
+### Transición de página — `PageTransition`
+
+Anima el cambio de página al navegar con la View Transitions API (el <ViewTransition> de React, sin configurar en el App Router de Next): fundido, deslizamiento, barrido de color, persianas, disolución por píxeles, encendido CRT, glitch, iris o escritura de terminal. CSS puro con los tokens del tema; una animación fija o una por tipo de navegación.
+
+Envuelve contenido (`children`), p. ej.: `{/* contenido de la página */}`
+
+| prop | tipo | default |
+|---|---|---|
+| `kind` | `none` · `fade` · `slide` · `wipe` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `direction` | `left` · `right` · `up` · `down` | "left" |
+| `pace` | `fast` · `normal` · `slow` | "normal" |
+| `tone` | `acc` · `acc2` · `fg` | "acc" |
+
+- Va en cada page.tsx (o en un template.tsx), nunca en un layout: el layout no se vuelve a montar y no hay entrada ni salida. Sin nodos extra en el DOM.
+- Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria; `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType("glitch")`) elige la animación de esa navegación; `types={{ "mi-tipo": "iris" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`. Un solo tipo por navegación: si coinciden varios, React junta sus clases.
+- Cabecera o barra fija: envuélvela en `<PageTransitionPersist name="cabecera">` (un `name` único por elemento) para que no se mueva con la página.
+- Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).
+- Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar.
+
 ### Revelado de contenido — `Reveal`
 
 Revela lo que envuelve al montar, al entrar en pantalla o siguiendo el scroll: 7 efectos × 4 direcciones, escalonado de hijos o de palabras/letras, curvas con rebote y repetición al volver a entrar.

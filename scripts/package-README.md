@@ -60,6 +60,23 @@ Define estos tokens en `:root` o en cualquier contenedor (sin ellos se usa un te
 Vocabulario común de props: `variant` = estilo visual · `intent` = color semántico (`accent neutral success info
 warning danger`) · `emphasis` = énfasis de un botón · `tone` = token de color · `fill` = fondo de una tarjeta.
 
+## Transiciones de página
+
+`PageTransition` anima la navegación con la View Transitions API (el `<ViewTransition>` de React; en el App Router de
+Next funciona sin configurar): `fade`, `slide`, `wipe`, `blinds`, `pixelate`, `scanline`, `glitch`, `iris`, `terminal`.
+Va en cada `page.tsx` (o en un `template.tsx`), nunca en un layout; `PageTransitionPersist` deja fija la cabecera.
+
+```tsx
+import PageTransition, { PageTransitionPersist, NAV_FORWARD, pageTransitionType } from "trama-ui/PageTransition";
+
+<PageTransition kind="wipe">{/* contenido de la página */}</PageTransition>
+<Link href="/siguiente" transitionTypes={[NAV_FORWARD]}>Siguiente</Link>
+<Link href="/contacto" transitionTypes={[pageTransitionType("terminal")]}>Contacto</Link>
+```
+
+Los pseudo-elementos de la transición leen los tokens de `:root`. Con «reducir movimiento», solo un fundido breve; sin
+soporte, la página cambia sin animar.
+
 ## Recursos pixel art
 
 `PixelFrame` y `Sprite` usan imágenes (Kenney «Pixel UI», CC0) que tienen que servirse desde tu `public/`:

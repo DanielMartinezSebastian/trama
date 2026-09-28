@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PageTransition, { NAV_BACK, NAV_FORWARD, PageTransitionPersist } from "@/components/ui/PageTransition";
 import Prose from "@/components/ui/Prose";
 import TableOfContents from "@/components/ui/TableOfContents";
 import { DOC_GROUPS, DOC_PAGES, docHref, getDoc, loadDoc } from "@/lib/docs";
@@ -30,61 +31,67 @@ export default async function DocPage({ params }: Props) {
   const prev = DOC_PAGES[i - 1];
   const next = DOC_PAGES[i + 1];
 
+  // Barrido de color al cambiar de página; «Anterior» y «Siguiente» lo orientan (nav-back / nav-forward). El índice lateral
+  // queda fijo. Es la demostración de PageTransition en la propia web.
   return (
-    <main className="tr-docs">
-      <JsonLd data={docJsonLd({ title: page.title, description: page.description, path: docHref(page.slug), section: group?.label ?? "Docs" })} />
-      <aside className="tr-docs__side" aria-label="Documentación">
-        {DOC_GROUPS.map((g) => (
-          <div key={g.label} className="tr-docs__group">
-            <p className="tr-label">{g.label}</p>
-            <ul>
-              {g.pages.map((p) => (
-                <li key={p.slug}>
-                  <Link href={docHref(p.slug)} className={p === page ? "is-on" : ""} aria-current={p === page ? "page" : undefined}>
-                    {p.title}
-                  </Link>
-                </li>
-              ))}
-              {g.label === "Referencia" && (
-                <li>
-                  <Link href="/componentes">Componentes en vivo →</Link>
-                </li>
-              )}
-            </ul>
-          </div>
-        ))}
-      </aside>
+    <PageTransition kind="wipe" pace="fast">
+      <main className="tr-docs">
+        <JsonLd data={docJsonLd({ title: page.title, description: page.description, path: docHref(page.slug), section: group?.label ?? "Docs" })} />
+        <PageTransitionPersist name="tr-docs-side">
+          <aside className="tr-docs__side" aria-label="Documentación">
+            {DOC_GROUPS.map((g) => (
+              <div key={g.label} className="tr-docs__group">
+                <p className="tr-label">{g.label}</p>
+                <ul>
+                  {g.pages.map((p) => (
+                    <li key={p.slug}>
+                      <Link href={docHref(p.slug)} className={p === page ? "is-on" : ""} aria-current={p === page ? "page" : undefined}>
+                        {p.title}
+                      </Link>
+                    </li>
+                  ))}
+                  {g.label === "Referencia" && (
+                    <li>
+                      <Link href="/componentes">Componentes en vivo →</Link>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            ))}
+          </aside>
+        </PageTransitionPersist>
 
-      <article className="tr-docs__main">
-        <header className="tr-docs__head">
-          <p className="tr-label">Docs · {group?.label}</p>
-          <h1>{page.title}</h1>
-          <p>{page.blurb}</p>
-        </header>
-        <Prose markdown={markdown} variant="minimal" codeVariant="minimal" measure="full" anchors className="tr-prose" />
-        <nav className="tr-docs__pager" aria-label="Páginas">
-          {prev ? (
-            <Link href={docHref(prev.slug)}>
-              <span className="tr-label">← Anterior</span>
-              {prev.title}
-            </Link>
-          ) : (
-            <span />
-          )}
-          {next && (
-            <Link href={docHref(next.slug)} className="is-next">
-              <span className="tr-label">Siguiente →</span>
-              {next.title}
-            </Link>
-          )}
-        </nav>
-      </article>
+        <article className="tr-docs__main">
+          <header className="tr-docs__head">
+            <p className="tr-label">Docs · {group?.label}</p>
+            <h1>{page.title}</h1>
+            <p>{page.blurb}</p>
+          </header>
+          <Prose markdown={markdown} variant="minimal" codeVariant="minimal" measure="full" anchors className="tr-prose" />
+          <nav className="tr-docs__pager" aria-label="Páginas">
+            {prev ? (
+              <Link href={docHref(prev.slug)} transitionTypes={[NAV_BACK]}>
+                <span className="tr-label">← Anterior</span>
+                {prev.title}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <Link href={docHref(next.slug)} className="is-next" transitionTypes={[NAV_FORWARD]}>
+                <span className="tr-label">Siguiente →</span>
+                {next.title}
+              </Link>
+            )}
+          </nav>
+        </article>
 
-      {headings.length > 1 && (
-        <aside className="tr-docs__toc">
-          <TableOfContents items={headings.map((h) => `## ${h.text}=#${h.id}`).join("\n")} title="En esta página" depth={2} kind="rail" sticky variant="minimal" />
-        </aside>
-      )}
-    </main>
+        {headings.length > 1 && (
+          <aside className="tr-docs__toc">
+            <TableOfContents items={headings.map((h) => `## ${h.text}=#${h.id}`).join("\n")} title="En esta página" depth={2} kind="rail" sticky variant="minimal" />
+          </aside>
+        )}
+      </main>
+    </PageTransition>
   );
 }

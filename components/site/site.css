@@ -12,6 +12,9 @@
   --dots: 1px dotted var(--ln);
   position: relative; min-height: 100vh; color: var(--fg); background: var(--bg);
 }
+/* Las transiciones de página (PageTransition) se pintan en pseudo-elementos de <html>, fuera de .tr: les pasamos el acento
+   y el fondo del tema de la web (los mismos valores que SITE_TOKENS). */
+html:has(.tr) { --acc: #ff3b3b; --acc2: #8a8a8a; --ui-vt-page: #000000; }
 /* las demos a pantalla completa bloquean el scroll en <html> (globals.css); las páginas de la web lo abren desde el primer
    pintado, sin esperar a un efecto (los hijos, como TableOfContents, miden el scroll antes que el efecto del marco) */
 html:has(.tr:not(.tr--app)) { height: auto; overflow-x: hidden; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.25) transparent; }

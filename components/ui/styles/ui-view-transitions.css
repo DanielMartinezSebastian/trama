@@ -1,0 +1,221 @@
+/* =====================================================================
+   Transiciones de página (PageTransition / PageTransitionPersist)
+
+   CSS puro sobre los pseudo-elementos de la View Transitions API. React pone en cada captura una lista de clases
+   (`view-transition-class`):  ui-vt  ui-vt-in|ui-vt-out  ui-vt-<animación>  ui-vt--<ritmo>  ui-vt--<tono>
+   · ui-vt-in / ui-vt-out distinguen la página que entra de la que sale (son grupos distintos).
+   · Los pseudo-elementos heredan de <html>, no del contenedor del tema: los tokens (--bg, --acc, --acc2, --fg) se leen
+     de :root. Si el tema vive en un contenedor, repite en :root al menos --acc y el fondo (o --ui-vt-page).
+   · --ui-vt-page: color que tapa la página vieja en los efectos de cobertura (wipe, blinds, pixelate, iris, terminal,
+     scanline). Por defecto, --bg.
+   ===================================================================== */
+
+/* Progreso (0 → 116 %) de barridos y persianas; el 16 % extra es el ancho de la banda de color. Hereda: el grupo lo
+   anima y la imagen de dentro lo usa para recortarse al mismo paso. Sin @property, el efecto salta a mitad: no se rompe. */
+@property --ui-vt-k { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+/* Radio del iris */
+@property --ui-vt-r { syntax: "<length>"; inherits: true; initial-value: 0px; }
+/* Opacidad de los cuatro píxeles de cada bloque de 2×2 (pixelate) */
+@property --ui-vt-a1 { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --ui-vt-a2 { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --ui-vt-a3 { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --ui-vt-a4 { syntax: "<number>"; inherits: false; initial-value: 1; }
+
+/* Los clics durante la animación llegan a la página nueva (la capa de la transición no los captura) */
+::view-transition { pointer-events: none; }
+
+/* ---------- Base: ritmo, tono y orden ---------- */
+::view-transition-group(.ui-vt) {
+  --ui-vt-d: 380ms;
+  --ui-vt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ui-vt-c: var(--acc);
+  --ui-vt-c2: var(--acc2);
+  --ui-vt-x: 0px;
+  --ui-vt-y: 0px;
+}
+::view-transition-group(.ui-vt--fast) { --ui-vt-d: 240ms; }
+::view-transition-group(.ui-vt--slow) { --ui-vt-d: 560ms; }
+::view-transition-group(.ui-vt--acc2) { --ui-vt-c: var(--acc2); --ui-vt-c2: var(--acc); }
+::view-transition-group(.ui-vt--fg) { --ui-vt-c: var(--fg); --ui-vt-c2: var(--mut); }
+/* la página que entra, siempre encima de la que sale (los efectos de cobertura dependen de ello) */
+::view-transition-group(.ui-vt-out) { z-index: 1; }
+::view-transition-group(.ui-vt-in) { z-index: 2; }
+
+@keyframes ui-vt-out { to { opacity: 0; } }
+@keyframes ui-vt-in { from { opacity: 0; } }
+/* la vieja se queda debajo mientras la nueva la tapa y se desvanece al final (por si la nueva es más corta) */
+@keyframes ui-vt-hold { 0%, 60% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes ui-vt-k { from { --ui-vt-k: 0%; } to { --ui-vt-k: 116%; } }
+
+/* Efectos de cobertura: la página nueva es opaca para no mezclarse con la vieja que queda debajo */
+::view-transition-new(.ui-vt-wipe-left),
+::view-transition-new(.ui-vt-wipe-right),
+::view-transition-new(.ui-vt-wipe-up),
+::view-transition-new(.ui-vt-wipe-down),
+::view-transition-new(.ui-vt-blinds),
+::view-transition-new(.ui-vt-pixelate),
+::view-transition-new(.ui-vt-scanline),
+::view-transition-new(.ui-vt-iris),
+::view-transition-new(.ui-vt-terminal) { background: var(--ui-vt-page, var(--bg)); }
+::view-transition-old(.ui-vt-blinds),
+::view-transition-old(.ui-vt-pixelate),
+::view-transition-old(.ui-vt-iris) { animation: ui-vt-hold var(--ui-vt-d) linear both; }
+
+/* ---------- fade: fundido cruzado con la salida más rápida que la entrada ---------- */
+::view-transition-old(.ui-vt-fade) { animation: ui-vt-out calc(var(--ui-vt-d) * 0.5) ease-in both; }
+::view-transition-new(.ui-vt-fade) { animation: ui-vt-in calc(var(--ui-vt-d) * 0.7) var(--ui-vt-ease) calc(var(--ui-vt-d) * 0.3) both; }
+
+/* ---------- slide-*: desplazamiento corto (48 px / 32 px) con fundido; la dirección es hacia dónde se mueve ---------- */
+::view-transition-group(.ui-vt-slide-left) { --ui-vt-x: 48px; }
+::view-transition-group(.ui-vt-slide-right) { --ui-vt-x: -48px; }
+::view-transition-group(.ui-vt-slide-up) { --ui-vt-y: 32px; }
+::view-transition-group(.ui-vt-slide-down) { --ui-vt-y: -32px; }
+::view-transition-old(.ui-vt-slide-left),
+::view-transition-old(.ui-vt-slide-right),
+::view-transition-old(.ui-vt-slide-up),
+::view-transition-old(.ui-vt-slide-down) { animation: ui-vt-slide-out calc(var(--ui-vt-d) * 0.6) cubic-bezier(0.55, 0, 1, 0.45) both; }
+::view-transition-new(.ui-vt-slide-left),
+::view-transition-new(.ui-vt-slide-right),
+::view-transition-new(.ui-vt-slide-up),
+::view-transition-new(.ui-vt-slide-down) { animation: ui-vt-slide-in calc(var(--ui-vt-d) * 0.85) var(--ui-vt-ease) calc(var(--ui-vt-d) * 0.15) both; }
+@keyframes ui-vt-slide-out { to { opacity: 0; translate: calc(var(--ui-vt-x) * -1) calc(var(--ui-vt-y) * -1); } }
+@keyframes ui-vt-slide-in { from { opacity: 0; translate: var(--ui-vt-x) var(--ui-vt-y); } }
+
+/* ---------- wipe-*: una banda del color del tono barre la página; la vieja se recorta delante y la nueva aparece detrás.
+   La banda es el fondo del grupo que sale, visible solo en el hueco entre las dos. ---------- */
+::view-transition-group(.ui-vt-out.ui-vt-wipe-left),
+::view-transition-group(.ui-vt-out.ui-vt-wipe-right),
+::view-transition-group(.ui-vt-out.ui-vt-wipe-up),
+::view-transition-group(.ui-vt-out.ui-vt-wipe-down) { animation: ui-vt-k var(--ui-vt-d) cubic-bezier(0.65, 0, 0.35, 1) both; }
+::view-transition-new(.ui-vt-wipe-left),
+::view-transition-new(.ui-vt-wipe-right),
+::view-transition-new(.ui-vt-wipe-up),
+::view-transition-new(.ui-vt-wipe-down) { animation: ui-vt-k var(--ui-vt-d) cubic-bezier(0.65, 0, 0.35, 1) both; }
+::view-transition-old(.ui-vt-wipe-left),
+::view-transition-old(.ui-vt-wipe-right),
+::view-transition-old(.ui-vt-wipe-up),
+::view-transition-old(.ui-vt-wipe-down) { animation: none; }
+
+/* hacia la izquierda: entra desde el borde derecho */
+::view-transition-group(.ui-vt-out.ui-vt-wipe-left) { background: linear-gradient(to left, transparent calc(var(--ui-vt-k) - 16%), var(--ui-vt-c) 0 var(--ui-vt-k), transparent 0); }
+::view-transition-old(.ui-vt-wipe-left) { clip-path: inset(0 min(var(--ui-vt-k), 100%) 0 0); }
+::view-transition-new(.ui-vt-wipe-left) { clip-path: inset(0 0 0 calc(100% - max(var(--ui-vt-k) - 16%, 0%))); }
+/* hacia la derecha */
+::view-transition-group(.ui-vt-out.ui-vt-wipe-right) { background: linear-gradient(to right, transparent calc(var(--ui-vt-k) - 16%), var(--ui-vt-c) 0 var(--ui-vt-k), transparent 0); }
+::view-transition-old(.ui-vt-wipe-right) { clip-path: inset(0 0 0 min(var(--ui-vt-k), 100%)); }
+::view-transition-new(.ui-vt-wipe-right) { clip-path: inset(0 calc(100% - max(var(--ui-vt-k) - 16%, 0%)) 0 0); }
+/* hacia arriba: entra desde abajo */
+::view-transition-group(.ui-vt-out.ui-vt-wipe-up) { background: linear-gradient(to top, transparent calc(var(--ui-vt-k) - 16%), var(--ui-vt-c) 0 var(--ui-vt-k), transparent 0); }
+::view-transition-old(.ui-vt-wipe-up) { clip-path: inset(0 0 min(var(--ui-vt-k), 100%) 0); }
+::view-transition-new(.ui-vt-wipe-up) { clip-path: inset(calc(100% - max(var(--ui-vt-k) - 16%, 0%)) 0 0 0); }
+/* hacia abajo */
+::view-transition-group(.ui-vt-out.ui-vt-wipe-down) { background: linear-gradient(to bottom, transparent calc(var(--ui-vt-k) - 16%), var(--ui-vt-c) 0 var(--ui-vt-k), transparent 0); }
+::view-transition-old(.ui-vt-wipe-down) { clip-path: inset(min(var(--ui-vt-k), 100%) 0 0 0); }
+::view-transition-new(.ui-vt-wipe-down) { clip-path: inset(0 0 calc(100% - max(var(--ui-vt-k) - 16%, 0%)) 0); }
+
+/* ---------- blinds: persianas horizontales de 28 px que se abren a la vez ---------- */
+::view-transition-new(.ui-vt-blinds) {
+  animation: ui-vt-k var(--ui-vt-d) cubic-bezier(0.65, 0, 0.35, 1) both;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--ui-vt-k), transparent var(--ui-vt-k));
+  mask-image: linear-gradient(to bottom, #000 var(--ui-vt-k), transparent var(--ui-vt-k));
+  -webkit-mask-size: 100% 28px;
+  mask-size: 100% 28px;
+}
+
+/* ---------- pixelate: disolución por bloques de 12 px en tramado ordenado 2×2 (4 pasos, sin parpadeo) ---------- */
+::view-transition-new(.ui-vt-pixelate) {
+  animation: ui-vt-pix var(--ui-vt-d) steps(1, end) both;
+  -webkit-mask-image: conic-gradient(rgb(0 0 0 / var(--ui-vt-a1)) 0 25%, rgb(0 0 0 / var(--ui-vt-a3)) 0 50%, rgb(0 0 0 / var(--ui-vt-a2)) 0 75%, rgb(0 0 0 / var(--ui-vt-a4)) 0);
+  mask-image: conic-gradient(rgb(0 0 0 / var(--ui-vt-a1)) 0 25%, rgb(0 0 0 / var(--ui-vt-a3)) 0 50%, rgb(0 0 0 / var(--ui-vt-a2)) 0 75%, rgb(0 0 0 / var(--ui-vt-a4)) 0);
+  -webkit-mask-size: 24px 24px;
+  mask-size: 24px 24px;
+}
+@keyframes ui-vt-pix {
+  from { --ui-vt-a1: 0; --ui-vt-a2: 0; --ui-vt-a3: 0; --ui-vt-a4: 0; }
+  25% { --ui-vt-a1: 1; }
+  50% { --ui-vt-a2: 1; }
+  75% { --ui-vt-a3: 1; }
+  to { --ui-vt-a1: 1; --ui-vt-a2: 1; --ui-vt-a3: 1; --ui-vt-a4: 1; }
+}
+
+/* ---------- scanline: la vieja se deshace en líneas de barrido y la nueva se enciende como un CRT desde una línea
+   (brillo 1,3 una sola vez: sin destellos repetidos, WCAG 2.3.1) ---------- */
+::view-transition-old(.ui-vt-scanline) {
+  animation: ui-vt-k calc(var(--ui-vt-d) * 0.6) ease-in both;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ui-vt-k)), transparent 0);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ui-vt-k)), transparent 0);
+  -webkit-mask-size: 100% 4px;
+  mask-size: 100% 4px;
+}
+::view-transition-new(.ui-vt-scanline) {
+  animation:
+    ui-vt-crt-on calc(var(--ui-vt-d) * 0.8) cubic-bezier(0.3, 0, 0.2, 1) calc(var(--ui-vt-d) * 0.35) both,
+    ui-vt-k calc(var(--ui-vt-d) * 1.15) linear both;
+  -webkit-mask-image: linear-gradient(to bottom, #000 max(var(--ui-vt-k), 70%), transparent 0);
+  mask-image: linear-gradient(to bottom, #000 max(var(--ui-vt-k), 70%), transparent 0);
+  -webkit-mask-size: 100% 4px;
+  mask-size: 100% 4px;
+}
+/* la línea de encendido cae en el centro de la pantalla (o de la página, si es más corta) */
+@keyframes ui-vt-crt-on {
+  0% { clip-path: inset(min(50%, 45vh) 0 calc(100% - min(50%, 45vh) - 2px) 0); filter: brightness(1.3) saturate(0.6); }
+  30% { clip-path: inset(min(50%, 45vh) 0 calc(100% - min(50%, 45vh) - 2px) 0); }
+  100% { clip-path: inset(0); filter: none; }
+}
+
+/* ---------- glitch: la nueva entra por franjas que crecen, con saltos laterales y separación RGB en --ui-vt-c y
+   --ui-vt-c2. Solo crece (nunca vuelve a ocultar lo mostrado) y dura < 0,5 s: no parpadea. ---------- */
+::view-transition-old(.ui-vt-glitch) { animation: ui-vt-glitch-out calc(var(--ui-vt-d) * 0.5) steps(1, end) both; }
+::view-transition-new(.ui-vt-glitch) { animation: ui-vt-glitch-in var(--ui-vt-d) steps(1, end) calc(var(--ui-vt-d) * 0.1) both; }
+@keyframes ui-vt-glitch-out {
+  30% { translate: 6px 0; opacity: 0.75; }
+  60% { translate: -4px 0; opacity: 0.4; }
+  100% { translate: 0; opacity: 0; }
+}
+@keyframes ui-vt-glitch-in {
+  0% { opacity: 0; clip-path: inset(36vh 0 calc(100% - 52vh) 0); translate: -10px 0; filter: drop-shadow(3px 0 var(--ui-vt-c)) drop-shadow(-3px 0 var(--ui-vt-c2)); }
+  20% { opacity: 1; clip-path: inset(22vh 0 calc(100% - 66vh) 0); translate: 8px 0; filter: drop-shadow(3px 0 var(--ui-vt-c)) drop-shadow(-3px 0 var(--ui-vt-c2)); }
+  40% { clip-path: inset(9vh 0 calc(100% - 82vh) 0); translate: -5px 0; filter: drop-shadow(2px 0 var(--ui-vt-c)) drop-shadow(-2px 0 var(--ui-vt-c2)); }
+  60% { clip-path: inset(0 0 max(0px, calc(100% - 100vh)) 0); translate: 3px 0; filter: drop-shadow(2px 0 var(--ui-vt-c)) drop-shadow(-2px 0 var(--ui-vt-c2)); }
+  80% { clip-path: inset(0); translate: -1px 0; filter: drop-shadow(1px 0 var(--ui-vt-c)) drop-shadow(-1px 0 var(--ui-vt-c2)); }
+  100% { opacity: 1; clip-path: inset(0); translate: 0; filter: none; }
+}
+
+/* ---------- iris: círculo que se abre desde el centro de la pantalla con un aro del color del tono ---------- */
+::view-transition-group(.ui-vt-in.ui-vt-iris) {
+  animation: ui-vt-iris var(--ui-vt-d) cubic-bezier(0.65, 0, 0.35, 1) both;
+  background: radial-gradient(circle at 50% min(50%, 45vh), transparent var(--ui-vt-r), var(--ui-vt-c) 0 calc(var(--ui-vt-r) + 3px), transparent 0);
+}
+::view-transition-new(.ui-vt-iris) { animation: none; clip-path: circle(var(--ui-vt-r) at 50% min(50%, 45vh)); }
+@keyframes ui-vt-iris { from { --ui-vt-r: 0px; } to { --ui-vt-r: 150vmax; } }
+
+/* ---------- terminal: la vieja se apaga y la nueva se escribe por líneas (12 pasos) tras un cursor de bloque ---------- */
+::view-transition-old(.ui-vt-terminal) { animation: ui-vt-out calc(var(--ui-vt-d) * 0.3) linear both; }
+::view-transition-new(.ui-vt-terminal) { animation: ui-vt-type calc(var(--ui-vt-d) * 0.9) steps(12, end) calc(var(--ui-vt-d) * 0.2) both; }
+::view-transition-group(.ui-vt-in.ui-vt-terminal) {
+  background: linear-gradient(var(--ui-vt-c), var(--ui-vt-c)) no-repeat;
+  background-size: 0.6em 1.15em;
+  animation: ui-vt-cursor calc(var(--ui-vt-d) * 0.9) steps(12, end) calc(var(--ui-vt-d) * 0.2) both;
+}
+@keyframes ui-vt-type { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 max(0px, calc(100% - 100vh)) 0); } }
+@keyframes ui-vt-cursor { from { background-position: 0 0; } to { background-position: 0 min(100%, 100vh); } }
+
+/* ---------- Elementos fijos (PageTransitionPersist): ni se mueven ni se funden; quedan por encima ---------- */
+::view-transition-group(.ui-vt-persist) { animation: none; z-index: 100; }
+::view-transition-old(.ui-vt-persist) { display: none; }
+::view-transition-new(.ui-vt-persist) { animation: none; }
+
+/* ---------- Reducir movimiento: sin desplazamientos, recortes ni máscaras; solo un fundido de 120 ms ---------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(.ui-vt) { animation: none !important; background: none !important; }
+  ::view-transition-old(.ui-vt),
+  ::view-transition-new(.ui-vt) {
+    clip-path: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    filter: none !important;
+    translate: none !important;
+  }
+  ::view-transition-old(.ui-vt) { animation: ui-vt-out 120ms linear both !important; }
+  ::view-transition-new(.ui-vt) { animation: ui-vt-in 120ms linear both !important; }
+}

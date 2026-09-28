@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomePage from "@/components/site/HomePage";
+import PageTransition from "@/components/ui/PageTransition";
 import SiteChrome from "@/components/site/SiteChrome";
 import { JsonLd, homeJsonLd } from "@/lib/seo";
 import { homeData } from "@/lib/site-data";
@@ -16,7 +17,9 @@ export default function Home() {
   return (
     <SiteChrome>
       <JsonLd data={homeJsonLd(data.counts.components)} />
-      <HomePage data={data} />
+      <PageTransition kind="wipe" pace="fast">
+        <HomePage data={data} />
+      </PageTransition>
     </SiteChrome>
   );
 }

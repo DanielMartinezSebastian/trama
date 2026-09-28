@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { PageTransitionPersist } from "@/components/ui/PageTransition";
 import InstallChip from "./InstallChip";
 import NavLinks from "./NavLinks";
 import { GITHUB, SITE_STYLE, VERSION } from "./theme";
@@ -17,20 +18,23 @@ export default function SiteChrome({ children, app = false }: { children: ReactN
       <a href="#contenido" className="tr-skip">
         Saltar al contenido
       </a>
-      <header className="tr-nav">
-        <Link href="/" className="tr-nav__brand" aria-label="Trama, inicio">
-          <span className="tr-nav__mark" aria-hidden />
-          TRAMA
-        </Link>
-        <nav className="tr-nav__links" aria-label="Secciones">
-          <NavLinks />
-          <a href={GITHUB} className="tr-nav__link" target="_blank" rel="noopener noreferrer">
-            GitHub <span aria-hidden>↗</span>
-            <span className="ui-sr-only"> (se abre en otra pestaña)</span>
-          </a>
-        </nav>
-        <InstallChip className="tr-nav__install" />
-      </header>
+      {/* fija durante las transiciones de página: el contenido cambia debajo (PageTransition en cada página) */}
+      <PageTransitionPersist name="tr-header">
+        <header className="tr-nav">
+          <Link href="/" className="tr-nav__brand" aria-label="Trama, inicio">
+            <span className="tr-nav__mark" aria-hidden />
+            TRAMA
+          </Link>
+          <nav className="tr-nav__links" aria-label="Secciones">
+            <NavLinks />
+            <a href={GITHUB} className="tr-nav__link" target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden>↗</span>
+              <span className="ui-sr-only"> (se abre en otra pestaña)</span>
+            </a>
+          </nav>
+          <InstallChip className="tr-nav__install" />
+        </header>
+      </PageTransitionPersist>
 
       <div id="contenido" tabIndex={-1} className="tr-content">
         {children}

@@ -22,7 +22,7 @@ const EXTS = ["", ".ts", ".tsx", ".mts", "/index.ts", "/index.tsx"];
 const resolveFile = (base: string) => EXTS.map((e) => base + e).find((f) => existsSync(f) && statSync(f).isFile());
 
 /** Archivos del kit que se copian siempre: el CSS completo (kit.css importa los demás) y las fuentes. */
-export const ALWAYS = ["components/ui/styles/kit.css", "components/ui/styles/ui-kit.css", "components/ui/styles/ui-carousel.css", "components/ui/styles/ui-video.css", "lib/ui/fonts.ts", "lib/ui/tokens.ts"];
+export const ALWAYS = ["components/ui/styles/kit.css", "components/ui/styles/ui-kit.css", "components/ui/styles/ui-carousel.css", "components/ui/styles/ui-video.css", "components/ui/styles/ui-view-transitions.css", "lib/ui/fonts.ts", "lib/ui/tokens.ts"];
 
 /** Recursos de /public que necesitan ciertos componentes (se referencian por URL, no por import). */
 export const PUBLIC_ASSETS: Record<string, string[]> = {

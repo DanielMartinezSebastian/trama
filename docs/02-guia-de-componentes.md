@@ -381,6 +381,23 @@ conviene saber para usarlo bien:
   transform/filter/clip-path (un `Modal` dentro sigue funcionando). Lo que queda por encima del viewport sin haberse
   visto (recarga a mitad de página, `#ancla`) se muestra sin animar.
 
+### 6.4 Transiciones entre páginas: `PageTransition`
+
+Para animar la **navegación** (no una sección dentro de la página) está `PageTransition`, sobre la View Transitions API
+y el `<ViewTransition>` de React: guía completa en [05-transiciones-de-pagina.md](./05-transiciones-de-pagina.md). Lo que
+conviene saber al ampliarlo:
+
+- Las animaciones son CSS puro en `components/ui/styles/ui-view-transitions.css`, sobre `::view-transition-old/new/group`
+  con clases (`view-transition-class`): `ui-vt` + `ui-vt-in|ui-vt-out` + `ui-vt-<animación>` + ritmo y tono. Una
+  animación nueva = un bloque CSS con ese prefijo + su nombre en `PAGE_TRANSITION_KINDS`.
+- Los pseudo-elementos heredan de `<html>`: los tokens se leen de `:root` (no del contenedor del tema). Los efectos que
+  tapan la página vieja pintan la nueva sobre `--ui-vt-page` (por defecto `--bg`).
+- Lo que tiene que interpolar un valor propio (banda del barrido, radio del iris, bloques de `pixelate`) usa
+  `@property`; sin él, el efecto salta a mitad en lugar de romperse.
+- Nada de destellos repetidos (WCAG 2.3.1): lo que aparece no vuelve a ocultarse, y con `prefers-reduced-motion` todo
+  queda en un fundido de 120 ms.
+- `ViewTransition` se lee con `Reflect.get(React, …)`: en React 19.0–19.2 no existe y el componente devuelve sus hijos.
+
 ## 7. Fondos (painters y sketches)
 
 - **Painter (asciify):** `(ctx, w, h, t, p) => void`, `p = {x, y, down, active}` normalizado 0–1. Dibuja a ~640 px de

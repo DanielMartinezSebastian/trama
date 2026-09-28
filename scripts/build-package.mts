@@ -55,6 +55,8 @@ const barrel = [
   `export { tokensToStyle, neutralTokens, dotmatrixTokens, FONT_PRESETS, type TokenSet } from "./lib/ui/tokens";`,
   `export { splitList, splitEscaped } from "./lib/ui/list";`,
   `export type { ContactFormProps, ContactFormResult } from "./components/ui/ContactForm";`,
+  // transiciones de página: además del componente, el envoltorio de elementos fijos y las ayudas para elegir animación
+  `export * from "./components/ui/PageTransition";`,
   "",
 ].join("\n");
 writeFileSync(join(SRC, "index.ts"), barrel);

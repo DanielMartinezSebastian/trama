@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DemosIndex from "@/components/site/DemosIndex";
+import PageTransition from "@/components/ui/PageTransition";
 import { demoGroups } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default function DemosPage() {
-  return <DemosIndex groups={demoGroups()} />;
+  return (
+    <PageTransition kind="wipe" pace="fast">
+      <DemosIndex groups={demoGroups()} />
+    </PageTransition>
+  );
 }

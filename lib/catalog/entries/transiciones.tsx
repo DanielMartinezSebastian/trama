@@ -1,5 +1,15 @@
 "use client";
 
+import { startTransition, useEffect, useId, useRef, useState } from "react";
+import PageTransition, {
+  NAV_BACK,
+  NAV_FORWARD,
+  PAGE_TRANSITION_KINDS,
+  PageTransitionPersist,
+  markPageTransition,
+  type PageTransitionDirection,
+  type PageTransitionKind,
+} from "@/components/ui/PageTransition";
 import Panel from "@/components/ui/Panel";
 import Presence, { PRESENCE_EFFECTS } from "@/components/ui/Presence";
 import Reveal, { REVEAL_KINDS, type RevealDirection, type RevealEasing, type RevealKind } from "@/components/ui/Reveal";
@@ -11,6 +21,91 @@ import { ALL_STYLES, variantProp } from "./shared";
 
 const CHAR_OPTIONS = Object.keys(CHARSETS);
 const isAscii = (p: Record<string, unknown>) => String(p.effect).startsWith("ascii-");
+
+/** Páginas de la mini web del ejemplo de PageTransition. */
+const VT_PAGES = [
+  { title: "Inicio", lines: ["> sistema listo", "Tres páginas de ejemplo para probar la transición.", "Usa las pestañas o Anterior / Siguiente."] },
+  { title: "Proyectos", lines: ["> ls proyectos/", "01  cartografía ASCII", "02  sintetizador en el navegador", "03  tipografía de matriz de puntos"] },
+  { title: "Contacto", lines: ["> contacto --abrir", "Escríbeme y te respondo en un par de días.", "hola@ejemplo.dev"] },
+];
+
+type VtDemoProps = { kind: PageTransitionKind; direction: PageTransitionDirection; pace: "fast" | "normal" | "slow"; tone: "acc" | "acc2" | "fg"; replay: number };
+
+/**
+ * Mini web con cabecera fija y tres páginas: cada cambio de página va dentro de `startTransition` con su tipo
+ * (`nav-forward` / `nav-back` o ninguno), igual que una navegación del App Router con `<Link transitionTypes>`.
+ */
+function PageTransitionDemo({ kind, direction, pace, tone, replay }: VtDemoProps) {
+  const [page, setPage] = useState(0);
+  const root = useRef<HTMLDivElement>(null);
+  const name = `pg-vt-head-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
+
+  // Los pseudo-elementos de la transición heredan de <html>, no del escenario: se copian ahí los tokens del tema elegido.
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const html = document.documentElement;
+    const cs = getComputedStyle(el);
+    const keys = ["--acc", "--acc2", "--fg", "--mut"];
+    const prev = keys.map((k) => html.style.getPropertyValue(k));
+    const prevPage = html.style.getPropertyValue("--ui-vt-page");
+    keys.forEach((k) => html.style.setProperty(k, cs.getPropertyValue(k)));
+    html.style.setProperty("--ui-vt-page", cs.getPropertyValue("--bg"));
+    return () => {
+      keys.forEach((k, i) => (prev[i] ? html.style.setProperty(k, prev[i]) : html.style.removeProperty(k)));
+      if (prevPage) html.style.setProperty("--ui-vt-page", prevPage);
+      else html.style.removeProperty("--ui-vt-page");
+    };
+  });
+
+  const go = (to: number, type?: string) =>
+    startTransition(() => {
+      if (type) markPageTransition(type);
+      setPage((to + VT_PAGES.length) % VT_PAGES.length);
+    });
+
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    go(page + 1, NAV_FORWARD);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- solo al pulsar «Repetir animación»
+  }, [replay]);
+
+  const p = VT_PAGES[page];
+  return (
+    <div ref={root} className="pg-vt">
+      <PageTransitionPersist name={name}>
+        <nav className="pg-vt__nav" aria-label="Páginas del ejemplo">
+          <strong>mi-web</strong>
+          {VT_PAGES.map((x, i) => (
+            <button key={x.title} type="button" className={i === page ? "is-on" : ""} aria-current={i === page ? "page" : undefined} onClick={() => i !== page && go(i)}>
+              {x.title}
+            </button>
+          ))}
+        </nav>
+      </PageTransitionPersist>
+      <PageTransition key={page} kind={kind} direction={direction} pace={pace} tone={tone}>
+        <section className="pg-vt__page">
+          <h3>{p.title}</h3>
+          {p.lines.map((l) => (
+            <p key={l}>{l}</p>
+          ))}
+        </section>
+      </PageTransition>
+      <div className="pg-vt__pager">
+        <button type="button" onClick={() => go(page - 1, NAV_BACK)}>
+          ← Anterior <span>nav-back</span>
+        </button>
+        <button type="button" onClick={() => go(page + 1, NAV_FORWARD)}>
+          Siguiente → <span>nav-forward</span>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export const transiciones: CatalogEntry[] = [
   {
@@ -35,6 +130,37 @@ export const transiciones: CatalogEntry[] = [
         </div>
         <SceneFlash kind={p.kind as never} duration={p.duration as number} loop={p.loop as boolean} playKey={replay} />
       </>
+    ),
+  },
+  {
+    id: "page-transition",
+    component: "PageTransition",
+    path: "@/components/ui/PageTransition",
+    name: "Transición de página",
+    category: "transiciones",
+    styles: ALL_STYLES,
+    description:
+      "Anima el cambio de página al navegar con la View Transitions API (el <ViewTransition> de React, sin configurar en el App Router de Next): fundido, deslizamiento, barrido de color, persianas, disolución por píxeles, encendido CRT, glitch, iris o escritura de terminal. CSS puro con los tokens del tema; una animación fija o una por tipo de navegación.",
+    stageHeight: 380,
+    replayable: true,
+    children: "{/* contenido de la página */}",
+    notes: [
+      "Va en cada page.tsx (o en un template.tsx), nunca en un layout: el layout no se vuelve a montar y no hay entrada ni salida. Sin nodos extra en el DOM.",
+      "Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria; `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType(\"glitch\")`) elige la animación de esa navegación; `types={{ \"mi-tipo\": \"iris\" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`. Un solo tipo por navegación: si coinciden varios, React junta sus clases.",
+      "Cabecera o barra fija: envuélvela en `<PageTransitionPersist name=\"cabecera\">` (un `name` único por elemento) para que no se mueva con la página.",
+      "Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).",
+      "Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar.",
+    ],
+    props: [
+      { key: "kind", label: "Animación", type: "select", default: "fade", options: PAGE_TRANSITION_KINDS },
+      { key: "direction", label: "Dirección (slide, wipe)", type: "select", default: "left", options: ["left", "right", "up", "down"], when: (p) => p.kind === "slide" || p.kind === "wipe" },
+      { key: "pace", label: "Ritmo", type: "select", default: "normal", options: ["fast", "normal", "slow"], labels: { fast: "rápido (240 ms)", normal: "normal (380 ms)", slow: "lento (560 ms)" } },
+      { key: "tone", label: "Color del efecto", type: "select", default: "acc", options: ["acc", "acc2", "fg"] },
+    ],
+    render: (p, { replay }) => (
+      <div className="ui-center">
+        <PageTransitionDemo kind={p.kind as PageTransitionKind} direction={p.direction as PageTransitionDirection} pace={p.pace as never} tone={p.tone as never} replay={replay} />
+      </div>
     ),
   },
   {

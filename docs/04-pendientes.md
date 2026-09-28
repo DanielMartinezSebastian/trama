@@ -8,17 +8,26 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
 
 ## 0. Publicación del paquete
 
-- [ ] **Publicar `trama-ui@0.3.0` en npm.** Está construido y empaquetado (rama `fix/mejoras-desde-web`), pero no
-      publicado: en el registro sigue la 0.2.0. Pasos (ver «Publicar en npm» en `README.md`):
-  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.3.0"` y que `CHANGELOG.md` tiene su entrada.
+- [ ] **Publicar `trama-ui@0.4.0` en npm** (incluye lo de 0.3.0, que nunca se publicó: transiciones de página sobre
+      el envío real de `ContactForm` y las ayudas accesibles). Está construido y empaquetado (rama `feat/view-transitions`,
+      que sale de `fix/mejoras-desde-web`), pero no publicado: en el registro sigue la 0.2.0. Pasos (ver «Publicar en
+      npm» en `README.md`):
+  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.4.0"` y que `CHANGELOG.md` tiene su
+     entrada (y la de 0.3.0).
   2. `npm login` (cuenta dueña de `trama-ui`; `npm whoami` para confirmarlo).
   3. `npm run pkg:build` (vacía y regenera `dist-npm/`).
   4. `cd dist-npm && npm publish --dry-run` para revisar la lista de archivos, y después `npm publish`.
-  5. Comprobar con `npm view trama-ui version` (debe decir `0.3.0`).
-  6. **Web martinezsebastian.com:** de momento usa la 0.3.0 desde un `.tgz` incluido en su propio repo
-     (`dist-npm/trama-ui-0.3.0.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
-     (`npm i trama-ui@^0.3.0` en ese proyecto), borrar el `.tgz` de su repo y comprobar que el `package-lock.json`
+  5. Comprobar con `npm view trama-ui version` (debe decir `0.4.0`).
+  6. **Web martinezsebastian.com:** de momento usa el paquete desde un `.tgz` incluido en su propio repo, en `vendor/`
+     (`dist-npm/trama-ui-0.4.0.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
+     (`npm i trama-ui@^0.4.0` en ese proyecto), borrar el `.tgz` de su `vendor/` y comprobar que el `package-lock.json`
      apunta a `registry.npmjs.org`.
+
+- [ ] **`PageTransition` entre layouts distintos.** En la web de Trama, `/docs/a` → `/docs/b` anima (mismo layout),
+      pero `/docs` → `/demos` → `/` solo hace el fundido de raíz: los `PageTransition` de las páginas no reciben
+      `enter`/`exit`. Investigar si es por cómo React decide las salidas cuando se borra un subárbol de layout entero
+      (con la cabecera `PageTransitionPersist` dentro) y, si hace falta, documentar la alternativa (un `template.tsx` en
+      la raíz, o un solo layout con la cabecera). Ver `docs/05-transiciones-de-pagina.md`.
 
 ## 1. Publicación de la web
 

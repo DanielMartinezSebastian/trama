@@ -4,6 +4,33 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.4.0 — transiciones de página (View Transitions)
+
+Incluye todo lo de 0.3.0, que no llegó a publicarse en npm: quien pase de 0.2.0 a 0.4.0 recibe ambos bloques.
+
+- `PageTransition` (categoría Transiciones): envuelve el contenido de una página y anima su entrada y salida al navegar
+  con el `<ViewTransition>` de React sobre la View Transitions API del navegador. En el App Router de Next 16 funciona
+  sin configurar. Props: `kind` (`none` · `fade` · `slide` · `wipe` · `blinds` · `pixelate` · `scanline` · `glitch` ·
+  `iris` · `terminal`), `direction` (`left` · `right` · `up` · `down`, para `slide` y `wipe`), `pace` (`fast` ·
+  `normal` · `slow`), `tone` (`acc` · `acc2` · `fg`) y `types` (tipo de transición → animación). Sin `"use client"`:
+  vale en páginas y plantillas de servidor, y no añade nodos al DOM.
+- Una animación por navegación: `nav-forward` / `nav-back` (constantes `NAV_FORWARD` / `NAV_BACK`) orientan `slide` y
+  `wipe`; `trama-<animación>` (`pageTransitionType("glitch")`) elige la animación desde el enlace
+  (`<Link transitionTypes={[…]}>` de Next o `router.push(url, { transitionTypes })`); `markPageTransition()` hace lo
+  mismo dentro de `startTransition` con cualquier router. El kit no importa `next/link`.
+- `PageTransitionPersist`: deja fuera de la animación la cabecera u otro elemento fijo (`name` único), que se queda quieto y
+  por encima.
+- CSS nuevo `components/ui/styles/ui-view-transitions.css`, importado por `kit.css` (y por tanto en
+  `trama-ui/styles.css`): animaciones en CSS puro sobre `::view-transition-*`, con los tokens del tema leídos de `:root`
+  y `--ui-vt-page` para el color que tapa la página vieja. Con `prefers-reduced-motion: reduce`, solo un fundido de 120 ms;
+  `glitch` y `scanline` no parpadean (WCAG 2.3.1). Sin soporte (React sin `ViewTransition`, como 19.0–19.2 estable fuera
+  del App Router, o navegador sin la API), la página cambia sin animar y nada se rompe.
+- Web de Trama: la portada, `/demos` y `/docs` usan `PageTransition` (barrido con el acento; «Anterior» / «Siguiente» de
+  las docs lo orientan) con la cabecera fija. Guía en `docs/05-transiciones-de-pagina.md`.
+- Compatible con 0.3.0: no cambia ninguna prop existente. Nuevo en `trama-ui`: `PageTransition`,
+  `PageTransitionPersist`, `pageTransitionType`, `markPageTransition`, `pageTransitionsSupported`, `NAV_FORWARD`,
+  `NAV_BACK`, `PAGE_TRANSITION_KINDS`, `PAGE_TRANSITION_ANIMATIONS` y sus tipos.
+
 ## 0.3.0 — envío real en `ContactForm`, ayudas accesibles y listas con escape
 
 Mejoras que salieron al montar martinezsebastian.com con el kit.
