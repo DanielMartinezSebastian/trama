@@ -104,6 +104,12 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 
 ## 4. Librería (`components/ui/`, `lib/`)
 
+- [ ] **`AsciiBackground` con `palette="duotone"` (o `gradient`) tiñe toda la pantalla.** El motor dibuja los caracteres
+      sobre fondo transparente, y la capa `.ui-pal__a` (acento en `multiply`) rellena de color todo el hueco entre
+      caracteres: con `position="fixed"` queda un velo del color de acento sobre la página. `TextmodeBackground` no lo
+      sufre porque sus bocetos pintan un fondo opaco. Arreglo posible: pintar `--bg` bajo el lienzo dentro de `.ui-fill`
+      cuando hay paleta, o aplicar la paleta solo a los caracteres. Visto en martinezsebastian.com (`/herramientas`), que de
+      momento usa `palette="original"` con `colorMode="accent"`.
 - [ ] **Prueba del arreglo de Markdown.** `lib/ui/markdown.tsx` ya acepta la continuación sangrada de un ítem de lista
       (`- texto\n  sigue`); falta un caso de prueba que lo fije (ver el punto siguiente).
 - [ ] **Pruebas.** No hay pruebas automáticas: empezar por las funciones puras (`lib/ui/markdown.tsx`,
