@@ -62,14 +62,20 @@ warning danger`) · `emphasis` = énfasis de un botón · `tone` = token de colo
 
 ## Transiciones de página
 
-`PageTransition` anima la navegación con la View Transitions API (el `<ViewTransition>` de React; en el App Router de
-Next funciona sin configurar): `fade`, `slide`, `wipe`, `blinds`, `pixelate`, `scanline`, `glitch`, `iris`, `terminal`.
-Va en cada `page.tsx` (o en un `template.tsx`), nunca en un layout; `PageTransitionPersist` deja fija la cabecera.
+`PageTransition` anima la **ventana entera** al navegar con la View Transitions API (el `<ViewTransition>` de React; en
+el App Router de Next funciona sin configurar): `fade`, `slide`, `wipe`, `blinds`, `pixelate`, `scanline`, `glitch`,
+`iris`, `terminal`. Va en cada `page.tsx` (o en un `template.tsx`), nunca en un layout; `PageTransitionPersist` deja
+fija la cabecera (y cualquier elemento que deba quedarse quieto). `ElementTransition` aplica las mismas animaciones a la
+caja de un elemento suelto y `SharedTransition` transforma un elemento compartido entre dos páginas.
 
 ```tsx
 import PageTransition, { PageTransitionPersist, NAV_FORWARD, pageTransitionType } from "trama-ui/PageTransition";
 
+// app/layout.tsx
+<PageTransitionPersist name="cabecera"><header>…</header></PageTransitionPersist>
+// app/**/page.tsx
 <PageTransition kind="wipe">{/* contenido de la página */}</PageTransition>
+// enlaces
 <Link href="/siguiente" transitionTypes={[NAV_FORWARD]}>Siguiente</Link>
 <Link href="/contacto" transitionTypes={[pageTransitionType("terminal")]}>Contacto</Link>
 ```

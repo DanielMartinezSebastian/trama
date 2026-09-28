@@ -27,7 +27,7 @@ export const DOC_GROUPS: DocGroup[] = [
     label: "Guías",
     pages: [
       { slug: "guia", file: "02-guia-de-componentes.md", title: "Crear componentes", blurb: "Tokens, sistema de estilos, reglas y trampas conocidas.", description: "Guía para crear y ampliar componentes de Trama: tokens, sistema de estilos, variantes, accesibilidad, rendimiento y trampas conocidas." },
-      { slug: "transiciones", file: "05-transiciones-de-pagina.md", title: "Transiciones de página", blurb: "Animar la navegación entre páginas con View Transitions.", description: "Cómo animar la navegación entre páginas de Next.js con PageTransition de Trama: View Transitions, animaciones ASCII y CRT, cabecera fija y accesibilidad." },
+      { slug: "transiciones", file: "05-transiciones-de-pagina.md", title: "Transiciones de página", blurb: "Animar la ventana entera al navegar, o un elemento suelto, con View Transitions.", description: "Cómo animar la navegación entre páginas de Next.js con PageTransition de Trama: la ventana entera con View Transitions, animaciones ASCII y CRT, cabecera fija, elementos sueltos y compartidos, y accesibilidad." },
       { slug: "webs-completas", file: "03-webs-completas.md", title: "Webs completas", blurb: "Sitios de varias páginas: estructura y estado compartido.", description: "Cómo están hechas las webs completas de ejemplo de Trama: varias páginas, navegación sin recarga y estado compartido (carrito, chat)." },
     ],
   },

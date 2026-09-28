@@ -4,6 +4,36 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.5.0 — transiciones de página a pantalla completa
+
+Incluye todo lo de 0.3.0 y 0.4.0, que no llegaron a publicarse en npm: quien pase de 0.2.0 a 0.5.0 recibe los tres
+bloques (0.4.0 queda abajo como referencia; lo que cambia de su API se explica aquí).
+
+- **`PageTransition` anima la ventana entera.** En 0.4.0 envolvía la página en un `<ViewTransition>` y el efecto solo
+  ocupaba la caja del `<main>`: los fondos `position: fixed`, el pie y los márgenes cambiaban de golpe. Ahora anima la
+  raíz del documento (`::view-transition-old/new(root)`): todo el viewport salvo lo envuelto en `PageTransitionPersist`.
+  Su parte cliente pone en `<html>`, solo durante la navegación, `view-transition-name: root` en línea (React ya no
+  cancela la raíz), un `view-transition-class` con la animación, el ritmo y el tono, y `data-ui-vt`; al terminar la
+  transición lo retira. Mismas props (`kind`, `direction`, `pace`, `tone`, `types`) y mismas 9 animaciones, que ahora
+  cubren la ventana (bandas de color, máscaras y recortes incluidos). La animación la decide la página de destino; si
+  una navegación lleva varios tipos, se elige una (prioridad: `types` › `trama-*` › `nav-back` › `kind`).
+- **`PageTransitionPersist` funciona también en un layout**: si su hijo es un elemento HTML, le pone
+  `view-transition-name` en su `style` de forma permanente (React solo nombra los `<ViewTransition>` de las partes que
+  cambian, y una cabecera en un layout no cambia al navegar). Todo lo que deba quedarse quieto lo necesita.
+- **`ElementTransition`** (nuevo, `trama-ui/ElementTransition`): lo que era `PageTransition` en 0.4.0, la animación sobre
+  la caja de un elemento suelto que entra o sale en una transición de React. Mismas props.
+- **`SharedTransition`** (nuevo, en `trama-ui/ElementTransition`): elemento compartido entre dos vistas con el mismo
+  `name`; el navegador lo transforma de una caja a otra (`pace` ajusta la duración). Con «reducir movimiento», solo
+  funde.
+- Nuevas utilidades: `pickTransitionAnimation(tipos, { kind, direction, types })` (la elección de animación como función
+  pura) y los tipos `PageTransitionPace` / `PageTransitionTone`.
+- Arreglado de paso: las navegaciones entre layouts distintos (`/docs` → `/demos` → `/` en la web de Trama) ahora
+  animan igual que las de un mismo layout.
+- CSS: `ui-view-transitions.css` añade la variante `ui-vt-root` (vieja y nueva en el mismo grupo, sin mezcla aditiva,
+  fondo `--ui-vt-page` debajo) y `ui-vt-morph`. `PageTransition` ya no es solo de servidor: importa un componente
+  cliente diminuto (se sigue pudiendo usar en páginas de servidor).
+- Catálogo: «Transición de página» anima la ventana del catálogo; nueva entrada «Transición de elemento».
+
 ## 0.4.0 — transiciones de página (View Transitions)
 
 Incluye todo lo de 0.3.0, que no llegó a publicarse en npm: quien pase de 0.2.0 a 0.4.0 recibe ambos bloques.

@@ -11,7 +11,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [catalog.json](./catalog.json) | Lo mismo en datos, para herramientas. |
 | [02-guia-de-componentes.md](./02-guia-de-componentes.md) | Cómo **crear** componentes coherentes: tokens, sistema de estilos `--s-*`, reglas, trampas conocidas. |
 | [01-evaluacion.md](./01-evaluacion.md) | Historial de decisiones: por qué el kit es como es. Los conteos de cada apartado son los de su fecha. |
-| [05-transiciones-de-pagina.md](./05-transiciones-de-pagina.md) | **Transiciones de página** (`PageTransition`): animaciones al navegar con la View Transitions API, cómo colocarlas en el App Router de Next, cabecera fija y elección por enlace. |
+| [05-transiciones-de-pagina.md](./05-transiciones-de-pagina.md) | **Transiciones de página y de elementos** (`PageTransition`, `ElementTransition`, `SharedTransition`): la ventana entera al navegar con la View Transitions API (salvo la cabecera), elementos sueltos y compartidos, cómo colocarlas en el App Router de Next y elección por enlace. |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
@@ -102,7 +102,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` |
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` |
-| Transiciones | `SceneFlash` · `Reveal` · `Presence` · `PageTransition` (+ `PageTransitionPersist`) |
+| Transiciones | `SceneFlash` · `Reveal` · `Presence` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
 | Datos | `StatCounter` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
