@@ -99,13 +99,20 @@ los `searchParams` (`/tienda?p=2`): no remontan ni la página ni el template, as
 - **Por qué hace falta algo más.** Cuando todo lo que cambia en un commit está dentro de boundaries `<ViewTransition>`,
   React «cancela» la animación de la raíz: pone `view-transition-name: none` en línea en `<html>` (solo si ese estilo
   en línea está vacío) y oculta su grupo. Esa comprobación ocurre al final del commit, dentro del callback de la
-  transición, después de los efectos de layout. `PageTransition` lleva una parte cliente mínima que, en un efecto de
-  layout **al montarse** la página nueva:
+  transición, después de los efectos de layout. `PageTransition` lleva una parte cliente mínima
+  (`lib/ui/pageTransitionRoot.tsx`) que arma `<html>` en un efecto de layout:
   1. lee la transición en curso (`document.activeViewTransition`, o la que registra React) y sus tipos;
   2. pone en `<html>`, en línea, `view-transition-name: root` (así React ya no la cancela) y un
      `view-transition-class` con la animación, el ritmo y el tono (`ui-vt ui-vt-root ui-vt-wipe-left ui-vt--fast
      ui-vt--acc`), más `data-ui-vt="wipe-left"`;
-  3. cuando la transición termina (`finished`), deja `<html>` como estaba.
+  3. cuando esa transición termina (`finished`), deja `<html>` como estaba.
+- **Al montarse y al desmontarse.** Una navegación puede llegarle a React en **dos commits independientes** en vez de
+  uno —uno que desmonta la página de origen (nada nuevo aparece todavía) y, después, otro que monta la de destino—,
+  cada uno con su propio `document.startViewTransition`. `PageTransitionRoot` arma la raíz en ambos momentos del
+  mismo efecto (al montar y en su limpieza al desmontar), con la animación que tenía la página en cada caso: así el
+  commit de salida, si le toca ir por su cuenta, recibe el mismo tratamiento en vez del cross-fade por defecto del
+  navegador (0.6.1). Si el commit de salida ya tiene armada una transición sin terminar (navegaciones muy seguidas),
+  no se pisa: gana la que estaba primero.
 - Mientras dura la animación (240–560 ms) las capturas no son interactivas, pero los clics pasan a la página nueva
   (`::view-transition { pointer-events: none }`).
 

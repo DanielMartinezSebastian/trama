@@ -4,6 +4,19 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.6.1 — la cabecera ya no parpadea en navegaciones de dos commits
+
+- **Corrección:** `PageTransitionRoot` solo armaba la raíz (`<html>`) al *montarse* la página de destino. El App
+  Router de Next puede aplicar una navegación en dos commits independientes (uno que desmonta la página de origen sin
+  que la de destino haya llegado aún, y otro que la monta); el commit de salida no tenía nada que lo armara, así que
+  React lo cancelaba y caía al cross-fade por defecto del navegador —sin el CSS del kit— justo al lado de los
+  elementos persistentes (`PageTransitionPersist`), que sí se quedan quietos. Se percibía como que la cabecera
+  «parpadeaba». Ahora `PageTransitionRoot` también arma la raíz en la limpieza del efecto (al desmontarse), con la
+  misma animación que tenía la página, así que ese commit de salida recibe el mismo tratamiento en vez del estilo por
+  defecto del navegador.
+- No cambia ninguna prop ni comportamiento visible cuando la navegación llega en un solo commit (el caso más común,
+  con la ruta precargada).
+
 ## 0.6.0 — transiciones `scan` y `stack`
 
 Incluye todo lo de 0.3.0, 0.4.0 y 0.5.0, que no llegaron a publicarse en npm: quien pase de 0.2.0 a 0.6.0 recibe los

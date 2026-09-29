@@ -8,19 +8,20 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
 
 ## 0. Publicación del paquete
 
-- [ ] **Publicar `trama-ui@0.6.0` en npm** (incluye lo de 0.3.0, 0.4.0 y 0.5.0, que nunca se publicaron: transiciones
-      de página a pantalla completa con `scan` y `stack`, transiciones de elementos, envío real de `ContactForm` y ayudas accesibles). Está
+- [ ] **Publicar `trama-ui@0.6.1` en npm** (incluye lo de 0.3.0, 0.4.0, 0.5.0 y 0.6.0, que nunca se publicaron:
+      transiciones de página a pantalla completa con `scan` y `stack`, transiciones de elementos, envío real de
+      `ContactForm`, ayudas accesibles y la cabecera sin parpadeo). Está
       construido y empaquetado (rama `feat/view-transitions`, que sale de `fix/mejoras-desde-web`), pero no publicado:
       en el registro sigue la 0.2.0. Pasos (ver «Publicar en npm» en `README.md`):
-  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.6.0"` y que `CHANGELOG.md` tiene su
-     entrada (y las de 0.5.0, 0.4.0 y 0.3.0).
+  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.6.1"` y que `CHANGELOG.md` tiene su
+     entrada (y las de 0.6.0, 0.5.0, 0.4.0 y 0.3.0).
   2. `npm login` (cuenta dueña de `trama-ui`; `npm whoami` para confirmarlo).
   3. `npm run pkg:build` (vacía y regenera `dist-npm/`).
   4. `cd dist-npm && npm publish --dry-run` para revisar la lista de archivos, y después `npm publish`.
-  5. Comprobar con `npm view trama-ui version` (debe decir `0.6.0`).
+  5. Comprobar con `npm view trama-ui version` (debe decir `0.6.1`).
   6. **Web martinezsebastian.com:** de momento usa el paquete desde un `.tgz` incluido en su propio repo, en `vendor/`
-     (`dist-npm/trama-ui-0.6.0.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
-     (`npm i trama-ui@^0.6.0` en ese proyecto), borrar el `.tgz` de su `vendor/` y comprobar que el `package-lock.json`
+     (`dist-npm/trama-ui-0.6.1.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
+     (`npm i trama-ui@^0.6.1` en ese proyecto), borrar el `.tgz` de su `vendor/` y comprobar que el `package-lock.json`
      apunta a `registry.npmjs.org`.
 
 - [ ] **Comprobar a ojo las 11 animaciones de `PageTransition` a pantalla completa** en Chrome y Safari (pestaña
@@ -28,11 +29,12 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
       cubren la ventana y que la cabecera queda quieta. `scan` y `stack` (0.6.0) solo se han revisado leyendo el CSS. Verificado por código y con instrumentación JS (estado de `<html>` y nombres capturados en cada
       navegación), no visualmente.
 
-## 0a. La cabecera parpadea: Next divide algunas navegaciones en dos commits (bug)
+## 0a. La cabecera parpadea: Next divide algunas navegaciones en dos commits (arreglado en 0.6.1, falta confirmar a ojo)
 
 Reportado desde martinezsebastian.com: la cabecera (en `PageTransitionPersist`) "parpadea" o "se recarga" al navegar,
 incluso con la cabecera excluida correctamente por nombre. Investigado por código e instrumentación JS en el navegador
-(sin comprobación visual, a petición expresa); falta la confirmación a ojo de un humano.
+(sin comprobación visual, a petición expresa). **Corregido con la opción 1** de abajo, en 0.6.1; solo falta que
+alguien lo confirme a ojo en un navegador normal.
 
 - **Causa raíz encontrada.** Una navegación con `<Link>` del App Router puede llegar a React como **dos commits
   independientes**, cada uno disparando su propio `document.startViewTransition`: uno que desmonta la página de origen
@@ -62,14 +64,12 @@ incluso con la cabecera excluida correctamente por nombre. Investigado por códi
 
 **Plan de arreglo** (de la opción recomendada a las alternativas; una sola implementación, no las cuatro):
 
-1. **(Recomendada) Armar también al desmontar.** En `pageTransitionRoot.tsx`, añadir en la función de limpieza del
-   mismo `useLayoutEffect` una comprobación simétrica a la del montaje: si al desmontar hay una transición activa
-   *distinta* de la que ya se desarmó (el commit de salida aislado), armar `<html>` también para ella, con la misma
-   `kind`/`direction`/`pace`/`tone` que tenía esta página como mejor aproximación disponible — por ejemplo
-   reutilizando el `ui-vt-hold` que ya existe para `blinds`/`pixelate`/`iris` (mantener visible el contenido viejo
-   hasta que llegue el de verdad, en vez de un corte seco al color de fondo). Cambio acotado a un archivo, sin tocar
-   la API pública ni el resto de componentes.
-2. **Alternativa más simple:** si no se puede saber con fiabilidad qué animación traerá la página de destino en ese
+1. **[x] (Recomendada, implementada en 0.6.1) Armar también al desmontar.** `pageTransitionRoot.tsx` ahora tiene una
+   función `arm()` compartida que se llama tanto al montar como en la limpieza del mismo `useLayoutEffect` al
+   desmontar: si en ese momento hay una transición activa sin armar todavía (el commit de salida aislado), la arma
+   con la misma `kind`/`direction`/`pace`/`tone` que tenía la página. Si ya había una armada (la del propio montaje,
+   o una de una instancia anterior sin terminar), no se pisa. Sin cambios en la API pública.
+2. **Alternativa más simple (no usada):** si no se puede saber con fiabilidad qué animación traerá la página de destino en ese
    momento, usar siempre un `fade` corto (120–160 ms) como tratamiento neutro para ese commit aislado. Menos coherente
    visualmente que la opción 1, pero más simple y con menos superficie de fallo.
 3. **Alternativa arquitectónica (mayor cambio; valorar solo si 1 no basta):** disparar la transición desde un único
@@ -82,15 +82,15 @@ incluso con la cabecera excluida correctamente por nombre. Investigado por códi
    reutilizable para quien envuelva algo que no sea "un solo elemento HTML". Prioridad baja: es un extra de
    robustez, no la causa del bug.
 
-**Verificación sin pruebas visuales, antes de dar el punto por hecho:**
+**Verificación:**
 
-- Repetir la instrumentación: interceptar `document.startViewTransition`, contar llamadas por navegación y comprobar
-  que `<html>` lleva `data-ui-vt` y `view-transition-class` en **las dos**, no solo en la segunda.
-- Comprobar con `requestAnimationFrame` que `getComputedStyle(cabecera).getPropertyValue('view-transition-name')`
-  nunca queda vacío en ningún fotograma capturable durante la navegación.
-- `npm run typecheck`, `npm run catalog:check`, `npm run build`.
-- **Confirmación visual final:** la tiene que hacer una persona con los ojos, en un navegador normal (no en la
-  herramienta de automatización de este agente) — ningún agente ha podido verlo todavía, solo inferirlo por código.
+- [x] `npm run typecheck`, `npm run catalog:check`, `npm run build` — pasan con el cambio.
+- [ ] Repetir la instrumentación con el nuevo código: interceptar `document.startViewTransition`, contar llamadas por
+      navegación y comprobar que `<html>` lleva `data-ui-vt` y `view-transition-class` en **las dos**, no solo en la
+      segunda.
+- [ ] **Confirmación visual final:** la tiene que hacer una persona con los ojos, en un navegador normal (no en la
+      herramienta de automatización de un agente) — todavía no se ha visto el efecto, solo inferido y verificado por
+      código.
 
 ## 1. Publicación de la web
 
