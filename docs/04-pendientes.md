@@ -28,6 +28,70 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
       cubren la ventana y que la cabecera queda quieta. `scan` y `stack` (0.6.0) solo se han revisado leyendo el CSS. Verificado por código y con instrumentación JS (estado de `<html>` y nombres capturados en cada
       navegación), no visualmente.
 
+## 0a. La cabecera parpadea: Next divide algunas navegaciones en dos commits (bug)
+
+Reportado desde martinezsebastian.com: la cabecera (en `PageTransitionPersist`) "parpadea" o "se recarga" al navegar,
+incluso con la cabecera excluida correctamente por nombre. Investigado por código e instrumentación JS en el navegador
+(sin comprobación visual, a petición expresa); falta la confirmación a ojo de un humano.
+
+- **Causa raíz encontrada.** Una navegación con `<Link>` del App Router puede llegar a React como **dos commits
+  independientes**, cada uno disparando su propio `document.startViewTransition`: uno que desmonta la página de origen
+  (nada nuevo aparece todavía) y otro, después, que monta la de destino. Confirmado interceptando
+  `document.startViewTransition` y contando llamadas: **2 por clic**, siempre, incluso esperando varios segundos (link
+  ya precargado) antes de pulsar. Coincide con lo que documenta la propia guía de Next
+  (`node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`): "the destination suspends into a fallback
+  first, no pair forms".
+- **Por qué eso rompe el estilo.** `PageTransitionRoot` (`lib/ui/pageTransitionRoot.tsx`) solo arma `<html>`
+  (`view-transition-name: root` + clases) en el efecto de montaje de la página de DESTINO. El commit de SALIDA (la
+  página de origen desmontándose, sin que nada nuevo se monte en el mismo commit) no tiene ningún `PageTransitionRoot`
+  nuevo que lo arme. Sin nadie que lo arme, React cancela nuestra raíz personalizada (dessarma `<html>`, ver el
+  comentario de cabecera del propio archivo) y ese commit cae al **cross-fade por defecto del navegador, sin nuestro
+  CSS**, sobre un contenido que en ese instante está vacío (la página vieja ya no está, la nueva aún no ha llegado).
+  Ese destello sin estilo, pegado a una cabecera que sí se queda quieta, es lo que se percibe como que "la cabecera
+  parpadea o se recarga".
+- **Descartado como causa:** la exclusión de la cabecera en sí. `PageTransitionPersist` le pone
+  `view-transition-name`/`-class` como prop de JSX en cada render, sin depender de ningún efecto ni de timing; y el
+  bloque `@media (prefers-reduced-motion: reduce)` de `ui-view-transitions.css` selecciona el token `.ui-vt`, que
+  `.ui-vt-persist` no lleva, así que tampoco le afecta. La cabecera en sí está bien excluida en ambos commits; el
+  problema es el *contenido* del commit de salida, no la cabecera.
+- **Sin confirmar:** en algunas pruebas también salió `InvalidStateError: ... aborted ... Document hidden` en las dos
+  transiciones; React trata ese error como esperado (lo traga y aplica el cambio sin animar). Puede ser un artefacto
+  del entorno de automatización de este agente (la pestaña pierde el foco durante la prueba) más que algo que le pase
+  a un usuario real con la pestaña activa; no descartarlo del todo, pero es secundario frente al punto de arriba, que
+  se reprodujo de forma consistente y no depende de ningún acto de automatización.
+
+**Plan de arreglo** (de la opción recomendada a las alternativas; una sola implementación, no las cuatro):
+
+1. **(Recomendada) Armar también al desmontar.** En `pageTransitionRoot.tsx`, añadir en la función de limpieza del
+   mismo `useLayoutEffect` una comprobación simétrica a la del montaje: si al desmontar hay una transición activa
+   *distinta* de la que ya se desarmó (el commit de salida aislado), armar `<html>` también para ella, con la misma
+   `kind`/`direction`/`pace`/`tone` que tenía esta página como mejor aproximación disponible — por ejemplo
+   reutilizando el `ui-vt-hold` que ya existe para `blinds`/`pixelate`/`iris` (mantener visible el contenido viejo
+   hasta que llegue el de verdad, en vez de un corte seco al color de fondo). Cambio acotado a un archivo, sin tocar
+   la API pública ni el resto de componentes.
+2. **Alternativa más simple:** si no se puede saber con fiabilidad qué animación traerá la página de destino en ese
+   momento, usar siempre un `fade` corto (120–160 ms) como tratamiento neutro para ese commit aislado. Menos coherente
+   visualmente que la opción 1, pero más simple y con menos superficie de fallo.
+3. **Alternativa arquitectónica (mayor cambio; valorar solo si 1 no basta):** disparar la transición desde un único
+   componente cliente en el layout raíz (que nunca se desmonta) reaccionando a `usePathname()`, en vez de desde cada
+   `page.tsx`/`template.tsx`. Investigar primero si es viable engancharse a la actualización de Next sin duplicar
+   trabajo; no emprenderlo sin haber probado antes la opción 1.
+4. **Endurecimiento independiente (hacerlo de todos modos, sea cual sea la causa):** hoy `PageTransitionPersist` solo
+   excluye vía `style` en línea puesto por React. En la práctica es estable porque se aplica en cada render y el
+   layout donde vive no se desmonta, pero no cuesta nada documentar/ofrecer también la exclusión como clase CSS
+   reutilizable para quien envuelva algo que no sea "un solo elemento HTML". Prioridad baja: es un extra de
+   robustez, no la causa del bug.
+
+**Verificación sin pruebas visuales, antes de dar el punto por hecho:**
+
+- Repetir la instrumentación: interceptar `document.startViewTransition`, contar llamadas por navegación y comprobar
+  que `<html>` lleva `data-ui-vt` y `view-transition-class` en **las dos**, no solo en la segunda.
+- Comprobar con `requestAnimationFrame` que `getComputedStyle(cabecera).getPropertyValue('view-transition-name')`
+  nunca queda vacío en ningún fotograma capturable durante la navegación.
+- `npm run typecheck`, `npm run catalog:check`, `npm run build`.
+- **Confirmación visual final:** la tiene que hacer una persona con los ojos, en un navegador normal (no en la
+  herramienta de automatización de este agente) — ningún agente ha podido verlo todavía, solo inferirlo por código.
+
 ## 1. Publicación de la web
 
 - [ ] **Dominio.** Definir `NEXT_PUBLIC_SITE_URL` (p. ej. `https://trama.dev`) en el hosting. Sin ella, fuera de Vercel,
