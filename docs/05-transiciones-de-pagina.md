@@ -100,19 +100,12 @@ los `searchParams` (`/tienda?p=2`): no remontan ni la página ni el template, as
   React «cancela» la animación de la raíz: pone `view-transition-name: none` en línea en `<html>` (solo si ese estilo
   en línea está vacío) y oculta su grupo. Esa comprobación ocurre al final del commit, dentro del callback de la
   transición, después de los efectos de layout. `PageTransition` lleva una parte cliente mínima
-  (`lib/ui/pageTransitionRoot.tsx`) que arma `<html>` en un efecto de layout:
+  que, en un efecto de layout **al montarse** la página nueva, arma `<html>`:
   1. lee la transición en curso (`document.activeViewTransition`, o la que registra React) y sus tipos;
   2. pone en `<html>`, en línea, `view-transition-name: root` (así React ya no la cancela) y un
      `view-transition-class` con la animación, el ritmo y el tono (`ui-vt ui-vt-root ui-vt-wipe-left ui-vt--fast
      ui-vt--acc`), más `data-ui-vt="wipe-left"`;
   3. cuando esa transición termina (`finished`), deja `<html>` como estaba.
-- **Al montarse y al desmontarse.** Una navegación puede llegarle a React en **dos commits independientes** en vez de
-  uno —uno que desmonta la página de origen (nada nuevo aparece todavía) y, después, otro que monta la de destino—,
-  cada uno con su propio `document.startViewTransition`. `PageTransitionRoot` arma la raíz en ambos momentos del
-  mismo efecto (al montar y en su limpieza al desmontar), con la animación que tenía la página en cada caso: así el
-  commit de salida, si le toca ir por su cuenta, recibe el mismo tratamiento en vez del cross-fade por defecto del
-  navegador (0.6.1). Si el commit de salida ya tiene armada una transición sin terminar (navegaciones muy seguidas),
-  no se pisa: gana la que estaba primero.
 - Mientras dura la animación (240–560 ms) las capturas no son interactivas, pero los clics pasan a la página nueva
   (`::view-transition { pointer-events: none }`).
 
@@ -192,11 +185,16 @@ parte de la captura de la raíz y se anima con el resto.
 ```
 
 - Si el hijo es **un elemento HTML** (`<header>`, `<nav>`, `<aside>`…), `PageTransitionPersist` le pone
-  `view-transition-name` y `view-transition-class: ui-vt-persist` en su `style`, de forma permanente. Así funciona
-  también en un **layout**, que React no vuelve a tocar en la navegación (React solo nombra los `<ViewTransition>` de
-  las partes del árbol que cambian).
-- Si el hijo es un componente o varios nodos, solo actúa el `<ViewTransition>` de React: vale para lo que se vuelve a
-  renderizar con la página, no para un layout. Pásale el elemento HTML directamente siempre que puedas.
+  `view-transition-name` y `view-transition-class: ui-vt-persist` en su `style`, de forma permanente, y **nada más**.
+  Así funciona también en un **layout**, que React no vuelve a tocar en la navegación.
+- **No lo envuelve en un `<ViewTransition>` de React, a propósito** (0.6.2). Un boundary que no cambia en un commit se
+  considera «cancelable»: React lo restaura y oculta su grupo con una animación de opacidad 0. Con el nombre ya puesto
+  en el elemento, el navegador sigue sin pintarlo en el DOM real mientras dura la transición y su grupo está oculto:
+  la cabecera **desaparecía hasta que terminaba**, en toda navegación que no cambiaba nada dentro de ella (en una web
+  con menú, las que no cambian el enlace activo: Home ↔ Contacto, legales, 404…). Sin boundary, React no la ve y el
+  navegador la pinta en su grupo, quieta.
+- Si el hijo es un componente o varios nodos, no hay dónde poner el nombre en línea y solo actúa el `<ViewTransition>`
+  de React: no la deja quieta en un layout. **Pásale siempre un solo elemento HTML.**
 - Cada `name`, único en la página: dos elementos con el mismo nombre a la vez hacen que el navegador cancele la
   transición. Se captura aparte, no se mueve ni se funde y queda por encima (el enlace activo cambia sin animar).
 

@@ -4,18 +4,26 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
-## 0.6.1 — la cabecera ya no parpadea en navegaciones de dos commits
+## 0.6.2 — la cabecera ya no desaparece durante la transición
 
-- **Corrección:** `PageTransitionRoot` solo armaba la raíz (`<html>`) al *montarse* la página de destino. El App
-  Router de Next puede aplicar una navegación en dos commits independientes (uno que desmonta la página de origen sin
-  que la de destino haya llegado aún, y otro que la monta); el commit de salida no tenía nada que lo armara, así que
-  React lo cancelaba y caía al cross-fade por defecto del navegador —sin el CSS del kit— justo al lado de los
-  elementos persistentes (`PageTransitionPersist`), que sí se quedan quietos. Se percibía como que la cabecera
-  «parpadeaba». Ahora `PageTransitionRoot` también arma la raíz en la limpieza del efecto (al desmontarse), con la
-  misma animación que tenía la página, así que ese commit de salida recibe el mismo tratamiento en vez del estilo por
-  defecto del navegador.
-- No cambia ninguna prop ni comportamiento visible cuando la navegación llega en un solo commit (el caso más común,
-  con la ruta precargada).
+- **Corrección de fondo:** `PageTransitionPersist` con un elemento HTML como hijo (el caso de una cabecera en el
+  layout) le ponía `view-transition-name` en línea **y además** lo envolvía en un `<ViewTransition>` de React.
+  En un commit en el que nada cambia dentro de la cabecera, React trata ese boundary como cancelable: lo restaura y
+  oculta su grupo con una animación de opacidad 0. Como el nombre seguía puesto, el navegador no pintaba la cabecera
+  real mientras duraba la transición y su grupo estaba oculto: **la cabecera desaparecía entre 0,3 y 1 s** en toda
+  navegación que no cambiaba nada en ella (Home ↔ Contacto, legales, 404…; con un clic en el menú, que cambia el
+  enlace activo, no pasaba, de ahí que pareciera intermitente), y además disparaba una segunda transición. Ahora,
+  con un elemento HTML como hijo, solo se le ponen `view-transition-name` y `-class` en el `style` y no se envuelve
+  en ningún `<ViewTransition>`. Comprobado con un Chrome real comparando píxeles fotograma a fotograma: antes,
+  ausente ~880 ms; ahora, presente en todos los fotogramas.
+- Sin cambios de API. Con un componente o varios nodos como hijo sigue actuando solo el `<ViewTransition>` de React
+  (no la deja quieta en un layout): pásale siempre un solo elemento HTML.
+
+## 0.6.1 — retirada
+
+Intentaba arreglar la desaparición de la cabecera armando también la raíz al desmontar la página. La causa era otra
+(ver 0.6.2), así que no arreglaba nada, y además hacía que la animación de la página de origen pisara la de destino.
+Se ha revertido; no publicar esta versión.
 
 ## 0.6.0 — transiciones `scan` y `stack`
 

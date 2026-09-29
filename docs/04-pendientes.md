@@ -8,20 +8,20 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
 
 ## 0. Publicación del paquete
 
-- [ ] **Publicar `trama-ui@0.6.1` en npm** (incluye lo de 0.3.0, 0.4.0, 0.5.0 y 0.6.0, que nunca se publicaron:
+- [ ] **Publicar `trama-ui@0.6.2` en npm** (incluye lo de 0.3.0, 0.4.0, 0.5.0 y 0.6.0/0.6.1, que nunca se publicaron:
       transiciones de página a pantalla completa con `scan` y `stack`, transiciones de elementos, envío real de
       `ContactForm`, ayudas accesibles y la cabecera sin parpadeo). Está
       construido y empaquetado (rama `feat/view-transitions`, que sale de `fix/mejoras-desde-web`), pero no publicado:
       en el registro sigue la 0.2.0. Pasos (ver «Publicar en npm» en `README.md`):
-  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.6.1"` y que `CHANGELOG.md` tiene su
+  1. Fusionar la rama en `main` y comprobar que `package.json` dice `"version": "0.6.2"` y que `CHANGELOG.md` tiene su
      entrada (y las de 0.6.0, 0.5.0, 0.4.0 y 0.3.0).
   2. `npm login` (cuenta dueña de `trama-ui`; `npm whoami` para confirmarlo).
   3. `npm run pkg:build` (vacía y regenera `dist-npm/`).
   4. `cd dist-npm && npm publish --dry-run` para revisar la lista de archivos, y después `npm publish`.
-  5. Comprobar con `npm view trama-ui version` (debe decir `0.6.1`).
+  5. Comprobar con `npm view trama-ui version` (debe decir `0.6.2`).
   6. **Web martinezsebastian.com:** de momento usa el paquete desde un `.tgz` incluido en su propio repo, en `vendor/`
-     (`dist-npm/trama-ui-0.6.1.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
-     (`npm i trama-ui@^0.6.1` en ese proyecto), borrar el `.tgz` de su `vendor/` y comprobar que el `package-lock.json`
+     (`dist-npm/trama-ui-0.6.2.tgz` copiado allí). Cuando esté publicada, volver a la versión del registro
+     (`npm i trama-ui@^0.6.2` en ese proyecto), borrar el `.tgz` de su `vendor/` y comprobar que el `package-lock.json`
      apunta a `registry.npmjs.org`.
 
 - [ ] **Comprobar a ojo las 11 animaciones de `PageTransition` a pantalla completa** en Chrome y Safari (pestaña
@@ -29,68 +29,28 @@ Antes de dar un punto por hecho: `npm run typecheck`, `npm run catalog:check` y,
       cubren la ventana y que la cabecera queda quieta. `scan` y `stack` (0.6.0) solo se han revisado leyendo el CSS. Verificado por código y con instrumentación JS (estado de `<html>` y nombres capturados en cada
       navegación), no visualmente.
 
-## 0a. La cabecera parpadea: Next divide algunas navegaciones en dos commits (arreglado en 0.6.1, falta confirmar a ojo)
+## 0a. La cabecera desaparecía durante la transición (arreglado en 0.6.2)
 
-Reportado desde martinezsebastian.com: la cabecera (en `PageTransitionPersist`) "parpadea" o "se recarga" al navegar,
-incluso con la cabecera excluida correctamente por nombre. Investigado por código e instrumentación JS en el navegador
-(sin comprobación visual, a petición expresa). **Corregido con la opción 1** de abajo, en 0.6.1; solo falta que
-alguien lo confirme a ojo en un navegador normal.
+Reportado desde martinezsebastian.com: la cabecera «parpadeaba» o «se recargaba» al navegar, sobre todo con el botón
+del Home hacia Contacto. **Causa real (verificada con un Chrome real, comparando píxeles fotograma a fotograma):**
+`PageTransitionPersist` ponía `view-transition-name` en línea en el elemento y además lo envolvía en un
+`<ViewTransition>` de React. React trata un boundary que no cambia en un commit como cancelable: lo restaura y oculta
+su grupo con `documentElement.animate({ opacity: [0, 0] }, { pseudoElement: "::view-transition-group(nombre)" })`
+(react-dom, `commitAfterMutationEffectsOnFiber`, caso de la raíz). Como el elemento seguía con el nombre, el navegador
+no lo pintaba en el DOM real durante la transición y su grupo estaba a opacidad 0: **ausente entre 0,3 y 1 s**. Solo
+pasaba en navegaciones donde nada cambiaba dentro de la cabecera (Home ↔ Contacto, legales, 404…); con un clic en el
+menú, que cambia el enlace activo, el boundary sí «cambiaba» y no se ocultaba. De ahí que pareciera intermitente.
+Además el boundary provocaba una segunda `document.startViewTransition` tras la de la navegación.
 
-- **Causa raíz encontrada.** Una navegación con `<Link>` del App Router puede llegar a React como **dos commits
-  independientes**, cada uno disparando su propio `document.startViewTransition`: uno que desmonta la página de origen
-  (nada nuevo aparece todavía) y otro, después, que monta la de destino. Confirmado interceptando
-  `document.startViewTransition` y contando llamadas: **2 por clic**, siempre, incluso esperando varios segundos (link
-  ya precargado) antes de pulsar. Coincide con lo que documenta la propia guía de Next
-  (`node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`): "the destination suspends into a fallback
-  first, no pair forms".
-- **Por qué eso rompe el estilo.** `PageTransitionRoot` (`lib/ui/pageTransitionRoot.tsx`) solo arma `<html>`
-  (`view-transition-name: root` + clases) en el efecto de montaje de la página de DESTINO. El commit de SALIDA (la
-  página de origen desmontándose, sin que nada nuevo se monte en el mismo commit) no tiene ningún `PageTransitionRoot`
-  nuevo que lo arme. Sin nadie que lo arme, React cancela nuestra raíz personalizada (dessarma `<html>`, ver el
-  comentario de cabecera del propio archivo) y ese commit cae al **cross-fade por defecto del navegador, sin nuestro
-  CSS**, sobre un contenido que en ese instante está vacío (la página vieja ya no está, la nueva aún no ha llegado).
-  Ese destello sin estilo, pegado a una cabecera que sí se queda quieta, es lo que se percibe como que "la cabecera
-  parpadea o se recarga".
-- **Descartado como causa:** la exclusión de la cabecera en sí. `PageTransitionPersist` le pone
-  `view-transition-name`/`-class` como prop de JSX en cada render, sin depender de ningún efecto ni de timing; y el
-  bloque `@media (prefers-reduced-motion: reduce)` de `ui-view-transitions.css` selecciona el token `.ui-vt`, que
-  `.ui-vt-persist` no lleva, así que tampoco le afecta. La cabecera en sí está bien excluida en ambos commits; el
-  problema es el *contenido* del commit de salida, no la cabecera.
-- **Sin confirmar:** en algunas pruebas también salió `InvalidStateError: ... aborted ... Document hidden` en las dos
-  transiciones; React trata ese error como esperado (lo traga y aplica el cambio sin animar). Puede ser un artefacto
-  del entorno de automatización de este agente (la pestaña pierde el foco durante la prueba) más que algo que le pase
-  a un usuario real con la pestaña activa; no descartarlo del todo, pero es secundario frente al punto de arriba, que
-  se reprodujo de forma consistente y no depende de ningún acto de automatización.
+Corregido quitando el `<ViewTransition>` cuando el hijo es un elemento HTML (solo estilo en línea).
 
-**Plan de arreglo** (de la opción recomendada a las alternativas; una sola implementación, no las cuatro):
-
-1. **[x] (Recomendada, implementada en 0.6.1) Armar también al desmontar.** `pageTransitionRoot.tsx` ahora tiene una
-   función `arm()` compartida que se llama tanto al montar como en la limpieza del mismo `useLayoutEffect` al
-   desmontar: si en ese momento hay una transición activa sin armar todavía (el commit de salida aislado), la arma
-   con la misma `kind`/`direction`/`pace`/`tone` que tenía la página. Si ya había una armada (la del propio montaje,
-   o una de una instancia anterior sin terminar), no se pisa. Sin cambios en la API pública.
-2. **Alternativa más simple (no usada):** si no se puede saber con fiabilidad qué animación traerá la página de destino en ese
-   momento, usar siempre un `fade` corto (120–160 ms) como tratamiento neutro para ese commit aislado. Menos coherente
-   visualmente que la opción 1, pero más simple y con menos superficie de fallo.
-3. **Alternativa arquitectónica (mayor cambio; valorar solo si 1 no basta):** disparar la transición desde un único
-   componente cliente en el layout raíz (que nunca se desmonta) reaccionando a `usePathname()`, en vez de desde cada
-   `page.tsx`/`template.tsx`. Investigar primero si es viable engancharse a la actualización de Next sin duplicar
-   trabajo; no emprenderlo sin haber probado antes la opción 1.
-4. **Endurecimiento independiente (hacerlo de todos modos, sea cual sea la causa):** hoy `PageTransitionPersist` solo
-   excluye vía `style` en línea puesto por React. En la práctica es estable porque se aplica en cada render y el
-   layout donde vive no se desmonta, pero no cuesta nada documentar/ofrecer también la exclusión como clase CSS
-   reutilizable para quien envuelva algo que no sea "un solo elemento HTML". Prioridad baja: es un extra de
-   robustez, no la causa del bug.
-
-**Verificación:**
-
-- [x] `npm run typecheck`, `npm run catalog:check`, `npm run build` — pasan con el cambio.
-- [ ] Repetir la instrumentación con el nuevo código: interceptar `document.startViewTransition`, contar llamadas por
-      navegación y comprobar que `<html>` lleva `data-ui-vt` y `view-transition-class` en **las dos**, no solo en la
-      segunda.
-- [ ] **Confirmación visual final:** la tiene que hacer una persona con los ojos, en un navegador normal (no en la
-      herramienta de automatización de un agente) — todavía no se ha visto el efecto, solo inferido y verificado por
-      código.
+- [x] Arreglo en `components/ui/PageTransition.tsx` (`PageTransitionPersist`), documentado en `docs/05` y `CHANGELOG.md`.
+- [x] Revertida la 0.6.2, que armaba la raíz al desmontar: partía de un diagnóstico equivocado (dos commits sin armar)
+      y no arreglaba nada.
+- [ ] **Prueba de regresión automática.** Se validó con `puppeteer-core` + Chrome headless: clic real, `Page.startScreencast`
+      y un detector por píxeles del botón de la cabecera (presente/ausente por fotograma). No está en el repo porque
+      pide `puppeteer-core` y un Chrome; valdría un script en `scripts/` para el catálogo de `/componentes`.
+- [ ] Comprobar a ojo, en un navegador normal, Home → Contacto y una navegación con clic en el menú.
 
 ## 1. Publicación de la web
 

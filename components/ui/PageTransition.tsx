@@ -72,21 +72,27 @@ export type PageTransitionPersistProps = {
  * se captura aparte, se queda quieto y por encima mientras el resto de la ventana transiciona. Todo elemento que deba
  * quedarse quieto lo necesita, esté en el layout o en la página.
  *
- * Si el hijo es UN elemento HTML (`<header>`, `<nav>`, `<aside>`…), se le pone `view-transition-name` en su `style`
- * de forma permanente: así queda excluido aunque viva en un layout que React no vuelve a tocar en la navegación (React
- * solo nombra los `<ViewTransition>` de las partes del árbol que cambian). Con otro hijo (un componente, varios nodos)
- * solo actúa el `<ViewTransition>` de React: vale para lo que se vuelve a renderizar con la página, no para un layout.
+ * Si el hijo es UN elemento HTML (`<header>`, `<nav>`, `<aside>`…), se le pone `view-transition-name` y
+ * `view-transition-class` en su `style`, y **nada más**: sin `<ViewTransition>` de React. Es a propósito. Un boundary de
+ * React que no cambia en un commit se considera «cancelable»: React lo restaura y oculta su grupo con una animación de
+ * opacidad 0 (`::view-transition-group(nombre)`). Con el nombre ya puesto en el elemento, el navegador sigue sin
+ * pintarlo en el DOM real mientras dura la transición, y su grupo está oculto: la cabecera desaparece hasta que
+ * termina. Pasaba en toda navegación que no cambiaba nada dentro de ella (en una web con menú, todas las que no cambian
+ * el enlace activo). Sin boundary, React no sabe que existe y el navegador la pinta en su propio grupo, quieta.
+ *
+ * Con otro hijo (un componente, varios nodos) no hay dónde poner el nombre en línea: solo actúa el `<ViewTransition>`
+ * de React, que vale para lo que se vuelve a renderizar con la página, no para un layout, y no la deja quieta. Pásale
+ * siempre UN elemento HTML.
  */
 export function PageTransitionPersist({ name = "ui-site-header", children }: PageTransitionPersistProps) {
   if (!ViewTransition) return <Fragment>{children}</Fragment>;
-  let child = children;
   if (Children.count(children) === 1 && isValidElement(children) && typeof children.type === "string") {
     const el = children as ReactElement<{ style?: CSSProperties }>;
-    child = cloneElement(el, { style: { ...el.props.style, viewTransitionName: name, viewTransitionClass: "ui-vt-persist" } as CSSProperties });
+    return cloneElement(el, { style: { ...el.props.style, viewTransitionName: name, viewTransitionClass: "ui-vt-persist" } as CSSProperties });
   }
   return (
     <ViewTransition name={name} default="ui-vt-persist" share="ui-vt-persist" enter="ui-vt-persist" exit="ui-vt-persist" update="ui-vt-persist">
-      {child}
+      {children}
     </ViewTransition>
   );
 }
