@@ -1187,3 +1187,73 @@ Trampas:
    percusión), timbres y el orden en que entran las capas; `semilla % 4` elige la entrada (0 bombo y rumble, 1 acid sola,
    2 acordes con eco, 3 percusión). Para una lista de demo, usa semillas con restos distintos (4, 5, 14…): si todas
    tienen el mismo resto, empiezan igual.
+
+## 26. Mockups de dispositivo: `DeviceMockup` y `DeviceMockup3D`
+
+Para enseñar cómo quedó una web (portfolio, casos de éxito, la sección «así se ve» de una landing) dentro de un móvil, una
+tablet, un portátil, un monitor o una ventana de navegador. Son dos componentes con las mismas props:
+
+| Componente | Cómo pinta | Dependencias |
+|---|---|---|
+| `DeviceMockup` | Carcasa en DOM + CSS, con pose en perspectiva (`rotateX`, `rotateY`) y movimiento por CSS | ninguna; va en el barrel |
+| `DeviceMockup3D` | Carcasa three.js generada (canto, cristal, reflejos, sombra) y la pantalla como DOM colocado en 3D | `three` y `@react-three/fiber` (opcionales): `trama-ui/DeviceMockup3D` |
+
+**Por qué no una librería existente.** Las que hay (`react-device-frameset` y demás envoltorios de Devices.css,
+`react-mockframe`) son marcos CSS de modelos comerciales concretos con colores fijos: no siguen los tokens del tema, no
+tienen 3D ni reserva estática. `@react-three/drei` (`<Html transform>`) resuelve el DOM en 3D, pero es una dependencia
+grande para una sola pieza. `three` ya trae `CSS3DRenderer`, que hace lo mismo, así que no se añade ninguna dependencia.
+
+**Contenido** (por orden de preferencia): `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura;
+`gen:N` vale). Con `url` o `video`, `image` es la imagen previa mientras carga y la que queda en modo estático. Una captura
+más alta que la pantalla se recorre sola con `imageScroll` (`hover` por defecto, `auto`, `none`).
+
+**Viewport simulado.** La pantalla se maqueta al ancho real del aparato (móvil 390 px, tablet 820, portátil 1440, monitor
+1920, navegador 1280) y se reduce al tamaño del mockup: la web se ve como en ese dispositivo, con sus media queries reales
+si es un iframe. `viewportWidth` cambia ese ancho. Los `children` no están en otro documento, así que sus media queries
+miran la ventana real: la pantalla es un contenedor (`container-type: inline-size`), usa `@container` y unidades `cqw`.
+
+**Reserva y modo estático** (`render` de `DeviceMockup3D`): `auto` usa 3D salvo sin WebGL2, con `Save-Data`, ≤ 2 GB de
+memoria, ≤ 2 núcleos o `prefers-reduced-motion`; entonces pinta `DeviceMockup` con `still` (sin movimiento y con `image` en
+lugar de la web). `3d` lo fuerza, `flat` es la versión CSS y `static`, la CSS quieta. Mientras llegan three y el primer
+fotograma se ve la versión CSS en la misma caja y con la misma pose, sin salto de layout.
+
+Cómo funciona (`lib/ui/devices.ts`, `lib/device3d/scene.tsx`):
+
+- **Una sola geometría.** `deviceGeometry()` describe cada aparato en «px de dispositivo» (la pantalla mide su viewport). La
+  versión CSS lo pasa a porcentajes de la caja y la 3D lo usa como unidades de escena; la perspectiva CSS y la cámara
+  comparten distancia (`cameraDistance`). Un dispositivo nuevo es una rama más ahí y su nombre en `DEVICES`.
+- **La pantalla es DOM, también en 3D.** `CSS3DRenderer` la coloca con la misma cámara **detrás** del lienzo, y el modelo
+  tiene en su sitio una malla que escribe píxeles transparentes (`NoBlending`). Así el propio modelo tapa la pantalla al
+  girar, el reflejo y la isla se dibujan encima, y los clics llegan al iframe (el lienzo no recibe eventos).
+- **Coste.** `frameloop="demand"`: quieto no dibuja; solo pide fotogramas mientras hay movimiento. El lienzo se crea al
+  acercarse a la pantalla (`IntersectionObserver`, 300 px de margen) y se detiene fuera. three se carga con `lazy()`.
+- **Brillos.** La carcasa y el cristal reflejan un entorno de estudio generado, y esos reflejos se desplazan cuando el
+  aparato flota, gira o sigue al puntero. `shine` los gradúa (1 = normal; 0 = carcasa mate y sin reflejo del cristal; hasta
+  2); `glare={false}` quita solo la banda del cristal. En la versión CSS, `shine` es la opacidad de esa banda.
+- **Color.** La carcasa es `--tone` (prop `tone`) mezclado al 38 % con `--bg`; el cristal es casi negro en cualquier tema.
+
+Trampas:
+
+- **Una web solo se incrusta si lo permite.** `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco y no se
+  puede detectar desde fuera; y la CSP de la página que la muestra necesita `frame-src` con ese origen. Para webs de
+  terceros, captura. Esta web permite incrustarse a sí misma (`SAMEORIGIN`, `frame-ancestors 'self'` en `next.config.ts`)
+  para poder enseñar sus demos.
+- **El contenedor necesita ancho propio.** El mockup ocupa el 100 % hasta `--device-max`; en un grid de columnas `auto` o un
+  flex que se ajusta al contenido, colapsa. Dale `minmax(0, 1fr)` o un ancho.
+- **Un contexto WebGL por mockup 3D** (los navegadores admiten unos 16 y descartan los más antiguos): en una rejilla de
+  proyectos, 3D en uno o dos destacados y `DeviceMockup` en el resto.
+- **Dos móviles.** `platform="ios"` (por defecto) es un iPhone: isla alargada, esquinas muy redondas, viewport 390 × 844.
+  `platform="android"`: cámara frontal redonda, esquinas más cerradas, 412 × 915. La tablet no cambia.
+- **La isla del móvil tapa lo que haya arriba** (menús, cabeceras fijas), igual que en un teléfono real con una web que
+  no usa `env(safe-area-inset-top)`. `safeArea` reserva esa franja (a la izquierda en horizontal) y pinta la web debajo; la
+  franja mide la isla más el mismo margen por los dos lados, así que la isla queda centrada en ella. Es negra o del color
+  de `--device-safe`.
+- **Navegación del sistema.** `systemNav` añade abajo el indicador de inicio (iOS) o los tres botones de Android (atrás,
+  inicio, recientes; a la derecha con el móvil en horizontal) y acorta la página para que la web quede por encima. La franja
+  usa `--device-safe`, como el área segura, y los iconos `--device-nav`. Es dibujo, no botones: no hacen nada.
+- **Girar móvil y tablet.** `orientation` es la orientación inicial; `rotatable` pinta debajo un botón (`rotateLabel` es su
+  nombre accesible) con el que el visitante alterna vertical y horizontal. Con el botón dentro, la raíz deja de ser
+  `role="img"` y pasa a `group`, para que el lector de pantalla llegue al botón.
+- **`interactive` es `false` por defecto**: el contenido lleva `inert` para que la vista previa no atrape el scroll ni el
+  foco. Actívalo solo si la gracia es usar la web dentro.
+- En CSS no hay cara trasera: `motion="spin"` es un balanceo amplio; la vuelta completa solo existe en 3D.

@@ -1016,6 +1016,91 @@ Carrusel genérico sobre Swiper: cada hijo es una diapositiva. Diapositivas visi
 - Las secciones (testimonios, ventajas, precios, equipo, blog) lo usan por dentro con `layout="carousel"`; úsalo directamente para cualquier lista de tarjetas.
 - En pantallas estrechas baja solo a 2 y a 1 diapositiva visible.
 
+### Mockup de dispositivo — `DeviceMockup`
+
+Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana de navegador dibujados con CSS: web real en un iframe a tamaño de viewport, captura (con recorrido de páginas largas), vídeo o contenido React. Sin WebGL ni dependencias; para enseñar proyectos en un portfolio o una landing.
+
+| prop | tipo | default |
+|---|---|---|
+| `device` | `phone` · `tablet` · `laptop` · `desktop` · `browser` | "phone" |
+| `platform` | `ios` · `android` | "ios" |
+| `orientation` | `portrait` · `landscape` | "portrait" |
+| `rotatable` | boolean | false |
+| `rotateLabel` | text | "Girar el dispositivo" |
+| `url` | text | "" |
+| `image` | text | "" |
+| `video` | text | "" |
+| `alt` | text | "" |
+| `urlLabel` | text | "" |
+| `imageScroll` | `hover` · `auto` · `none` | "hover" |
+| `interactive` | boolean | false |
+| `viewportWidth` | number 0–1920 | 0 |
+| `safeArea` | boolean | false |
+| `systemNav` | boolean | false |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
+| `rotateX` | number -30–40 | 0 |
+| `rotateY` | number -60–60 | 0 |
+| `motion` | `none` · `float` · `sway` · `spin` · `pointer` | "float" |
+| `speed` | number 0.2–3 | 1 |
+| `shadow` | boolean | true |
+| `glare` | boolean | true |
+| `shine` | number 0–2 | 1 |
+| `still` | boolean | false |
+
+- Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.
+- La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.
+- Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.
+- Ocupa el ancho de su contenedor (que debe tener ancho propio) hasta `--device-max`: 300 px el móvil, 460 la tablet, 860 el portátil, 900 el monitor y el navegador.
+- `safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).
+- `orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).
+- `systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.
+- Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.
+- Con `prefers-reduced-motion` queda quieto y el vídeo no arranca. `still` lo fuerza y además muestra `image` en lugar de la web.
+
+### Mockup de dispositivo 3D — `DeviceMockup3D`
+
+El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos, sombra) y la pantalla como DOM real colocado en 3D, así la web en vivo sigue siendo utilizable. Si el equipo no puede con WebGL, va justo o pide reducir movimiento, pinta solo la versión CSS como imagen fija.
+
+| prop | tipo | default |
+|---|---|---|
+| `render` | `auto` · `3d` · `flat` · `static` | "auto" |
+| `device` | `phone` · `tablet` · `laptop` · `desktop` · `browser` | "phone" |
+| `platform` | `ios` · `android` | "ios" |
+| `orientation` | `portrait` · `landscape` | "portrait" |
+| `rotatable` | boolean | false |
+| `rotateLabel` | text | "Girar el dispositivo" |
+| `url` | text | "" |
+| `image` | text | "" |
+| `video` | text | "" |
+| `alt` | text | "" |
+| `urlLabel` | text | "" |
+| `imageScroll` | `hover` · `auto` · `none` | "hover" |
+| `interactive` | boolean | false |
+| `viewportWidth` | number 0–1920 | 0 |
+| `safeArea` | boolean | false |
+| `systemNav` | boolean | false |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
+| `rotateX` | number -30–40 | 0 |
+| `rotateY` | number -60–60 | 0 |
+| `motion` | `none` · `float` · `sway` · `spin` · `pointer` | "float" |
+| `speed` | number 0.2–3 | 1 |
+| `shadow` | boolean | true |
+| `glare` | boolean | true |
+| `shine` | number 0–2 | 1 |
+| `still` | boolean | false |
+
+- Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/DeviceMockup3D`. three se descarga bajo demanda, al acercarse el mockup a la pantalla; mientras, se ve la versión CSS en la misma caja y con la misma pose.
+- `render`: `auto` elige 3D salvo sin WebGL2, con `Save-Data`, ≤ 2 GB de memoria, ≤ 2 núcleos o `prefers-reduced-motion`, que caen a imagen fija; `3d` lo fuerza; `flat` es la versión CSS; `static`, la CSS quieta con `image` en lugar de la web.
+- Cada mockup 3D es un contexto WebGL (los navegadores admiten unos 16): en una rejilla de proyectos usa 3D en uno o dos destacados y `DeviceMockup` en el resto. Dibuja bajo demanda y se detiene fuera de pantalla.
+- Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.
+- La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.
+- Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.
+- Ocupa el ancho de su contenedor (que debe tener ancho propio) hasta `--device-max`: 300 px el móvil, 460 la tablet, 860 el portátil, 900 el monitor y el navegador.
+- `safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).
+- `orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).
+- `systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.
+- Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.
+
 ### Reproductor de vídeo — `VideoPlayer`
 
 Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.

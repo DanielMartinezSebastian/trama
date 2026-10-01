@@ -1,12 +1,18 @@
 "use client";
 
+import type { ReactNode } from "react";
 import AudioPlayer from "@/components/ui/AudioPlayer";
+import Badge from "@/components/ui/Badge";
+import Button from "@/components/ui/Button";
 import Carousel from "@/components/ui/Carousel";
+import DeviceMockup, { DEVICE_MOTIONS, type DeviceMockupProps } from "@/components/ui/DeviceMockup";
+import DeviceMockup3D from "@/components/ui/DeviceMockup3D";
 import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
-import type { CatalogEntry } from "../schema";
-import { ALL_STYLES, Sample, variantProp } from "./shared";
+import { DEVICES, DEVICE_PLATFORMS, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
+import type { CatalogEntry, PropSpec, Values } from "../schema";
+import { ALL_STYLES, Sample, toneProp, variantProp } from "./shared";
 
 /**
  * Galerías y carruseles sobre Swiper (https://swiperjs.com/). `ImageGallery` presenta las mismas imágenes de ocho maneras;
@@ -25,6 +31,141 @@ const VIDEO_SAMPLES: Record<string, string> = {
   [LOCAL_LIFE]: "Local · pixel-life (8 s, sin audio)",
   [YOUTUBE]: "YouTube · enlace (carátula, sin cookies)",
 };
+
+/**
+ * Captura de ejemplo para los mockups: una landing esquemática (cabecera, titular, tarjetas, pie) dibujada como SVG al ancho
+ * del viewport del dispositivo y `pages` pantallas de alto, para probar el recorrido de capturas largas sin descargar nada.
+ */
+function fakeScreenshot(device: DeviceKind, landscape: boolean, pages = 3.2): string {
+  const { w, h } = deviceGeometry(device, landscape ? "landscape" : "portrait").screen;
+  const H = Math.round(h * pages);
+  const u = w / 24; // rejilla de 24 columnas
+  const cols = w > 700 ? 3 : 1;
+  const r = (x: number, y: number, rw: number, rh: number, fill: string, rx = u * 0.3) => `<rect x="${x}" y="${y}" width="${rw}" height="${rh}" rx="${rx}" fill="${fill}"/>`;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">` + r(0, 0, w, H, "#0b1020", 0);
+  s += r(u, u * 0.8, u * 4, u * 0.9, "#7cc4ff") + r(w - u * 5, u * 0.8, u * 4, u * 0.9, "#232b45");
+  s += r(u, u * 4, w * 0.7, u * 1.6, "#e8ecf4") + r(u, u * 6.2, w * 0.5, u * 1.6, "#e8ecf4") + r(u, u * 9, w * 0.8, u * 0.6, "#5b6680") + r(u, u * 10.2, w * 0.6, u * 0.6, "#5b6680") + r(u, u * 12, u * 6, u * 1.6, "#7cc4ff", u * 0.8);
+  const cw = (w - u * (cols + 1)) / cols;
+  let y = Math.max(h * 0.8, u * 16);
+  for (let row = 0; y < H - h * 0.5; row++) {
+    for (let c = 0; c < cols; c++) {
+      const x = u + c * (cw + u);
+      s += r(x, y, cw, cw * 0.6, (row + c) % 2 ? "#1a2340" : "#2a1f4a") + r(x, y + cw * 0.6 + u * 0.6, cw * 0.7, u * 0.7, "#e8ecf4") + r(x, y + cw * 0.6 + u * 1.8, cw * 0.9, u * 0.5, "#5b6680");
+    }
+    y += cw * 0.6 + u * 4.2;
+  }
+  s += r(0, H - u * 5, w, u * 5, "#060912", 0) + r(u, H - u * 3.4, u * 5, u * 0.7, "#c084fc") + r(u, H - u * 2, w * 0.5, u * 0.5, "#232b45");
+  return `data:image/svg+xml;utf8,${encodeURIComponent(s + "</svg>")}`;
+}
+
+const DEVICE_DEMOS: Record<string, string> = {
+  screenshot: "Captura larga (recorre la página al pasar el puntero)",
+  image: "Imagen",
+  web: "Web en vivo (/demo/th-minimal)",
+  react: "Componentes React del kit",
+  custom: "Tus props: url, image y video",
+};
+
+/** Controles comunes a `DeviceMockup` y `DeviceMockup3D`. */
+const deviceSpecs = (): PropSpec[] => [
+  { key: "device", label: "Dispositivo", type: "select", default: "phone", options: DEVICES, labels: { phone: "móvil", tablet: "tablet", laptop: "portátil", desktop: "monitor", browser: "ventana de navegador" } },
+  { key: "platform", label: "Tipo de móvil", type: "select", default: "ios", options: DEVICE_PLATFORMS, labels: { ios: "iPhone (isla)", android: "Android (cámara redonda)" }, when: (p) => p.device === "phone" },
+  { key: "orientation", label: "Orientación", type: "select", default: "portrait", options: ["portrait", "landscape"], labels: { portrait: "vertical", landscape: "horizontal" }, when: (p) => p.device === "phone" || p.device === "tablet" },
+  { key: "rotatable", label: "Botón para girarlo", type: "boolean", default: false, when: (p) => p.device === "phone" || p.device === "tablet", hint: "El visitante lo cambia entre vertical y horizontal" },
+  { key: "rotateLabel", label: "Texto accesible del botón", type: "text", default: "Girar el dispositivo", when: (p) => p.rotatable === true && (p.device === "phone" || p.device === "tablet") },
+  { key: "demo", label: "Contenido de ejemplo", type: "select", default: "screenshot", options: Object.keys(DEVICE_DEMOS), labels: DEVICE_DEMOS, noCode: true },
+  { key: "url", label: "Web en vivo (URL)", type: "text", default: "", when: (p) => p.demo === "custom", hint: "La web debe permitir incrustarse en un iframe" },
+  { key: "image", label: "Captura (URL, ruta o gen:N)", type: "text", default: "", when: (p) => p.demo === "custom", hint: "Sola es el contenido; con url o video, la imagen previa y la del modo estático" },
+  { key: "video", label: "Vídeo (.mp4, .webm)", type: "text", default: "", when: (p) => p.demo === "custom" },
+  { key: "alt", label: "Descripción accesible", type: "text", default: "", hint: "Vacío = decorativo" },
+  { key: "urlLabel", label: "Texto de la barra de direcciones", type: "text", default: "", when: (p) => p.device === "browser", hint: "Vacío = el dominio de url" },
+  { key: "imageScroll", label: "Recorrido de capturas largas", type: "select", default: "hover", options: ["hover", "auto", "none"], labels: { hover: "al pasar el puntero", auto: "automático", none: "ninguno" } },
+  { key: "interactive", label: "Contenido utilizable (scroll y clics)", type: "boolean", default: false },
+  { key: "viewportWidth", label: "Ancho del viewport simulado (px, 0 = el del dispositivo)", type: "number", default: 0, min: 0, max: 1920, step: 10 },
+  { key: "safeArea", label: "Área segura (la web empieza bajo la isla)", type: "boolean", default: false, when: (p) => p.device === "phone", hint: "Para webs cuyo menú queda tapado por la isla. Color de la franja: --device-safe" },
+  { key: "systemNav", label: "Navegación del sistema", type: "boolean", default: false, when: (p) => p.device === "phone" || p.device === "tablet", hint: "iPhone: indicador de inicio · Android: atrás, inicio y recientes. La web queda por encima" },
+  toneProp("mut"),
+  { key: "rotateX", label: "Inclinación (°, positivo = desde arriba)", type: "number", default: 0, min: -30, max: 40, step: 1 },
+  { key: "rotateY", label: "Giro (°)", type: "number", default: 0, min: -60, max: 60, step: 1 },
+  { key: "motion", label: "Movimiento", type: "select", default: "float", options: DEVICE_MOTIONS, labels: { none: "quieto", float: "flota", sway: "se balancea", spin: "gira", pointer: "sigue al puntero" } },
+  { key: "speed", label: "Velocidad", type: "number", default: 1, min: 0.2, max: 3, step: 0.1, when: (p) => p.motion !== "none" || p.imageScroll !== "none" },
+  { key: "shadow", label: "Sombra", type: "boolean", default: true },
+  { key: "glare", label: "Reflejo del cristal", type: "boolean", default: true },
+  { key: "shine", label: "Brillos y reflejos (0 = mate)", type: "number", default: 1, min: 0, max: 2, step: 0.05, hint: "En 3D gradúa también los reflejos de la carcasa, que cambian cuando el aparato se mueve o sigue al puntero" },
+  { key: "still", label: "Imagen fija", type: "boolean", default: false, hint: "Sin movimiento y, si hay captura, la muestra en lugar de la web o el vídeo" },
+];
+
+/** Las props de una entrada de mockup, con el contenido de ejemplo elegido. */
+function deviceValues(p: Values): DeviceMockupProps {
+  const device = p.device as DeviceKind;
+  const landscape = p.orientation === "landscape" && (device === "phone" || device === "tablet");
+  const demo = p.demo as string;
+  const shot = fakeScreenshot(device, landscape);
+  const content: DeviceMockupProps =
+    demo === "custom"
+      ? { url: (p.url as string).trim() || undefined, image: (p.image as string).trim() || undefined, video: (p.video as string).trim() || undefined }
+      : demo === "web"
+        ? { url: "/demo/th-minimal", image: shot }
+        : demo === "image"
+          ? { image: "gen:2" }
+          : demo === "react"
+            ? {
+                children: (
+                  <div style={{ display: "grid", gap: 18, alignContent: "start", padding: "12cqw 7cqw", minHeight: "100%", boxSizing: "border-box" }}>
+                    <div>
+                      <Badge text="Nuevo" variant="outline" />
+                    </div>
+                    <strong style={{ fontSize: "clamp(28px, 9cqw, 64px)", lineHeight: 1.05 }}>Clases de surf al amanecer</strong>
+                    <span style={{ color: "var(--mut)", fontSize: 17, lineHeight: 1.5 }}>Este contenido es React real, maquetado al ancho del viewport simulado.</span>
+                    <div>
+                      <Button label="Reservar plaza" variant="solid" />
+                    </div>
+                  </div>
+                ),
+              }
+            : { image: shot };
+  return {
+    ...content,
+    device,
+    platform: p.platform as never,
+    orientation: landscape ? "landscape" : "portrait",
+    rotatable: p.rotatable as boolean,
+    rotateLabel: p.rotateLabel as string,
+    alt: p.alt as string,
+    urlLabel: (p.urlLabel as string) || (demo === "web" || demo === "custom" ? undefined : "tu-proyecto.com"),
+    imageScroll: p.imageScroll as never,
+    interactive: p.interactive as boolean,
+    viewportWidth: p.viewportWidth as number,
+    safeArea: p.safeArea as boolean,
+    systemNav: p.systemNav as boolean,
+    tone: p.tone as never,
+    rotateX: p.rotateX as number,
+    rotateY: p.rotateY as number,
+    motion: p.motion as never,
+    speed: p.speed as number,
+    shadow: p.shadow as boolean,
+    glare: p.glare as boolean,
+    shine: p.shine as number,
+    still: p.still as boolean,
+  };
+}
+
+const DEVICE_NOTES = [
+  "Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.",
+  "La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.",
+  "Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.",
+  "Ocupa el ancho de su contenedor (que debe tener ancho propio) hasta `--device-max`: 300 px el móvil, 460 la tablet, 860 el portátil, 900 el monitor y el navegador.",
+  "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
+  "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
+  "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+  "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.",
+];
+
+const deviceStage = (mockup: ReactNode) => (
+  <div className="ui-center" style={{ padding: "56px 40px", justifyItems: "stretch", gridTemplateColumns: "minmax(0, 1fr)" }}>
+    {mockup}
+  </div>
+);
 
 export const galerias: CatalogEntry[] = [
   {
@@ -136,6 +277,39 @@ export const galerias: CatalogEntry[] = [
         </div>
       );
     },
+  },
+  {
+    id: "device-mockup",
+    component: "DeviceMockup",
+    path: "@/components/ui/DeviceMockup",
+    name: "Mockup de dispositivo",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description:
+      "Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana de navegador dibujados con CSS: web real en un iframe a tamaño de viewport, captura (con recorrido de páginas largas), vídeo o contenido React. Sin WebGL ni dependencias; para enseñar proyectos en un portfolio o una landing.",
+    stageHeight: 780,
+    notes: [...DEVICE_NOTES, "Con `prefers-reduced-motion` queda quieto y el vídeo no arranca. `still` lo fuerza y además muestra `image` en lugar de la web."],
+    props: deviceSpecs(),
+    render: (p) => deviceStage(<DeviceMockup key={`${p.device}-${p.platform}-${p.demo}`} {...deviceValues(p)} />),
+  },
+  {
+    id: "device-mockup-3d",
+    component: "DeviceMockup3D",
+    path: "@/components/ui/DeviceMockup3D",
+    name: "Mockup de dispositivo 3D",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description:
+      "El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos, sombra) y la pantalla como DOM real colocado en 3D, así la web en vivo sigue siendo utilizable. Si el equipo no puede con WebGL, va justo o pide reducir movimiento, pinta solo la versión CSS como imagen fija.",
+    stageHeight: 780,
+    notes: [
+      "Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/DeviceMockup3D`. three se descarga bajo demanda, al acercarse el mockup a la pantalla; mientras, se ve la versión CSS en la misma caja y con la misma pose.",
+      "`render`: `auto` elige 3D salvo sin WebGL2, con `Save-Data`, ≤ 2 GB de memoria, ≤ 2 núcleos o `prefers-reduced-motion`, que caen a imagen fija; `3d` lo fuerza; `flat` es la versión CSS; `static`, la CSS quieta con `image` en lugar de la web.",
+      "Cada mockup 3D es un contexto WebGL (los navegadores admiten unos 16): en una rejilla de proyectos usa 3D en uno o dos destacados y `DeviceMockup` en el resto. Dibuja bajo demanda y se detiene fuera de pantalla.",
+      ...DEVICE_NOTES,
+    ],
+    props: [{ key: "render", label: "Render", type: "select", default: "auto", options: ["auto", "3d", "flat", "static"], labels: { auto: "auto (3D si el equipo puede)", "3d": "3D siempre", flat: "CSS", static: "imagen fija" } }, ...deviceSpecs()],
+    render: (p) => deviceStage(<DeviceMockup3D key={`${p.device}-${p.platform}-${p.demo}-${p.render}`} render={p.render as never} {...deviceValues(p)} />),
   },
   {
     id: "video-player",

@@ -147,6 +147,8 @@
       "components": [
         "image-gallery",
         "carousel",
+        "device-mockup",
+        "device-mockup-3d",
         "video-player",
         "audio-player"
       ]
@@ -6038,6 +6040,480 @@
       ],
       "example": "import Carousel from \"@/components/ui/Carousel\";\n\n<Carousel />",
       "preview": "/componentes#carousel"
+    },
+    {
+      "id": "device-mockup",
+      "name": "Mockup de dispositivo",
+      "component": "DeviceMockup",
+      "import": "import DeviceMockup from \"@/components/ui/DeviceMockup\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana de navegador dibujados con CSS: web real en un iframe a tamaño de viewport, captura (con recorrido de páginas largas), vídeo o contenido React. Sin WebGL ni dependencias; para enseñar proyectos en un portfolio o una landing.",
+      "props": [
+        {
+          "key": "device",
+          "type": "select",
+          "default": "phone",
+          "label": "Dispositivo",
+          "options": [
+            "phone",
+            "tablet",
+            "laptop",
+            "desktop",
+            "browser"
+          ]
+        },
+        {
+          "key": "platform",
+          "type": "select",
+          "default": "ios",
+          "label": "Tipo de móvil",
+          "options": [
+            "ios",
+            "android"
+          ]
+        },
+        {
+          "key": "orientation",
+          "type": "select",
+          "default": "portrait",
+          "label": "Orientación",
+          "options": [
+            "portrait",
+            "landscape"
+          ]
+        },
+        {
+          "key": "rotatable",
+          "type": "boolean",
+          "default": false,
+          "label": "Botón para girarlo",
+          "hint": "El visitante lo cambia entre vertical y horizontal"
+        },
+        {
+          "key": "rotateLabel",
+          "type": "text",
+          "default": "Girar el dispositivo",
+          "label": "Texto accesible del botón"
+        },
+        {
+          "key": "url",
+          "type": "text",
+          "default": "",
+          "label": "Web en vivo (URL)",
+          "hint": "La web debe permitir incrustarse en un iframe"
+        },
+        {
+          "key": "image",
+          "type": "text",
+          "default": "",
+          "label": "Captura (URL, ruta o gen:N)",
+          "hint": "Sola es el contenido; con url o video, la imagen previa y la del modo estático"
+        },
+        {
+          "key": "video",
+          "type": "text",
+          "default": "",
+          "label": "Vídeo (.mp4, .webm)"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "",
+          "label": "Descripción accesible",
+          "hint": "Vacío = decorativo"
+        },
+        {
+          "key": "urlLabel",
+          "type": "text",
+          "default": "",
+          "label": "Texto de la barra de direcciones",
+          "hint": "Vacío = el dominio de url"
+        },
+        {
+          "key": "imageScroll",
+          "type": "select",
+          "default": "hover",
+          "label": "Recorrido de capturas largas",
+          "options": [
+            "hover",
+            "auto",
+            "none"
+          ]
+        },
+        {
+          "key": "interactive",
+          "type": "boolean",
+          "default": false,
+          "label": "Contenido utilizable (scroll y clics)"
+        },
+        {
+          "key": "viewportWidth",
+          "type": "number",
+          "default": 0,
+          "label": "Ancho del viewport simulado (px, 0 = el del dispositivo)",
+          "min": 0,
+          "max": 1920
+        },
+        {
+          "key": "safeArea",
+          "type": "boolean",
+          "default": false,
+          "label": "Área segura (la web empieza bajo la isla)",
+          "hint": "Para webs cuyo menú queda tapado por la isla. Color de la franja: --device-safe"
+        },
+        {
+          "key": "systemNav",
+          "type": "boolean",
+          "default": false,
+          "label": "Navegación del sistema",
+          "hint": "iPhone: indicador de inicio · Android: atrás, inicio y recientes. La web queda por encima"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "mut",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "rotateX",
+          "type": "number",
+          "default": 0,
+          "label": "Inclinación (°, positivo = desde arriba)",
+          "min": -30,
+          "max": 40
+        },
+        {
+          "key": "rotateY",
+          "type": "number",
+          "default": 0,
+          "label": "Giro (°)",
+          "min": -60,
+          "max": 60
+        },
+        {
+          "key": "motion",
+          "type": "select",
+          "default": "float",
+          "label": "Movimiento",
+          "options": [
+            "none",
+            "float",
+            "sway",
+            "spin",
+            "pointer"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad",
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "shadow",
+          "type": "boolean",
+          "default": true,
+          "label": "Sombra"
+        },
+        {
+          "key": "glare",
+          "type": "boolean",
+          "default": true,
+          "label": "Reflejo del cristal"
+        },
+        {
+          "key": "shine",
+          "type": "number",
+          "default": 1,
+          "label": "Brillos y reflejos (0 = mate)",
+          "hint": "En 3D gradúa también los reflejos de la carcasa, que cambian cuando el aparato se mueve o sigue al puntero",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "still",
+          "type": "boolean",
+          "default": false,
+          "label": "Imagen fija",
+          "hint": "Sin movimiento y, si hay captura, la muestra en lugar de la web o el vídeo"
+        }
+      ],
+      "notes": [
+        "Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.",
+        "La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.",
+        "Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.",
+        "Ocupa el ancho de su contenedor (que debe tener ancho propio) hasta `--device-max`: 300 px el móvil, 460 la tablet, 860 el portátil, 900 el monitor y el navegador.",
+        "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
+        "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
+        "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+        "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.",
+        "Con `prefers-reduced-motion` queda quieto y el vídeo no arranca. `still` lo fuerza y además muestra `image` en lugar de la web."
+      ],
+      "example": "import DeviceMockup from \"@/components/ui/DeviceMockup\";\n\n<DeviceMockup />",
+      "preview": "/componentes#device-mockup"
+    },
+    {
+      "id": "device-mockup-3d",
+      "name": "Mockup de dispositivo 3D",
+      "component": "DeviceMockup3D",
+      "import": "import DeviceMockup3D from \"@/components/ui/DeviceMockup3D\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos, sombra) y la pantalla como DOM real colocado en 3D, así la web en vivo sigue siendo utilizable. Si el equipo no puede con WebGL, va justo o pide reducir movimiento, pinta solo la versión CSS como imagen fija.",
+      "props": [
+        {
+          "key": "render",
+          "type": "select",
+          "default": "auto",
+          "label": "Render",
+          "options": [
+            "auto",
+            "3d",
+            "flat",
+            "static"
+          ]
+        },
+        {
+          "key": "device",
+          "type": "select",
+          "default": "phone",
+          "label": "Dispositivo",
+          "options": [
+            "phone",
+            "tablet",
+            "laptop",
+            "desktop",
+            "browser"
+          ]
+        },
+        {
+          "key": "platform",
+          "type": "select",
+          "default": "ios",
+          "label": "Tipo de móvil",
+          "options": [
+            "ios",
+            "android"
+          ]
+        },
+        {
+          "key": "orientation",
+          "type": "select",
+          "default": "portrait",
+          "label": "Orientación",
+          "options": [
+            "portrait",
+            "landscape"
+          ]
+        },
+        {
+          "key": "rotatable",
+          "type": "boolean",
+          "default": false,
+          "label": "Botón para girarlo",
+          "hint": "El visitante lo cambia entre vertical y horizontal"
+        },
+        {
+          "key": "rotateLabel",
+          "type": "text",
+          "default": "Girar el dispositivo",
+          "label": "Texto accesible del botón"
+        },
+        {
+          "key": "url",
+          "type": "text",
+          "default": "",
+          "label": "Web en vivo (URL)",
+          "hint": "La web debe permitir incrustarse en un iframe"
+        },
+        {
+          "key": "image",
+          "type": "text",
+          "default": "",
+          "label": "Captura (URL, ruta o gen:N)",
+          "hint": "Sola es el contenido; con url o video, la imagen previa y la del modo estático"
+        },
+        {
+          "key": "video",
+          "type": "text",
+          "default": "",
+          "label": "Vídeo (.mp4, .webm)"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "",
+          "label": "Descripción accesible",
+          "hint": "Vacío = decorativo"
+        },
+        {
+          "key": "urlLabel",
+          "type": "text",
+          "default": "",
+          "label": "Texto de la barra de direcciones",
+          "hint": "Vacío = el dominio de url"
+        },
+        {
+          "key": "imageScroll",
+          "type": "select",
+          "default": "hover",
+          "label": "Recorrido de capturas largas",
+          "options": [
+            "hover",
+            "auto",
+            "none"
+          ]
+        },
+        {
+          "key": "interactive",
+          "type": "boolean",
+          "default": false,
+          "label": "Contenido utilizable (scroll y clics)"
+        },
+        {
+          "key": "viewportWidth",
+          "type": "number",
+          "default": 0,
+          "label": "Ancho del viewport simulado (px, 0 = el del dispositivo)",
+          "min": 0,
+          "max": 1920
+        },
+        {
+          "key": "safeArea",
+          "type": "boolean",
+          "default": false,
+          "label": "Área segura (la web empieza bajo la isla)",
+          "hint": "Para webs cuyo menú queda tapado por la isla. Color de la franja: --device-safe"
+        },
+        {
+          "key": "systemNav",
+          "type": "boolean",
+          "default": false,
+          "label": "Navegación del sistema",
+          "hint": "iPhone: indicador de inicio · Android: atrás, inicio y recientes. La web queda por encima"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "mut",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "rotateX",
+          "type": "number",
+          "default": 0,
+          "label": "Inclinación (°, positivo = desde arriba)",
+          "min": -30,
+          "max": 40
+        },
+        {
+          "key": "rotateY",
+          "type": "number",
+          "default": 0,
+          "label": "Giro (°)",
+          "min": -60,
+          "max": 60
+        },
+        {
+          "key": "motion",
+          "type": "select",
+          "default": "float",
+          "label": "Movimiento",
+          "options": [
+            "none",
+            "float",
+            "sway",
+            "spin",
+            "pointer"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad",
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "shadow",
+          "type": "boolean",
+          "default": true,
+          "label": "Sombra"
+        },
+        {
+          "key": "glare",
+          "type": "boolean",
+          "default": true,
+          "label": "Reflejo del cristal"
+        },
+        {
+          "key": "shine",
+          "type": "number",
+          "default": 1,
+          "label": "Brillos y reflejos (0 = mate)",
+          "hint": "En 3D gradúa también los reflejos de la carcasa, que cambian cuando el aparato se mueve o sigue al puntero",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "still",
+          "type": "boolean",
+          "default": false,
+          "label": "Imagen fija",
+          "hint": "Sin movimiento y, si hay captura, la muestra en lugar de la web o el vídeo"
+        }
+      ],
+      "notes": [
+        "Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/DeviceMockup3D`. three se descarga bajo demanda, al acercarse el mockup a la pantalla; mientras, se ve la versión CSS en la misma caja y con la misma pose.",
+        "`render`: `auto` elige 3D salvo sin WebGL2, con `Save-Data`, ≤ 2 GB de memoria, ≤ 2 núcleos o `prefers-reduced-motion`, que caen a imagen fija; `3d` lo fuerza; `flat` es la versión CSS; `static`, la CSS quieta con `image` en lugar de la web.",
+        "Cada mockup 3D es un contexto WebGL (los navegadores admiten unos 16): en una rejilla de proyectos usa 3D en uno o dos destacados y `DeviceMockup` en el resto. Dibuja bajo demanda y se detiene fuera de pantalla.",
+        "Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.",
+        "La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.",
+        "Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.",
+        "Ocupa el ancho de su contenedor (que debe tener ancho propio) hasta `--device-max`: 300 px el móvil, 460 la tablet, 860 el portátil, 900 el monitor y el navegador.",
+        "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
+        "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
+        "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+        "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa."
+      ],
+      "example": "import DeviceMockup3D from \"@/components/ui/DeviceMockup3D\";\n\n<DeviceMockup3D />",
+      "preview": "/componentes#device-mockup-3d"
     },
     {
       "id": "video-player",

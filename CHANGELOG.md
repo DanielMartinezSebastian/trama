@@ -4,6 +4,19 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.7.0 — mockups de dispositivo
+
+- **`DeviceMockup`** (categoría Galerías): vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana
+  de navegador dibujados con CSS. Contenido: web real en un iframe (`url`), captura (`image`, con recorrido de páginas
+  largas: `imageScroll`), `video` o `children`. La pantalla simula el viewport real del aparato (`viewportWidth` lo
+  cambia) y `safeArea` deja la franja de la isla del móvil fuera de la web. `platform` (`ios` con isla · `android` con cámara redonda), `systemNav` (indicador de inicio de iOS o los tres botones de Android), `orientation` y `rotatable` (botón para que el visitante gire móvil y tablet). Pose con `rotateX`/`rotateY`, movimiento `float · sway · spin · pointer`, color de carcasa con `tone`, brillos con `shine`, `still`
+  para imagen fija. Sin dependencias.
+- **`DeviceMockup3D`** (`trama-ui/DeviceMockup3D`, requiere `three` y `@react-three/fiber`): las mismas props con la
+  carcasa en three.js (geometría generada, sin modelos que descargar) y la pantalla como DOM real colocado en 3D, así la
+  web en vivo sigue siendo utilizable. `render="auto"` cae solo a imagen fija sin WebGL2, en equipos modestos, con
+  `Save-Data` o con `prefers-reduced-motion`; three se descarga bajo demanda.
+- CSS nuevo `ui-device.css`, importado desde `kit.css` (`trama-ui/styles.css`). Guía §26.
+
 ## 0.6.2 — la cabecera ya no desaparece durante la transición
 
 - **Corrección de fondo:** `PageTransitionPersist` con un elemento HTML como hijo (el caso de una cabecera en el
