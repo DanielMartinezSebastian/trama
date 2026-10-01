@@ -4,6 +4,19 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.9.0 — reflejo del cristal aparte de la carcasa
+
+- `DeviceMockup` y `DeviceMockup3D`: `screenShine` (0–2) gradúa el reflejo del cristal sobre la pantalla por separado;
+  `shine` queda para la carcasa y el entorno. Sin `screenShine` el cristal sigue a `shine`, como en 0.8.0.
+
+## 0.8.0 — límites del seguimiento del puntero en los mockups
+
+- `DeviceMockup` y `DeviceMockup3D`, con `motion="pointer"`: `pointerX` y `pointerY` (grados máximos de giro horizontal e
+  inclinación vertical; por defecto 16 y 10, los de antes; 0 anula el eje) y `pointerSide` (`both · left · right`) para
+  que solo gire hacia un lado. Igual en la versión CSS y en la 3D.
+- **Paquete:** `sideEffects` incluye ahora `swiperCss.js`. Solo contiene imports de CSS y el empaquetador de Next lo
+  descartaba, con lo que `ImageGallery` y `Carousel` salían sin los estilos base de Swiper (diapositivas apiladas).
+
 ## 0.7.0 — mockups de dispositivo
 
 - **`DeviceMockup`** (categoría Galerías): vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana

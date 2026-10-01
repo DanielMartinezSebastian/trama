@@ -6,7 +6,7 @@ import { BoxGeometry, ExtrudeGeometry, NoBlending, PMREMGenerator, PlaneGeometry
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { CSS3DObject, CSS3DRenderer } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 import { cssToColor } from "@/lib/retro3d/color";
-import { DEVICE_FOV, cameraDistance, type DeviceGeometry, type DeviceKind, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
+import { DEVICE_FOV, cameraDistance, pointerSideClamp, type DevicePointerSide, type DeviceGeometry, type DeviceKind, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
 
 export type DeviceSceneProps = {
   device: DeviceKind;
@@ -17,11 +17,17 @@ export type DeviceSceneProps = {
   rotateX: number;
   rotateY: number;
   motion: "none" | "float" | "sway" | "spin" | "pointer";
+  /** grados máximos de giro horizontal y de inclinación vertical al seguir al puntero, y lado permitido */
+  pointerX: number;
+  pointerY: number;
+  pointerSide: DevicePointerSide;
   speed: number;
   shadow: boolean;
   glare: boolean;
-  /** intensidad de brillos y reflejos: 0 = mate, 1 = normal */
+  /** intensidad de brillos y reflejos de la carcasa: 0 = mate, 1 = normal */
   shine: number;
+  /** intensidad del reflejo del cristal sobre la pantalla */
+  screenShine: number;
   /** false = fuera de pantalla: el lienzo no dibuja */
   active: boolean;
   /** elemento DOM con el contenido de la pantalla; se coloca con CSS 3D detrás del lienzo */
@@ -76,7 +82,7 @@ const VERT = "varying vec2 vP; varying vec2 vUv; void main() { vP = position.xy;
 /** centro de un rectángulo de la geometría en coordenadas de escena (origen en el centro de la caja, y hacia arriba) */
 const center = (r: DeviceRect, geo: DeviceGeometry): [number, number] => [r.x + r.w / 2 - geo.tw / 2, geo.th / 2 - (r.y + r.h / 2)];
 
-function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, speed, shadow, glare, shine, screenEl, cssHost, root, onReady }: DeviceSceneProps) {
+function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, pointerX, pointerY, pointerSide, speed, shadow, glare, shine, screenShine, screenEl, cssHost, root, onReady }: DeviceSceneProps) {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
   const camera = useThree((s) => s.camera);
@@ -145,7 +151,7 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, speed, s
       if (!el) return;
       const r = el.getBoundingClientRect();
       const clamp = (v: number) => Math.max(-1, Math.min(1, v));
-      target.current = { x: clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)), y: clamp((e.clientY - (r.top + r.height / 2)) / (innerHeight / 2)) };
+      target.current = { x: pointerSideClamp(clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)), pointerSide), y: clamp((e.clientY - (r.top + r.height / 2)) / (innerHeight / 2)) };
       invalidate();
     };
     addEventListener("pointermove", onMove, { passive: true });
@@ -153,7 +159,7 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, speed, s
       removeEventListener("pointermove", onMove);
       target.current = { x: 0, y: 0 };
     };
-  }, [motion, root, invalidate]);
+  }, [motion, pointerSide, root, invalidate]);
 
   useFrame((_, delta) => {
     const g = rig.current;
@@ -177,8 +183,8 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, speed, s
       const c = cur.current;
       c.x += (target.current.x - c.x) * k;
       c.y += (target.current.y - c.y) * k;
-      ry += c.x * 0.28;
-      rx += c.y * 0.17;
+      ry += c.x * rad(pointerX);
+      rx += c.y * rad(pointerY);
       if (Math.abs(target.current.x - c.x) + Math.abs(target.current.y - c.y) > 0.002) invalidate();
     }
     g.rotation.set(rx, ry, 0);
@@ -241,7 +247,7 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, speed, s
   // sin brillo la carcasa pasa de metal pulido a plástico mate, y la luz ambiente compensa lo que deja de reflejar
   const gloss = Math.min(1, shine);
   const rough = (matte: number, glossy: number) => matte + (glossy - matte) * gloss;
-  glareMat.uniforms.uShine.value = shine;
+  glareMat.uniforms.uShine.value = screenShine;
   const metal = <meshStandardMaterial color={body} roughness={rough(0.9, 0.36)} metalness={0.6 * gloss} />;
   const hingeY = fy - f.h / 2;
   // el portátil se abre un poco hacia atrás, girando sobre la bisagra; el resto no gira

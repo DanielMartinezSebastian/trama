@@ -6221,6 +6221,35 @@
           ]
         },
         {
+          "key": "pointerX",
+          "type": "number",
+          "default": 16,
+          "label": "Giro máximo con el puntero (°)",
+          "hint": "0 = no gira a los lados",
+          "min": 0,
+          "max": 45
+        },
+        {
+          "key": "pointerY",
+          "type": "number",
+          "default": 10,
+          "label": "Inclinación máxima con el puntero (°)",
+          "hint": "0 = no se inclina arriba ni abajo",
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "pointerSide",
+          "type": "select",
+          "default": "both",
+          "label": "Lado del giro",
+          "options": [
+            "both",
+            "left",
+            "right"
+          ]
+        },
+        {
           "key": "speed",
           "type": "number",
           "default": 1,
@@ -6250,6 +6279,14 @@
           "max": 2
         },
         {
+          "key": "screenShine",
+          "type": "number",
+          "default": 1,
+          "label": "Reflejo del cristal (screenShine)",
+          "min": 0,
+          "max": 2
+        },
+        {
           "key": "still",
           "type": "boolean",
           "default": false,
@@ -6265,6 +6302,7 @@
         "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
         "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
         "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+        "Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.",
         "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.",
         "Con `prefers-reduced-motion` queda quieto y el vídeo no arranca. `still` lo fuerza y además muestra `image` en lugar de la web."
       ],
@@ -6463,6 +6501,35 @@
           ]
         },
         {
+          "key": "pointerX",
+          "type": "number",
+          "default": 16,
+          "label": "Giro máximo con el puntero (°)",
+          "hint": "0 = no gira a los lados",
+          "min": 0,
+          "max": 45
+        },
+        {
+          "key": "pointerY",
+          "type": "number",
+          "default": 10,
+          "label": "Inclinación máxima con el puntero (°)",
+          "hint": "0 = no se inclina arriba ni abajo",
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "pointerSide",
+          "type": "select",
+          "default": "both",
+          "label": "Lado del giro",
+          "options": [
+            "both",
+            "left",
+            "right"
+          ]
+        },
+        {
           "key": "speed",
           "type": "number",
           "default": 1,
@@ -6492,6 +6559,14 @@
           "max": 2
         },
         {
+          "key": "screenShine",
+          "type": "number",
+          "default": 1,
+          "label": "Reflejo del cristal (screenShine)",
+          "min": 0,
+          "max": 2
+        },
+        {
           "key": "still",
           "type": "boolean",
           "default": false,
@@ -6510,6 +6585,7 @@
         "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
         "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
         "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+        "Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.",
         "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa."
       ],
       "example": "import DeviceMockup3D from \"@/components/ui/DeviceMockup3D\";\n\n<DeviceMockup3D />",

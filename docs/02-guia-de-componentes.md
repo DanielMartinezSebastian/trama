@@ -1229,7 +1229,9 @@ Cómo funciona (`lib/ui/devices.ts`, `lib/device3d/scene.tsx`):
   acercarse a la pantalla (`IntersectionObserver`, 300 px de margen) y se detiene fuera. three se carga con `lazy()`.
 - **Brillos.** La carcasa y el cristal reflejan un entorno de estudio generado, y esos reflejos se desplazan cuando el
   aparato flota, gira o sigue al puntero. `shine` los gradúa (1 = normal; 0 = carcasa mate y sin reflejo del cristal; hasta
-  2); `glare={false}` quita solo la banda del cristal. En la versión CSS, `shine` es la opacidad de esa banda.
+  2); `glare={false}` quita solo la banda del cristal. `screenShine` gradúa esa banda por separado (sin él, sigue a `shine`):
+  carcasa discreta con algo de reflejo en la pantalla, `shine={0.4} screenShine={0.9}`. En la versión CSS no hay carcasa
+  que brille: lo único que se ve es la opacidad de la banda.
 - **Color.** La carcasa es `--tone` (prop `tone`) mezclado al 38 % con `--bg`; el cristal es casi negro en cualquier tema.
 
 Trampas:
@@ -1251,6 +1253,10 @@ Trampas:
 - **Navegación del sistema.** `systemNav` añade abajo el indicador de inicio (iOS) o los tres botones de Android (atrás,
   inicio, recientes; a la derecha con el móvil en horizontal) y acorta la página para que la web quede por encima. La franja
   usa `--device-safe`, como el área segura, y los iconos `--device-nav`. Es dibujo, no botones: no hacen nada.
+- **Seguir al puntero con límites.** Con `motion="pointer"`, `pointerX` (16 por defecto) y `pointerY` (10) son los grados
+  máximos de giro horizontal y de inclinación vertical; 0 anula el eje. `pointerSide` (`both · left · right`) limita el giro
+  horizontal a un lado: con `left` el aparato solo se vuelve cuando el puntero está a su izquierda y, con el puntero a la
+  derecha, se queda de frente. Un móvil junto a un texto que solo mira hacia él: `pointerY={0} pointerSide="left"`.
 - **Girar móvil y tablet.** `orientation` es la orientación inicial; `rotatable` pinta debajo un botón (`rotateLabel` es su
   nombre accesible) con el que el visitante alterna vertical y horizontal. Con el botón dentro, la raíz deja de ser
   `role="img"` y pasa a `group`, para que el lector de pantalla llegue al botón.

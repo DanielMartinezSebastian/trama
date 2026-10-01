@@ -61,7 +61,7 @@ class Boundary extends Component<{ onError: () => void; children: ReactNode }, {
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/DeviceMockup3D`.
  */
 export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMockup3DProps) {
-  const { device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", speed = 1, shadow = true, glare = true, shine = 1, still = false, live = true, className = "" } = props;
+  const { device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" } = props;
   const root = useRef<HTMLDivElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
@@ -126,7 +126,7 @@ export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMock
             {cssHost && (
               <Boundary onError={() => setFailed(true)}>
                 <Suspense fallback={null}>
-                  <DeviceScene device={device} geo={geo} vp={vp} bodyColor={bodyColor} rotateX={rotateX} rotateY={rotateY} motion={quiet ? "none" : motion} speed={speed} shadow={shadow} glare={glare} shine={Math.max(0, shine)} active={near} screenEl={screenEl} cssHost={cssHost} root={root} onReady={() => setReady(true)} />
+                  <DeviceScene device={device} geo={geo} vp={vp} bodyColor={bodyColor} rotateX={rotateX} rotateY={rotateY} motion={quiet ? "none" : motion} pointerX={pointerX} pointerY={pointerY} pointerSide={pointerSide} speed={speed} shadow={shadow} glare={glare} shine={Math.max(0, shine)} screenShine={Math.max(0, screenShine ?? shine)} active={near} screenEl={screenEl} cssHost={cssHost} root={root} onReady={() => setReady(true)} />
                 </Suspense>
               </Boundary>
             )}

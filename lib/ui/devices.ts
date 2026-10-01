@@ -143,6 +143,16 @@ export function deviceGeometry(device: DeviceKind, orientation: DeviceOrientatio
   };
 }
 
+export const DEVICE_POINTER_SIDES = ["both", "left", "right"] as const;
+/** hacia qué lado puede girar el aparato al seguir al puntero */
+export type DevicePointerSide = (typeof DEVICE_POINTER_SIDES)[number];
+
+/**
+ * Posición horizontal del puntero (−1 izquierda … 1 derecha) tras aplicar `pointerSide`: con `left` el aparato solo gira
+ * cuando el puntero está a su izquierda (a la derecha se queda de frente), y con `right`, al revés.
+ */
+export const pointerSideClamp = (x: number, side: DevicePointerSide) => (side === "left" ? Math.min(0, x) : side === "right" ? Math.max(0, x) : x);
+
 export type DeviceViewport = {
   /** viewport CSS simulado */
   vw: number;

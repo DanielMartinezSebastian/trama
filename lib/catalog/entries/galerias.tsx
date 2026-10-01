@@ -10,7 +10,7 @@ import DeviceMockup3D from "@/components/ui/DeviceMockup3D";
 import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
-import { DEVICES, DEVICE_PLATFORMS, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
+import { DEVICES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
 import type { CatalogEntry, PropSpec, Values } from "../schema";
 import { ALL_STYLES, Sample, toneProp, variantProp } from "./shared";
 
@@ -88,10 +88,15 @@ const deviceSpecs = (): PropSpec[] => [
   { key: "rotateX", label: "Inclinación (°, positivo = desde arriba)", type: "number", default: 0, min: -30, max: 40, step: 1 },
   { key: "rotateY", label: "Giro (°)", type: "number", default: 0, min: -60, max: 60, step: 1 },
   { key: "motion", label: "Movimiento", type: "select", default: "float", options: DEVICE_MOTIONS, labels: { none: "quieto", float: "flota", sway: "se balancea", spin: "gira", pointer: "sigue al puntero" } },
+  { key: "pointerX", label: "Giro máximo con el puntero (°)", type: "number", default: 16, min: 0, max: 45, step: 1, when: (p) => p.motion === "pointer", hint: "0 = no gira a los lados" },
+  { key: "pointerY", label: "Inclinación máxima con el puntero (°)", type: "number", default: 10, min: 0, max: 30, step: 1, when: (p) => p.motion === "pointer", hint: "0 = no se inclina arriba ni abajo" },
+  { key: "pointerSide", label: "Lado del giro", type: "select", default: "both", options: DEVICE_POINTER_SIDES, labels: { both: "los dos", left: "solo a la izquierda", right: "solo a la derecha" }, when: (p) => p.motion === "pointer" && (p.pointerX as number) > 0 },
   { key: "speed", label: "Velocidad", type: "number", default: 1, min: 0.2, max: 3, step: 0.1, when: (p) => p.motion !== "none" || p.imageScroll !== "none" },
   { key: "shadow", label: "Sombra", type: "boolean", default: true },
   { key: "glare", label: "Reflejo del cristal", type: "boolean", default: true },
   { key: "shine", label: "Brillos y reflejos (0 = mate)", type: "number", default: 1, min: 0, max: 2, step: 0.05, hint: "En 3D gradúa también los reflejos de la carcasa, que cambian cuando el aparato se mueve o sigue al puntero" },
+  { key: "ownScreenShine", label: "Reflejo del cristal aparte", type: "boolean", default: false, noCode: true, when: (p) => p.glare === true, hint: "Apagado, el cristal sigue a «Brillos y reflejos»" },
+  { key: "screenShine", label: "Reflejo del cristal (screenShine)", type: "number", default: 1, min: 0, max: 2, step: 0.05, when: (p) => p.glare === true && p.ownScreenShine === true },
   { key: "still", label: "Imagen fija", type: "boolean", default: false, hint: "Sin movimiento y, si hay captura, la muestra en lugar de la web o el vídeo" },
 ];
 
@@ -142,10 +147,14 @@ function deviceValues(p: Values): DeviceMockupProps {
     rotateX: p.rotateX as number,
     rotateY: p.rotateY as number,
     motion: p.motion as never,
+    pointerX: p.pointerX as number,
+    pointerY: p.pointerY as number,
+    pointerSide: p.pointerSide as never,
     speed: p.speed as number,
     shadow: p.shadow as boolean,
     glare: p.glare as boolean,
     shine: p.shine as number,
+    screenShine: p.ownScreenShine ? (p.screenShine as number) : undefined,
     still: p.still as boolean,
   };
 }
@@ -158,6 +167,7 @@ const DEVICE_NOTES = [
   "`safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).",
   "`orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).",
   "`systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.",
+  "Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.",
   "Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.",
 ];
 

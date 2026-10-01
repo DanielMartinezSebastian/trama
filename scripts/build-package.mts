@@ -145,7 +145,8 @@ const pkg = {
   homepage: "https://github.com/DanielMartinezSebastian/trama#readme",
   bugs: { url: "https://github.com/DanielMartinezSebastian/trama/issues" },
   type: "module",
-  sideEffects: ["**/*.css"],
+  // swiperCss.js solo tiene imports de CSS: sin declararlo, el empaquetador lo descarta y Carousel/ImageGallery pierden los estilos de Swiper
+  sideEffects: ["**/*.css", "**/swiperCss.js"],
   main: "./dist/index.js",
   types: "./dist/index.d.ts",
   exports: {

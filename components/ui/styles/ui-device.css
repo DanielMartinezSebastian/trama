@@ -11,7 +11,7 @@
   position: relative; width: 100%; max-width: var(--device-max, var(--dv-max)); margin-inline: auto;
   perspective: calc(var(--dv-g) * var(--dv-p) * 1px);
 }
-.ui-device__body { position: relative; width: 100%; transform: rotateX(calc(-1 * var(--dv-rx) - var(--dv-py, 0) * 10deg)) rotateY(calc(var(--dv-ry) + var(--dv-px, 0) * 16deg)); }
+.ui-device__body { position: relative; width: 100%; transform: rotateX(calc(-1 * var(--dv-rx) - var(--dv-py, 0) * var(--dv-pmy, 10deg))) rotateY(calc(var(--dv-ry) + var(--dv-px, 0) * var(--dv-pmx, 16deg))); }
 .ui-device--pointer .ui-device__body { transition: transform 0.3s ease-out; }
 .ui-device--float .ui-device__body { animation: ui-device-float calc(6s / var(--dv-speed)) ease-in-out infinite; }
 .ui-device--sway .ui-device__body { animation: ui-device-sway calc(7s / var(--dv-speed)) ease-in-out infinite; }

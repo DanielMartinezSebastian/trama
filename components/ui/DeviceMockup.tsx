@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { cameraDistance, deviceGeometry, deviceViewport, type DeviceGeometry, type DeviceKind, type DeviceOrientation, type DevicePlatform, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
+import { cameraDistance, deviceGeometry, deviceViewport, pointerSideClamp, type DevicePointerSide, type DeviceGeometry, type DeviceKind, type DeviceOrientation, type DevicePlatform, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
 import { resolveImage } from "@/lib/ui/placeholder";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { tcls, type Tone } from "./variants";
@@ -55,13 +55,21 @@ export type DeviceMockupProps = {
   rotateY?: number;
   /** float = flota · sway = se balancea · spin = gira sobre sí mismo (en CSS, balanceo amplio) · pointer = sigue al puntero */
   motion?: (typeof DEVICE_MOTIONS)[number];
+  /** con `motion="pointer"`: grados máximos de giro horizontal al seguir al puntero (0 = no gira a los lados) */
+  pointerX?: number;
+  /** con `motion="pointer"`: grados máximos de inclinación vertical al seguir al puntero (0 = no se inclina arriba ni abajo) */
+  pointerY?: number;
+  /** con `motion="pointer"`: lado hacia el que puede girar. left = solo cuando el puntero está a su izquierda · right = solo a su derecha */
+  pointerSide?: DevicePointerSide;
   /** multiplicador de la velocidad del movimiento y del recorrido de la captura (1 = normal) */
   speed?: number;
   shadow?: boolean;
   /** reflejo del cristal sobre la pantalla */
   glare?: boolean;
-  /** intensidad de brillos y reflejos (0 = mate, 1 = normal, hasta 2): el reflejo del cristal y, en 3D, los de la carcasa, que cambian al moverse el aparato */
+  /** intensidad de brillos y reflejos (0 = mate, 1 = normal, hasta 2): en 3D, los de la carcasa, que cambian al moverse el aparato; y, si no se pasa `screenShine`, también el reflejo del cristal */
   shine?: number;
+  /** intensidad del reflejo del cristal sobre la pantalla (0–2), aparte de la carcasa. Sin él, sigue a `shine` */
+  screenShine?: number;
   /** imagen fija: sin movimiento y, si hay `image`, se muestra en lugar de la web o el vídeo */
   still?: boolean;
   /** false = no carga la web ni el vídeo: solo `image` (o la pantalla apagada) */
@@ -201,7 +209,7 @@ export const deviceVars = (geo: DeviceGeometry, vp: DeviceViewport, speed: numbe
  * una web en vivo (`url`), una captura (`image`), un vídeo o contenido React. Ocupa el ancho de su contenedor hasta
  * `--device-max`. Sin WebGL: para la versión con volumen y luz, `DeviceMockup3D`, que usa esta de reserva.
  */
-export default function DeviceMockup({ device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", speed = 1, shadow = true, glare = true, shine = 1, still = false, live = true, className = "" }: DeviceMockupProps) {
+export default function DeviceMockup({ device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" }: DeviceMockupProps) {
   const root = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -227,7 +235,7 @@ export default function DeviceMockup({ device = "phone", platform = "ios", orien
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       const clamp = (v: number) => Math.max(-1, Math.min(1, v));
-      el.style.setProperty("--dv-px", clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)).toFixed(3));
+      el.style.setProperty("--dv-px", pointerSideClamp(clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)), pointerSide).toFixed(3));
       el.style.setProperty("--dv-py", clamp((e.clientY - (r.top + r.height / 2)) / (innerHeight / 2)).toFixed(3));
     };
     addEventListener("pointermove", onMove, { passive: true });
@@ -236,9 +244,9 @@ export default function DeviceMockup({ device = "phone", platform = "ios", orien
       el.style.removeProperty("--dv-px");
       el.style.removeProperty("--dv-py");
     };
-  }, [move]);
+  }, [move, pointerSide]);
 
-  const style = { ...deviceVars(geo, vp, speed), "--dv-p": cameraDistance(geo), "--dv-rx": `${rotateX}deg`, "--dv-ry": `${rotateY}deg`, "--dv-speed": Math.max(0.1, speed), "--dv-shine": shine } as CSSProperties;
+  const style = { ...deviceVars(geo, vp, speed), "--dv-p": cameraDistance(geo), "--dv-rx": `${rotateX}deg`, "--dv-ry": `${rotateY}deg`, "--dv-speed": Math.max(0.1, speed), "--dv-shine": Math.max(0, screenShine ?? shine), "--dv-pmx": `${pointerX}deg`, "--dv-pmy": `${pointerY}deg` } as CSSProperties;
 
   return (
     <div ref={root} className={`ui-device ui-device--${device} ui-device--${move} ${tcls(tone)} ${className}`} style={style} role={alt && !interactive && !rotation.can ? "img" : alt ? "group" : undefined} aria-label={alt || undefined}>

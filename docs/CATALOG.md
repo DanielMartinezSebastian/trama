@@ -1041,10 +1041,14 @@ Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventan
 | `rotateX` | number -30–40 | 0 |
 | `rotateY` | number -60–60 | 0 |
 | `motion` | `none` · `float` · `sway` · `spin` · `pointer` | "float" |
+| `pointerX` | number 0–45 | 16 |
+| `pointerY` | number 0–30 | 10 |
+| `pointerSide` | `both` · `left` · `right` | "both" |
 | `speed` | number 0.2–3 | 1 |
 | `shadow` | boolean | true |
 | `glare` | boolean | true |
 | `shine` | number 0–2 | 1 |
+| `screenShine` | number 0–2 | 1 |
 | `still` | boolean | false |
 
 - Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.
@@ -1054,6 +1058,7 @@ Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventan
 - `safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).
 - `orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).
 - `systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.
+- Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.
 - Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.
 - Con `prefers-reduced-motion` queda quieto y el vídeo no arranca. `still` lo fuerza y además muestra `image` en lugar de la web.
 
@@ -1083,10 +1088,14 @@ El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos
 | `rotateX` | number -30–40 | 0 |
 | `rotateY` | number -60–60 | 0 |
 | `motion` | `none` · `float` · `sway` · `spin` · `pointer` | "float" |
+| `pointerX` | number 0–45 | 16 |
+| `pointerY` | number 0–30 | 10 |
+| `pointerSide` | `both` · `left` · `right` | "both" |
 | `speed` | number 0.2–3 | 1 |
 | `shadow` | boolean | true |
 | `glare` | boolean | true |
 | `shine` | number 0–2 | 1 |
+| `screenShine` | number 0–2 | 1 |
 | `still` | boolean | false |
 
 - Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/DeviceMockup3D`. three se descarga bajo demanda, al acercarse el mockup a la pantalla; mientras, se ve la versión CSS en la misma caja y con la misma pose.
@@ -1099,6 +1108,7 @@ El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos
 - `safeArea` (móvil): la web no se pinta bajo la isla sino debajo de ella, como el área segura de un teléfono real; la franja es negra o del color de `--device-safe` (p. ej. el de la cabecera de la web).
 - `orientation` fija la orientación de móvil y tablet; `rotatable` añade debajo un botón para que el visitante lo gire (la web en vivo se adapta al nuevo viewport).
 - `systemNav` (móvil y tablet): pinta la navegación del sistema y deja la web por encima; el indicador de inicio con `platform` ios, o los tres botones de Android (a la derecha con el móvil en horizontal). Color de los iconos: `--device-nav`.
+- Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.
 - Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.
 
 ### Reproductor de vídeo — `VideoPlayer`
