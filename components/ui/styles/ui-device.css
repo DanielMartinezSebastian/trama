@@ -80,3 +80,45 @@
 @media (prefers-reduced-motion: reduce) {
   .ui-device__body, .ui-device__img--scroll { animation: none !important; transition: none !important; }
 }
+
+/* =====================================================================
+   LogoCoin (prefijo ui-coin): un logo con volumen que gira, en CSS 3D. Dos caras a ±grosor/2 y el canto hecho con tramos
+   rectos alrededor (--a = ángulo del tramo, --k = cuánta luz recibe). El giro es una animación de `transform`: la mueve el
+   compositor. Decorativo: no recibe eventos salvo con draggable (.is-hand).
+   ===================================================================== */
+.ui-coin { --coin-edge: var(--tone, var(--acc)); position: relative; display: inline-block; flex: none; width: var(--coin-d); height: var(--coin-d); perspective: calc(var(--coin-d) * 4); pointer-events: none; user-select: none; vertical-align: middle; }
+.ui-coin.is-hand { pointer-events: auto; cursor: grab; touch-action: pan-y; }
+.ui-coin.is-hand:active { cursor: grabbing; }
+.ui-coin__tilt, .ui-coin__spin { position: absolute; inset: 0; display: block; transform-style: preserve-3d; }
+.ui-coin__tilt { transform: rotateX(var(--coin-tilt)); }
+.ui-coin__spin { animation: ui-coin-spin var(--coin-turn) linear infinite; }
+.ui-coin.is-reverse .ui-coin__spin { animation-direction: reverse; }
+.ui-coin.is-hand .ui-coin__spin { animation: none; }
+/* quieto: ladeado, para que el canto siga dando volumen */
+.ui-coin.is-still .ui-coin__spin { animation: none; transform: rotateY(-32deg); }
+@keyframes ui-coin-spin { to { transform: rotateY(360deg); } }
+
+.ui-coin__face { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; border-radius: 50%; background: var(--coin-face); color: var(--fg); backface-visibility: hidden; }
+.ui-coin__face--front { transform: translateZ(calc(var(--coin-t) / 2)); }
+.ui-coin__face--back { transform: rotateY(180deg) translateZ(calc(var(--coin-t) / 2)); }
+.ui-coin__face img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ui-coin--contain .ui-coin__face img { width: 68%; height: 68%; object-fit: contain; }
+.ui-coin__face svg { width: 56%; height: 56%; }
+.ui-coin__glare { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgb(255 255 255 / 0.22), transparent 42%, transparent 70%, rgb(0 0 0 / 0.25)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--coin-edge) 55%, transparent); }
+.ui-coin__edge { position: absolute; left: 50%; top: 50%; width: var(--coin-seg); height: var(--coin-t); margin: calc(var(--coin-t) / -2) 0 0 calc(var(--coin-seg) / -2); background: color-mix(in oklab, var(--coin-edge), black calc((1 - var(--k)) * 62%)); transform: rotateZ(var(--a)) translateY(calc(var(--coin-d) / -2)) rotateX(90deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-coin__spin { animation: none; transform: rotateY(-32deg); }
+}
+
+/* =====================================================================
+   Logo3D (prefijo ui-logo3d): la marca extruida en un lienzo three.js. La marca plana en SVG es la reserva (carga, sin
+   WebGL, reducir movimiento) y ocupa el mismo hueco. Decorativo: sin eventos salvo con draggable (.is-hand).
+   ===================================================================== */
+.ui-logo3d { position: relative; width: 100%; color: var(--tone, var(--fg)); pointer-events: none; user-select: none; }
+.ui-logo3d.is-hand { pointer-events: auto; cursor: grab; touch-action: pan-y; }
+.ui-logo3d.is-hand:active { cursor: grabbing; }
+/* misma altura aparente que la marca en 3D (el relleno en % iría contra el ancho, no el alto) */
+.ui-logo3d__flat { position: absolute; left: 0; top: 12%; width: 100%; height: 76%; }
+.ui-logo3d__gl { position: absolute; inset: 0; pointer-events: none; }
+.ui-logo3d__gl.is-loading { opacity: 0; }

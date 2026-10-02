@@ -1263,3 +1263,42 @@ Trampas:
 - **`interactive` es `false` por defecto**: el contenido lleva `inert` para que la vista previa no atrape el scroll ni el
   foco. Actívalo solo si la gracia es usar la web dentro.
 - En CSS no hay cara trasera: `motion="spin"` es un balanceo amplio; la vuelta completa solo existe en 3D.
+
+## 27. Logo giratorio: `LogoCoin`
+
+Un logo con volumen que gira como una moneda (dos caras con la marca y canto visible), para dar vida a un menú, una
+cabecera o una pantalla de carga. **Es CSS 3D, no WebGL**, a propósito: para un objeto tan pequeño un lienzo three.js
+costaría un contexto WebGL, la descarga de three y trabajo de GPU por fotograma, y aquí el giro es una animación de
+`transform` que mueve el compositor, sin JavaScript por fotograma. Dentro de un contenedor oculto (`hidden`,
+`display: none`) no hace nada, y al desmontarse no deja nada que limpiar.
+
+- **Marca**: `src` (URL, ruta o `gen:N`) o `children` (SVG, `Icon`, texto), igual en las dos caras; `backSrc` si la trasera
+  es otra. `fit="cover"` para logos ya redondos, `contain` para uno suelto sobre el fondo de la cara (`faceTone`).
+- **Volumen**: `thickness` es el grosor del canto, hecho con 48 tramos rectos alrededor (color `tone`, con los de arriba
+  más claros que los de abajo); `tilt` lo inclina para que se vea.
+- **Movimiento**: `speed` (1 = una vuelta cada 6 s; negativo, al revés; 0, quieto). Con `prefers-reduced-motion` o `still`
+  queda quieto y ladeado. `draggable` deja girarlo arrastrando, con inercia: solo entonces hay un bucle `requestAnimationFrame`,
+  que se detiene fuera de pantalla y con la pestaña oculta.
+- **Accesibilidad**: decorativo por defecto (`aria-hidden`, `pointer-events: none`); `alt` lo convierte en `role="img"`.
+- Trampa: el canto se lee curvo hasta unos 240 px de diámetro; más grande se notan los tramos.
+
+## 28. La marca como objeto 3D: `Logo3D`
+
+Donde `LogoCoin` (§27) es un disco con el logo pegado, `Logo3D` es **la propia marca con volumen**: un trazado SVG extruido
+en un lienzo three.js, que se puede pintar con los estilos de la librería. Requiere `three` y `@react-three/fiber`
+(opcionales): `trama-ui/Logo3D`, fuera del barrel como `RetroCanvas` y `DeviceMockup3D`.
+
+- **Marca**: `path` (el `d` de un SVG) y su `viewBox`. `strokeWidth` > 0 trata el trazado como una línea de ese grosor, y
+  cada tramo se extruye como una cápsula (extremos y uniones redondos); con 0 es una forma rellena (`SVGLoader.createShapes`).
+  `depth` y `bevel` van en unidades del `viewBox`. `base`: `none`, `plate` o `ring`. No acepta imágenes: de un PNG no sale
+  un volumen; hay que redibujar la marca como trazado.
+- **Estilos** (`renderStyle`): `solid`, `wire`, y los del filtro retro, `ascii`, `pixel` y `both`, que **reutilizan `RetroFX`**
+  (§22) con sus props: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`,
+  `glow`, `glitch`, `curvature`, `vignette`… Con el filtro, el material pasa a gris claro (lo que se lee es la luz) salvo con
+  `tint="scene"`, y el lienzo es opaco sobre `--bg`; `solid` y `wire` son transparentes.
+- **Movimiento**: `motion` (`spin · sway · float · pointer · none`), `axis`, `speed`, `tilt`, `paused` y `draggable`
+  (arrastre con inercia, que se suma al movimiento).
+- **Coste**: `frameloop="demand"` con un marcapasos a `fps` (30) solo mientras hay movimiento; nada fuera de pantalla ni
+  dentro de un contenedor oculto (`IntersectionObserver`). three se carga con `lazy()`. Un contexto WebGL por instancia.
+- **Reserva** (`render`): `auto` cae a la marca plana en SVG sin WebGL2, con `Save-Data`, en equipos modestos o con
+  `prefers-reduced-motion`; es también lo que se ve mientras carga.

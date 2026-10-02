@@ -9,7 +9,7 @@
    2) sistema de estilos --s-* y componentes (ui-kit.css)
    3) carruseles y galerías sobre Swiper (ui-carousel.css) y reproductor de vídeo (ui-video.css)
    4) transiciones de página con la View Transitions API (ui-view-transitions.css, PageTransition)
-   5) mockups de dispositivo (ui-device.css, DeviceMockup y DeviceMockup3D)
+   5) mockups de dispositivo y logo giratorio (ui-device.css: DeviceMockup, DeviceMockup3D, LogoCoin y Logo3D)
    ===================================================================== */
 @import "./ui-kit.css";
 @import "./ui-carousel.css";

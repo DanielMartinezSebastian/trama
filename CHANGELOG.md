@@ -4,6 +4,21 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## 0.11.0 — la marca como objeto 3D
+
+- **`Logo3D`** (`trama-ui/Logo3D`, requiere `three` y `@react-three/fiber`): un trazado SVG (`path`, `viewBox`,
+  `strokeWidth`) extruido (`depth`, `bevel`, `base`) que gira, se balancea, flota o sigue al puntero (`motion`, `axis`,
+  `speed`, `tilt`, `draggable`, `paused`), con `renderStyle` `solid · wire · ascii · pixel · both`; los tres últimos usan
+  el filtro de `RetroFX` (`ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `tint`, `scanlines`, `glow`…).
+  Cae a la marca plana en SVG sin WebGL2, en equipos modestos o con `prefers-reduced-motion`. Guía §28.
+
+## 0.10.0 — logo giratorio
+
+- **`LogoCoin`** (categoría Galerías): un logo con volumen que gira como una moneda, con la marca en las dos caras (`src` o
+  `children`) y canto visible (`thickness`, `tone`). CSS 3D puro, sin WebGL ni dependencias: no ejecuta JavaScript por
+  fotograma y no trabaja dentro de un contenedor oculto. `speed`, `tilt`, `fit`, `faceTone`, `glare`, `still`, `alt` y
+  `draggable` (girarlo arrastrando, con inercia). Decorativo por defecto: no recibe toques. Guía §27.
+
 ## 0.9.0 — reflejo del cristal aparte de la carcasa
 
 - `DeviceMockup` y `DeviceMockup3D`: `screenShine` (0–2) gradúa el reflejo del cristal sobre la pantalla por separado;

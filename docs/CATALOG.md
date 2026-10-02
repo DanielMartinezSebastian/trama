@@ -1111,6 +1111,74 @@ El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos
 - Con `motion` pointer, `pointerX` y `pointerY` son los grados máximos de giro horizontal e inclinación vertical (0 anula ese eje) y `pointerSide` deja girar solo hacia un lado: con `left`, el aparato solo se vuelve cuando el puntero está a su izquierda.
 - Por defecto el contenido no es utilizable (no atrapa el scroll ni el foco); `interactive` lo activa.
 
+### Logo giratorio 3D — `LogoCoin`
+
+Un logo con volumen que gira sobre su eje vertical, como una moneda: la marca en las dos caras y canto visible. CSS 3D puro, sin WebGL ni dependencias: lo anima el compositor, no cuesta nada dentro de un contenedor oculto y no recibe toques. Para dar vida a un menú, una cabecera o una pantalla de carga.
+
+| prop | tipo | default |
+|---|---|---|
+| `src` | text | "" |
+| `diameter` | number 40–320 | 120 |
+| `thickness` | number 2–48 | 12 |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
+| `faceTone` | `bg` · `fg` · `acc` · `acc2` · `mut` | "bg" |
+| `fit` | `cover` · `contain` | "cover" |
+| `speed` | number -4–4 | 1 |
+| `tilt` | number -40–40 | 10 |
+| `draggable` | boolean | false |
+| `glare` | boolean | true |
+| `still` | boolean | false |
+| `alt` | text | "" |
+
+- La marca va en `src` (URL, ruta o `gen:N`) o como `children` (un SVG, un `Icon`, texto), que se pinta en las dos caras. Con un logo ya redondo, `fit` cover; con uno suelto, contain.
+- Decorativo por defecto: `aria-hidden` y sin eventos. `alt` le da nombre accesible. `draggable` deja girarlo arrastrando, con inercia (entonces sí recibe toques, pero el scroll vertical pasa).
+- Sin `draggable` no ejecuta JavaScript por fotograma: es una animación CSS de `transform`. Con `prefers-reduced-motion` o `still` queda quieto y ladeado, con el canto a la vista.
+- Color del canto: `tone`. Fondo de las caras: `faceTone`.
+
+### Logo 3D — `Logo3D`
+
+La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o sigue al puntero, pintado como sólido, malla de alambre, caracteres ASCII o pixel art con el mismo filtro que RetroCanvas (rampas de glifos, dither, scanlines, glow, glitch). Decorativo, para un menú, una cabecera o un hero.
+
+| prop | tipo | default |
+|---|---|---|
+| `path` | text | "M78 62 44 96l34 34M114 62l34 34-34 34" |
+| `viewBox` | text | "0 0 192 192" |
+| `strokeWidth` | number 0–60 | 16 |
+| `depth` | number 2–120 | 22 |
+| `bevel` | number 0–12 | 3 |
+| `base` | `none` · `plate` · `ring` | "none" |
+| `renderStyle` | `solid` · `wire` · `ascii` · `pixel` · `both` | "ascii" |
+| `ramp` | `classic` · `dots` · `braille` · `blocks` · `binary` · `hex` · `code` · `hatch` · `circuit` | "classic" |
+| `chars` | text | "" |
+| `cellSize` | number 3–20 | 6 |
+| `pixelSize` | number 2–16 | 4 |
+| `levels` | number 2–8 | 4 |
+| `dither` | number 0–1 | 0.6 |
+| `ditherPattern` | `bayer` · `hatch` · `halftone` · `noise` | "bayer" |
+| `tint` | `mono` · `scene` · `gradient` | "mono" |
+| `scanlines` | number 0–1 | 0.2 |
+| `glow` | number 0–1 | 0 |
+| `glitch` | number 0–1 | 0 |
+| `invert` | boolean | false |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "fg" |
+| `baseTone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
+| `motion` | `spin` · `sway` · `float` · `pointer` · `none` | "spin" |
+| `axis` | `y` · `x` · `z` | "y" |
+| `speed` | number -4–4 | 1 |
+| `tilt` | number -45–45 | 8 |
+| `draggable` | boolean | false |
+| `paused` | boolean | false |
+| `height` | number 80–480 | 160 |
+| `fps` | number 0–60 | 30 |
+| `render` | `auto` · `3d` · `static` | "auto" |
+| `alt` | text | "" |
+
+- Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/Logo3D`. Se descargan bajo demanda; mientras, y si el equipo no puede con WebGL, va justo, pide ahorrar datos o reducir movimiento, se ve la marca plana en SVG.
+- La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.
+- `renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.
+- Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.
+- Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.
+
 ### Reproductor de vídeo — `VideoPlayer`
 
 Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.

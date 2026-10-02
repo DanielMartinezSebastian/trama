@@ -2,6 +2,7 @@
 
 import { Component, Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { hasWebGL, lowPower } from "@/lib/ui/capability";
 import { deviceGeometry, deviceViewport } from "@/lib/ui/devices";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
@@ -18,26 +19,6 @@ export type DeviceMockup3DProps = DeviceMockupProps & {
    */
   render?: "auto" | "3d" | "flat" | "static";
 };
-
-let webgl: boolean | null = null;
-/** ¿se puede crear un contexto WebGL2? Se comprueba una vez por página */
-function hasWebGL(): boolean {
-  if (webgl !== null) return webgl;
-  try {
-    const gl = document.createElement("canvas").getContext("webgl2");
-    gl?.getExtension("WEBGL_lose_context")?.loseContext();
-    webgl = Boolean(gl);
-  } catch {
-    webgl = false;
-  }
-  return webgl;
-}
-
-/** equipo modesto o que pide ahorrar datos: poca memoria, pocos núcleos o `Save-Data` */
-function lowPower(): boolean {
-  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  return Boolean(nav.connection?.saveData) || (nav.deviceMemory ?? 8) <= 2 || (nav.hardwareConcurrency ?? 8) <= 2;
-}
 
 /** si el lienzo falla (sin WebGL, contexto perdido al crear), se cae a la versión CSS */
 class Boundary extends Component<{ onError: () => void; children: ReactNode }, { failed: boolean }> {

@@ -149,6 +149,8 @@
         "carousel",
         "device-mockup",
         "device-mockup-3d",
+        "logo-coin",
+        "logo-3d",
         "video-player",
         "audio-player"
       ]
@@ -6590,6 +6592,442 @@
       ],
       "example": "import DeviceMockup3D from \"@/components/ui/DeviceMockup3D\";\n\n<DeviceMockup3D />",
       "preview": "/componentes#device-mockup-3d"
+    },
+    {
+      "id": "logo-coin",
+      "name": "Logo giratorio 3D",
+      "component": "LogoCoin",
+      "import": "import LogoCoin from \"@/components/ui/LogoCoin\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "Un logo con volumen que gira sobre su eje vertical, como una moneda: la marca en las dos caras y canto visible. CSS 3D puro, sin WebGL ni dependencias: lo anima el compositor, no cuesta nada dentro de un contenedor oculto y no recibe toques. Para dar vida a un menú, una cabecera o una pantalla de carga.",
+      "props": [
+        {
+          "key": "src",
+          "type": "text",
+          "default": "",
+          "label": "Imagen de la marca (URL, ruta o gen:N)",
+          "hint": "Vacío = el logo de ejemplo del catálogo"
+        },
+        {
+          "key": "diameter",
+          "type": "number",
+          "default": 120,
+          "label": "Diámetro (px)",
+          "min": 40,
+          "max": 320
+        },
+        {
+          "key": "thickness",
+          "type": "number",
+          "default": 12,
+          "label": "Grosor del canto (px)",
+          "min": 2,
+          "max": 48
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "faceTone",
+          "type": "select",
+          "default": "bg",
+          "label": "Fondo de las caras (token)",
+          "options": [
+            "bg",
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "fit",
+          "type": "select",
+          "default": "cover",
+          "label": "Encaje de la imagen",
+          "options": [
+            "cover",
+            "contain"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad (negativa = al revés)",
+          "min": -4,
+          "max": 4
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 10,
+          "label": "Inclinación (°)",
+          "min": -40,
+          "max": 40
+        },
+        {
+          "key": "draggable",
+          "type": "boolean",
+          "default": false,
+          "label": "Se puede girar arrastrando"
+        },
+        {
+          "key": "glare",
+          "type": "boolean",
+          "default": true,
+          "label": "Reflejo"
+        },
+        {
+          "key": "still",
+          "type": "boolean",
+          "default": false,
+          "label": "Quieto"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "",
+          "label": "Descripción accesible",
+          "hint": "Vacío = decorativo"
+        }
+      ],
+      "notes": [
+        "La marca va en `src` (URL, ruta o `gen:N`) o como `children` (un SVG, un `Icon`, texto), que se pinta en las dos caras. Con un logo ya redondo, `fit` cover; con uno suelto, contain.",
+        "Decorativo por defecto: `aria-hidden` y sin eventos. `alt` le da nombre accesible. `draggable` deja girarlo arrastrando, con inercia (entonces sí recibe toques, pero el scroll vertical pasa).",
+        "Sin `draggable` no ejecuta JavaScript por fotograma: es una animación CSS de `transform`. Con `prefers-reduced-motion` o `still` queda quieto y ladeado, con el canto a la vista.",
+        "Color del canto: `tone`. Fondo de las caras: `faceTone`."
+      ],
+      "example": "import LogoCoin from \"@/components/ui/LogoCoin\";\n\n<LogoCoin />",
+      "preview": "/componentes#logo-coin"
+    },
+    {
+      "id": "logo-3d",
+      "name": "Logo 3D",
+      "component": "Logo3D",
+      "import": "import Logo3D from \"@/components/ui/Logo3D\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix"
+      ],
+      "description": "La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o sigue al puntero, pintado como sólido, malla de alambre, caracteres ASCII o pixel art con el mismo filtro que RetroCanvas (rampas de glifos, dither, scanlines, glow, glitch). Decorativo, para un menú, una cabecera o un hero.",
+      "props": [
+        {
+          "key": "path",
+          "type": "text",
+          "default": "M78 62 44 96l34 34M114 62l34 34-34 34",
+          "label": "Trazado SVG (atributo d)"
+        },
+        {
+          "key": "viewBox",
+          "type": "text",
+          "default": "0 0 192 192",
+          "label": "viewBox del SVG"
+        },
+        {
+          "key": "strokeWidth",
+          "type": "number",
+          "default": 16,
+          "label": "Grosor de línea (0 = forma rellena)",
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "depth",
+          "type": "number",
+          "default": 22,
+          "label": "Fondo de la extrusión",
+          "min": 2,
+          "max": 120
+        },
+        {
+          "key": "bevel",
+          "type": "number",
+          "default": 3,
+          "label": "Bisel",
+          "min": 0,
+          "max": 12
+        },
+        {
+          "key": "base",
+          "type": "select",
+          "default": "none",
+          "label": "Base",
+          "options": [
+            "none",
+            "plate",
+            "ring"
+          ]
+        },
+        {
+          "key": "renderStyle",
+          "type": "select",
+          "default": "ascii",
+          "label": "Estilo de render",
+          "options": [
+            "solid",
+            "wire",
+            "ascii",
+            "pixel",
+            "both"
+          ]
+        },
+        {
+          "key": "ramp",
+          "type": "select",
+          "default": "classic",
+          "label": "Rampa de glifos",
+          "options": [
+            "classic",
+            "dots",
+            "braille",
+            "blocks",
+            "binary",
+            "hex",
+            "code",
+            "hatch",
+            "circuit"
+          ]
+        },
+        {
+          "key": "chars",
+          "type": "text",
+          "default": "",
+          "label": "Glifos propios (de menos a más denso)"
+        },
+        {
+          "key": "cellSize",
+          "type": "number",
+          "default": 6,
+          "label": "Celda ASCII (px)",
+          "min": 3,
+          "max": 20
+        },
+        {
+          "key": "pixelSize",
+          "type": "number",
+          "default": 4,
+          "label": "Bloque de pixel art (px)",
+          "min": 2,
+          "max": 16
+        },
+        {
+          "key": "levels",
+          "type": "number",
+          "default": 4,
+          "label": "Niveles de la paleta",
+          "min": 2,
+          "max": 8
+        },
+        {
+          "key": "dither",
+          "type": "number",
+          "default": 0.6,
+          "label": "Dither",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "ditherPattern",
+          "type": "select",
+          "default": "bayer",
+          "label": "Patrón del dither",
+          "options": [
+            "bayer",
+            "hatch",
+            "halftone",
+            "noise"
+          ]
+        },
+        {
+          "key": "tint",
+          "type": "select",
+          "default": "mono",
+          "label": "Tinte",
+          "options": [
+            "mono",
+            "scene",
+            "gradient"
+          ]
+        },
+        {
+          "key": "scanlines",
+          "type": "number",
+          "default": 0.2,
+          "label": "Scanlines",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "glow",
+          "type": "number",
+          "default": 0,
+          "label": "Glow",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "glitch",
+          "type": "number",
+          "default": 0,
+          "label": "Glitch",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "invert",
+          "type": "boolean",
+          "default": false,
+          "label": "Invertir"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "fg",
+          "label": "Color (token)",
+          "hint": "Sigue el tema y los colores del selector",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "baseTone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color de la base (token)",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "motion",
+          "type": "select",
+          "default": "spin",
+          "label": "Movimiento",
+          "options": [
+            "spin",
+            "sway",
+            "float",
+            "pointer",
+            "none"
+          ]
+        },
+        {
+          "key": "axis",
+          "type": "select",
+          "default": "y",
+          "label": "Eje",
+          "options": [
+            "y",
+            "x",
+            "z"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad (negativa = al revés)",
+          "min": -4,
+          "max": 4
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 8,
+          "label": "Inclinación (°)",
+          "min": -45,
+          "max": 45
+        },
+        {
+          "key": "draggable",
+          "type": "boolean",
+          "default": false,
+          "label": "Se puede girar arrastrando"
+        },
+        {
+          "key": "paused",
+          "type": "boolean",
+          "default": false,
+          "label": "En pausa"
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 160,
+          "label": "Alto (px)",
+          "min": 80,
+          "max": 480
+        },
+        {
+          "key": "fps",
+          "type": "number",
+          "default": 30,
+          "label": "Fotogramas por segundo (0 = pantalla)",
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "render",
+          "type": "select",
+          "default": "auto",
+          "label": "Render",
+          "options": [
+            "auto",
+            "3d",
+            "static"
+          ]
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "",
+          "label": "Descripción accesible",
+          "hint": "Vacío = decorativo"
+        }
+      ],
+      "notes": [
+        "Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/Logo3D`. Se descargan bajo demanda; mientras, y si el equipo no puede con WebGL, va justo, pide ahorrar datos o reducir movimiento, se ve la marca plana en SVG.",
+        "La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.",
+        "`renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.",
+        "Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.",
+        "Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto."
+      ],
+      "example": "import Logo3D from \"@/components/ui/Logo3D\";\n\n<Logo3D />",
+      "preview": "/componentes#logo-3d"
     },
     {
       "id": "video-player",

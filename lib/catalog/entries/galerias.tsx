@@ -8,6 +8,8 @@ import Carousel from "@/components/ui/Carousel";
 import DeviceMockup, { DEVICE_MOTIONS, type DeviceMockupProps } from "@/components/ui/DeviceMockup";
 import DeviceMockup3D from "@/components/ui/DeviceMockup3D";
 import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
+import Logo3D, { LOGO3D_MOTIONS, LOGO3D_STYLES } from "@/components/ui/Logo3D";
+import LogoCoin from "@/components/ui/LogoCoin";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
 import { DEVICES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
@@ -57,6 +59,11 @@ function fakeScreenshot(device: DeviceKind, landscape: boolean, pages = 3.2): st
   s += r(0, H - u * 5, w, u * 5, "#060912", 0) + r(u, H - u * 3.4, u * 5, u * 0.7, "#c084fc") + r(u, H - u * 2, w * 0.5, u * 0.5, "#232b45");
   return `data:image/svg+xml;utf8,${encodeURIComponent(s + "</svg>")}`;
 }
+
+/** Logo de ejemplo para `LogoCoin`: un círculo oscuro con «< >» de trazo grueso, como SVG en data URI. */
+const SAMPLE_LOGO = `data:image/svg+xml;utf8,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" fill="#05050f"/><path d="M78 62 44 96l34 34M114 62l34 34-34 34" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+)}`;
 
 const DEVICE_DEMOS: Record<string, string> = {
   screenshot: "Captura larga (recorre la página al pasar el puntero)",
@@ -320,6 +327,144 @@ export const galerias: CatalogEntry[] = [
     ],
     props: [{ key: "render", label: "Render", type: "select", default: "auto", options: ["auto", "3d", "flat", "static"], labels: { auto: "auto (3D si el equipo puede)", "3d": "3D siempre", flat: "CSS", static: "imagen fija" } }, ...deviceSpecs()],
     render: (p) => deviceStage(<DeviceMockup3D key={`${p.device}-${p.platform}-${p.demo}-${p.render}`} render={p.render as never} {...deviceValues(p)} />),
+  },
+  {
+    id: "logo-coin",
+    component: "LogoCoin",
+    path: "@/components/ui/LogoCoin",
+    name: "Logo giratorio 3D",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description:
+      "Un logo con volumen que gira sobre su eje vertical, como una moneda: la marca en las dos caras y canto visible. CSS 3D puro, sin WebGL ni dependencias: lo anima el compositor, no cuesta nada dentro de un contenedor oculto y no recibe toques. Para dar vida a un menú, una cabecera o una pantalla de carga.",
+    stageHeight: 320,
+    notes: [
+      "La marca va en `src` (URL, ruta o `gen:N`) o como `children` (un SVG, un `Icon`, texto), que se pinta en las dos caras. Con un logo ya redondo, `fit` cover; con uno suelto, contain.",
+      "Decorativo por defecto: `aria-hidden` y sin eventos. `alt` le da nombre accesible. `draggable` deja girarlo arrastrando, con inercia (entonces sí recibe toques, pero el scroll vertical pasa).",
+      "Sin `draggable` no ejecuta JavaScript por fotograma: es una animación CSS de `transform`. Con `prefers-reduced-motion` o `still` queda quieto y ladeado, con el canto a la vista.",
+      "Color del canto: `tone`. Fondo de las caras: `faceTone`.",
+    ],
+    props: [
+      { key: "src", label: "Imagen de la marca (URL, ruta o gen:N)", type: "text", default: "", hint: "Vacío = el logo de ejemplo del catálogo" },
+      { key: "diameter", label: "Diámetro (px)", type: "number", default: 120, min: 40, max: 320, step: 4 },
+      { key: "thickness", label: "Grosor del canto (px)", type: "number", default: 12, min: 2, max: 48, step: 1 },
+      toneProp("acc"),
+      { key: "faceTone", label: "Fondo de las caras (token)", type: "select", default: "bg", options: ["bg", "fg", "acc", "acc2", "mut"] },
+      { key: "fit", label: "Encaje de la imagen", type: "select", default: "cover", options: ["cover", "contain"], labels: { cover: "llena la cara", contain: "entera, con margen" } },
+      { key: "speed", label: "Velocidad (negativa = al revés)", type: "number", default: 1, min: -4, max: 4, step: 0.1 },
+      { key: "tilt", label: "Inclinación (°)", type: "number", default: 10, min: -40, max: 40, step: 1 },
+      { key: "draggable", label: "Se puede girar arrastrando", type: "boolean", default: false },
+      { key: "glare", label: "Reflejo", type: "boolean", default: true },
+      { key: "still", label: "Quieto", type: "boolean", default: false },
+      { key: "alt", label: "Descripción accesible", type: "text", default: "", hint: "Vacío = decorativo" },
+    ],
+    render: (p) => (
+      <div className="ui-center">
+        <LogoCoin
+          src={(p.src as string).trim() || SAMPLE_LOGO}
+          diameter={p.diameter as number}
+          thickness={p.thickness as number}
+          tone={p.tone as never}
+          faceTone={p.faceTone as never}
+          fit={p.fit as never}
+          speed={p.speed as number}
+          tilt={p.tilt as number}
+          draggable={p.draggable as boolean}
+          glare={p.glare as boolean}
+          still={p.still as boolean}
+          alt={p.alt as string}
+        />
+      </div>
+    ),
+  },
+  {
+    id: "logo-3d",
+    component: "Logo3D",
+    path: "@/components/ui/Logo3D",
+    name: "Logo 3D",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description:
+      "La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o sigue al puntero, pintado como sólido, malla de alambre, caracteres ASCII o pixel art con el mismo filtro que RetroCanvas (rampas de glifos, dither, scanlines, glow, glitch). Decorativo, para un menú, una cabecera o un hero.",
+    stageHeight: 360,
+    notes: [
+      "Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/Logo3D`. Se descargan bajo demanda; mientras, y si el equipo no puede con WebGL, va justo, pide ahorrar datos o reducir movimiento, se ve la marca plana en SVG.",
+      "La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.",
+      "`renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.",
+      "Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.",
+      "Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.",
+    ],
+    props: [
+      { key: "path", label: "Trazado SVG (atributo d)", type: "text", default: "M78 62 44 96l34 34M114 62l34 34-34 34" },
+      { key: "viewBox", label: "viewBox del SVG", type: "text", default: "0 0 192 192" },
+      { key: "strokeWidth", label: "Grosor de línea (0 = forma rellena)", type: "number", default: 16, min: 0, max: 60, step: 1 },
+      { key: "depth", label: "Fondo de la extrusión", type: "number", default: 22, min: 2, max: 120, step: 1 },
+      { key: "bevel", label: "Bisel", type: "number", default: 3, min: 0, max: 12, step: 0.5 },
+      { key: "base", label: "Base", type: "select", default: "none", options: ["none", "plate", "ring"], labels: { none: "ninguna", plate: "placa", ring: "aro" } },
+      { key: "renderStyle", label: "Estilo de render", type: "select", default: "ascii", options: LOGO3D_STYLES, labels: { solid: "sólido", wire: "alambre", ascii: "ASCII", pixel: "pixel art", both: "ASCII sobre pixel art" } },
+      { key: "ramp", label: "Rampa de glifos", type: "select", default: "classic", options: ["classic", "dots", "braille", "blocks", "binary", "hex", "code", "hatch", "circuit"], when: (p) => p.renderStyle === "ascii" || p.renderStyle === "both" },
+      { key: "chars", label: "Glifos propios (de menos a más denso)", type: "text", default: "", when: (p) => p.renderStyle === "ascii" || p.renderStyle === "both" },
+      { key: "cellSize", label: "Celda ASCII (px)", type: "number", default: 6, min: 3, max: 20, step: 1, when: (p) => p.renderStyle === "ascii" || p.renderStyle === "both" },
+      { key: "pixelSize", label: "Bloque de pixel art (px)", type: "number", default: 4, min: 2, max: 16, step: 1, when: (p) => p.renderStyle === "pixel" || p.renderStyle === "both" },
+      { key: "levels", label: "Niveles de la paleta", type: "number", default: 4, min: 2, max: 8, step: 1, when: (p) => p.renderStyle === "pixel" || p.renderStyle === "both" },
+      { key: "dither", label: "Dither", type: "number", default: 0.6, min: 0, max: 1, step: 0.05, when: (p) => p.renderStyle === "pixel" || p.renderStyle === "both" },
+      { key: "ditherPattern", label: "Patrón del dither", type: "select", default: "bayer", options: ["bayer", "hatch", "halftone", "noise"], when: (p) => p.renderStyle === "pixel" || p.renderStyle === "both" },
+      { key: "tint", label: "Tinte", type: "select", default: "mono", options: ["mono", "scene", "gradient"], labels: { mono: "monocromo (tone sobre --bg)", scene: "colores de la escena", gradient: "degradado bg → baseTone → tone" }, when: (p) => p.renderStyle !== "solid" && p.renderStyle !== "wire" },
+      { key: "scanlines", label: "Scanlines", type: "number", default: 0.2, min: 0, max: 1, step: 0.05, when: (p) => p.renderStyle !== "solid" && p.renderStyle !== "wire" },
+      { key: "glow", label: "Glow", type: "number", default: 0, min: 0, max: 1, step: 0.05, when: (p) => p.renderStyle !== "solid" && p.renderStyle !== "wire" },
+      { key: "glitch", label: "Glitch", type: "number", default: 0, min: 0, max: 1, step: 0.05, when: (p) => p.renderStyle !== "solid" && p.renderStyle !== "wire" },
+      { key: "invert", label: "Invertir", type: "boolean", default: false, when: (p) => p.renderStyle !== "solid" && p.renderStyle !== "wire" },
+      toneProp("fg"),
+      { key: "baseTone", label: "Color de la base (token)", type: "select", default: "acc", options: ["fg", "acc", "acc2", "mut"] },
+      { key: "motion", label: "Movimiento", type: "select", default: "spin", options: LOGO3D_MOTIONS, labels: { spin: "gira", sway: "se balancea", float: "flota", pointer: "sigue al puntero", none: "quieto" } },
+      { key: "axis", label: "Eje", type: "select", default: "y", options: ["y", "x", "z"], when: (p) => p.motion !== "none" },
+      { key: "speed", label: "Velocidad (negativa = al revés)", type: "number", default: 1, min: -4, max: 4, step: 0.1, when: (p) => p.motion !== "none" },
+      { key: "tilt", label: "Inclinación (°)", type: "number", default: 8, min: -45, max: 45, step: 1 },
+      { key: "draggable", label: "Se puede girar arrastrando", type: "boolean", default: false },
+      { key: "paused", label: "En pausa", type: "boolean", default: false },
+      { key: "height", label: "Alto (px)", type: "number", default: 160, min: 80, max: 480, step: 10 },
+      { key: "fps", label: "Fotogramas por segundo (0 = pantalla)", type: "number", default: 30, min: 0, max: 60, step: 5 },
+      { key: "render", label: "Render", type: "select", default: "auto", options: ["auto", "3d", "static"], labels: { auto: "auto (3D si el equipo puede)", "3d": "3D siempre", static: "marca plana" } },
+      { key: "alt", label: "Descripción accesible", type: "text", default: "", hint: "Vacío = decorativo" },
+    ],
+    render: (p) => (
+      <div className="ui-center" style={{ justifyItems: "stretch", gridTemplateColumns: "minmax(0, 1fr)" }}>
+        <Logo3D
+          key={`${p.renderStyle}-${p.render}`}
+          path={p.path as string}
+          viewBox={p.viewBox as string}
+          strokeWidth={p.strokeWidth as number}
+          depth={p.depth as number}
+          bevel={p.bevel as number}
+          base={p.base as never}
+          renderStyle={p.renderStyle as never}
+          ramp={p.ramp as never}
+          chars={p.chars as string}
+          cellSize={p.cellSize as number}
+          pixelSize={p.pixelSize as number}
+          levels={p.levels as number}
+          dither={p.dither as number}
+          ditherPattern={p.ditherPattern as never}
+          tint={p.tint as never}
+          scanlines={p.scanlines as number}
+          glow={p.glow as number}
+          glitch={p.glitch as number}
+          invert={p.invert as boolean}
+          tone={p.tone as never}
+          baseTone={p.baseTone as never}
+          motion={p.motion as never}
+          axis={p.axis as never}
+          speed={p.speed as number}
+          tilt={p.tilt as number}
+          draggable={p.draggable as boolean}
+          paused={p.paused as boolean}
+          height={p.height as number}
+          fps={p.fps as number}
+          render={p.render as never}
+          alt={p.alt as string}
+        />
+      </div>
+    ),
   },
   {
     id: "video-player",
