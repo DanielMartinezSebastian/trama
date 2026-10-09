@@ -1037,6 +1037,7 @@ Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventan
 | `viewportWidth` | number 0–1920 | 0 |
 | `safeArea` | boolean | false |
 | `systemNav` | boolean | false |
+| `finish` | `theme` · `black` · `graphite` · `silver` · `white` · `gold` · `blue` · `rose` | "theme" |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
 | `rotateX` | number -30–40 | 0 |
 | `rotateY` | number -60–60 | 0 |
@@ -1051,6 +1052,7 @@ Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventan
 | `screenShine` | number 0–2 | 1 |
 | `still` | boolean | false |
 
+- `finish` elige el color de la carcasa: `theme` (por defecto) lo saca del tema con `tone`; `black`, `graphite`, `silver`, `white`, `gold`, `blue` y `rose` son colores de aparato, iguales en cualquier tema. El cristal y el marco de la pantalla son siempre negros.
 - Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.
 - La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.
 - Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.
@@ -1084,6 +1086,7 @@ El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos
 | `viewportWidth` | number 0–1920 | 0 |
 | `safeArea` | boolean | false |
 | `systemNav` | boolean | false |
+| `finish` | `theme` · `black` · `graphite` · `silver` · `white` · `gold` · `blue` · `rose` | "theme" |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
 | `rotateX` | number -30–40 | 0 |
 | `rotateY` | number -60–60 | 0 |
@@ -1101,6 +1104,7 @@ El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos
 - Requiere `three` y `@react-three/fiber` (opcionales en el paquete): importa `trama-ui/DeviceMockup3D`. three se descarga bajo demanda, al acercarse el mockup a la pantalla; mientras, se ve la versión CSS en la misma caja y con la misma pose.
 - `render`: `auto` elige 3D salvo sin WebGL2, con `Save-Data`, ≤ 2 GB de memoria, ≤ 2 núcleos o `prefers-reduced-motion`, que caen a imagen fija; `3d` lo fuerza; `flat` es la versión CSS; `static`, la CSS quieta con `image` en lugar de la web.
 - Cada mockup 3D es un contexto WebGL (los navegadores admiten unos 16): en una rejilla de proyectos usa 3D en uno o dos destacados y `DeviceMockup` en el resto. Dibuja bajo demanda y se detiene fuera de pantalla.
+- `finish` elige el color de la carcasa: `theme` (por defecto) lo saca del tema con `tone`; `black`, `graphite`, `silver`, `white`, `gold`, `blue` y `rose` son colores de aparato, iguales en cualquier tema. El cristal y el marco de la pantalla son siempre negros.
 - Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.
 - La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.
 - Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.

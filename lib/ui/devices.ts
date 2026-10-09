@@ -12,6 +12,22 @@ export const DEVICE_PLATFORMS = ["ios", "android"] as const;
 /** aspecto del móvil: ios = isla alargada y esquinas muy redondas · android = cámara redonda y esquinas más cerradas */
 export type DevicePlatform = (typeof DEVICE_PLATFORMS)[number];
 
+export const DEVICE_FINISHES = ["theme", "black", "graphite", "silver", "white", "gold", "blue", "rose"] as const;
+/** acabado de la carcasa: theme = el color sale del tema (prop `tone`) · el resto, colores de aparato, iguales en cualquier tema */
+export type DeviceFinish = (typeof DEVICE_FINISHES)[number];
+/** color de cada acabado fijo. Son colores de producto (aluminio, negro…), no de interfaz: por eso no salen de los tokens */
+export const DEVICE_FINISH_COLORS: Record<Exclude<DeviceFinish, "theme">, string> = {
+  black: "#17181b",
+  graphite: "#4b4e56",
+  silver: "#c8cbd0",
+  white: "#eceef0",
+  gold: "#d8c3a2",
+  blue: "#5c7592",
+  rose: "#dfb9b4",
+};
+/** color fijo del acabado, o `null` si lo pone el tema */
+export const deviceFinishColor = (finish: DeviceFinish): string | null => (finish === "theme" ? null : (DEVICE_FINISH_COLORS[finish] ?? null));
+
 /** rectángulo redondeado en la caja del dispositivo (y hacia abajo) */
 export type DeviceRect = { x: number; y: number; w: number; h: number; r: number };
 

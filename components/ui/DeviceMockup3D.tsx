@@ -3,7 +3,7 @@
 import { Component, Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { hasWebGL, lowPower } from "@/lib/ui/capability";
-import { deviceBleed, deviceGeometry, deviceViewport } from "@/lib/ui/devices";
+import { deviceBleed, deviceFinishColor, deviceGeometry, deviceViewport } from "@/lib/ui/devices";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import DeviceMockup, { DeviceScreen, deviceVars, useDeviceRotation, type DeviceMockupProps } from "./DeviceMockup";
@@ -42,7 +42,7 @@ class Boundary extends Component<{ onError: () => void; children: ReactNode }, {
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/DeviceMockup3D`.
  */
 export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMockup3DProps) {
-  const { device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" } = props;
+  const { device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, finish = "theme", tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" } = props;
   const root = useRef<HTMLDivElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
@@ -96,7 +96,7 @@ export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMock
   const quiet = still || reduced;
   // el lienzo y la capa CSS 3D sobresalen de la caja lo que pide el aparato
   const bleed = { inset: `${-deviceBleed(device) * 100}%` };
-  const bodyColor = tokens ? `color-mix(in oklab, ${tokens[`--${tone}`]} 38%, ${tokens["--bg"]})` : "#3a3f4b";
+  const bodyColor = deviceFinishColor(finish) ?? (tokens ? `color-mix(in oklab, ${tokens[`--${tone}`]} 38%, ${tokens["--bg"]})` : "#3a3f4b");
 
   return (
     <div ref={root} className={`ui-device ui-device--3d ${tcls(tone)} ${className}`} style={deviceVars(geo, vp, speed)} role={alt && !interactive && !rotation.can ? "img" : alt ? "group" : undefined} aria-label={alt || undefined}>

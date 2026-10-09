@@ -6,6 +6,9 @@ renombrados de esta primera versión dejan el nombre antiguo como alias `@deprec
 
 ## Sin publicar
 
+- `DeviceMockup` y `DeviceMockup3D`: prop `finish` con el color de la carcasa. `theme` (por defecto) lo saca del tema
+  con `tone`, como hasta ahora; `black`, `graphite`, `silver`, `white`, `gold`, `blue` y `rose` son colores de aparato,
+  iguales en cualquier tema. Vale para todos los dispositivos.
 - `DeviceMockup3D`, portátil: la base deja de ser una losa con dos rectángulos pintados. Ahora tiene teclado de teclas
   sueltas en un hueco calado (con las flechas en T invertida), trackpad con su marco, rejillas de altavoz, bisagra,
   muesca para abrir la tapa, puertos en los cantos, tacos de goma y un emblema en la trasera de la tapa. Su lienzo

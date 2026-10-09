@@ -333,7 +333,10 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, pointerX
   const gloss = Math.min(1, shine);
   const rough = (matte: number, glossy: number) => matte + (glossy - matte) * gloss;
   glareMat.uniforms.uShine.value = screenShine;
-  const metal = <meshStandardMaterial color={body} roughness={rough(0.9, 0.36)} metalness={0.6 * gloss} />;
+  // Un metal refleja con su propio color: una carcasa muy oscura (acabado negro) no devolvería luz y se perdería sobre un
+  // fondo oscuro. Cuanto más oscura, menos metal: así conserva el brillo blanco de un plástico o un anodizado negro.
+  const metalness = 0.6 * gloss * Math.max(0.25, Math.min(1, (0.2126 * body.r + 0.7152 * body.g + 0.0722 * body.b) / 0.04));
+  const metal = <meshStandardMaterial color={body} roughness={rough(0.9, 0.36)} metalness={metalness} />;
   const hingeY = fy - f.h / 2;
   // el portátil se abre un poco hacia atrás, girando sobre la bisagra; el resto no gira
   const open = laptop ? rad(-10) : 0;
@@ -386,7 +389,7 @@ function Device({ device, geo, vp, bodyColor, rotateX, rotateY, motion, pointerX
                 <meshStandardMaterial color="#020203" roughness={0.95} metalness={0} />
               </mesh>
               <mesh geometry={wellGeo} position={[0, kb.y, -BASE_T - 0.1]}>
-                <meshStandardMaterial color={body} roughness={rough(0.9, 0.36)} metalness={0.6 * gloss} side={DoubleSide} />
+                <meshStandardMaterial color={body} roughness={rough(0.9, 0.36)} metalness={metalness} side={DoubleSide} />
               </mesh>
               <mesh geometry={keysGeo} position={[0, kb.y, -WELL]}>
                 <meshStandardMaterial color="#14161b" roughness={rough(0.85, 0.5)} metalness={0.1} />

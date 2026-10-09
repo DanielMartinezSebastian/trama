@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { cameraDistance, deviceGeometry, deviceViewport, pointerSideClamp, type DevicePointerSide, type DeviceGeometry, type DeviceKind, type DeviceOrientation, type DevicePlatform, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
+import { cameraDistance, deviceFinishColor, deviceGeometry, deviceViewport, pointerSideClamp, type DeviceFinish, type DevicePointerSide, type DeviceGeometry, type DeviceKind, type DeviceOrientation, type DevicePlatform, type DeviceRect, type DeviceViewport } from "@/lib/ui/devices";
 import { resolveImage } from "@/lib/ui/placeholder";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { tcls, type Tone } from "./variants";
@@ -47,7 +47,12 @@ export type DeviceMockupProps = {
    * con `android`, los tres botones (atrás, inicio, recientes), que pasan a la derecha con el móvil en horizontal
    */
   systemNav?: boolean;
-  /** token del que sale el color de la carcasa (mezclado con `--bg`) */
+  /**
+   * acabado de la carcasa: theme (por defecto) = sale del tema, con `tone` · black · graphite · silver · white · gold · blue ·
+   * rose = colores de aparato, iguales en cualquier tema
+   */
+  finish?: DeviceFinish;
+  /** con `finish="theme"`: token del que sale el color de la carcasa (mezclado con `--bg`) */
   tone?: Tone;
   /** inclinación en grados (0 = de frente): positivo = visto desde arriba */
   rotateX?: number;
@@ -209,7 +214,7 @@ export const deviceVars = (geo: DeviceGeometry, vp: DeviceViewport, speed: numbe
  * una web en vivo (`url`), una captura (`image`), un vídeo o contenido React. Ocupa el ancho de su contenedor hasta
  * `--device-max`. Sin WebGL: para la versión con volumen y luz, `DeviceMockup3D`, que usa esta de reserva.
  */
-export default function DeviceMockup({ device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" }: DeviceMockupProps) {
+export default function DeviceMockup({ device = "phone", platform = "ios", orientation = "portrait", rotatable = false, rotateLabel = "Girar el dispositivo", url, image, video, children, alt = "", urlLabel, imageScroll = "hover", interactive = false, viewportWidth = 0, safeArea = false, systemNav = false, finish = "theme", tone = "mut", rotateX = 0, rotateY = 0, motion = "float", pointerX = 16, pointerY = 10, pointerSide = "both", speed = 1, shadow = true, glare = true, shine = 1, screenShine, still = false, live = true, className = "" }: DeviceMockupProps) {
   const root = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -246,7 +251,8 @@ export default function DeviceMockup({ device = "phone", platform = "ios", orien
     };
   }, [move, pointerSide]);
 
-  const style = { ...deviceVars(geo, vp, speed), "--dv-p": cameraDistance(geo), "--dv-rx": `${rotateX}deg`, "--dv-ry": `${rotateY}deg`, "--dv-speed": Math.max(0.1, speed), "--dv-shine": Math.max(0, screenShine ?? shine), "--dv-pmx": `${pointerX}deg`, "--dv-pmy": `${pointerY}deg` } as CSSProperties;
+  const fixed = deviceFinishColor(finish);
+  const style = { ...deviceVars(geo, vp, speed), ...(fixed ? { "--dv-body": fixed } : null), "--dv-p": cameraDistance(geo), "--dv-rx": `${rotateX}deg`, "--dv-ry": `${rotateY}deg`, "--dv-speed": Math.max(0.1, speed), "--dv-shine": Math.max(0, screenShine ?? shine), "--dv-pmx": `${pointerX}deg`, "--dv-pmy": `${pointerY}deg` } as CSSProperties;
 
   return (
     <div ref={root} className={`ui-device ui-device--${device} ui-device--${move} ${tcls(tone)} ${className}`} style={style} role={alt && !interactive && !rotation.can ? "img" : alt ? "group" : undefined} aria-label={alt || undefined}>

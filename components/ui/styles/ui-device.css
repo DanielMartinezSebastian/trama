@@ -1,8 +1,8 @@
 /* =====================================================================
    DeviceMockup y DeviceMockup3D (prefijo ui-device). La carcasa se coloca en porcentajes de la caja total (geometría en
    lib/ui/devices.ts); lo que depende del tamaño real —contenido, bordes, perspectiva— sale de --dv-g (px de página por px
-   de dispositivo), que mide un ResizeObserver. La carcasa toma su color de un token (--tone) mezclado con --bg; el
-   cristal es casi negro en cualquier tema, como en un aparato real.
+   de dispositivo), que mide un ResizeObserver. La carcasa toma su color de un token (--tone) mezclado con --bg, o el
+   color fijo de la prop `finish`, que llega en --dv-body; el cristal es casi negro en cualquier tema, como en un aparato real.
    ===================================================================== */
 
 .ui-device {

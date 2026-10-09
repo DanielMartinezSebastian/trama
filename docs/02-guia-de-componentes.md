@@ -1232,7 +1232,10 @@ Cómo funciona (`lib/ui/devices.ts`, `lib/device3d/scene.tsx`):
   2); `glare={false}` quita solo la banda del cristal. `screenShine` gradúa esa banda por separado (sin él, sigue a `shine`):
   carcasa discreta con algo de reflejo en la pantalla, `shine={0.4} screenShine={0.9}`. En la versión CSS no hay carcasa
   que brille: lo único que se ve es la opacidad de la banda.
-- **Color.** La carcasa es `--tone` (prop `tone`) mezclado al 38 % con `--bg`; el cristal es casi negro en cualquier tema.
+- **Color.** Con `finish="theme"` (por defecto) la carcasa es `--tone` (prop `tone`) mezclado al 38 % con `--bg`. Los demás
+  acabados (`black`, `graphite`, `silver`, `white`, `gold`, `blue`, `rose`; `DEVICE_FINISH_COLORS` en `lib/ui/devices.ts`)
+  son colores fijos de aparato, la excepción a «sin colores fijos»: un móvil negro es negro en cualquier tema. Llegan a la
+  versión CSS en `--dv-body` y a la 3D como color del material. El cristal es casi negro siempre.
 
 Trampas:
 

@@ -12,7 +12,7 @@ import Logo3D, { LOGO3D_MOTIONS, LOGO3D_STYLES } from "@/components/ui/Logo3D";
 import LogoCoin from "@/components/ui/LogoCoin";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
-import { DEVICES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
+import { DEVICES, DEVICE_FINISHES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
 import type { CatalogEntry, PropSpec, Values } from "../schema";
 import { ALL_STYLES, Sample, toneProp, variantProp } from "./shared";
 
@@ -91,7 +91,8 @@ const deviceSpecs = (): PropSpec[] => [
   { key: "viewportWidth", label: "Ancho del viewport simulado (px, 0 = el del dispositivo)", type: "number", default: 0, min: 0, max: 1920, step: 10 },
   { key: "safeArea", label: "Área segura (la web empieza bajo la isla)", type: "boolean", default: false, when: (p) => p.device === "phone", hint: "Para webs cuyo menú queda tapado por la isla. Color de la franja: --device-safe" },
   { key: "systemNav", label: "Navegación del sistema", type: "boolean", default: false, when: (p) => p.device === "phone" || p.device === "tablet", hint: "iPhone: indicador de inicio · Android: atrás, inicio y recientes. La web queda por encima" },
-  toneProp("mut"),
+  { key: "finish", label: "Acabado de la carcasa", type: "select", default: "theme", options: DEVICE_FINISHES, labels: { theme: "del tema (tone)", black: "negro", graphite: "grafito", silver: "plata", white: "blanco", gold: "oro", blue: "azul", rose: "rosa" } },
+  { ...toneProp("mut"), when: (p) => p.finish === "theme" },
   { key: "rotateX", label: "Inclinación (°, positivo = desde arriba)", type: "number", default: 0, min: -30, max: 40, step: 1 },
   { key: "rotateY", label: "Giro (°)", type: "number", default: 0, min: -60, max: 60, step: 1 },
   { key: "motion", label: "Movimiento", type: "select", default: "float", options: DEVICE_MOTIONS, labels: { none: "quieto", float: "flota", sway: "se balancea", spin: "gira", pointer: "sigue al puntero" } },
@@ -150,6 +151,7 @@ function deviceValues(p: Values): DeviceMockupProps {
     viewportWidth: p.viewportWidth as number,
     safeArea: p.safeArea as boolean,
     systemNav: p.systemNav as boolean,
+    finish: p.finish as never,
     tone: p.tone as never,
     rotateX: p.rotateX as number,
     rotateY: p.rotateY as number,
@@ -167,6 +169,7 @@ function deviceValues(p: Values): DeviceMockupProps {
 }
 
 const DEVICE_NOTES = [
+  "`finish` elige el color de la carcasa: `theme` (por defecto) lo saca del tema con `tone`; `black`, `graphite`, `silver`, `white`, `gold`, `blue` y `rose` son colores de aparato, iguales en cualquier tema. El cristal y el marco de la pantalla son siempre negros.",
   "Contenido, por orden de preferencia: `url` (web real en un iframe), `video`, `children` (React) o solo `image` (captura). Con `url` o `video`, `image` es la imagen previa y la que queda en modo estático.",
   "La pantalla simula el viewport real del dispositivo (móvil 390 px, o 412 con `platform` android; tablet 820, portátil 1440, monitor 1920, navegador 1280) y lo reduce al tamaño del mockup: la web se ve como en ese aparato. `viewportWidth` lo cambia. Los `children` pueden responder a ese ancho con `@container`.",
   "Una web solo se puede incrustar si lo permite: `X-Frame-Options: DENY` o `frame-ancestors 'none'` la dejan en blanco, y tu propia CSP necesita `frame-src` con ese origen. Para webs de terceros, usa una captura.",
