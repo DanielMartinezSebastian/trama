@@ -65,7 +65,7 @@
 .ui-device__url { flex: 1; min-width: 0; max-width: 60%; min-height: 1.5em; margin-inline: auto; padding: 0.3em 1.2em; border-radius: 999px; background: var(--card); color: var(--mut); font-size: 0.8em; line-height: 1.5; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ---------- 3D ----------
-   El lienzo y la capa CSS 3D sobresalen un 15 % por cada lado (DEVICE_MARGIN) para que el giro no se recorte; la caja de
+   El lienzo y la capa CSS 3D sobresalen un 15 % por cada lado (un 50 % el portátil: `deviceBleed`) para que el giro no se recorte; la caja de
    layout es la misma que en CSS. La pantalla es DOM y va DETRÁS del lienzo, que tiene un agujero transparente en su sitio:
    así el propio modelo la tapa al girar y los clics llegan al contenido (el lienzo no recibe eventos). */
 .ui-device--3d { perspective: none; }
@@ -116,6 +116,7 @@
    WebGL, reducir movimiento) y ocupa el mismo hueco. Decorativo: sin eventos salvo con draggable (.is-hand).
    ===================================================================== */
 .ui-logo3d { position: relative; width: 100%; color: var(--tone, var(--fg)); pointer-events: none; user-select: none; }
+.ui-logo3d--fill { position: absolute; inset: 0; width: auto; }
 .ui-logo3d.is-hand { pointer-events: auto; cursor: grab; touch-action: pan-y; }
 .ui-logo3d.is-hand:active { cursor: grabbing; }
 /* misma altura aparente que la marca en 3D (el relleno en % iría contra el ancho, no el alto) */

@@ -392,6 +392,7 @@ export const galerias: CatalogEntry[] = [
       "La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.",
       "`renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.",
       "Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.",
+      "Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.",
       "Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.",
     ],
     props: [
@@ -422,7 +423,15 @@ export const galerias: CatalogEntry[] = [
       { key: "tilt", label: "Inclinación (°)", type: "number", default: 8, min: -45, max: 45, step: 1 },
       { key: "draggable", label: "Se puede girar arrastrando", type: "boolean", default: false },
       { key: "paused", label: "En pausa", type: "boolean", default: false },
-      { key: "height", label: "Alto (px)", type: "number", default: 160, min: 80, max: 480, step: 10 },
+      { key: "charge", label: "Carga (partículas que se desprenden)", type: "number", default: 0, min: 0, max: 1, step: 0.05 },
+      { key: "explode", label: "Estallar", type: "boolean", default: false, hint: "La marca se deshace en partículas; al apagarlo, se recompone" },
+      { key: "explodeDuration", label: "Duración del estallido (s)", type: "number", default: 1.2, min: 0.3, max: 4, step: 0.1 },
+      { key: "particles", label: "Partículas", type: "number", default: 1800, min: 0, max: 6000, step: 100 },
+      { key: "particleSize", label: "Tamaño de partícula (px)", type: "number", default: 3, min: 1, max: 12, step: 0.5 },
+      { key: "fill", label: "Rellena el contenedor", type: "boolean", default: false, hint: "Como un fondo: la marca y sus partículas tienen todo el escenario" },
+      { key: "markSize", label: "Tamaño de la marca (px, 0 = encuadrada)", type: "number", default: 0, min: 0, max: 400, step: 10 },
+      { key: "markPosition", label: "Posición de la marca («x,y» en fracciones)", type: "text", default: "0.5,0.5" },
+      { key: "height", label: "Alto (px)", type: "number", default: 160, min: 80, max: 480, step: 10, when: (p) => !p.fill },
       { key: "fps", label: "Fotogramas por segundo (0 = pantalla)", type: "number", default: 30, min: 0, max: 60, step: 5 },
       { key: "render", label: "Render", type: "select", default: "auto", options: ["auto", "3d", "static"], labels: { auto: "auto (3D si el equipo puede)", "3d": "3D siempre", static: "marca plana" } },
       { key: "alt", label: "Descripción accesible", type: "text", default: "", hint: "Vacío = decorativo" },
@@ -459,6 +468,14 @@ export const galerias: CatalogEntry[] = [
           draggable={p.draggable as boolean}
           paused={p.paused as boolean}
           height={p.height as number}
+          fill={p.fill as boolean}
+          markSize={p.markSize as number}
+          markPosition={p.markPosition as string}
+          charge={p.charge as number}
+          explode={p.explode as boolean}
+          explodeDuration={p.explodeDuration as number}
+          particles={p.particles as number}
+          particleSize={p.particleSize as number}
           fps={p.fps as number}
           render={p.render as never}
           alt={p.alt as string}

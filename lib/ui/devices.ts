@@ -51,6 +51,11 @@ export const DEVICE_FOV = 30;
 export const DEVICE_MARGIN = 1.3;
 /** distancia de la cámara (px de dispositivo) a la que la caja ocupa 1 / DEVICE_MARGIN del alto del lienzo */
 export const cameraDistance = (geo: DeviceGeometry) => (DEVICE_MARGIN * geo.th) / (2 * Math.tan((DEVICE_FOV * Math.PI) / 360));
+/**
+ * Cuánto sobresalen de la caja el lienzo 3D y su capa CSS, por cada lado y en fracción de la caja. El portátil necesita
+ * más: al inclinarlo, la base viene hacia la cámara y se sale por abajo.
+ */
+export const deviceBleed = (device: DeviceKind) => (device === "laptop" ? 0.5 : (DEVICE_MARGIN - 1) / 2);
 
 export function deviceGeometry(device: DeviceKind, orientation: DeviceOrientation = "portrait", platform: DevicePlatform = "ios"): DeviceGeometry {
   const land = orientation === "landscape";

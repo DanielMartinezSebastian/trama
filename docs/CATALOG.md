@@ -1168,6 +1168,14 @@ La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o 
 | `tilt` | number -45–45 | 8 |
 | `draggable` | boolean | false |
 | `paused` | boolean | false |
+| `charge` | number 0–1 | 0 |
+| `explode` | boolean | false |
+| `explodeDuration` | number 0.3–4 | 1.2 |
+| `particles` | number 0–6000 | 1800 |
+| `particleSize` | number 1–12 | 3 |
+| `fill` | boolean | false |
+| `markSize` | number 0–400 | 0 |
+| `markPosition` | text | "0.5,0.5" |
 | `height` | number 80–480 | 160 |
 | `fps` | number 0–60 | 30 |
 | `render` | `auto` · `3d` · `static` | "auto" |
@@ -1177,6 +1185,7 @@ La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o 
 - La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.
 - `renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.
 - Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.
+- Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.
 - Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.
 
 ### Reproductor de vídeo — `VideoPlayer`

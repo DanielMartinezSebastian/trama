@@ -1298,6 +1298,15 @@ en un lienzo three.js, que se puede pintar con los estilos de la librería. Requ
   `tint="scene"`, y el lienzo es opaco sobre `--bg`; `solid` y `wire` son transparentes.
 - **Movimiento**: `motion` (`spin · sway · float · pointer · none`), `axis`, `speed`, `tilt`, `paused` y `draggable`
   (arrastre con inercia, que se suma al movimiento).
+- **Partículas**: una nube de `particles` puntos (1.800) muestreada de la superficie de la marca (`MeshSurfaceSampler`), con
+  las posiciones calculadas en la CPU cada fotograma. Pasa por el mismo filtro que la malla, así que en ASCII o pixel art
+  las partículas son caracteres o bloques del propio render. `charge` (0–1) las desprende de forma continua (más carga, más
+  partículas y más lejos; la marca sigue entera) y `explode` deshace la marca: todas salen despedidas y se apagan mientras
+  la malla se desvanece, en `explodeDuration` segundos, y `onExploded` avisa. Al volver `explode` a false recorren el mismo
+  camino al revés y la marca se recompone. Sin 3D, `onExploded` se llama enseguida.
+- **Como fondo**: `fill` hace que rellene su contenedor (`position: relative` y con tamaño), y `markSize` (px) y
+  `markPosition` («x,y» en fracciones) colocan la marca dentro. Se hace desplazando la ventana de la cámara
+  (`setViewOffset`), no la marca: no se deforma fuera del centro y el estallido cruza todo el lienzo.
 - **Coste**: `frameloop="demand"` con un marcapasos a `fps` (30) solo mientras hay movimiento; nada fuera de pantalla ni
   dentro de un contenedor oculto (`IntersectionObserver`). three se carga con `lazy()`. Un contexto WebGL por instancia.
 - **Reserva** (`render`): `auto` cae a la marca plana en SVG sin WebGL2, con `Save-Data`, en equipos modestos o con

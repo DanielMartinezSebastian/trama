@@ -3,7 +3,7 @@
 import { Component, Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { hasWebGL, lowPower } from "@/lib/ui/capability";
-import { deviceGeometry, deviceViewport } from "@/lib/ui/devices";
+import { deviceBleed, deviceGeometry, deviceViewport } from "@/lib/ui/devices";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import DeviceMockup, { DeviceScreen, deviceVars, useDeviceRotation, type DeviceMockupProps } from "./DeviceMockup";
@@ -94,6 +94,8 @@ export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMock
   if (!use3d) return <DeviceMockup {...props} still={still || render !== "flat" && render !== "3d"} />;
 
   const quiet = still || reduced;
+  // el lienzo y la capa CSS 3D sobresalen de la caja lo que pide el aparato
+  const bleed = { inset: `${-deviceBleed(device) * 100}%` };
   const bodyColor = tokens ? `color-mix(in oklab, ${tokens[`--${tone}`]} 38%, ${tokens["--bg"]})` : "#3a3f4b";
 
   return (
@@ -102,8 +104,8 @@ export default function DeviceMockup3D({ render = "auto", ...props }: DeviceMock
       {!ready && <DeviceMockup {...props} orientation={rotation.orient} rotatable={false} alt="" live={false} motion="none" className="" />}
       {mounted && screenEl && (
         <div className={`ui-device__box${ready ? "" : " is-loading"}`} style={{ aspectRatio: `${geo.tw} / ${geo.th}` }}>
-          <div className="ui-device__css3d" ref={setCssHost} />
-          <div className="ui-device__gl" aria-hidden>
+          <div className="ui-device__css3d" ref={setCssHost} style={bleed} />
+          <div className="ui-device__gl" style={bleed} aria-hidden>
             {cssHost && (
               <Boundary onError={() => setFailed(true)}>
                 <Suspense fallback={null}>

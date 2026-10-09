@@ -8,13 +8,13 @@ import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js
 export const RETRO_SHAPES = ["chevrons", "knot", "cube", "icosahedron", "cage", "helix", "rings", "terrain", "globe", "tunnel", "pyramid", "torus"] as const;
 
 export type RetroShapesProps = {
-  /** chevrons = dos flechas con una barra central · cage = jaula de aristas · helix = ADN · rings = giroscopio · terrain = relieve de datos · globe = globo facetado · tunnel = túnel de marcos · el resto, un sólido */
+  /** chevrons = dos flechas, «< >» · cage = jaula de aristas · helix = ADN · rings = giroscopio · terrain = relieve de datos · globe = globo facetado · tunnel = túnel de marcos · el resto, un sólido */
   shape?: (typeof RETRO_SHAPES)[number];
   /** velocidad de giro (1 = normal) */
   speed?: number;
 };
 
-/** «>» grueso; el de la derecha es el mismo espejado */
+/** «>» grueso; el de la izquierda es el mismo espejado */
 function chevron(): Shape {
   const s = new Shape();
   [[-0.55, 1], [0.15, 1], [0.95, 0], [0.15, -1], [-0.55, -1], [0.25, 0]].forEach(([x, y], i) => (i ? s.lineTo(x, y) : s.moveTo(x, y)));
@@ -151,16 +151,12 @@ export default function RetroShapes({ shape = "chevrons", speed = 1 }: RetroShap
       <group ref={group}>
         {shape === "chevrons" && (
           <>
-            <mesh position={[-2.4, 0, -0.3]} scale={1.15}>
+            <mesh position={[-1.25, 0, -0.3]} scale={[-1.15, 1.15, 1.15]}>
               <extrudeGeometry args={[cs, { depth: 0.6, bevelEnabled: false }]} />
               {mat}
             </mesh>
-            <mesh position={[2.4, 0, -0.3]} scale={[-1.15, 1.15, 1.15]}>
+            <mesh position={[1.25, 0, -0.3]} scale={1.15}>
               <extrudeGeometry args={[cs, { depth: 0.6, bevelEnabled: false }]} />
-              {mat}
-            </mesh>
-            <mesh>
-              <boxGeometry args={[0.32, 3.6, 0.32]} />
               {mat}
             </mesh>
           </>

@@ -6985,6 +6985,66 @@
           "label": "En pausa"
         },
         {
+          "key": "charge",
+          "type": "number",
+          "default": 0,
+          "label": "Carga (partículas que se desprenden)",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "explode",
+          "type": "boolean",
+          "default": false,
+          "label": "Estallar",
+          "hint": "La marca se deshace en partículas; al apagarlo, se recompone"
+        },
+        {
+          "key": "explodeDuration",
+          "type": "number",
+          "default": 1.2,
+          "label": "Duración del estallido (s)",
+          "min": 0.3,
+          "max": 4
+        },
+        {
+          "key": "particles",
+          "type": "number",
+          "default": 1800,
+          "label": "Partículas",
+          "min": 0,
+          "max": 6000
+        },
+        {
+          "key": "particleSize",
+          "type": "number",
+          "default": 3,
+          "label": "Tamaño de partícula (px)",
+          "min": 1,
+          "max": 12
+        },
+        {
+          "key": "fill",
+          "type": "boolean",
+          "default": false,
+          "label": "Rellena el contenedor",
+          "hint": "Como un fondo: la marca y sus partículas tienen todo el escenario"
+        },
+        {
+          "key": "markSize",
+          "type": "number",
+          "default": 0,
+          "label": "Tamaño de la marca (px, 0 = encuadrada)",
+          "min": 0,
+          "max": 400
+        },
+        {
+          "key": "markPosition",
+          "type": "text",
+          "default": "0.5,0.5",
+          "label": "Posición de la marca («x,y» en fracciones)"
+        },
+        {
           "key": "height",
           "type": "number",
           "default": 160,
@@ -7024,6 +7084,7 @@
         "La marca es `path` (el atributo `d` de un SVG) con su `viewBox`. Con `strokeWidth` > 0 el trazado es una línea de ese grosor con extremos redondos; con 0, una forma rellena. No acepta imágenes: de un PNG no se puede sacar volumen.",
         "`renderStyle` ascii, pixel y both usan `RetroFX`: `ramp`, `chars`, `cellSize`, `pixelSize`, `levels`, `dither`, `ditherPattern`, `tint`, `scanlines`, `glow`… Con ellos el lienzo se pinta sobre `--bg` (opaco); `solid` y `wire` son transparentes.",
         "Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.",
+        "Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.",
         "Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto."
       ],
       "example": "import Logo3D from \"@/components/ui/Logo3D\";\n\n<Logo3D />",

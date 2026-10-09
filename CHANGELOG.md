@@ -4,6 +4,22 @@ Formato: una entrada por versión publicada en npm (`npm run pkg:build` → `npm
 [SemVer](https://semver.org/lang/es/): cambiar el nombre o el significado de una prop es un cambio mayor; los
 renombrados de esta primera versión dejan el nombre antiguo como alias `@deprecated`.
 
+## Sin publicar
+
+- `DeviceMockup3D`, portátil: la base deja de ser una losa con dos rectángulos pintados. Ahora tiene teclado de teclas
+  sueltas en un hueco calado (con las flechas en T invertida), trackpad con su marco, rejillas de altavoz, bisagra,
+  muesca para abrir la tapa, puertos en los cantos, tacos de goma y un emblema en la trasera de la tapa. Su lienzo
+  sobresale un 50 % de la caja (antes un 15 %) para que la base no se recorte al inclinarlo (`deviceBleed`).
+- `RetroShapes`: la forma `chevrons` es ahora «< >», sin barra central y con las flechas más juntas.
+
+## 0.12.0 — partículas en Logo3D
+
+- `Logo3D`: `charge` (0–1) hace que la marca suelte partículas de su superficie y `explode` la deshace entera
+  (`explodeDuration`, `onExploded`; al volver a false se recompone). `particles` y `particleSize` las ajustan. Pasan por
+  el mismo filtro que la marca: en ASCII son caracteres.
+- `Logo3D`: `fill` (rellena el contenedor, como un fondo), `markSize` y `markPosition` para colocar la marca pequeña dentro
+  de un lienzo grande. En pantallas táctiles la densidad de píxeles se limita a 1,5.
+
 ## 0.11.0 — la marca como objeto 3D
 
 - **`Logo3D`** (`trama-ui/Logo3D`, requiere `three` y `@react-three/fiber`): un trazado SVG (`path`, `viewBox`,

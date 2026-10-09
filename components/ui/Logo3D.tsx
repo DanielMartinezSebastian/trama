@@ -47,8 +47,26 @@ export type Logo3DProps = FxProps & {
   draggable?: boolean;
   /** detiene el movimiento sin desmontar nada */
   paused?: boolean;
-  /** alto en px; el ancho es el del contenedor */
+  /** alto en px; el ancho es el del contenedor. Con `fill` no se usa */
   height?: number;
+  /** rellena su contenedor (que debe tener `position: relative` y tamaño), como los fondos del kit: para que la marca y sus partículas tengan todo ese espacio */
+  fill?: boolean;
+  /** lado mayor de la marca en px (0 = encuadrada al lado corto del lienzo) */
+  markSize?: number;
+  /** centro de la marca en fracciones del lienzo, «x,y»: `0.5,0.5` = centro · `0.5,0.85` = abajo */
+  markPosition?: string;
+  /** 0–1: nivel de carga. La marca suelta partículas de su superficie que salen un trecho y se apagan; más carga, más partículas y más lejos */
+  charge?: number;
+  /** true = la marca se deshace: sus partículas salen despedidas y se apagan. Al volver a false, convergen y se recompone */
+  explode?: boolean;
+  /** segundos que dura el estallido (y la recomposición) */
+  explodeDuration?: number;
+  /** se llama cuando el estallido termina. Sin 3D (marca plana), enseguida */
+  onExploded?: () => void;
+  /** cuántas partículas (0 = ninguna: sin carga ni estallido) */
+  particles?: number;
+  /** tamaño de cada partícula en px */
+  particleSize?: number;
   /** fotogramas por segundo (0 = los de la pantalla) */
   fps?: number;
   /** auto = 3D si el equipo puede y no pide reducir movimiento; si no, la marca plana · 3d = siempre 3D (si hay WebGL) · static = la marca plana, sin WebGL */
@@ -100,6 +118,15 @@ export default function Logo3D({
   draggable = false,
   paused = false,
   height = 160,
+  fill = false,
+  markSize = 0,
+  markPosition = "0.5,0.5",
+  charge = 0,
+  explode = false,
+  explodeDuration = 1.2,
+  onExploded,
+  particles = 1800,
+  particleSize = 3,
   fps = 30,
   render = "auto",
   alt = "",
@@ -165,16 +192,26 @@ export default function Logo3D({
     if (b.width > 0 && b.height > 0) svg.setAttribute("viewBox", `${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`);
   }, [path, viewBox, strokeWidth]);
 
+  const [mx, my] = markPosition.split(",").map((v) => (Number.isFinite(parseFloat(v)) ? parseFloat(v) : 0.5)).concat(0.5, 0.5);
+  const drawing = use3d && mounted && ready;
+
+  // Sin 3D no hay estallido que animar: se avisa enseguida para que quien espera `onExploded` no se quede colgado
+  const exploded = useRef(onExploded);
+  exploded.current = onExploded;
+  useEffect(() => {
+    if (explode && !drawing) exploded.current?.();
+  }, [explode, drawing]);
+
   const quiet = reduced || paused;
   const hand = draggable && use3d && !reduced;
   const show3d = use3d && mounted;
   const stroke = strokeWidth > 0;
 
   return (
-    <div ref={root} className={`ui-logo3d ${tcls(tone)} ${hand ? "is-hand" : ""} ${className}`} style={{ height } as CSSProperties} role={alt ? "img" : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}>
+    <div ref={root} className={`ui-logo3d ${tcls(tone)} ${fill ? "ui-logo3d--fill" : ""} ${hand ? "is-hand" : ""} ${className}`} style={fill ? undefined : ({ height } as CSSProperties)} role={alt ? "img" : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}>
       {/* la marca plana: se ve mientras llegan three y el primer fotograma, y se queda si no hay 3D */}
       {!(show3d && ready) && (
-        <svg ref={flat} className="ui-logo3d__flat" viewBox={viewBox} aria-hidden>
+        <svg ref={flat} className="ui-logo3d__flat" viewBox={viewBox} style={markSize > 0 ? { left: `${mx * 100}%`, top: `${my * 100}%`, width: markSize, height: markSize, translate: "-50% -50%", visibility: explode ? "hidden" : undefined } : { visibility: explode ? "hidden" : undefined }} aria-hidden>
           <path d={path} fill={stroke ? "none" : "currentColor"} stroke={stroke ? "currentColor" : "none"} strokeWidth={stroke ? strokeWidth : undefined} strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )}
@@ -199,6 +236,15 @@ export default function Logo3D({
                 tilt={tilt}
                 draggable={hand}
                 fps={fps}
+                markSize={markSize}
+                markX={mx}
+                markY={my}
+                charge={Math.max(0, Math.min(1, charge))}
+                explode={explode}
+                explodeDuration={explodeDuration}
+                particles={particles}
+                particleSize={particleSize}
+                onExploded={() => exploded.current?.()}
                 active={near}
                 root={root}
                 onReady={() => setReady(true)}
