@@ -2,7 +2,7 @@
 
 .es { --st-max: 1480px; --st-gutter: clamp(16px, 3.4vw, 48px); letter-spacing: -0.01em; }
 .es a { color: inherit; }
-.es em { font-family: var(--font-instrument-serif), Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.es em { font-family: var(--font-accent, var(--font-instrument-serif)), Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
 
 /* cabecera fija con mezcla: se lee sobre cualquier fondo */
 .es-head { position: fixed; inset: 0 0 auto 0; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px var(--st-gutter); color: #fff; mix-blend-mode: difference; }
@@ -76,3 +76,7 @@
 .es-duo { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(16px, 4vw, 64px); align-items: start; }
 .es-duo__b { margin-top: clamp(40px, 12vw, 200px); }
 @media (max-width: 720px) { .es-duo { grid-template-columns: minmax(0, 1fr); } .es-duo__b { margin-top: 0; } }
+
+/* titulares en la fuente de display del par tipográfico */
+.es :is(.es-hero h1, .es-h2, .es-big-mail, .es-brand, .es-scard b, .es-step b, .es-step span, .es-facts b, .es-scrub, .ui-plist__t, .ui-bento__stat, .ui-bento__t, .ui-fsm__link, .ui-bigfoot__mail, .ui-fit__t) { font-family: var(--display); }
+.ui-fsm .ui-fsm__link { font-family: var(--display); }

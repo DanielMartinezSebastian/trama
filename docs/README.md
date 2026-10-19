@@ -77,6 +77,10 @@ import { fontVariables } from "@/lib/ui/fonts";
 Tema: define `--bg --fg --mut --acc --acc2 --card --ln --r` en `:root` o en cualquier contenedor (sin ellos se usa el
 neutro oscuro de `kit.css`).
 
+**Temas.** Un tema es un objeto de tokens; el kit trae `neutralTokens`, `dotmatrixTokens`, `editorialTokens` y `editorialDarkTokens`
+en el registro `TOKEN_THEMES` (`lib/ui/tokens.ts`, también en `trama-ui/tokens`). No hay límite: añadir uno es una entrada nueva en
+ese registro y aparece solo en el selector de `/componentes` (guía §2.5). Fuentes y pares tipográficos: guía §2.3 (`FONT_PAIRINGS`).
+
 **Traer de vuelta lo que mejores en el proyecto:** `npm run kit:pull -- ../mi-proyecto` enseña qué componentes del
 kit cambiaste allí, cuáles son nuevos y cuáles chocan con cambios de la librería; con `--apply` los copia aquí.
 Después: registrar los nuevos en `lib/catalog/entries/`, `npm run catalog`, revisar `git diff` y hacer commit. Una

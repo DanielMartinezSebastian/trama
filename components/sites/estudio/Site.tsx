@@ -22,23 +22,13 @@ import SplitText from "@/components/ui/SplitText";
 import StackedCards from "@/components/ui/StackedCards";
 import { fashionArt } from "@/lib/sites/art";
 import { getLenis } from "@/lib/motion/lenis";
-import { tokensToStyle } from "@/lib/ui/tokens";
+import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
 import { FACTS, PROCESS, PROJECTS, SERVICES, SLUG } from "./data";
 import "./estudio.css";
 
-const TOKENS: CSSProperties = tokensToStyle({
-  bg: "#f2efe9",
-  fg: "#121110",
-  mut: "#6c675e",
-  acc: "#ff4d1c",
-  acc2: "#121110",
-  card: "#e8e4dc",
-  ln: "rgba(18,17,16,0.16)",
-  r: 16,
-  font: 'var(--font-inter), "Helvetica Neue", Arial, sans-serif',
-  display: 'var(--font-inter), "Helvetica Neue", Arial, sans-serif',
-});
+// tema del kit `editorialTokens` (claro, «papel»); la demo solo fija su propio acento
+const TOKENS: CSSProperties = tokensToStyle(editorialTokens);
 
 const href = (p = "") => siteHref(SLUG, p);
 const LINKS = [

@@ -35,6 +35,24 @@ export const shareTechMono = Share_Tech_Mono({ subsets: ["latin"], weight: "400"
 export const majorMonoDisplay = Major_Mono_Display({ subsets: ["latin"], weight: "400", variable: "--font-major-mono-display", display: "swap", preload: false });
 
 /**
+ * Fuentes editoriales (variante `editorial`, webs de estudio y portfolio). Todas son OFL (uso comercial libre) y variables.
+ * Grotescas de titular apretado: Inter Tight (la hermana condensada de Inter, titulares enormes), Instrument Sans (casa con
+ * Instrument Serif), Geist, Schibsted Grotesk (tono de prensa) y Bricolage Grotesque (con carácter, ejes de anchura y tamaño
+ * óptico). Serifs de acento para cursivas: Newsreader (lectura) y Bodoni Moda (contraste alto, moda). Mono: Geist Mono.
+ * Sin precarga: solo se descargan en las páginas que las usan. Pares recomendados en `FONT_PAIRINGS` (`lib/ui/tokens.ts`).
+ */
+import { Bodoni_Moda, Bricolage_Grotesque, Geist, Geist_Mono, Inter_Tight, Instrument_Sans, Newsreader, Schibsted_Grotesk } from "next/font/google";
+
+export const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap", preload: false });
+export const instrumentSans = Instrument_Sans({ subsets: ["latin"], variable: "--font-instrument-sans", display: "swap", preload: false });
+export const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap", preload: false });
+export const schibstedGrotesk = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted-grotesk", display: "swap", preload: false });
+export const bricolageGrotesque = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage-grotesque", display: "swap", preload: false });
+export const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-newsreader", display: "swap", preload: false });
+export const bodoniModa = Bodoni_Moda({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-bodoni-moda", display: "swap", preload: false });
+export const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap", preload: false });
+
+/**
  * Fuentes "Pixel" — las 46 familias que Google Fonts agrupa bajo Appearance › Theme › Pixel
  * (fonts.google.com/?categoryFilters=Appearance:%2FTheme%2FPixel), todas registradas también
  * en `FONT_PRESETS` bajo la etiqueta "Pixel — …". `preload: false` a propósito: son 46 fuentes
@@ -104,6 +122,7 @@ export const rubikBrokenFax = Rubik_Broken_Fax({ weight: "400", subsets: ["latin
 /** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
 export const fontVariables = [
   inter, manrope, spaceGrotesk, syne, fraunces, instrumentSerif, jetbrainsMono, spaceMono,
+  interTight, instrumentSans, geist, schibstedGrotesk, bricolageGrotesque, newsreader, bodoniModa, geistMono,
   ibmPlexMono, shareTechMono, majorMonoDisplay,
   pressStart2P, vt323, geistPixel, jersey25, pixelifySans, dotGothic16,
   silkscreen, bitcountSingle, jersey10, doto, tiny5, bitcountPropSingle,

@@ -182,7 +182,14 @@ Catálogo curado (11 familias base + las 46 de la categoría Pixel de Google Fon
 | Serif | Fraunces, Instrument Serif | `--font-fraunces`, `--font-instrument-serif` |
 | Mono | JetBrains Mono, Space Mono, IBM Plex Mono, Share Tech Mono | `--font-jetbrains-mono`, `--font-space-mono`, `--font-ibm-plex-mono`, `--font-share-tech-mono` |
 | Display mono | Major Mono Display | `--font-major-mono-display` |
+| Editorial | Inter Tight, Instrument Sans, Geist, Schibsted Grotesk, Bricolage Grotesque · serifs Newsreader, Bodoni Moda · mono Geist Mono | `--font-inter-tight`, `--font-instrument-sans`, `--font-geist`, `--font-schibsted-grotesk`, `--font-bricolage-grotesque`, `--font-newsreader`, `--font-bodoni-moda`, `--font-geist-mono` |
 | Pixel | las 46 de Google Fonts › Appearance › Theme › Pixel (Press Start 2P, VT323, Silkscreen, Pixelify Sans, Jersey, Bitcount, Jacquard…) | `--font-press-start-2p`, `--font-vt323`, … (kebab-case del nombre) |
+
+**Fuentes editoriales y pares (`FONT_PAIRINGS`).** Las ocho familias editoriales (OFL, uso comercial libre, `preload: false`) están pensadas
+para la variante `editorial`. `FONT_PAIRINGS` (`lib/ui/tokens.ts`, exportado también por el paquete) trae cinco pares ya probados
+entre sí —*Estudio sobrio*, *Contemporáneo*, *Revista*, *Moda y lujo* y *Expresivo*— con cuatro roles: `display` (titulares con tracking
+negativo), `body`, `accent` (cursiva dentro de un titular) y `mono` (etiquetas). Uso: `tokensToStyle({ …, font: par.body, display: par.display })`
+y `--font-accent: par.accent` en el contenedor. `/sitios/estudio` usa el primero.
 
 **Las fuentes Pixel** (`lib/ui/fonts.ts` + `FONT_PRESETS`, etiquetadas «Pixel — …» en el selector de `/componentes`) llevan `preload: false`, a diferencia de las 8 base: son 46 fuentes decorativas para elegir una a una, y con precarga cada carga de *cualquier* página del sitio encadenaría 46 `<link rel="preload">` aunque no use ninguna. Sin precarga el `@font-face` sigue disponible y se aplica al instante al elegirla. La lista sale de la propia página de Google Fonts (no de memoria) y cada nombre se comprobó contra los tipos instalados de `next/font/google`, que fijan qué `weight` es obligatorio y qué `subsets` existen. Al compilar salen 16 avisos «Failed to find font override values» (familias muy recientes, como Bitcount, sin métricas de *fallback* todavía): no rompen nada, solo omiten el ajuste anti-salto de layout de esas familias.
 
@@ -206,6 +213,31 @@ Catálogo curado (11 familias base + las 46 de la categoría Pixel de Google Fon
 exportando su propia variable igual que las de arriba, súmala a `fontVariables` y regístrala en `FONT_PRESETS` (o
 referénciala directamente en el `font` de un tema). No hace falta tocar ningún componente: todos leen `font-family`
 vía tokens, nunca una fuente concreta a pelo.
+
+### 2.5 Temas del kit (`TOKEN_THEMES`) y cómo añadir uno
+
+Un tema es **solo un objeto de tokens** (`TokenSet`: `bg fg mut acc acc2 card ln r font`, más `display` y `accentFont`
+opcionales); cambiarlo no toca ningún componente. Los temas del kit viven en un registro, `TOKEN_THEMES`
+(`lib/ui/tokens.ts`, exportado también por `trama-ui/tokens`):
+
+| Tema | Variante sugerida | Para qué |
+|---|---|---|
+| `neutralTokens` («Neutro oscuro») | `glass` | El de por defecto: azul noche con acento celeste |
+| `dotmatrixTokens` («Dot matrix») | `dotmatrix` | Negro puro monocromo, estética hacker sobria |
+| `editorialTokens` («Editorial · papel») | `editorial` | Hueso y tinta con acento naranja: estudios, portfolios, marcas con fotografía |
+| `editorialDarkTokens` («Editorial · tinta») | `editorial` | Lo mismo sobre negro cálido |
+
+Tema y variante son ejes **independientes**: cualquier tema vale con cualquier variante; la columna es solo la combinación
+pensada. **No hay límite de temas.** Para añadir uno:
+
+1. En `lib/ui/tokens.ts`: `export const miTemaTokens: TokenSet = { … }` (usa `var(--font-*)` de `lib/ui/fonts.ts` o `FONT_PAIRINGS`).
+2. Añade una entrada a `TOKEN_THEMES` con `id`, `label`, `note` y la `variant` sugerida.
+3. Exporta el objeto en el barrel de `scripts/build-package.mts` si quieres que viaje en el paquete (la entrada del registro viaja sola).
+4. Nada más: el selector «Tema» de `/componentes` (`lib/catalog/presets.ts` lo construye desde el registro) lo muestra y lo aplica a
+   todos los componentes. Si una variante nueva lo usa como tema de partida, pon su id en `preset` de `lib/catalog/styleGuide.ts`.
+
+Aplicarlo en una web: `<div style={tokensToStyle(editorialTokens)}>…</div>` (y, si sobrescribes algo, `{ ...editorialTokens, acc: "#…" }`).
+`accentFont` se publica como `--font-accent`, para las cursivas de un titular (`.mi-titulo em { font-family: var(--font-accent) }`).
 
 ## 3. Contrato de un componente
 

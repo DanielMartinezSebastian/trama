@@ -17,6 +17,8 @@ export type TokenSet = {
   font: string;
   /** fuente de los titulares (h1–h3); sin ella heredan `font` */
   display?: string;
+  /** fuente de acento (cursiva dentro de un titular, `<em>`); se publica como `--font-accent` */
+  accentFont?: string;
 };
 
 /** Tema por defecto del kit: el mismo que fija `:root` en `components/ui/styles/kit.css`. */
@@ -49,6 +51,55 @@ export const dotmatrixTokens: TokenSet = {
   display: 'var(--font-doto), var(--font-major-mono-display), ui-monospace, monospace',
 };
 
+/**
+ * Tema editorial claro («papel»): fondo hueso, tinta casi negra y un acento naranja. Pensado para la variante `editorial`
+ * (estudios, portfolios, marcas con fotografía) y para tipografía grande; vale con cualquier variante. Titulares en Inter Tight,
+ * texto en Inter y cursiva de acento en Instrument Serif (`FONT_PAIRINGS`, par «estudio»).
+ */
+export const editorialTokens: TokenSet = {
+  bg: "#f2efe9",
+  fg: "#121110",
+  mut: "#6c675e",
+  acc: "#ff4d1c",
+  acc2: "#121110",
+  card: "#e8e4dc",
+  ln: "rgba(18,17,16,0.16)",
+  r: 16,
+  font: 'var(--font-inter), ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif',
+  display: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif',
+  accentFont: 'var(--font-instrument-serif), Georgia, serif',
+};
+
+/** Tema editorial oscuro («tinta»): el mismo carácter sobre negro cálido. */
+export const editorialDarkTokens: TokenSet = {
+  bg: "#0e0e0d",
+  fg: "#ece9e2",
+  mut: "#8f8a80",
+  acc: "#ff5a2c",
+  acc2: "#ece9e2",
+  card: "rgba(236,233,226,0.06)",
+  ln: "rgba(236,233,226,0.18)",
+  r: 16,
+  font: 'var(--font-inter), ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif',
+  display: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif',
+  accentFont: 'var(--font-instrument-serif), Georgia, serif',
+};
+
+/**
+ * Registro de temas del kit. **Añadir un tema = añadir una entrada aquí**: el selector de `/componentes`, el paquete
+ * (`trama-ui/tokens`) y la tabla de `docs/README.md` lo recogen solos (la última, con `npm run catalog`). No hay límite:
+ * un tema es solo un objeto de tokens (ver «Temas del kit» en la guía, §2.5).
+ * `variant` es la variante de estilo que mejor le sienta (una sugerencia: cualquier tema vale con cualquier variante).
+ */
+export type KitTheme = { id: string; label: string; note: string; variant: string; tokens: TokenSet };
+
+export const TOKEN_THEMES: KitTheme[] = [
+  { id: "neutro", label: "Neutro oscuro", note: "El tema por defecto del kit: azul noche con acento celeste.", variant: "glass", tokens: neutralTokens },
+  { id: "dotmatrix", label: "Dot matrix (mono)", note: "Negro puro monocromo para la estética de matriz de puntos.", variant: "dotmatrix", tokens: dotmatrixTokens },
+  { id: "editorial", label: "Editorial · papel", note: "Hueso y tinta con acento naranja. Estudios, portfolios, marcas con fotografía.", variant: "editorial", tokens: editorialTokens },
+  { id: "editorial-oscuro", label: "Editorial · tinta", note: "Negro cálido con el mismo carácter editorial.", variant: "editorial", tokens: editorialDarkTokens },
+];
+
 /** Convierte tokens en variables CSS para el contenedor (`style={tokensToStyle(...)}`). */
 export function tokensToStyle(t: TokenSet): CSSProperties {
   return {
@@ -61,6 +112,7 @@ export function tokensToStyle(t: TokenSet): CSSProperties {
     "--ln": t.ln,
     "--r": `${t.r}px`,
     ...(t.display ? { "--display": t.display } : {}),
+    ...(t.accentFont ? { "--font-accent": t.accentFont } : {}),
     fontFamily: t.font,
     color: t.fg,
   } as CSSProperties;
@@ -93,6 +145,15 @@ export const FONT_PRESETS: { id: string; label: string; stack: string }[] = [
   { id: "share-tech-mono", label: "Mono — Share Tech Mono", stack: 'var(--font-share-tech-mono), ui-monospace, Consolas, monospace' },
   { id: "major-mono-display", label: "Display — Major Mono Display", stack: 'var(--font-major-mono-display), ui-monospace, monospace' },
   { id: "mono-sistema", label: "Monoespaciada del sistema", stack: 'ui-monospace, "Cascadia Code", Consolas, monospace' },
+  // Editorial — grotescas de titular apretado, serifs de acento y mono (lib/ui/fonts.ts).
+  { id: "inter-tight", label: "Editorial — Inter Tight", stack: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif' },
+  { id: "instrument-sans", label: "Editorial — Instrument Sans", stack: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif' },
+  { id: "geist", label: "Editorial — Geist", stack: 'var(--font-geist), ui-sans-serif, system-ui, sans-serif' },
+  { id: "schibsted-grotesk", label: "Editorial — Schibsted Grotesk", stack: 'var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif' },
+  { id: "bricolage-grotesque", label: "Editorial — Bricolage Grotesque", stack: 'var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif' },
+  { id: "newsreader", label: "Editorial serif — Newsreader", stack: 'var(--font-newsreader), Georgia, serif' },
+  { id: "bodoni-moda", label: "Editorial serif — Bodoni Moda", stack: 'var(--font-bodoni-moda), "Didot", Georgia, serif' },
+  { id: "geist-mono", label: "Editorial mono — Geist Mono", stack: 'var(--font-geist-mono), ui-monospace, Consolas, monospace' },
   // Pixel — las 46 familias de fonts.google.com/?categoryFilters=Appearance:/Theme/Pixel (lib/ui/fonts.ts).
   { id: "press-start-2p", label: "Pixel — Press Start 2P", stack: 'var(--font-press-start-2p), monospace' },
   { id: "vt323", label: "Pixel — VT323", stack: 'var(--font-vt323), monospace' },
@@ -171,3 +232,56 @@ export function applyOverrides(base: TokenSet, o: TokenOverrides): TokenSet {
 
 /** Valor válido para `<input type="color">` (solo acepta #rrggbb). */
 export const toHex = (c: string, fallback = "#888888") => (isHex(c) ? c : fallback);
+
+/**
+ * Pares tipográficos para la variante `editorial`: `display` para titulares (con tracking negativo), `body` para texto,
+ * `accent` para palabras en cursiva dentro de un titular (`<em>`) y `mono` para etiquetas. Los stacks son los de `FONT_PRESETS`.
+ * Uso: `tokensToStyle({ ..., font: pair.body, display: pair.display })` y `--font-accent: pair.accent` en el contenedor.
+ */
+export const FONT_PAIRINGS: { id: string; label: string; note: string; display: string; body: string; accent: string; mono: string }[] = [
+  {
+    id: "estudio",
+    label: "Estudio sobrio",
+    note: "Inter Tight en titulares, Inter en texto, Instrument Serif en cursiva. La de Marea Studio.",
+    display: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, sans-serif',
+    body: 'var(--font-inter), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-instrument-serif), Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "contemporaneo",
+    label: "Contemporáneo",
+    note: "Geist en todo, con Newsreader para las cursivas. Tecnología y producto.",
+    display: 'var(--font-geist), ui-sans-serif, system-ui, sans-serif',
+    body: 'var(--font-geist), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-newsreader), Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "revista",
+    label: "Revista",
+    note: "Schibsted Grotesk para titulares, Newsreader para leer. Medios, blogs y contenido largo.",
+    display: 'var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif',
+    body: 'var(--font-newsreader), Georgia, serif',
+    accent: 'var(--font-newsreader), Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "moda",
+    label: "Moda y lujo",
+    note: "Instrument Sans discreta con Bodoni Moda de alto contraste en titulares. Marcas, joyería, estilismo.",
+    display: 'var(--font-bodoni-moda), "Didot", Georgia, serif',
+    body: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-bodoni-moda), "Didot", Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "expresivo",
+    label: "Expresivo",
+    note: "Bricolage Grotesque con carácter, e Instrument Sans para leer. Estudios creativos, eventos y cultura.",
+    display: 'var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif',
+    body: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-instrument-serif), Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+];

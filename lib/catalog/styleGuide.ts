@@ -85,6 +85,6 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     type: "Sans grotesca grande con tracking ajustado; serif cursiva para el énfasis.",
     ascii: "Ninguno: SplitText, FitText, RollLink y ProjectList son sus recursos.",
     avoid: "Neón, glass y degradados: pierde la sobriedad.",
-    preset: "neutro",
+    preset: "editorial",
   },
 };
