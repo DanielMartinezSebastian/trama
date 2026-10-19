@@ -1,16 +1,16 @@
 "use client";
 
-import { type CSSProperties, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import BigFooter from "@/components/ui/BigFooter";
 import CookieBanner from "@/components/ui/CookieBanner";
 import CustomCursor from "@/components/ui/CustomCursor";
-import ElasticText from "@/components/ui/ElasticText";
 import FitText from "@/components/ui/FitText";
+import OptionPicker from "@/components/ui/OptionPicker";
+import ProjectList, { type ProjectView } from "@/components/ui/ProjectList";
 import RollLink from "@/components/ui/RollLink";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import StickerCollage from "@/components/ui/StickerCollage";
-import WorkViews from "@/components/ui/WorkViews";
 import { photo } from "@/lib/sites/photos";
 import { sticker } from "@/lib/sites/stickers";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
@@ -21,6 +21,7 @@ import "./mota.css";
 // crema con un único acento coral; texto pequeño siempre en tinta (el coral solo en tamaños grandes)
 const TOKENS: CSSProperties = tokensToStyle({ ...editorialTokens, bg: "#f4f0e8", fg: "#17140f", mut: "#625c52", card: "#e9e3d7", ln: "rgba(23,20,15,0.2)", acc: "#ff5a36", r: 14, display: 'var(--font-bricolage-grotesque), var(--font-inter-tight), sans-serif' });
 const href = (p = "") => siteHref(SLUG, p);
+const items = (list: typeof JOBS) => list.map((j) => ({ title: j.title, meta: j.kind, year: j.year, image: photo(j.topic, j.i).src, alt: j.alt, href: href("proyectos") }));
 
 const STICKERS = [
   { id: "a", src: sticker("burst", "#ff5a36", "#fff3c4"), x: 12, y: 24, width: 130, rotate: -12, label: "Pegatina de una explosión" },
@@ -65,24 +66,33 @@ function Home() {
 
       <section id="colage" aria-label="Collage">
         <StickerCollage stickers={STICKERS} height="min(88vh, 760px)">
-          <ElasticText as="p" mode="scroll" stretch={0.9} className="mo-big">Locales con alma, casas con humor.</ElasticText>
+          <SplitText as="p" by="words" effect="none" elastic="scroll" stretch={0.9} className="mo-big">Locales con alma, casas con humor.</SplitText>
         </StickerCollage>
       </section>
 
       <section className="mo-sec" aria-label="Proyectos">
         <SplitText as="h2" by="words" stagger={0.05} className="mo-h2">Lo último.</SplitText>
-        <WorkViews items={JOBS.slice(0, 5).map((j) => ({ title: j.title, meta: j.kind, year: j.year, image: photo(j.topic, j.i).src, alt: j.alt, href: href("proyectos") }))} />
+        {/* índice con la foto dentro del cursor: ProjectList + CustomCursor (montado en el marco) */}
+        <ProjectList preview="cursor" items={items(JOBS.slice(0, 5))} />
       </section>
     </>
   );
 }
 
 /* ---------- proyectos ---------- */
+const VIEWS = [
+  { value: "grid", label: "Cuadrícula", short: "1" },
+  { value: "list", label: "Lista", short: "2" },
+  { value: "index", label: "Índice", short: "3" },
+];
+
 function Jobs() {
+  const [view, setView] = useState<ProjectView>("grid");
   return (
     <section className="mo-sec" style={{ paddingTop: "clamp(40px, 6vw, 88px)" }}>
       <SplitText as="h1" by="lines" trigger="mount" className="mo-h2">Proyectos.</SplitText>
-      <WorkViews views={["grid", "list", "index"]} items={JOBS.map((j) => ({ title: j.title, meta: j.kind, year: j.year, image: photo(j.topic, j.i).src, alt: j.alt, href: href("proyectos") }))} />
+      <OptionPicker className="mo-views" label="Layout" options={VIEWS} value={view} onChange={(v) => setView(v as ProjectView)} />
+      <ProjectList view={view} preview="cursor" items={items(JOBS)} />
     </section>
   );
 }

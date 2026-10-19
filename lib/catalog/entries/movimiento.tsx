@@ -5,20 +5,40 @@ import FitText from "@/components/ui/FitText";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import LocalTime from "@/components/ui/LocalTime";
 import Preloader from "@/components/ui/Preloader";
-import ProjectList from "@/components/ui/ProjectList";
+import OptionPicker from "@/components/ui/OptionPicker";
+import ProjectList, { PROJECT_VIEWS, type ProjectView } from "@/components/ui/ProjectList";
 import RollLink from "@/components/ui/RollLink";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText, { SPLIT_BY, SPLIT_EFFECTS } from "@/components/ui/SplitText";
-import { fashionArt } from "@/lib/sites/art";
+import { useEffect, useState } from "react";
+import { photo } from "@/lib/sites/photos";
 import type { CatalogEntry } from "../schema";
 
 /** Piezas de movimiento y tipografía cinética (ver docs/06-indice-replicar-webs-premiadas.md). */
 const PROJECTS = [
-  { title: "Casa Alba", meta: "Identidad", year: "2026", image: fashionArt(4, "coat") },
-  { title: "Tinta y Sal", meta: "Web", year: "2026", image: fashionArt(2, "arch") },
-  { title: "Nodo", meta: "Producto", year: "2025", image: fashionArt(6, "dress") },
-  { title: "Faro Studio", meta: "Web + 3D", year: "2025", image: fashionArt(5, "fabric") },
+  { title: "Casa Alba", meta: "Interiorismo", year: "2026", image: photo("interiores", 4).src },
+  { title: "Tinta y Sal", meta: "Identidad", year: "2026", image: photo("objetos", 4).src },
+  { title: "Nodo", meta: "Producto", year: "2025", image: photo("estudio", 1).src },
+  { title: "Faro Studio", meta: "Web + 3D", year: "2025", image: photo("arquitectura", 4).src },
+  { title: "Ola", meta: "Campaña", year: "2024", image: photo("gastronomia", 1).src },
 ];
+
+const VIEW_NAMES: Record<ProjectView, string> = { list: "Lista", grid: "Cuadrícula", index: "Índice" };
+
+/** ProjectList con su selector de vista: un OptionPicker con números, como en 'kin. */
+function ProjectsDemo(p: { view: ProjectView; preview: "follow" | "cursor" | "none"; numbered: boolean; follow: number; tilt: number; cursorLabel: string; picker: boolean }) {
+  const [view, setView] = useState<ProjectView>(p.view);
+  useEffect(() => setView(p.view), [p.view]);
+  return (
+    <div style={{ width: "100%", padding: 16, display: "grid", gap: 14 }}>
+      {p.preview === "cursor" && <CustomCursor />}
+      {p.picker && (
+        <OptionPicker label="Vista" options={PROJECT_VIEWS.map((v, i) => ({ value: v, label: VIEW_NAMES[v], short: String(i + 1) }))} value={view} onChange={(v) => setView(v as ProjectView)} />
+      )}
+      <ProjectList items={PROJECTS.map((x) => ({ ...x, href: "#" }))} view={view} preview={p.preview} numbered={p.numbered} follow={p.follow} tilt={p.tilt} cursorLabel={p.cursorLabel} />
+    </div>
+  );
+}
 
 export const movimiento: CatalogEntry[] = [
   {
@@ -46,10 +66,12 @@ export const movimiento: CatalogEntry[] = [
       { key: "stagger", label: "Escalonado (s)", type: "number", default: 0.1, min: 0.01, max: 0.4, step: 0.01 },
       { key: "duration", label: "Duración (s)", type: "number", default: 0.9, min: 0.2, max: 2.5, step: 0.1 },
       { key: "delay", label: "Retardo (s)", type: "number", default: 0, min: 0, max: 2, step: 0.1 },
+      { key: "elastic", label: "Elástica", type: "select", default: "off", options: ["off", "pointer", "scroll"], labels: { off: "no", pointer: "con el puntero", scroll: "con el scroll" }, hint: "las letras se estiran (Mat Voyce, Uncommon); desactiva la máscara" },
+      { key: "stretch", label: "Estirado", type: "number", default: 0.6, min: 0.2, max: 1.2, step: 0.1, when: (p) => p.elastic !== "off" },
     ],
     render: (p, { replay }) => (
       <div style={{ padding: 24, fontSize: "clamp(24px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.03em", maxWidth: 760 }}>
-        <SplitText by={p.by as never} effect={p.effect as never} mask={p.mask as boolean} trigger={p.trigger as never} stagger={p.stagger as number} duration={p.duration as number} delay={p.delay as number} playKey={replay}>
+        <SplitText by={p.by as never} effect={p.effect as never} mask={p.mask as boolean} trigger={p.trigger as never} stagger={p.stagger as number} duration={p.duration as number} delay={p.delay as number} elastic={p.elastic === "off" ? undefined : (p.elastic as never)} stretch={p.stretch as number} playKey={replay}>
           {(p.text as string) || " "}
         </SplitText>
       </div>
@@ -102,7 +124,7 @@ export const movimiento: CatalogEntry[] = [
     category: "interaccion",
     styles: ["minimal", "solid", "neon"],
     description:
-      "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
+      "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", una **imagen** con data-cursor-img=\"/foto.jpg\" (así se compone el índice de proyectos con foto: ProjectList preview=\"cursor\"), se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
     stageHeight: 280,
     notes: ["Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.", "hideNative oculta el cursor del sistema, salvo en campos de texto."],
     props: [
@@ -110,12 +132,15 @@ export const movimiento: CatalogEntry[] = [
       { key: "follow", label: "Seguimiento", type: "number", default: 0.18, min: 0.05, max: 1, step: 0.01 },
       { key: "blend", label: "Mezcla", type: "select", default: "none", options: ["none", "difference"], labels: { none: "se adapta al fondo", difference: "invertir lo de debajo" } },
       { key: "hideNative", label: "Ocultar cursor del sistema", type: "boolean", default: false },
+      { key: "imageWidth", label: "Ancho de la imagen (px)", type: "number", default: 260, min: 120, max: 420, step: 10 },
+      { key: "tilt", label: "Inclinación de la imagen (°)", type: "number", default: 6, min: 0, max: 20, step: 1 },
     ],
     render: (p) => (
       <div className="ui-center" style={{ gap: 24, flexWrap: "wrap" }}>
-        <CustomCursor cursorSize={p.cursorSize as number} follow={p.follow as number} blend={p.blend as never} hideNative={p.hideNative as boolean} />
+        <CustomCursor cursorSize={p.cursorSize as number} follow={p.follow as number} blend={p.blend as never} hideNative={p.hideNative as boolean} imageWidth={p.imageWidth as number} tilt={p.tilt as number} />
         <span className="ui-hint">Mueve el puntero por la página</span>
         <a href="#" data-cursor="Ver" style={{ padding: "28px 40px", border: "1px solid var(--ln)", borderRadius: 12 }} onClick={(e) => e.preventDefault()}>data-cursor=&quot;Ver&quot;</a>
+        <a href="#" data-cursor-img={photo("interiores", 4).src} style={{ padding: "28px 40px", border: "1px solid var(--ln)", borderRadius: 12 }} onClick={(e) => e.preventDefault()}>data-cursor-img</a>
         <a href="#" style={{ padding: 12 }} onClick={(e) => e.preventDefault()}>un enlace</a>
         <input aria-label="Campo de ejemplo" placeholder="un campo de texto" style={{ padding: 10 }} />
       </div>
@@ -177,13 +202,16 @@ export const movimiento: CatalogEntry[] = [
     id: "project-list",
     component: "ProjectList",
     path: "@/components/ui/ProjectList",
-    name: "Lista de proyectos con vista previa",
+    name: "Proyectos: lista, cuadrícula o índice con vista previa",
     category: "secciones",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen sigue al cursor con inclinación según la velocidad; con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título.",
-    stageHeight: 520,
+      "Tres vistas (filas con título enorme, cuadrícula de imágenes o índice de texto) que se animan al cambiar (GSAP Flip, 'kin). En lista e índice, al pasar el puntero el resto se atenúa y aparece la foto: propia, que sigue al puntero con inclinación, o dentro de CustomCursor (preview=\"cursor\"). Con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título. El selector de vista no va dentro: se compone con un OptionPicker.",
+    stageHeight: 640,
     props: [
+      { key: "view", label: "Vista", type: "select", default: "list", options: PROJECT_VIEWS, labels: VIEW_NAMES },
+      { key: "picker", label: "Selector de vista (OptionPicker)", type: "boolean", default: true },
+      { key: "preview", label: "Vista previa", type: "select", default: "follow", options: ["follow", "cursor", "none"], labels: { follow: "imagen que sigue al puntero", cursor: "dentro de CustomCursor", none: "ninguna" } },
       { key: "numbered", label: "Numeración", type: "boolean", default: true },
       { key: "follow", label: "Seguimiento", type: "number", default: 0.14, min: 0.05, max: 1, step: 0.01 },
       { key: "tilt", label: "Inclinación máx. (°)", type: "number", default: 8, min: 0, max: 20, step: 1 },
@@ -191,7 +219,7 @@ export const movimiento: CatalogEntry[] = [
     ],
     render: (p) => (
       <div style={{ width: "100%", padding: 16 }}>
-        <ProjectList items={PROJECTS.map((x) => ({ ...x, href: "#" }))} numbered={p.numbered as boolean} follow={p.follow as number} tilt={p.tilt as number} cursorLabel={p.cursorLabel as string} />
+        <ProjectsDemo view={p.view as ProjectView} picker={p.picker as boolean} preview={p.preview as never} numbered={p.numbered as boolean} follow={p.follow as number} tilt={p.tilt as number} cursorLabel={p.cursorLabel as string} />
       </div>
     ),
   },

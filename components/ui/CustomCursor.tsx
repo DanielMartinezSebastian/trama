@@ -11,7 +11,12 @@ export type CustomCursorProps = {
   blend?: "none" | "difference";
   /** oculta el cursor del sistema en toda la página (menos en campos de texto) */
   hideNative?: boolean;
-  /** texto de `data-cursor` que se trata como etiqueta; el resto de valores son modos (`link`, `hide`, `text`) */
+  /** ancho de la imagen que muestra sobre elementos con `data-cursor-img` (px) */
+  imageWidth?: number;
+  /** relación ancho / alto de esa imagen */
+  imageRatio?: number;
+  /** con imagen, la inclina según la velocidad del puntero (grados máximos; 0 = recta) */
+  tilt?: number;
   className?: string;
 };
 
@@ -46,19 +51,23 @@ function backdropTone(start: Element | null): "light" | "dark" | "mixed" {
 }
 
 const LINKS = 'a[href], button, [role="button"], summary, label[for]';
+const TAGGED = "[data-cursor], [data-cursor-img]";
 
 /**
  * Cursor propio para toda la página. Reacciona a lo que hay debajo sin que los elementos importen el componente:
  * - `data-cursor="Ver"` en cualquier elemento: el punto crece y muestra esa etiqueta («Ver», «Arrastra»…);
  * - `data-cursor="hide"`: se oculta (útil sobre vídeos o mapas);
+ * - `data-cursor-img="/foto.jpg"`: el punto se convierte en esa imagen (con la etiqueta encima si además hay `data-cursor`).
+ *   Así se compone un índice de proyectos con vista previa (`ProjectList preview="cursor"`) sin otro componente de cursor;
  * - enlaces y botones: el punto se convierte en un aro que deja ver el texto; campos de texto: una barra fina.
  * - **se ve sobre cualquier fondo**: lee el fondo que hay debajo (claro, oscuro o imagen) y cambia de color; además lleva siempre un contorno de contraste.
  * No existe en táctil ni con `prefers-reduced-motion`, y no sustituye al cursor del sistema salvo con `hideNative`.
  * Solo se monta si el equipo tiene puntero fino y hover.
  */
-export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "none", hideNative = false, className = "" }: CustomCursorProps) {
+export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "none", hideNative = false, imageWidth = 260, imageRatio = 0.8, tilt = 6, className = "" }: CustomCursorProps) {
   const root = useRef<HTMLDivElement>(null);
   const txt = useRef<HTMLSpanElement>(null);
+  const pic = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const el = root.current;
@@ -66,11 +75,14 @@ export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const html = document.documentElement;
     if (hideNative) html.classList.add("ui-ccur-native");
-    let x = -100, y = -100, tx = -100, ty = -100, raf = 0, seen = false;
+    let x = -100, y = -100, tx = -100, ty = -100, raf = 0, seen = false, vx = 0;
     const loop = () => {
-      x += (tx - x) * follow;
+      const nx = x + (tx - x) * follow;
+      vx += (nx - x - vx) * 0.2;
+      x = nx;
       y += (ty - y) * follow;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      const rot = tilt && el.dataset.mode === "image" ? Math.max(-tilt, Math.min(tilt, vx * 0.5)) : 0;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot.toFixed(2)}deg)`;
       raf = requestAnimationFrame(loop);
     };
     let lastEl: Element | null = null;
@@ -81,11 +93,16 @@ export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "
         lastEl = t;
         el.dataset.bg = backdropTone(t);
       }
-      const tagged = t?.closest<HTMLElement>("[data-cursor]");
+      const tagged = t?.closest<HTMLElement>(TAGGED);
       const data = tagged?.dataset.cursor;
+      const img = tagged?.dataset.cursorImg;
       let mode = "idle";
       let label = "";
-      if (data === "hide") mode = "hide";
+      if (img) {
+        mode = "image";
+        label = data && data !== "link" && data !== "hide" ? data : "";
+        if (pic.current && pic.current.getAttribute("src") !== img) pic.current.src = img;
+      } else if (data === "hide") mode = "hide";
       else if (data && data !== "link") { mode = "label"; label = data; }
       else if (data === "link" || t?.closest(LINKS)) mode = "link";
       else if (t?.closest('input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, [contenteditable="true"]')) mode = "text";
@@ -119,11 +136,13 @@ export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "
       cancelAnimationFrame(raf);
       html.classList.remove("ui-ccur-native");
     };
-  }, [follow, hideNative]);
+  }, [follow, hideNative, tilt]);
 
   return (
-    <div ref={root} className={`ui-ccur ${blend === "difference" ? "ui-ccur--diff" : ""} ${className}`.trim()} data-mode="idle" aria-hidden style={{ "--cc-size": `${cursorSize}px` } as React.CSSProperties}>
+    <div ref={root} className={`ui-ccur ${blend === "difference" ? "ui-ccur--diff" : ""} ${className}`.trim()} data-mode="idle" aria-hidden style={{ "--cc-size": `${cursorSize}px`, "--cc-img-w": `${imageWidth}px`, "--cc-img-h": `${Math.round(imageWidth / imageRatio)}px` } as React.CSSProperties}>
       <span className="ui-ccur__dot">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img ref={pic} className="ui-ccur__img" alt="" />
         <span ref={txt} className="ui-ccur__txt" />
       </span>
     </div>

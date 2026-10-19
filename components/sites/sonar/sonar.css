@@ -21,7 +21,30 @@
 .sn-rings { position: absolute; inset: 0; color: var(--fg); }
 .sn-rings__dots { opacity: 0.16; }
 .sn .ui-xcan__view { background: radial-gradient(1400px 900px at 50% 50%, rgba(127, 208, 255, 0.08), transparent 70%), #0e1622; }
-.sn .ui-wv__ul--list .ui-wv__t, .sn .ui-xcan__list b, .sn .ui-xcan__card b { font-family: var(--display); font-weight: 400; }
+.sn .ui-plist__t, .sn .ui-xcan__list b, .sn .ui-xcan__card b { font-family: var(--display); font-weight: 400; }
+.sn .ui-plist--list .ui-plist__t { font-size: clamp(30px, 5vw, 72px); letter-spacing: -0.02em; }
+
+/* selector de vista: OptionPicker con círculos numerados */
+.sn-views { margin-bottom: 14px; }
+.sn-views .ui-opt__l { font-size: 11px; letter-spacing: 0.14em; }
+.sn-views .ui-opt__chip { min-width: 34px; height: 34px; padding: 0; border-radius: 50%; font-size: 12px; }
+
+/* pantalla de entrada: Modal size="full" */
+.sn .ui-modal--full h2 { font-family: var(--display); }
+.sn-gate__mark { display: block; margin-bottom: 22px; font-size: 40px; opacity: 0.8; }
+.sn .ui-modal--full .ui-button { min-height: 48px; padding-inline: 28px; border: 1px solid var(--fg); border-radius: 99px; background: transparent; color: var(--fg); box-shadow: none; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+.sn .ui-modal--full .ui-button--primary { background: var(--fg); color: var(--bg); }
+.sn .ui-modal--full .ui-button:is(:hover, :focus-visible) { background: var(--acc); border-color: var(--acc); color: var(--bg); }
+
+/* interruptor de sonido: Toggle con el ecualizador como indicador */
+.sn-snd { min-height: 36px; padding: 0 14px 0 12px; border: 1px solid var(--ln); border-radius: 99px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.sn-snd:is(:hover, :focus-visible) { border-color: var(--fg); }
+.sn-snd:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.sn-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.sn-eq i { width: 2px; height: 3px; background: currentColor; border-radius: 1px; transition: height 0.2s; }
+.sn-snd.is-on .sn-eq i { animation: sn-eq 0.9s ease-in-out infinite; }
+@keyframes sn-eq { 0%, 100% { height: 3px; } 50% { height: 14px; } }
+@media (prefers-reduced-motion: reduce) { .sn-snd.is-on .sn-eq i { animation: none; height: 9px; } }
 .sn .ui-bigfoot { background: var(--fg); color: var(--bg); }
 .sn .ui-bigfoot .ui-fit__t { font-family: var(--display); font-weight: 400; }
 .sn-brand:focus-visible, .sn-pill:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }

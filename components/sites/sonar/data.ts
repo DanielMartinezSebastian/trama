@@ -6,7 +6,7 @@ export const meta = {
   name: "Sonar",
   title: "Sonar · estudio de identidad sonora",
   blurb:
-    "Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa EntryGate, SoundToggle, ElasticText, ExplorableCanvas, WorkViews y BigFooter.",
+    "Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa Modal (pantalla completa), Toggle con indicador, SplitText (elastic), ExplorableCanvas, ProjectList con OptionPicker y BigFooter.",
   accent: "#7fd0ff",
   tag: "audio · mapa explorable",
 };

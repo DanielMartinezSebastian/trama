@@ -22,7 +22,7 @@ export const overlays: CatalogEntry[] = [
     name: "Modal",
     category: "overlays",
     styles: ALL_STYLES,
-    description: "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed, sin portal.",
+    description: "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran; pausa el scroll y el tabulador no sale de él. Con size=\"full\" es una pantalla de entrada a toda la ventana («Entrar con sonido / sin sonido», «¿Eres mayor de edad?»); con actions lleva botones propios y con dismissible={false} obliga a elegir. position: fixed, sin portal.",
     stageHeight: 220,
     replayable: true,
     props: [
@@ -31,7 +31,7 @@ export const overlays: CatalogEntry[] = [
       { key: "body", label: "Cuerpo", type: "text", multiline: true, default: "Esta acción no se puede deshacer. Se borrarán todos tus datos y no podrás recuperarlos." },
       { key: "confirmLabel", label: "Botón de confirmar", type: "text", default: "Sí, eliminar" },
       { key: "cancelLabel", label: "Botón de cancelar", type: "text", default: "Cancelar" },
-      { key: "size", label: "Tamaño", type: "select", default: "md", options: ["sm", "md", "lg"] },
+      { key: "size", label: "Tamaño", type: "select", default: "md", options: ["sm", "md", "lg", "full"], labels: { full: "pantalla completa (entrada)" } },
       intentProp("accent", undefined, { label: "Color del botón de confirmar (intent)", hint: "danger para acciones destructivas" }),
       variantProp("glass"),
     ],

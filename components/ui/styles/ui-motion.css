@@ -26,6 +26,7 @@ html.lenis, html.lenis body { height: auto; }
 /* máscara: recorta la unidad que sube; el relleno evita cortar los descendentes (g, y, p) */
 .ui-split--mask .ui-split__w { overflow: clip; padding-block: 0.12em; margin-block: -0.12em; }
 .ui-split__u { display: inline-block; }
+.ui-split__c { display: inline-block; transform-origin: 50% 70%; will-change: transform; }
 .ui-split[data-armed] .ui-split__u {
   transition: transform var(--split-dur) var(--ease-out), opacity var(--split-dur) var(--ease-out), filter var(--split-dur) var(--ease-out);
   transition-delay: calc(var(--i, 0) * var(--split-step) + var(--split-delay));
@@ -85,6 +86,13 @@ html.ui-intro-lock { overflow: hidden; scrollbar-gutter: stable; }
 .ui-ccur[data-mode="label"] .ui-ccur__dot { --d: var(--cc-label-d, 84px); width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); }
 .ui-ccur[data-mode="text"] .ui-ccur__dot { transform: scale(0.15, 1.8); border-radius: 2px; box-shadow: none; }
 .ui-ccur[data-mode="hide"] { opacity: 0; }
+/* imagen (data-cursor-img): el punto crece hasta la foto; la etiqueta, si la hay, va en una píldora encima */
+.ui-ccur__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--dur-s) linear; }
+.ui-ccur__img:not([src]) { display: none; }
+.ui-ccur[data-mode="image"] .ui-ccur__dot { position: relative; overflow: clip; width: var(--cc-img-w); height: var(--cc-img-h); margin: calc(var(--cc-img-h) / -2) 0 0 calc(var(--cc-img-w) / -2); border-radius: calc(var(--r, 12px) * 0.6); background: var(--card, #ddd); box-shadow: none; }
+.ui-ccur[data-mode="image"] .ui-ccur__img { opacity: 1; }
+.ui-ccur[data-mode="image"] .ui-ccur__txt { position: relative; padding: 8px 14px; border-radius: 99px; background: var(--cc-fill); color: var(--cc-ink); }
+.ui-ccur[data-mode="image"] .ui-ccur__txt:empty { display: none; }
 .ui-ccur[data-down] .ui-ccur__dot { transform: scale(0.7); }
 /* el texto mide lo que mide (no los 14 px del punto): así queda centrado en la burbuja en vez de desbordar a un lado */
 .ui-ccur__txt { display: block; width: max-content; line-height: 1; text-align: center; }
@@ -120,6 +128,20 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 }
 @media (max-width: 640px) { .ui-plist__a { grid-template-columns: 3ch minmax(0, 1fr) auto; } .ui-plist__m { display: none; } }
 @media (prefers-reduced-motion: reduce) { .ui-plist__peek, .ui-plist__a { transition: none; } }
+/* vista «grid»: tarjetas con la imagen siempre visible */
+.ui-plist--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 28px 16px; padding-top: 20px; border-top: 0; }
+.ui-plist--grid .ui-plist__row { border-bottom: 0; }
+.ui-plist--grid .ui-plist__a { grid-template-columns: auto minmax(0, 1fr) auto; align-items: baseline; gap: 8px 12px; padding-block: 0; }
+.ui-plist--grid .ui-plist__thumb { display: block; order: -1; grid-column: 1 / -1; width: 100%; max-width: none; aspect-ratio: 4 / 5; object-fit: cover; border-radius: calc(var(--r) * 0.6); background: var(--card); }
+.ui-plist--grid .ui-plist__t { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.ui-plist--grid .ui-plist__m { display: none; }
+.ui-plist--grid .ui-plist__n, .ui-plist--grid .ui-plist__y { font-size: 11px; }
+.ui-plist--grid .ui-plist__a:is(:hover, :focus-visible) .ui-plist__t { text-decoration: underline; text-underline-offset: 4px; }
+/* vista «index»: solo texto, denso (la vista previa sigue funcionando) */
+.ui-plist--index .ui-plist__a { padding-block: 10px; gap: 12px clamp(12px, 2vw, 28px); }
+.ui-plist--index .ui-plist__t { font-size: clamp(16px, 1.5vw, 20px); font-weight: 500; letter-spacing: -0.005em; }
+.ui-plist--index .ui-plist__n, .ui-plist--index .ui-plist__m, .ui-plist--index .ui-plist__y { font-size: 11px; }
+.ui-plist--index .ui-plist__thumb { display: none; }
 
 /* ---------- FullscreenMenu ---------- */
 .ui-fsm__btn { display: inline-flex; align-items: center; gap: 0.3em; padding: 8px 4px; background: none; border: 0; color: inherit; font: inherit; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }

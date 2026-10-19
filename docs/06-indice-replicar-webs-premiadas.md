@@ -28,7 +28,7 @@ fluida y fuentes (C8, decisión §7.2).
 **Fase 3 (parcial, 19-10-2026), reutilizando `three` + `@react-three/fiber` sin dependencias nuevas:** `DistortImage`,
 `DragGrid` y `ObjectStage`, con ficha en `/componentes` y uso en la página `/sitios/estudio/laboratorio`. `DistortImage` y
 `ObjectStage` van por subruta (peer opcional), como `RetroCanvas`. **Pendiente de la fase:** `ShaderSlider` (G4),
-`WebGLStage` con planos sincronizados con el DOM (G5), `ExplorableCanvas` (G8), `SoundToggle` (F6) y `BackgroundVideo` (G10).
+`WebGLStage` con planos sincronizados con el DOM (G5), `ExplorableCanvas` (G8), `Toggle indicator` (F6) y `BackgroundVideo` (G10).
 Aprendido: Chrome cuenta el `clip-path` del propio elemento en `IntersectionObserver`; con `setPointerCapture` el clic se
 reenvía al elemento que captura (por eso `DragGrid` captura solo al empezar a arrastrar); y sobre un lienzo transparente
 `transmission` da negro (el vidrio es translúcido con reflejos).
@@ -184,7 +184,7 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 | F3 | Botón magnético | — | ✔ | `MagneticButton` |
 | F4 | Foco que sigue al puntero | — | ✔ | `Spotlight` |
 | F5 | Botón con relleno que entra desde el lado del cursor | Estándar | ◐ | Añadir como efecto de `HoverFX` |
-| F6 | Toggle de sonido ON/OFF con ecualizador animado | Overworld Audio | ✘ | `SoundToggle` + `lib/ui/audio.ts` (ya existe); **sonido siempre desactivado por defecto** |
+| F6 | Toggle de sonido ON/OFF con ecualizador animado | Overworld Audio | ✔ | `Toggle` con `indicator` (ecualizador en la demo Sonar) + `lib/ui/audio.ts`; **sonido siempre desactivado por defecto** |
 | F7 | Efectos de hover | — | ✔ | `HoverFX` (9 efectos) |
 | F8 | Detección táctil: sin cursor propio, sin hover «pegajoso» | Responsive | ◐ | Apoyarse en A6 |
 

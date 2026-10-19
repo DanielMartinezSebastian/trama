@@ -362,6 +362,9 @@ a.ui-button { text-decoration: none; }
 .ui-s--solid .ui-toggle__track, .ui-s--outline .ui-toggle__track { border-radius: var(--s-r); }
 .ui-s--solid .ui-toggle__thumb, .ui-s--outline .ui-toggle__thumb { border-radius: calc(var(--s-r) - 2px); }
 .ui-s--neon .ui-toggle.is-on .ui-toggle__thumb { box-shadow: 0 0 10px var(--acc); }
+.ui-toggle:disabled { cursor: not-allowed; opacity: 0.55; }
+.ui-toggle__ind { display: inline-flex; align-items: center; flex: none; }
+.ui-toggle.ui-toggle--ind .ui-toggle__text { display: none; }
 
 /* ---------- RangeSlider ---------- */
 .ui-range { display: grid; gap: 8px; width: min(100%, 340px); font-family: var(--s-ff); text-transform: var(--s-tt); letter-spacing: var(--s-ls); font-size: 13px; }
@@ -1139,6 +1142,16 @@ a.ui-button { text-decoration: none; }
 .ui-modal h3 { margin: 0; font-size: 19px; text-transform: var(--s-tt); letter-spacing: var(--s-ls); text-shadow: var(--s-ts); }
 .ui-modal p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; }
 .ui-modal__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+/* size="full": pantalla de entrada con el fondo de la web */
+.ui-modal__backdrop--full { z-index: 400; padding: 24px; background: var(--bg); backdrop-filter: none; animation: ui-fade-in 0.5s var(--ease-out, ease-out) both; }
+.ui-modal__backdrop--full.is-leaving { animation: ui-modal-out 0.5s var(--ease-io, ease-in-out) both; pointer-events: none; }
+@keyframes ui-modal-out { to { opacity: 0; transform: scale(1.04); } }
+.ui-modal--full { width: min(100%, 880px); max-height: none; overflow: visible; justify-items: center; gap: 22px; padding: 0; text-align: center; color: var(--fg); animation: none; }
+.ui-modal--full:focus { outline: none; }
+.ui-modal--full h2 { margin: 0; font-family: var(--display, inherit); font-weight: 400; font-size: clamp(34px, 7.4vw, 104px); line-height: 0.98; letter-spacing: -0.02em; text-wrap: balance; }
+.ui-modal--full p { max-width: 46ch; font-size: 15px; line-height: 1.5; }
+.ui-modal--full .ui-modal__actions { justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+@media (prefers-reduced-motion: reduce) { .ui-modal__backdrop--full, .ui-modal__backdrop--full.is-leaving { animation: none; } }
 @keyframes ui-fade-in { from { opacity: 0; } }
 @keyframes ui-modal-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
 

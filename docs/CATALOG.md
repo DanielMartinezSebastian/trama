@@ -268,12 +268,14 @@ Titular o párrafo que entra por líneas, palabras o letras, con máscara de rec
 |---|---|---|
 | `text` | text | "Diseñamos webs que se sienten como una conversación y no como un folleto." |
 | `by` | `lines` · `words` · `chars` | "lines" |
-| `effect` | `rise` · `rotate` · `blur` · `fade` | "rise" |
+| `effect` | `rise` · `rotate` · `blur` · `fade` · `none` | "rise" |
 | `mask` | boolean | true |
 | `trigger` | `mount` · `inview` | "mount" |
 | `stagger` | number 0.01–0.4 | 0.1 |
 | `duration` | number 0.2–2.5 | 0.9 |
 | `delay` | number 0–2 | 0 |
+| `elastic` | `off` · `pointer` · `scroll` | "off" |
+| `stretch` | number 0.2–1.2 | 0.6 |
 
 - by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.
 - El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.
@@ -313,16 +315,6 @@ Letras que se separan y se desvanecen al hacer scroll: la marca gigante de un he
 | `lift` | number 0–200 | 40 |
 
 - Depende del scroll de la página; con prefers-reduced-motion se ve entero y quieto.
-
-### Tipografía elástica — `ElasticText`
-
-Las letras se estiran en vertical cuando el puntero pasa cerca o cuando haces scroll rápido (Mat Voyce, Uncommon). Solo transforma: el texto sigue legible y accesible, y se queda quieto con movimiento reducido.
-
-| prop | tipo | default |
-|---|---|---|
-| `text` | text | "Diseño que se siente" |
-| `mode` | `pointer` · `scroll` | "pointer" |
-| `stretch` | number 0.2–1.2 | 0.6 |
 
 ## Tarjetas (`tarjetas`)
 
@@ -637,7 +629,7 @@ Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el 
 
 ### Cursor de página con estados — `CustomCursor`
 
-Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor="Ver", se oculta con data-cursor="hide" y es una barra en campos de texto. Solo con puntero fino.
+Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor="Ver", una **imagen** con data-cursor-img="/foto.jpg" (así se compone el índice de proyectos con foto: ProjectList preview="cursor"), se oculta con data-cursor="hide" y es una barra en campos de texto. Solo con puntero fino.
 
 | prop | tipo | default |
 |---|---|---|
@@ -645,6 +637,8 @@ Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo
 | `follow` | number 0.05–1 | 0.18 |
 | `blend` | `none` · `difference` | "none" |
 | `hideNative` | boolean | false |
+| `imageWidth` | number 120–420 | 260 |
+| `tilt` | number 0–20 | 6 |
 
 - Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.
 - hideNative oculta el cursor del sistema, salvo en campos de texto.
@@ -673,16 +667,6 @@ Botón de icono circular. Con inline mide lo mismo que la letra y se coloca dent
 | `size` | `sm` · `md` · `lg` | "md" |
 | `inline` | boolean | false |
 | `look` | `outline` · `solid` | "outline" |
-
-### Interruptor de sonido con ecualizador — `SoundToggle`
-
-Botón con barras animadas que se mueven cuando el sonido está activo. Arranca siempre apagado; con `src` controla un audio en bucle y con `onChange` avisa a tu propio reproductor.
-
-| prop | tipo | default |
-|---|---|---|
-| `bars` | number 3–8 | 4 |
-| `labelOff` | text | "Sonido: no" |
-| `labelOn` | text | "Sonido: sí" |
 
 ### Collage de pegatinas arrastrables — `StickerCollage`
 
@@ -1767,18 +1751,9 @@ Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con 
 | `height` | text | "320px" |
 | `grow` | number 1.5–8 | 4 |
 
-### Trabajos con cambio de vista animado — `WorkViews`
-
-Colección de proyectos con botones «Vista ① ② ③»: lista con miniatura, cuadrícula o índice de texto. Al cambiar, cada elemento viaja a su nueva posición (GSAP Flip) en vez de saltar ('kin).
-
-| prop | tipo | default |
-|---|---|---|
-| `label` | text | "Vista" |
-| `views` | `2` · `3` | "3" |
-
 ### Lienzo explorable por arrastre — `ExplorableCanvas`
 
-Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible.
+Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Usa el mismo arrastre que DragGrid (lib/ui/dragPan.ts) y un OptionPicker para «Mapa / Lista».
 
 | prop | tipo | default |
 |---|---|---|
@@ -1964,12 +1939,15 @@ Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con im
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
-### Lista de proyectos con vista previa — `ProjectList`
+### Proyectos: lista, cuadrícula o índice con vista previa — `ProjectList`
 
-Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen sigue al cursor con inclinación según la velocidad; con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título.
+Tres vistas (filas con título enorme, cuadrícula de imágenes o índice de texto) que se animan al cambiar (GSAP Flip, 'kin). En lista e índice, al pasar el puntero el resto se atenúa y aparece la foto: propia, que sigue al puntero con inclinación, o dentro de CustomCursor (preview="cursor"). Con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título. El selector de vista no va dentro: se compone con un OptionPicker.
 
 | prop | tipo | default |
 |---|---|---|
+| `view` | `list` · `grid` · `index` | "list" |
+| `picker` | boolean | true |
+| `preview` | `follow` · `cursor` · `none` | "follow" |
 | `numbered` | boolean | true |
 | `follow` | number 0.05–1 | 0.14 |
 | `tilt` | number 0–20 | 8 |
@@ -2099,7 +2077,7 @@ Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.
 
 ### Modal — `Modal`
 
-Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed, sin portal.
+Diálogo modal: un botón lo abre, el fondo o Escape lo cierran; pausa el scroll y el tabulador no sale de él. Con size="full" es una pantalla de entrada a toda la ventana («Entrar con sonido / sin sonido», «¿Eres mayor de edad?»); con actions lleva botones propios y con dismissible={false} obliga a elegir. position: fixed, sin portal.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2108,7 +2086,7 @@ Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed
 | `body` | text | "Esta acción no se puede deshacer. Se borrarán todos tus datos y no podrás recuperarlos." |
 | `confirmLabel` | text | "Sí, eliminar" |
 | `cancelLabel` | text | "Cancelar" |
-| `size` | `sm` · `md` · `lg` | "md" |
+| `size` | `sm` · `md` · `lg` · `full` | "md" |
 | `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "accent" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
@@ -2211,18 +2189,15 @@ Líneas con cantidad y quitar, subtotal, barra de envío gratis y botón de pedi
 
 - El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta.
 
-### Pantalla de entrada (sonido / mayoría de edad) — `EntryGate`
-
-Diálogo a pantalla completa con titular enorme y dos botones: «Entrar con sonido / sin sonido» (Overworld Audio) o «¿Eres mayor de edad?» (Santioni Spirits). Bloquea el scroll, atrapa el foco y recuerda la elección en la sesión. Es una declaración, no una verificación legal.
-
 ### Aviso de cookies — `CookieBanner`
 
-Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página.
+Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página. Está hecho con Button y Toggle: para teñirlo, redefine --bg, --fg y --acc sobre .ui-cook.
 
 | prop | tipo | default |
 |---|---|---|
 | `position` | `bottom-left` · `bottom-right` · `bottom` | "bottom-left" |
 | `title` | text | "¿Qué te parecen las cookies?" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ## Pixel art (`pixel`)
 
@@ -2435,16 +2410,16 @@ Carpeta: `components/sites/arbor/` · 2 páginas: Inicio · Residencias
 
 ### Sonar · estudio de identidad sonora — `/sitios/sonar`
 
-Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa EntryGate, SoundToggle, ElasticText, ExplorableCanvas, WorkViews y BigFooter.
+Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa Modal (pantalla completa), Toggle con indicador, SplitText (elastic), ExplorableCanvas, ProjectList con OptionPicker y BigFooter.
 
 Carpeta: `components/sites/sonar/` · 2 páginas: Inicio · Proyectos
 
-`RollLink` ×3 · `SplitText` ×2 · `SmoothScroll` · `BigFooter` · `CellGrid` · `EntryGate` · `SoundToggle` · `ElasticText` · `WorkViews` · `ExplorableCanvas`
+`SplitText` ×3 · `RollLink` ×3 · `Toggle` · `Modal` · `SmoothScroll` · `ProjectList` · `BigFooter` · `OptionPicker` · `CellGrid` · `ExplorableCanvas`
 
 ### Mota · interiorismo y marca con carácter — `/sitios/mota`
 
-Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, ElasticText, WorkViews, CookieBanner y CustomCursor.
+Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, SplitText (elastic), ProjectList con OptionPicker, CookieBanner y CustomCursor (con imagen).
 
 Carpeta: `components/sites/mota/` · 2 páginas: Inicio · Proyectos
 
-`RollLink` ×3 · `SplitText` ×2 · `WorkViews` ×2 · `FitText` · `CustomCursor` · `SmoothScroll` · `BigFooter` · `ElasticText` · `StickerCollage` · `CookieBanner`
+`SplitText` ×3 · `RollLink` ×3 · `ProjectList` ×2 · `FitText` · `CustomCursor` · `SmoothScroll` · `BigFooter` · `OptionPicker` · `StickerCollage` · `CookieBanner`

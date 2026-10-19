@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import Button from "./Button";
+import Toggle from "./Toggle";
+import { type Variant } from "./variants";
 
 export type CookieChoice = { necessary: true; analytics: boolean; marketing: boolean };
 
@@ -15,6 +18,8 @@ export type CookieBannerProps = {
   storageKey?: string;
   /** esquina o franja */
   position?: "bottom-left" | "bottom-right" | "bottom";
+  /** estilo de los botones e interruptores */
+  variant?: Variant;
   className?: string;
 };
 
@@ -32,6 +37,9 @@ const stored = (key: string) => {
  * énfasis): es lo que exige la normativa europea y se comprueba a ojo. Hay vista «Personalizar» con categorías (las necesarias
  * van fijas). No es modal: no bloquea la página. Recuerda la elección en `localStorage`. En una demo no activa ninguna cookie
  * real; quien lo integre debe enlazar `onChoice` con su gestor de consentimiento.
+ *
+ * Es una composición de átomos (`Button`, `Toggle`) con los tokens del tema: para cambiarle el color, redefine `--bg`, `--fg`
+ * y `--acc` sobre `.ui-cook` y todo lo de dentro se adapta.
  */
 export default function CookieBanner({
   title = "¿Qué te parecen las cookies?",
@@ -40,6 +48,7 @@ export default function CookieBanner({
   onChoice,
   storageKey = "ui-cookies",
   position = "bottom-left",
+  variant = "minimal",
   className = "",
 }: CookieBannerProps) {
   const [open, setOpen] = useState(false);
@@ -73,19 +82,20 @@ export default function CookieBanner({
         {text} {policyHref && <a href={policyHref}>Política de cookies</a>}
       </p>
       {custom && (
-        <ul className="ui-cook__cats">
-          <li><label><input type="checkbox" checked disabled /> Necesarias <small>siempre activas</small></label></li>
-          <li><label><input type="checkbox" checked={an} onChange={(e) => setAn(e.target.checked)} /> Medición <small>cómo se usa la web</small></label></li>
-          <li><label><input type="checkbox" checked={mk} onChange={(e) => setMk(e.target.checked)} /> Marketing <small>anuncios a tu medida</small></label></li>
-        </ul>
+        <div className="ui-cook__cats" role="group" aria-label="Categorías">
+          <Toggle label="Necesarias (siempre activas)" checked disabled size="sm" variant={variant} />
+          <Toggle label="Medición: cómo se usa la web" checked={an} onChange={setAn} size="sm" variant={variant} />
+          <Toggle label="Marketing: anuncios a tu medida" checked={mk} onChange={setMk} size="sm" variant={variant} />
+        </div>
       )}
+      {/* mismo énfasis y tamaño para todos: rechazar cuesta lo mismo que aceptar */}
       <div className="ui-cook__acts">
-        <button type="button" className="ui-cook__b" onClick={() => save({ necessary: true, analytics: true, marketing: true })}>Aceptar</button>
-        <button type="button" className="ui-cook__b" onClick={() => save({ necessary: true, analytics: false, marketing: false })}>Rechazar</button>
+        <Button label="Aceptar" emphasis="outline" size="sm" variant={variant} onClick={() => save({ necessary: true, analytics: true, marketing: true })} />
+        <Button label="Rechazar" emphasis="outline" size="sm" variant={variant} onClick={() => save({ necessary: true, analytics: false, marketing: false })} />
         {custom ? (
-          <button type="button" className="ui-cook__b" onClick={() => save({ necessary: true, analytics: an, marketing: mk })}>Guardar</button>
+          <Button label="Guardar" emphasis="outline" size="sm" variant={variant} onClick={() => save({ necessary: true, analytics: an, marketing: mk })} />
         ) : (
-          <button type="button" className="ui-cook__b" onClick={() => setCustom(true)}>Personalizar</button>
+          <Button label="Personalizar" emphasis="outline" size="sm" variant={variant} onClick={() => setCustom(true)} />
         )}
       </div>
     </section>

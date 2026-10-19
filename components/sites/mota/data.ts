@@ -6,7 +6,7 @@ export const meta = {
   name: "Mota",
   title: "Mota · interiorismo y marca con carácter",
   blurb:
-    "Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, ElasticText, WorkViews, CookieBanner y CustomCursor.",
+    "Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, SplitText (elastic), ProjectList con OptionPicker, CookieBanner y CustomCursor (con imagen).",
   accent: "#ff5a36",
   tag: "estudio · pegatinas",
 };

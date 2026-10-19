@@ -51,8 +51,7 @@
         "split-text",
         "fit-text",
         "scrub-text",
-        "scatter-text",
-        "elastic-text"
+        "scatter-text"
       ]
     },
     {
@@ -87,7 +86,6 @@
         "custom-cursor",
         "smooth-scroll",
         "circle-button",
-        "sound-toggle",
         "sticker-collage"
       ]
     },
@@ -198,7 +196,6 @@
         "object-stage",
         "product-gallery",
         "expanding-panels",
-        "work-views",
         "explorable-canvas"
       ]
     },
@@ -248,7 +245,6 @@
         "chat-widget",
         "command-palette",
         "cart-drawer",
-        "entry-gate",
         "cookie-banner"
       ]
     },
@@ -9177,7 +9173,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed, sin portal.",
+      "description": "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran; pausa el scroll y el tabulador no sale de él. Con size=\"full\" es una pantalla de entrada a toda la ventana («Entrar con sonido / sin sonido», «¿Eres mayor de edad?»); con actions lleva botones propios y con dismissible={false} obliga a elegir. position: fixed, sin portal.",
       "props": [
         {
           "key": "triggerLabel",
@@ -9217,7 +9213,8 @@
           "options": [
             "sm",
             "md",
-            "lg"
+            "lg",
+            "full"
           ]
         },
         {
@@ -10033,7 +10030,8 @@
             "rise",
             "rotate",
             "blur",
-            "fade"
+            "fade",
+            "none"
           ]
         },
         {
@@ -10075,6 +10073,26 @@
           "label": "Retardo (s)",
           "min": 0,
           "max": 2
+        },
+        {
+          "key": "elastic",
+          "type": "select",
+          "default": "off",
+          "label": "Elástica",
+          "hint": "las letras se estiran (Mat Voyce, Uncommon); desactiva la máscara",
+          "options": [
+            "off",
+            "pointer",
+            "scroll"
+          ]
+        },
+        {
+          "key": "stretch",
+          "type": "number",
+          "default": 0.6,
+          "label": "Estirado",
+          "min": 0.2,
+          "max": 1.2
         }
       ],
       "notes": [
@@ -10167,7 +10185,7 @@
         "solid",
         "neon"
       ],
-      "description": "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
+      "description": "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", una **imagen** con data-cursor-img=\"/foto.jpg\" (así se compone el índice de proyectos con foto: ProjectList preview=\"cursor\"), se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
       "props": [
         {
           "key": "cursorSize",
@@ -10200,6 +10218,22 @@
           "type": "boolean",
           "default": false,
           "label": "Ocultar cursor del sistema"
+        },
+        {
+          "key": "imageWidth",
+          "type": "number",
+          "default": 260,
+          "label": "Ancho de la imagen (px)",
+          "min": 120,
+          "max": 420
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 6,
+          "label": "Inclinación de la imagen (°)",
+          "min": 0,
+          "max": 20
         }
       ],
       "notes": [
@@ -10320,7 +10354,7 @@
     },
     {
       "id": "project-list",
-      "name": "Lista de proyectos con vista previa",
+      "name": "Proyectos: lista, cuadrícula o índice con vista previa",
       "component": "ProjectList",
       "import": "import ProjectList from \"@/components/ui/ProjectList\";",
       "category": "secciones",
@@ -10329,8 +10363,36 @@
         "solid",
         "outline"
       ],
-      "description": "Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen sigue al cursor con inclinación según la velocidad; con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título.",
+      "description": "Tres vistas (filas con título enorme, cuadrícula de imágenes o índice de texto) que se animan al cambiar (GSAP Flip, 'kin). En lista e índice, al pasar el puntero el resto se atenúa y aparece la foto: propia, que sigue al puntero con inclinación, o dentro de CustomCursor (preview=\"cursor\"). Con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título. El selector de vista no va dentro: se compone con un OptionPicker.",
       "props": [
+        {
+          "key": "view",
+          "type": "select",
+          "default": "list",
+          "label": "Vista",
+          "options": [
+            "list",
+            "grid",
+            "index"
+          ]
+        },
+        {
+          "key": "picker",
+          "type": "boolean",
+          "default": true,
+          "label": "Selector de vista (OptionPicker)"
+        },
+        {
+          "key": "preview",
+          "type": "select",
+          "default": "follow",
+          "label": "Vista previa",
+          "options": [
+            "follow",
+            "cursor",
+            "none"
+          ]
+        },
         {
           "key": "numbered",
           "type": "boolean",
@@ -12169,133 +12231,6 @@
       "preview": "/componentes#circle-button"
     },
     {
-      "id": "entry-gate",
-      "name": "Pantalla de entrada (sonido / mayoría de edad)",
-      "component": "EntryGate",
-      "import": "import EntryGate from \"@/components/ui/EntryGate\";",
-      "category": "overlays",
-      "styles": [
-        "editorial",
-        "minimal",
-        "outline"
-      ],
-      "description": "Diálogo a pantalla completa con titular enorme y dos botones: «Entrar con sonido / sin sonido» (Overworld Audio) o «¿Eres mayor de edad?» (Santioni Spirits). Bloquea el scroll, atrapa el foco y recuerda la elección en la sesión. Es una declaración, no una verificación legal.",
-      "props": [],
-      "example": "import EntryGate from \"@/components/ui/EntryGate\";\n\n<EntryGate />",
-      "preview": "/componentes#entry-gate"
-    },
-    {
-      "id": "sound-toggle",
-      "name": "Interruptor de sonido con ecualizador",
-      "component": "SoundToggle",
-      "import": "import SoundToggle from \"@/components/ui/SoundToggle\";",
-      "category": "interaccion",
-      "styles": [
-        "editorial",
-        "minimal",
-        "outline"
-      ],
-      "description": "Botón con barras animadas que se mueven cuando el sonido está activo. Arranca siempre apagado; con `src` controla un audio en bucle y con `onChange` avisa a tu propio reproductor.",
-      "props": [
-        {
-          "key": "bars",
-          "type": "number",
-          "default": 4,
-          "label": "Barras",
-          "min": 3,
-          "max": 8
-        },
-        {
-          "key": "labelOff",
-          "type": "text",
-          "default": "Sonido: no",
-          "label": "Texto apagado"
-        },
-        {
-          "key": "labelOn",
-          "type": "text",
-          "default": "Sonido: sí",
-          "label": "Texto encendido"
-        }
-      ],
-      "example": "import SoundToggle from \"@/components/ui/SoundToggle\";\n\n<SoundToggle />",
-      "preview": "/componentes#sound-toggle"
-    },
-    {
-      "id": "elastic-text",
-      "name": "Tipografía elástica",
-      "component": "ElasticText",
-      "import": "import ElasticText from \"@/components/ui/ElasticText\";",
-      "category": "texto",
-      "styles": [
-        "editorial",
-        "minimal",
-        "outline"
-      ],
-      "description": "Las letras se estiran en vertical cuando el puntero pasa cerca o cuando haces scroll rápido (Mat Voyce, Uncommon). Solo transforma: el texto sigue legible y accesible, y se queda quieto con movimiento reducido.",
-      "props": [
-        {
-          "key": "text",
-          "type": "text",
-          "default": "Diseño que se siente",
-          "label": "Texto"
-        },
-        {
-          "key": "mode",
-          "type": "select",
-          "default": "pointer",
-          "label": "Respuesta a",
-          "options": [
-            "pointer",
-            "scroll"
-          ]
-        },
-        {
-          "key": "stretch",
-          "type": "number",
-          "default": 0.6,
-          "label": "Estirado",
-          "min": 0.2,
-          "max": 1.2
-        }
-      ],
-      "example": "import ElasticText from \"@/components/ui/ElasticText\";\n\n<ElasticText\n  text=\"Diseño que se siente\"\n/>",
-      "preview": "/componentes#elastic-text"
-    },
-    {
-      "id": "work-views",
-      "name": "Trabajos con cambio de vista animado",
-      "component": "WorkViews",
-      "import": "import WorkViews from \"@/components/ui/WorkViews\";",
-      "category": "galerias",
-      "styles": [
-        "editorial",
-        "minimal",
-        "outline"
-      ],
-      "description": "Colección de proyectos con botones «Vista ① ② ③»: lista con miniatura, cuadrícula o índice de texto. Al cambiar, cada elemento viaja a su nueva posición (GSAP Flip) en vez de saltar ('kin).",
-      "props": [
-        {
-          "key": "label",
-          "type": "text",
-          "default": "Vista",
-          "label": "Texto del selector"
-        },
-        {
-          "key": "views",
-          "type": "select",
-          "default": "3",
-          "label": "Vistas",
-          "options": [
-            "2",
-            "3"
-          ]
-        }
-      ],
-      "example": "import WorkViews from \"@/components/ui/WorkViews\";\n\n<WorkViews\n  label=\"Vista\"\n/>",
-      "preview": "/componentes#work-views"
-    },
-    {
       "id": "explorable-canvas",
       "name": "Lienzo explorable por arrastre",
       "component": "ExplorableCanvas",
@@ -12306,7 +12241,7 @@
         "minimal",
         "outline"
       ],
-      "description": "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible.",
+      "description": "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Usa el mismo arrastre que DragGrid (lib/ui/dragPan.ts) y un OptionPicker para «Mapa / Lista».",
       "props": [
         {
           "key": "listToggle",
@@ -12358,7 +12293,7 @@
         "minimal",
         "outline"
       ],
-      "description": "Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página.",
+      "description": "Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página. Está hecho con Button y Toggle: para teñirlo, redefine --bg, --fg y --acc sobre .ui-cook.",
       "props": [
         {
           "key": "position",
@@ -12376,6 +12311,24 @@
           "type": "text",
           "default": "¿Qué te parecen las cookies?",
           "label": "Título"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
         }
       ],
       "example": "import CookieBanner from \"@/components/ui/CookieBanner\";\n\n<CookieBanner\n  title=\"¿Qué te parecen las cookies?\"\n/>",
@@ -14912,7 +14865,7 @@
       "title": "Sonar · estudio de identidad sonora",
       "url": "/sitios/sonar",
       "dir": "components/sites/sonar",
-      "description": "Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa EntryGate, SoundToggle, ElasticText, ExplorableCanvas, WorkViews y BigFooter.",
+      "description": "Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa Modal (pantalla completa), Toggle con indicador, SplitText (elastic), ExplorableCanvas, ProjectList con OptionPicker y BigFooter.",
       "pages": [
         {
           "path": "/sitios/sonar",
@@ -14925,18 +14878,33 @@
       ],
       "components": [
         {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 3
+        },
+        {
           "component": "RollLink",
           "id": "roll-link",
           "uses": 3
         },
         {
-          "component": "SplitText",
-          "id": "split-text",
-          "uses": 2
+          "component": "Toggle",
+          "id": "toggle",
+          "uses": 1
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 1
         },
         {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "ProjectList",
+          "id": "project-list",
           "uses": 1
         },
         {
@@ -14945,28 +14913,13 @@
           "uses": 1
         },
         {
+          "component": "OptionPicker",
+          "id": "option-picker",
+          "uses": 1
+        },
+        {
           "component": "CellGrid",
           "id": "cell-grid",
-          "uses": 1
-        },
-        {
-          "component": "EntryGate",
-          "id": "entry-gate",
-          "uses": 1
-        },
-        {
-          "component": "SoundToggle",
-          "id": "sound-toggle",
-          "uses": 1
-        },
-        {
-          "component": "ElasticText",
-          "id": "elastic-text",
-          "uses": 1
-        },
-        {
-          "component": "WorkViews",
-          "id": "work-views",
           "uses": 1
         },
         {
@@ -14981,7 +14934,7 @@
       "title": "Mota · interiorismo y marca con carácter",
       "url": "/sitios/mota",
       "dir": "components/sites/mota",
-      "description": "Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, ElasticText, WorkViews, CookieBanner y CustomCursor.",
+      "description": "Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, SplitText (elastic), ProjectList con OptionPicker, CookieBanner y CustomCursor (con imagen).",
       "pages": [
         {
           "path": "/sitios/mota",
@@ -14994,18 +14947,18 @@
       ],
       "components": [
         {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 3
+        },
+        {
           "component": "RollLink",
           "id": "roll-link",
           "uses": 3
         },
         {
-          "component": "SplitText",
-          "id": "split-text",
-          "uses": 2
-        },
-        {
-          "component": "WorkViews",
-          "id": "work-views",
+          "component": "ProjectList",
+          "id": "project-list",
           "uses": 2
         },
         {
@@ -15029,8 +14982,8 @@
           "uses": 1
         },
         {
-          "component": "ElasticText",
-          "id": "elastic-text",
+          "component": "OptionPicker",
+          "id": "option-picker",
           "uses": 1
         },
         {

@@ -19,9 +19,10 @@
 .mo-big { margin: 0; max-width: 14ch; font-family: var(--display); font-weight: 800; font-size: clamp(44px, 9vw, 132px); line-height: 0.95; letter-spacing: -0.04em; text-wrap: balance; }
 .mo-sec { padding: clamp(40px, 7vw, 100px) var(--st-gutter); }
 .mo-h2 { margin: 0 0 clamp(18px, 3vw, 36px); font-family: var(--display); font-weight: 800; font-size: clamp(40px, 7vw, 104px); line-height: 0.92; letter-spacing: -0.04em; }
-.mo .ui-wv__ul--list .ui-wv__t { font-family: var(--display); font-weight: 700; }
-.mo .ui-cook { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.mo .ui-cook__b { border-color: var(--bg); }
-.mo .ui-cook__b:is(:hover, :focus-visible) { background: var(--bg); color: var(--fg); }
+.mo .ui-plist__t { font-family: var(--display); }
+.mo-views { margin-bottom: 16px; }
+.mo-views .ui-opt__chip { min-width: 40px; border-radius: 99px; font-size: 16px; }
+/* aviso de cookies en tinta: basta con invertir los tokens; Button y Toggle de dentro se adaptan solos */
+.mo .ui-cook { --bg: #17140f; --fg: #f4f0e8; --mut: #c9c2b5; --ln: rgba(244, 240, 232, 0.3); --card: #26221b; --acc: #f4f0e8; }
 .mo .ui-bigfoot { background: var(--acc); color: #17140f; }
 .mo .ui-bigfoot .ui-fit__t { font-family: var(--font-geist-mono), ui-monospace, monospace; font-weight: 500; letter-spacing: -0.06em; }

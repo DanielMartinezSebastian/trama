@@ -202,18 +202,18 @@ atómico, y **no acumular cientos de componentes** que podrían beber unos de ot
    tiene sentido en una web, **vive en esa web** (`components/sites/<web>/`), no en `components/ui/`.
 4. **Una pregunta de control** al crear: «¿puede usarlo otra web con otra estética cambiando tokens o props?». Si no, no entra.
 
-**Revisión pendiente de la ronda 3** (piezas que probablemente deben fundirse con otras existentes):
+**Revisión de la ronda 3 — hecha el 19-10-2026.** De 7 componentes nuevos quedan 3; el catálogo baja de 141 a 137.
 
-| Pieza nueva | Se solapa con | Propuesta |
+| Pieza nueva | Se solapaba con | Qué se hizo |
 |---|---|---|
-| `WorkViews` (lista / cuadrícula / índice) | `ProjectList` (lista con vista previa), `BentoGrid`, `ImageGallery` | Que `ProjectList` acepte `view` y el selector sea un átomo `ViewSwitch` reutilizable; `WorkViews` pasa a ser composición |
-| `ExplorableCanvas` | `DragGrid` (arrastre con inercia) | Extraer el arrastre con inercia a un hook `useDragPan` que usen los dos |
-| `EntryGate` | `Modal` | Reducir a `Modal` con variante «a pantalla completa» + contenido |
-| `CookieBanner` | `Modal`, `Drawer`, `Toggle`, `CheckboxGroup` | Composición de esos átomos; deja de ser componente del kit |
-| `SoundToggle` | `Toggle` | Variante/slot de `Toggle` con el ecualizador como icono |
-| `ElasticText` | `SplitText`, `ScrubText` | Modo de `SplitText` (reutilizar su troceado de letras) |
-| `StickerCollage` | `DragGrid` / arrastre | Usar `useDragPan` o similar; las pegatinas (`lib/sites/stickers.ts`) viven en la demo |
-| Cursor con imagen (idea) | `CustomCursor`, `ProjectList` | Opción `image` en `CustomCursor`, nada de componente nuevo |
+| `WorkViews` | `ProjectList` | **Borrado.** `ProjectList` gana `view` (`list` / `grid` / `index`, con GSAP Flip) y `preview`. El selector «① ② ③» es un `OptionPicker` (gana `short` y `hideLabel`): no hizo falta un `ViewSwitch` nuevo |
+| Cursor con imagen (idea) | `CustomCursor`, `ProjectList` | `CustomCursor` gana `data-cursor-img`, `imageWidth`, `imageRatio` y `tilt`; `ProjectList preview="cursor"` lo usa. Ningún componente nuevo |
+| `EntryGate` | `Modal` | **Borrado.** `Modal` gana `size="full"`, `children`, `actions`/`onAction`, `dismissible`, foco atrapado y pausa del scroll (mejora para todos los modales). Recordar la elección es cosa de la web (Sonar, 10 líneas) |
+| `SoundToggle` | `Toggle` | **Borrado.** `Toggle` gana `checked`/`onChange` (modo controlado), `disabled` e `indicator`. El ecualizador vive en la demo Sonar |
+| `ElasticText` | `SplitText` | **Borrado.** `SplitText` gana `elastic`, `stretch`, `radius` y `effect="none"`; la lógica está en `lib/ui/elastic.ts` |
+| `ExplorableCanvas` | `DragGrid` | Se queda (mundo con límites y fichas), pero el arrastre con inercia es `lib/ui/dragPan.ts`, el mismo que usa `DragGrid`. «Mapa / Lista» es un `OptionPicker` |
+| `CookieBanner` | `Button`, `Toggle` | Se queda (lo necesita cualquier web de cliente), pero ya es composición de `Button` y `Toggle`; se tiñe redefiniendo tokens sobre `.ui-cook` |
+| `StickerCollage` | — | Se queda: mueve piezas sueltas, no la vista, así que no encaja en `dragPan`. Las pegatinas (`lib/sites/stickers.ts`) son de las demos |
 
 **Auditoría periódica:** cada vez que se cierre una ronda de webs, revisar `components/ui/` buscando pares que se puedan
 fundir, y anotar aquí lo que se funda. La biblioteca debería crecer en **opciones**, no en **nombres**.

@@ -10,21 +10,28 @@
 | Web | Fórmula | En Trama |
 |---|---|---|
 | [Neutomni](https://neutomni.com/) (Webflow, GSAP 3.15, Lenis, rojo + blanco) | Wordmark de borde a borde en rojo, microtextos mono, serif cursiva de acento, aviso de cookies con la marca (rojo) y «Rechazar» tan visible como «Permitir» | `FitText`, `CookieBanner` |
-| [Overworld Audio](https://overworldaudio.com/) (Three.js, Nuxt, Sanity) | Entrada «con sonido / sin sonido»; mapa 3D que se arrastra con puntos clicables; menú mínimo; botón «lista» como alternativa | `EntryGate`, `SoundToggle`, `ExplorableCanvas` (versión 2D) |
-| ['kin](https://by-kin.com/) | Home de una sola pantalla: wordmark mono gigante en coral sobre crema, selector «Layout ① ②» que reordena los trabajos | `WorkViews` (cambio de vista con Flip) |
+| [Overworld Audio](https://overworldaudio.com/) (Three.js, Nuxt, Sanity) | Entrada «con sonido / sin sonido»; mapa 3D que se arrastra con puntos clicables; menú mínimo; botón «lista» como alternativa | `Modal size="full"`, `Toggle indicator`, `ExplorableCanvas` (versión 2D) |
+| ['kin](https://by-kin.com/) | Home de una sola pantalla: wordmark mono gigante en coral sobre crema, selector «Layout ① ②» que reordena los trabajos | `ProjectList view` + `OptionPicker` (cambio de vista con Flip) |
 | [Uncommon](https://uncommondesign.group/) | Collage de pegatinas, cursor con etiqueta «Play reel» sobre una frase, píldora «Menu», rótulos laterales | `StickerCollage`, `CustomCursor` (ya existía) |
-| [Santioni Spirits](https://santionispirits.com/) (Active Theory) | Puerta de edad con tipografía display, mundo ilustrado con sonido | `EntryGate variant="age"` |
-| Mat Voyce / By-Kin (según reseñas, sin medir) | Letras que se estiran y recomponen al hacer scroll, sin perder legibilidad | `ElasticText` |
+| [Santioni Spirits](https://santionispirits.com/) (Active Theory) | Puerta de edad con tipografía display, mundo ilustrado con sonido | `Modal size="full"` con `actions` (una con `href`) |
+| Mat Voyce / By-Kin (según reseñas, sin medir) | Letras que se estiran y recomponen al hacer scroll, sin perder legibilidad | `SplitText elastic` |
 
 ## Qué se construyó
 
-Componentes: `EntryGate`, `SoundToggle`, `ElasticText`, `WorkViews`, `ExplorableCanvas`, `StickerCollage`, `CookieBanner`
-(estilos en `ui-showcase.css`). Demos: **Sonar** (`/sitios/sonar`) y **Mota** (`/sitios/mota`).
+Primero se hicieron siete componentes; en la revisión de modularidad (19-10-2026, [`04-pendientes.md` §6](./04-pendientes.md))
+cuatro se fundieron con piezas que ya existían. Quedan como componentes propios `ExplorableCanvas`, `StickerCollage` y
+`CookieBanner` (este, hecho con `Button` y `Toggle`). Lo demás son **opciones nuevas** de componentes existentes:
 
-## Aviso: revisión de modularidad pendiente
+| Lo que se quería | Cómo se hace ahora |
+|---|---|
+| Pantalla de entrada (sonido / edad) | `Modal size="full"` con `actions`, `dismissible={false}`; recordar la elección lo hace la web |
+| Interruptor de sonido con ecualizador | `Toggle` con `indicator` (las barras viven en la demo) y `checked`/`onChange` |
+| Tipografía elástica | `SplitText elastic="pointer" \| "scroll"` (lógica en `lib/ui/elastic.ts`) |
+| Trabajos con cambio de vista | `ProjectList view="list" \| "grid" \| "index"` + `OptionPicker` con `short` como selector |
+| Índice con la foto en el cursor | `ProjectList preview="cursor"` + `CustomCursor` (atributo `data-cursor-img`) |
+| Arrastre con inercia | `lib/ui/dragPan.ts`, compartido por `DragGrid` y `ExplorableCanvas` |
 
-Varias de estas piezas se solapan con otras del kit y deben fundirse (ver
-[`04-pendientes.md` §6](./04-pendientes.md)). No se deben añadir más componentes parecidos hasta hacer esa revisión.
+Demos: **Sonar** (`/sitios/sonar`) y **Mota** (`/sitios/mota`).
 
 ## Pendiente de esta ronda
 
