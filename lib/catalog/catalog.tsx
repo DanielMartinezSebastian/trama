@@ -12,6 +12,7 @@ import { movimiento } from "./entries/movimiento";
 import { scroll } from "./entries/scroll";
 import { navegacion } from "./entries/navegacion";
 import { overlays } from "./entries/overlays";
+import { producto } from "./entries/producto";
 import { pixel } from "./entries/pixel";
 import { secciones } from "./entries/secciones";
 import { tarjetas } from "./entries/tarjetas";
@@ -23,6 +24,6 @@ import { transiciones } from "./entries/transiciones";
  * Catálogo de componentes: una lista por categoría en `entries/`. Para añadir un componente, crea su
  * entrada en la categoría que corresponda (ver docs/02-guia-de-componentes.md §9).
  */
-export const catalog: CatalogEntry[] = [...fondos, ...texto, ...tarjetas, ...interaccion, ...transiciones, ...datos, ...navegacion, ...formularios, ...feedback, ...galerias, ...secciones, ...contenido, ...overlays, ...pixel, ...movimiento, ...scroll, ...webgl];
+export const catalog: CatalogEntry[] = [...fondos, ...texto, ...tarjetas, ...interaccion, ...transiciones, ...datos, ...navegacion, ...formularios, ...feedback, ...galerias, ...secciones, ...contenido, ...overlays, ...pixel, ...movimiento, ...scroll, ...webgl, ...producto];
 
 export const getEntry = (id: string) => catalog.find((e) => e.id === id);

@@ -33,6 +33,13 @@ Aprendido: Chrome cuenta el `clip-path` del propio elemento en `IntersectionObse
 reenvía al elemento que captura (por eso `DragGrid` captura solo al empezar a arrastrar); y sobre un lienzo transparente
 `transmission` da negro (el vidrio es translúcido con reflejos).
 
+**Fase 4 (parcial, 19-10-2026): UI de producto.** `AppShell`, `CommandPalette`, `DataTable`, `Chart`, `KpiCard`, `Avatar`,
+`Kbd` y `EmptyState`, con ficha en `/componentes` y usadas en la demo **Pulso** (`/sitios/pulso`: resumen con KPIs y
+gráficos, clientes con tabla interactiva, informes, ajustes). Verificado en Chrome: paleta (filtra, navega con Intro y
+devuelve el foco), orden y selección de la tabla, gráficos y marco. Lección: la variante `outline` impone mayúsculas y un
+brillo interior que no sirven en un panel, así que estas piezas parten de `editorial`. **Pendiente de la fase:** `Kanban`
+(I6), `Onboarding` (I8), `FeatureShowcase` (I9), `Combobox`/`DatePicker`/`Popover`, y todo el bloque de comercio (J1–J6).
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,
@@ -154,7 +161,7 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 | E2 | `NavBar` que se esconde al bajar y vuelve al subir | Estándar | ✔ | `HideOnScroll`
 | E3 | Cabecera con modo «sobre imagen» que cambia de color según la sección | Estudios | ✘ | `data-theme` por sección + observador |
 | E4 | Navegación explorable por arrastre con marcadores | Overworld Audio | ✘ | Ver G8 |
-| E5 | Paleta de comandos ⌘K | SaaS | ✘ | Ver I3 |
+| E5 | Paleta de comandos ⌘K | SaaS | ✔ | `CommandPalette` (ver I3)
 | E6 | Índice lateral / «saltar a sección» | Documentación y editorial | ✔ | `TableOfContents` |
 
 ### F. Cursor e interacción
@@ -205,13 +212,13 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
-| I1 | `AppShell` (sidebar plegable + cabecera + contenido) | Linear, Vercel, Notion | ✘ | Responsive: sidebar → `Drawer` en móvil |
-| I2 | `DataTable` con orden, filtro, selección, paginación | Dashboards | ◐ | `Table` y `Pagination` existen; faltan orden y selección |
-| I3 | `CommandPalette` (⌘K) con búsqueda difusa y atajos | SaaS | ✘ | Base de foco de `Modal`; `NavBar` ya trae `search="command"` (ver pendientes) |
-| I4 | Gráficos reales (líneas, barras, áreas, dona) | Dashboards | ◐ | `AsciiChart` es estético; hace falta `Chart` SVG accesible |
-| I5 | `Combobox`, `DatePicker`, `Avatar`, `Tag`, `Kbd`, `Menu contextual`, `Popover` | Cualquier app | ✘ | Completar el set básico de formularios y overlays |
+| I1 | `AppShell` (sidebar plegable + cabecera + contenido) | Linear, Vercel, Notion | ✔ | `AppShell` (barra lateral plegable; en móvil, panel con botón)
+| I2 | `DataTable` con orden, filtro, selección, paginación | Dashboards | ✔ | `DataTable` (orden con `aria-sort`, búsqueda, selección, paginación)
+| I3 | `CommandPalette` (⌘K) con búsqueda difusa y atajos | SaaS | ✔ | `CommandPalette` (combobox + listbox ARIA, búsqueda sin acentos, Ctrl/⌘ K)
+| I4 | Gráficos reales (líneas, barras, áreas, dona) | Dashboards | ✔ | `Chart` (líneas, áreas, barras en SVG; tabla oculta para lectores) y `KpiCard` con sparkline
+| I5 | `Combobox`, `DatePicker`, `Avatar`, `Tag`, `Kbd`, `Menu contextual`, `Popover` | Cualquier app | ◐ | `Avatar` y `Kbd` hechos; faltan `Combobox`, `DatePicker`, menú contextual y `Popover`
 | I6 | `Kanban` con arrastrar y soltar | Gestores de proyectos | ✘ | Con teclado accesible (mover con flechas) |
-| I7 | `EmptyState`, `ErrorState`, `Skeleton` por pantalla | Pulido | ◐ | `Skeleton` existe |
+| I7 | `EmptyState`, `ErrorState`, `Skeleton` por pantalla | Pulido | ◐ | `EmptyState` hecho; falta `ErrorState` por pantalla
 | I8 | `Onboarding` / tour guiado con resaltado | SaaS | ✘ | Opcional |
 | I9 | Páginas de producto: hero con captura animada, bloques alternos, comparativa, integraciones | Heron AI y similares | ◐ | `DeviceMockup`, `FeatureGrid`; falta `FeatureShowcase` (pestañas con vista previa) |
 

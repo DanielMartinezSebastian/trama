@@ -24,6 +24,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   onda: site(() => import("./onda/Site")),
   "clara-vidal": site(() => import("./clara-vidal/Site")),
   estudio: site(() => import("./estudio/Site")),
+  pulso: site(() => import("./pulso/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

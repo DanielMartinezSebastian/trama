@@ -107,14 +107,14 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` |
 | Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
-| Datos | `StatCounter` · `LocalTime` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` |
+| Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
-| Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
+| Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` |
 | Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
-| Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` |
+| Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |
 
 **Secciones** son bloques compuestos (hero, contacto, precios, FAQ, cifras, testimonios, equipo, marcas, blog, pie)

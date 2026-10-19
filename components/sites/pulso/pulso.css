@@ -1,0 +1,18 @@
+/* Pulso (/sitios/pulso): prefijo pl-. Marco de aplicación a pantalla completa; solo tokens del tema. */
+
+.pl { min-height: 100svh; }
+.pl .ui-app { border: 0; }
+.pl-grid { display: grid; gap: clamp(12px, 1.6vw, 20px); min-width: 0; }
+.pl-kpis { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.pl-two { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 1100px) { .pl-two { grid-template-columns: minmax(0, 1fr); } }
+.pl-card { display: grid; gap: 12px; padding: clamp(14px, 1.8vw, 22px); min-width: 0; }
+.pl-card h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.pl-card p { margin: 0; color: var(--mut); font-size: 13px; }
+.pl-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.pl-page { display: grid; gap: clamp(14px, 2vw, 24px); max-width: 1280px; }
+.pl-lead { margin: 0; color: var(--mut); max-width: 60ch; line-height: 1.5; }
+.pl-name { display: inline-flex; align-items: center; gap: 10px; }
+.pl-name b { font-weight: 600; }
+.pl-name small { display: block; color: var(--mut); font-size: 12px; }
+.pl-user { display: inline-flex; align-items: center; gap: 10px; }

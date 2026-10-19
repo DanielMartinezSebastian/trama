@@ -841,6 +841,49 @@ Código con cabecera, numeración de línea opcional y botón de copiar. Sin res
 | `timeZone` | text | "Europe/Madrid" |
 | `seconds` | boolean | false |
 
+### Tarjeta de indicador (KPI) — `KpiCard`
+
+Etiqueta, cifra, variación con color semántico y mini gráfica. El color nunca es la única señal: la variación lleva signo y flecha.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Ingresos recurrentes" |
+| `value` | text | "71.000 €" |
+| `delta` | text | "+7,6 %" |
+| `trend` | `up` · `down` · `flat` | "up" |
+| `lowerIsBetter` | boolean | false |
+| `note` | text | "vs. mes anterior" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
+
+- lowerIsBetter invierte los colores cuando que baje es bueno (bajas, tiempos de respuesta).
+
+### Gráfico (líneas, áreas, barras) — `Chart`
+
+Gráfico en SVG sin librerías: escala «bonita», animación de trazo, guía con valores al pasar el puntero o con las flechas. Los datos van además en una tabla oculta para lectores de pantalla.
+
+| prop | tipo | default |
+|---|---|---|
+| `kind` | `line` · `area` · `bar` | "area" |
+| `legend` | boolean | true |
+| `unit` | text | " k€" |
+| `height` | number 140–520 | 260 |
+
+- Máximo recomendable: 4 series. Tonos: acc, acc2, fg, mut.
+
+### Tabla de datos interactiva — `DataTable`
+
+Ordena al pulsar la cabecera (aria-sort), busca en todas las columnas, selecciona filas y pagina. Datos como array de objetos; celdas a tu manera con render.
+
+| prop | tipo | default |
+|---|---|---|
+| `searchable` | boolean | true |
+| `selectable` | boolean | true |
+| `pageSize` | number 0–20 | 4 |
+| `striped` | boolean | false |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
+
+- Para datos estáticos en CSV, Table. La búsqueda, el orden y la página se anuncian con aria-live.
+
 ## Navegación (`navegacion`)
 
 Barras, pestañas y acordeones.
@@ -986,6 +1029,19 @@ Envuelve contenido (`children`), p. ej.: `<nav>…tu cabecera…</nav>`
 | `selector` | text | "[data-section]" |
 
 - Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio.
+
+### Marco de aplicación — `AppShell`
+
+Barra lateral con grupos (plegable a iconos), barra superior y contenido con su propio scroll. En pantallas estrechas la barra pasa a panel con botón (Esc y fuera cierran). Los enlaces son <a href> reales con aria-current.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Resumen" |
+| `collapsible` | boolean | true |
+| `height` | text | "440px" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
+
+- height admite 100svh (página entera) o un valor fijo cuando va dentro de otra cosa.
 
 ## Formularios (`formularios`)
 
@@ -1156,6 +1212,40 @@ Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta
 | `kind` | `text` · `card` · `avatar` · `table` | "text" |
 | `lines` | number 1–6 | 3 |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
+
+### Tecla (atajo) — `Kbd`
+
+Una tecla o combinación en un recuadro (<kbd>): atajos en menús, paletas y ayudas.
+
+Envuelve contenido (`children`), p. ej.: `⌘K`
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "⌘K" |
+
+### Avatar — `Avatar`
+
+Imagen o iniciales con punto de estado opcional. El nombre y el estado van como texto accesible.
+
+| prop | tipo | default |
+|---|---|---|
+| `name` | text | "Lucía Ferrer" |
+| `size` | `sm` · `md` · `lg` | "md" |
+| `status` | `none` · `online` · `away` · `busy` · `offline` | "online" |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
+
+### Estado vacío — `EmptyState`
+
+Qué pasa y qué puedes hacer cuando no hay datos, resultados o hay un error. Una sola acción principal.
+
+Envuelve contenido (`children`), p. ej.: `<Button label="Conectar una integración" />`
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Aún no has conectado integraciones" |
+| `text` | text | "Conecta tu pasarela de pago o tu CRM para que importemos los clientes." |
+| `glyph` | text | "◌" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
 
 ## Galerías, vídeo y audio (`galerias`)
 
@@ -1888,6 +1978,19 @@ Asistente flotante en una esquina: responde por reglas (palabras clave → respu
 - onMessage(texto, historial) → texto o { text, quickReplies } (puede ser async): sustituye a las reglas para usar un backend.
 - Flota sobre la ventana (portal a document.body con los tokens copiados): en la vista previa aparece en la esquina de la pantalla, no en el escenario.
 
+### Paleta de comandos (⌘K) — `CommandPalette`
+
+Caja de búsqueda sobre la página con lista filtrada por varias palabras (sin acentos ni mayúsculas), agrupada y navegable con flechas, Intro y Esc. Patrón ARIA combobox + listbox; atrapa el foco y lo devuelve al cerrar.
+
+| prop | tipo | default |
+|---|---|---|
+| `trigger` | boolean | true |
+| `hotkey` | boolean | true |
+| `triggerLabel` | text | "Buscar" |
+| `placeholder` | text | "Escribe un comando o busca…" |
+
+- Se abre con el botón o con Ctrl/⌘ + K. Se pinta en un portal con los tokens del tema.
+
 ## Pixel art (`pixel`)
 
 Iconos SVG que se tiñen con el tema, marcos de 9 cortes y sprites: píxeles hechos a mano, no filtros.
@@ -2056,3 +2159,11 @@ Web de un estudio creativo con los patrones de las webs premiadas: scroll suave,
 Carpeta: `components/sites/estudio/` · 5 páginas: Inicio · Proyectos · Estudio · Laboratorio · Contacto
 
 `SplitText` ×8 · `ProjectList` ×2 · `Parallax` ×2 · `ImageReveal` ×2 · `ObjectStage` ×2 · `Marquee` · `RollLink` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `LocalTime` · `ScrubText` · `HideOnScroll` · `SectionIndex` · `HorizontalScroll` · `StackedCards` · `BentoGrid` · `BigFooter` · `DistortImage` · `DragGrid`
+
+### Pulso · panel de métricas — `/sitios/pulso`
+
+Panel de un SaaS con los patrones de producto: marco de aplicación con barra lateral plegable, paleta de comandos ⌘K, tarjetas de indicadores con mini gráficas, gráficos de líneas, áreas y barras en SVG, y una tabla de datos con búsqueda, orden, selección y paginación.
+
+Carpeta: `components/sites/pulso/` · 4 páginas: Resumen · Clientes · Informes · Ajustes
+
+`KpiCard` ×4 · `Chart` ×4 · `Avatar` ×2 · `DataTable` ×2 · `Button` · `Badge` · `CommandPalette` · `AppShell` · `EmptyState`

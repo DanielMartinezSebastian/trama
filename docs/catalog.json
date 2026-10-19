@@ -109,7 +109,10 @@
         "timeline",
         "table",
         "code-block",
-        "local-time"
+        "local-time",
+        "kpi-card",
+        "chart",
+        "data-table"
       ]
     },
     {
@@ -126,7 +129,8 @@
         "scroll-progress",
         "fullscreen-menu",
         "hide-on-scroll",
-        "section-index"
+        "section-index",
+        "app-shell"
       ]
     },
     {
@@ -153,7 +157,10 @@
         "progress",
         "alert",
         "spinner",
-        "skeleton"
+        "skeleton",
+        "kbd",
+        "avatar",
+        "empty-state"
       ]
     },
     {
@@ -218,7 +225,8 @@
         "toast",
         "tooltip",
         "drawer",
-        "chat-widget"
+        "chat-widget",
+        "command-palette"
       ]
     },
     {
@@ -11016,6 +11024,459 @@
       ],
       "example": "import ObjectStage from \"@/components/ui/ObjectStage\";\n\n<ObjectStage />",
       "preview": "/componentes#object-stage"
+    },
+    {
+      "id": "kbd",
+      "name": "Tecla (atajo)",
+      "component": "Kbd",
+      "import": "import Kbd from \"@/components/ui/Kbd\";",
+      "category": "feedback",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Una tecla o combinación en un recuadro (<kbd>): atajos en menús, paletas y ayudas.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "⌘K",
+          "label": "Texto"
+        }
+      ],
+      "example": "import Kbd from \"@/components/ui/Kbd\";\n\n<Kbd\n  text=\"⌘K\"\n>\n  ⌘K\n</Kbd>",
+      "preview": "/componentes#kbd"
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "component": "Avatar",
+      "import": "import Avatar from \"@/components/ui/Avatar\";",
+      "category": "feedback",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Imagen o iniciales con punto de estado opcional. El nombre y el estado van como texto accesible.",
+      "props": [
+        {
+          "key": "name",
+          "type": "text",
+          "default": "Lucía Ferrer",
+          "label": "Nombre"
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "status",
+          "type": "select",
+          "default": "online",
+          "label": "Estado",
+          "options": [
+            "none",
+            "online",
+            "away",
+            "busy",
+            "offline"
+          ]
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color (token)",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        }
+      ],
+      "example": "import Avatar from \"@/components/ui/Avatar\";\n\n<Avatar />",
+      "preview": "/componentes#avatar"
+    },
+    {
+      "id": "kpi-card",
+      "name": "Tarjeta de indicador (KPI)",
+      "component": "KpiCard",
+      "import": "import KpiCard from \"@/components/ui/KpiCard\";",
+      "category": "datos",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Etiqueta, cifra, variación con color semántico y mini gráfica. El color nunca es la única señal: la variación lleva signo y flecha.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Ingresos recurrentes",
+          "label": "Etiqueta"
+        },
+        {
+          "key": "value",
+          "type": "text",
+          "default": "71.000 €",
+          "label": "Valor"
+        },
+        {
+          "key": "delta",
+          "type": "text",
+          "default": "+7,6 %",
+          "label": "Variación"
+        },
+        {
+          "key": "trend",
+          "type": "select",
+          "default": "up",
+          "label": "Tendencia",
+          "options": [
+            "up",
+            "down",
+            "flat"
+          ]
+        },
+        {
+          "key": "lowerIsBetter",
+          "type": "boolean",
+          "default": false,
+          "label": "Bajar es bueno"
+        },
+        {
+          "key": "note",
+          "type": "text",
+          "default": "vs. mes anterior",
+          "label": "Nota"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "lowerIsBetter invierte los colores cuando que baje es bueno (bajas, tiempos de respuesta)."
+      ],
+      "example": "import KpiCard from \"@/components/ui/KpiCard\";\n\n<KpiCard\n  value=\"71.000 €\"\n  label=\"Ingresos recurrentes\"\n/>",
+      "preview": "/componentes#kpi-card"
+    },
+    {
+      "id": "chart",
+      "name": "Gráfico (líneas, áreas, barras)",
+      "component": "Chart",
+      "import": "import Chart from \"@/components/ui/Chart\";",
+      "category": "datos",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Gráfico en SVG sin librerías: escala «bonita», animación de trazo, guía con valores al pasar el puntero o con las flechas. Los datos van además en una tabla oculta para lectores de pantalla.",
+      "props": [
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "area",
+          "label": "Tipo",
+          "options": [
+            "line",
+            "area",
+            "bar"
+          ]
+        },
+        {
+          "key": "legend",
+          "type": "boolean",
+          "default": true,
+          "label": "Leyenda"
+        },
+        {
+          "key": "unit",
+          "type": "text",
+          "default": " k€",
+          "label": "Unidad"
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 260,
+          "label": "Alto (px)",
+          "min": 140,
+          "max": 520
+        }
+      ],
+      "notes": [
+        "Máximo recomendable: 4 series. Tonos: acc, acc2, fg, mut."
+      ],
+      "example": "import Chart from \"@/components/ui/Chart\";\n\n<Chart />",
+      "preview": "/componentes#chart"
+    },
+    {
+      "id": "data-table",
+      "name": "Tabla de datos interactiva",
+      "component": "DataTable",
+      "import": "import DataTable from \"@/components/ui/DataTable\";",
+      "category": "datos",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Ordena al pulsar la cabecera (aria-sort), busca en todas las columnas, selecciona filas y pagina. Datos como array de objetos; celdas a tu manera con render.",
+      "props": [
+        {
+          "key": "searchable",
+          "type": "boolean",
+          "default": true,
+          "label": "Búsqueda"
+        },
+        {
+          "key": "selectable",
+          "type": "boolean",
+          "default": true,
+          "label": "Selección de filas"
+        },
+        {
+          "key": "pageSize",
+          "type": "number",
+          "default": 4,
+          "label": "Filas por página (0 = todas)",
+          "min": 0,
+          "max": 20
+        },
+        {
+          "key": "striped",
+          "type": "boolean",
+          "default": false,
+          "label": "Filas alternas"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Para datos estáticos en CSV, Table. La búsqueda, el orden y la página se anuncian con aria-live."
+      ],
+      "example": "import DataTable from \"@/components/ui/DataTable\";\n\n<DataTable />",
+      "preview": "/componentes#data-table"
+    },
+    {
+      "id": "command-palette",
+      "name": "Paleta de comandos (⌘K)",
+      "component": "CommandPalette",
+      "import": "import CommandPalette from \"@/components/ui/CommandPalette\";",
+      "category": "overlays",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Caja de búsqueda sobre la página con lista filtrada por varias palabras (sin acentos ni mayúsculas), agrupada y navegable con flechas, Intro y Esc. Patrón ARIA combobox + listbox; atrapa el foco y lo devuelve al cerrar.",
+      "props": [
+        {
+          "key": "trigger",
+          "type": "boolean",
+          "default": true,
+          "label": "Botón visible"
+        },
+        {
+          "key": "hotkey",
+          "type": "boolean",
+          "default": true,
+          "label": "Atajo Ctrl/⌘ K"
+        },
+        {
+          "key": "triggerLabel",
+          "type": "text",
+          "default": "Buscar",
+          "label": "Texto del botón"
+        },
+        {
+          "key": "placeholder",
+          "type": "text",
+          "default": "Escribe un comando o busca…",
+          "label": "Placeholder"
+        }
+      ],
+      "notes": [
+        "Se abre con el botón o con Ctrl/⌘ + K. Se pinta en un portal con los tokens del tema."
+      ],
+      "example": "import CommandPalette from \"@/components/ui/CommandPalette\";\n\n<CommandPalette />",
+      "preview": "/componentes#command-palette"
+    },
+    {
+      "id": "app-shell",
+      "name": "Marco de aplicación",
+      "component": "AppShell",
+      "import": "import AppShell from \"@/components/ui/AppShell\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Barra lateral con grupos (plegable a iconos), barra superior y contenido con su propio scroll. En pantallas estrechas la barra pasa a panel con botón (Esc y fuera cierran). Los enlaces son <a href> reales con aria-current.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Resumen",
+          "label": "Título de la página"
+        },
+        {
+          "key": "collapsible",
+          "type": "boolean",
+          "default": true,
+          "label": "Plegable"
+        },
+        {
+          "key": "height",
+          "type": "text",
+          "default": "440px",
+          "label": "Alto"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "height admite 100svh (página entera) o un valor fijo cuando va dentro de otra cosa."
+      ],
+      "example": "import AppShell from \"@/components/ui/AppShell\";\n\n<AppShell\n  title=\"Resumen\"\n/>",
+      "preview": "/componentes#app-shell"
+    },
+    {
+      "id": "empty-state",
+      "name": "Estado vacío",
+      "component": "EmptyState",
+      "import": "import EmptyState from \"@/components/ui/EmptyState\";",
+      "category": "feedback",
+      "styles": [
+        "editorial",
+        "outline",
+        "solid",
+        "glass",
+        "minimal",
+        "terminal"
+      ],
+      "description": "Qué pasa y qué puedes hacer cuando no hay datos, resultados o hay un error. Una sola acción principal.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Aún no has conectado integraciones",
+          "label": "Título"
+        },
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Conecta tu pasarela de pago o tu CRM para que importemos los clientes.",
+          "label": "Texto"
+        },
+        {
+          "key": "glyph",
+          "type": "text",
+          "default": "◌",
+          "label": "Glifo"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "example": "import EmptyState from \"@/components/ui/EmptyState\";\n\n<EmptyState\n  text=\"Conecta tu pasarela de pago o tu CRM para que importemos los clientes.\"\n  title=\"Aún no has conectado integraciones\"\n>\n  <Button label=\"Conectar una integración\" />\n</EmptyState>",
+      "preview": "/componentes#empty-state"
     }
   ],
   "landings": [
@@ -13160,6 +13621,78 @@
         {
           "component": "DragGrid",
           "id": "drag-grid",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "pulso",
+      "title": "Pulso · panel de métricas",
+      "url": "/sitios/pulso",
+      "dir": "components/sites/pulso",
+      "description": "Panel de un SaaS con los patrones de producto: marco de aplicación con barra lateral plegable, paleta de comandos ⌘K, tarjetas de indicadores con mini gráficas, gráficos de líneas, áreas y barras en SVG, y una tabla de datos con búsqueda, orden, selección y paginación.",
+      "pages": [
+        {
+          "path": "/sitios/pulso",
+          "title": "Resumen"
+        },
+        {
+          "path": "/sitios/pulso/clientes",
+          "title": "Clientes"
+        },
+        {
+          "path": "/sitios/pulso/informes",
+          "title": "Informes"
+        },
+        {
+          "path": "/sitios/pulso/ajustes",
+          "title": "Ajustes"
+        }
+      ],
+      "components": [
+        {
+          "component": "KpiCard",
+          "id": "kpi-card",
+          "uses": 4
+        },
+        {
+          "component": "Chart",
+          "id": "chart",
+          "uses": 4
+        },
+        {
+          "component": "Avatar",
+          "id": "avatar",
+          "uses": 2
+        },
+        {
+          "component": "DataTable",
+          "id": "data-table",
+          "uses": 2
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 1
+        },
+        {
+          "component": "Badge",
+          "id": "badge",
+          "uses": 1
+        },
+        {
+          "component": "CommandPalette",
+          "id": "command-palette",
+          "uses": 1
+        },
+        {
+          "component": "AppShell",
+          "id": "app-shell",
+          "uses": 1
+        },
+        {
+          "component": "EmptyState",
+          "id": "empty-state",
           "uses": 1
         }
       ]
