@@ -1,9 +1,10 @@
 "use client";
 
-import { createElement, useEffect, useRef, type CSSProperties } from "react";
+import { createElement, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
 export type FitTextProps = {
-  children: string;
+  /** texto o varias piezas (p. ej. dos tipografías: `<b>OFFF</b><i>FORUM</i>`); siempre en una sola línea */
+  children: ReactNode;
   /** tope de tamaño en px (por defecto sin tope: ocupa todo el ancho) */
   max?: number;
   min?: number;

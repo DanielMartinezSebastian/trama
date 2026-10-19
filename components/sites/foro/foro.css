@@ -1,0 +1,25 @@
+/* ArcoForo (/sitios/foro): prefijo fr-. Fórmula OFFFForum: wordmark gigante, hero a sangre, ficha de datos. */
+
+.fr { --st-gutter: clamp(14px, 1.2vw, 20px); }
+:where(.fr) a { color: inherit; }
+.fr-top { display: flex; justify-content: flex-end; gap: 22px; padding: 14px var(--st-gutter) 6px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.fr-top a { text-decoration: none; } .fr-top a:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: 4px; }
+.fr-mark { padding: 0 var(--st-gutter); line-height: 0.8; }
+.fr-mark .ui-fit__t { letter-spacing: -0.045em; line-height: 0.82; }
+.fr-w1 { font-family: var(--font-inter-tight), var(--font-inter), sans-serif; font-weight: 900; }
+.fr-w2 { font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; letter-spacing: -0.02em; }
+.fr-meta { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 24px; padding: 16px var(--st-gutter) 24px; align-items: start; }
+.fr-meta .ui-meta { background: transparent; }
+@media (max-width: 720px) { .fr-meta { grid-template-columns: minmax(0, 1fr); } }
+.fr .ui-xfade { color: #fff; }
+.fr .ui-xfade__t { font-family: var(--font-instrument-serif), Georgia, serif; font-size: clamp(28px, 5.2vw, 76px); letter-spacing: -0.01em; }
+
+.fr-sec { padding: clamp(40px, 7vw, 96px) var(--st-gutter); }
+.fr-h2 { margin: 0 0 20px; font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; font-size: clamp(36px, 6vw, 88px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; }
+.fr-days { margin-bottom: 28px; }
+.fr-days .ui-fbar__chip { text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; }
+.fr .ui-plist__t { font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; letter-spacing: -0.01em; text-transform: uppercase; }
+.fr-pill { display: inline-grid; place-items: center; padding: 11px 22px; border: 1px solid var(--fg); border-radius: 99px; text-decoration: none; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.fr-pill:is(:hover, :focus-visible) { background: var(--fg); color: var(--bg); }
+.fr .ui-bigfoot { background: var(--fg); color: var(--bg); }
+.fr .ui-bigfoot .ui-fit__t { font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; }

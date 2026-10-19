@@ -1,0 +1,44 @@
+/* Arbor (/sitios/arbor): prefijo ar-. Fórmula Belgrade Arbor: isla de navegación, marca serif que se dispersa, verde y oro. */
+
+.ar { --st-gutter: clamp(16px, 4vw, 64px); letter-spacing: 0; }
+:where(.ar) a { color: inherit; }
+.ar h1, .ar h2, .ar h3 { font-family: var(--display); font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+.ar-monogram { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--acc); border-radius: 50%; color: var(--acc); font-family: var(--display); font-size: 20px; line-height: 1; }
+.ar .ui-island__pill { background: color-mix(in srgb, var(--bg) 58%, transparent); }
+.ar .ui-island__r a { color: var(--acc); border-color: color-mix(in srgb, var(--acc) 55%, transparent); }
+.ar .ui-island__r a:is(:hover, :focus-visible) { background: var(--acc); color: var(--bg); }
+.ar .ui-fsm { background: var(--bg); }
+.ar .ui-fsm__link { font-family: var(--display); font-weight: 400; letter-spacing: -0.01em; }
+
+/* hero */
+.ar-hero { position: relative; height: 130svh; }
+.ar-hero__stick { position: sticky; top: 0; height: 100svh; overflow: clip; display: grid; align-items: end; }
+.ar-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ar-hero__veil { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--bg) 82%, transparent), transparent 55%), linear-gradient(to bottom, color-mix(in srgb, var(--bg) 40%, transparent), transparent 22%); }
+.ar-hero__mark { position: relative; z-index: 1; padding: 0 var(--st-gutter) clamp(24px, 6vh, 72px); }
+.ar-hero__mark .ui-scatter { font-family: var(--display); font-weight: 400; font-size: clamp(64px, 17vw, 280px); line-height: 0.85; letter-spacing: -0.02em; color: var(--fg); text-transform: uppercase; }
+.ar-hero__sub { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: 16px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg); }
+
+/* secciones */
+.ar-sec { padding: clamp(56px, 10vw, 150px) var(--st-gutter); }
+.ar-lead { max-width: 20ch; font-size: clamp(34px, 6vw, 92px); line-height: 1; }
+.ar-lead em { font-style: italic; color: var(--acc); }
+.ar-p { max-width: 52ch; margin: 28px 0 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.6; color: var(--mut); }
+.ar-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(24px, 6vw, 96px); align-items: start; }
+@media (max-width: 860px) { .ar-row { grid-template-columns: minmax(0, 1fr); } }
+.ar .ui-meta { border-color: var(--ln); }
+.ar .ui-meta dt { font-family: var(--font-geist-mono), ui-monospace, monospace; }
+.ar-panels { padding: 0 var(--st-gutter) clamp(56px, 10vw, 150px); }
+.ar-cta { display: inline-flex; align-items: center; gap: 14px; margin-top: 28px; padding: 12px 22px; border: 1px solid var(--acc); border-radius: 99px; color: var(--acc) !important; text-decoration: none; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+.ar-cta:is(:hover, :focus-visible) { background: var(--acc); color: var(--bg) !important; }
+.ar-homes { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ln); }
+.ar-homes li { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.6fr) auto; gap: 16px; align-items: baseline; padding: clamp(16px, 2.4vw, 30px) 0; border-bottom: 1px solid var(--ln); }
+.ar-homes b { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3vw, 44px); }
+.ar-homes span { color: var(--mut); } .ar-homes em { font-style: normal; color: var(--acc); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) { .ar-homes li { grid-template-columns: minmax(0, 1fr) auto; } .ar-homes li span { display: none; } }
+.ar .ui-edge__a { background: var(--acc); color: var(--bg); border-color: var(--acc); }
+.ar .ui-edge__mark { background: var(--bg); color: var(--acc); }
+.ar .ui-edge__a:is(:hover, :focus-visible) { background: var(--fg); color: var(--bg); }
+.ar-foot { padding: clamp(40px, 7vw, 96px) var(--st-gutter) 24px; border-top: 1px solid var(--ln); }
+.ar-foot .ui-fit__t { font-family: var(--display); font-weight: 400; text-transform: uppercase; color: var(--acc); }
+.ar-foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 20px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); }

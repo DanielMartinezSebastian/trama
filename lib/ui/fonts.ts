@@ -41,7 +41,7 @@ export const majorMonoDisplay = Major_Mono_Display({ subsets: ["latin"], weight:
  * óptico). Serifs de acento para cursivas: Newsreader (lectura) y Bodoni Moda (contraste alto, moda). Mono: Geist Mono.
  * Sin precarga: solo se descargan en las páginas que las usan. Pares recomendados en `FONT_PAIRINGS` (`lib/ui/tokens.ts`).
  */
-import { Bodoni_Moda, Bricolage_Grotesque, Geist, Geist_Mono, Inter_Tight, Instrument_Sans, Newsreader, Schibsted_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Playfair_Display, Bodoni_Moda, Bricolage_Grotesque, Geist, Geist_Mono, Inter_Tight, Instrument_Sans, Newsreader, Schibsted_Grotesk } from "next/font/google";
 
 export const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap", preload: false });
 export const instrumentSans = Instrument_Sans({ subsets: ["latin"], variable: "--font-instrument-sans", display: "swap", preload: false });
@@ -50,6 +50,8 @@ export const schibstedGrotesk = Schibsted_Grotesk({ subsets: ["latin"], variable
 export const bricolageGrotesque = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage-grotesque", display: "swap", preload: false });
 export const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-newsreader", display: "swap", preload: false });
 export const bodoniModa = Bodoni_Moda({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-bodoni-moda", display: "swap", preload: false });
+export const cormorantGaramond = Cormorant_Garamond({ subsets: ["latin"], weight: ["300", "400", "500", "600"], style: ["normal", "italic"], variable: "--font-cormorant-garamond", display: "swap", preload: false });
+export const playfairDisplay = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-playfair-display", display: "swap", preload: false });
 export const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap", preload: false });
 
 /**
@@ -122,7 +124,7 @@ export const rubikBrokenFax = Rubik_Broken_Fax({ weight: "400", subsets: ["latin
 /** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
 export const fontVariables = [
   inter, manrope, spaceGrotesk, syne, fraunces, instrumentSerif, jetbrainsMono, spaceMono,
-  interTight, instrumentSans, geist, schibstedGrotesk, bricolageGrotesque, newsreader, bodoniModa, geistMono,
+  interTight, instrumentSans, geist, schibstedGrotesk, bricolageGrotesque, newsreader, bodoniModa, cormorantGaramond, playfairDisplay, geistMono,
   ibmPlexMono, shareTechMono, majorMonoDisplay,
   pressStart2P, vt323, geistPixel, jersey25, pixelifySans, dotGothic16,
   silkscreen, bitcountSingle, jersey10, doto, tiny5, bitcountPropSingle,

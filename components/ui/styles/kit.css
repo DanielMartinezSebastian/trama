@@ -19,6 +19,7 @@
 @import "./ui-motion.css";
 @import "./ui-product.css";
 @import "./ui-commerce.css";
+@import "./ui-layout.css";
 
 /* Mismos valores que `neutralTokens` en lib/ui/tokens.ts */
 :where(:root) {

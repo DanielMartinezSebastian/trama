@@ -88,6 +88,42 @@ export const editorialDarkTokens: TokenSet = {
 };
 
 /**
+ * Tema «plano técnico» (fórmula de Heron AI): papel hueso con grano, tinta casi negra y un único acento naranja. Pensado para webs
+ * de producto técnico: marcos de línea fina, etiquetas mono en mayúsculas y titulares gruesos y apretados.
+ */
+export const blueprintTokens: TokenSet = {
+  bg: "#f4f2ec",
+  fg: "#232220",
+  mut: "#5f5b53",
+  acc: "#c43500",
+  acc2: "#232220",
+  card: "#ebe8df",
+  ln: "rgba(35,34,32,0.22)",
+  r: 2,
+  font: 'var(--font-inter), ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif',
+  display: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif',
+  accentFont: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+};
+
+/**
+ * Tema «bosque» (fórmula de Belgrade Arbor): verde profundo, crema y oro, con serif elegante en los titulares. Pensado para
+ * arquitectura, inmobiliario, hostelería y marcas de lujo tranquilo.
+ */
+export const forestTokens: TokenSet = {
+  bg: "#25331f",
+  fg: "#efe8d6",
+  mut: "#b9b49c",
+  acc: "#d9b45a",
+  acc2: "#efe8d6",
+  card: "rgba(239,232,214,0.06)",
+  ln: "rgba(239,232,214,0.2)",
+  r: 14,
+  font: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif',
+  display: 'var(--font-cormorant-garamond), var(--font-playfair-display), Georgia, serif',
+  accentFont: 'var(--font-cormorant-garamond), Georgia, serif',
+};
+
+/**
  * Registro de temas del kit. **Añadir un tema = añadir una entrada aquí**: el selector de `/componentes`, el paquete
  * (`trama-ui/tokens`) y la tabla de `docs/README.md` lo recogen solos (la última, con `npm run catalog`). No hay límite:
  * un tema es solo un objeto de tokens (ver «Temas del kit» en la guía, §2.5).
@@ -99,6 +135,8 @@ export const TOKEN_THEMES: KitTheme[] = [
   { id: "neutro", label: "Neutro oscuro", note: "El tema por defecto del kit: azul noche con acento celeste.", variant: "glass", tokens: neutralTokens },
   { id: "dotmatrix", label: "Dot matrix (mono)", note: "Negro puro monocromo para la estética de matriz de puntos.", variant: "dotmatrix", tokens: dotmatrixTokens },
   { id: "editorial", label: "Editorial · papel", note: "Hueso y tinta con acento naranja. Estudios, portfolios, marcas con fotografía.", variant: "editorial", tokens: editorialTokens },
+  { id: "blueprint", label: "Plano técnico", note: "Papel hueso y un acento naranja, mono en etiquetas. Producto técnico, ingeniería, herramientas.", variant: "outline", tokens: blueprintTokens },
+  { id: "bosque", label: "Bosque", note: "Verde profundo, crema y oro con serif elegante. Arquitectura, inmobiliario, hostelería.", variant: "editorial", tokens: forestTokens },
   { id: "editorial-oscuro", label: "Editorial · tinta", note: "Negro cálido con el mismo carácter editorial.", variant: "editorial", tokens: editorialDarkTokens },
 ];
 
@@ -188,6 +226,8 @@ export const FONT_PRESETS: { id: string; label: string; stack: string }[] = [
   { id: "bricolage-grotesque", label: "Editorial — Bricolage Grotesque", stack: 'var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif' },
   { id: "newsreader", label: "Editorial serif — Newsreader", stack: 'var(--font-newsreader), Georgia, serif' },
   { id: "bodoni-moda", label: "Editorial serif — Bodoni Moda", stack: 'var(--font-bodoni-moda), "Didot", Georgia, serif' },
+  { id: "cormorant-garamond", label: "Editorial serif — Cormorant Garamond", stack: 'var(--font-cormorant-garamond), Georgia, serif' },
+  { id: "playfair-display", label: "Editorial serif — Playfair Display", stack: 'var(--font-playfair-display), Georgia, serif' },
   { id: "geist-mono", label: "Editorial mono — Geist Mono", stack: 'var(--font-geist-mono), ui-monospace, Consolas, monospace' },
   // Pixel — las 46 familias de fonts.google.com/?categoryFilters=Appearance:/Theme/Pixel (lib/ui/fonts.ts).
   { id: "press-start-2p", label: "Pixel — Press Start 2P", stack: 'var(--font-press-start-2p), monospace' },
@@ -308,6 +348,24 @@ export const FONT_PAIRINGS: { id: string; label: string; note: string; display: 
     display: 'var(--font-bodoni-moda), "Didot", Georgia, serif',
     body: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif',
     accent: 'var(--font-bodoni-moda), "Didot", Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "arquitectura",
+    label: "Arquitectura",
+    note: "Cormorant Garamond para titulares y Instrument Sans para leer. Estudios de arquitectura, inmobiliario, hostelería.",
+    display: 'var(--font-cormorant-garamond), var(--font-playfair-display), Georgia, serif',
+    body: 'var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-cormorant-garamond), Georgia, serif',
+    mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+  },
+  {
+    id: "tecnico",
+    label: "Técnico",
+    note: "Inter Tight en mayúsculas gruesas y Geist Mono en etiquetas. Producto técnico y planos.",
+    display: 'var(--font-inter-tight), var(--font-inter), ui-sans-serif, sans-serif',
+    body: 'var(--font-inter), ui-sans-serif, system-ui, sans-serif',
+    accent: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
     mono: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
   },
   {

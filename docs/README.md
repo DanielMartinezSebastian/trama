@@ -103,16 +103,16 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
 | Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
-| Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` |
-| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` |
-| Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` |
+| Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` · `ScatterText` |
+| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
+| Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` |
 | Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
-| Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` |
+| Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `EdgeTab` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
-| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
-| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
+| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` · `CartDrawer` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |

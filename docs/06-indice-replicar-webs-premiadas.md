@@ -47,6 +47,10 @@ prueba: no pide datos de pago ni envía nada. Verificado en Chrome: ficha con se
 barra de envío, subtotal), paso a pedido con resumen, y filtro por tipo con contador. Lección: dos clases nuevas
 (`ui-price`, `ui-chart`) chocaban con las del kit; ver la trampa nueva en la guía §10.
 
+**Segunda ronda (19-10-2026):** investigación de cinco webs más y nuevas fórmulas en [`07-formulas-webs-top.md`](./07-formulas-webs-top.md):
+`BlueprintFrame`, `CellGrid`, `IslandNav`, `CrossfadeHero`, `ExpandingPanels`, `ScatterText`, `EdgeTab`, `MetaTable`, `CircleButton`, la
+variante `fill` del `Preloader`, los temas `blueprintTokens` y `forestTokens` y las demos **Plano**, **Foro** y **Arbor**.
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,

@@ -50,7 +50,8 @@
         "divider",
         "split-text",
         "fit-text",
-        "scrub-text"
+        "scrub-text",
+        "scatter-text"
       ]
     },
     {
@@ -65,7 +66,9 @@
         "blog-card",
         "stacked-cards",
         "bento-grid",
-        "product-card"
+        "product-card",
+        "blueprint-frame",
+        "cell-grid"
       ]
     },
     {
@@ -81,7 +84,8 @@
         "scroll-area",
         "roll-link",
         "custom-cursor",
-        "smooth-scroll"
+        "smooth-scroll",
+        "circle-button"
       ]
     },
     {
@@ -113,7 +117,8 @@
         "local-time",
         "kpi-card",
         "chart",
-        "data-table"
+        "data-table",
+        "meta-table"
       ]
     },
     {
@@ -132,7 +137,9 @@
         "hide-on-scroll",
         "section-index",
         "app-shell",
-        "filter-bar"
+        "filter-bar",
+        "island-nav",
+        "edge-tab"
       ]
     },
     {
@@ -186,7 +193,8 @@
         "distort-image",
         "drag-grid",
         "object-stage",
-        "product-gallery"
+        "product-gallery",
+        "expanding-panels"
       ]
     },
     {
@@ -207,7 +215,8 @@
         "logo-cloud",
         "articles-section",
         "project-list",
-        "big-footer"
+        "big-footer",
+        "crossfade-hero"
       ]
     },
     {
@@ -10261,7 +10270,8 @@
           "options": [
             "counter",
             "words",
-            "bar"
+            "bar",
+            "fill"
           ]
         },
         {
@@ -11766,6 +11776,390 @@
       ],
       "example": "import CartDrawer from \"@/components/ui/CartDrawer\";\n\n<CartDrawer />",
       "preview": "/componentes#cart-drawer"
+    },
+    {
+      "id": "blueprint-frame",
+      "name": "Marco de plano técnico",
+      "component": "BlueprintFrame",
+      "import": "import BlueprintFrame from \"@/components/ui/BlueprintFrame\";",
+      "category": "tarjetas",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Borde de línea fina con regla de marcas milimétricas y cruces «+» de registro en las esquinas: la piel de las webs de producto técnico (fórmula Heron AI). Decorativo, sin JS.",
+      "props": [
+        {
+          "key": "ticks",
+          "type": "boolean",
+          "default": true,
+          "label": "Regla de marcas"
+        },
+        {
+          "key": "marks",
+          "type": "boolean",
+          "default": true,
+          "label": "Cruces de esquina"
+        },
+        {
+          "key": "inset",
+          "type": "number",
+          "default": 6,
+          "label": "Separación (px)",
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "padding",
+          "type": "number",
+          "default": 32,
+          "label": "Relleno (px)",
+          "min": 0,
+          "max": 80
+        }
+      ],
+      "example": "import BlueprintFrame from \"@/components/ui/BlueprintFrame\";\n\n<BlueprintFrame>\n  <h2>Contenido del plano</h2>\n</BlueprintFrame>",
+      "preview": "/componentes#blueprint-frame"
+    },
+    {
+      "id": "cell-grid",
+      "name": "Rejilla de celdas con divisores",
+      "component": "CellGrid",
+      "import": "import CellGrid from \"@/components/ui/CellGrid\";",
+      "category": "tarjetas",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Celdas separadas por divisores de línea fina, continuos o discontinuos, sin tarjetas ni sombras. Los divisores se dibujan con el hueco de la rejilla: sin dobles bordes con cualquier número de celdas.",
+      "props": [
+        {
+          "key": "columns",
+          "type": "select",
+          "default": "4",
+          "label": "Columnas",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "key": "line",
+          "type": "select",
+          "default": "solid",
+          "label": "Divisor",
+          "options": [
+            "solid",
+            "dashed"
+          ]
+        },
+        {
+          "key": "padding",
+          "type": "number",
+          "default": 24,
+          "label": "Relleno (px)",
+          "min": 8,
+          "max": 60
+        }
+      ],
+      "example": "import CellGrid from \"@/components/ui/CellGrid\";\n\n<CellGrid>\n  <div>Celda 1</div>\n  <div>Celda 2</div>\n</CellGrid>",
+      "preview": "/componentes#cell-grid"
+    },
+    {
+      "id": "island-nav",
+      "name": "Navegación «isla»",
+      "component": "IslandNav",
+      "import": "import IslandNav from \"@/components/ui/IslandNav\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla.",
+      "props": [
+        {
+          "key": "hideOnScroll",
+          "type": "boolean",
+          "default": false,
+          "label": "Esconder al bajar"
+        }
+      ],
+      "notes": [
+        "Es position: fixed; aquí va contenida en el recuadro de puntos. En una web real cuelga de la ventana."
+      ],
+      "example": "import IslandNav from \"@/components/ui/IslandNav\";\n\n<IslandNav />",
+      "preview": "/componentes#island-nav"
+    },
+    {
+      "id": "crossfade-hero",
+      "name": "Hero con fundido de fotografías",
+      "component": "CrossfadeHero",
+      "import": "import CrossfadeHero from \"@/components/ui/CrossfadeHero\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Hero a sangre con fotografías que se funden, titular centrado y botón-píldora (fórmula OFFFForum). Accesible: botón de pausa visible (WCAG 2.2.2), se detiene al pasar el puntero o enfocar, con la pestaña oculta y con movimiento reducido.",
+      "props": [
+        {
+          "key": "kicker",
+          "type": "text",
+          "default": "Montreal · septiembre 2027",
+          "label": "Línea superior"
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Una semana de diseño, arte y cultura digital",
+          "label": "Titular"
+        },
+        {
+          "key": "interval",
+          "type": "number",
+          "default": 5,
+          "label": "Segundos entre imágenes",
+          "min": 2,
+          "max": 12
+        },
+        {
+          "key": "shade",
+          "type": "number",
+          "default": 0.38,
+          "label": "Velo (0–1)",
+          "min": 0,
+          "max": 0.9
+        },
+        {
+          "key": "drift",
+          "type": "boolean",
+          "default": true,
+          "label": "Zoom lento"
+        }
+      ],
+      "example": "import CrossfadeHero from \"@/components/ui/CrossfadeHero\";\n\n<CrossfadeHero\n  title=\"Una semana de diseño, arte y cultura digital\"\n/>",
+      "preview": "/componentes#crossfade-hero"
+    },
+    {
+      "id": "expanding-panels",
+      "name": "Paneles que se expanden",
+      "component": "ExpandingPanels",
+      "import": "import ExpandingPanels from \"@/components/ui/ExpandingPanels\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con teclado una se expande y las demás se estrechan (fórmula LPAS). Cada panel es un enlace real; en estrechas se apilan en filas.",
+      "props": [
+        {
+          "key": "height",
+          "type": "text",
+          "default": "320px",
+          "label": "Alto (CSS)"
+        },
+        {
+          "key": "grow",
+          "type": "number",
+          "default": 4,
+          "label": "Crecimiento del activo",
+          "min": 1.5,
+          "max": 8
+        }
+      ],
+      "example": "import ExpandingPanels from \"@/components/ui/ExpandingPanels\";\n\n<ExpandingPanels />",
+      "preview": "/componentes#expanding-panels"
+    },
+    {
+      "id": "scatter-text",
+      "name": "Texto que se dispersa con el scroll",
+      "component": "ScatterText",
+      "import": "import ScatterText from \"@/components/ui/ScatterText\";",
+      "category": "texto",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Letras que se separan y se desvanecen al hacer scroll: la marca gigante de un hero que se disuelve (fórmula Belgrade Arbor). `scope` toma el progreso de la sección contenedora cuando el titular está en un contenedor sticky.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "ARBOR",
+          "label": "Texto"
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "exit",
+          "label": "Modo",
+          "options": [
+            "exit",
+            "enter"
+          ]
+        },
+        {
+          "key": "spread",
+          "type": "number",
+          "default": 220,
+          "label": "Separación (px)",
+          "min": 40,
+          "max": 600
+        },
+        {
+          "key": "lift",
+          "type": "number",
+          "default": 40,
+          "label": "Elevación (px)",
+          "min": 0,
+          "max": 200
+        }
+      ],
+      "notes": [
+        "Depende del scroll de la página; con prefers-reduced-motion se ve entero y quieto."
+      ],
+      "example": "import ScatterText from \"@/components/ui/ScatterText\";\n\n<ScatterText\n  text=\"ARBOR\"\n/>",
+      "preview": "/componentes#scatter-text"
+    },
+    {
+      "id": "edge-tab",
+      "name": "Pestaña de borde",
+      "component": "EdgeTab",
+      "import": "import EdgeTab from \"@/components/ui/EdgeTab\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Pestaña fija pegada al borde de la ventana con el texto en vertical: una llamada a la acción siempre a mano que no ocupa la cabecera. Enlace o botón real con foco visible.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Agenda tu visita",
+          "label": "Texto"
+        },
+        {
+          "key": "side",
+          "type": "select",
+          "default": "right",
+          "label": "Lado",
+          "options": [
+            "right",
+            "left"
+          ]
+        },
+        {
+          "key": "mark",
+          "type": "text",
+          "default": "A.",
+          "label": "Marca"
+        },
+        {
+          "key": "top",
+          "type": "text",
+          "default": "50%",
+          "label": "Posición vertical"
+        }
+      ],
+      "notes": [
+        "Es position: fixed; aquí va contenida en el recuadro de puntos."
+      ],
+      "example": "import EdgeTab from \"@/components/ui/EdgeTab\";\n\n<EdgeTab\n  label=\"Agenda tu visita\"\n/>",
+      "preview": "/componentes#edge-tab"
+    },
+    {
+      "id": "meta-table",
+      "name": "Ficha de datos (clave-valor)",
+      "component": "MetaTable",
+      "import": "import MetaTable from \"@/components/ui/MetaTable\";",
+      "category": "datos",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Datos clave-valor en una caja de línea fina (fechas, lugar, superficie, plazo). Es una lista de definiciones (<dl>): los lectores de pantalla leen cada pareja. Sin JS.",
+      "props": [
+        {
+          "key": "columns",
+          "type": "select",
+          "default": "1",
+          "label": "Columnas",
+          "options": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "key": "mono",
+          "type": "boolean",
+          "default": true,
+          "label": "Claves en mono"
+        }
+      ],
+      "example": "import MetaTable from \"@/components/ui/MetaTable\";\n\n<MetaTable />",
+      "preview": "/componentes#meta-table"
+    },
+    {
+      "id": "circle-button",
+      "name": "Botón circular (también dentro de un titular)",
+      "component": "CircleButton",
+      "import": "import CircleButton from \"@/components/ui/CircleButton\";",
+      "category": "interaccion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Botón de icono circular. Con inline mide lo mismo que la letra y se coloca dentro de un titular («…interior design studio ⊙»). Enlace o botón real, con foco visible y nombre accesible.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Ver más",
+          "label": "Nombre accesible"
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "inline",
+          "type": "boolean",
+          "default": false,
+          "label": "Dentro de un titular"
+        },
+        {
+          "key": "look",
+          "type": "select",
+          "default": "outline",
+          "label": "Aspecto",
+          "options": [
+            "outline",
+            "solid"
+          ]
+        }
+      ],
+      "example": "import CircleButton from \"@/components/ui/CircleButton\";\n\n<CircleButton\n  label=\"Ver más\"\n/>",
+      "preview": "/componentes#circle-button"
     }
   ],
   "landings": [
@@ -14102,6 +14496,193 @@
         {
           "component": "CartDrawer",
           "id": "cart-drawer",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "plano",
+      "title": "Plano · revisión de modelos de edificación",
+      "url": "/sitios/plano",
+      "dir": "components/sites/plano",
+      "description": "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos y un único acento naranja. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable y el tema blueprintTokens.",
+      "pages": [
+        {
+          "path": "/sitios/plano",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/plano/producto",
+          "title": "Producto"
+        }
+      ],
+      "components": [
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 4
+        },
+        {
+          "component": "CellGrid",
+          "id": "cell-grid",
+          "uses": 3
+        },
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "BlueprintFrame",
+          "id": "blueprint-frame",
+          "uses": 1
+        },
+        {
+          "component": "EdgeTab",
+          "id": "edge-tab",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "foro",
+      "title": "ArcoForo · una semana de diseño, arte y cultura digital",
+      "url": "/sitios/foro",
+      "dir": "components/sites/foro",
+      "description": "Web de un festival con la fórmula «evento»: preloader con la marca que se rellena, wordmark de borde a borde en dos tipografías, hero a sangre con fotografías que se funden (con botón de pausa), ficha de datos en caja de línea fina, programa con filtros por día y pie con la marca gigante. Usa Preloader (fill), FitText, CrossfadeHero, MetaTable, FilterBar y ProjectList.",
+      "pages": [
+        {
+          "path": "/sitios/foro",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/foro/programa",
+          "title": "Programa"
+        }
+      ],
+      "components": [
+        {
+          "component": "ProjectList",
+          "id": "project-list",
+          "uses": 2
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
+        },
+        {
+          "component": "CustomCursor",
+          "id": "custom-cursor",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "FilterBar",
+          "id": "filter-bar",
+          "uses": 1
+        },
+        {
+          "component": "CrossfadeHero",
+          "id": "crossfade-hero",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "arbor",
+      "title": "Arbor · residencias entre árboles",
+      "url": "/sitios/arbor",
+      "dir": "components/sites/arbor",
+      "description": "Web de un complejo residencial con la fórmula «arquitectura de lujo tranquilo»: navegación en forma de isla (píldora de vidrio) con el menú a pantalla completa debajo, hero a sangre con la marca en serif que se dispersa al hacer scroll, paneles verticales que se expanden, ficha de datos, botón circular dentro del titular y pestaña lateral de visita. Usa IslandNav, ScatterText, ExpandingPanels, MetaTable, CircleButton, EdgeTab y el tema forestTokens.",
+      "pages": [
+        {
+          "path": "/sitios/arbor",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/arbor/residencias",
+          "title": "Residencias"
+        }
+      ],
+      "components": [
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 2
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "FullscreenMenu",
+          "id": "fullscreen-menu",
+          "uses": 1
+        },
+        {
+          "component": "IslandNav",
+          "id": "island-nav",
+          "uses": 1
+        },
+        {
+          "component": "ExpandingPanels",
+          "id": "expanding-panels",
+          "uses": 1
+        },
+        {
+          "component": "ScatterText",
+          "id": "scatter-text",
+          "uses": 1
+        },
+        {
+          "component": "EdgeTab",
+          "id": "edge-tab",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 1
+        },
+        {
+          "component": "CircleButton",
+          "id": "circle-button",
           "uses": 1
         }
       ]

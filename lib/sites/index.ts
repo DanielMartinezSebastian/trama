@@ -10,6 +10,9 @@ import * as clara from "@/components/sites/clara-vidal/data";
 import * as estudio from "@/components/sites/estudio/data";
 import * as pulso from "@/components/sites/pulso/data";
 import * as barro from "@/components/sites/barro/data";
+import * as plano from "@/components/sites/plano/data";
+import * as foro from "@/components/sites/foro/data";
+import * as arbor from "@/components/sites/arbor/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -23,6 +26,9 @@ export const sites: SiteMeta[] = [
   { ...estudio.meta, routes: estudio.ROUTES, dir: "components/sites/estudio" },
   { ...pulso.meta, routes: pulso.ROUTES, dir: "components/sites/pulso" },
   { ...barro.meta, routes: barro.ROUTES, dir: "components/sites/barro" },
+  { ...plano.meta, routes: plano.ROUTES, dir: "components/sites/plano" },
+  { ...foro.meta, routes: foro.ROUTES, dir: "components/sites/foro" },
+  { ...arbor.meta, routes: arbor.ROUTES, dir: "components/sites/arbor" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

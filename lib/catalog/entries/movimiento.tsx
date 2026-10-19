@@ -160,7 +160,7 @@ export const movimiento: CatalogEntry[] = [
     replayable: true,
     notes: ["Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always."],
     props: [
-      { key: "variant", label: "Variante", type: "select", default: "counter", options: ["counter", "words", "bar"] },
+      { key: "variant", label: "Variante", type: "select", default: "counter", options: ["counter", "words", "bar", "fill"], labels: { counter: "contador", words: "palabras", bar: "barra", fill: "la marca se rellena" } },
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
       { key: "meta", label: "Texto lateral", type: "text", default: "Madrid — 2026" },
       { key: "duration", label: "Duración (s)", type: "number", default: 2, min: 0.5, max: 5, step: 0.1 },

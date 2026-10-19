@@ -301,6 +301,19 @@ Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálc
 
 - Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.
 
+### Texto que se dispersa con el scroll — `ScatterText`
+
+Letras que se separan y se desvanecen al hacer scroll: la marca gigante de un hero que se disuelve (fórmula Belgrade Arbor). `scope` toma el progreso de la sección contenedora cuando el titular está en un contenedor sticky.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "ARBOR" |
+| `mode` | `exit` · `enter` | "exit" |
+| `spread` | number 40–600 | 220 |
+| `lift` | number 0–200 | 40 |
+
+- Depende del scroll de la página; con prefers-reduced-motion se ve entero y quieto.
+
 ## Tarjetas (`tarjetas`)
 
 Superficies de contenido con capas ASCII.
@@ -474,6 +487,31 @@ Imagen con segunda imagen al pasar el puntero, etiqueta, título, material y pre
 | `soldOut` | boolean | false |
 | `ratio` | text | "4 / 5" |
 
+### Marco de plano técnico — `BlueprintFrame`
+
+Borde de línea fina con regla de marcas milimétricas y cruces «+» de registro en las esquinas: la piel de las webs de producto técnico (fórmula Heron AI). Decorativo, sin JS.
+
+Envuelve contenido (`children`), p. ej.: `<h2>Contenido del plano</h2>`
+
+| prop | tipo | default |
+|---|---|---|
+| `ticks` | boolean | true |
+| `marks` | boolean | true |
+| `inset` | number 0–40 | 6 |
+| `padding` | number 0–80 | 32 |
+
+### Rejilla de celdas con divisores — `CellGrid`
+
+Celdas separadas por divisores de línea fina, continuos o discontinuos, sin tarjetas ni sombras. Los divisores se dibujan con el hueco de la rejilla: sin dobles bordes con cualquier número de celdas.
+
+Envuelve contenido (`children`), p. ej.: `<div>Celda 1</div> <div>Celda 2</div>`
+
+| prop | tipo | default |
+|---|---|---|
+| `columns` | `1` · `2` · `3` · `4` · `5` | "4" |
+| `line` | `solid` · `dashed` | "solid" |
+| `padding` | number 8–60 | 24 |
+
 ## Interacción (`interaccion`)
 
 Respuestas al puntero.
@@ -615,6 +653,17 @@ Scroll con inercia de toda la página, sincronizado con ScrollTrigger. No pinta 
 - Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.
 - No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio.
 
+### Botón circular (también dentro de un titular) — `CircleButton`
+
+Botón de icono circular. Con inline mide lo mismo que la letra y se coloca dentro de un titular («…interior design studio ⊙»). Enlace o botón real, con foco visible y nombre accesible.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Ver más" |
+| `size` | `sm` · `md` · `lg` | "md" |
+| `inline` | boolean | false |
+| `look` | `outline` · `solid` | "outline" |
+
 ## Transiciones (`transiciones`)
 
 Cambios de escena y de sección.
@@ -728,7 +777,7 @@ Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta 
 
 | prop | tipo | default |
 |---|---|---|
-| `variant` | `counter` · `words` · `bar` | "counter" |
+| `variant` | `counter` · `words` · `bar` · `fill` | "counter" |
 | `brand` | text | "Estudio" |
 | `meta` | text | "Madrid — 2026" |
 | `duration` | number 0.5–5 | 2 |
@@ -898,6 +947,15 @@ Ordena al pulsar la cabecera (aria-sort), busca en todas las columnas, seleccion
 
 - Para datos estáticos en CSV, Table. La búsqueda, el orden y la página se anuncian con aria-live.
 
+### Ficha de datos (clave-valor) — `MetaTable`
+
+Datos clave-valor en una caja de línea fina (fechas, lugar, superficie, plazo). Es una lista de definiciones (<dl>): los lectores de pantalla leen cada pareja. Sin JS.
+
+| prop | tipo | default |
+|---|---|---|
+| `columns` | `1` · `2` | "1" |
+| `mono` | boolean | true |
+
 ## Navegación (`navegacion`)
 
 Barras, pestañas y acordeones.
@@ -1064,6 +1122,29 @@ Grupos de chips (aria-pressed) con contador, selector de orden, número de resul
 | prop | tipo | default |
 |---|---|---|
 | `total` | boolean | true |
+
+### Navegación «isla» — `IslandNav`
+
+Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla.
+
+| prop | tipo | default |
+|---|---|---|
+| `hideOnScroll` | boolean | false |
+
+- Es position: fixed; aquí va contenida en el recuadro de puntos. En una web real cuelga de la ventana.
+
+### Pestaña de borde — `EdgeTab`
+
+Pestaña fija pegada al borde de la ventana con el texto en vertical: una llamada a la acción siempre a mano que no ocupa la cabecera. Enlace o botón real con foco visible.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Agenda tu visita" |
+| `side` | `right` · `left` | "right" |
+| `mark` | text | "A." |
+| `top` | text | "50%" |
+
+- Es position: fixed; aquí va contenida en el recuadro de puntos.
 
 ## Formularios (`formularios`)
 
@@ -1649,6 +1730,15 @@ Imagen principal con zoom que sigue al puntero y miniaturas que son botones real
 | `zoom` | number 1–3 | 1.8 |
 | `ratio` | text | "4 / 5" |
 
+### Paneles que se expanden — `ExpandingPanels`
+
+Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con teclado una se expande y las demás se estrechan (fórmula LPAS). Cada panel es un enlace real; en estrechas se apilan en filas.
+
+| prop | tipo | default |
+|---|---|---|
+| `height` | text | "320px" |
+| `grow` | number 1.5–8 | 4 |
+
 ## Secciones (`secciones`)
 
 Bloques compuestos, listos para pegar en una landing: hero, contacto, precios, FAQ…
@@ -1851,6 +1941,18 @@ Correo grande, enlaces que ruedan y un titular que llena el ancho, con los color
 | `note` | text | "© 2026 Estudio" |
 | `credit` | text | "Hecho con Trama" |
 | `city` | text | "Madrid" |
+
+### Hero con fundido de fotografías — `CrossfadeHero`
+
+Hero a sangre con fotografías que se funden, titular centrado y botón-píldora (fórmula OFFFForum). Accesible: botón de pausa visible (WCAG 2.2.2), se detiene al pasar el puntero o enfocar, con la pestaña oculta y con movimiento reducido.
+
+| prop | tipo | default |
+|---|---|---|
+| `kicker` | text | "Montreal · septiembre 2027" |
+| `title` | text | "Una semana de diseño, arte y cultura digital" |
+| `interval` | number 2–12 | 5 |
+| `shade` | number 0–0.9 | 0.38 |
+| `drift` | boolean | true |
 
 ## Contenido (`contenido`)
 
@@ -2247,3 +2349,27 @@ Tienda de cerámica con el flujo completo de comercio: listado con filtros y ord
 Carpeta: `components/sites/barro/` · 11 páginas: Inicio · Tienda · Jarrón Ola · Cuenco Brisa · Taza Alba · Plato Marea · Jarra Nube · Jarrón Sal · Cuenco Arena · Taza Duna · Pedido
 
 `TextField` ×4 · `RollLink` ×2 · `EmptyState` ×2 · `OptionPicker` ×2 · `RadioGroup` · `Stepper` · `SplitText` · `PriceTag` · `QuantityStepper` · `ProductCard` · `ProductGallery` · `FilterBar` · `CartDrawer`
+
+### Plano · revisión de modelos de edificación — `/sitios/plano`
+
+Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos y un único acento naranja. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable y el tema blueprintTokens.
+
+Carpeta: `components/sites/plano/` · 2 páginas: Inicio · Producto
+
+`SplitText` ×4 · `CellGrid` ×3 · `RollLink` · `SmoothScroll` · `BlueprintFrame` · `EdgeTab` · `MetaTable`
+
+### ArcoForo · una semana de diseño, arte y cultura digital — `/sitios/foro`
+
+Web de un festival con la fórmula «evento»: preloader con la marca que se rellena, wordmark de borde a borde en dos tipografías, hero a sangre con fotografías que se funden (con botón de pausa), ficha de datos en caja de línea fina, programa con filtros por día y pie con la marca gigante. Usa Preloader (fill), FitText, CrossfadeHero, MetaTable, FilterBar y ProjectList.
+
+Carpeta: `components/sites/foro/` · 2 páginas: Inicio · Programa
+
+`ProjectList` ×2 · `FitText` · `CustomCursor` · `SmoothScroll` · `Preloader` · `BigFooter` · `FilterBar` · `CrossfadeHero` · `MetaTable`
+
+### Arbor · residencias entre árboles — `/sitios/arbor`
+
+Web de un complejo residencial con la fórmula «arquitectura de lujo tranquilo»: navegación en forma de isla (píldora de vidrio) con el menú a pantalla completa debajo, hero a sangre con la marca en serif que se dispersa al hacer scroll, paneles verticales que se expanden, ficha de datos, botón circular dentro del titular y pestaña lateral de visita. Usa IslandNav, ScatterText, ExpandingPanels, MetaTable, CircleButton, EdgeTab y el tema forestTokens.
+
+Carpeta: `components/sites/arbor/` · 2 páginas: Inicio · Residencias
+
+`SplitText` ×2 · `FitText` · `SmoothScroll` · `FullscreenMenu` · `IslandNav` · `ExpandingPanels` · `ScatterText` · `EdgeTab` · `MetaTable` · `CircleButton`

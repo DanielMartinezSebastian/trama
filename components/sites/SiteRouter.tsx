@@ -26,6 +26,9 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   estudio: site(() => import("./estudio/Site")),
   pulso: site(() => import("./pulso/Site")),
   barro: site(() => import("./barro/Site")),
+  plano: site(() => import("./plano/Site")),
+  foro: site(() => import("./foro/Site")),
+  arbor: site(() => import("./arbor/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

@@ -191,3 +191,43 @@ export function potteryArt(seed: number, kind: PotteryKind, glaze = "#b5532f") {
   else d += `<path d="M300 380 Q280 560 300 790 L500 790 Q530 580 500 380 Z" fill="${glaze}"/><path d="M300 400 Q230 390 210 340 Q290 350 310 380 Z" fill="${glaze}"/><path d="M500 440 Q620 440 620 560 Q620 670 505 670" stroke="${glaze}" stroke-width="30" fill="none"/><ellipse cx="400" cy="380" rx="100" ry="16" fill="#00000030"/>`;
   return uri(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">${d}</svg>`);
 }
+
+/* ---------- Arquitectura y ambiente: plano de línea, fachada orgánica y composiciones con grano (webs «Plano», «Foro» y «Arbor») ---------- */
+const GRAIN = `<filter id="gr" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter>`;
+
+/** Dibujo de línea de un edificio de hormigón sobre papel, con árboles y un círculo de acento. 1200×700. */
+export function blueprintArt(seed = 0, accent = "#f04a00") {
+  const ink = "#232220";
+  const wins = Array.from({ length: 4 }, (_, r) => Array.from({ length: 6 }, (_, c) => `<rect x="${330 + c * 90}" y="${190 + r * 70}" width="62" height="46" fill="none" stroke="${ink}" stroke-width="1.6"/><line x1="${330 + c * 90}" y1="${213 + r * 70}" x2="${392 + c * 90}" y2="${213 + r * 70}" stroke="${ink}" stroke-width="1"/>`).join("")).join("");
+  const tree = (x: number, h: number) => `<line x1="${x}" y1="640" x2="${x}" y2="${640 - h}" stroke="${ink}" stroke-width="2"/>` + Array.from({ length: 11 }, (_, i) => { const a = (i / 11) * Math.PI * 2 + rnd(seed, i); const l = 40 + rnd(seed, i + 9) * 60; return `<line x1="${x}" y1="${640 - h * 0.7}" x2="${(x + Math.cos(a) * l).toFixed(0)}" y2="${(640 - h * 0.7 - Math.abs(Math.sin(a)) * l).toFixed(0)}" stroke="${ink}" stroke-width="1.3"/>`; }).join("");
+  return uri(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">${GRAIN}` +
+      `<circle cx="${700 + seed * 12}" cy="250" r="120" fill="${accent}"/>` +
+      `<rect x="290" y="150" width="590" height="330" fill="#f4f2ec" stroke="${ink}" stroke-width="3"/>${wins}` +
+      `<rect x="250" y="480" width="670" height="64" fill="#f4f2ec" stroke="${ink}" stroke-width="3"/><rect x="180" y="544" width="830" height="96" fill="#f4f2ec" stroke="${ink}" stroke-width="3"/>` +
+      Array.from({ length: 9 }, (_, i) => `<line x1="${180 + i * 104}" y1="544" x2="${180 + i * 104}" y2="640" stroke="${ink}" stroke-width="1.4"/>`).join("") +
+      `<line x1="80" y1="640" x2="1120" y2="640" stroke="${ink}" stroke-width="3"/>${tree(150, 200)}${tree(1060, 170)}` +
+      `</svg>`,
+  );
+}
+
+/** Fachada con trama orgánica de líneas blancas sobre un cielo de atardecer. 1600×1000. */
+export function facadeArt(seed = 0, sky: [string, string] = ["#2b4a63", "#d79a6a"], wall = "#e8dcc4") {
+  const veins = Array.from({ length: 14 }, (_, i) => { const x = 160 + i * 100 + rnd(seed, i) * 30; const y = 330 + (i % 2) * 40; return `<path d="M${x} ${y} C ${x + 60} ${y + 90}, ${x - 40} ${y + 200}, ${x + 30} ${y + 330}" stroke="${wall}" stroke-width="${10 + rnd(seed, i + 5) * 12}" fill="none" stroke-linecap="round"/>`; }).join("");
+  const win = Array.from({ length: 4 }, (_, r) => Array.from({ length: 14 }, (_, c) => `<rect x="${150 + c * 100}" y="${340 + r * 85}" width="66" height="58" rx="6" fill="#1d2a2f" opacity="${0.55 + rnd(seed, r * 14 + c) * 0.35}"/>`).join("")).join("");
+  const trees = Array.from({ length: 7 }, (_, i) => `<circle cx="${80 + i * 245 + rnd(seed, i + 30) * 60}" cy="${790 + rnd(seed, i + 40) * 30}" r="${90 + rnd(seed, i + 50) * 60}" fill="#1b2a1c"/>`).join("");
+  return uri(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">${GRAIN}<defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset="1" stop-color="${sky[1]}"/></linearGradient></defs>` +
+      `<rect width="1600" height="1000" fill="url(#s)"/><path d="M90 300 Q800 190 1510 300 L1510 780 L90 780 Z" fill="#6a5a48"/><path d="M90 300 Q800 190 1510 300" stroke="${wall}" stroke-width="14" fill="none"/>` +
+      `${win}${veins}<rect x="600" y="380" width="400" height="400" rx="30" fill="#8b5b3a" opacity=".8"/>${trees}<rect y="800" width="1600" height="200" fill="#16210f" opacity=".7"/><rect width="1600" height="1000" filter="url(#gr)" opacity=".2"/></svg>`,
+  );
+}
+
+/** Composición «fotográfica» abstracta: manchas de color desenfocadas con grano y viñeta. 1600×1000. */
+export function moodArt(seed: number, a = "#3b3a5a", b = "#e0885e", c = "#f3d9a4") {
+  const blob = (col: string, i: number, big: number) => `<circle cx="${(300 + rnd(seed, i) * 1000).toFixed(0)}" cy="${(250 + rnd(seed, i + 7) * 500).toFixed(0)}" r="${(big * (0.7 + rnd(seed, i + 3) * 0.6)).toFixed(0)}" fill="${col}"/>`;
+  return uri(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">${GRAIN}<filter id="bl"><feGaussianBlur stdDeviation="90"/></filter><radialGradient id="vg" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>` +
+      `<rect width="1600" height="1000" fill="${a}"/><g filter="url(#bl)">${blob(b, 1, 380)}${blob(c, 2, 260)}${blob(b, 3, 300)}${blob(a, 4, 320)}</g><rect width="1600" height="1000" fill="url(#vg)"/><rect width="1600" height="1000" filter="url(#gr)" opacity=".22"/></svg>`,
+  );
+}

@@ -5,8 +5,8 @@ import { finishIntro } from "@/lib/motion/intro";
 import { lockScroll } from "@/lib/motion/lenis";
 
 export type PreloaderProps = {
-  /** counter = contador 0–100 · words = palabras que se suceden · bar = solo barra y marca */
-  variant?: "counter" | "words" | "bar";
+  /** counter = contador 0–100 · words = palabras que se suceden · bar = solo barra y marca · fill = la marca, gigante y en contorno, se rellena con el progreso */
+  variant?: "counter" | "words" | "bar" | "fill";
   /** marca (esquina superior izquierda) */
   brand?: string;
   /** texto de la esquina superior derecha (p. ej. ciudad o año) */
@@ -157,7 +157,9 @@ export default function Preloader({
           <span>{meta}</span>
         </div>
         <div className="ui-pre__mid" aria-hidden>
-          {variant === "bar" ? null : variant === "words" ? (
+          {variant === "bar" ? null : variant === "fill" ? (
+            <span className="ui-pre__fill" data-text={brand}>{brand}</span>
+          ) : variant === "words" ? (
             <span className="ui-pre__word" ref={num}>{words[0]}</span>
           ) : (
             <span className="ui-pre__count"><span ref={num}>0</span></span>
