@@ -185,3 +185,35 @@ claros el texto oscuro llevaba un halo **negro** (visible en Clara Vidal, Barro 
 contenedor con el fondo del tema. Comprobación repetible en el navegador: recorrer los elementos con texto y verificar que
 ninguno tenga un `text-shadow` oscuro cuando su texto es oscuro (resultado actual: 0 casos en las 11 webs). Un contraste de axe que
 mide un fondo «más oscuro del real» suele delatar justo una sombra de texto oscura.
+
+## 6. Control de la biblioteca: modularidad antes que cantidad (anotado el 19-10-2026)
+
+**El riesgo (palabras de Daniel):** al crear piezas para cada web nueva, la biblioteca se llena de componentes muy explícitos
+(sirven para una estética concreta) o que montan algo muy complejo y muy concreto. Hay que mantenerla **modular**, con diseño
+atómico, y **no acumular cientos de componentes** que podrían beber unos de otros.
+
+**Regla para todo componente nuevo** (también en `docs/02-guia-de-componentes.md`, §12):
+
+1. **Buscar primero.** Antes de crear nada, buscar en `components/ui/` y en el catálogo si algo ya hace algo parecido.
+2. **Ampliar antes que duplicar.** Si lo existente casi lo cubre, se le añade una opción (`mode`, `variant`, una prop) en vez de
+   crear un segundo componente. Ejemplo: no habrá un «cursor que arrastra una imagen» aparte; `CustomCursor` gana la opción de
+   mostrar una imagen y el índice de proyectos con imagen al pasar el puntero se **compone** con él.
+3. **Átomos → moléculas → secciones.** Un componente complejo está bien si está hecho de átomos del kit. Si una pieza solo
+   tiene sentido en una web, **vive en esa web** (`components/sites/<web>/`), no en `components/ui/`.
+4. **Una pregunta de control** al crear: «¿puede usarlo otra web con otra estética cambiando tokens o props?». Si no, no entra.
+
+**Revisión pendiente de la ronda 3** (piezas que probablemente deben fundirse con otras existentes):
+
+| Pieza nueva | Se solapa con | Propuesta |
+|---|---|---|
+| `WorkViews` (lista / cuadrícula / índice) | `ProjectList` (lista con vista previa), `BentoGrid`, `ImageGallery` | Que `ProjectList` acepte `view` y el selector sea un átomo `ViewSwitch` reutilizable; `WorkViews` pasa a ser composición |
+| `ExplorableCanvas` | `DragGrid` (arrastre con inercia) | Extraer el arrastre con inercia a un hook `useDragPan` que usen los dos |
+| `EntryGate` | `Modal` | Reducir a `Modal` con variante «a pantalla completa» + contenido |
+| `CookieBanner` | `Modal`, `Drawer`, `Toggle`, `CheckboxGroup` | Composición de esos átomos; deja de ser componente del kit |
+| `SoundToggle` | `Toggle` | Variante/slot de `Toggle` con el ecualizador como icono |
+| `ElasticText` | `SplitText`, `ScrubText` | Modo de `SplitText` (reutilizar su troceado de letras) |
+| `StickerCollage` | `DragGrid` / arrastre | Usar `useDragPan` o similar; las pegatinas (`lib/sites/stickers.ts`) viven en la demo |
+| Cursor con imagen (idea) | `CustomCursor`, `ProjectList` | Opción `image` en `CustomCursor`, nada de componente nuevo |
+
+**Auditoría periódica:** cada vez que se cierre una ronda de webs, revisar `components/ui/` buscando pares que se puedan
+fundir, y anotar aquí lo que se funda. La biblioteca debería crecer en **opciones**, no en **nombres**.

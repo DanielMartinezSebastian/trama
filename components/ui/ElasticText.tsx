@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useEffect, useRef, type CSSProperties } from "react";
+import { Fragment, createElement, useEffect, useRef, type CSSProperties } from "react";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ElasticTextProps = {
@@ -99,10 +99,12 @@ export default function ElasticText({ children, as = "h2", mode = "pointer", str
     { ref: box, className: `ui-elas ${className}`.trim(), style },
     <span key="sr" className="ui-elas__sr">{children}</span>,
     words.map((w, wi) => (
-      <span key={wi} className="ui-elas__w" aria-hidden>
-        {[...w].map((c, ci) => <span key={ci} className="ui-elas__c">{c}</span>)}
+      <Fragment key={wi}>
+        <span className="ui-elas__w" aria-hidden>
+          {[...w].map((c, ci) => <span key={ci} className="ui-elas__c">{c}</span>)}
+        </span>
         {wi < words.length - 1 ? " " : ""}
-      </span>
+      </Fragment>
     )),
   );
 }

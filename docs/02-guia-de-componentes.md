@@ -1374,3 +1374,10 @@ encajen con el tema. El arte generado (`lib/sites/art.ts`) queda para lo que una
 color elegible (Barro), capturas de interfaz o dibujos de línea con intención de diseño (Plano, segunda imagen). Si falta un
 tema, añádelo a `scripts/fetch-images.mts` y ejecuta `npm run images:fetch -- tema`. Toda demo que muestre fotos enlaza
 `/creditos` en el pie (`creditHref` en `BigFooter`) y da a cada foto un `alt` que la describa, o vacío si es decorativa.
+
+## 12. Modularidad: no llenar la biblioteca de componentes
+
+Antes de crear un componente: busca si ya existe uno parecido (`components/ui/`, catálogo) y **ampliarlo con una opción** antes
+que duplicarlo (un `CustomCursor` con imagen, no un segundo cursor). Un componente complejo debe estar **hecho de átomos** del kit;
+si solo sirve a una estética o a una web, vive en `components/sites/<web>/`. Detalle y revisión pendiente en
+[`04-pendientes.md` §6](./04-pendientes.md).

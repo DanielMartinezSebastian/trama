@@ -14975,6 +14975,75 @@
           "uses": 1
         }
       ]
+    },
+    {
+      "slug": "mota",
+      "title": "Mota · interiorismo y marca con carácter",
+      "url": "/sitios/mota",
+      "dir": "components/sites/mota",
+      "description": "Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, ElasticText, WorkViews, CookieBanner y CustomCursor.",
+      "pages": [
+        {
+          "path": "/sitios/mota",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/mota/proyectos",
+          "title": "Proyectos"
+        }
+      ],
+      "components": [
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 3
+        },
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 2
+        },
+        {
+          "component": "WorkViews",
+          "id": "work-views",
+          "uses": 2
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
+        },
+        {
+          "component": "CustomCursor",
+          "id": "custom-cursor",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "ElasticText",
+          "id": "elastic-text",
+          "uses": 1
+        },
+        {
+          "component": "StickerCollage",
+          "id": "sticker-collage",
+          "uses": 1
+        },
+        {
+          "component": "CookieBanner",
+          "id": "cookie-banner",
+          "uses": 1
+        }
+      ]
     }
   ]
 }

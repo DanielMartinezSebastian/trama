@@ -1,0 +1,27 @@
+/* Mota (/sitios/mota): prefijo mo-. Fórmulas 'kin / Neutomni / Uncommon: crema, wordmark mono gigante, pegatinas. */
+
+.mo { --st-gutter: clamp(16px, 2.4vw, 36px); }
+:where(.mo) a { color: inherit; }
+.mo-head { display: flex; justify-content: flex-end; padding: 18px var(--st-gutter); }
+.mo-nav { display: flex; gap: 28px; font-size: 16px; }
+.mo-nav .ui-roll { text-decoration: underline; text-underline-offset: 5px; }
+
+.mo-hero { padding: 0 var(--st-gutter) clamp(24px, 4vw, 56px); display: grid; gap: clamp(20px, 4vw, 56px); }
+.mo-mark { color: var(--acc); line-height: 0.8; }
+.mo-mark .ui-fit__t { font-family: var(--font-geist-mono), ui-monospace, monospace; font-weight: 500; letter-spacing: -0.06em; line-height: 0.8; }
+.mo-hero__row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; }
+.mo-hero__p { margin: 0; max-width: 28ch; font-family: var(--display); font-size: clamp(22px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -0.01em; }
+.mo-pill { display: inline-grid; place-items: center; min-height: 46px; padding: 0 24px; border: 1.5px solid var(--fg); border-radius: 99px; text-decoration: none; font-size: 14px; transition: background 0.2s linear, color 0.2s linear; }
+.mo-pill:is(:hover, :focus-visible) { background: var(--fg); color: var(--bg); }
+.mo-pill:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+.mo #colage { background: #bfe6ff; color: #17140f; }
+.mo-big { margin: 0; max-width: 14ch; font-family: var(--display); font-weight: 800; font-size: clamp(44px, 9vw, 132px); line-height: 0.95; letter-spacing: -0.04em; text-wrap: balance; }
+.mo-sec { padding: clamp(40px, 7vw, 100px) var(--st-gutter); }
+.mo-h2 { margin: 0 0 clamp(18px, 3vw, 36px); font-family: var(--display); font-weight: 800; font-size: clamp(40px, 7vw, 104px); line-height: 0.92; letter-spacing: -0.04em; }
+.mo .ui-wv__ul--list .ui-wv__t { font-family: var(--display); font-weight: 700; }
+.mo .ui-cook { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.mo .ui-cook__b { border-color: var(--bg); }
+.mo .ui-cook__b:is(:hover, :focus-visible) { background: var(--bg); color: var(--fg); }
+.mo .ui-bigfoot { background: var(--acc); color: #17140f; }
+.mo .ui-bigfoot .ui-fit__t { font-family: var(--font-geist-mono), ui-monospace, monospace; font-weight: 500; letter-spacing: -0.06em; }

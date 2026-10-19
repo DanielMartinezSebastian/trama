@@ -2440,3 +2440,11 @@ Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla
 Carpeta: `components/sites/sonar/` · 2 páginas: Inicio · Proyectos
 
 `RollLink` ×3 · `SplitText` ×2 · `SmoothScroll` · `BigFooter` · `CellGrid` · `EntryGate` · `SoundToggle` · `ElasticText` · `WorkViews` · `ExplorableCanvas`
+
+### Mota · interiorismo y marca con carácter — `/sitios/mota`
+
+Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: wordmark monoespaciado gigante en una sola pantalla, collage de pegatinas arrastrables, frase con letras elásticas que reaccionan al scroll, proyectos con cambio de vista animado (lista, cuadrícula, índice) y aviso de cookies con la marca. Usa FitText, StickerCollage, ElasticText, WorkViews, CookieBanner y CustomCursor.
+
+Carpeta: `components/sites/mota/` · 2 páginas: Inicio · Proyectos
+
+`RollLink` ×3 · `SplitText` ×2 · `WorkViews` ×2 · `FitText` · `CustomCursor` · `SmoothScroll` · `BigFooter` · `ElasticText` · `StickerCollage` · `CookieBanner`
