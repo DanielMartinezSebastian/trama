@@ -340,6 +340,9 @@ Ordenadas por cuántos sectores las usan. Respetan la regla de modularidad: **pr
 | **Mapa / ubicación** | todos los locales, I | `LocationCard` (dirección, cómo llegar, enlace a mapas, sin cargar mapa hasta pulsar) y mapa de resultados para I |
 | **Tarjeta y ficha de inmueble** | I | Opción de `ProductCard` (`kind="property"`) + `MetaTable` para m², planta, energía |
 | **Comparador** | B2B, SaaS, comercio | Opción `compare` de `DataTable` |
+| **Barra de utilidades y megamenú** ([`12`](./12-agencias-corporativas.md) G4) | B2B, I, corporativo | Opciones `utility` y `mega` (título + descripción por enlace) de `NavBar` |
+| **Filtro en forma de frase** (`12` G6) | B2B, I, A | Variante `sentence` de `FilterBar`, con el estado en la URL (I1) |
+| **Clientes en texto y laureles** (`12` G3) | B2B, T, P | Opciones de `LogoCloud` |
 | **Contacto rápido** | todos | Bloque con teléfono, WhatsApp, correo y dirección (puede ser variante de `CTASection`) |
 | **Plantillas legales** | todos | Páginas de aviso legal, privacidad, cookies y **declaración de accesibilidad** como bloques con datos |
 | **Datos estructurados** | todos | Generadores en `lib/seo.tsx`: `LocalBusiness`, `Restaurant`, `Dentist`, `Product`, `Event`, `FAQPage`, `Course` |
@@ -358,6 +361,7 @@ movimiento según §2.
 | **Umbral** | Inmobiliaria | Contactar / valorar | Buscador con mapa, ficha con energía, valoración en pasos | 1–2 |
 | **Núcleo** | Gimnasio / pilates | Clase de prueba | `ScheduleGrid`, tarifas con condiciones | 1–2 |
 | **Arista Reformas** | Oficios locales | Llamar / presupuesto | `ActionBar`, zona de servicio, fotos en el presupuesto | 1 |
+| **Vértice** (de la [`12`](./12-agencias-corporativas.md)) | Grupo industrial / corporativo | Contacto por área | `NavBar utility/mega`, `FilterBar sentence`, `LogoCloud` con laureles, cifras en mosaico | 1 |
 
 Orden recomendado: **Brasa** y **Clínica Ribera** primero (estrenan las piezas más compartidas: hueco, horario,
 reseñas, barra móvil); después **Núcleo** y **Arista** (reutilizan casi todo); **Umbral**, **Albar** y **Ferrer** al
@@ -379,6 +383,10 @@ final.
 - Preguntas abiertas para esa investigación: patrones de **formularios de cita** en móvil (¿hueco antes que datos?),
   **público mayor** en salud (tamaño de letra base, contraste), **WhatsApp frente a formulario** en España (no se
   encontraron datos de encuesta: buscar en CNMC, INE, IAB Spain) y el **umbral de animación** aceptable con pruebas reales.
+
+> **Ronda 12** ([`12-agencias-corporativas.md`](./12-agencias-corporativas.md)): cómo son las webs corporativas de las
+> agencias punteras y de sus clientes. Su §5 la cruza con este documento (lecciones G1–G12 frente a B, sectores y
+> presupuesto de movimiento) y añade la fórmula «Corporativo claro» (nivel 1) y la demo Vértice.
 
 ## 9. Pendiente de esta ronda
 
