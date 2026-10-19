@@ -159,3 +159,10 @@ Cinco sitios **de varias páginas** hechos con el kit, en `components/sites/<slu
 - Los textos por defecto de los componentes son copy de demostración (escuela de surf…): en un proyecto real hay que
   pasar siempre las props de texto (o `""`).
 - Sin pruebas visuales automatizadas: la red de seguridad es `npm run typecheck`, `npm run catalog:check` y `next build`.
+
+## Fotografías de las demos
+
+`public/img/<tema>/` guarda fotos reales con licencia libre (CC0, dominio público o CC BY) de Wikimedia Commons. Se usan con
+`photo(tema, i)` / `photos(tema)` de `lib/sites/photos.ts`. La atribución (autor, licencia, origen) está en
+`lib/sites/photo-credits.json` y se muestra en `/creditos`, enlazada discretamente desde el pie de las demos. Para regenerarlas:
+`npm run images:fetch [-- tema]`. No viajan en el paquete npm. Al usar una foto nueva en una demo, enlaza `/creditos` en su pie.

@@ -10,7 +10,7 @@ import MetaTable from "@/components/ui/MetaTable";
 import Preloader from "@/components/ui/Preloader";
 import ProjectList from "@/components/ui/ProjectList";
 import SmoothScroll from "@/components/ui/SmoothScroll";
-import { moodArt } from "@/lib/sites/art";
+import { photo } from "@/lib/sites/photos";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
 import { DAYS, FACTS, SLUG, TALKS } from "./data";
@@ -21,11 +21,11 @@ const TOKENS: CSSProperties = tokensToStyle({ ...editorialTokens, bg: "#ffffff",
 const href = (p = "") => siteHref(SLUG, p);
 
 const SLIDES = [
-  { src: moodArt(1, "#1c2340", "#c9552b", "#f0c98a"), alt: "Sala del festival con luz cálida" },
-  { src: moodArt(2, "#14312f", "#b9803a", "#e9d9b0"), alt: "Público en una charla" },
-  { src: moodArt(3, "#3a1d2b", "#d77a5b", "#f3d6c0"), alt: "Taller de diseño" },
+  { src: photo("eventos", 4).src, alt: "Concierto con luces sobre el escenario" },
+  { src: photo("eventos", 2).src, alt: "Público en primera fila" },
+  { src: photo("eventos", 5).src, alt: "Haces de luz y humo en la sala" },
 ];
-const talkItems = (list: typeof TALKS) => list.map((t) => ({ title: t.title, meta: t.who, year: t.hour, href: href("programa"), image: moodArt(t.seed + 10, "#222a44", "#c9552b", "#f0c98a"), alt: "" }));
+const talkItems = (list: typeof TALKS) => list.map((t) => ({ title: t.title, meta: t.who, year: t.hour, href: href("programa"), image: photo("eventos", t.seed).src, alt: "" }));
 
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
@@ -35,7 +35,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <SmoothScroll />
       <CustomCursor hideNative />
       <main id="contenido">{children}</main>
-      <BigFooter heading="ArcoForo" lead="Recibe las novedades del festival" email="hola@arcoforo.example" links={[{ label: "Programa", href: href("programa") }, { label: "Inicio", href: href() }]} note="© 2026 ArcoForo" credit="Demo de Trama" city="Montreal" timeZone="America/Toronto" />
+      <BigFooter heading="ArcoForo" lead="Recibe las novedades del festival" email="hola@arcoforo.example" links={[{ label: "Programa", href: href("programa") }, { label: "Inicio", href: href() }]} note="© 2026 ArcoForo" credit="Créditos de las imágenes" creditHref="/creditos" city="Montreal" timeZone="America/Toronto" />
     </SiteFrame>
   );
 }

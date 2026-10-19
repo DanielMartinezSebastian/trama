@@ -11,7 +11,7 @@ import MetaTable from "@/components/ui/MetaTable";
 import ScatterText from "@/components/ui/ScatterText";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
-import { facadeArt, moodArt } from "@/lib/sites/art";
+import { photo } from "@/lib/sites/photos";
 import { forestTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
 import { AREAS, FACTS, HOMES, SLUG } from "./data";
@@ -35,7 +35,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <EdgeTab label="Agenda tu visita" href={href("residencias")} mark="A." top="55%" />
       <footer className="ar-foot">
         <FitText>Arbor</FitText>
-        <div className="ar-foot__row"><span>© 2026 Arbor Residencial</span><span>Demo de Trama — complejo ficticio</span></div>
+        <div className="ar-foot__row"><span>© 2026 Arbor Residencial</span><span>Demo de Trama — complejo ficticio · <a href="/creditos">Créditos de las imágenes</a></span></div>
       </footer>
     </SiteFrame>
   );
@@ -48,7 +48,7 @@ function Home() {
       <section className="ar-hero" aria-label="Arbor">
         <div className="ar-hero__stick">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="ar-hero__img" src={facadeArt(1)} alt="Fachada de Arbor con una trama orgánica de líneas blancas entre árboles, al atardecer" />
+          <img className="ar-hero__img" src={photo("arquitectura", 4).src} alt="Fachada de un edificio de piedra clara con ventanas regulares" />
           <div className="ar-hero__veil" aria-hidden />
           <div className="ar-hero__mark">
             <h1 className="ui-sr">Arbor, residencias entre árboles</h1>
@@ -72,7 +72,7 @@ function Home() {
       <section className="ar-panels" aria-label="Áreas del proyecto">
         <ExpandingPanels
           height="68vh"
-          panels={AREAS.map((a) => ({ title: a.title, meta: a.meta, color: a.color, image: moodArt(a.seed + 20, "#1b2a17", "#6f8f4a", "#d9b45a"), alt: "" }))}
+          panels={AREAS.map((a) => ({ title: a.title, meta: a.meta, color: a.color, image: photo(a.seed % 2 ? "naturaleza" : "interiores", a.seed).src, alt: "" }))}
         />
       </section>
     </>

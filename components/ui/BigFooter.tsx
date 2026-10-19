@@ -15,6 +15,8 @@ export type BigFooterProps = {
   note?: string;
   /** texto derecho de la línea final */
   credit?: string;
+  /** convierte el texto derecho en un enlace (p. ej. «Créditos de las imágenes») */
+  creditHref?: string;
   /** muestra la hora local de esta ciudad en la línea final (vacío = no) */
   city?: string;
   timeZone?: string;
@@ -25,7 +27,7 @@ export type BigFooterProps = {
  * Pie de página «de estudio»: correo grande, enlaces que ruedan y un titular que llena el ancho. Invierte los colores del
  * tema (fondo `--fg`, texto `--bg`), así contrasta con el resto de la página. Compone `FitText`, `RollLink` y `LocalTime`.
  */
-export default function BigFooter({ heading = "Hablemos.", lead = "¿Tienes un proyecto?", email = "hola@estudio.example", links = [], note = "", credit = "", city = "", timeZone = "Europe/Madrid", className = "" }: BigFooterProps) {
+export default function BigFooter({ heading = "Hablemos.", lead = "¿Tienes un proyecto?", email = "hola@estudio.example", links = [], note = "", credit = "", creditHref, city = "", timeZone = "Europe/Madrid", className = "" }: BigFooterProps) {
   return (
     <footer className={`ui-bigfoot ${className}`.trim()}>
       <div className="ui-bigfoot__in">
@@ -46,7 +48,7 @@ export default function BigFooter({ heading = "Hablemos.", lead = "¿Tienes un p
         <div className="ui-bigfoot__bot">
           <span>{note}</span>
           {city ? <LocalTime city={city} timeZone={timeZone} /> : <span />}
-          <span>{credit}</span>
+          {creditHref ? <a href={creditHref}>{credit}</a> : <span>{credit}</span>}
         </div>
       </div>
     </footer>
