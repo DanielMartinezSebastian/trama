@@ -1762,6 +1762,7 @@ Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se a
 | `tilt` | number 0–70 | 52 |
 | `intro` | boolean | true |
 | `explode` | number 0–160 | 0 |
+| `frame` | boolean | true |
 | `listToggle` | boolean | true |
 | `hint` | text | "Arrastra para explorar · pulsa un punto" |
 

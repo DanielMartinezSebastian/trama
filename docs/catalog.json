@@ -12278,6 +12278,12 @@
           "max": 160
         },
         {
+          "key": "frame",
+          "type": "boolean",
+          "default": true,
+          "label": "Con marco (sin él, la maqueta se funde con la página)"
+        },
+        {
           "key": "listToggle",
           "type": "boolean",
           "default": true,

@@ -94,6 +94,7 @@ function Home() {
           blocks={MAP_BLOCKS}
           markers={SITES.map((s) => ({ id: s.id, x: s.x, y: s.y, title: s.title, meta: s.meta, text: s.text, image: photo(s.topic, s.i).src, href: href("proyectos") }))}
           tilt={54}
+          frame={false}
           height="min(78vh, 720px)"
           paper="#f4f1ea"
           hint="Arrastra la ciudad · pulsa una obra"

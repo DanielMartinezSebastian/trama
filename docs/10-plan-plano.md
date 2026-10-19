@@ -149,3 +149,5 @@ Daniel prefiere la maquetación original de la portada. Cambios:
   `--sel-bg` / `--sel-fg` para la selección de texto (tinta sobre papel, no naranja). La regla de selección del kit acepta
   ahora esos dos tokens opcionales (`kit.css`). La maqueta usa `paper` y la nueva opción `wood` de `ExplorableCanvas`
   (madera en gris cálido). Las fotos del recorrido y de las fichas van en blanco y negro.
+- **Sin marco** (`ExplorableCanvas frame={false}`): la maqueta de la portada y la del producto no tienen caja; la escena
+  se desvanece hacia la página por los bordes. También el mapa de obras de Alzado.

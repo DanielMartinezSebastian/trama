@@ -67,6 +67,9 @@ export type ExplorableCanvasProps = {
   onStop?: (i: number) => void;
   /** con 3D y arrastre: separación fija entre capas (`MapBlock.layer`), en px del mundo: la maqueta en despiece */
   explode?: number;
+  /** false = sin marco: sin borde ni fondo propio y la maqueta se funde con la página por los bordes (la arquitectura 3D
+   * queda integrada en la web en vez de dentro de una caja) */
+  frame?: boolean;
   /** texto del enlace de la ficha de un punto */
   linkLabel?: string;
   className?: string;
@@ -133,7 +136,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete) aunque se use en 2D: se importa por subruta,
  * `trama-ui/ExplorableCanvas`.
  */
-export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", wood, groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", className = "" }: ExplorableCanvasProps) {
+export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", wood, groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", frame = true, className = "" }: ExplorableCanvasProps) {
   const box = useRef<HTMLDivElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
@@ -255,7 +258,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
   );
 
   return (
-    <div ref={box} className={`ui-xcan ${three ? "ui-xcan--3d" : ""} ${tour ? "ui-xcan--tour" : ""} ${className}`.trim()} style={{ "--xc-h": height } as CSSProperties}>
+    <div ref={box} className={`ui-xcan ${three ? "ui-xcan--3d" : ""} ${tour ? "ui-xcan--tour" : ""} ${frame ? "" : "ui-xcan--bare"} ${className}`.trim()} style={{ "--xc-h": height } as CSSProperties}>
       {listToggle && (
         <OptionPicker
           className="ui-xcan__tog"

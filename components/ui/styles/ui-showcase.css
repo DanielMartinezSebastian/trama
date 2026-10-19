@@ -24,6 +24,14 @@
 @media (prefers-reduced-motion: reduce) { .ui-xcan__stop { animation: none; } }
 /* depth="3d": la escena ocupa la ventana; el mundo deja de moverse y los puntos se colocan donde dice la cámara (--sx, --sy) */
 .ui-xcan__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; }
+/* sin marco: la vista no tiene caja y la escena (o el plano 2D) se desvanece hacia la página por los cuatro bordes;
+   los puntos, la ficha y el texto de ayuda quedan fuera de la máscara */
+.ui-xcan--bare .ui-xcan__view, .ui-xcan--bare.ui-xcan--3d .ui-xcan__view { border: 0; border-radius: 0; background: transparent; }
+.ui-xcan--bare :is(.ui-xcan__gl, .ui-xcan__bg) {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  mask-composite: intersect; }
 .ui-xcan__gl.is-on { opacity: 1; }
 .ui-xcan--3d .ui-xcan__view, .ui-xcan--tour .ui-xcan__view { background: var(--xc-bg, var(--bg)); }
 .ui-xcan--3d .ui-xcan__world { transform: none !important; width: 100% !important; height: 100% !important; }

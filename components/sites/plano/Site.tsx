@@ -303,6 +303,7 @@ function Home() {
           markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
           linkLabel="Ver incidencia →"
           tilt={50}
+          frame={false}
           paper={TONES.paper}
           wood={TONES.wood}
           height="min(76vh, 680px)"
@@ -358,7 +359,7 @@ function Product() {
       </section>
       <section className="pn-model" aria-label="Maqueta del modelo en despiece">
         <p className="pn-mono">El modelo por capas · base, estructura, instalaciones y muros</p>
-        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} paper={TONES.paper} wood={TONES.wood} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
+        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} frame={false} paper={TONES.paper} wood={TONES.wood} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
       </section>
       <section>
         <MetaTable rows={SPECS} columns={2} label="Ficha técnica de Cota" />
