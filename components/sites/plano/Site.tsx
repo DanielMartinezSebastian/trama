@@ -8,6 +8,7 @@ import MetaTable from "@/components/ui/MetaTable";
 import RollLink from "@/components/ui/RollLink";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
+import { photo } from "@/lib/sites/photos";
 import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
@@ -38,7 +39,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <main id="contenido">{children}</main>
           <footer className="pn-foot pn-mono">
             <span>© 2026 Cota · Software de revisión de modelos</span>
-            <span>Demo de Trama — producto ficticio</span>
+            <span>Demo de Trama — producto ficticio · <a href="/creditos">Créditos de las imágenes</a></span>
           </footer>
         </BlueprintFrame>
       </div>
@@ -54,7 +55,7 @@ function Home() {
       <section className="pn-hero">
         <div className="pn-hero__art">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={blueprintArt(0)} alt="Dibujo de línea de un edificio de hormigón con dos árboles y un círculo naranja" />
+          <img src={photo("arquitectura", 2).src} alt="Fachada de edificio en blanco y negro" />
         </div>
         <div className="pn-hero__row">
           <SplitText as="h1" by="lines" trigger="mount" stagger={0.1} delay={0.1}>Revisa tus modelos mientras los dibujas.</SplitText>

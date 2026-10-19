@@ -1366,3 +1366,11 @@ en un lienzo three.js, que se puede pintar con los estilos de la librería. Requ
   dentro de un contenedor oculto (`IntersectionObserver`). three se carga con `lazy()`. Un contexto WebGL por instancia.
 - **Reserva** (`render`): `auto` cae a la marca plana en SVG sin WebGL2, con `Save-Data`, en equipos modestos o con
   `prefers-reduced-motion`; es también lo que se ve mientras carga.
+
+## Imágenes en las demos: fotos reales primero
+
+**Regla:** en una demo nueva usa fotos reales de la biblioteca (`photo(tema, i)` / `photos(tema)`, `lib/sites/photos.ts`) siempre que
+encajen con el tema. El arte generado (`lib/sites/art.ts`) queda para lo que una foto no puede dar: variantes de producto con
+color elegible (Barro), capturas de interfaz o dibujos de línea con intención de diseño (Plano, segunda imagen). Si falta un
+tema, añádelo a `scripts/fetch-images.mts` y ejecuta `npm run images:fetch -- tema`. Toda demo que muestre fotos enlaza
+`/creditos` en el pie (`creditHref` en `BigFooter`) y da a cada foto un `alt` que la describa, o vacío si es decorativa.

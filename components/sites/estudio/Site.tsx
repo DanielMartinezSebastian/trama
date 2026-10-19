@@ -23,7 +23,11 @@ import SectionIndex from "@/components/ui/SectionIndex";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import StackedCards from "@/components/ui/StackedCards";
-import { fashionArt, withSize } from "@/lib/sites/art";
+import { photo } from "@/lib/sites/photos";
+
+/** foto real de cada proyecto (tema + posición en la biblioteca) */
+const SHOT: Record<string, [Parameters<typeof photo>[0], number]> = { "casa-alba": ["interiores", 4], "tinta-y-sal": ["objetos", 4], nodo: ["estudio", 1], "faro-studio": ["arquitectura", 4], ola: ["gastronomia", 1] };
+const shot = (slug: string) => photo(...SHOT[slug]).src;
 import { getLenis } from "@/lib/motion/lenis";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
@@ -41,7 +45,7 @@ const LINKS = [
   { label: "Contacto", href: href("contacto") },
 ];
 const MAIL = "hola@marea.example";
-const ITEMS = PROJECTS.map((p) => ({ title: p.title, meta: p.meta, year: p.year, href: href("proyectos"), image: fashionArt(p.seed, p.art), alt: p.lead }));
+const ITEMS = PROJECTS.map((p) => ({ title: p.title, meta: p.meta, year: p.year, href: href("proyectos"), image: shot(p.slug), alt: p.lead }));
 
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
@@ -68,7 +72,8 @@ export function Shell({ children }: { children: ReactNode }) {
         email={MAIL}
         links={LINKS.map((l) => ({ label: l.label, href: l.href }))}
         note="© 2026 Marea Studio"
-        credit="Demo de Trama"
+        credit="Créditos de las imágenes"
+        creditHref="/creditos"
         city="Madrid"
       />
     </SiteFrame>
@@ -143,7 +148,7 @@ function Home() {
             { title: "Años de oficio", stat: FACTS[0].v },
             { title: "Un estudio pequeño por decisión", text: "Nueve personas, sin capas intermedias. Quien te vende el proyecto lo hace.", span: "2x1" },
             { title: "Proyectos", stat: FACTS[1].v },
-            { title: "Casa Alba", image: fashionArt(4, "coat"), span: "2x2", href: href("proyectos") },
+            { title: "Casa Alba", image: shot("casa-alba"), span: "2x2", href: href("proyectos") },
             { title: "Personas", stat: FACTS[2].v },
             { title: "Premios", stat: FACTS[3].v },
             { title: "Hablemos", text: "Cuéntanos qué tienes entre manos.", span: "2x1", href: href("contacto") },
@@ -152,8 +157,8 @@ function Home() {
       </section>
 
       <section className="es-sec es-duo" aria-label="Imágenes">
-        <div className="es-duo__a"><Parallax speed={0.08}><ImageReveal src={fashionArt(2, "arch")} ratio="4 / 5" from="bottom" /></Parallax></div>
-        <div className="es-duo__b"><Parallax speed={-0.06}><ImageReveal src={fashionArt(6, "dress")} ratio="3 / 4" from="left" delay={0.15} /></Parallax></div>
+        <div className="es-duo__a"><Parallax speed={0.08}><ImageReveal src={shot("faro-studio")} alt="Fachada de edificio con líneas geométricas" ratio="4 / 5" from="bottom" /></Parallax></div>
+        <div className="es-duo__b"><Parallax speed={-0.06}><ImageReveal src={shot("nodo")} alt="Mesa de trabajo con ordenador y accesorios" ratio="3 / 4" from="left" delay={0.15} /></Parallax></div>
       </section>
     </>
   );
@@ -171,7 +176,7 @@ function Projects() {
         {PROJECTS.map((p) => (
           <article className="es-card" key={p.slug} data-cursor="Ver">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={fashionArt(p.seed, p.art)} alt="" loading="lazy" />
+            <img src={shot(p.slug)} alt="" loading="lazy" />
             <h2>{p.title}</h2>
             <p>{p.lead}</p>
           </article>
@@ -206,7 +211,7 @@ function Studio() {
 }
 
 function Lab() {
-  const grid = PROJECTS.flatMap((p, i) => [0, 1].map((k) => ({ src: withSize(fashionArt(p.seed + k * 7, k ? "still" : p.art), 800, 1000), alt: `${p.title} · ${i + 1}`, href: href("proyectos") })));
+  const grid = PROJECTS.flatMap((p, i) => [0, 1].map((k) => ({ src: photo(SHOT[p.slug][0], SHOT[p.slug][1] + k * 2).src, alt: `${p.title} · ${i + 1}`, href: href("proyectos") })));
   const effects = ["ripple", "liquid", "rgb"] as const;
   return (
     <>
@@ -222,7 +227,7 @@ function Lab() {
         <div className="es-grid">
           {effects.map((e, i) => (
             <figure key={e} className="es-card" style={{ margin: 0 }}>
-              <DistortImage src={withSize(fashionArt(PROJECTS[i].seed, PROJECTS[i].art), 800, 1000)} alt="" effect={e} />
+              <DistortImage src={shot(PROJECTS[i].slug)} alt="" effect={e} />
               <h2>{e === "ripple" ? "Ondas" : e === "liquid" ? "Líquido" : "Canales RGB"}</h2>
             </figure>
           ))}

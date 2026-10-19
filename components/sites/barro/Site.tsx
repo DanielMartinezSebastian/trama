@@ -16,6 +16,7 @@ import Stepper from "@/components/ui/Stepper";
 import TextField from "@/components/ui/TextField";
 import { useCart } from "@/lib/commerce/cart";
 import { money } from "@/lib/commerce/money";
+import { photo } from "@/lib/sites/photos";
 import { potteryArt } from "@/lib/sites/art";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
@@ -54,7 +55,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <main id="contenido">{children}</main>
         <footer className="br-wrap" style={{ padding: "48px var(--st-gutter) 32px", borderTop: "1px solid var(--ln)", color: "var(--mut)", fontSize: 14, display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 12 }}>
           <span>© 2026 Barro · Cerámica hecha a mano en Teruel</span>
-          <span>Demo de Trama: no se cobra ni se envía nada</span>
+          <span>Demo de Trama: no se cobra ni se envía nada · <a href="/creditos">Créditos de las imágenes</a></span>
         </footer>
         <CartDrawer
           open={open}
@@ -89,7 +90,7 @@ function Home() {
           <a className="br-cta" href={href("tienda")}>Ver la tienda</a>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={potteryArt(0, "vase", "#b5532f")} alt="Jarrón de gres con esmalte terracota" />
+        <img src={photo("objetos", 4).src} alt="Jarrón de cerámica con tulipanes sobre una mesa" />
       </div>
       <section className="br-wrap br-sec">
         <div className="br-row"><h2 className="br-h2">Lo más querido</h2><RollLink label="Ver todo →" href={href("tienda")} /></div>
