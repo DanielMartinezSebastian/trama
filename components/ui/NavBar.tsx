@@ -70,6 +70,11 @@ export type NavBarProps = {
   mobileMenu?: "drawer" | "sheet";
   /** franja de anuncio sobre la barra ("" = sin franja) */
   announcement?: string;
+  /**
+   * barra de utilidades sobre la barra principal (webs corporativas: inversores, empleo, prensa, área de cliente, idioma).
+   * Enlaces separados por comas (`Empleo=/empleo, Inversores=/inversores`); tras `|`, los de la derecha (`| ES=/es, EN=/en`)
+   */
+  utility?: string;
   /** `position: sticky` arriba del contenedor con scroll */
   sticky?: boolean;
   /** con sticky: elevate = sombra y fondo al bajar · hide = se oculta al bajar y vuelve al subir */
@@ -192,12 +197,17 @@ export default function NavBar({
   collapseAt = 760,
   mobileMenu = "drawer",
   announcement = "",
+  utility = "",
   sticky = false,
   scrollFx = "none",
   children,
   className = "",
 }: NavBarProps) {
   const items = useMemo(() => parseLinks(links), [links]);
+  const util = useMemo(
+    () => utility.split("|").slice(0, 2).map((side) => splitList(side).map(parseLabel)),
+    [utility],
+  );
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(defaultActive);
@@ -572,6 +582,17 @@ export default function NavBar({
           <button type="button" className="ui-nav__announce-x" aria-label="Cerrar anuncio" onClick={() => setAnnounceOn(false)}>
             ×
           </button>
+        </div>
+      )}
+      {utility && (
+        <div className="ui-nav__util">
+          {util.map((side, i) => (
+            <ul key={i} className={i ? "ui-nav__util-end" : undefined}>
+              {side.map((l) => (
+                <li key={l.label}>{l.href ? <a href={l.href}>{l.label}</a> : <span>{l.label}</span>}</li>
+              ))}
+            </ul>
+          ))}
         </div>
       )}
       <div className="ui-nav__bar ui-surface">

@@ -83,6 +83,12 @@
 .ui-fbar__n { color: var(--mut); margin-right: auto; }
 .ui-fbar__clear { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .ui-fbar__sort { display: inline-flex; align-items: center; gap: 8px; color: var(--mut); }
+/* en frase: titular grande con desplegables subrayados en el acento; el texto de la opción elegida es parte de la frase */
+.ui-fbar__sentence { margin: 0; font-family: var(--display, inherit); font-size: clamp(26px, 4.4vw, 60px); line-height: 1.2; letter-spacing: -0.02em; text-wrap: balance; }
+.ui-fbar__pick { appearance: none; -webkit-appearance: none; field-sizing: content; max-width: 100%; margin: 0 0.15em; padding: 0 1.1em 0.02em 0.05em; border: 0; border-bottom: 2px solid var(--acc); border-radius: 0; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23888' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 0.1em center / 0.4em auto; color: var(--fg); font: inherit; letter-spacing: inherit; cursor: pointer; }
+.ui-fbar__pick:hover { color: var(--acc); }
+.ui-fbar__pick:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+.ui-fbar__pick option { font-size: 16px; color: var(--fg); background: var(--bg); }
 .ui-fbar__sort select { padding: 7px 10px; border: 1px solid var(--ln); border-radius: calc(var(--r) * 0.5); background: var(--bg); color: var(--fg); font: inherit; }
 
 /* ---------- CartDrawer ---------- */

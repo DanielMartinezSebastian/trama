@@ -29,20 +29,22 @@ function PickerDemo({ kind, label }: { kind: "swatch" | "chip"; label: string })
     : [{ value: "s", label: "Pequeño" }, { value: "m", label: "Mediano" }, { value: "l", label: "Grande" }, { value: "xl", label: "Extra", disabled: true }];
   return <OptionPicker label={label} kind={kind} options={opts} value={v} onChange={setV} />;
 }
-function FilterDemo({ total }: { total: boolean }) {
+function FilterDemo({ total, layout }: { total: boolean; layout: "chips" | "sentence" }) {
   const [values, setValues] = useState<Record<string, string[]>>({ tipo: ["Tazas"], material: [] });
   const [sort, setSort] = useState("destacados");
   return (
     <FilterBar
       groups={[
-        { id: "tipo", label: "Tipo", options: ["Jarrones", "Cuencos", "Tazas", "Platos"].map((t, i) => ({ value: t, label: t, count: 4 - i })) },
-        { id: "material", label: "Material", options: ["Gres", "Porcelana", "Terracota"].map((m) => ({ value: m, label: m })) },
+        { id: "tipo", label: "Tipo", any: "piezas", options: ["Jarrones", "Cuencos", "Tazas", "Platos"].map((t, i) => ({ value: t, label: layout === "sentence" ? t.toLowerCase() : t, count: 4 - i })) },
+        { id: "material", label: "Material", any: "cualquier material", options: ["Gres", "Porcelana", "Terracota"].map((m) => ({ value: m, label: layout === "sentence" ? m.toLowerCase() : m })) },
       ]}
       values={values}
       onChange={setValues}
       sort={{ value: sort, onChange: setSort, options: [{ value: "destacados", label: "Destacados" }, { value: "asc", label: "Precio ascendente" }, { value: "desc", label: "Precio descendente" }] }}
       total={total ? 12 : undefined}
       noun="piezas"
+      layout={layout}
+      sentence="Busco {tipo} de {material}."
     />
   );
 }
@@ -181,12 +183,16 @@ export const comercio: CatalogEntry[] = [
     name: "Filtros y orden",
     category: "navegacion",
     styles: EDITORIAL,
-    description: "Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página.",
+    description: "Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página. Con layout=\"sentence\" filtra con una frase («Fabricamos [qué] para [sector]», como Pentagram): un desplegable nativo por grupo dentro del texto.",
     stageHeight: 260,
-    props: [{ key: "total", label: "Mostrar resultados", type: "boolean", default: true }],
+    props: [
+      { key: "layout", label: "Forma", type: "select", default: "chips", options: ["chips", "sentence"], labels: { chips: "chips por grupo", sentence: "frase con desplegables" } },
+      { key: "total", label: "Mostrar resultados", type: "boolean", default: true },
+    ],
+    notes: ["En frase, cada grupo admite un valor; `FilterGroup.any` es el texto de «sin filtro». Guarda el estado en la URL si el listado es largo (ver /sitios/vertice/soluciones)."],
     render: (p) => (
       <div style={{ width: "100%", padding: 16 }}>
-        <FilterDemo total={p.total as boolean} />
+        <FilterDemo key={p.layout as string} total={p.total as boolean} layout={p.layout as never} />
       </div>
     ),
   },

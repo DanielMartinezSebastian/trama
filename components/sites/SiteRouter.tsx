@@ -32,6 +32,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   sonar: site(() => import("./sonar/Site")),
   mota: site(() => import("./mota/Site")),
   alzado: site(() => import("./alzado/Site")),
+  vertice: site(() => import("./vertice/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

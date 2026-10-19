@@ -76,6 +76,7 @@ export const navegacion: CatalogEntry[] = [
       { key: "cta", label: "Botón principal", type: "text", default: "Reservar" },
       { key: "secondaryCta", label: "Botón secundario", type: "text", default: "Entrar" },
       { key: "announcement", label: "Anuncio", type: "text", default: "" },
+      { key: "utility", label: "Barra de utilidades (corporativo)", type: "text", default: "", hint: "Empleo=/empleo, Inversores=/inversores | ES, EN — tras | van a la derecha" },
       { key: "collapseAt", label: "Plegar por debajo de (px)", type: "number", default: 760, min: 0, max: 1400, step: 20 },
       { key: "mobileMenu", label: "Menú móvil", type: "select", default: "drawer", options: ["drawer", "sheet"], labels: { drawer: "cajón lateral", sheet: "hoja bajo la barra" } },
       { key: "defaultActive", label: "Enlace activo", type: "number", default: 0, min: 0, max: 5, step: 1 },
@@ -94,6 +95,7 @@ export const navegacion: CatalogEntry[] = [
             search={p.search as never}
             searchPlaceholder={p.searchPlaceholder as string}
             searchItems={p.searchItems as string}
+            utility={p.utility as string}
             brand={p.brand as string}
             links={p.links as string}
             menuStyle={p.menuStyle as never}
@@ -164,7 +166,7 @@ export const navegacion: CatalogEntry[] = [
     description: "Ruta de navegación. El último elemento es la página actual, sin enlace.",
     stageHeight: 180,
     props: [
-      { key: "items", label: "Ruta (separada por comas)", type: "text", default: "Inicio, Cursos, Iniciación al surf", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
+      { key: "items", label: "Ruta (separada por comas)", type: "text", default: "Inicio, Cursos, Iniciación al surf", hint: "Con Etiqueta=/ruta el paso es un enlace real. Escribe \\, para una coma dentro de un elemento" },
       { key: "separator", label: "Separador", type: "text", default: "/" },
       variantProp("minimal"),
     ],

@@ -384,11 +384,12 @@ export const secciones: CatalogEntry[] = [
       { key: "label", label: "Etiqueta", type: "text", default: "Con la confianza de" },
       { key: "brands", label: "Marcas (separadas por comas)", type: "text", default: "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar", hint: "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")" },
       { key: "layout", label: "Disposición", type: "select", default: "row", options: ["row", "ticker"], hint: "ticker = cinta continua con Swiper" },
+      { key: "awards", label: "Premios con laureles", type: "text", default: "", hint: "Premio | categoría, separados por comas: Webby 2026 | Corporativo, Red Dot | Marca" },
       variantProp("minimal"),
     ],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <LogoCloud label={p.label as string} brands={p.brands as string} layout={p.layout as never} variant={p.variant as never} />
+        <LogoCloud label={p.label as string} brands={p.brands as string} layout={p.layout as never} awards={p.awards as string} variant={p.variant as never} />
       </div>
     ),
   },

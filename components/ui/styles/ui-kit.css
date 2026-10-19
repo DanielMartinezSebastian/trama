@@ -614,6 +614,13 @@ a.ui-button { text-decoration: none; }
 /* anuncio */
 .ui-nav__announce { position: relative; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 7px 40px; font-size: 13px; text-align: center; color: var(--fg); background: color-mix(in srgb, var(--acc) 16%, var(--bg)); border-bottom: 1px solid var(--ln); }
 .ui-s--dotmatrix .ui-nav__announce { border-bottom-style: dotted; background: color-mix(in srgb, var(--fg) 6%, var(--bg)); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+/* barra de utilidades (corporativo): fila fina y discreta sobre la barra principal */
+.ui-nav__util { display: flex; justify-content: space-between; gap: 16px; padding: 6px var(--nav-pad-x, 20px); font-size: 12px; color: var(--mut); border-bottom: 1px solid var(--ln); overflow-x: auto; scrollbar-width: none; }
+.ui-nav__util ul { display: flex; gap: 18px; margin: 0; padding: 0; list-style: none; white-space: nowrap; }
+.ui-nav__util-end { margin-left: auto !important; }
+.ui-nav__util a { color: inherit; text-decoration: none; }
+.ui-nav__util a:is(:hover, :focus-visible) { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+.ui-nav--floating .ui-nav__util, .ui-nav--island .ui-nav__util { border: 0; padding-inline: 4px; }
 .ui-nav__announce-x { position: absolute; right: 10px; top: 50%; translate: 0 -50%; font-size: 16px; line-height: 1; color: var(--mut); background: none; border: 0; cursor: pointer; }
 .ui-nav--floating .ui-nav__announce, .ui-nav--island .ui-nav__announce { border: 0; border-radius: max(var(--s-r), 8px); margin-bottom: 8px; }
 
@@ -1287,6 +1294,7 @@ a.ui-button { text-decoration: none; }
 .ui-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; font-family: var(--s-ff); text-transform: var(--s-tt); letter-spacing: var(--s-ls); }
 .ui-crumbs__item { display: inline-flex; align-items: center; gap: 6px; }
 .ui-crumbs__link { font: inherit; color: var(--mut); background: none; border: 0; padding: 0; cursor: pointer; text-transform: inherit; letter-spacing: inherit; }
+a.ui-crumbs__link { text-decoration: none; }
 .ui-crumbs__link:hover { color: var(--acc); text-decoration: underline; }
 .ui-crumbs [aria-current="page"] { color: var(--fg); font-weight: 700; }
 .ui-crumbs__sep { color: var(--ln); font-family: var(--mono); }
@@ -1394,6 +1402,12 @@ a.ui-button { text-decoration: none; }
 .ui-logos__row { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(20px, 4vw, 48px); font-family: var(--s-ff); }
 .ui-logos__brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: var(--mut); text-transform: var(--s-tt); text-shadow: var(--legibility-ts); transition: color 0.15s; }
 .ui-logos__brand:hover { color: var(--fg); }
+.ui-logos__awards { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px; margin: 6px 0 0; padding: 0; list-style: none; }
+.ui-logos__award { display: inline-flex; align-items: center; gap: 8px; color: var(--mut); }
+.ui-logos__award span { display: grid; text-align: center; line-height: 1.2; }
+.ui-logos__award b { color: var(--fg); font-size: 14px; font-weight: 600; }
+.ui-logos__award small { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+.ui-logos__laurel { flex: none; color: var(--mut); }
 
 /* ---------- ScrollArea ---------- */
 .ui-scroll { width: 100%; max-width: 420px; overflow-y: auto; padding: 16px 18px; display: grid; gap: 10px; align-content: start; font-size: 14px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; }

@@ -120,7 +120,25 @@ quedan **fuera** de la fórmula «Corporativo claro»; `06·P9` (transiciones co
 Las piezas nuevas de esta ronda (`NavBar utility/mega`, `FilterBar sentence`, `LogoCloud` con laureles) se suman a la
 lista de la `11` §5 con la misma regla: **opciones de componentes existentes**, no componentes nuevos.
 
-## 6. Pendiente
+## 6. Hecho: demo Vértice (19-10-2026)
+
+`/sitios/vertice`, grupo industrial ficticio (Movilidad, Energía y Agua) con la fórmula «Corporativo claro». Páginas:
+inicio, sectores (índice y ficha por sector), soluciones, sostenibilidad, inversores, sala de prensa, empleo y contacto
+por área. Sin componentes nuevos; opciones añadidas al kit:
+
+| Opción | Componente | Lección |
+|---|---|---|
+| `utility` (barra de utilidades: izquierda y, tras `|`, derecha) | `NavBar` | G4 |
+| `layout="sentence"` + `sentence` + `FilterGroup.any` | `FilterBar` | G6 |
+| `awards` (premios con laureles) | `LogoCloud` | G3 |
+| Pasos con `Etiqueta=/ruta` (enlaces reales) | `Breadcrumbs` | B13 |
+| `--sel-bg` / `--sel-fg` (selección por tema) | `kit.css` | — |
+
+El megamenú con descripciones, el buscador ⌘K y `KpiCard` con la cotización ya existían. Movimiento nivel 1: solo
+transiciones de estado. Tipografía: Instrument Sans y Instrument Serif (G2). Soluciones guarda el filtro en la URL
+(`?tipo=…&sector=…`, B13 / I1). **Falta**: barra de acción móvil (B1), páginas legales propias (B11), axe y Lighthouse.
+
+## 7. Pendiente
 
 - Probar en móvil (390 px) y con teclado las tres webs corporativas, sobre todo el megamenú de GCF y Celanese.
 - Ampliar con agencias europeas de corte corporativo (Edenspiekermann ya está) y con alguna española de referencia.

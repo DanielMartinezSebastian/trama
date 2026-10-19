@@ -4497,6 +4497,13 @@
           "label": "Anuncio"
         },
         {
+          "key": "utility",
+          "type": "text",
+          "default": "",
+          "label": "Barra de utilidades (corporativo)",
+          "hint": "Empleo=/empleo, Inversores=/inversores | ES, EN — tras | van a la derecha"
+        },
+        {
           "key": "collapseAt",
           "type": "number",
           "default": 760,
@@ -4698,7 +4705,7 @@
           "type": "text",
           "default": "Inicio, Cursos, Iniciación al surf",
           "label": "Ruta (separada por comas)",
-          "hint": "Escribe \\, para una coma dentro de un elemento (\"99\\,5 %\")"
+          "hint": "Con Etiqueta=/ruta el paso es un enlace real. Escribe \\, para una coma dentro de un elemento"
         },
         {
           "key": "separator",
@@ -8529,6 +8536,13 @@
           ]
         },
         {
+          "key": "awards",
+          "type": "text",
+          "default": "",
+          "label": "Premios con laureles",
+          "hint": "Premio | categoría, separados por comas: Webby 2026 | Corporativo, Red Dot | Marca"
+        },
+        {
           "key": "variant",
           "type": "select",
           "default": "minimal",
@@ -11802,14 +11816,27 @@
         "minimal",
         "solid"
       ],
-      "description": "Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página.",
+      "description": "Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página. Con layout=\"sentence\" filtra con una frase («Fabricamos [qué] para [sector]», como Pentagram): un desplegable nativo por grupo dentro del texto.",
       "props": [
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "chips",
+          "label": "Forma",
+          "options": [
+            "chips",
+            "sentence"
+          ]
+        },
         {
           "key": "total",
           "type": "boolean",
           "default": true,
           "label": "Mostrar resultados"
         }
+      ],
+      "notes": [
+        "En frase, cada grupo admite un valor; `FilterGroup.any` es el texto de «sin filtro». Guarda el estado en la URL si el listado es largo (ver /sitios/vertice/soluciones)."
       ],
       "example": "import FilterBar from \"@/components/ui/FilterBar\";\n\n<FilterBar />",
       "preview": "/componentes#filter-bar"
@@ -15165,6 +15192,106 @@
         {
           "component": "CellGrid",
           "id": "cell-grid",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "vertice",
+      "title": "Vértice · grupo industrial",
+      "url": "/sitios/vertice",
+      "dir": "components/sites/vertice",
+      "description": "Web corporativa de un grupo industrial con la fórmula «Corporativo claro»: barra de utilidades (inversores, prensa, empleo, proveedores), megamenú con una línea por enlace y buscador, una frase en el hero, cifras con fuente y fecha, entrada por sector, soluciones filtradas con una frase («Fabricamos [qué] para [sector]»), clientes y premios con laureles, inversores con cotización e informes, sala de prensa, empleo y contacto por área. Movimiento mínimo. Usa NavBar (utility, mega, search), FilterBar (sentence), LogoCloud (awards), KpiCard, DataTable, Breadcrumbs, ContactForm, Footer y CookieBanner.",
+      "pages": [
+        {
+          "path": "/sitios/vertice",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/vertice/sectores",
+          "title": "Sectores"
+        },
+        {
+          "path": "/sitios/vertice/sectores/movilidad",
+          "title": "Movilidad"
+        },
+        {
+          "path": "/sitios/vertice/sectores/energia",
+          "title": "Energía"
+        },
+        {
+          "path": "/sitios/vertice/sectores/agua",
+          "title": "Agua"
+        },
+        {
+          "path": "/sitios/vertice/soluciones",
+          "title": "Soluciones"
+        },
+        {
+          "path": "/sitios/vertice/sostenibilidad",
+          "title": "Sostenibilidad"
+        },
+        {
+          "path": "/sitios/vertice/inversores",
+          "title": "Inversores"
+        },
+        {
+          "path": "/sitios/vertice/prensa",
+          "title": "Sala de prensa"
+        },
+        {
+          "path": "/sitios/vertice/empleo",
+          "title": "Empleo"
+        },
+        {
+          "path": "/sitios/vertice/contacto",
+          "title": "Contacto"
+        }
+      ],
+      "components": [
+        {
+          "component": "Breadcrumbs",
+          "id": "breadcrumbs",
+          "uses": 8
+        },
+        {
+          "component": "FilterBar",
+          "id": "filter-bar",
+          "uses": 3
+        },
+        {
+          "component": "DataTable",
+          "id": "data-table",
+          "uses": 2
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "LogoCloud",
+          "id": "logo-cloud",
+          "uses": 1
+        },
+        {
+          "component": "KpiCard",
+          "id": "kpi-card",
+          "uses": 1
+        },
+        {
+          "component": "CookieBanner",
+          "id": "cookie-banner",
           "uses": 1
         }
       ]

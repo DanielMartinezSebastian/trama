@@ -995,6 +995,7 @@ Barra de navegación completa: siete disposiciones (o piezas en el orden que qui
 | `cta` | text | "Reservar" |
 | `secondaryCta` | text | "Entrar" |
 | `announcement` | text | "" |
+| `utility` | text | "" |
 | `collapseAt` | number 0–1400 | 760 |
 | `mobileMenu` | `drawer` · `sheet` | "drawer" |
 | `defaultActive` | number 0–5 | 0 |
@@ -1130,11 +1131,14 @@ Barra lateral con grupos (plegable a iconos), barra superior y contenido con su 
 
 ### Filtros y orden — `FilterBar`
 
-Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página.
+Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página. Con layout="sentence" filtra con una frase («Fabricamos [qué] para [sector]», como Pentagram): un desplegable nativo por grupo dentro del texto.
 
 | prop | tipo | default |
 |---|---|---|
+| `layout` | `chips` · `sentence` | "chips" |
 | `total` | boolean | true |
+
+- En frase, cada grupo admite un valor; `FilterGroup.any` es el texto de «sin filtro». Guarda el estado en la URL si el listado es largo (ver /sitios/vertice/soluciones).
 
 ### Navegación «isla» — `IslandNav`
 
@@ -1932,6 +1936,7 @@ Cabecera de sección + grid de perfiles con avatar de iniciales: la página «so
 | `label` | text | "Con la confianza de" |
 | `brands` | text | "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar" |
 | `layout` | `row` · `ticker` | "row" |
+| `awards` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Sección de blog — `ArticlesSection`
@@ -2443,3 +2448,11 @@ Web de un estudio de arquitectura con la fórmula «maqueta que se recorre»: pr
 Carpeta: `components/sites/alzado/` · 2 páginas: Inicio · Proyectos
 
 `SplitText` ×5 · `RollLink` ×3 · `ProjectList` ×2 · `ExplorableCanvas` ×2 · `CustomCursor` · `SmoothScroll` · `Preloader` · `PinnedSection` · `BigFooter` · `OptionPicker` · `CellGrid`
+
+### Vértice · grupo industrial — `/sitios/vertice`
+
+Web corporativa de un grupo industrial con la fórmula «Corporativo claro»: barra de utilidades (inversores, prensa, empleo, proveedores), megamenú con una línea por enlace y buscador, una frase en el hero, cifras con fuente y fecha, entrada por sector, soluciones filtradas con una frase («Fabricamos [qué] para [sector]»), clientes y premios con laureles, inversores con cotización e informes, sala de prensa, empleo y contacto por área. Movimiento mínimo. Usa NavBar (utility, mega, search), FilterBar (sentence), LogoCloud (awards), KpiCard, DataTable, Breadcrumbs, ContactForm, Footer y CookieBanner.
+
+Carpeta: `components/sites/vertice/` · 11 páginas: Inicio · Sectores · Movilidad · Energía · Agua · Soluciones · Sostenibilidad · Inversores · Sala de prensa · Empleo · Contacto
+
+`Breadcrumbs` ×8 · `FilterBar` ×3 · `DataTable` ×2 · `NavBar` · `ContactForm` · `Footer` · `LogoCloud` · `KpiCard` · `CookieBanner`
