@@ -42,3 +42,28 @@ export const FEATURES = [
   { t: "Informe", p: "Lista de incidencias lista para enviar, ordenada por gravedad." },
   { t: "Historial", p: "Qué se arregló, cuándo y quién lo hizo, por versión del modelo." },
 ];
+
+/* ---------- maqueta: planta de un pequeño centro de trabajo (en % de un mundo de 1800 × 1100 px) ---------- */
+export const MODEL_WORLD = { w: 1800, h: 1100 };
+
+/** Muros de la planta: [x1, y1, x2, y2] en %. Los huecos son puertas. */
+export const PLAN_WALLS: [number, number, number, number][] = [
+  [25, 20, 75, 20],
+  [25, 20, 25, 80],
+  [75, 20, 75, 80],
+  [25, 80, 50, 80],
+  [72, 80, 75, 80],
+  [48, 20, 48, 48],
+  [25, 55, 40, 55],
+  [46, 55, 75, 55],
+  [62, 62, 62, 80],
+  [62, 20, 62, 40],
+];
+
+/** Lo que Cota ha encontrado en el modelo: cada incidencia es un punto de la maqueta. */
+export const ISSUES = [
+  { id: "c1", x: 55, y: 36, title: "Colisión", meta: "Instalaciones · planta 1", text: "El conducto de ventilación cruza la viga del eje C a 2,62 m." },
+  { id: "c2", x: 36, y: 40, title: "Altura libre", meta: "Normativa · sala A", text: "Bajo el falso techo quedan 2,38 m; el mínimo para uso de oficina es 2,50 m." },
+  { id: "c3", x: 68, y: 70, title: "Paso de puerta", meta: "Accesibilidad", text: "El giro de 1,50 m no cabe delante de la puerta del aseo." },
+  { id: "c4", x: 33, y: 67, title: "Escalera", meta: "Cotas · núcleo", text: "La huella del último peldaño mide 26 cm: el resto mide 28." },
+];

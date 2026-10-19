@@ -1,8 +1,9 @@
 "use client";
 
-import { Component, Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import type { DistortPointer } from "@/lib/distort/scene";
 import { hasWebGL, lowPower } from "@/lib/ui/capability";
+import { GLBoundary } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 // three y react-three-fiber solo se descargan cuando el puntero entra por primera vez
@@ -24,19 +25,6 @@ export type DistortImageProps = {
   radius?: number;
   className?: string;
 };
-
-class Boundary extends Component<{ onError: () => void; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  componentDidCatch() {
-    this.props.onError();
-  }
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
 
 /**
  * Imagen que se deforma con un shader alrededor del puntero (ondas, líquido, separación RGB o lupa).
@@ -89,7 +77,7 @@ export default function DistortImage({ src, alt = "", ratio = "4 / 5", effect = 
       <img className="ui-dimg__img" src={src} alt={alt} loading="lazy" decoding="async" />
       {gl && (
         <div className={`ui-dimg__gl ${ready ? "is-on" : ""}`}>
-          <Boundary onError={() => { setGl(false); setCapable(false); }}>
+          <GLBoundary onError={() => { setGl(false); setCapable(false); }}>
             <Suspense fallback={null}>
               <DistortScene
                 src={src}
@@ -101,7 +89,7 @@ export default function DistortImage({ src, alt = "", ratio = "4 / 5", effect = 
                 onIdle={() => { setGl(false); setReady(false); }}
               />
             </Suspense>
-          </Boundary>
+          </GLBoundary>
         </div>
       )}
     </div>

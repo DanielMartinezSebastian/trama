@@ -4,21 +4,34 @@ import { type CSSProperties, type ReactNode } from "react";
 import BlueprintFrame from "@/components/ui/BlueprintFrame";
 import CellGrid from "@/components/ui/CellGrid";
 import EdgeTab from "@/components/ui/EdgeTab";
+import ExplorableCanvas, { type MapBlock } from "@/components/ui/ExplorableCanvas";
 import MetaTable from "@/components/ui/MetaTable";
 import RollLink from "@/components/ui/RollLink";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
+import { walls } from "@/lib/sites/maqueta";
 import { photo } from "@/lib/sites/photos";
 import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
-import { CLIENTS, FEATURES, PROBLEMS, SLUG, SPECS } from "./data";
+import { CLIENTS, FEATURES, ISSUES, MODEL_WORLD, PLAN_WALLS, PROBLEMS, SLUG, SPECS } from "./data";
 import "./plano.css";
 
 const PAIR = FONT_PAIRINGS.find((p) => p.id === "tecnico")!;
 // tema del kit `blueprintTokens` con el par tipográfico «técnico»
 const TOKENS: CSSProperties = { ...tokensToStyle({ ...blueprintTokens, display: PAIR.display }), "--font-accent": PAIR.accent } as CSSProperties;
 const href = (p = "") => siteHref(SLUG, p);
+
+// la maqueta del modelo: muros de cartón sobre una base de madera, fachada de metacrilato, pilares, escalera y árboles
+const ASPECT = MODEL_WORLD.h / MODEL_WORLD.w;
+const MODEL: MapBlock[] = [
+  { x: 50, y: 50, w: 56, d: 66, h: 6, mat: "wood" },
+  ...walls(PLAN_WALLS, { h: 90, thick: 0.45, aspect: ASPECT }),
+  ...walls([[50, 80, 72, 80]], { h: 90, thick: 0.3, aspect: ASPECT, mat: "acrylic" }),
+  ...[30, 40, 55, 68].flatMap((x) => [{ x, y: 30, w: 0.9, d: 0.9 / ASPECT, h: 90, shape: "cylinder" as const }]),
+  ...Array.from({ length: 7 }, (_, i) => ({ x: 31 + i * 1.1, y: 70, w: 1.1, d: 9, h: 10 + i * 11, mat: (i === 6 ? "accent" : "paper") as MapBlock["mat"] })),
+  ...[[14, 26], [16, 44], [13, 70], [86, 30], [88, 58], [84, 78], [40, 90], [60, 92]].map(([x, y]) => ({ x, y, w: 3.4, d: 3.4 / ASPECT, h: 120, shape: "tree" as const })),
+];
 
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
@@ -97,6 +110,19 @@ function Home() {
 
       <section className="pn-mid">
         <SplitText as="h2" by="words" stagger={0.06}>A tu lado, dentro del modelo.</SplitText>
+      </section>
+
+      <section className="pn-model" aria-label="Maqueta del modelo revisado">
+        <p className="pn-mono">Modelo revisado · 4 incidencias</p>
+        <ExplorableCanvas
+          depth="3d"
+          world={MODEL_WORLD}
+          blocks={MODEL}
+          markers={ISSUES.map((i) => ({ ...i, color: "var(--acc)" }))}
+          tilt={50}
+          height="min(76vh, 680px)"
+          hint="Arrastra la maqueta · pulsa una incidencia"
+        />
       </section>
     </>
   );

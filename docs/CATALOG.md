@@ -1753,12 +1753,19 @@ Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con 
 
 ### Lienzo explorable por arrastre — `ExplorableCanvas`
 
-Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Usa el mismo arrastre que DragGrid (lib/ui/dragPan.ts) y un OptionPicker para «Mapa / Lista».
+Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Con depth="3d" el mundo es una maqueta de papel en three.js (cartón, metacrilato, madera y árboles de espuma, sombras suaves) con una intro que pasa del plano a la maqueta; con nav="scroll" dentro de un PinnedSection, el scroll lleva la cámara por una ruta de paradas (Oryzo, Primland). Usa el arrastre de DragGrid (lib/ui/dragPan.ts), un OptionPicker para «Mapa / Lista» y la carga diferida de los componentes 3D (lib/ui/gl.tsx).
 
 | prop | tipo | default |
 |---|---|---|
+| `depth` | `flat` · `3d` | "3d" |
+| `tilt` | number 0–70 | 52 |
+| `intro` | boolean | true |
 | `listToggle` | boolean | true |
 | `hint` | text | "Arrastra para explorar · pulsa un punto" |
+
+- depth="3d" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.
+- Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).
+- nav="scroll" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.
 
 ## Secciones (`secciones`)
 
@@ -2390,7 +2397,7 @@ Web de producto técnico con la fórmula «plano»: marco de línea fina con reg
 
 Carpeta: `components/sites/plano/` · 2 páginas: Inicio · Producto
 
-`SplitText` ×4 · `CellGrid` ×3 · `RollLink` · `SmoothScroll` · `BlueprintFrame` · `EdgeTab` · `MetaTable`
+`SplitText` ×4 · `CellGrid` ×3 · `RollLink` · `SmoothScroll` · `BlueprintFrame` · `EdgeTab` · `MetaTable` · `ExplorableCanvas`
 
 ### ArcoForo · una semana de diseño, arte y cultura digital — `/sitios/foro`
 
@@ -2423,3 +2430,11 @@ Web de un estudio de interiorismo con la fórmula «estudio con personalidad»: 
 Carpeta: `components/sites/mota/` · 2 páginas: Inicio · Proyectos
 
 `SplitText` ×3 · `RollLink` ×3 · `ProjectList` ×2 · `FitText` · `CustomCursor` · `SmoothScroll` · `BigFooter` · `OptionPicker` · `StickerCollage` · `CookieBanner`
+
+### Alzado · arquitectura que se entiende en maqueta — `/sitios/alzado`
+
+Web de un estudio de arquitectura con la fórmula «maqueta que se recorre»: preloader con la marca, portada fijada en la que el scroll lleva la cámara de la planta con cotas a la maqueta 3D de madera y metacrilato (three.js), proyectos con la foto dentro del cursor y cambio de vista, y mapa 3D de obras que se arrastra. Usa Preloader, PinnedSection, ExplorableCanvas (depth="3d", nav="scroll" y "drag"), SplitText, ProjectList con OptionPicker, CustomCursor, CellGrid y BigFooter.
+
+Carpeta: `components/sites/alzado/` · 2 páginas: Inicio · Proyectos
+
+`SplitText` ×5 · `RollLink` ×3 · `ProjectList` ×2 · `ExplorableCanvas` ×2 · `CustomCursor` · `SmoothScroll` · `Preloader` · `PinnedSection` · `BigFooter` · `OptionPicker` · `CellGrid`

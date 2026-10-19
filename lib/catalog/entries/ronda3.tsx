@@ -3,6 +3,7 @@
 import CookieBanner from "@/components/ui/CookieBanner";
 import ExplorableCanvas from "@/components/ui/ExplorableCanvas";
 import StickerCollage from "@/components/ui/StickerCollage";
+import { city } from "@/lib/sites/maqueta";
 import { photo } from "@/lib/sites/photos";
 import { sticker } from "@/lib/sites/stickers";
 import type { CatalogEntry } from "../schema";
@@ -22,6 +23,9 @@ const MARKERS = [
   { id: "d", x: 62, y: 80, title: "Nodo", meta: "Sonido de producto", text: "Los avisos de una app de logística.", image: photo("estudio", 1).src },
 ];
 
+// la maqueta del catálogo: un barrio de cartón con una plaza en cada punto (mundo de 2600 × 1700)
+const CITY = city({ seed: 3, plazas: MARKERS, aspect: 1700 / 2600, cell: 7, maxH: 150 });
+
 const Rings = () => (
   <svg width="100%" height="100%" aria-hidden style={{ position: "absolute", inset: 0 }}>
     <defs>
@@ -40,13 +44,21 @@ export const ronda3: CatalogEntry[] = [
     name: "Lienzo explorable por arrastre",
     category: "galerias",
     styles: STYLES,
-    description: "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Usa el mismo arrastre que DragGrid (lib/ui/dragPan.ts) y un OptionPicker para «Mapa / Lista».",
+    description: "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Con depth=\"3d\" el mundo es una maqueta de papel en three.js (cartón, metacrilato, madera y árboles de espuma, sombras suaves) con una intro que pasa del plano a la maqueta; con nav=\"scroll\" dentro de un PinnedSection, el scroll lleva la cámara por una ruta de paradas (Oryzo, Primland). Usa el arrastre de DragGrid (lib/ui/dragPan.ts), un OptionPicker para «Mapa / Lista» y la carga diferida de los componentes 3D (lib/ui/gl.tsx).",
     stageHeight: 560,
     props: [
+      { key: "depth", label: "Profundidad", type: "select", default: "3d", options: ["flat", "3d"], labels: { flat: "plano 2D", "3d": "maqueta 3D (three.js)" } },
+      { key: "tilt", label: "Inclinación de la cámara (°)", type: "number", default: 52, min: 0, max: 70, step: 2, when: (p) => p.depth === "3d" },
+      { key: "intro", label: "Intro del plano a la maqueta", type: "boolean", default: true, when: (p) => p.depth === "3d" },
       { key: "listToggle", label: "Botón Mapa / Lista", type: "boolean", default: true },
       { key: "hint", label: "Pista de uso", type: "text", default: "Arrastra para explorar · pulsa un punto" },
     ],
-    render: (p) => <ExplorableCanvas markers={MARKERS.map((m) => ({ ...m, href: "#" }))} background={<Rings />} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />,
+    notes: [
+      "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
+      "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
+      "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.",
+    ],
+    render: (p) => <ExplorableCanvas key={`${p.depth}${p.intro}`} markers={MARKERS.map((m) => ({ ...m, href: "#" }))} background={p.depth === "3d" ? undefined : <Rings />} blocks={CITY} depth={p.depth as never} tilt={p.tilt as number} intro={p.intro as boolean} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />,
   },
   {
     id: "sticker-collage",

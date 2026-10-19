@@ -8,6 +8,27 @@
 .ui-xcan__view[data-drag] { cursor: grabbing; }
 .ui-xcan__view:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .ui-xcan__world { position: absolute; left: 0; top: 0; will-change: transform; }
+.ui-xcan__bg { position: absolute; inset: 0; }
+.ui-xcan__plan { position: absolute; inset: 0; color: var(--fg); }
+.ui-xcan__plan :is(rect, ellipse):not([fill]) { fill: color-mix(in srgb, var(--fg) 6%, transparent); stroke: currentColor; stroke-opacity: 0.45; }
+.ui-xcan__plan [data-acc] { fill: color-mix(in srgb, var(--acc) 30%, transparent); }
+.ui-xcan__dim line { stroke: var(--acc); stroke-dasharray: 6 5; }
+.ui-xcan__dim text { fill: var(--acc); font: 600 12px ui-monospace, monospace; text-anchor: middle; }
+/* nav="scroll": sin arrastre (la página sigue haciendo scroll en táctil) y con el texto de cada parada */
+.ui-xcan--tour .ui-xcan__view { cursor: default; touch-action: auto; }
+.ui-pin .ui-xcan--tour .ui-xcan__view { height: 100svh; min-height: 0; border: 0; border-radius: 0; }
+.ui-xcan__stop { position: absolute; left: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 40px); z-index: 2; display: grid; gap: 6px; max-width: min(420px, calc(100% - 32px)); padding: 16px 18px; border: 1px solid var(--ln); border-radius: var(--r, 12px); background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); animation: ui-xcan-card 0.5s var(--ease-out, ease-out) both; }
+.ui-xcan__stop small { color: var(--mut); font: 500 11px ui-monospace, monospace; letter-spacing: 0.12em; }
+.ui-xcan__stop b { font-family: var(--display, inherit); font-weight: 500; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.05; }
+.ui-xcan__stop p { margin: 0; color: var(--mut); font-size: 14px; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) { .ui-xcan__stop { animation: none; } }
+/* depth="3d": la escena ocupa la ventana; el mundo deja de moverse y los puntos se colocan donde dice la cámara (--sx, --sy) */
+.ui-xcan__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; }
+.ui-xcan__gl.is-on { opacity: 1; }
+.ui-xcan--3d .ui-xcan__view { background: var(--bg); }
+.ui-xcan--3d .ui-xcan__world { transform: none !important; width: 100% !important; height: 100% !important; }
+.ui-xcan--3d .ui-xcan__bg { display: none; }
+.ui-xcan--3d .ui-xcan__pt { left: 0 !important; top: 0 !important; transform: translate(var(--sx, -999px), var(--sy, -999px)) translate(-50%, -50%); opacity: var(--so, 0); transition: opacity 0.3s linear; }
 .ui-xcan__pt { position: absolute; transform: translate(-50%, -50%); display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--fg); font: inherit; cursor: pointer; }
 .ui-xcan__pt i { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--pt, var(--acc)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pt, var(--acc)) 28%, transparent); }
 .ui-xcan__pt i::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 1px solid var(--pt, var(--acc)); opacity: 0; animation: ui-xcan-ping 3.2s ease-out infinite; }

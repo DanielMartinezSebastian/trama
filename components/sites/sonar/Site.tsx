@@ -11,6 +11,7 @@ import RollLink from "@/components/ui/RollLink";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import Toggle from "@/components/ui/Toggle";
+import { city } from "@/lib/sites/maqueta";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
@@ -32,6 +33,9 @@ const TOKENS: CSSProperties = tokensToStyle({
   accentFont: 'var(--font-newsreader), Georgia, serif',
 });
 const href = (p = "") => siteHref(SLUG, p);
+const WORLD = { w: 2600, h: 1700 };
+// la ciudad de cartón: una plaza despejada en cada proyecto
+const BLOCKS = city({ seed: 11, plazas: WORKS, aspect: WORLD.h / WORLD.w, cell: 6.5, maxH: 150, accent: 0.05 });
 
 /** Anillos concéntricos alrededor de cada proyecto: el «sonar» que da nombre a la web. */
 function Rings() {
@@ -116,7 +120,10 @@ function Home() {
       <section id="mapa" className="sn-sec" aria-label="Mapa de proyectos">
         <ExplorableCanvas
           markers={WORKS.map((w) => ({ id: w.id, x: w.x, y: w.y, title: w.title, meta: `${w.kind} · ${w.year}`, text: w.text, image: photo(w.topic, w.i).src, alt: w.alt, href: href("proyectos") }))}
-          world={{ w: 2600, h: 1700 }}
+          world={WORLD}
+          depth="3d"
+          blocks={BLOCKS}
+          paper="#e9eef4"
           background={<Rings />}
           height="min(80vh, 720px)"
         />

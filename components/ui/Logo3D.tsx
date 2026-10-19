@@ -1,7 +1,7 @@
 "use client";
 
-import { Component, Suspense, lazy, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { hasWebGL, lowPower } from "@/lib/ui/capability";
+import { Suspense, lazy, useEffect, useRef, useState, type CSSProperties } from "react";
+import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import type { RetroFXProps } from "./RetroFX";
@@ -76,20 +76,6 @@ export type Logo3DProps = FxProps & {
   className?: string;
 };
 
-/** si el lienzo falla (sin WebGL, contexto perdido al crear), se queda la marca plana */
-class Boundary extends Component<{ onError: () => void; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  componentDidCatch() {
-    this.props.onError();
-  }
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
-
 const CHEVRONS = "M78 62 44 96l34 34M114 62l34 34-34 34";
 
 /**
@@ -154,33 +140,11 @@ export default function Logo3D({
   const flat = useRef<SVGSVGElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
-  const [capable, setCapable] = useState<boolean | null>(null);
-  const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
-  const [near, setNear] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
+  // el lienzo se crea al acercarse a la pantalla y deja de dibujar al alejarse
   const want3d = render === "3d" || (render === "auto" && !reduced);
-  const use3d = want3d && capable === true && !failed;
-
-  useEffect(() => {
-    if (want3d) setCapable(hasWebGL() && (render === "3d" || !lowPower()));
-  }, [want3d, render]);
-
-  // el lienzo se crea al acercarse a la pantalla y deja de dibujar al alejarse o al ocultarse su contenedor
-  useEffect(() => {
-    const el = root.current;
-    if (!el || !use3d) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        setNear(e.isIntersecting);
-        if (e.isIntersecting) setMounted(true);
-      },
-      { rootMargin: "120px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [use3d]);
+  const { use3d, mounted, near, fail } = useGLGate(root, { want: want3d, force: render === "3d" });
 
   // La marca plana se encuadra a su trazado, como hace la escena 3D: así las dos miden lo mismo aunque el viewBox tenga aire
   useEffect(() => {
@@ -217,7 +181,7 @@ export default function Logo3D({
       )}
       {show3d && (
         <div className={`ui-logo3d__gl${ready ? "" : " is-loading"}`}>
-          <Boundary onError={() => setFailed(true)}>
+          <GLBoundary onError={fail}>
             <Suspense fallback={null}>
               <LogoScene
                 path={path}
@@ -250,7 +214,7 @@ export default function Logo3D({
                 onReady={() => setReady(true)}
               />
             </Suspense>
-          </Boundary>
+          </GLBoundary>
         </div>
       )}
     </div>

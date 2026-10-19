@@ -1,0 +1,33 @@
+/* Alzado (/sitios/alzado): prefijo az-. Fórmulas Oryzo / Primland (maqueta que se recorre con el scroll) y Overworld (mapa 3D). */
+
+.az { --st-gutter: clamp(16px, 3vw, 40px); }
+:where(.az) a { color: inherit; }
+.az-mono { margin: 0; font-family: var(--font-accent); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mut); }
+
+/* cabecera fija sobre la portada: no se mueve al abrir nada */
+.az-head { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px var(--st-gutter); pointer-events: none; }
+.az-head > * { pointer-events: auto; }
+.az-brand { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.03em; text-decoration: none; }
+.az-brand span { color: var(--acc); }
+.az-nav { display: flex; gap: 24px; font-size: 14px; }
+@media (max-width: 560px) { .az-nav { gap: 14px; font-size: 13px; } }
+
+/* portada fijada: título arriba, maqueta a toda pantalla */
+.az-hero__title { opacity: clamp(0, 1 - var(--pin-p, 0) * 6, 1); position: absolute; z-index: 3; top: clamp(64px, 9vh, 96px); left: var(--st-gutter); right: var(--st-gutter); display: grid; gap: 10px; pointer-events: none; }
+.az-h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(64px, 15vw, 220px); line-height: 0.82; letter-spacing: -0.06em; }
+.az-hero .ui-xcan__view { background: var(--bg); }
+
+.az-sec { padding: clamp(48px, 8vw, 120px) var(--st-gutter); }
+.az-manifest { display: grid; gap: 22px; }
+.az-big { margin: 0; max-width: 22ch; font-family: var(--display); font-weight: 600; font-size: clamp(32px, 5.4vw, 78px); line-height: 1; letter-spacing: -0.035em; text-wrap: balance; }
+.az-row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: clamp(18px, 3vw, 36px); }
+.az-h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(40px, 7vw, 104px); line-height: 0.9; letter-spacing: -0.045em; }
+.az-h3 { margin: 10px 0 8px; font-family: var(--display); font-weight: 700; font-size: 24px; letter-spacing: -0.02em; }
+.az-lead { margin: 0; max-width: 36ch; color: var(--mut); }
+.az-link { color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
+.az .ui-cell p, .az .ui-cells p { margin: 0; color: var(--mut); line-height: 1.55; }
+.az .ui-plist__t { font-family: var(--display); font-weight: 800; letter-spacing: -0.045em; }
+.az-views { margin: 20px 0 16px; }
+.az .ui-xcan__pt span, .az .ui-xcan__stop small { font-family: var(--font-accent); }
+.az .ui-bigfoot { background: var(--fg); color: var(--bg); }
+.az .ui-bigfoot .ui-fit__t { font-family: var(--display); font-weight: 800; letter-spacing: -0.06em; }

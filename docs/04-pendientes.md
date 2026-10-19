@@ -215,5 +215,10 @@ atómico, y **no acumular cientos de componentes** que podrían beber unos de ot
 | `CookieBanner` | `Button`, `Toggle` | Se queda (lo necesita cualquier web de cliente), pero ya es composición de `Button` y `Toggle`; se tiñe redefiniendo tokens sobre `.ui-cook` |
 | `StickerCollage` | — | Se queda: mueve piezas sueltas, no la vista, así que no encaja en `dragPan`. Las pegatinas (`lib/sites/stickers.ts`) son de las demos |
 
+**Ronda 4 (19-10-2026, three.js):** el 3D entró como **opciones** de un componente existente, no como componentes nuevos:
+`ExplorableCanvas` gana `depth="3d"`, `nav="scroll"`, `path`, `blocks`, `dims`, `tilt`, `intro`, `paper` y `groundImage`
+(ver [`09-ronda-4-threejs.md`](./09-ronda-4-threejs.md)). Además se fundió la carga diferida de WebGL que repetían
+`ObjectStage`, `Logo3D`, `DeviceMockup3D` y `DistortImage` en `lib/ui/gl.tsx` (`GLBoundary`, `useGLGate`).
+
 **Auditoría periódica:** cada vez que se cierre una ronda de webs, revisar `components/ui/` buscando pares que se puedan
 fundir, y anotar aquí lo que se funda. La biblioteca debería crecer en **opciones**, no en **nombres**.

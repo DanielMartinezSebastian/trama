@@ -1,8 +1,8 @@
 "use client";
 
-import { Component, Suspense, lazy, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Suspense, lazy, useEffect, useRef, useState, type CSSProperties } from "react";
 import type { ObjectMaterial, ObjectShape } from "@/lib/object3d/scene";
-import { hasWebGL, lowPower } from "@/lib/ui/capability";
+import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import { tcls, type Tone } from "./variants";
@@ -33,19 +33,6 @@ export type ObjectStageProps = {
   className?: string;
 };
 
-class Boundary extends Component<{ onError: () => void; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  componentDidCatch() {
-    this.props.onError();
-  }
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
-
 /**
  * Un objeto 3D con materiales físicos (metal, vidrio, plástico barnizado, mate) y reflejos de estudio, sin cargar
  * ningún HDR (usa `RoomEnvironment` de three). Para fondos de hero, secciones de producto y detalles; el color sale de los
@@ -59,31 +46,8 @@ export default function ObjectStage({ shape = "knot", material = "metal", tone =
   const pointer = useRef({ x: 0, y: 0 });
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
-  const [capable, setCapable] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [near, setNear] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setCapable(hasWebGL() && !lowPower());
-  }, []);
-
-  const use3d = render === "auto" && capable && !reduced && !failed;
-
-  useEffect(() => {
-    const el = root.current;
-    if (!el || !use3d) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        setNear(e.isIntersecting);
-        if (e.isIntersecting) setMounted(true);
-      },
-      { rootMargin: "120px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [use3d]);
+  const { use3d, mounted, near, fail } = useGLGate(root, { want: render === "auto" && !reduced });
 
   // el puntero se normaliza respecto al centro del elemento, aunque esté fuera de él (el objeto «mira» al cursor)
   useEffect(() => {
@@ -111,11 +75,11 @@ export default function ObjectStage({ shape = "knot", material = "metal", tone =
       {!ready && <div className="ui-obj__flat" />}
       {use3d && mounted && (
         <div className={`ui-obj__gl ${ready ? "is-on" : ""}`}>
-          <Boundary onError={() => setFailed(true)}>
+          <GLBoundary onError={fail}>
             <Suspense fallback={null}>
               <ObjectScene shape={shape} material={material} color={color} motion={motion} speed={speed} pointer={pointer} active={near} onReady={() => setReady(true)} />
             </Suspense>
-          </Boundary>
+          </GLBoundary>
         </div>
       )}
     </div>

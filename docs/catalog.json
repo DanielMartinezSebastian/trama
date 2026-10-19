@@ -12241,8 +12241,32 @@
         "minimal",
         "outline"
       ],
-      "description": "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Usa el mismo arrastre que DragGrid (lib/ui/dragPan.ts) y un OptionPicker para «Mapa / Lista».",
+      "description": "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible. Con depth=\"3d\" el mundo es una maqueta de papel en three.js (cartón, metacrilato, madera y árboles de espuma, sombras suaves) con una intro que pasa del plano a la maqueta; con nav=\"scroll\" dentro de un PinnedSection, el scroll lleva la cámara por una ruta de paradas (Oryzo, Primland). Usa el arrastre de DragGrid (lib/ui/dragPan.ts), un OptionPicker para «Mapa / Lista» y la carga diferida de los componentes 3D (lib/ui/gl.tsx).",
       "props": [
+        {
+          "key": "depth",
+          "type": "select",
+          "default": "3d",
+          "label": "Profundidad",
+          "options": [
+            "flat",
+            "3d"
+          ]
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 52,
+          "label": "Inclinación de la cámara (°)",
+          "min": 0,
+          "max": 70
+        },
+        {
+          "key": "intro",
+          "type": "boolean",
+          "default": true,
+          "label": "Intro del plano a la maqueta"
+        },
         {
           "key": "listToggle",
           "type": "boolean",
@@ -12255,6 +12279,11 @@
           "default": "Arrastra para explorar · pulsa un punto",
           "label": "Pista de uso"
         }
+      ],
+      "notes": [
+        "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
+        "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
+        "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado."
       ],
       "example": "import ExplorableCanvas from \"@/components/ui/ExplorableCanvas\";\n\n<ExplorableCanvas />",
       "preview": "/componentes#explorable-canvas"
@@ -14724,6 +14753,11 @@
           "component": "MetaTable",
           "id": "meta-table",
           "uses": 1
+        },
+        {
+          "component": "ExplorableCanvas",
+          "id": "explorable-canvas",
+          "uses": 1
         }
       ]
     },
@@ -14994,6 +15028,80 @@
         {
           "component": "CookieBanner",
           "id": "cookie-banner",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "alzado",
+      "title": "Alzado · arquitectura que se entiende en maqueta",
+      "url": "/sitios/alzado",
+      "dir": "components/sites/alzado",
+      "description": "Web de un estudio de arquitectura con la fórmula «maqueta que se recorre»: preloader con la marca, portada fijada en la que el scroll lleva la cámara de la planta con cotas a la maqueta 3D de madera y metacrilato (three.js), proyectos con la foto dentro del cursor y cambio de vista, y mapa 3D de obras que se arrastra. Usa Preloader, PinnedSection, ExplorableCanvas (depth=\"3d\", nav=\"scroll\" y \"drag\"), SplitText, ProjectList con OptionPicker, CustomCursor, CellGrid y BigFooter.",
+      "pages": [
+        {
+          "path": "/sitios/alzado",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/alzado/proyectos",
+          "title": "Proyectos"
+        }
+      ],
+      "components": [
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 5
+        },
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 3
+        },
+        {
+          "component": "ProjectList",
+          "id": "project-list",
+          "uses": 2
+        },
+        {
+          "component": "ExplorableCanvas",
+          "id": "explorable-canvas",
+          "uses": 2
+        },
+        {
+          "component": "CustomCursor",
+          "id": "custom-cursor",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
+          "component": "PinnedSection",
+          "id": "pinned-section",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "OptionPicker",
+          "id": "option-picker",
+          "uses": 1
+        },
+        {
+          "component": "CellGrid",
+          "id": "cell-grid",
           "uses": 1
         }
       ]

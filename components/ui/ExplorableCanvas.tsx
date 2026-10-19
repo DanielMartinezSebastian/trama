@@ -1,9 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import type { CameraStop, MapBlock, MapDim } from "@/lib/map3d/scene";
+import { clamp01, trackScroll } from "@/lib/motion/progress";
 import { attachDragPan, type DragPan } from "@/lib/ui/dragPan";
+import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
+import { useTokens } from "@/lib/ui/useTokens";
 import OptionPicker from "./OptionPicker";
+
+export type { CameraStop, MapBlock, MapDim };
+
+// three y react-three-fiber solo se descargan con depth="3d", cuando el equipo puede y el mapa está cerca de la pantalla
+const Map3DScene = lazy(() => import("@/lib/map3d/scene"));
 
 export type MapMarker = {
   id: string;
@@ -32,8 +41,61 @@ export type ExplorableCanvasProps = {
   listToggle?: boolean;
   /** textos */
   hint?: string;
+  /** flat = plano 2D · 3d = maqueta 3D (three.js) con la cámara inclinada; sin WebGL o con movimiento reducido, se queda en 2D */
+  depth?: "flat" | "3d";
+  /** volúmenes de la maqueta (y, en 2D, sus huellas en planta si no hay `background`) */
+  blocks?: MapBlock[];
+  /** con 3D: inclinación de la cámara respecto a la vertical (grados; 0 = cenital) */
+  tilt?: number;
+  /** con 3D: la cámara empieza cenital (el plano) y se levanta mientras los volúmenes crecen (la maqueta) */
+  intro?: boolean;
+  /** con 3D: color del cartón y del tablero (CSS) */
+  paper?: string;
+  /** con 3D: imagen dibujada sobre el tablero (URL o data URI) */
+  groundImage?: string;
+  /** cotas dibujadas sobre el tablero (y sobre el plano 2D) */
+  dims?: MapDim[];
+  /** drag = se explora arrastrando · scroll = la cámara recorre `path` con el scroll (ponlo dentro de un `PinnedSection`) */
+  nav?: "drag" | "scroll";
+  /** con `nav="scroll"`: paradas de la cámara; la de cada momento enseña su `title` y `text` */
+  path?: CameraStop[];
   className?: string;
 };
+
+/** Normaliza cualquier color CSS a `#rrggbb` / `rgb()` (three no entiende `color(srgb …)` ni `color-mix`) */
+const cssColor = (c: string | undefined, fallback: string) => {
+  if (!c || typeof document === "undefined") return c || fallback;
+  const ctx = document.createElement("canvas").getContext("2d");
+  if (!ctx) return fallback;
+  ctx.fillStyle = fallback;
+  ctx.fillStyle = c;
+  return ctx.fillStyle.startsWith("rgba") ? ctx.fillStyle.replace(/rgba\(([^,]+),([^,]+),([^,]+),[^)]+\)/, "rgb($1,$2,$3)") : ctx.fillStyle;
+};
+
+/** Huellas en planta de los volúmenes: el fondo 2D cuando hay `blocks` y no hay `background` (y la reserva del 3D) */
+function Footprints({ blocks, dims = [] }: { blocks: MapBlock[]; dims?: MapDim[] }) {
+  return (
+    <svg className="ui-xcan__plan" width="100%" height="100%" aria-hidden>
+      <defs>
+        <pattern id="ui-xcan-grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="currentColor" strokeOpacity=".12" /></pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#ui-xcan-grid)" />
+      {blocks.map((b, i) =>
+        b.shape && b.shape !== "box" ? (
+          <ellipse key={i} cx={`${b.x}%`} cy={`${b.y}%`} rx={`${b.w / 2}%`} ry={`${b.d / 2}%`} />
+        ) : (
+          <rect key={i} x={`${b.x - b.w / 2}%`} y={`${b.y - b.d / 2}%`} width={`${b.w}%`} height={`${b.d}%`} data-acc={b.mat === "accent" ? "" : undefined} transform={b.rot ? `rotate(${b.rot})` : undefined} style={b.rot ? { transformBox: "fill-box", transformOrigin: "center" } : undefined} />
+        ),
+      )}
+      {dims.map((d, i) => (
+        <g key={`d${i}`} className="ui-xcan__dim">
+          <line x1={`${d.x1}%`} y1={`${d.y1}%`} x2={`${d.x2}%`} y2={`${d.y2}%`} />
+          <text x={`${(d.x1 + d.x2) / 2}%`} y={`${(d.y1 + d.y2) / 2}%`} dy="-6">{d.label}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
@@ -43,16 +105,44 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  * **vista de lista** como alternativa (accesible, sin gestos) y el hint de uso. Sin inercia ni animaciones con
  * `prefers-reduced-motion`. En móvil el lienzo captura el gesto: la lista es la salida para quien prefiera hacer scroll.
  *
- * Se compone de piezas del kit: el arrastre es el de `DragGrid` (`lib/ui/dragPan.ts`) y el cambio «Mapa / Lista» es un
- * `OptionPicker`.
+ * Con `depth="3d"` el mismo mundo se ve como **maqueta de papel en 3D** (three.js, Overworld Audio): volúmenes de cartón,
+ * metacrilato y madera (`blocks`), sombras suaves, cámara inclinada que sigue el arrastre y una intro que pasa del plano a la
+ * maqueta. Los puntos siguen siendo botones del DOM (teclado, foco, lector de pantalla) colocados sobre la escena. Mientras
+ * carga, y si el equipo no puede o pide reducir movimiento, se ve el plano 2D con las huellas de los volúmenes.
+ *
+ * Con `nav="scroll"` dentro de un `PinnedSection` no se arrastra: el scroll lleva la cámara por las paradas de `path` (de la
+ * planta cenital a la maqueta y de un detalle a otro, como Oryzo, Primland o las salas de Cartier) y cada parada enseña su
+ * texto. `dims` dibuja cotas sobre el tablero, como anotaciones de CAD.
+ *
+ * Se compone de piezas del kit: el arrastre es el de `DragGrid` (`lib/ui/dragPan.ts`), el cambio «Mapa / Lista» es un
+ * `OptionPicker` y la carga del 3D es la de `ObjectStage` y `Logo3D` (`lib/ui/gl.tsx`).
+ *
+ * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete) aunque se use en 2D: se importa por subruta,
+ * `trama-ui/ExplorableCanvas`.
  */
-export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", className = "" }: ExplorableCanvasProps) {
+export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", groundImage, dims, nav = "drag", path, className = "" }: ExplorableCanvasProps) {
+  const box = useRef<HTMLDivElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
   const pan = useRef<DragPan | null>(null);
+  const panPos = useRef({ x: 0, y: 0 });
+  const pointer = useRef({ x: 0, y: 0 });
+  const markerEls = useRef(new Map<string, HTMLElement>());
+  const progress = useRef(0);
+  const [stop, setStop] = useState(0);
+  const tour = nav === "scroll" && !!path && path.length > 1;
   const [mode, setMode] = useState<"map" | "list">("map");
   const [open, setOpen] = useState<string | null>(null);
+  const [ready3d, setReady3d] = useState(false);
   const reduced = useReducedMotion();
+  const tokens = useTokens(box);
+  const gl = useGLGate(box, { want: depth === "3d" && mode === "map" && !reduced, margin: "0px" });
+  const three = gl.use3d && ready3d;
+  const colors = useMemo(
+    () => ({ paper: cssColor(paper, "#f3efe7"), bg: cssColor(tokens?.["--bg"], "#f3efe7"), line: cssColor(tokens?.["--fg"], "#222"), accent: cssColor(tokens?.["--acc"], "#ff5a36") }),
+    [paper, tokens],
+  );
+  const pts = useMemo(() => markers.map((m) => ({ id: m.id, x: m.x, y: m.y })), [markers]);
 
   // el mundo nunca deja ver su borde: la vista se recorta a [ventana − mundo, 0]
   const limits = useCallback(() => {
@@ -60,12 +150,30 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
     return { minX: Math.min(0, (v?.clientWidth ?? 0) - world.w), minY: Math.min(0, (v?.clientHeight ?? 0) - world.h) };
   }, [world.w, world.h]);
 
+  // recorrido por scroll: el progreso sale del PinnedSection que lo envuelve (o del propio lienzo)
+  useEffect(() => {
+    const host = box.current?.closest(".ui-pin") ?? box.current;
+    if (!tour || !host || !path) return;
+    return trackScroll(host, (r, vh) => {
+      const p = host === box.current ? clamp01((vh - r.top) / (r.height + vh)) : clamp01(-r.top / (r.height - vh));
+      progress.current = p;
+      setStop(Math.round(p * (path.length - 1)));
+    });
+  }, [tour, path]);
+
   useEffect(() => {
     const v = view.current;
     if (mode !== "map" || !v) return;
     const b = limits();
+    if (tour) {
+      // sin arrastre: el plano 2D (reserva del 3D) queda centrado
+      panPos.current = { x: b.minX / 2, y: b.minY / 2 };
+      if (layer.current) layer.current.style.transform = `translate3d(${b.minX / 2}px, ${b.minY / 2}px, 0)`;
+      return;
+    }
     const p = attachDragPan(v, {
       apply: (x, y) => {
+        panPos.current = { x, y };
         if (layer.current) layer.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       },
       clamp: (x, y) => {
@@ -88,7 +196,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
       p.destroy();
       pan.current = null;
     };
-  }, [mode, limits, reduced]);
+  }, [mode, limits, reduced, tour]);
 
   const sel = markers.find((m) => m.id === open) ?? null;
   // centra el punto (un poco por encima del centro, para dejar sitio a la ficha)
@@ -115,7 +223,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
   );
 
   return (
-    <div className={`ui-xcan ${className}`.trim()} style={{ "--xc-h": height } as CSSProperties}>
+    <div ref={box} className={`ui-xcan ${three ? "ui-xcan--3d" : ""} ${tour ? "ui-xcan--tour" : ""} ${className}`.trim()} style={{ "--xc-h": height } as CSSProperties}>
       {listToggle && (
         <OptionPicker
           className="ui-xcan__tog"
@@ -135,12 +243,29 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
           role="group"
           aria-roledescription="mapa explorable"
           aria-label="Mapa de proyectos. Usa las flechas para desplazarlo y el tabulador para recorrer los puntos"
+          onPointerMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            pointer.current = { x: ((e.clientX - r.left) / r.width) * 2 - 1, y: ((e.clientY - r.top) / r.height) * 2 - 1 };
+          }}
         >
+          {gl.use3d && gl.mounted && (
+            <div className={`ui-xcan__gl ${three ? "is-on" : ""}`} aria-hidden>
+              <GLBoundary onError={gl.fail}>
+                <Suspense fallback={null}>
+                  <Map3DScene world={world} blocks={blocks} markers={pts} pan={panPos} markerEls={markerEls} pointer={pointer} colors={colors} groundImage={groundImage} dims={dims} path={tour ? path : undefined} progress={tour ? progress : undefined} tilt={tilt} intro={intro} active={gl.near} onReady={() => setReady3d(true)} />
+                </Suspense>
+              </GLBoundary>
+            </div>
+          )}
           <div ref={layer} className="ui-xcan__world" style={{ width: world.w, height: world.h }}>
-            {background}
+            <div className="ui-xcan__bg">{background ?? (blocks.length > 0 && <Footprints blocks={blocks} dims={dims} />)}</div>
             {markers.map((m) => (
               <button
                 key={m.id}
+                ref={(el) => {
+                  if (el) markerEls.current.set(m.id, el);
+                  else markerEls.current.delete(m.id);
+                }}
                 type="button"
                 className="ui-xcan__pt"
                 data-on={m.id === open ? "" : undefined}
@@ -153,7 +278,15 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
               </button>
             ))}
           </div>
-          <p className="ui-xcan__hint" aria-hidden>{hint}</p>
+          {tour && path?.[stop] && (path[stop].title || path[stop].text) ? (
+            <div className="ui-xcan__stop" aria-live="polite" key={stop}>
+              <small>{String(stop + 1).padStart(2, "0")} / {String(path.length).padStart(2, "0")}</small>
+              {path[stop].title && <b>{path[stop].title}</b>}
+              {path[stop].text && <p>{path[stop].text}</p>}
+            </div>
+          ) : (
+            !tour && <p className="ui-xcan__hint" aria-hidden>{hint}</p>
+          )}
           {card}
         </div>
       ) : (
