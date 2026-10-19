@@ -1,6 +1,8 @@
 "use client";
 
-import Icon from "@/components/ui/Icon";
+import Icon, { ICON_WEIGHTS, type IconSetDef, type IconWeight } from "@/components/ui/Icon";
+import { lucide } from "@/lib/ui/icons-lucide";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import PixelFrame, { PIXEL_FRAME_SKINS } from "@/components/ui/PixelFrame";
 import Sprite, { SPRITE_SHEET } from "@/components/ui/Sprite";
 import type { Tone } from "@/components/ui/variants";
@@ -12,12 +14,16 @@ const PIXEL_STYLES = ["retro", "terminal", "minimal", "dotmatrix"] as const;
 const FRAME_COLORS = Array.from(new Set(Object.values(PIXEL_FRAME_SKINS).flatMap((s) => Object.keys(s.fills))));
 
 /** El icono elegido en grande y, debajo, el set curado entero por grupos: el propio catálogo hace de navegador de iconos. */
-function IconGallery({ name, size, sharp, tone }: { name: IconName; size: number; sharp: boolean; tone: Tone }) {
+const FAMILY: Record<string, IconSetDef | "pixel"> = { pixel: "pixel", phosphor, lucide };
+
+function IconGallery({ name, size, sharp, tone, family, weight }: { name: IconName; size: number; sharp: boolean; tone: Tone; family: string; weight: IconWeight }) {
+  const set = FAMILY[family] ?? "pixel";
+  const attrs = family === "pixel" ? "" : ` set={${family}} weight="${weight}"`;
   return (
     <div className="ui-icongal">
       <div className="ui-icongal__hero">
-        <Icon name={name} iconSize={size} sharp={sharp} tone={tone} label={name} />
-        <code>{`<Icon name="${name}" />`}</code>
+        <Icon name={name} iconSize={size} sharp={sharp} tone={tone} label={name} set={set} weight={weight} />
+        <code>{`<Icon name="${name}"${attrs} />`}</code>
       </div>
       {ICON_GROUPS.map((g) => (
         <section key={g.label}>
@@ -27,7 +33,7 @@ function IconGallery({ name, size, sharp, tone }: { name: IconName; size: number
           <div className="ui-icongal__grid">
             {g.names.map((n) => (
               <div key={n} className="ui-icongal__cell" data-on={n === name}>
-                <Icon name={n} iconSize={24} sharp={sharp} />
+                <Icon name={n} iconSize={24} sharp={sharp} set={set} weight={weight} />
                 <span>{n}</span>
               </div>
             ))}
@@ -54,26 +60,30 @@ export const pixel: CatalogEntry[] = [
     id: "icon",
     component: "Icon",
     path: "@/components/ui/Icon",
-    name: "Icono pixel art",
+    name: "Icono (pixel art, Phosphor o Lucide)",
     category: "pixel",
     styles: ALL_STYLES,
-    description: "Icono SVG de Pixelarticons sobre rejilla de 24 px. Se tiñe con un token del tema o con el color del texto que lo rodea.",
+    description: "Los mismos 119 nombres en tres familias: pixel art (Pixelarticons), Phosphor (seis pesos dibujados a mano, de fino a bitono: editorial, corporativo, lujo) y Lucide (trazo técnico de grosor ajustable). Se tiñe con un token del tema o con el color del texto. Una web fija familia y peso para todo el kit con IconSet (o SiteFrame icons).",
     stageHeight: 520,
     props: [
       { key: "name", label: "Icono", type: "select", default: "heart", options: ICON_NAMES, hint: `${ICON_NAMES.length} del set curado; el resto de Pixelarticons entra con la prop icon` },
       { key: "iconSize", label: "Tamaño (px)", type: "number", default: 48, min: 16, max: 120, step: 4, hint: "Los múltiplos de 24 dan píxeles del mismo tamaño; otros valores mantienen bordes nítidos pero desiguales" },
-      { key: "sharp", label: "Esquinas duras", type: "boolean", default: false, hint: "Solo la mitad de los iconos tiene versión sharp; el resto se queda como está" },
+      { key: "family", label: "Familia", type: "select", default: "pixel", options: ["pixel", "phosphor", "lucide"], labels: { pixel: "pixel art (Pixelarticons)", phosphor: "Phosphor (6 pesos)", lucide: "Lucide (trazo)" }, noCode: true },
+      { key: "weight", label: "Peso", type: "select", default: "light", options: ICON_WEIGHTS, labels: { thin: "fino", light: "ligero", regular: "normal", bold: "grueso", fill: "relleno", duotone: "bitono" }, when: (p) => p.family !== "pixel", noCode: true },
+      { key: "sharp", label: "Esquinas duras", type: "boolean", default: false, hint: "Solo la mitad de los iconos tiene versión sharp; el resto se queda como está", when: (p) => p.family === "pixel" },
       toneProp("acc"),
     ],
     notes: [
       "Sin `tone` el icono hereda el color del texto (`currentColor`): dentro de un Button o un Badge toma el color de ese componente.",
       "Sin `label` es decorativo (aria-hidden); con `label` se anuncia como imagen.",
       "Para un icono fuera del set: `import { Zap } from \"pixelarticons/react/Zap\"` y `<Icon icon={Zap} />` (también valen las variantes …Solid y …Glyph).",
-      "Iconos de Pixelarticons, licencia MIT (© Gerrit Halfmann).",
+      "Para toda una web: `<IconSet set={phosphor} weight=\"light\">` (import de `@/lib/ui/icons-phosphor`) o `SiteFrame icons`. Los glifos `icon:…` de Button, NavBar, FeatureGrid o Footer también cambian.",
+      "Cada familia vive en su módulo (`icons-phosphor`, `icons-lucide`) y solo la descarga la web que la usa. Lucide no dibuja marcas: las suyas salen de Phosphor.",
+      "Licencias: Pixelarticons MIT (© Gerrit Halfmann), Phosphor MIT, Lucide ISC.",
     ],
     render: (p) => (
       <div className="ui-center ui-center--top ui-center--cols">
-        <IconGallery name={p.name as IconName} size={Number(p.iconSize)} sharp={p.sharp as boolean} tone={p.tone as Tone} />
+        <IconGallery name={p.name as IconName} size={Number(p.iconSize)} sharp={p.sharp as boolean} tone={p.tone as Tone} family={p.family as string} weight={p.weight as IconWeight} />
       </div>
     ),
   },

@@ -2,6 +2,9 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import HoverFX, { HOVERFX_EFFECTS, type HoverEffectKind } from "@/components/ui/HoverFX";
+import { ICON_WEIGHTS, IconSet, type IconSetDef, type IconWeight } from "@/components/ui/Icon";
+import { lucide } from "@/lib/ui/icons-lucide";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import Presence, { PRESENCE_EFFECTS, type PresenceEffect } from "@/components/ui/Presence";
 import { VARIANTS } from "@/components/ui/variants";
 import { catalog, getEntry } from "@/lib/catalog/catalog";
@@ -11,6 +14,14 @@ import { styleGuide } from "@/lib/catalog/styleGuide";
 import { getPreset, tokenPresets } from "@/lib/catalog/presets";
 import { FONT_PRESETS, applyOverrides, toHex, tokensToStyle, type TokenOverrides } from "@/lib/ui/tokens";
 import "./playground.css";
+
+/** familias de iconos del catálogo (el selector «Iconos» envuelve el escenario en un IconSet) */
+const ICON_FAMILIES: { id: "pixel" | "phosphor" | "lucide"; label: string; set?: IconSetDef }[] = [
+  { id: "pixel", label: "Pixel art" },
+  { id: "phosphor", label: "Phosphor", set: phosphor },
+  { id: "lucide", label: "Lucide", set: lucide },
+];
+const WEIGHT_LABELS: Record<IconWeight, string> = { thin: "fino", light: "ligero", regular: "normal", bold: "grueso", fill: "relleno", duotone: "bitono" };
 
 /** Un control por tipo de prop, generado a partir del esquema. */
 function Field({ spec, value, onChange }: { spec: PropSpec; value: Values[string]; onChange: (v: string | number | boolean) => void }) {
@@ -65,6 +76,8 @@ export default function Playground() {
   const [hoverOn, setHoverOn] = useState(false);
   const [hoverEffect, setHoverEffect] = useState<HoverEffectKind>("glow");
   const [hoverStrength, setHoverStrength] = useState(0.6);
+  const [iconFam, setIconFam] = useState<(typeof ICON_FAMILIES)[number]["id"]>("pixel");
+  const [iconWeight, setIconWeight] = useState<IconWeight>("regular");
   const [compare, setCompare] = useState(false);
   const [scenario, setScenario] = useState(false);
   const [sel, setSel] = useState(catalog[0].id);
@@ -135,6 +148,8 @@ export default function Playground() {
     if (s !== "all") {
       setPreset(styleGuide[s].preset);
       setOv({});
+      setIconFam(styleGuide[s].icons.set);
+      setIconWeight(styleGuide[s].icons.weight);
     }
   };
   const setToken = <K extends keyof TokenOverrides>(k: K, v: TokenOverrides[K]) => setOv((o) => ({ ...o, [k]: v }));
@@ -157,12 +172,13 @@ export default function Playground() {
   // Los fondos ocupan todo el escenario: envolverlos en Presence/HoverFX (que se ajustan al
   // contenido salvo en modo `fill`) rompería su tamaño, así que el panel FX no se aplica a ellos.
   const canWrapFx = entry ? entry.category !== "fondos" : false;
+  const fam = ICON_FAMILIES.find((f) => f.id === iconFam);
   const wrapFx = (node: ReactNode) => {
-    if (!canWrapFx) return node;
+    if (!canWrapFx) return <IconSet set={fam?.set} weight={iconWeight}>{node}</IconSet>;
     let out = node;
     if (hoverOn) out = <HoverFX effect={hoverEffect} strength={hoverStrength} fill>{out}</HoverFX>;
     if (animOn) out = <Presence effect={animEffect} loop duration={animDuration} hold={1.4} fill>{out}</Presence>;
-    return out;
+    return <IconSet set={fam?.set} weight={iconWeight}>{out}</IconSet>;
   };
 
   return (
@@ -188,6 +204,28 @@ export default function Playground() {
           acc2
           <input type="color" value={toHex(tokens.acc2, "#c084fc")} onChange={(e) => setToken("acc2", e.target.value)} />
         </label>
+        <label className="pg__theme" title="Familia de los iconos de todos los componentes (Icon y los glifos icon:…)">
+          Iconos
+          <select value={iconFam} onChange={(e) => setIconFam(e.target.value as typeof iconFam)}>
+            {ICON_FAMILIES.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        {iconFam !== "pixel" && (
+          <label className="pg__theme" title="Peso de los iconos">
+            Peso
+            <select value={iconWeight} onChange={(e) => setIconWeight(e.target.value as IconWeight)}>
+              {ICON_WEIGHTS.map((w) => (
+                <option key={w} value={w}>
+                  {WEIGHT_LABELS[w]}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <button className={`pg-chip ${showTokens ? "is-on" : ""}`} onClick={() => setShowTokens((v) => !v)}>
           Tokens {showTokens ? "▴" : "▾"}
         </button>
@@ -322,6 +360,8 @@ export default function Playground() {
                 <dd>{styleGuide[sty].type}</dd>
                 <dt>ASCII</dt>
                 <dd>{styleGuide[sty].ascii}</dd>
+                <dt>Iconos</dt>
+                <dd>{ICON_FAMILIES.find((f) => f.id === styleGuide[sty].icons.set)?.label}{styleGuide[sty].icons.set !== "pixel" ? ` · ${WEIGHT_LABELS[styleGuide[sty].icons.weight]}` : ""}</dd>
                 <dt>Evitar</dt>
                 <dd>{styleGuide[sty].avoid}</dd>
               </dl>

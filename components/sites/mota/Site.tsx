@@ -14,6 +14,7 @@ import StickerCollage from "@/components/ui/StickerCollage";
 import { photo } from "@/lib/sites/photos";
 import { sticker } from "@/lib/sites/stickers";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref } from "../shared";
 import { JOBS, SLUG } from "./data";
 import "./mota.css";
@@ -34,7 +35,7 @@ const STICKERS = [
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="mo">
+    <SiteFrame tokens={TOKENS} className="mo" icons={{ set: phosphor, weight: "light" }}>
       <SmoothScroll />
       <CustomCursor hideNative />
       <header className="mo-head">

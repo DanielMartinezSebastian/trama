@@ -930,7 +930,42 @@ obligatorio; el `License.txt` original vive en `public/pixel/kenney-pixel-ui/`).
 atribución visible; si algún día se sustituye por un pack CC BY, habrá que acreditarlo en el pie.
 
 **Añadir un icono al registro:** un `import` profundo, una línea en `ICONS` y su clave en `ICON_GROUPS`
-(`lib/ui/icons.ts`). Para comprobar que el nombre existe: `ls node_modules/pixelarticons/react/<Nombre>.js`.
+(`lib/ui/icons.ts`). Para comprobar que el nombre existe: `ls node_modules/pixelarticons/react/<Nombre>.js`. Después,
+añadir su equivalente en `MAP` de `scripts/build-icon-sets.mjs` y ejecutarlo (ver abajo).
+
+### 17b. Otras familias de iconos: Phosphor y Lucide (19-10-2026)
+
+Pixel art solo encaja en las estéticas retro (retro, terminal, dotmatrix). Para las demás, `Icon` dibuja **los mismos 119
+nombres** con otras dos librerías:
+
+| Familia | Licencia | Por qué | Pesos |
+|---|---|---|---|
+| **Phosphor** (`@phosphor-icons/react`) | MIT | Seis pesos **dibujados a mano** (no solo más trazo): de fino a bitono. Cubre editorial y lujo (fino, ligero), corporativo (ligero, normal), marca contundente (grueso, relleno) y producto amable (bitono). Trae logotipos de marca | `thin` · `light` · `regular` · `bold` · `fill` · `duotone` |
+| **Lucide** (`lucide-react`) | ISC | Trazo técnico y neutro, el estándar de shadcn/ui; el más ligero (~0,7 KB por icono). Para producto técnico, B2B y paneles | el peso se traduce a grosor: fino 1 · ligero 1,5 · normal 2 · grueso 2,5 |
+
+Se descartaron Tabler (mismo papel que Lucide, sin pesos), Iconoir (menos piezas y sin pesos) y Hugeicons (las variantes
+buenas son de pago).
+
+**Cómo se usa.** La familia y el peso se fijan **una vez por web** y los heredan todos los iconos de dentro, también los
+glifos `icon:…` de Button, NavBar, Footer, FeatureGrid, Timeline, ChatWidget o AudioPlayer:
+
+```tsx
+import { IconSet } from "@/components/ui/Icon";
+import { phosphor } from "@/lib/ui/icons-phosphor";   // paquete: "trama-ui/icons/phosphor"
+<IconSet set={phosphor} weight="light">…</IconSet>     // en las demos: <SiteFrame icons={{ set: phosphor, weight: "light" }}>
+<Icon name="heart" set={lucide} weight="thin" />        // o por icono
+```
+
+Sin `IconSet`, pixel art: nada de lo existente cambia. **Peso**: cada familia vive en su propio módulo y solo la descarga
+la web que la usa (Phosphor ~3,7 KB por icono sin comprimir, porque cada icono trae sus seis pesos; Lucide ~0,7 KB).
+Lucide no dibuja marcas (lo deja a Simple Icons): las suyas salen de Phosphor. Los registros
+(`lib/ui/icons-phosphor.ts`, `lib/ui/icons-lucide.ts`) los **genera** `node scripts/build-icon-sets.mjs`, que falla si
+algún nombre no tiene equivalente o no existe en la librería instalada.
+
+**Qué familia para cada estilo** (lo aplica el catálogo al elegir un estilo, en `lib/catalog/styleGuide.ts`):
+glass → Phosphor bitono · solid → Phosphor grueso · outline → Lucide ligero · neon → Lucide normal · minimal → Phosphor
+ligero · editorial → Phosphor fino · retro, terminal y dotmatrix → pixel art. En el catálogo, el selector «Iconos» de la
+barra superior cambia la familia y el peso de todos los componentes.
 
 ## 18. Galerías y carruseles (Swiper)
 

@@ -13,6 +13,7 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import { photo } from "@/lib/sites/photos";
 import { forestTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref } from "../shared";
 import { AREAS, FACTS, HOMES, SLUG } from "./data";
 import "./arbor.css";
@@ -24,7 +25,7 @@ const href = (p = "") => siteHref(SLUG, p);
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="ar">
+    <SiteFrame tokens={TOKENS} className="ar" icons={{ set: phosphor, weight: "thin" }}>
       <SmoothScroll />
       <IslandNav
         leading={<FullscreenMenu brand="Arbor" links={[{ label: "Inicio", href: href() }, { label: "Residencias", href: href("residencias") }]} footer={[{ label: "Instagram", href: "#" }, { label: "visitas@arbor.example", href: "mailto:visitas@arbor.example" }]} note="Arbor · Residencias entre árboles" />}

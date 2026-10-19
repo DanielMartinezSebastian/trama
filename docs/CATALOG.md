@@ -2220,9 +2220,9 @@ Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Acepta
 
 Iconos SVG que se tiñen con el tema, marcos de 9 cortes y sprites: píxeles hechos a mano, no filtros.
 
-### Icono pixel art — `Icon`
+### Icono (pixel art, Phosphor o Lucide) — `Icon`
 
-Icono SVG de Pixelarticons sobre rejilla de 24 px. Se tiñe con un token del tema o con el color del texto que lo rodea.
+Los mismos 119 nombres en tres familias: pixel art (Pixelarticons), Phosphor (seis pesos dibujados a mano, de fino a bitono: editorial, corporativo, lujo) y Lucide (trazo técnico de grosor ajustable). Se tiñe con un token del tema o con el color del texto. Una web fija familia y peso para todo el kit con IconSet (o SiteFrame icons).
 
 | prop | tipo | default |
 |---|---|---|
@@ -2234,7 +2234,9 @@ Icono SVG de Pixelarticons sobre rejilla de 24 px. Se tiñe con un token del tem
 - Sin `tone` el icono hereda el color del texto (`currentColor`): dentro de un Button o un Badge toma el color de ese componente.
 - Sin `label` es decorativo (aria-hidden); con `label` se anuncia como imagen.
 - Para un icono fuera del set: `import { Zap } from "pixelarticons/react/Zap"` y `<Icon icon={Zap} />` (también valen las variantes …Solid y …Glyph).
-- Iconos de Pixelarticons, licencia MIT (© Gerrit Halfmann).
+- Para toda una web: `<IconSet set={phosphor} weight="light">` (import de `@/lib/ui/icons-phosphor`) o `SiteFrame icons`. Los glifos `icon:…` de Button, NavBar, FeatureGrid o Footer también cambian.
+- Cada familia vive en su módulo (`icons-phosphor`, `icons-lucide`) y solo la descarga la web que la usa. Lucide no dibuja marcas: las suyas salen de Phosphor.
+- Licencias: Pixelarticons MIT (© Gerrit Halfmann), Phosphor MIT, Lucide ISC.
 
 ### Marco pixel art — `PixelFrame`
 

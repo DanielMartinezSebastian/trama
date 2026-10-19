@@ -19,6 +19,7 @@ import { money } from "@/lib/commerce/money";
 import { photo } from "@/lib/sites/photos";
 import { potteryArt } from "@/lib/sites/art";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref } from "../shared";
 import { FREE_SHIPPING, MATERIALS, PRODUCTS, SHIPPING, SLUG, TYPES, type Product } from "./data";
 import "./barro.css";
@@ -40,7 +41,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const value = useMemo<Cart>(() => ({ ...cart, openCart: () => setOpen(true) }), [cart]);
   return (
-    <SiteFrame tokens={TOKENS} className="br">
+    <SiteFrame tokens={TOKENS} className="br" icons={{ set: phosphor, weight: "light" }}>
       <CartCtx.Provider value={value}>
         <header className="br-head">
           <a className="br-brand" href={href()}>Barro</a>

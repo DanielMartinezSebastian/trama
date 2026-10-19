@@ -12,6 +12,7 @@ import ProjectList from "@/components/ui/ProjectList";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import { photo } from "@/lib/sites/photos";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref } from "../shared";
 import { DAYS, FACTS, SLUG, TALKS } from "./data";
 import "./foro.css";
@@ -30,7 +31,7 @@ const talkItems = (list: typeof TALKS) => list.map((t) => ({ title: t.title, met
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="fr">
+    <SiteFrame tokens={TOKENS} className="fr" icons={{ set: phosphor, weight: "bold" }}>
       <Preloader variant="fill" brand="ArcoForo" duration={1.8} />
       <SmoothScroll />
       <CustomCursor hideNative />

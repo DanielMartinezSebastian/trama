@@ -19,6 +19,7 @@ import TextField from "@/components/ui/TextField";
 import Toast from "@/components/ui/Toast";
 import { fashionArt, type LookKind } from "@/lib/sites/art";
 import { tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref, useActiveIndex, useSiteNavigate } from "../shared";
 import { POSTS, SERVICES, SLOTS, SLUG, type Post } from "./data";
 import "./clara.css";
@@ -55,7 +56,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const L = [href("servicios"), href("lookbook"), href("diario"), href("sobre-mi")];
   const active = useActiveIndex(L);
   return (
-    <SiteFrame tokens={TOKENS} className="cv">
+    <SiteFrame tokens={TOKENS} className="cv" icons={{ set: phosphor, weight: "thin" }}>
       <div className="st-header st-header--flat cv__header">
         <NavBar
           brand="Clara Vidal"

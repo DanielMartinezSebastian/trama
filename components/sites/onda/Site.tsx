@@ -24,6 +24,7 @@ import Toast from "@/components/ui/Toast";
 import { renderGlyph } from "@/components/ui/Icon";
 import { gearArt } from "@/lib/sites/art";
 import { tokensToStyle } from "@/lib/ui/tokens";
+import { lucide } from "@/lib/ui/icons-lucide";
 import { PageHeader, Section, SiteFrame, euros, siteHref, useActiveIndex, useSiteNavigate } from "../shared";
 import { ARTISTS, CATEGORIES, GEAR, SLUG, SUPPORT_FAQ, type Gear } from "./data";
 import "./onda.css";
@@ -51,7 +52,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const L = [href("productos"), href("artistas"), href("soporte")];
   const active = useActiveIndex(L);
   return (
-    <SiteFrame tokens={TOKENS} className="on">
+    <SiteFrame tokens={TOKENS} className="on" icons={{ set: lucide, weight: "light" }}>
       <div className="st-header st-header--flat">
         <NavBar
           brand="ONDA"

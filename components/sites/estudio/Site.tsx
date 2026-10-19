@@ -30,6 +30,7 @@ const SHOT: Record<string, [Parameters<typeof photo>[0], number]> = { "casa-alba
 const shot = (slug: string) => photo(...SHOT[slug]).src;
 import { getLenis } from "@/lib/motion/lenis";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref } from "../shared";
 import { FACTS, PROCESS, PROJECTS, SERVICES, SLUG } from "./data";
 import "./estudio.css";
@@ -56,7 +57,7 @@ export function Shell({ children }: { children: ReactNode }) {
     if (l) l.scrollTo(0, { immediate: true });
   }, [path]);
   return (
-    <SiteFrame tokens={TOKENS} className="es">
+    <SiteFrame tokens={TOKENS} className="es" icons={{ set: phosphor, weight: "light" }}>
       <Preloader variant="counter" brand="Marea Studio" meta="Madrid — 2026" duration={1.8} />
       <SmoothScroll />
       <CustomCursor hideNative />

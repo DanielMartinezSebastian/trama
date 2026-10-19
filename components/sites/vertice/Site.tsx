@@ -12,6 +12,7 @@ import LogoCloud from "@/components/ui/LogoCloud";
 import NavBar from "@/components/ui/NavBar";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
+import { phosphor } from "@/lib/ui/icons-phosphor";
 import { SiteFrame, siteHref, useActiveIndex, useSiteNavigate } from "../shared";
 import { AGENDA, AREAS, AWARDS, CLIENTS, GOALS, GROUP_FIGURES, JOBS, KINDS, NEWS, QUOTE, REPORTS, SECTORS, SLUG, SOLUTIONS, STOCK, type SectorId } from "./data";
 import "./vertice.css";
@@ -57,7 +58,7 @@ export function Shell({ children }: { children: ReactNode }) {
     ...JOBS.map((j) => `${j.title}=${href("empleo")}`),
   ].join(", ");
   return (
-    <SiteFrame tokens={TOKENS} className="vx">
+    <SiteFrame tokens={TOKENS} className="vx" icons={{ set: phosphor, weight: "light" }}>
       <div className="st-header st-header--flat vx-head">
         <NavBar
           brand="Vértice"
@@ -85,7 +86,7 @@ export function Shell({ children }: { children: ReactNode }) {
             brand="Vértice"
             tagline="Grupo industrial · Bilbao, 1962"
             columns={`Sectores: ${SECTORS.map((s) => `${s.name}=${sectorHref(s.id)}`).join(", ")}, Soluciones=${L[1]}; Compañía: Sostenibilidad=${L[2]}, Inversores=${L[3]}, Sala de prensa=${href("prensa")}, Empleo=${href("empleo")}; Contacto: Contacto por área=${href("contacto")}, Canal ético=${href("contacto")}, Proveedores=${href("contacto")}; Legal: Créditos de las imágenes=/creditos`}
-            social="in, YT"
+            social="icon:linkedin, icon:youtube"
             copyright="© 2026 Vértice Grupo Industrial, S. A. Empresa ficticia: demo construida con Trama."
             variant="minimal"
           />

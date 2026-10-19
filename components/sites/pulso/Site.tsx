@@ -12,6 +12,7 @@ import DataTable, { type DataColumn } from "@/components/ui/DataTable";
 import EmptyState from "@/components/ui/EmptyState";
 import KpiCard from "@/components/ui/KpiCard";
 import { editorialDarkTokens, tokensToStyle } from "@/lib/ui/tokens";
+import { lucide } from "@/lib/ui/icons-lucide";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import { CUSTOMERS, MONTHS, RETENTION, REVENUE, SIGNUPS, SLUG, type Customer } from "./data";
 import "./pulso.css";
@@ -41,7 +42,7 @@ export function Shell({ children }: { children: ReactNode }) {
     [],
   );
   return (
-    <SiteFrame tokens={TOKENS} className="pl">
+    <SiteFrame tokens={TOKENS} className="pl" icons={{ set: lucide, weight: "regular" }}>
       <AppShell
         brand={<><span aria-hidden>◐</span><span>Pulso</span></>}
         title={TITLES[section] ?? "Pulso"}

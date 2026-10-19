@@ -402,6 +402,8 @@ a.ui-button { text-decoration: none; }
 /* Sin `tone` hereda `currentColor`; con `tone` usa el token (--tone lo fija .ui-tone--*). `crispEdges`: al no ser
    el tamaño múltiplo de 24, sin esto cada píxel del icono saldría con los bordes suavizados. */
 .ui-icon { display: inline-block; flex: none; vertical-align: middle; shape-rendering: crispEdges; }
+/* familias vectoriales (Phosphor, Lucide): curvas suavizadas */
+.ui-icon--vec { shape-rendering: auto; }
 .ui-icon--tone { color: var(--tone); }
 /* Galería del catálogo (Pixel art → Icono): el elegido en grande y el set curado entero debajo. */
 .ui-icongal { display: grid; align-content: start; gap: 18px; width: 100%; max-width: 780px; }

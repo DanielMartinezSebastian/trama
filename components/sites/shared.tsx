@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, type CSSProperties, type ReactNode } from "react";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { IconSet, type IconSetDef, type IconWeight } from "@/components/ui/Icon";
 import "./sites.css";
 
 /** Ruta absoluta dentro de una web: `siteHref("pixelforge", "tienda")` → `/sitios/pixelforge/tienda`. */
@@ -45,7 +46,7 @@ export function useActiveIndex(hrefs: string[]) {
  * componentes del kit (Button con href, BlogCard, Prose…) se interceptan aquí y van por `router.push`, así el estado de la web
  * (carrito, chat) sobrevive al cambiar de página. Los de la barra no: NavBar ya navega con `onNavigate`.
  */
-export function SiteFrame({ tokens, className = "", children }: { tokens: CSSProperties; className?: string; children: ReactNode }) {
+export function SiteFrame({ tokens, className = "", icons, children }: { tokens: CSSProperties; className?: string; /** familia y peso de los iconos de la web (sin él, pixel art) */ icons?: { set: IconSetDef; weight?: IconWeight }; children: ReactNode }) {
   const router = useRouter();
   useEffect(() => {
     document.documentElement.classList.add("scrollable");
@@ -66,7 +67,7 @@ export function SiteFrame({ tokens, className = "", children }: { tokens: CSSPro
   }, [router]);
   return (
     <div className={`st-page ${className}`} style={tokens}>
-      {children}
+      {icons ? <IconSet set={icons.set} weight={icons.weight}>{children}</IconSet> : children}
     </div>
   );
 }

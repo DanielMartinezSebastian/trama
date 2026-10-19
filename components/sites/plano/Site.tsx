@@ -18,6 +18,7 @@ import { getLenis } from "@/lib/motion/lenis";
 import { photo } from "@/lib/sites/photos";
 import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
+import { lucide } from "@/lib/ui/icons-lucide";
 import { SiteFrame, siteHref } from "../shared";
 import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_WORLD, PROBLEMS, PROOF, SLUG, SPECS, TOUR } from "./data";
 import "./plano.css";
@@ -47,7 +48,7 @@ const LEN = 13;
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="pn">
+    <SiteFrame tokens={TOKENS} className="pn" icons={{ set: lucide, weight: "light" }}>
       <SmoothScroll />
       <div className="pn-wrap">
         <BlueprintFrame>

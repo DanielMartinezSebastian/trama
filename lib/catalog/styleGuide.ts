@@ -12,6 +12,8 @@ export type StyleRecipe = {
   avoid: string;
   /** tema de las landings que mejor lo ilustra */
   preset: string;
+  /** familia y peso de iconos que encajan (ver `Icon`): pixel art en lo retro, Phosphor o Lucide en lo demás */
+  icons: { set: "pixel" | "phosphor" | "lucide"; weight: "thin" | "light" | "regular" | "bold" | "fill" | "duotone" };
 };
 
 export const styleGuide: Record<StyleTag, StyleRecipe> = {
@@ -22,6 +24,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Trama de texto con hover trail/glow; revelado wipe.",
     avoid: "Fondos muy claros: se pierde contraste.",
     preset: "tide",
+    icons: { set: "phosphor", weight: "duotone" },
   },
   solid: {
     when: "Editorial, artesanal, retro.",
@@ -30,6 +33,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Revelado rise; hover magnify/shatter.",
     avoid: "Blur y sombras suaves.",
     preset: "brew",
+    icons: { set: "phosphor", weight: "bold" },
   },
   outline: {
     when: "Técnico, espacial, nocturno.",
@@ -38,6 +42,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Disolución ASCII; hover attract/glitchText.",
     avoid: "Rellenos opacos grandes.",
     preset: "orbit",
+    icons: { set: "lucide", weight: "light" },
   },
   neon: {
     when: "Vida nocturna, gaming.",
@@ -46,6 +51,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Bloom + glitch + parpadeo.",
     avoid: "Más de 2 colores de acento.",
     preset: "pulse",
+    icons: { set: "lucide", weight: "regular" },
   },
   retro: {
     when: "Arcade, píxel.",
@@ -54,6 +60,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Estilos pixel/dither, scanlines.",
     avoid: "Antialias suave y sombras difuminadas.",
     preset: "arcade",
+    icons: { set: "pixel", weight: "regular" },
   },
   terminal: {
     when: "Herramientas para desarrolladores.",
@@ -62,6 +69,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Escritura carácter a carácter, CRT.",
     avoid: "Iconos de color.",
     preset: "pulse",
+    icons: { set: "pixel", weight: "regular" },
   },
   minimal: {
     when: "El contenido manda.",
@@ -70,6 +78,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Solo ScrambleText en el titular.",
     avoid: "Efectos sobre texto largo.",
     preset: "neutro",
+    icons: { set: "phosphor", weight: "light" },
   },
   dotmatrix: {
     when: "Tecnología, seguridad, IA, herramientas de datos: estética hacker sobria.",
@@ -78,6 +87,7 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "RetroCanvas con rampa dots + scanlines; fondos en paleta duotone o tint.",
     avoid: "Colores de acento saturados y degradados: es monocromo.",
     preset: "dotmatrix",
+    icons: { set: "pixel", weight: "regular" },
   },
   editorial: {
     when: "Estudios, portfolios, revistas y marcas con fotografía: la tipografía y el espacio mandan.",
@@ -86,5 +96,6 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     ascii: "Ninguno: SplitText, FitText, RollLink y ProjectList son sus recursos.",
     avoid: "Neón, glass y degradados: pierde la sobriedad.",
     preset: "editorial",
+    icons: { set: "phosphor", weight: "thin" },
   },
 };
