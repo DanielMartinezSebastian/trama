@@ -43,6 +43,7 @@
  * Selección de texto en el acento del tema: fondo --acc y texto --bg, así el texto que ya es de color acento se invierte en
  * vez de desaparecer. Los tokens se leen del elemento seleccionado, de modo que cada tema (y cada tarjeta con fill="accent",
  * que invierte --acc/--bg en sus hijos) tiene su propia selección sin reglas extra. Sin text-shadow: el glow de neon,
- * dotmatrix y la sombra de legibilidad emborronan el texto sobre el fondo de selección.
+ * dotmatrix y la sombra de legibilidad emborronan el texto sobre el fondo de selección. Un tema puede fijar otra pareja con
+ * los tokens opcionales `--sel-bg` y `--sel-fg` (p. ej. tinta sobre papel en un tema en blanco y negro).
  */
-::selection { background: var(--acc); color: var(--bg); text-shadow: none; }
+::selection { background: var(--sel-bg, var(--acc)); color: var(--sel-fg, var(--bg)); text-shadow: none; }

@@ -58,7 +58,7 @@ export type MapBlock = {
   layer?: number;
 };
 
-export type Map3DColors = { paper: string; bg: string; line: string; accent: string };
+export type Map3DColors = { paper: string; bg: string; line: string; accent: string; wood?: string };
 
 /** Parada de la cámara en un recorrido: mira a (x, y) en % del mundo */
 export type CameraStop = {
@@ -299,7 +299,7 @@ function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps
       paper: new MeshStandardMaterial({ color: colors.paper, map: tex.paper, roughness: 0.95 }),
       accent: new MeshStandardMaterial({ color: colors.accent, map: tex.paper, roughness: 0.85 }),
       acrylic: new MeshPhysicalMaterial({ color: "#dff1f7", roughness: 0.08, metalness: 0, transparent: true, opacity: 0.38, clearcoat: 1 }),
-      wood: new MeshStandardMaterial({ color: "#d9b183", map: tex.wood, roughness: 0.8 }),
+      wood: new MeshStandardMaterial({ color: colors.wood ?? "#d9b183", map: tex.wood, roughness: 0.8 }),
       edge: new LineBasicMaterial({ color: colors.line, transparent: true, opacity: 0.35 }),
     });
     const sets = new Map<number, ReturnType<typeof set>>();
@@ -336,7 +336,7 @@ function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps
     });
     const far = Math.max(0.001, ...items.map((i) => i.dist));
     return { sets, wire, geos, items, far };
-  }, [world.w, world.h, blocks, colors.paper, colors.accent, colors.line, tex]);
+  }, [world.w, world.h, blocks, colors.paper, colors.accent, colors.line, colors.wood, tex]);
 
   useEffect(
     () => () => {

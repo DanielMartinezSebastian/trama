@@ -51,6 +51,8 @@ export type ExplorableCanvasProps = {
   intro?: boolean;
   /** con 3D: color del cartón y del tablero (CSS) */
   paper?: string;
+  /** con 3D: color de la madera de balsa (CSS); por defecto un tono miel. Un gris cálido la deja en la gama de una web en blanco y negro */
+  wood?: string;
   /** con 3D: imagen dibujada sobre el tablero (URL o data URI) */
   groundImage?: string;
   /** cotas dibujadas sobre el tablero (y sobre el plano 2D) */
@@ -131,7 +133,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete) aunque se use en 2D: se importa por subruta,
  * `trama-ui/ExplorableCanvas`.
  */
-export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", className = "" }: ExplorableCanvasProps) {
+export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", wood, groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", className = "" }: ExplorableCanvasProps) {
   const box = useRef<HTMLDivElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
@@ -150,8 +152,8 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
   const gl = useGLGate(box, { want: depth === "3d" && mode === "map" && !reduced, margin: "0px" });
   const three = gl.use3d && ready3d;
   const colors = useMemo(
-    () => ({ paper: cssColor(paper, "#f3efe7"), bg: cssColor(tokens?.["--bg"], "#f3efe7"), line: cssColor(tokens?.["--fg"], "#222"), accent: cssColor(tokens?.["--acc"], "#ff5a36") }),
-    [paper, tokens],
+    () => ({ paper: cssColor(paper, "#f3efe7"), bg: cssColor(tokens?.["--bg"], "#f3efe7"), line: cssColor(tokens?.["--fg"], "#222"), accent: cssColor(tokens?.["--acc"], "#ff5a36"), wood: wood ? cssColor(wood, "#d9b183") : undefined }),
+    [paper, wood, tokens],
   );
   const pts = useMemo(() => markers.map((m) => ({ id: m.id, x: m.x, y: m.y })), [markers]);
   // three no entiende cualquier color CSS: los fondos de las paradas se normalizan aquí

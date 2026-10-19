@@ -14719,7 +14719,7 @@
       "title": "Plano · revisión de modelos de edificación",
       "url": "/sitios/plano",
       "dir": "components/sites/plano",
-      "description": "Web de producto técnico con la fórmula «plano» y un relato en 3D: la foto del edificio se disuelve en la planta con cotas, la planta se levanta en maqueta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos (en alambre y sobre fondo oscuro) y la cámara visita cada incidencia como una sala con su ficha editorial. Usa BlueprintFrame, PinnedSection, ExplorableCanvas (despiece, barrido, foco y fondo por parada), ScrubText, FitText, CellGrid, MetaTable, ImageReveal, EdgeTab y GridBackground (grano).",
+      "description": "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos, un único acento naranja sobre blanco y negro y la maqueta 3D del modelo con sus incidencias. En «Recorrido», un relato 3D: la foto se disuelve en la planta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos y la cámara visita cada incidencia como una sala con su ficha. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable, ExplorableCanvas (despiece, barrido, foco y fondo por parada), PinnedSection, ScrubText, FitText, ImageReveal y GridBackground (grano).",
       "pages": [
         {
           "path": "/sitios/plano",
@@ -14728,6 +14728,10 @@
         {
           "path": "/sitios/plano/producto",
           "title": "Producto"
+        },
+        {
+          "path": "/sitios/plano/recorrido",
+          "title": "Recorrido: así revisa Cota un modelo"
         },
         {
           "path": "/sitios/plano/incidencias/c1",
@@ -14750,11 +14754,16 @@
         {
           "component": "SplitText",
           "id": "split-text",
-          "uses": 5
+          "uses": 8
         },
         {
           "component": "CellGrid",
           "id": "cell-grid",
+          "uses": 5
+        },
+        {
+          "component": "ExplorableCanvas",
+          "id": "explorable-canvas",
           "uses": 3
         },
         {
@@ -14765,11 +14774,6 @@
         {
           "component": "MetaTable",
           "id": "meta-table",
-          "uses": 2
-        },
-        {
-          "component": "ExplorableCanvas",
-          "id": "explorable-canvas",
           "uses": 2
         },
         {
@@ -14790,11 +14794,6 @@
         {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
-          "uses": 1
-        },
-        {
-          "component": "Preloader",
-          "id": "preloader",
           "uses": 1
         },
         {

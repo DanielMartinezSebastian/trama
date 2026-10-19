@@ -1,6 +1,6 @@
 /** Plano — web de «Cota», software ficticio que revisa modelos de edificación al guardarlos. Fórmulas: Heron AI (plano técnico),
  * Atlas Motion (relato por pasos sobre un objeto en despiece), Cartier Watches & Wonders (salas y ficha editorial) y Sleep Well
- * Creatives (capítulos numerados, fondo que alterna, grano). Datos puros. */
+ * Creatives (capítulos numerados, fondo que alterna, grano) en la página «Recorrido». Datos puros. */
 import type { CameraStop, MapBlock } from "@/lib/map3d/scene";
 import { walls } from "@/lib/sites/maqueta";
 
@@ -11,7 +11,7 @@ export const meta = {
   name: "Plano",
   title: "Plano · revisión de modelos de edificación",
   blurb:
-    "Web de producto técnico con la fórmula «plano» y un relato en 3D: la foto del edificio se disuelve en la planta con cotas, la planta se levanta en maqueta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos (en alambre y sobre fondo oscuro) y la cámara visita cada incidencia como una sala con su ficha editorial. Usa BlueprintFrame, PinnedSection, ExplorableCanvas (despiece, barrido, foco y fondo por parada), ScrubText, FitText, CellGrid, MetaTable, ImageReveal, EdgeTab y GridBackground (grano).",
+    "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos, un único acento naranja sobre blanco y negro y la maqueta 3D del modelo con sus incidencias. En «Recorrido», un relato 3D: la foto se disuelve en la planta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos y la cámara visita cada incidencia como una sala con su ficha. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable, ExplorableCanvas (despiece, barrido, foco y fondo por parada), PinnedSection, ScrubText, FitText, ImageReveal y GridBackground (grano).",
   accent: "#c43500",
   tag: "producto técnico · relato 3D",
 };
@@ -177,7 +177,16 @@ export const ISSUE_STOP = Object.fromEntries(ISSUES.map((i) => [i.id, CHAPTERS.f
 export const ROUTES = [
   { path: "", title: "Inicio" },
   { path: "producto", title: "Producto" },
+  { path: "recorrido", title: "Recorrido: así revisa Cota un modelo" },
   ...ISSUES.map((i) => ({ path: `incidencias/${i.id}`, title: `Incidencia: ${i.title}` })),
+];
+
+/* ---------- portada ---------- */
+export const PROBLEMS = [
+  { t: "Cada cambio\nlo haces tú", p: "Revisas a mano cada plano, uno a uno, incluso lo que ya has comprobado cien veces." },
+  { t: "La revisión\nllega tarde", p: "Los errores de normativa aparecen en la entrega, cuando corregirlos cuesta una semana." },
+  { t: "Nadie vigila\nlas colisiones", p: "Instalaciones y estructura se cruzan en silencio hasta que alguien abre las dos vistas." },
+  { t: "Lo pequeño\nse acumula", p: "Las comprobaciones repetitivas se comen la semana que tenías para diseñar." },
 ];
 
 /* ---------- después del relato ---------- */

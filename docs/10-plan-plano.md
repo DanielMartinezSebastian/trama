@@ -135,3 +135,17 @@ cambia `bg` por parada.
 **Comprobado:** recorrido completo en Chrome (escritorio y 390 px en un marco), fichas de las cuatro incidencias y vuelta a
 su sala, página de producto con el despiece, catálogo con el control de despiece, Alzado y Sonar sin cambios y sin errores
 en consola; `tsc`, `catalog:check` y `check:shadows`. **Sin hacer:** axe, `npm run build` y `pkg:build`.
+
+## Revisión (19-10-2026, después)
+
+Daniel prefiere la maquetación original de la portada. Cambios:
+
+- **Portada** (`/sitios/plano`): vuelve la maquetación técnica de antes (foto, fila de titular, bloque partido con
+  clientes, problemas, frase y maqueta arrastrable con las incidencias), sin preloader ni grano. La maqueta enlaza al
+  recorrido.
+- **El relato 3D** pasa a su propia página, **`/sitios/plano/recorrido`** (en el menú, «Recorrido»), con las cifras, las
+  integraciones y la llamada final. Las fichas de incidencia vuelven a su sala del recorrido.
+- **Tonos apagados en los tokens** de la demo (`TONES` en `Site.tsx`): `--ink`, `--cream`, `--mut-dark` y `--wood`, más
+  `--sel-bg` / `--sel-fg` para la selección de texto (tinta sobre papel, no naranja). La regla de selección del kit acepta
+  ahora esos dos tokens opcionales (`kit.css`). La maqueta usa `paper` y la nueva opción `wood` de `ExplorableCanvas`
+  (madera en gris cálido). Las fotos del recorrido y de las fichas van en blanco y negro.

@@ -2397,11 +2397,11 @@ Carpeta: `components/sites/barro/` · 11 páginas: Inicio · Tienda · Jarrón O
 
 ### Plano · revisión de modelos de edificación — `/sitios/plano`
 
-Web de producto técnico con la fórmula «plano» y un relato en 3D: la foto del edificio se disuelve en la planta con cotas, la planta se levanta en maqueta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos (en alambre y sobre fondo oscuro) y la cámara visita cada incidencia como una sala con su ficha editorial. Usa BlueprintFrame, PinnedSection, ExplorableCanvas (despiece, barrido, foco y fondo por parada), ScrubText, FitText, CellGrid, MetaTable, ImageReveal, EdgeTab y GridBackground (grano).
+Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos, un único acento naranja sobre blanco y negro y la maqueta 3D del modelo con sus incidencias. En «Recorrido», un relato 3D: la foto se disuelve en la planta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos y la cámara visita cada incidencia como una sala con su ficha. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable, ExplorableCanvas (despiece, barrido, foco y fondo por parada), PinnedSection, ScrubText, FitText, ImageReveal y GridBackground (grano).
 
-Carpeta: `components/sites/plano/` · 6 páginas: Inicio · Producto · Incidencia: Colisión · Incidencia: Altura libre · Incidencia: Paso de puerta · Incidencia: Escalera
+Carpeta: `components/sites/plano/` · 7 páginas: Inicio · Producto · Recorrido: así revisa Cota un modelo · Incidencia: Colisión · Incidencia: Altura libre · Incidencia: Paso de puerta · Incidencia: Escalera
 
-`SplitText` ×5 · `CellGrid` ×3 · `ScrubText` ×2 · `MetaTable` ×2 · `ExplorableCanvas` ×2 · `GridBackground` · `FitText` · `RollLink` · `SmoothScroll` · `Preloader` · `PinnedSection` · `ImageReveal` · `BlueprintFrame` · `EdgeTab`
+`SplitText` ×8 · `CellGrid` ×5 · `ExplorableCanvas` ×3 · `ScrubText` ×2 · `MetaTable` ×2 · `GridBackground` · `FitText` · `RollLink` · `SmoothScroll` · `PinnedSection` · `ImageReveal` · `BlueprintFrame` · `EdgeTab`
 
 ### ArcoForo · una semana de diseño, arte y cultura digital — `/sitios/foro`
 

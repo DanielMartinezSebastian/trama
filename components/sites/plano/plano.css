@@ -1,7 +1,8 @@
-/* Plano (/sitios/plano): prefijo pn-. Fórmulas Heron (plano técnico), Atlas (relato por pasos sobre un despiece),
-   Cartier (salas y ficha) y Sleep Well (capítulos numerados, fondo que alterna, grano). Solo tokens del tema. */
+/* Plano (/sitios/plano): prefijo pn-. Portada con la fórmula Heron (plano técnico); en «Recorrido», Atlas (relato por pasos
+   sobre un despiece), Cartier (salas y ficha) y Sleep Well (capítulos numerados, fondo que alterna, grano).
+   Solo tokens: los del tema y los tonos de la demo (--ink, --cream, --mut-dark, --wood, --sel-*), definidos en Site.tsx. */
 
-.pn { --st-gutter: clamp(14px, 2.4vw, 32px); --ink: #1d1c1a; --cream: #efe9dc; letter-spacing: -0.005em; }
+.pn { --st-gutter: clamp(14px, 2.4vw, 32px); letter-spacing: -0.005em; }
 :where(.pn) a { color: inherit; }
 .pn-mono { font-family: var(--font-accent, var(--mono)); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 .pn h1, .pn h2, .pn h3 { font-family: var(--display); text-transform: uppercase; font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; margin: 0; }
@@ -27,7 +28,44 @@
 .pn-btn--solid i { border-left-color: rgba(255, 255, 255, 0.5); }
 .pn-btn--solid:is(:hover, :focus-visible) { background: var(--fg); border-color: var(--fg); }
 
-/* ---------- el relato fijado ---------- */
+/* ---------- portada (la maquetación original) ---------- */
+/* hero */
+.pn-hero { display: grid; }
+.pn-hero__art { display: grid; place-items: center; padding: clamp(24px, 5vw, 64px) var(--st-gutter) 0; min-height: min(62svh, 560px); }
+.pn-hero__art img { width: min(100%, 880px); height: auto; }
+.pn-hero__row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto; border-top: 1px solid var(--ln); align-items: stretch; }
+.pn-hero__row > * { padding: clamp(16px, 2.4vw, 32px); }
+.pn-hero__row h1 { font-size: clamp(32px, 5.4vw, 80px); max-width: 15ch; }
+.pn-hero__sub { border-left: 1px solid var(--ln); display: grid; align-content: space-between; gap: 16px; }
+.pn-hero__sub p { margin: 0; max-width: 40ch; line-height: 1.45; color: var(--mut); font-size: 15px; }
+.pn-hero__go { border-left: 1px dashed var(--ln); display: grid; align-content: end; text-decoration: none; }
+@media (max-width: 860px) { .pn-hero__row { grid-template-columns: minmax(0, 1fr); } .pn-hero__sub, .pn-hero__go { border-left: 0; border-top: 1px solid var(--ln); } }
+
+/* split */
+.pn-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-top: 1px solid var(--ln); }
+.pn-split__art { display: grid; place-items: center; padding: clamp(20px, 4vw, 56px); border-right: 1px solid var(--ln); }
+.pn-split__art img { width: 100%; height: auto; }
+.pn-split__txt { display: grid; grid-template-rows: auto auto 1fr auto; }
+.pn-split__body { display: grid; gap: 22px; align-content: start; padding: clamp(20px, 4vw, 56px); }
+.pn-split__body h2 { font-size: clamp(26px, 3.4vw, 48px); max-width: 16ch; }
+.pn-split__body p { margin: 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.4; max-width: 40ch; text-transform: uppercase; font-weight: 600; letter-spacing: -0.01em; }
+@media (max-width: 860px) { .pn-split { grid-template-columns: minmax(0, 1fr); } .pn-split__art { border-right: 0; border-bottom: 1px solid var(--ln); } }
+
+/* problemas y declaración */
+.pn-sec { border-top: 1px solid var(--ln); }
+.pn-prob h3 { font-size: clamp(20px, 2vw, 28px); white-space: pre-line; margin-bottom: 40px; }
+.pn-prob p { margin: 0; color: var(--mut); font-size: 14px; line-height: 1.45; }
+.pn-mid { display: grid; place-items: center; min-height: 60svh; text-align: center; padding: 40px var(--st-gutter); border-top: 1px solid var(--ln); }
+.pn-mid h2 { font-size: clamp(32px, 6.4vw, 96px); }
+.pn-split .pn-clients { border-top: 1px solid var(--ln); }
+
+/* maqueta de la portada (y del producto) */
+.pn-model--home { padding: clamp(24px, 4vw, 56px) clamp(16px, 3vw, 40px); border-top: 1px solid var(--ln); }
+.pn-model__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.pn-model__bar p { margin: 0; }
+.pn-model .ui-xcan__pt span { font-family: var(--font-accent, ui-monospace), monospace; }
+
+/* ---------- recorrido: el relato fijado ---------- */
 .pn-story { position: relative; }
 /* anclas de cada sala: a la altura de scroll de su parada */
 .pn-anchor { position: absolute; left: 0; top: calc(var(--at) * var(--len) * 100svh); width: 1px; height: 1px; }
@@ -36,7 +74,7 @@
 .pn-tour .ui-xcan__pt span { font-family: var(--font-accent, ui-monospace), monospace; }
 /* tramo oscuro (los cuatro pasos): el texto pasa a crema. Solo en los capítulos y el raíl: si los tokens cambiaran en un
    ancestro del lienzo, la maqueta se reconstruiría con los colores nuevos (el fondo de la escena ya lo cambia `bg` por parada) */
-.pn-tour.is-dark :is(.pn-chs, .pn-rail) { --fg: var(--cream); --mut: #b9b2a3; --ln: rgba(239, 233, 220, 0.24); --bg: var(--ink); }
+.pn-tour.is-dark :is(.pn-chs, .pn-rail) { --fg: var(--cream); --mut: var(--mut-dark); --ln: rgba(239, 233, 220, 0.24); --bg: var(--ink); }
 
 /* foto primero: se abre un agujero en el centro y la fachada se disuelve en la planta */
 .pn-photo { --k: clamp(0, var(--pin-p, 0) * 16, 1); position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: calc(1 - var(--k) * 0.9);
@@ -94,13 +132,13 @@
 
 /* ---------- después del relato ---------- */
 /* tramo oscuro con curvas de nivel (Atlas) */
-.pn-dark { --bg: var(--ink); --fg: var(--cream); --mut: #b9b2a3; --ln: rgba(239, 233, 220, 0.22); --card: #26241f; background-color: var(--bg); color: var(--fg);
+.pn-dark { --bg: var(--ink); --fg: var(--cream); --mut: var(--mut-dark); --ln: rgba(239, 233, 220, 0.22); --card: #26241f; background-color: var(--bg); color: var(--fg);
   background-image: repeating-radial-gradient(ellipse at 18% 30%, transparent 0 26px, rgba(239, 233, 220, 0.045) 26px 27px), repeating-radial-gradient(ellipse at 82% 76%, transparent 0 34px, rgba(239, 233, 220, 0.035) 34px 35px); }
 .pn-proof { display: grid; gap: clamp(22px, 3vw, 40px); padding: clamp(40px, 7vw, 110px) var(--st-gutter) 0; }
 .pn-proof > .pn-mono { color: var(--mut); }
 .pn-stat b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 96px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.9; margin-bottom: 18px; }
 .pn-stat p { margin: 0; color: var(--mut); max-width: 26ch; line-height: 1.45; }
-.pn-clients { border-top: 1px solid var(--ln); margin: 0 calc(-1 * var(--st-gutter)); }
+.pn-proof .pn-clients { border-top: 1px solid var(--ln); margin: 0 calc(-1 * var(--st-gutter)); }
 .pn-clients__bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 22px; border-bottom: 1px solid var(--ln); }
 
 /* integraciones: tarjetas con marcas de esquina (Atlas) */
@@ -119,7 +157,7 @@
 
 /* llamada final: foto a sangre con un velo (no sombra en el texto) */
 .pn-end { position: relative; min-height: min(86svh, 760px); display: grid; align-items: end; border-top: 1px solid var(--ln); overflow: hidden; }
-.pn-end img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.4); }
+.pn-end img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
 .pn-end::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(29, 28, 26, 0.86), rgba(29, 28, 26, 0.15) 70%); }
 .pn-end__txt { position: relative; z-index: 1; display: grid; gap: 26px; padding: clamp(28px, 5vw, 72px) var(--st-gutter); color: var(--cream); }
 
@@ -134,6 +172,7 @@
 .pn-issue__head h1 { font-size: clamp(48px, 10vw, 160px); }
 .pn-issue__short { margin: 0; max-width: 46ch; color: var(--mut); line-height: 1.5; }
 .pn-issue__img { width: 100%; }
+.pn-issue__img img { filter: grayscale(1) contrast(1.05); }
 .pn-issue__lead { margin: 0 auto; max-width: 30ch; font-family: var(--display); font-size: clamp(24px, 3.2vw, 46px); line-height: 1.15; letter-spacing: -0.02em; text-align: center; }
 .pn-issue__nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--ln); padding-top: 18px; }
 .pn-issue__nav a { text-decoration: none; }

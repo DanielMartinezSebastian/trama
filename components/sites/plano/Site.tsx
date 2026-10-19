@@ -10,21 +10,34 @@ import GridBackground from "@/components/ui/GridBackground";
 import ImageReveal from "@/components/ui/ImageReveal";
 import MetaTable from "@/components/ui/MetaTable";
 import PinnedSection from "@/components/ui/PinnedSection";
-import Preloader from "@/components/ui/Preloader";
 import RollLink from "@/components/ui/RollLink";
 import ScrubText from "@/components/ui/ScrubText";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import { getLenis } from "@/lib/motion/lenis";
 import { photo } from "@/lib/sites/photos";
+import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
-import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_WORLD, PROOF, SLUG, SPECS, TOUR } from "./data";
+import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_WORLD, PROBLEMS, PROOF, SLUG, SPECS, TOUR } from "./data";
 import "./plano.css";
 
 const PAIR = FONT_PAIRINGS.find((p) => p.id === "tecnico")!;
-// tema del kit `blueprintTokens` con el par tipográfico «técnico»
-const TOKENS: CSSProperties = { ...tokensToStyle({ ...blueprintTokens, display: PAIR.display }), "--font-accent": PAIR.accent } as CSSProperties;
+/** tonos de la demo: blanco y negro apagados (como las fotos) y un solo acento. Van en los tokens para que todo los use
+ * (la selección de texto, el tramo oscuro) y también como constantes para la maqueta 3D, que no entiende `var()` */
+const TONES = { ink: "#1d1c1a", cream: "#efe9dc", mutDark: "#b9b2a3", wood: "#cbc3b4", paper: "#f1efe9" };
+// tema del kit `blueprintTokens` con el par tipográfico «técnico» y los tonos de la demo
+const TOKENS: CSSProperties = {
+  ...tokensToStyle({ ...blueprintTokens, display: PAIR.display }),
+  "--font-accent": PAIR.accent,
+  "--ink": TONES.ink,
+  "--cream": TONES.cream,
+  "--mut-dark": TONES.mutDark,
+  "--wood": TONES.wood,
+  // selección en tinta sobre papel, no en naranja
+  "--sel-bg": blueprintTokens.fg,
+  "--sel-fg": blueprintTokens.bg,
+} as CSSProperties;
 const href = (p = "") => siteHref(SLUG, p);
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -35,7 +48,6 @@ const LEN = 13;
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <SiteFrame tokens={TOKENS} className="pn">
-      <Preloader variant="words" brand="Cota" meta="Revisión de modelos" words={["Normativa", "Colisiones", "Cotas", "Nomenclatura"]} exit="curtain" />
       <SmoothScroll />
       <div className="pn-wrap">
         <BlueprintFrame>
@@ -43,8 +55,8 @@ export function Shell({ children }: { children: ReactNode }) {
             <a className="pn-brand" href={href()}><span aria-hidden>◩</span> Cota</a>
             <nav className="pn-nav pn-mono" aria-label="Principal">
               <a href={href("producto")}>Producto</a>
-              <a href={`${href()}#sala-${ISSUES[0].id}`}>Incidencias</a>
-              <a href={`${href()}#integraciones`}>Integraciones</a>
+              <a href={href("recorrido")}>Recorrido</a>
+              <a href={href("producto")}>Precios</a>
             </nav>
             <a className="pn-cta pn-mono" href={href("producto")}>Solicitar demo <span aria-hidden>→</span></a>
           </header>
@@ -56,13 +68,11 @@ export function Shell({ children }: { children: ReactNode }) {
         </BlueprintFrame>
       </div>
       <EdgeTab label="Solicitar demo" href={href("producto")} mark="C." top="56%" />
-      {/* grano de papel sobre toda la página (Sleep Well) */}
-      <GridBackground kind="grain" position="fixed" opacity={0.16} fade={false} />
     </SiteFrame>
   );
 }
 
-/* ---------- inicio: el relato «De guardar a entregar» ---------- */
+/* ---------- recorrido: el relato «De guardar a entregar» (Atlas, Cartier, Sleep Well) ---------- */
 function Chapter({ i, on }: { i: number; on: boolean }) {
   const c = CHAPTERS[i];
   const tab = on ? undefined : -1;
@@ -127,10 +137,10 @@ function Chapter({ i, on }: { i: number; on: boolean }) {
   );
 }
 
-function Home() {
+function Tour() {
   const [stop, setStop] = useState(0);
   const dark = CHAPTERS[stop]?.kind === "step";
-  // al volver de una ficha (#sala-c1…): el preloader y el scroll suave arrancan arriba, así que se salta a la sala después
+  // al volver de una ficha (#sala-c1…): el scroll suave arranca arriba, así que se salta a la sala después
   useEffect(() => {
     const el = location.hash.startsWith("#sala-") ? document.getElementById(location.hash.slice(1)) : null;
     if (!el) return;
@@ -149,6 +159,8 @@ function Home() {
   }, []);
   return (
     <>
+      {/* grano de papel sobre el recorrido (Sleep Well) */}
+      <GridBackground kind="grain" position="fixed" opacity={0.14} fade={false} />
       <div className="pn-story" style={{ "--len": LEN } as CSSProperties}>
         {/* anclas: cada incidencia tiene su «sala» a la altura de scroll de su parada (la ficha vuelve aquí) */}
         {ISSUES.map((x) => (
@@ -167,6 +179,8 @@ function Home() {
             markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
             linkLabel="Ver incidencia →"
             listToggle={false}
+            paper={TONES.paper}
+            wood={TONES.wood}
           />
           {/* foto primero: la fachada se disuelve en la planta con el scroll (Atlas: vídeo → pintura) */}
           <div className="pn-photo">
@@ -226,6 +240,79 @@ function Home() {
   );
 }
 
+/* ---------- inicio: la maquetación técnica (Heron) ---------- */
+function Home() {
+  return (
+    <>
+      <section className="pn-hero">
+        <div className="pn-hero__art">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={photo("arquitectura", 2).src} alt="Fachada de edificio en blanco y negro" />
+        </div>
+        <div className="pn-hero__row">
+          <SplitText as="h1" by="lines" trigger="mount" stagger={0.1} delay={0.1}>Revisa tus modelos mientras los dibujas.</SplitText>
+          <div className="pn-hero__sub">
+            <p>Cota comprueba normativa, colisiones y cotas cada vez que guardas, dentro de tu programa de siempre.</p>
+            <span className="pn-mono">Revit · Rhino · ArchiCAD · SketchUp</span>
+          </div>
+          <a className="pn-hero__go pn-mono" href="#problema">Descubrir ↓</a>
+        </div>
+      </section>
+
+      <section className="pn-split">
+        <div className="pn-split__art">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={blueprintArt(2, "#c43500")} alt="Dibujo de línea de otro edificio con un círculo de acento" loading="lazy" />
+        </div>
+        <div className="pn-split__txt">
+          <div className="pn-split__body">
+            <SplitText as="h2" by="words" stagger={0.05}>Lo repetitivo del modelado no debería comerse tu semana.</SplitText>
+            <p>Cota se ocupa de lo fiel y manual para que tú te quedes con el diseño, no con el programa.</p>
+            <a className="pn-btn pn-mono" href={href("producto")}><span>Saber más</span><i aria-hidden>→</i></a>
+          </div>
+          <div className="pn-clients">
+            <div className="pn-clients__bar pn-mono"><span>Clientes</span><span aria-hidden>← →</span></div>
+            <CellGrid columns={5} line="dashed" padding={18}>
+              {CLIENTS.map((c) => <span key={c} className="pn-mono" style={{ fontWeight: 700 }}>{c}</span>)}
+            </CellGrid>
+          </div>
+        </div>
+      </section>
+
+      <section id="problema" className="pn-sec pn-prob" aria-label="Problemas que resuelve">
+        <CellGrid columns={4} padding={28}>
+          {PROBLEMS.map((p) => (
+            <div key={p.t}><h3>{p.t}</h3><p>{p.p}</p></div>
+          ))}
+        </CellGrid>
+      </section>
+
+      <section className="pn-mid">
+        <SplitText as="h2" by="words" stagger={0.06}>A tu lado, dentro del modelo.</SplitText>
+      </section>
+
+      <section className="pn-model pn-model--home" aria-label="Maqueta del modelo revisado">
+        <div className="pn-model__bar">
+          <p className="pn-mono">Modelo revisado · {ISSUES.length} incidencias</p>
+          <a className="pn-btn pn-mono" href={href("recorrido")}><span>Ver el recorrido</span><i aria-hidden>→</i></a>
+        </div>
+        <ExplorableCanvas
+          depth="3d"
+          world={MODEL_WORLD}
+          blocks={MODEL}
+          markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
+          linkLabel="Ver incidencia →"
+          tilt={50}
+          paper={TONES.paper}
+          wood={TONES.wood}
+          height="min(76vh, 680px)"
+          hint="Arrastra la maqueta · pulsa una incidencia"
+        />
+      </section>
+    </>
+  );
+}
+
 /* ---------- ficha de una incidencia (Cartier: «Explore» → ficha editorial con URL propia) ---------- */
 function IssuePage({ id }: { id: string }) {
   const k = ISSUES.findIndex((x) => x.id === id);
@@ -234,7 +321,7 @@ function IssuePage({ id }: { id: string }) {
   const prev = ISSUES[(k + ISSUES.length - 1) % ISSUES.length], next = ISSUES[(k + 1) % ISSUES.length];
   return (
     <article className="pn-issue">
-      <a className="pn-issue__x" href={`${href()}#sala-${x.id}`} aria-label="Volver a la maqueta">×</a>
+      <a className="pn-issue__x" href={`${href("recorrido")}#sala-${x.id}`} aria-label="Volver a la maqueta">×</a>
       <header className="pn-issue__head">
         <p className="pn-mono">Incidencia {pad(k + 1)} / {pad(ISSUES.length)} · {x.meta}</p>
         <SplitText as="h1" by="lines" trigger="mount">{x.title}</SplitText>
@@ -254,7 +341,7 @@ function IssuePage({ id }: { id: string }) {
       />
       <nav className="pn-issue__nav pn-mono" aria-label="Otras incidencias">
         <a href={href(`incidencias/${prev.id}`)}>← {prev.title}</a>
-        <a href={`${href()}#sala-${x.id}`}>Volver a la maqueta</a>
+        <a href={`${href("recorrido")}#sala-${x.id}`}>Volver a la maqueta</a>
         <a href={href(`incidencias/${next.id}`)}>{next.title} →</a>
       </nav>
     </article>
@@ -271,7 +358,7 @@ function Product() {
       </section>
       <section className="pn-model" aria-label="Maqueta del modelo en despiece">
         <p className="pn-mono">El modelo por capas · base, estructura, instalaciones y muros</p>
-        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
+        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} paper={TONES.paper} wood={TONES.wood} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
       </section>
       <section>
         <MetaTable rows={SPECS} columns={2} label="Ficha técnica de Cota" />
@@ -293,6 +380,7 @@ export function Page({ path }: { path: string[] }) {
   const [a, b] = path;
   if (!a) return <Home />;
   if (a === "producto") return <Product />;
+  if (a === "recorrido") return <Tour />;
   if (a === "incidencias" && b) return <IssuePage id={b} />;
   return null;
 }
