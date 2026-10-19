@@ -314,6 +314,16 @@ Letras que se separan y se desvanecen al hacer scroll: la marca gigante de un he
 
 - Depende del scroll de la página; con prefers-reduced-motion se ve entero y quieto.
 
+### Tipografía elástica — `ElasticText`
+
+Las letras se estiran en vertical cuando el puntero pasa cerca o cuando haces scroll rápido (Mat Voyce, Uncommon). Solo transforma: el texto sigue legible y accesible, y se queda quieto con movimiento reducido.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "Diseño que se siente" |
+| `mode` | `pointer` · `scroll` | "pointer" |
+| `stretch` | number 0.2–1.2 | 0.6 |
+
 ## Tarjetas (`tarjetas`)
 
 Superficies de contenido con capas ASCII.
@@ -663,6 +673,24 @@ Botón de icono circular. Con inline mide lo mismo que la letra y se coloca dent
 | `size` | `sm` · `md` · `lg` | "md" |
 | `inline` | boolean | false |
 | `look` | `outline` · `solid` | "outline" |
+
+### Interruptor de sonido con ecualizador — `SoundToggle`
+
+Botón con barras animadas que se mueven cuando el sonido está activo. Arranca siempre apagado; con `src` controla un audio en bucle y con `onChange` avisa a tu propio reproductor.
+
+| prop | tipo | default |
+|---|---|---|
+| `bars` | number 3–8 | 4 |
+| `labelOff` | text | "Sonido: no" |
+| `labelOn` | text | "Sonido: sí" |
+
+### Collage de pegatinas arrastrables — `StickerCollage`
+
+Pegatinas vectoriales que flotan sobre un titular y se pueden arrastrar, apilar y mover con las flechas (Uncommon). Decorativo: el texto que importa va en el contenido, no en las pegatinas.
+
+| prop | tipo | default |
+|---|---|---|
+| `float` | boolean | true |
 
 ## Transiciones (`transiciones`)
 
@@ -1739,6 +1767,24 @@ Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con 
 | `height` | text | "320px" |
 | `grow` | number 1.5–8 | 4 |
 
+### Trabajos con cambio de vista animado — `WorkViews`
+
+Colección de proyectos con botones «Vista ① ② ③»: lista con miniatura, cuadrícula o índice de texto. Al cambiar, cada elemento viaja a su nueva posición (GSAP Flip) en vez de saltar ('kin).
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Vista" |
+| `views` | `2` · `3` | "3" |
+
+### Lienzo explorable por arrastre — `ExplorableCanvas`
+
+Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible.
+
+| prop | tipo | default |
+|---|---|---|
+| `listToggle` | boolean | true |
+| `hint` | text | "Arrastra para explorar · pulsa un punto" |
+
 ## Secciones (`secciones`)
 
 Bloques compuestos, listos para pegar en una landing: hero, contacto, precios, FAQ…
@@ -2165,6 +2211,19 @@ Líneas con cantidad y quitar, subtotal, barra de envío gratis y botón de pedi
 
 - El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta.
 
+### Pantalla de entrada (sonido / mayoría de edad) — `EntryGate`
+
+Diálogo a pantalla completa con titular enorme y dos botones: «Entrar con sonido / sin sonido» (Overworld Audio) o «¿Eres mayor de edad?» (Santioni Spirits). Bloquea el scroll, atrapa el foco y recuerda la elección en la sesión. Es una declaración, no una verificación legal.
+
+### Aviso de cookies — `CookieBanner`
+
+Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página.
+
+| prop | tipo | default |
+|---|---|---|
+| `position` | `bottom-left` · `bottom-right` · `bottom` | "bottom-left" |
+| `title` | text | "¿Qué te parecen las cookies?" |
+
 ## Pixel art (`pixel`)
 
 Iconos SVG que se tiñen con el tema, marcos de 9 cortes y sprites: píxeles hechos a mano, no filtros.
@@ -2373,3 +2432,11 @@ Web de un complejo residencial con la fórmula «arquitectura de lujo tranquilo�
 Carpeta: `components/sites/arbor/` · 2 páginas: Inicio · Residencias
 
 `SplitText` ×2 · `FitText` · `SmoothScroll` · `FullscreenMenu` · `IslandNav` · `ExpandingPanels` · `ScatterText` · `EdgeTab` · `MetaTable` · `CircleButton`
+
+### Sonar · estudio de identidad sonora — `/sitios/sonar`
+
+Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa EntryGate, SoundToggle, ElasticText, ExplorableCanvas, WorkViews y BigFooter.
+
+Carpeta: `components/sites/sonar/` · 2 páginas: Inicio · Proyectos
+
+`RollLink` ×3 · `SplitText` ×2 · `SmoothScroll` · `BigFooter` · `CellGrid` · `EntryGate` · `SoundToggle` · `ElasticText` · `WorkViews` · `ExplorableCanvas`

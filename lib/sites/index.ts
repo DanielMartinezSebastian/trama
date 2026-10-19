@@ -13,6 +13,7 @@ import * as barro from "@/components/sites/barro/data";
 import * as plano from "@/components/sites/plano/data";
 import * as foro from "@/components/sites/foro/data";
 import * as arbor from "@/components/sites/arbor/data";
+import * as sonar from "@/components/sites/sonar/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -29,6 +30,7 @@ export const sites: SiteMeta[] = [
   { ...plano.meta, routes: plano.ROUTES, dir: "components/sites/plano" },
   { ...foro.meta, routes: foro.ROUTES, dir: "components/sites/foro" },
   { ...arbor.meta, routes: arbor.ROUTES, dir: "components/sites/arbor" },
+  { ...sonar.meta, routes: sonar.ROUTES, dir: "components/sites/sonar" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

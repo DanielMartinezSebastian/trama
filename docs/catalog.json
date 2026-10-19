@@ -51,7 +51,8 @@
         "split-text",
         "fit-text",
         "scrub-text",
-        "scatter-text"
+        "scatter-text",
+        "elastic-text"
       ]
     },
     {
@@ -85,7 +86,9 @@
         "roll-link",
         "custom-cursor",
         "smooth-scroll",
-        "circle-button"
+        "circle-button",
+        "sound-toggle",
+        "sticker-collage"
       ]
     },
     {
@@ -194,7 +197,9 @@
         "drag-grid",
         "object-stage",
         "product-gallery",
-        "expanding-panels"
+        "expanding-panels",
+        "work-views",
+        "explorable-canvas"
       ]
     },
     {
@@ -242,7 +247,9 @@
         "drawer",
         "chat-widget",
         "command-palette",
-        "cart-drawer"
+        "cart-drawer",
+        "entry-gate",
+        "cookie-banner"
       ]
     },
     {
@@ -12160,6 +12167,219 @@
       ],
       "example": "import CircleButton from \"@/components/ui/CircleButton\";\n\n<CircleButton\n  label=\"Ver más\"\n/>",
       "preview": "/componentes#circle-button"
+    },
+    {
+      "id": "entry-gate",
+      "name": "Pantalla de entrada (sonido / mayoría de edad)",
+      "component": "EntryGate",
+      "import": "import EntryGate from \"@/components/ui/EntryGate\";",
+      "category": "overlays",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Diálogo a pantalla completa con titular enorme y dos botones: «Entrar con sonido / sin sonido» (Overworld Audio) o «¿Eres mayor de edad?» (Santioni Spirits). Bloquea el scroll, atrapa el foco y recuerda la elección en la sesión. Es una declaración, no una verificación legal.",
+      "props": [],
+      "example": "import EntryGate from \"@/components/ui/EntryGate\";\n\n<EntryGate />",
+      "preview": "/componentes#entry-gate"
+    },
+    {
+      "id": "sound-toggle",
+      "name": "Interruptor de sonido con ecualizador",
+      "component": "SoundToggle",
+      "import": "import SoundToggle from \"@/components/ui/SoundToggle\";",
+      "category": "interaccion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Botón con barras animadas que se mueven cuando el sonido está activo. Arranca siempre apagado; con `src` controla un audio en bucle y con `onChange` avisa a tu propio reproductor.",
+      "props": [
+        {
+          "key": "bars",
+          "type": "number",
+          "default": 4,
+          "label": "Barras",
+          "min": 3,
+          "max": 8
+        },
+        {
+          "key": "labelOff",
+          "type": "text",
+          "default": "Sonido: no",
+          "label": "Texto apagado"
+        },
+        {
+          "key": "labelOn",
+          "type": "text",
+          "default": "Sonido: sí",
+          "label": "Texto encendido"
+        }
+      ],
+      "example": "import SoundToggle from \"@/components/ui/SoundToggle\";\n\n<SoundToggle />",
+      "preview": "/componentes#sound-toggle"
+    },
+    {
+      "id": "elastic-text",
+      "name": "Tipografía elástica",
+      "component": "ElasticText",
+      "import": "import ElasticText from \"@/components/ui/ElasticText\";",
+      "category": "texto",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Las letras se estiran en vertical cuando el puntero pasa cerca o cuando haces scroll rápido (Mat Voyce, Uncommon). Solo transforma: el texto sigue legible y accesible, y se queda quieto con movimiento reducido.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Diseño que se siente",
+          "label": "Texto"
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "pointer",
+          "label": "Respuesta a",
+          "options": [
+            "pointer",
+            "scroll"
+          ]
+        },
+        {
+          "key": "stretch",
+          "type": "number",
+          "default": 0.6,
+          "label": "Estirado",
+          "min": 0.2,
+          "max": 1.2
+        }
+      ],
+      "example": "import ElasticText from \"@/components/ui/ElasticText\";\n\n<ElasticText\n  text=\"Diseño que se siente\"\n/>",
+      "preview": "/componentes#elastic-text"
+    },
+    {
+      "id": "work-views",
+      "name": "Trabajos con cambio de vista animado",
+      "component": "WorkViews",
+      "import": "import WorkViews from \"@/components/ui/WorkViews\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Colección de proyectos con botones «Vista ① ② ③»: lista con miniatura, cuadrícula o índice de texto. Al cambiar, cada elemento viaja a su nueva posición (GSAP Flip) en vez de saltar ('kin).",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Vista",
+          "label": "Texto del selector"
+        },
+        {
+          "key": "views",
+          "type": "select",
+          "default": "3",
+          "label": "Vistas",
+          "options": [
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "example": "import WorkViews from \"@/components/ui/WorkViews\";\n\n<WorkViews\n  label=\"Vista\"\n/>",
+      "preview": "/componentes#work-views"
+    },
+    {
+      "id": "explorable-canvas",
+      "name": "Lienzo explorable por arrastre",
+      "component": "ExplorableCanvas",
+      "import": "import ExplorableCanvas from \"@/components/ui/ExplorableCanvas\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se arrastra con inercia, se mueve con flechas, cada punto centra la vista y abre su ficha. Incluye vista de lista como alternativa accesible.",
+      "props": [
+        {
+          "key": "listToggle",
+          "type": "boolean",
+          "default": true,
+          "label": "Botón Mapa / Lista"
+        },
+        {
+          "key": "hint",
+          "type": "text",
+          "default": "Arrastra para explorar · pulsa un punto",
+          "label": "Pista de uso"
+        }
+      ],
+      "example": "import ExplorableCanvas from \"@/components/ui/ExplorableCanvas\";\n\n<ExplorableCanvas />",
+      "preview": "/componentes#explorable-canvas"
+    },
+    {
+      "id": "sticker-collage",
+      "name": "Collage de pegatinas arrastrables",
+      "component": "StickerCollage",
+      "import": "import StickerCollage from \"@/components/ui/StickerCollage\";",
+      "category": "interaccion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Pegatinas vectoriales que flotan sobre un titular y se pueden arrastrar, apilar y mover con las flechas (Uncommon). Decorativo: el texto que importa va en el contenido, no en las pegatinas.",
+      "props": [
+        {
+          "key": "float",
+          "type": "boolean",
+          "default": true,
+          "label": "Flotan"
+        }
+      ],
+      "example": "import StickerCollage from \"@/components/ui/StickerCollage\";\n\n<StickerCollage />",
+      "preview": "/componentes#sticker-collage"
+    },
+    {
+      "id": "cookie-banner",
+      "name": "Aviso de cookies",
+      "component": "CookieBanner",
+      "import": "import CookieBanner from \"@/components/ui/CookieBanner\";",
+      "category": "overlays",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página.",
+      "props": [
+        {
+          "key": "position",
+          "type": "select",
+          "default": "bottom-left",
+          "label": "Posición",
+          "options": [
+            "bottom-left",
+            "bottom-right",
+            "bottom"
+          ]
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "¿Qué te parecen las cookies?",
+          "label": "Título"
+        }
+      ],
+      "example": "import CookieBanner from \"@/components/ui/CookieBanner\";\n\n<CookieBanner\n  title=\"¿Qué te parecen las cookies?\"\n/>",
+      "preview": "/componentes#cookie-banner"
     }
   ],
   "landings": [
@@ -14683,6 +14903,75 @@
         {
           "component": "CircleButton",
           "id": "circle-button",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "sonar",
+      "title": "Sonar · estudio de identidad sonora",
+      "url": "/sitios/sonar",
+      "dir": "components/sites/sonar",
+      "description": "Web de un estudio de sonido con la fórmula «experiencia explorable»: pantalla de entrada «con sonido / sin sonido», titular serif que se estira con el puntero, mapa de proyectos que se arrastra con inercia (con vista de lista alternativa), interruptor de sonido con ecualizador y cambio de vista animado en la página de proyectos. Usa EntryGate, SoundToggle, ElasticText, ExplorableCanvas, WorkViews y BigFooter.",
+      "pages": [
+        {
+          "path": "/sitios/sonar",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/sonar/proyectos",
+          "title": "Proyectos"
+        }
+      ],
+      "components": [
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 3
+        },
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 2
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "CellGrid",
+          "id": "cell-grid",
+          "uses": 1
+        },
+        {
+          "component": "EntryGate",
+          "id": "entry-gate",
+          "uses": 1
+        },
+        {
+          "component": "SoundToggle",
+          "id": "sound-toggle",
+          "uses": 1
+        },
+        {
+          "component": "ElasticText",
+          "id": "elastic-text",
+          "uses": 1
+        },
+        {
+          "component": "WorkViews",
+          "id": "work-views",
+          "uses": 1
+        },
+        {
+          "component": "ExplorableCanvas",
+          "id": "explorable-canvas",
           "uses": 1
         }
       ]

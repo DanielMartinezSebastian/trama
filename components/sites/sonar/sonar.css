@@ -1,0 +1,27 @@
+/* Sonar (/sitios/sonar): prefijo sn-. Fórmula Overworld Audio: noche azul, serif, mapa explorable. */
+
+.sn { --st-gutter: clamp(16px, 3vw, 40px); }
+:where(.sn) a { color: inherit; }
+.sn-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px var(--st-gutter); position: relative; z-index: 5; }
+.sn-brand { display: inline-flex; gap: 10px; align-items: center; text-decoration: none; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; }
+.sn-nav { display: flex; gap: 28px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; }
+@media (max-width: 720px) { .sn-nav { display: none; } }
+
+.sn-hero { display: grid; align-content: center; justify-items: start; gap: 22px; min-height: min(78vh, 760px); padding: clamp(24px, 5vw, 72px) var(--st-gutter); background: radial-gradient(1200px 600px at 80% 10%, rgba(127, 208, 255, 0.1), transparent 60%); }
+.sn-hero__t { max-width: 15ch; font-family: var(--display); font-weight: 400; font-size: clamp(44px, 9vw, 128px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance; }
+.sn-hero__p { margin: 0; max-width: 48ch; color: var(--mut); font-size: 16px; line-height: 1.55; }
+.sn-pill { display: inline-grid; place-items: center; min-height: 46px; padding: 0 24px; border: 1px solid var(--fg); border-radius: 99px; text-decoration: none; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; transition: background 0.25s linear, color 0.25s linear; }
+.sn-pill:is(:hover, :focus-visible) { background: var(--fg); color: var(--bg); }
+
+.sn-sec { padding: clamp(32px, 6vw, 88px) var(--st-gutter); }
+.sn-h2 { margin: 0 0 clamp(20px, 3vw, 40px); font-family: var(--display); font-weight: 400; font-size: clamp(36px, 6vw, 88px); line-height: 0.98; letter-spacing: -0.02em; }
+.sn-h3 { margin: 0 0 10px; font-family: var(--display); font-weight: 500; font-size: 26px; }
+.sn-lead { margin: -8px 0 28px; color: var(--mut); font-size: 15px; }
+.sn .ui-cell p, .sn .ui-cells p { color: var(--mut); line-height: 1.55; margin: 0; }
+.sn-rings { position: absolute; inset: 0; color: var(--fg); }
+.sn-rings__dots { opacity: 0.16; }
+.sn .ui-xcan__view { background: radial-gradient(1400px 900px at 50% 50%, rgba(127, 208, 255, 0.08), transparent 70%), #0e1622; }
+.sn .ui-wv__ul--list .ui-wv__t, .sn .ui-xcan__list b, .sn .ui-xcan__card b { font-family: var(--display); font-weight: 400; }
+.sn .ui-bigfoot { background: var(--fg); color: var(--bg); }
+.sn .ui-bigfoot .ui-fit__t { font-family: var(--display); font-weight: 400; }
+.sn-brand:focus-visible, .sn-pill:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
