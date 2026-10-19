@@ -50,6 +50,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Probar el servidor de desarrollo desde otro dispositivo de la red privada (Tailscale): su IP (100.x.y.z) y los nombres
+  // *.ts.net. Solo afecta a `next dev`; en producción no se usa.
+  allowedDevOrigins: ["100.*.*.*", "**.ts.net"],
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
