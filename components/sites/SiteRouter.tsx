@@ -23,6 +23,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   vigia: site(() => import("./vigia/Site")),
   onda: site(() => import("./onda/Site")),
   "clara-vidal": site(() => import("./clara-vidal/Site")),
+  estudio: site(() => import("./estudio/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

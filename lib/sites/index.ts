@@ -7,6 +7,7 @@ import * as pixelforge from "@/components/sites/pixelforge/data";
 import * as vigia from "@/components/sites/vigia/data";
 import * as onda from "@/components/sites/onda/data";
 import * as clara from "@/components/sites/clara-vidal/data";
+import * as estudio from "@/components/sites/estudio/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -17,6 +18,7 @@ export const sites: SiteMeta[] = [
   { ...vigia.meta, routes: vigia.ROUTES, dir: "components/sites/vigia" },
   { ...onda.meta, routes: onda.ROUTES, dir: "components/sites/onda" },
   { ...clara.meta, routes: clara.ROUTES, dir: "components/sites/clara-vidal" },
+  { ...estudio.meta, routes: estudio.ROUTES, dir: "components/sites/estudio" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

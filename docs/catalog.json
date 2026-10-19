@@ -46,7 +46,9 @@
         "bitmap-text",
         "marquee",
         "section-header",
-        "divider"
+        "divider",
+        "split-text",
+        "fit-text"
       ]
     },
     {
@@ -71,7 +73,10 @@
         "glyph-cursor",
         "spotlight",
         "hover-fx",
-        "scroll-area"
+        "scroll-area",
+        "roll-link",
+        "custom-cursor",
+        "smooth-scroll"
       ]
     },
     {
@@ -83,7 +88,8 @@
         "page-transition",
         "element-transition",
         "reveal",
-        "presence"
+        "presence",
+        "preloader"
       ]
     },
     {
@@ -96,7 +102,8 @@
         "terminal-typer",
         "timeline",
         "table",
-        "code-block"
+        "code-block",
+        "local-time"
       ]
     },
     {
@@ -110,7 +117,8 @@
         "breadcrumbs",
         "pagination",
         "dropdown",
-        "scroll-progress"
+        "scroll-progress",
+        "fullscreen-menu"
       ]
     },
     {
@@ -171,7 +179,8 @@
         "feature-grid",
         "team-section",
         "logo-cloud",
-        "articles-section"
+        "articles-section",
+        "project-list"
       ]
     },
     {
@@ -9802,6 +9811,450 @@
       ],
       "example": "import Sprite from \"@/components/ui/Sprite\";\n\n<Sprite />",
       "preview": "/componentes#sprite"
+    },
+    {
+      "id": "split-text",
+      "name": "Texto troceado (cinético)",
+      "component": "SplitText",
+      "import": "import SplitText from \"@/components/ui/SplitText\";",
+      "category": "texto",
+      "styles": [
+        "minimal",
+        "solid",
+        "outline",
+        "terminal"
+      ],
+      "description": "Titular o párrafo que entra por líneas, palabras o letras, con máscara de recorte. CSS puro: el estado oculto viene en el HTML del servidor. Espera a que termine el Preloader, si lo hay.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Diseñamos webs que se sienten como una conversación y no como un folleto.",
+          "label": "Texto"
+        },
+        {
+          "key": "by",
+          "type": "select",
+          "default": "lines",
+          "label": "Unidad",
+          "options": [
+            "lines",
+            "words",
+            "chars"
+          ]
+        },
+        {
+          "key": "effect",
+          "type": "select",
+          "default": "rise",
+          "label": "Efecto",
+          "options": [
+            "rise",
+            "rotate",
+            "blur",
+            "fade"
+          ]
+        },
+        {
+          "key": "mask",
+          "type": "boolean",
+          "default": true,
+          "label": "Máscara de recorte"
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "mount",
+          "label": "Disparador",
+          "options": [
+            "mount",
+            "inview"
+          ]
+        },
+        {
+          "key": "stagger",
+          "type": "number",
+          "default": 0.1,
+          "label": "Escalonado (s)",
+          "min": 0.01,
+          "max": 0.4
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 0.9,
+          "label": "Duración (s)",
+          "min": 0.2,
+          "max": 2.5
+        },
+        {
+          "key": "delay",
+          "type": "number",
+          "default": 0,
+          "label": "Retardo (s)",
+          "min": 0,
+          "max": 2
+        }
+      ],
+      "notes": [
+        "by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.",
+        "El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.",
+        "Solo admite un string (no trocea texto controlado por React, guía §10)."
+      ],
+      "example": "import SplitText from \"@/components/ui/SplitText\";\n\n<SplitText\n  text=\"Diseñamos webs que se sienten como una conversación y no como un folleto.\"\n/>",
+      "preview": "/componentes#split-text"
+    },
+    {
+      "id": "fit-text",
+      "name": "Texto a todo el ancho",
+      "component": "FitText",
+      "import": "import FitText from \"@/components/ui/FitText\";",
+      "category": "texto",
+      "styles": [
+        "minimal",
+        "solid",
+        "outline"
+      ],
+      "description": "Una sola línea que llena exactamente el ancho del contenedor (titulares gigantes de pie de página). Se reajusta al cambiar el tamaño.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Hablemos",
+          "label": "Texto"
+        },
+        {
+          "key": "max",
+          "type": "number",
+          "default": 0,
+          "label": "Tope de tamaño (px, 0 = sin tope)",
+          "min": 0,
+          "max": 600
+        }
+      ],
+      "example": "import FitText from \"@/components/ui/FitText\";\n\n<FitText\n  text=\"Hablemos\"\n/>",
+      "preview": "/componentes#fit-text"
+    },
+    {
+      "id": "roll-link",
+      "name": "Enlace que rueda",
+      "component": "RollLink",
+      "import": "import RollLink from \"@/components/ui/RollLink\";",
+      "category": "interaccion",
+      "styles": [
+        "minimal",
+        "solid",
+        "outline",
+        "terminal"
+      ],
+      "description": "Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Ver proyectos",
+          "label": "Texto"
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "up",
+          "label": "Dirección",
+          "options": [
+            "up",
+            "down"
+          ]
+        },
+        {
+          "key": "href",
+          "type": "text",
+          "default": "#",
+          "label": "Enlace (vacío = botón)"
+        }
+      ],
+      "example": "import RollLink from \"@/components/ui/RollLink\";\n\n<RollLink\n  label=\"Ver proyectos\"\n/>",
+      "preview": "/componentes#roll-link"
+    },
+    {
+      "id": "custom-cursor",
+      "name": "Cursor de página con estados",
+      "component": "CustomCursor",
+      "import": "import CustomCursor from \"@/components/ui/CustomCursor\";",
+      "category": "interaccion",
+      "styles": [
+        "minimal",
+        "solid",
+        "neon"
+      ],
+      "description": "Punto que persigue al puntero en toda la página y cambia según lo que hay debajo: crece en enlaces, muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y se hace barra en campos de texto. Solo con puntero fino.",
+      "props": [
+        {
+          "key": "cursorSize",
+          "type": "number",
+          "default": 14,
+          "label": "Tamaño (px)",
+          "min": 6,
+          "max": 40
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 0.18,
+          "label": "Seguimiento",
+          "min": 0.05,
+          "max": 1
+        },
+        {
+          "key": "blend",
+          "type": "select",
+          "default": "difference",
+          "label": "Mezcla",
+          "options": [
+            "difference",
+            "none"
+          ]
+        },
+        {
+          "key": "hideNative",
+          "type": "boolean",
+          "default": false,
+          "label": "Ocultar cursor del sistema"
+        }
+      ],
+      "notes": [
+        "Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.",
+        "hideNative oculta el cursor del sistema, salvo en campos de texto."
+      ],
+      "example": "import CustomCursor from \"@/components/ui/CustomCursor\";\n\n<CustomCursor />",
+      "preview": "/componentes#custom-cursor"
+    },
+    {
+      "id": "smooth-scroll",
+      "name": "Scroll suave (Lenis)",
+      "component": "SmoothScroll",
+      "import": "import SmoothScroll from \"@/components/ui/SmoothScroll\";",
+      "category": "interaccion",
+      "styles": [
+        "minimal"
+      ],
+      "description": "Scroll con inercia de toda la página, sincronizado con ScrollTrigger. No pinta nada. Se apaga con prefers-reduced-motion y en táctil.",
+      "props": [
+        {
+          "key": "lerp",
+          "type": "number",
+          "default": 0.1,
+          "label": "Inercia",
+          "min": 0.03,
+          "max": 0.3
+        },
+        {
+          "key": "wheelMultiplier",
+          "type": "number",
+          "default": 1,
+          "label": "Rueda ×",
+          "min": 0.3,
+          "max": 2.5
+        },
+        {
+          "key": "anchors",
+          "type": "boolean",
+          "default": true,
+          "label": "Anclas suaves"
+        },
+        {
+          "key": "syncGsap",
+          "type": "boolean",
+          "default": true,
+          "label": "Sincronizar con GSAP"
+        }
+      ],
+      "notes": [
+        "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
+        "No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio."
+      ],
+      "example": "import SmoothScroll from \"@/components/ui/SmoothScroll\";\n\n<SmoothScroll />",
+      "preview": "/componentes#smooth-scroll"
+    },
+    {
+      "id": "preloader",
+      "name": "Preloader",
+      "component": "Preloader",
+      "import": "import Preloader from \"@/components/ui/Preloader\";",
+      "category": "transiciones",
+      "styles": [
+        "minimal",
+        "solid",
+        "terminal"
+      ],
+      "description": "Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto.",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "counter",
+          "label": "Variante",
+          "options": [
+            "counter",
+            "words",
+            "bar"
+          ]
+        },
+        {
+          "key": "brand",
+          "type": "text",
+          "default": "Estudio",
+          "label": "Marca"
+        },
+        {
+          "key": "meta",
+          "type": "text",
+          "default": "Madrid — 2026",
+          "label": "Texto lateral"
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 2,
+          "label": "Duración (s)",
+          "min": 0.5,
+          "max": 5
+        },
+        {
+          "key": "exit",
+          "type": "select",
+          "default": "curtain",
+          "label": "Salida",
+          "options": [
+            "curtain",
+            "fade"
+          ]
+        }
+      ],
+      "notes": [
+        "Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always."
+      ],
+      "example": "import Preloader from \"@/components/ui/Preloader\";\n\n<Preloader />",
+      "preview": "/componentes#preloader"
+    },
+    {
+      "id": "project-list",
+      "name": "Lista de proyectos con vista previa",
+      "component": "ProjectList",
+      "import": "import ProjectList from \"@/components/ui/ProjectList\";",
+      "category": "secciones",
+      "styles": [
+        "minimal",
+        "solid",
+        "outline"
+      ],
+      "description": "Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen sigue al cursor con inclinación según la velocidad; con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título.",
+      "props": [
+        {
+          "key": "numbered",
+          "type": "boolean",
+          "default": true,
+          "label": "Numeración"
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 0.14,
+          "label": "Seguimiento",
+          "min": 0.05,
+          "max": 1
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 8,
+          "label": "Inclinación máx. (°)",
+          "min": 0,
+          "max": 20
+        },
+        {
+          "key": "cursorLabel",
+          "type": "text",
+          "default": "Ver",
+          "label": "Etiqueta del cursor"
+        }
+      ],
+      "example": "import ProjectList from \"@/components/ui/ProjectList\";\n\n<ProjectList />",
+      "preview": "/componentes#project-list"
+    },
+    {
+      "id": "fullscreen-menu",
+      "name": "Menú a pantalla completa",
+      "component": "FullscreenMenu",
+      "import": "import FullscreenMenu from \"@/components/ui/FullscreenMenu\";",
+      "category": "navegacion",
+      "styles": [
+        "minimal",
+        "solid",
+        "outline"
+      ],
+      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Atrapa el foco, cierra con Esc, pausa el scroll (también Lenis) y devuelve el foco al botón.",
+      "props": [
+        {
+          "key": "brand",
+          "type": "text",
+          "default": "Estudio",
+          "label": "Marca"
+        },
+        {
+          "key": "openLabel",
+          "type": "text",
+          "default": "menu",
+          "label": "Texto abrir"
+        },
+        {
+          "key": "closeLabel",
+          "type": "text",
+          "default": "close",
+          "label": "Texto cerrar"
+        },
+        {
+          "key": "note",
+          "type": "text",
+          "default": "Madrid, ES",
+          "label": "Nota del pie"
+        }
+      ],
+      "example": "import FullscreenMenu from \"@/components/ui/FullscreenMenu\";\n\n<FullscreenMenu />",
+      "preview": "/componentes#fullscreen-menu"
+    },
+    {
+      "id": "local-time",
+      "name": "Hora local",
+      "component": "LocalTime",
+      "import": "import LocalTime from \"@/components/ui/LocalTime\";",
+      "category": "datos",
+      "styles": [
+        "minimal",
+        "terminal"
+      ],
+      "description": "«Madrid 14:32»: la hora de una ciudad, detalle habitual en estudios. Se pinta al montar, sin desajuste de hidratación.",
+      "props": [
+        {
+          "key": "city",
+          "type": "text",
+          "default": "Madrid",
+          "label": "Ciudad"
+        },
+        {
+          "key": "timeZone",
+          "type": "text",
+          "default": "Europe/Madrid",
+          "label": "Zona IANA"
+        },
+        {
+          "key": "seconds",
+          "type": "boolean",
+          "default": false,
+          "label": "Segundos"
+        }
+      ],
+      "example": "import LocalTime from \"@/components/ui/LocalTime\";\n\n<LocalTime />",
+      "preview": "/componentes#local-time"
     }
   ],
   "landings": [
@@ -11810,6 +12263,83 @@
         {
           "component": "Toast",
           "id": "toast",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "estudio",
+      "title": "Marea Studio · estudio creativo",
+      "url": "/sitios/estudio",
+      "dir": "components/sites/estudio",
+      "description": "Web de un estudio creativo con los patrones de las webs premiadas: scroll suave, preloader con contador, titulares que entran por líneas, menú a pantalla completa, cursor con etiqueta, lista de proyectos con vista previa y pie con titular a todo el ancho.",
+      "pages": [
+        {
+          "path": "/sitios/estudio",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/estudio/proyectos",
+          "title": "Proyectos"
+        },
+        {
+          "path": "/sitios/estudio/estudio",
+          "title": "Estudio"
+        },
+        {
+          "path": "/sitios/estudio/contacto",
+          "title": "Contacto"
+        }
+      ],
+      "components": [
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 6
+        },
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 2
+        },
+        {
+          "component": "ProjectList",
+          "id": "project-list",
+          "uses": 2
+        },
+        {
+          "component": "LocalTime",
+          "id": "local-time",
+          "uses": 2
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
+        },
+        {
+          "component": "CustomCursor",
+          "id": "custom-cursor",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
+          "component": "FullscreenMenu",
+          "id": "fullscreen-menu",
           "uses": 1
         }
       ]

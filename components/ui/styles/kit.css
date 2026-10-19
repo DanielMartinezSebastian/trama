@@ -16,6 +16,7 @@
 @import "./ui-video.css";
 @import "./ui-view-transitions.css";
 @import "./ui-device.css";
+@import "./ui-motion.css";
 
 /* Mismos valores que `neutralTokens` en lib/ui/tokens.ts */
 :where(:root) {

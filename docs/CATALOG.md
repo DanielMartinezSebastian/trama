@@ -260,6 +260,34 @@ Separador con etiqueta. El modo texto dibuja la regla con caracteres.
 | `pattern` | text | "-=" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
 
+### Texto troceado (cinético) — `SplitText`
+
+Titular o párrafo que entra por líneas, palabras o letras, con máscara de recorte. CSS puro: el estado oculto viene en el HTML del servidor. Espera a que termine el Preloader, si lo hay.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "Diseñamos webs que se sienten como una conversación y no como un folleto." |
+| `by` | `lines` · `words` · `chars` | "lines" |
+| `effect` | `rise` · `rotate` · `blur` · `fade` | "rise" |
+| `mask` | boolean | true |
+| `trigger` | `mount` · `inview` | "mount" |
+| `stagger` | number 0.01–0.4 | 0.1 |
+| `duration` | number 0.2–2.5 | 0.9 |
+| `delay` | number 0–2 | 0 |
+
+- by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.
+- El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.
+- Solo admite un string (no trocea texto controlado por React, guía §10).
+
+### Texto a todo el ancho — `FitText`
+
+Una sola línea que llena exactamente el ancho del contenedor (titulares gigantes de pie de página). Se reajusta al cambiar el tamaño.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "Hablemos" |
+| `max` | number 0–600 | 0 |
+
 ## Tarjetas (`tarjetas`)
 
 Superficies de contenido con capas ASCII.
@@ -498,6 +526,44 @@ Caja de contenido largo (registro de cambios, comentarios, salida de terminal…
 
 - La barra de scroll no es exclusiva de este componente: cualquier superficie ui-s--<variante> la hereda automáticamente (ver components/ui/styles/ui-kit.css).
 
+### Enlace que rueda — `RollLink`
+
+Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Ver proyectos" |
+| `direction` | `up` · `down` | "up" |
+| `href` | text | "#" |
+
+### Cursor de página con estados — `CustomCursor`
+
+Punto que persigue al puntero en toda la página y cambia según lo que hay debajo: crece en enlaces, muestra una etiqueta con data-cursor="Ver", se oculta con data-cursor="hide" y se hace barra en campos de texto. Solo con puntero fino.
+
+| prop | tipo | default |
+|---|---|---|
+| `cursorSize` | number 6–40 | 14 |
+| `follow` | number 0.05–1 | 0.18 |
+| `blend` | `difference` · `none` | "difference" |
+| `hideNative` | boolean | false |
+
+- Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.
+- hideNative oculta el cursor del sistema, salvo en campos de texto.
+
+### Scroll suave (Lenis) — `SmoothScroll`
+
+Scroll con inercia de toda la página, sincronizado con ScrollTrigger. No pinta nada. Se apaga con prefers-reduced-motion y en táctil.
+
+| prop | tipo | default |
+|---|---|---|
+| `lerp` | number 0.03–0.3 | 0.1 |
+| `wheelMultiplier` | number 0.3–2.5 | 1 |
+| `anchors` | boolean | true |
+| `syncGsap` | boolean | true |
+
+- Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.
+- No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio.
+
 ## Transiciones (`transiciones`)
 
 Cambios de escena y de sección.
@@ -605,6 +671,20 @@ Envuelve contenido (`children`), p. ej.: `<Panel title="ACCESO_CONCEDIDO.sh" bod
 - chars, celda y rastro solo aplican a los efectos «ascii-*»; columnas a fragmentos; bandas a datamosh; alto de barra y texto a censura; líneas a arranque.
 - 13 efectos, 8 estilos de superficie para el contenido de ejemplo: 104 combinaciones.
 
+### Preloader — `Preloader`
+
+Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto.
+
+| prop | tipo | default |
+|---|---|---|
+| `variant` | `counter` · `words` · `bar` | "counter" |
+| `brand` | text | "Estudio" |
+| `meta` | text | "Madrid — 2026" |
+| `duration` | number 0.5–5 | 2 |
+| `exit` | `curtain` · `fade` | "curtain" |
+
+- Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always.
+
 ## Datos (`datos`)
 
 Cifras, gráficos, terminales y tablas.
@@ -690,6 +770,16 @@ Código con cabecera, numeración de línea opcional y botón de copiar. Sin res
 | `filename` | text | "" |
 | `showLineNumbers` | boolean | true |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+
+### Hora local — `LocalTime`
+
+«Madrid 14:32»: la hora de una ciudad, detalle habitual en estudios. Se pinta al montar, sin desajuste de hidratación.
+
+| prop | tipo | default |
+|---|---|---|
+| `city` | text | "Madrid" |
+| `timeZone` | text | "Europe/Madrid" |
+| `seconds` | boolean | false |
 
 ## Navegación (`navegacion`)
 
@@ -802,6 +892,17 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 - target="parent" mide el ancestro con scroll más cercano; un selector ("#articulo") mide ese elemento. Con position="absolute" se ancla al contenedor con position: relative.
 - El avance se escribe como variable CSS en un rAF, sin re-renderizar React; con prefers-reduced-motion no se suaviza.
 - En la vista previa la barra sigue la caja con scroll, no la página.
+
+### Menú a pantalla completa — `FullscreenMenu`
+
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Atrapa el foco, cierra con Esc, pausa el scroll (también Lenis) y devuelve el foco al botón.
+
+| prop | tipo | default |
+|---|---|---|
+| `brand` | text | "Estudio" |
+| `openLabel` | text | "menu" |
+| `closeLabel` | text | "close" |
+| `note` | text | "Madrid, ES" |
 
 ## Formularios (`formularios`)
 
@@ -1421,6 +1522,17 @@ Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con im
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
 
+### Lista de proyectos con vista previa — `ProjectList`
+
+Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen sigue al cursor con inclinación según la velocidad; con teclado se coloca en la fila enfocada; en táctil, miniatura bajo el título.
+
+| prop | tipo | default |
+|---|---|---|
+| `numbered` | boolean | true |
+| `follow` | number 0.05–1 | 0.14 |
+| `tilt` | number 0–20 | 8 |
+| `cursorLabel` | text | "Ver" |
+
 ## Contenido (`contenido`)
 
 Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.
@@ -1768,3 +1880,11 @@ Web de una estilista con estética minimalista (fondo claro, mucho aire, tipogra
 Carpeta: `components/sites/clara-vidal/` · 9 páginas: Inicio · Servicios · Lookbook · Diario · Treinta prendas, cien combinaciones · Cómo elegir un abrigo que dure diez años · Los colores que te favorecen, sin test de estaciones · Sobre mí · Reservar
 
 `Button` ×6 · `TextField` ×2 · `BlogCard` · `NavBar` · `Select` · `RadioGroup` · `ImageGallery` · `FAQSection` · `Footer` · `LogoCloud` · `Prose` · `Article` · `Modal` · `Toast`
+
+### Marea Studio · estudio creativo — `/sitios/estudio`
+
+Web de un estudio creativo con los patrones de las webs premiadas: scroll suave, preloader con contador, titulares que entran por líneas, menú a pantalla completa, cursor con etiqueta, lista de proyectos con vista previa y pie con titular a todo el ancho.
+
+Carpeta: `components/sites/estudio/` · 4 páginas: Inicio · Proyectos · Estudio · Contacto
+
+`SplitText` ×6 · `RollLink` ×2 · `ProjectList` ×2 · `LocalTime` ×2 · `Marquee` · `FitText` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu`
