@@ -22,6 +22,8 @@ export type ChartProps = {
   unit?: string;
   /** descripción corta del gráfico para el lector de pantalla */
   label?: string;
+  /** nombre de la columna de etiquetas en la tabla para lectores de pantalla («Mes», «Periodo») */
+  xLabel?: string;
   /** leyenda arriba */
   legend?: boolean;
   className?: string;
@@ -50,7 +52,7 @@ const fmt = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: 2 
  * Accesibilidad: el gráfico es una imagen con descripción; los datos completos van en una tabla oculta para lectores de
  * pantalla (no solo color: leyenda con nombre y valores en el aviso). Con `prefers-reduced-motion` no hay animación de trazo.
  */
-export default function Chart({ kind = "line", labels, series, height = 240, unit = "", label = "Gráfico", legend = true, className = "" }: ChartProps) {
+export default function Chart({ kind = "line", labels, series, height = 240, unit = "", label = "Gráfico", xLabel = "Periodo", legend = true, className = "" }: ChartProps) {
   const box = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(0);
   const [hover, setHover] = useState<number | null>(null);
@@ -167,7 +169,7 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
         <caption>{label}</caption>
         <thead>
           <tr>
-            <th scope="col" />
+            <th scope="col">{xLabel}</th>
             {series.map((s) => (
               <th key={s.name} scope="col">
                 {s.name}

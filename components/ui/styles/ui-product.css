@@ -138,3 +138,6 @@
 .ui-empty__t { margin: 6px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
 .ui-empty__p { margin: 0; max-width: 44ch; color: var(--mut); line-height: 1.5; }
 .ui-empty__a { margin-top: 10px; }
+
+/* en táctil no hay teclado físico: el recordatorio del atajo sobra */
+@media (pointer: coarse) { .ui-cmdk__btn .ui-kbd { display: none; } }

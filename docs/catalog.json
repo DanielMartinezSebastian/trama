@@ -10442,7 +10442,7 @@
         {
           "key": "dim",
           "type": "number",
-          "default": 0.18,
+          "default": 0.3,
           "label": "Opacidad apagada",
           "min": 0.05,
           "max": 0.6

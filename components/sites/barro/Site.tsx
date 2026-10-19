@@ -23,7 +23,7 @@ import { FREE_SHIPPING, MATERIALS, PRODUCTS, SHIPPING, SLUG, TYPES, type Product
 import "./barro.css";
 
 // tema del kit `editorialTokens` con la paleta de la marca (arcilla y terracota)
-const TOKENS: CSSProperties = tokensToStyle({ ...editorialTokens, bg: "#f4eee4", fg: "#231a14", mut: "#75665a", card: "#eadfce", ln: "rgba(35,26,20,0.16)", acc: "#b5532f", acc2: "#231a14", r: 14 });
+const TOKENS: CSSProperties = tokensToStyle({ ...editorialTokens, bg: "#f4eee4", fg: "#231a14", mut: "#4f4338", card: "#eadfce", ln: "rgba(35,26,20,0.16)", acc: "#b5532f", acc2: "#231a14", r: 14 });
 
 const href = (p = "") => siteHref(SLUG, p);
 const img = (p: Product, glazeIdx = 0, view = 0) => potteryArt(p.seed + view, p.kind, p.glazes[glazeIdx]?.color);

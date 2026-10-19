@@ -177,7 +177,7 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-par { will-change: transform; }
 
 /* ---------- SectionIndex ---------- */
-.ui-sidx { position: fixed; bottom: clamp(14px, 2.4vw, 28px); z-index: 30; display: flex; gap: 12px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-variant-numeric: tabular-nums; mix-blend-mode: difference; color: #fff; pointer-events: none; }
+.ui-sidx { position: fixed; bottom: clamp(14px, 2.4vw, 28px); z-index: 30; display: flex; gap: 12px; padding: 6px 12px; border: 1px solid var(--ln); border-radius: 99px; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--fg); pointer-events: none; }
 .ui-sidx--left { left: clamp(16px, 3.4vw, 48px); }
 .ui-sidx--right { right: clamp(16px, 3.4vw, 48px); }
 @media (max-width: 640px) { .ui-sidx span:last-child { display: none; } }
@@ -185,7 +185,8 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 /* ---------- ScrubText ---------- */
 .ui-scrub { position: relative; }
 .ui-scrub__w { opacity: calc(var(--dim, 0.18) + (1 - var(--dim, 0.18)) * var(--w, 0)); }
-@media (prefers-reduced-motion: reduce) { .ui-scrub__w { opacity: 1; } }
+/* las palabras «apagadas» son un efecto de progreso: con movimiento reducido o contraste alto, el texto se ve entero */
+@media (prefers-reduced-motion: reduce), (prefers-contrast: more), (forced-colors: active) { .ui-scrub__w { opacity: 1; } }
 
 /* ---------- ImageReveal ---------- */
 .ui-imgr { position: relative; width: 100%; aspect-ratio: var(--imgr-ratio, 4 / 5); background: transparent; }

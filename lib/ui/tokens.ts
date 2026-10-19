@@ -62,7 +62,7 @@ export const editorialTokens: TokenSet = {
   bg: "#f2efe9",
   fg: "#121110",
   mut: "#6c675e",
-  acc: "#ff4d1c",
+  acc: "#c93208",
   acc2: "#121110",
   card: "#e8e4dc",
   ln: "rgba(18,17,16,0.16)",

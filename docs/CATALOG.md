@@ -295,7 +295,7 @@ Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálc
 | prop | tipo | default |
 |---|---|---|
 | `text` | text | "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se s…" |
-| `dim` | number 0.05–0.6 | 0.18 |
+| `dim` | number 0.05–0.6 | 0.3 |
 | `from` | number 0.4–1 | 0.85 |
 | `to` | number 0–0.8 | 0.35 |
 

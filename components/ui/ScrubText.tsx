@@ -5,7 +5,7 @@ import { clamp01, trackScroll } from "@/lib/motion/progress";
 
 export type ScrubTextProps = {
   children: string;
-  /** opacidad de las palabras aún «apagadas» */
+  /** opacidad de las palabras aún «apagadas» (efecto de progreso: con movimiento reducido o contraste alto se ve todo) */
   dim?: number;
   /** fracción de la altura de la ventana donde empieza (0 = arriba) y donde termina el recorrido */
   from?: number;
@@ -19,7 +19,7 @@ export type ScrubTextProps = {
  * por fotograma que fija `--w` (0–1) en cada palabra. El texto es un `string` normal y el lector de pantalla lo lee entero.
  * Con `prefers-reduced-motion` se ve completo desde el principio.
  */
-export default function ScrubText({ children: text, dim = 0.18, from = 0.85, to = 0.35, as = "p", className = "" }: ScrubTextProps) {
+export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to = 0.35, as = "p", className = "" }: ScrubTextProps) {
   const ref = useRef<HTMLElement>(null);
   const words = text.split(/\s+/).filter(Boolean);
 

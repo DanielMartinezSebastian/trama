@@ -152,3 +152,23 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
       API (o acumular el `delta` de `useFrame`).
 - [ ] **Imágenes ASCII sin JS.** Los componentes con lienzo no tienen alternativa estática cuando falla WebGL o está
       activo `prefers-reduced-motion`; revisar `RetroCanvas`, `AsciiBackground` y `TextmodeBackground`.
+
+## 5. Auditoría de calidad de las demos nuevas (19-10-2026)
+
+Webs revisadas: `/sitios/estudio`, `/sitios/pulso` y `/sitios/barro` (todas sus páginas, a 1280 y a 390 px reales) con
+`axe-core`, recorrido con teclado de los overlays y revisión visual a 390 px. Método (sin dependencias en el repo): abrir cada
+página en un `<iframe>` del ancho deseado desde la misma origen, inyectar `axe.min.js` (copiado temporalmente a `public/`) y
+leer `axe.run`; los desbordes se miden comparando `scrollWidth` con `clientWidth`.
+
+- [x] **Sin infracciones de axe** en las tres webs, salvo las de `ScrubText` (abajo). Sin desbordes horizontales a 390 px.
+- [x] **Corregido en la auditoría:** cabecera y `SectionIndex` con `mix-blend-mode` (axe no puede calcular el contraste y sobre
+      imágenes medias se leía mal) → colores sólidos con fondo; acento de `editorialTokens` oscurecido (≥ 4,5:1);
+      carrusel nativo de `HorizontalScroll` sin foco de teclado; encabezados saltados; `th` vacío en la tabla oculta de `Chart`;
+      `EmptyState` con nivel de encabezado configurable.
+- [x] **Teclado:** `CartDrawer` y `FullscreenMenu` abren con Intro, llevan el foco dentro, lo atrapan con Tab, cierran con Esc,
+      devuelven el foco al botón y (el menú) bloquean y liberan el scroll. `CommandPalette` filtra, navega con flechas e Intro.
+- [ ] **Conocido y deliberado:** las palabras «apagadas» de `ScrubText` bajan de contraste hasta que el scroll las enciende
+      (axe lo marca). Se ve entero con `prefers-reduced-motion`, `prefers-contrast: more` y colores forzados, y el lector de
+      pantalla lee el texto íntegro. Úsalo solo en frases de énfasis, no en información imprescindible.
+- [ ] **Sin cubrir todavía:** Safari y Firefox, VoiceOver/NVDA, Lighthouse móvil, y las cinco webs anteriores (`kernel-log`,
+      `pixelforge`, `vigia`, `onda`, `clara-vidal`) con este mismo método. Pasos 2 y 3 del pedido de Barro con datos reales.

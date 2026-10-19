@@ -28,7 +28,7 @@ export const scroll: CatalogEntry[] = [
     notes: ["Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio."],
     props: [
       { key: "text", label: "Texto", type: "text", multiline: true, default: "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir." },
-      { key: "dim", label: "Opacidad apagada", type: "number", default: 0.18, min: 0.05, max: 0.6, step: 0.01 },
+      { key: "dim", label: "Opacidad apagada", type: "number", default: 0.3, min: 0.05, max: 0.6, step: 0.01 },
       { key: "from", label: "Empieza (fracción de ventana)", type: "number", default: 0.85, min: 0.4, max: 1, step: 0.05 },
       { key: "to", label: "Termina (fracción de ventana)", type: "number", default: 0.35, min: 0, max: 0.8, step: 0.05 },
     ],

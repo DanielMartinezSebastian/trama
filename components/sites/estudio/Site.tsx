@@ -172,7 +172,7 @@ function Projects() {
           <article className="es-card" key={p.slug} data-cursor="Ver">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={fashionArt(p.seed, p.art)} alt="" loading="lazy" />
-            <h3>{p.title}</h3>
+            <h2>{p.title}</h2>
             <p>{p.lead}</p>
           </article>
         ))}
@@ -223,7 +223,7 @@ function Lab() {
           {effects.map((e, i) => (
             <figure key={e} className="es-card" style={{ margin: 0 }}>
               <DistortImage src={withSize(fashionArt(PROJECTS[i].seed, PROJECTS[i].art), 800, 1000)} alt="" effect={e} />
-              <h3>{e === "ripple" ? "Ondas" : e === "liquid" ? "Líquido" : "Canales RGB"}</h3>
+              <h2>{e === "ripple" ? "Ondas" : e === "liquid" ? "Líquido" : "Canales RGB"}</h2>
             </figure>
           ))}
         </div>

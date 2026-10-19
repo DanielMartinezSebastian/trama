@@ -38,6 +38,9 @@ export default function HorizontalScroll({ children, heading = "", gap = 24, min
       o.style.height = "";
       t.style.transform = "";
       o.toggleAttribute("data-native", mq.matches);
+      // carrusel nativo: la región con scroll tiene que poder enfocarse y moverse con el teclado
+      if (mq.matches) { t.tabIndex = 0; t.setAttribute("role", "group"); t.setAttribute("aria-label", heading || "Carrusel horizontal"); }
+      else { t.removeAttribute("tabindex"); t.removeAttribute("role"); t.removeAttribute("aria-label"); }
       if (mq.matches) return;
       let dist = 0;
       const measure = () => {
@@ -61,7 +64,7 @@ export default function HorizontalScroll({ children, heading = "", gap = 24, min
       off?.();
       ro?.disconnect();
     };
-  }, [minWidth]);
+  }, [minWidth, heading]);
 
   return (
     <div ref={outer} className={`ui-hs ${className}`.trim()} style={{ "--hs-gap": `${gap}px`, "--hs-p": 0 } as CSSProperties}>
