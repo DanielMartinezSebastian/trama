@@ -95,7 +95,7 @@ dos lecturas de HTML y casos de estudio publicados. Antes de replicar una web co
 
 ## 2. Patrones de UX que se repiten
 
-Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
+Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3. En qué sectores cabe cada uno y con qué condición: [`11` §10](./11-estudio-sectores-2026.md#10-cruce-con-la-investigación-de-ux-rondas-0610) (allí se citan como `06·P1`…, porque `P1`–`P5` son también los ids de despachos).
 
 | # | Patrón | Qué hace al usuario sentir | Piezas (§3) |
 |---|---|---|---|
