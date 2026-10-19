@@ -25,6 +25,14 @@ corregidos: `Parallax` se realimentaba con velocidad negativa (medía su propio 
 de tema por sección (E3), `MediaCover` (G2), `MasonryGrid`, 404 y contacto editoriales (H5, H6), escala tipográfica
 fluida y fuentes (C8, decisión §7.2).
 
+**Fase 3 (parcial, 19-10-2026), reutilizando `three` + `@react-three/fiber` sin dependencias nuevas:** `DistortImage`,
+`DragGrid` y `ObjectStage`, con ficha en `/componentes` y uso en la página `/sitios/estudio/laboratorio`. `DistortImage` y
+`ObjectStage` van por subruta (peer opcional), como `RetroCanvas`. **Pendiente de la fase:** `ShaderSlider` (G4),
+`WebGLStage` con planos sincronizados con el DOM (G5), `ExplorableCanvas` (G8), `SoundToggle` (F6) y `BackgroundVideo` (G10).
+Aprendido: Chrome cuenta el `clip-path` del propio elemento en `IntersectionObserver`; con `setPointerCapture` el clic se
+reenvía al elemento que captura (por eso `DragGrid` captura solo al empezar a arrastrar); y sobre un lienzo transparente
+`transmission` da negro (el vidrio es translúcido con reflejos).
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,
@@ -168,15 +176,15 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 |---|---|---|---|---|
 | G1 | `ImageReveal` (clip-path / cortina al entrar) | Todas | ✔ | `ImageReveal` (máscara + asentado de la imagen)
 | G2 | `MediaCover` con carga diferida, `blur-up` y relación de aspecto fija | Rendimiento | ✘ | Integrar con `next/image`; evita saltos de layout |
-| G3 | Imagen con **distorsión al hover** (shader de ondas/desplazamiento) | Codrops, portfolios | ✘ | `DistortImage` con OGL o three; fallback a imagen plana |
+| G3 | Imagen con **distorsión al hover** (shader de ondas/desplazamiento) | Codrops, portfolios | ✔ | `DistortImage` (shader propio sobre r3f; ondas, líquido, RGB, lupa; el lienzo solo vive mientras dura el efecto)
 | G4 | Transición entre imágenes con shader (disolución, ruido) | Sliders premiados | ✘ | `ShaderSlider`, como alternativa al `Carousel` (G9) |
 | G5 | Planos WebGL sincronizados con el DOM (imágenes como texturas que siguen el scroll) | Patrón clásico | ✘ | Capa `WebGLStage` fija + `<img>` reales debajo; coste alto, hacer al final |
-| G6 | Galería con **rejilla infinita arrastrable** | Colección «Galleries» | ✘ | `DragGrid` (Draggable/Observer); inercia y límites |
+| G6 | Galería con **rejilla infinita arrastrable** | Colección «Galleries» | ✔ | `DragGrid` (rejilla infinita con inercia, táctil y teclado; sin WebGL ni miles de nodos)
 | G7 | Rejilla bento y masonry | SaaS y portfolios | ◐ | `BentoGrid` hecho; falta `MasonryGrid`
 | G8 | Lienzo explorable por arrastre con puntos clicables | Overworld Audio | ✘ | `ExplorableCanvas` |
 | G9 | Carrusel | — | ✔ | `Carousel` (Swiper) |
 | G10 | Vídeo con reproductor propio y vídeo de fondo | — | ✔ | `VideoPlayer`; añadir `BackgroundVideo` (autoplay mudo, `playsInline`, póster) |
-| G11 | Escena 3D / mockups / logo 3D | — | ✔ | `RetroCanvas`, `DeviceMockup3D`, `Logo3D`; falta una escena **no retro** (materiales PBR, iluminación suave) |
+| G11 | Escena 3D / mockups / logo 3D | — | ✔ | `ObjectStage`: objeto 3D con materiales físicos y reflejos de estudio, sin HDR (la escena no retro)
 
 ### H. Secciones y páginas completas
 

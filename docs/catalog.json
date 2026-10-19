@@ -170,7 +170,10 @@
         "video-player",
         "audio-player",
         "horizontal-scroll",
-        "image-reveal"
+        "image-reveal",
+        "distort-image",
+        "drag-grid",
+        "object-stage"
       ]
     },
     {
@@ -10808,6 +10811,211 @@
       ],
       "example": "import BigFooter from \"@/components/ui/BigFooter\";\n\n<BigFooter />",
       "preview": "/componentes#big-footer"
+    },
+    {
+      "id": "distort-image",
+      "name": "Imagen con distorsión (WebGL)",
+      "component": "DistortImage",
+      "import": "import DistortImage from \"@/components/ui/DistortImage\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Imagen que se deforma con un shader alrededor del puntero: ondas, líquido, separación RGB o lupa. Es un <img> normal; el lienzo WebGL se crea al pasar el puntero y se destruye al apagarse, así que una rejilla de muchas imágenes no agota los contextos.",
+      "props": [
+        {
+          "key": "effect",
+          "type": "select",
+          "default": "ripple",
+          "label": "Efecto",
+          "options": [
+            "ripple",
+            "liquid",
+            "rgb",
+            "lens"
+          ]
+        },
+        {
+          "key": "strength",
+          "type": "number",
+          "default": 1,
+          "label": "Intensidad",
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "radius",
+          "type": "number",
+          "default": 0.45,
+          "label": "Radio de influencia",
+          "min": 0.1,
+          "max": 1
+        },
+        {
+          "key": "ratio",
+          "type": "text",
+          "default": "4 / 5",
+          "label": "Relación de aspecto"
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/DistortImage.",
+        "Sin WebGL, en táctil, en equipos modestos y con movimiento reducido se queda la imagen plana."
+      ],
+      "example": "import DistortImage from \"@/components/ui/DistortImage\";\n\n<DistortImage />",
+      "preview": "/componentes#distort-image"
+    },
+    {
+      "id": "drag-grid",
+      "name": "Rejilla infinita arrastrable",
+      "component": "DragGrid",
+      "import": "import DragGrid from \"@/components/ui/DragGrid\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Rejilla que se arrastra en cualquier dirección sin fin, con inercia, táctil y teclado (flechas). Un grupo fijo de celdas se recoloca en cada fotograma: no hay miles de nodos. Un arrastre no dispara el clic de las celdas.",
+      "props": [
+        {
+          "key": "cellWidth",
+          "type": "number",
+          "default": 200,
+          "label": "Ancho de celda (px)",
+          "min": 100,
+          "max": 420
+        },
+        {
+          "key": "ratio",
+          "type": "number",
+          "default": 0.8,
+          "label": "Proporción (ancho/alto)",
+          "min": 0.5,
+          "max": 1.6
+        },
+        {
+          "key": "gap",
+          "type": "number",
+          "default": 14,
+          "label": "Espacio (px)",
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "inertia",
+          "type": "number",
+          "default": 0.93,
+          "label": "Inercia",
+          "min": 0.8,
+          "max": 0.98
+        },
+        {
+          "key": "drift",
+          "type": "number",
+          "default": 0,
+          "label": "Deriva (px/s)",
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "wheel",
+          "type": "boolean",
+          "default": false,
+          "label": "Rueda del ratón"
+        }
+      ],
+      "notes": [
+        "En táctil captura el gesto dentro del visor: dale un alto razonable para que se pueda seguir desplazando la página.",
+        "Para el lector de pantalla hay una lista oculta con cada elemento una vez."
+      ],
+      "example": "import DragGrid from \"@/components/ui/DragGrid\";\n\n<DragGrid />",
+      "preview": "/componentes#drag-grid"
+    },
+    {
+      "id": "object-stage",
+      "name": "Objeto 3D con materiales físicos",
+      "component": "ObjectStage",
+      "import": "import ObjectStage from \"@/components/ui/ObjectStage\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado.",
+      "props": [
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "knot",
+          "label": "Forma",
+          "options": [
+            "knot",
+            "sphere",
+            "torus",
+            "capsule",
+            "gem"
+          ]
+        },
+        {
+          "key": "material",
+          "type": "select",
+          "default": "metal",
+          "label": "Material",
+          "options": [
+            "metal",
+            "glass",
+            "gloss",
+            "matte"
+          ]
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color (token)",
+          "options": [
+            "fg",
+            "acc",
+            "acc2",
+            "mut"
+          ]
+        },
+        {
+          "key": "motion",
+          "type": "select",
+          "default": "pointer",
+          "label": "Movimiento",
+          "options": [
+            "pointer",
+            "spin",
+            "float",
+            "none"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad",
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 340,
+          "label": "Alto (px)",
+          "min": 160,
+          "max": 700
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.",
+        "Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro."
+      ],
+      "example": "import ObjectStage from \"@/components/ui/ObjectStage\";\n\n<ObjectStage />",
+      "preview": "/componentes#object-stage"
     }
   ],
   "landings": [
@@ -12840,6 +13048,10 @@
           "title": "Estudio"
         },
         {
+          "path": "/sitios/estudio/laboratorio",
+          "title": "Laboratorio"
+        },
+        {
           "path": "/sitios/estudio/contacto",
           "title": "Contacto"
         }
@@ -12848,7 +13060,7 @@
         {
           "component": "SplitText",
           "id": "split-text",
-          "uses": 6
+          "uses": 8
         },
         {
           "component": "ProjectList",
@@ -12863,6 +13075,11 @@
         {
           "component": "ImageReveal",
           "id": "image-reveal",
+          "uses": 2
+        },
+        {
+          "component": "ObjectStage",
+          "id": "object-stage",
           "uses": 2
         },
         {
@@ -12933,6 +13150,16 @@
         {
           "component": "BigFooter",
           "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "DistortImage",
+          "id": "distort-image",
+          "uses": 1
+        },
+        {
+          "component": "DragGrid",
+          "id": "drag-grid",
           "uses": 1
         }
       ]

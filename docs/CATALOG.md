@@ -1452,6 +1452,52 @@ Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampli
 | `zoom` | number 1–2 | 1.25 |
 | `duration` | number 0.3–3 | 1.2 |
 
+### Imagen con distorsión (WebGL) — `DistortImage`
+
+Imagen que se deforma con un shader alrededor del puntero: ondas, líquido, separación RGB o lupa. Es un <img> normal; el lienzo WebGL se crea al pasar el puntero y se destruye al apagarse, así que una rejilla de muchas imágenes no agota los contextos.
+
+| prop | tipo | default |
+|---|---|---|
+| `effect` | `ripple` · `liquid` · `rgb` · `lens` | "ripple" |
+| `strength` | number 0.2–3 | 1 |
+| `radius` | number 0.1–1 | 0.45 |
+| `ratio` | text | "4 / 5" |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/DistortImage.
+- Sin WebGL, en táctil, en equipos modestos y con movimiento reducido se queda la imagen plana.
+
+### Rejilla infinita arrastrable — `DragGrid`
+
+Rejilla que se arrastra en cualquier dirección sin fin, con inercia, táctil y teclado (flechas). Un grupo fijo de celdas se recoloca en cada fotograma: no hay miles de nodos. Un arrastre no dispara el clic de las celdas.
+
+| prop | tipo | default |
+|---|---|---|
+| `cellWidth` | number 100–420 | 200 |
+| `ratio` | number 0.5–1.6 | 0.8 |
+| `gap` | number 0–40 | 14 |
+| `inertia` | number 0.8–0.98 | 0.93 |
+| `drift` | number 0–80 | 0 |
+| `wheel` | boolean | false |
+
+- En táctil captura el gesto dentro del visor: dale un alto razonable para que se pueda seguir desplazando la página.
+- Para el lector de pantalla hay una lista oculta con cada elemento una vez.
+
+### Objeto 3D con materiales físicos — `ObjectStage`
+
+Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado.
+
+| prop | tipo | default |
+|---|---|---|
+| `shape` | `knot` · `sphere` · `torus` · `capsule` · `gem` | "knot" |
+| `material` | `metal` · `glass` · `gloss` · `matte` | "metal" |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
+| `motion` | `pointer` · `spin` · `float` · `none` | "pointer" |
+| `speed` | number 0.2–3 | 1 |
+| `height` | number 160–700 | 340 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
+- Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
+
 ## Secciones (`secciones`)
 
 Bloques compuestos, listos para pegar en una landing: hero, contacto, precios, FAQ…
@@ -2007,6 +2053,6 @@ Carpeta: `components/sites/clara-vidal/` · 9 páginas: Inicio · Servicios · L
 
 Web de un estudio creativo con los patrones de las webs premiadas: scroll suave, preloader con contador, titulares que entran por líneas, menú a pantalla completa, cursor con etiqueta, lista de proyectos con vista previa y pie con titular a todo el ancho.
 
-Carpeta: `components/sites/estudio/` · 4 páginas: Inicio · Proyectos · Estudio · Contacto
+Carpeta: `components/sites/estudio/` · 5 páginas: Inicio · Proyectos · Estudio · Laboratorio · Contacto
 
-`SplitText` ×6 · `ProjectList` ×2 · `Parallax` ×2 · `ImageReveal` ×2 · `Marquee` · `RollLink` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `LocalTime` · `ScrubText` · `HideOnScroll` · `SectionIndex` · `HorizontalScroll` · `StackedCards` · `BentoGrid` · `BigFooter`
+`SplitText` ×8 · `ProjectList` ×2 · `Parallax` ×2 · `ImageReveal` ×2 · `ObjectStage` ×2 · `Marquee` · `RollLink` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `LocalTime` · `ScrubText` · `HideOnScroll` · `SectionIndex` · `HorizontalScroll` · `StackedCards` · `BentoGrid` · `BigFooter` · `DistortImage` · `DragGrid`

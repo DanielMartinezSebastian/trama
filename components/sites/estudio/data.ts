@@ -49,5 +49,6 @@ export const ROUTES = [
   { path: "", title: "Inicio" },
   { path: "proyectos", title: "Proyectos" },
   { path: "estudio", title: "Estudio" },
+  { path: "laboratorio", title: "Laboratorio" },
   { path: "contacto", title: "Contacto" },
 ];

@@ -163,3 +163,14 @@ export function fashionArt(seed: number, kind: LookKind) {
   } else d += `<rect x="240" y="520" width="320" height="360" rx="10" fill="${soft}" opacity=".7"/><rect x="300" y="380" width="200" height="160" rx="80" fill="${ink}"/><circle cx="560" cy="300" r="44" fill="${ink}" opacity=".35"/>`;
   return uri(svg(800, 1000, d));
 }
+
+/**
+ * Da tamaño intrínseco (`width`/`height`) a una ilustración SVG de este archivo. Los SVG con solo `viewBox` no tienen dimensiones
+ * propias y, usados como textura WebGL (`DistortImage`), salen a 300×150 y con otra proporción. Las imágenes reales ya traen su tamaño.
+ */
+export function withSize(dataUri: string, w: number, h: number) {
+  const prefix = "data:image/svg+xml;utf8,";
+  if (!dataUri.startsWith(prefix)) return dataUri;
+  const svgText = decodeURIComponent(dataUri.slice(prefix.length)).replace("<svg ", `<svg width="${w}" height="${h}" `);
+  return `${prefix}${encodeURIComponent(svgText)}`;
+}

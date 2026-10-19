@@ -5,12 +5,15 @@ import { useEffect, type CSSProperties, type ReactNode } from "react";
 import BentoGrid from "@/components/ui/BentoGrid";
 import BigFooter from "@/components/ui/BigFooter";
 import CustomCursor from "@/components/ui/CustomCursor";
+import DistortImage from "@/components/ui/DistortImage";
+import DragGrid from "@/components/ui/DragGrid";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import HideOnScroll from "@/components/ui/HideOnScroll";
 import HorizontalScroll from "@/components/ui/HorizontalScroll";
 import ImageReveal from "@/components/ui/ImageReveal";
 import LocalTime from "@/components/ui/LocalTime";
 import Marquee from "@/components/ui/Marquee";
+import ObjectStage from "@/components/ui/ObjectStage";
 import Preloader from "@/components/ui/Preloader";
 import Parallax from "@/components/ui/Parallax";
 import ProjectList from "@/components/ui/ProjectList";
@@ -20,7 +23,7 @@ import SectionIndex from "@/components/ui/SectionIndex";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import StackedCards from "@/components/ui/StackedCards";
-import { fashionArt } from "@/lib/sites/art";
+import { fashionArt, withSize } from "@/lib/sites/art";
 import { getLenis } from "@/lib/motion/lenis";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
@@ -34,6 +37,7 @@ const href = (p = "") => siteHref(SLUG, p);
 const LINKS = [
   { label: "Proyectos", href: href("proyectos"), meta: String(PROJECTS.length).padStart(2, "0") },
   { label: "Estudio", href: href("estudio") },
+  { label: "Laboratorio", href: href("laboratorio") },
   { label: "Contacto", href: href("contacto") },
 ];
 const MAIL = "hola@marea.example";
@@ -201,6 +205,49 @@ function Studio() {
   );
 }
 
+function Lab() {
+  const grid = PROJECTS.flatMap((p, i) => [0, 1].map((k) => ({ src: withSize(fashionArt(p.seed + k * 7, k ? "still" : p.art), 800, 1000), alt: `${p.title} · ${i + 1}`, href: href("proyectos") })));
+  const effects = ["ripple", "liquid", "rgb"] as const;
+  return (
+    <>
+      <section className="es-sec" style={{ paddingTop: "clamp(120px, 16vw, 220px)" }}>
+        <SplitText as="h1" by="lines" trigger="mount" className="es-h2" delay={0.1}>
+          Laboratorio: cosas que nos gusta probar.
+        </SplitText>
+        <p className="es-p" style={{ marginTop: 24, color: "var(--mut)" }}>Efectos con WebGL que solo se activan donde aportan, y que se apagan en móviles modestos o si prefieres menos movimiento.</p>
+      </section>
+
+      <section className="es-sec" style={{ paddingTop: 0 }} data-section="Distorsión">
+        <div className="es-eyebrow"><span>Imágenes que reaccionan</span><span>Pasa el puntero</span></div>
+        <div className="es-grid">
+          {effects.map((e, i) => (
+            <figure key={e} className="es-card" style={{ margin: 0 }}>
+              <DistortImage src={withSize(fashionArt(PROJECTS[i].seed, PROJECTS[i].art), 800, 1000)} alt="" effect={e} />
+              <h3>{e === "ripple" ? "Ondas" : e === "liquid" ? "Líquido" : "Canales RGB"}</h3>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section data-section="Rejilla" aria-label="Rejilla infinita">
+        <div className="es-eyebrow" style={{ padding: "0 var(--st-gutter)" }}><span>Rejilla infinita</span><span>Arrastra</span></div>
+        <div data-cursor="Arrastra"><DragGrid items={grid} height="78vh" cellWidth={280} drift={12} /></div>
+      </section>
+
+      <section className="es-sec es-two" data-section="Objetos">
+        <div>
+          <div className="es-eyebrow"><span>Objetos con materiales</span><span>Metal · vidrio</span></div>
+          <SplitText as="h2" by="words" className="es-h2" stagger={0.05}>Formas que reflejan la luz de verdad.</SplitText>
+        </div>
+        <div style={{ display: "grid", gap: 16 }}>
+          <ObjectStage shape="knot" material="metal" tone="acc" motion="pointer" height={300} alt="Nudo metálico" />
+          <ObjectStage shape="sphere" material="glass" tone="mut" motion="float" height={240} alt="Esfera de vidrio" />
+        </div>
+      </section>
+    </>
+  );
+}
+
 function Contact() {
   return (
     <section className="es-sec" style={{ paddingTop: "clamp(120px, 16vw, 220px)", minHeight: "80svh" }}>
@@ -220,6 +267,7 @@ export function Page({ path }: { path: string[] }) {
   if (!a) return <Home />;
   if (a === "proyectos") return <Projects />;
   if (a === "estudio") return <Studio />;
+  if (a === "laboratorio") return <Lab />;
   if (a === "contacto") return <Contact />;
   return null;
 }

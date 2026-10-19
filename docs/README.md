@@ -111,7 +111,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
-| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` |
