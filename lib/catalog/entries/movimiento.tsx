@@ -203,7 +203,7 @@ export const movimiento: CatalogEntry[] = [
     category: "navegacion",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Atrapa el foco, cierra con Esc, pausa el scroll (también Lenis) y devuelve el foco al botón.",
+      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado.",
     stageHeight: 200,
     props: [
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },

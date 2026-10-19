@@ -119,9 +119,13 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 
 /* ---------- FullscreenMenu ---------- */
 .ui-fsm__btn { display: inline-flex; align-items: center; gap: 0.3em; padding: 8px 4px; background: none; border: 0; color: inherit; font: inherit; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+.ui-fsm__lbl { display: inline-grid; justify-items: end; }
+.ui-fsm__lbl > span { grid-area: 1 / 1; }
 .ui-fsm__btn:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .ui-fsm { position: fixed; inset: 0; z-index: 9000; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(16px, 3vw, 32px); background: var(--bg); color: var(--fg); clip-path: inset(0 0 100% 0); visibility: hidden; transition: clip-path 0.8s var(--ease-io), visibility 0s linear 0.8s; overflow: auto; }
 .ui-fsm[data-open] { clip-path: inset(0); visibility: visible; transition-delay: 0s; }
+/* con cabecera de la página: el menú empieza debajo de ella y no repite su fila superior */
+.ui-fsm[data-host] { top: var(--fsm-top, 0); grid-template-rows: minmax(0, 1fr) auto; }
 .ui-fsm__top { display: flex; justify-content: space-between; align-items: center; }
 .ui-fsm__nav { display: grid; align-content: center; gap: clamp(2px, 1vw, 10px); padding-block: 24px; }
 .ui-fsm__item { overflow: clip; padding-block: 0.06em; }

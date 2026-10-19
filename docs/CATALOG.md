@@ -1012,7 +1012,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Atrapa el foco, cierra con Esc, pausa el scroll (también Lenis) y devuelve el foco al botón.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado.
 
 | prop | tipo | default |
 |---|---|---|
