@@ -481,6 +481,7 @@ letras oscuras las empasta y estorba la lectura.
   `tokensToStyle` la pone sola: 0 si el texto del tema es oscuro (luminancia < 0,4), 1 si es claro (`hasDarkText` en `lib/ui/tokens.ts`).
   En CSS: `text-shadow: 0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(100% * var(--glow, 1)), transparent)`.
   Un tema que no pase por `tokensToStyle` pone `--glow: 0` a mano; y `glow: true | false` en el `TokenSet` fuerza el valor.
+- **`--legibility-ts` y la trampa de `:root`.** Una variable que se define en `:root` con `var(--bg, …)` se resuelve en `:root`, donde el tema aún no existe, y cae al valor de reserva: así el halo salía **negro en los temas claros**. Por eso `tokensToStyle` la fija en el contenedor con el fondo del tema, y un tema aplicado solo con CSS debe definirla en su contenedor. Comprobación en el navegador: `getComputedStyle(el).textShadow` de un texto sobre tema claro no puede llevar un color oscuro.
 - **Legibilidad sobre fondos con movimiento** (ASCII, vídeo, imágenes): halo del **color del fondo del tema**, nunca negro fijo:
   `var(--legibility-ts)` o `color-mix(in srgb, var(--bg) 90%, transparent)`. Con fondo oscuro es idéntico al antiguo negro; con
   fondo claro es un halo claro, inocuo.

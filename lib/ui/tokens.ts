@@ -186,6 +186,9 @@ export function tokensToStyle(t: TokenSet): CSSProperties {
     ...(t.display ? { "--display": t.display } : {}),
     ...(t.accentFont ? { "--font-accent": t.accentFont } : {}),
     "--glow": (t.glow ?? !hasDarkText(t)) ? 1 : 0,
+    // El halo de legibilidad se fija aquí, con el fondo de ESTE tema: una variable definida en `:root` con `var(--bg, …)` se resuelve
+    // en `:root`, donde el tema aún no existe, y caería al negro de reserva (sombra negra sobre texto oscuro en temas claros).
+    "--legibility-ts": `0 1px 1px color-mix(in srgb, ${t.bg} 85%, transparent), 0 0 3px color-mix(in srgb, ${t.bg} 65%, transparent)`,
     fontFamily: t.font,
     color: t.fg,
   } as CSSProperties;

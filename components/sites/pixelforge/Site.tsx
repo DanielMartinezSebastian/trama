@@ -107,11 +107,13 @@ function CartProvider({ children }: { children: ReactNode }) {
 function CartButton() {
   const { count } = useCart();
   return (
-    <Link href={href("carrito")} className="pf__cartbtn" aria-label={`Carrito, ${count} ${count === 1 ? "artículo" : "artículos"}`}>
-      {renderGlyph("icon:shopping-cart", 20)}
-      <span>Carrito</span>
-      {count > 0 && <b>{count}</b>}
-    </Link>
+    <nav aria-label="Carrito" style={{ display: "contents" }}>
+      <Link href={href("carrito")} className="pf__cartbtn" aria-label={`Carrito, ${count} ${count === 1 ? "artículo" : "artículos"}`}>
+        {renderGlyph("icon:shopping-cart", 20)}
+        <span>Carrito</span>
+        {count > 0 && <b>{count}</b>}
+      </Link>
+    </nav>
   );
 }
 

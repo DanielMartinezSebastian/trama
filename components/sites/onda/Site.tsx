@@ -70,9 +70,9 @@ export function Shell({ children }: { children: ReactNode }) {
         />
       </div>
       <main>{children}</main>
-      <div className="on__marquee">
+      <aside className="on__marquee" aria-label="Lema de Onda">
         <Marquee text="HECHO PARA TOCAR · SIN MENÚS · CADA MANDO UNA FUNCIÓN · TRES AÑOS DE GARANTÍA" variant="solid" tone="mut" rows={1} fontSize={18} duration={40} separator="   ✦   " />
-      </div>
+      </aside>
       <div className="st-wrap on__footer">
         <Footer
           brand="ONDA Instruments"

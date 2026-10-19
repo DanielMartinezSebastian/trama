@@ -172,3 +172,16 @@ leer `axe.run`; los desbordes se miden comparando `scrollWidth` con `clientWidth
       pantalla lee el texto íntegro. Úsalo solo en frases de énfasis, no en información imprescindible.
 - [ ] **Sin cubrir todavía:** Safari y Firefox, VoiceOver/NVDA, Lighthouse móvil, y las cinco webs anteriores (`kernel-log`,
       `pixelforge`, `vigia`, `onda`, `clara-vidal`) con este mismo método. Pasos 2 y 3 del pedido de Barro con datos reales.
+
+### Revisión de las cinco webs anteriores y de las sombras de texto (19-10-2026)
+
+`kernel-log`, `pixelforge`, `vigia`, `onda` y `clara-vidal` pasadas con el mismo método (1280 y 390 px). Corregido: botón de búsqueda
+de `NavBar` (el nombre accesible no contenía el texto visible), avatar de `Testimonial` (contraste), `Stepper` que se desplazaba en
+horizontal (ahora parte en líneas), carrito de Pixelforge y cinta de Onda fuera de un landmark, y carrusel móvil de Clara sin foco de
+teclado. Resultado: 0 infracciones de axe en las cinco.
+
+**Hallazgo importante:** `--legibility-ts` se definía en `:root` con `var(--bg, #000)` y se resolvía allí, así que en los temas
+claros el texto oscuro llevaba un halo **negro** (visible en Clara Vidal, Barro y Marea). Ahora `tokensToStyle` lo fija en el
+contenedor con el fondo del tema. Comprobación repetible en el navegador: recorrer los elementos con texto y verificar que
+ninguno tenga un `text-shadow` oscuro cuando su texto es oscuro (resultado actual: 0 casos en las 11 webs). Un contraste de axe que
+mide un fondo «más oscuro del real» suele delatar justo una sombra de texto oscura.

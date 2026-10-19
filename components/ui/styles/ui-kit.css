@@ -24,8 +24,14 @@
  * SIEMPRE un <shadow> válido — `0 0 transparent` cuando el estilo no tiene sombra, nunca la palabra clave
  * `none`, que invalidaría toda la lista.
  */
+/*
+ * OJO: esta variable se resuelve AQUÍ, en :root, donde --bg es el del tema por defecto (oscuro). Un tema distinto tiene que
+ * redefinirla en su contenedor con SU fondo: `tokensToStyle` ya lo hace. Si un tema se aplica solo con CSS, añade
+ * `--legibility-ts: 0 1px 1px color-mix(in srgb, <su fondo> 85%, transparent), 0 0 3px color-mix(in srgb, <su fondo> 65%, transparent);`
+ * (o `0 0 transparent` para quitarla). Con `var(--bg, …)` en :root el halo salía NEGRO en temas claros.
+ */
 :root, :host {
-  --legibility-ts: 0 1px 1px color-mix(in srgb, var(--bg, #000) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #000) 65%, transparent);
+  --legibility-ts: 0 1px 1px color-mix(in srgb, #07080f 85%, transparent), 0 0 3px color-mix(in srgb, #07080f 65%, transparent);
 }
 
 /* ---------- 1. Sistema de estilos ---------- */
@@ -736,7 +742,7 @@ a.ui-button { text-decoration: none; }
 .ui-quote__stars { color: var(--acc); letter-spacing: 0.2em; font-family: var(--mono); font-size: 14px; }
 .ui-quote blockquote { margin: 0; font-size: 18px; line-height: 1.5; text-transform: none; letter-spacing: normal; text-shadow: none; }
 .ui-quote__by { display: flex; align-items: center; gap: 12px; font-size: 13px; }
-.ui-quote__avatar { display: grid; place-content: center; width: 40px; height: 40px; border-radius: min(var(--s-r), 50%); background: color-mix(in srgb, var(--acc) 22%, transparent); border: 1px solid var(--acc); color: var(--acc); font-weight: 800; font-family: var(--mono); }
+.ui-quote__avatar { display: grid; place-content: center; width: 40px; height: 40px; border-radius: min(var(--s-r), 50%); background: color-mix(in srgb, var(--acc) 12%, var(--bg)); border: 1px solid var(--acc); color: var(--fg); font-weight: 800; font-family: var(--mono); }
 .ui-quote__by strong { display: block; } .ui-quote__by span { color: var(--mut); text-transform: none; letter-spacing: normal; }
 
 /* ---------- SectionHeader ---------- */
@@ -1242,7 +1248,8 @@ a.ui-button { text-decoration: none; }
 .ui-s--retro .ui-rgroup__dot::after, .ui-s--terminal .ui-rgroup__dot::after { display: none; }
 
 /* ---------- Stepper ---------- */
-.ui-steps { display: flex; align-items: center; gap: 8px; list-style: none; margin: 0; padding: 0; width: 100%; overflow: auto; font-family: var(--s-ff); }
+/* los pasos se parten en varias líneas en pantallas estrechas en vez de desplazarse: una región con scroll horizontal tendría que poder enfocarse */
+.ui-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 8px; list-style: none; margin: 0; padding: 0; width: 100%; font-family: var(--s-ff); }
 .ui-steps__item { display: flex; align-items: center; gap: 8px; color: var(--mut); font-size: 13px; white-space: nowrap; }
 .ui-steps__item:not(:last-child)::after { content: ""; width: 28px; height: 1px; background: var(--ln); margin-left: 8px; }
 .ui-steps__mark { flex: none; width: 24px; height: 24px; display: grid; place-content: center; border-radius: 50%; background: var(--s-bg); border: var(--s-bd); font-size: 11px; font-weight: 700; color: var(--mut); }

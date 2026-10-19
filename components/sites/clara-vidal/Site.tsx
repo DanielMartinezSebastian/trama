@@ -121,7 +121,7 @@ function Home() {
           <Button label="Reservar una sesión" href={href("reservar")} variant="glass" size="lg" />
           <MoreLink to={href("servicios")}>Ver servicios</MoreLink>
         </Headline>
-        <div className="cv__hero-img">
+        <div className="cv__hero-img" tabIndex={0} role="group" aria-label="Imágenes del estudio">
           <img src={fashionArt(4, "coat")} alt="Abrigo camel" />
           <img src={fashionArt(6, "dress")} alt="Vestido columna" />
           <img src={fashionArt(1, "shirt")} alt="Camisa blanca" />

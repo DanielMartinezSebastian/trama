@@ -95,3 +95,5 @@
 .cv__hint { font-size: 15px; color: var(--mut); }
 .cv__footer { padding-block: 16px 40px; background: var(--cv-alt); border-top: 1px solid var(--ln); }
 .cv__footer .ui-footer { font-size: 12px; }
+
+.cv__hero-img:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }

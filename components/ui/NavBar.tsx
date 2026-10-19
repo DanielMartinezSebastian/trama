@@ -459,7 +459,7 @@ export default function NavBar({
   const searchEl =
     search === "none" ? null : usesPalette ? (
       search === "command" && !collapsed ? (
-        <button type="button" className="ui-nav__search-btn" onClick={openPalette} aria-label={`${searchPlaceholder} (Ctrl+K)`}>
+        <button type="button" className="ui-nav__search-btn" onClick={openPalette} aria-keyshortcuts="Control+K Meta+K">
           {renderGlyph("icon:search", 16)}
           <span className="ui-nav__search-ph">{searchPlaceholder}</span>
           <kbd className="ui-nav__kbd">⌘K</kbd>
