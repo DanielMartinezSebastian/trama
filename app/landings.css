@@ -31,14 +31,14 @@
   font-size: 12px;
   letter-spacing: 0.22em;
   color: var(--acc);
-  text-shadow: 0 1px 12px #000;
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--bg, #000) 90%, transparent);
 }
 .tl__title {
   margin: 0 0 18px;
   font-size: clamp(38px, 7vw, 92px);
   line-height: 0.98;
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.75);
+  text-shadow: 0 2px 30px color-mix(in srgb, var(--bg, #000) 75%, transparent);
   min-height: 1em;
 }
 .tl__sub {
@@ -48,7 +48,7 @@
   line-height: 1.55;
   color: var(--fg);
   opacity: 0.88;
-  text-shadow: 0 1px 14px #000;
+  text-shadow: 0 1px 14px color-mix(in srgb, var(--bg, #000) 90%, transparent);
 }
 .tl__cta {
   display: inline-block;
@@ -86,7 +86,7 @@
   font-size: clamp(26px, 4vw, 48px);
   letter-spacing: -0.01em;
   min-height: 1.1em;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 24px color-mix(in srgb, var(--bg, #000) 80%, transparent);
 }
 .tl__grid {
   display: grid;
@@ -100,14 +100,14 @@
   font-size: clamp(30px, 5vw, 60px);
   line-height: 1;
   min-height: 1em;
-  text-shadow: 0 2px 28px #000;
+  text-shadow: 0 2px 28px color-mix(in srgb, var(--bg, #000) 90%, transparent);
 }
 .tl__final p {
   margin: 0 0 28px;
   font-size: 17px;
   line-height: 1.6;
   opacity: 0.9;
-  text-shadow: 0 1px 14px #000;
+  text-shadow: 0 1px 14px color-mix(in srgb, var(--bg, #000) 90%, transparent);
 }
 
 /* Transiciones entre secciones y cursor temático */
@@ -143,7 +143,7 @@
   pointer-events: none;
   font-size: 20px;
   color: var(--acc);
-  text-shadow: 0 0 10px var(--acc);
+  text-shadow: 0 0 calc(10px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(100% * var(--glow, 1)), transparent);
   animation: tl-spin 3s linear infinite;
 }
 @keyframes tl-spin { to { rotate: 360deg; } }
@@ -156,7 +156,7 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--fg);
-  text-shadow: 0 1px 8px #000;
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--bg, #000) 90%, transparent);
 }
 
 /* Cards */
@@ -218,7 +218,7 @@
   line-height: 5px;
   letter-spacing: 0;
   color: var(--acc);
-  text-shadow: 0 0 8px var(--acc);
+  text-shadow: 0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(100% * var(--glow, 1)), transparent);
   white-space: pre;
   overflow: hidden;
 }

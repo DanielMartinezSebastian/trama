@@ -54,6 +54,8 @@ const barrel = [
   `export * from "./components/ui/variants";`,
   `export { tokensToStyle, neutralTokens, dotmatrixTokens, editorialTokens, editorialDarkTokens, TOKEN_THEMES, FONT_PRESETS, FONT_PAIRINGS, type TokenSet, type KitTheme } from "./lib/ui/tokens";`,
   `export { splitList, splitEscaped } from "./lib/ui/list";`,
+  `export { useCart, type CartLine } from "./lib/commerce/cart";`,
+  `export { money, discount } from "./lib/commerce/money";`,
   `export type { ContactFormProps, ContactFormResult } from "./components/ui/ContactForm";`,
   // transiciones de página: además del componente, el envoltorio de elementos fijos y las ayudas para elegir animación
   `export * from "./components/ui/PageTransition";`,

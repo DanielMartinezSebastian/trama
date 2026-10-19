@@ -64,7 +64,8 @@
         "testimonial",
         "blog-card",
         "stacked-cards",
-        "bento-grid"
+        "bento-grid",
+        "product-card"
       ]
     },
     {
@@ -130,7 +131,8 @@
         "fullscreen-menu",
         "hide-on-scroll",
         "section-index",
-        "app-shell"
+        "app-shell",
+        "filter-bar"
       ]
     },
     {
@@ -145,7 +147,9 @@
         "checkbox-group",
         "radio-group",
         "stepper",
-        "otp-input"
+        "otp-input",
+        "quantity-stepper",
+        "option-picker"
       ]
     },
     {
@@ -160,7 +164,8 @@
         "skeleton",
         "kbd",
         "avatar",
-        "empty-state"
+        "empty-state",
+        "price-tag"
       ]
     },
     {
@@ -180,7 +185,8 @@
         "image-reveal",
         "distort-image",
         "drag-grid",
-        "object-stage"
+        "object-stage",
+        "product-gallery"
       ]
     },
     {
@@ -226,7 +232,8 @@
         "tooltip",
         "drawer",
         "chat-widget",
-        "command-palette"
+        "command-palette",
+        "cart-drawer"
       ]
     },
     {
@@ -11477,6 +11484,288 @@
       ],
       "example": "import EmptyState from \"@/components/ui/EmptyState\";\n\n<EmptyState\n  text=\"Conecta tu pasarela de pago o tu CRM para que importemos los clientes.\"\n  title=\"Aún no has conectado integraciones\"\n>\n  <Button label=\"Conectar una integración\" />\n</EmptyState>",
       "preview": "/componentes#empty-state"
+    },
+    {
+      "id": "price-tag",
+      "name": "Precio con rebaja",
+      "component": "PriceTag",
+      "import": "import PriceTag from \"@/components/ui/PriceTag\";",
+      "category": "feedback",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Precio con precio anterior tachado y porcentaje de descuento. El tachado y la rebaja llevan texto accesible: no dependen del color ni del tachado.",
+      "props": [
+        {
+          "key": "price",
+          "type": "number",
+          "default": 28,
+          "label": "Precio",
+          "min": 0,
+          "max": 999
+        },
+        {
+          "key": "compareAt",
+          "type": "number",
+          "default": 34,
+          "label": "Precio anterior (0 = sin rebaja)",
+          "min": 0,
+          "max": 999
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "lg",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "currency",
+          "type": "select",
+          "default": "EUR",
+          "label": "Moneda",
+          "options": [
+            "EUR",
+            "USD",
+            "GBP"
+          ]
+        }
+      ],
+      "example": "import PriceTag from \"@/components/ui/PriceTag\";\n\n<PriceTag />",
+      "preview": "/componentes#price-tag"
+    },
+    {
+      "id": "quantity-stepper",
+      "name": "Selector de cantidad",
+      "component": "QuantityStepper",
+      "import": "import QuantityStepper from \"@/components/ui/QuantityStepper\";",
+      "category": "formularios",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "− y + con el producto nombrado en cada botón («Quitar una unidad de Taza») y el valor anunciado al cambiar.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Taza Alba",
+          "label": "Producto"
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md"
+          ]
+        }
+      ],
+      "example": "import QuantityStepper from \"@/components/ui/QuantityStepper\";\n\n<QuantityStepper\n  label=\"Taza Alba\"\n/>",
+      "preview": "/componentes#quantity-stepper"
+    },
+    {
+      "id": "option-picker",
+      "name": "Selector de variante (color, talla)",
+      "component": "OptionPicker",
+      "import": "import OptionPicker from \"@/components/ui/OptionPicker\";",
+      "category": "formularios",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Círculos de color (con su nombre accesible) o chips de texto. Botones de radio nativos: flechas para moverse, la elegida se anuncia y las agotadas quedan tachadas y deshabilitadas.",
+      "props": [
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "swatch",
+          "label": "Tipo",
+          "options": [
+            "swatch",
+            "chip"
+          ]
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Esmalte",
+          "label": "Título"
+        }
+      ],
+      "example": "import OptionPicker from \"@/components/ui/OptionPicker\";\n\n<OptionPicker\n  label=\"Esmalte\"\n/>",
+      "preview": "/componentes#option-picker"
+    },
+    {
+      "id": "product-card",
+      "name": "Tarjeta de producto",
+      "component": "ProductCard",
+      "import": "import ProductCard from \"@/components/ui/ProductCard\";",
+      "category": "tarjetas",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Imagen con segunda imagen al pasar el puntero, etiqueta, título, material y precio. Todo el cuadro es un único enlace con nombre claro. Sin JS: el cambio de imagen es CSS.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Jarrón Ola",
+          "label": "Título"
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "default": 48,
+          "label": "Precio",
+          "min": 0,
+          "max": 999
+        },
+        {
+          "key": "compareAt",
+          "type": "number",
+          "default": 0,
+          "label": "Precio anterior (0 = sin rebaja)",
+          "min": 0,
+          "max": 999
+        },
+        {
+          "key": "badge",
+          "type": "text",
+          "default": "Novedad",
+          "label": "Etiqueta"
+        },
+        {
+          "key": "meta",
+          "type": "text",
+          "default": "Jarrones · gres",
+          "label": "Línea secundaria"
+        },
+        {
+          "key": "soldOut",
+          "type": "boolean",
+          "default": false,
+          "label": "Agotado"
+        },
+        {
+          "key": "ratio",
+          "type": "text",
+          "default": "4 / 5",
+          "label": "Relación de aspecto"
+        }
+      ],
+      "example": "import ProductCard from \"@/components/ui/ProductCard\";\n\n<ProductCard\n  title=\"Jarrón Ola\"\n/>",
+      "preview": "/componentes#product-card"
+    },
+    {
+      "id": "product-gallery",
+      "name": "Galería de producto",
+      "component": "ProductGallery",
+      "import": "import ProductGallery from \"@/components/ui/ProductGallery\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Imagen principal con zoom que sigue al puntero y miniaturas que son botones reales (aria-pressed). En táctil no hay zoom: la imagen se ve entera.",
+      "props": [
+        {
+          "key": "thumbs",
+          "type": "select",
+          "default": "below",
+          "label": "Miniaturas",
+          "options": [
+            "below",
+            "side"
+          ]
+        },
+        {
+          "key": "zoom",
+          "type": "number",
+          "default": 1.8,
+          "label": "Zoom",
+          "min": 1,
+          "max": 3
+        },
+        {
+          "key": "ratio",
+          "type": "text",
+          "default": "4 / 5",
+          "label": "Relación de aspecto"
+        }
+      ],
+      "example": "import ProductGallery from \"@/components/ui/ProductGallery\";\n\n<ProductGallery />",
+      "preview": "/componentes#product-gallery"
+    },
+    {
+      "id": "filter-bar",
+      "name": "Filtros y orden",
+      "component": "FilterBar",
+      "import": "import FilterBar from \"@/components/ui/FilterBar\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página.",
+      "props": [
+        {
+          "key": "total",
+          "type": "boolean",
+          "default": true,
+          "label": "Mostrar resultados"
+        }
+      ],
+      "example": "import FilterBar from \"@/components/ui/FilterBar\";\n\n<FilterBar />",
+      "preview": "/componentes#filter-bar"
+    },
+    {
+      "id": "cart-drawer",
+      "name": "Carrito lateral",
+      "component": "CartDrawer",
+      "import": "import CartDrawer from \"@/components/ui/CartDrawer\";",
+      "category": "overlays",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Líneas con cantidad y quitar, subtotal, barra de envío gratis y botón de pedir. Diálogo modal: atrapa el foco, Esc y el fondo cierran, devuelve el foco. Pensado para usarse con useCart.",
+      "props": [
+        {
+          "key": "freeShippingFrom",
+          "type": "number",
+          "default": 60,
+          "label": "Envío gratis desde (0 = sin barra)",
+          "min": 0,
+          "max": 300
+        },
+        {
+          "key": "empty",
+          "type": "boolean",
+          "default": false,
+          "label": "Carrito vacío"
+        }
+      ],
+      "notes": [
+        "El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta."
+      ],
+      "example": "import CartDrawer from \"@/components/ui/CartDrawer\";\n\n<CartDrawer />",
+      "preview": "/componentes#cart-drawer"
     }
   ],
   "landings": [
@@ -13693,6 +13982,126 @@
         {
           "component": "EmptyState",
           "id": "empty-state",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "barro",
+      "title": "Barro · cerámica hecha a mano",
+      "url": "/sitios/barro",
+      "dir": "components/sites/barro",
+      "description": "Tienda de cerámica con el flujo completo de comercio: listado con filtros y orden, ficha con galería y zoom, selector de color y tamaño, carrito lateral con envío gratis, y un pedido por pasos. Usa useCart (estado del carrito con persistencia), ProductCard, OptionPicker, FilterBar y CartDrawer.",
+      "pages": [
+        {
+          "path": "/sitios/barro",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/barro/tienda",
+          "title": "Tienda"
+        },
+        {
+          "path": "/sitios/barro/producto/jarron-ola",
+          "title": "Jarrón Ola"
+        },
+        {
+          "path": "/sitios/barro/producto/cuenco-brisa",
+          "title": "Cuenco Brisa"
+        },
+        {
+          "path": "/sitios/barro/producto/taza-alba",
+          "title": "Taza Alba"
+        },
+        {
+          "path": "/sitios/barro/producto/plato-marea",
+          "title": "Plato Marea"
+        },
+        {
+          "path": "/sitios/barro/producto/jarra-nube",
+          "title": "Jarra Nube"
+        },
+        {
+          "path": "/sitios/barro/producto/jarron-sal",
+          "title": "Jarrón Sal"
+        },
+        {
+          "path": "/sitios/barro/producto/cuenco-arena",
+          "title": "Cuenco Arena"
+        },
+        {
+          "path": "/sitios/barro/producto/taza-duna",
+          "title": "Taza Duna"
+        },
+        {
+          "path": "/sitios/barro/pedido",
+          "title": "Pedido"
+        }
+      ],
+      "components": [
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 4
+        },
+        {
+          "component": "RollLink",
+          "id": "roll-link",
+          "uses": 2
+        },
+        {
+          "component": "EmptyState",
+          "id": "empty-state",
+          "uses": 2
+        },
+        {
+          "component": "OptionPicker",
+          "id": "option-picker",
+          "uses": 2
+        },
+        {
+          "component": "RadioGroup",
+          "id": "radio-group",
+          "uses": 1
+        },
+        {
+          "component": "Stepper",
+          "id": "stepper",
+          "uses": 1
+        },
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 1
+        },
+        {
+          "component": "PriceTag",
+          "id": "price-tag",
+          "uses": 1
+        },
+        {
+          "component": "QuantityStepper",
+          "id": "quantity-stepper",
+          "uses": 1
+        },
+        {
+          "component": "ProductCard",
+          "id": "product-card",
+          "uses": 1
+        },
+        {
+          "component": "ProductGallery",
+          "id": "product-gallery",
+          "uses": 1
+        },
+        {
+          "component": "FilterBar",
+          "id": "filter-bar",
+          "uses": 1
+        },
+        {
+          "component": "CartDrawer",
+          "id": "cart-drawer",
           "uses": 1
         }
       ]

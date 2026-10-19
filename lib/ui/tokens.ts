@@ -19,6 +19,8 @@ export type TokenSet = {
   display?: string;
   /** fuente de acento (cursiva dentro de un titular, `<em>`); se publica como `--font-accent` */
   accentFont?: string;
+  /** fuerza los brillos de texto (neón, dot matrix…) a true/false; por defecto, solo con texto claro */
+  glow?: boolean;
 };
 
 /** Tema por defecto del kit: el mismo que fija `:root` en `components/ui/styles/kit.css`. */
@@ -100,6 +102,38 @@ export const TOKEN_THEMES: KitTheme[] = [
   { id: "editorial-oscuro", label: "Editorial · tinta", note: "Negro cálido con el mismo carácter editorial.", variant: "editorial", tokens: editorialDarkTokens },
 ];
 
+/** Luminancia relativa (0–1) de un color CSS en `#rgb`, `#rrggbb`, `rgb()` o `rgba()`; `null` si no se sabe leer. */
+function luminance(css: string): number | null {
+  const c = css.trim().toLowerCase();
+  let r: number, g: number, b: number;
+  const hex = c.match(/^#([0-9a-f]{3,8})$/);
+  const fn = c.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/);
+  if (hex) {
+    const h = hex[1].length <= 4 ? [...hex[1]].map((x) => x + x).join("") : hex[1];
+    if (h.length < 6) return null;
+    r = parseInt(h.slice(0, 2), 16);
+    g = parseInt(h.slice(2, 4), 16);
+    b = parseInt(h.slice(4, 6), 16);
+  } else if (fn) {
+    [r, g, b] = [Number(fn[1]), Number(fn[2]), Number(fn[3])];
+  } else return null;
+  const lin = (v: number) => ((v /= 255) <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+/**
+ * ¿Es oscuro el texto de este tema? Con texto oscuro sobre fondo claro **no debe haber brillos ni sombras de texto**: un
+ * brillo oscuro alrededor de letras oscuras las empasta y estorba la lectura. El kit lo resuelve con la variable `--glow`
+ * (0 = sin brillos, 1 = con ellos) que escala todos los `text-shadow` de color. Se decide por la luminancia del texto (o,
+ * si no se puede leer, por la del fondo); sin datos, se asume tema oscuro (el de por defecto del kit).
+ */
+export function hasDarkText(t: Pick<TokenSet, "fg" | "bg">): boolean {
+  const f = luminance(t.fg);
+  if (f !== null) return f < 0.4;
+  const b = luminance(t.bg);
+  return b !== null ? b > 0.4 : false;
+}
+
 /** Convierte tokens en variables CSS para el contenedor (`style={tokensToStyle(...)}`). */
 export function tokensToStyle(t: TokenSet): CSSProperties {
   return {
@@ -113,6 +147,7 @@ export function tokensToStyle(t: TokenSet): CSSProperties {
     "--r": `${t.r}px`,
     ...(t.display ? { "--display": t.display } : {}),
     ...(t.accentFont ? { "--font-accent": t.accentFont } : {}),
+    "--glow": (t.glow ?? !hasDarkText(t)) ? 1 : 0,
     fontFamily: t.font,
     color: t.fg,
   } as CSSProperties;

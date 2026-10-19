@@ -93,9 +93,9 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
   const bw = Math.min(40, (innerW / n / (series.length + 0.6)) * 0.9);
   const tipLeft = hover === null ? 0 : x(hover);
   return (
-    <div className={`ui-chart ${className}`.trim()}>
+    <div className={`ui-gchart ${className}`.trim()}>
       {legend && (
-        <ul className="ui-chart__legend">
+        <ul className="ui-gchart__legend">
           {series.map((s, i) => (
             <li key={s.name} className={tcls(s.tone ?? TONES[i % TONES.length])}>
               <i aria-hidden />
@@ -104,7 +104,7 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
           ))}
         </ul>
       )}
-      <div ref={box} className="ui-chart__box" style={{ height }} role="group" aria-label={label} tabIndex={0} onKeyDown={keys} onBlur={() => setHover(null)}>
+      <div ref={box} className="ui-gchart__box" style={{ height }} role="group" aria-label={label} tabIndex={0} onKeyDown={keys} onBlur={() => setHover(null)}>
         {w > 0 && (
           <svg width={w} height={height} aria-hidden onPointerMove={move} onPointerLeave={() => setHover(null)}>
             <defs>
@@ -117,8 +117,8 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
             </defs>
             {ticks.map((t) => (
               <g key={t}>
-                <line className="ui-chart__grid" x1={M.l} x2={w - M.r} y1={y(t)} y2={y(t)} />
-                <text className="ui-chart__tick" x={M.l - 8} y={y(t)} textAnchor="end" dominantBaseline="middle">
+                <line className="ui-gchart__grid" x1={M.l} x2={w - M.r} y1={y(t)} y2={y(t)} />
+                <text className="ui-gchart__tick" x={M.l - 8} y={y(t)} textAnchor="end" dominantBaseline="middle">
                   {fmt(t)}
                   {unit}
                 </text>
@@ -126,7 +126,7 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
             ))}
             {labels.map((l, i) =>
               i % every === 0 ? (
-                <text key={i} className="ui-chart__tick" x={x(i)} y={height - 8} textAnchor="middle">
+                <text key={i} className="ui-gchart__tick" x={x(i)} y={height - 8} textAnchor="middle">
                   {l}
                 </text>
               ) : null,
@@ -135,23 +135,23 @@ export default function Chart({ kind = "line", labels, series, height = 240, uni
               const col = `var(--${s.tone ?? TONES[si % TONES.length]})`;
               if (bar) {
                 return s.data.map((v, i) => (
-                  <rect key={`${s.name}${i}`} className="ui-chart__bar" x={x(i) - (series.length * bw) / 2 + si * bw} y={y(v)} width={Math.max(2, bw - 2)} height={Math.max(0, M.t + innerH - y(v))} rx={2} fill={col} opacity={hover === null || hover === i ? 1 : 0.45} style={{ "--i": i } as CSSProperties} />
+                  <rect key={`${s.name}${i}`} className="ui-gchart__bar" x={x(i) - (series.length * bw) / 2 + si * bw} y={y(v)} width={Math.max(2, bw - 2)} height={Math.max(0, M.t + innerH - y(v))} rx={2} fill={col} opacity={hover === null || hover === i ? 1 : 0.45} style={{ "--i": i } as CSSProperties} />
                 ));
               }
               const d = s.data.map((v, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(" ");
               return (
                 <g key={s.name}>
-                  {kind === "area" && <path d={`${d} L${x(n - 1).toFixed(1)} ${M.t + innerH} L${x(0).toFixed(1)} ${M.t + innerH} Z`} fill={`url(#${uid}-g${si})`} className="ui-chart__area" />}
-                  <path className="ui-chart__line" d={d} pathLength={1} fill="none" stroke={col} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                  {kind === "area" && <path d={`${d} L${x(n - 1).toFixed(1)} ${M.t + innerH} L${x(0).toFixed(1)} ${M.t + innerH} Z`} fill={`url(#${uid}-g${si})`} className="ui-gchart__area" />}
+                  <path className="ui-gchart__line" d={d} pathLength={1} fill="none" stroke={col} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                   {hover !== null && <circle cx={x(hover)} cy={y(s.data[hover] ?? 0)} r={4} fill="var(--bg)" stroke={col} strokeWidth={2} />}
                 </g>
               );
             })}
-            {hover !== null && !bar && <line className="ui-chart__cross" x1={x(hover)} x2={x(hover)} y1={M.t} y2={M.t + innerH} />}
+            {hover !== null && !bar && <line className="ui-gchart__cross" x1={x(hover)} x2={x(hover)} y1={M.t} y2={M.t + innerH} />}
           </svg>
         )}
         {hover !== null && w > 0 && (
-          <div className="ui-chart__tip" role="status" style={{ left: Math.min(Math.max(tipLeft, 70), w - 70), top: M.t }}>
+          <div className="ui-gchart__tip" role="status" style={{ left: Math.min(Math.max(tipLeft, 70), w - 70), top: M.t }}>
             <b>{labels[hover]}</b>
             {series.map((s, i) => (
               <span key={s.name} className={tcls(s.tone ?? TONES[i % TONES.length])}>

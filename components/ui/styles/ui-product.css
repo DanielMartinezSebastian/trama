@@ -26,27 +26,27 @@
 .ui-kpi__s--good path { stroke: var(--ok, #3ddc84); } .ui-kpi__s--bad path { stroke: var(--bad, #ff5470); }
 
 /* ---------- Chart ---------- */
-.ui-chart { display: grid; gap: 10px; min-width: 0; }
-.ui-chart__legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--mut); }
-.ui-chart__legend li { display: inline-flex; align-items: center; gap: 7px; }
-.ui-chart__legend i, .ui-chart__tip i { width: 10px; height: 10px; border-radius: 3px; background: var(--tone, var(--acc)); }
-.ui-chart__box { position: relative; width: 100%; outline-offset: 2px; }
-.ui-chart__box:focus-visible { outline: 2px solid var(--acc); border-radius: 6px; }
-.ui-chart svg { display: block; overflow: visible; }
-.ui-chart__grid { stroke: var(--ln); stroke-width: 1; }
-.ui-chart__tick { fill: var(--mut); font-size: 11px; font-variant-numeric: tabular-nums; }
-.ui-chart__cross { stroke: var(--mut); stroke-width: 1; stroke-dasharray: 3 3; }
-.ui-chart__line { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.ui-gchart { display: grid; gap: 10px; min-width: 0; }
+.ui-gchart__legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--mut); }
+.ui-gchart__legend li { display: inline-flex; align-items: center; gap: 7px; }
+.ui-gchart__legend i, .ui-gchart__tip i { width: 10px; height: 10px; border-radius: 3px; background: var(--tone, var(--acc)); }
+.ui-gchart__box { position: relative; width: 100%; outline-offset: 2px; }
+.ui-gchart__box:focus-visible { outline: 2px solid var(--acc); border-radius: 6px; }
+.ui-gchart svg { display: block; overflow: visible; }
+.ui-gchart__grid { stroke: var(--ln); stroke-width: 1; }
+.ui-gchart__tick { fill: var(--mut); font-size: 11px; font-variant-numeric: tabular-nums; }
+.ui-gchart__cross { stroke: var(--mut); stroke-width: 1; stroke-dasharray: 3 3; }
+.ui-gchart__line { stroke-dasharray: 1; stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  .ui-chart__line { animation: ui-chart-draw 1.1s var(--ease-out, ease-out) both; }
-  .ui-chart__area { animation: ui-chart-fade 1.1s var(--ease-out, ease-out) both; }
-  .ui-chart__bar { transform-box: fill-box; transform-origin: 50% 100%; animation: ui-chart-grow 0.7s var(--ease-out, ease-out) both; animation-delay: calc(var(--i, 0) * 30ms); }
+  .ui-gchart__line { animation: ui-gchart-draw 1.1s var(--ease-out, ease-out) both; }
+  .ui-gchart__area { animation: ui-gchart-fade 1.1s var(--ease-out, ease-out) both; }
+  .ui-gchart__bar { transform-box: fill-box; transform-origin: 50% 100%; animation: ui-gchart-grow 0.7s var(--ease-out, ease-out) both; animation-delay: calc(var(--i, 0) * 30ms); }
 }
-@keyframes ui-chart-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes ui-chart-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes ui-chart-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-.ui-chart__tip { position: absolute; z-index: 2; display: grid; gap: 3px; transform: translateX(-50%); padding: 8px 10px; border: 1px solid var(--ln); border-radius: 8px; background: var(--bg); color: var(--fg); font-size: 12px; pointer-events: none; box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5); white-space: nowrap; }
-.ui-chart__tip span { display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+@keyframes ui-gchart-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes ui-gchart-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ui-gchart-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.ui-gchart__tip { position: absolute; z-index: 2; display: grid; gap: 3px; transform: translateX(-50%); padding: 8px 10px; border: 1px solid var(--ln); border-radius: 8px; background: var(--bg); color: var(--fg); font-size: 12px; pointer-events: none; box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5); white-space: nowrap; }
+.ui-gchart__tip span { display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
 
 /* ---------- DataTable ---------- */
 .ui-dtable { display: grid; min-width: 0; overflow: clip; }

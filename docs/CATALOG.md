@@ -460,6 +460,20 @@ Celdas de distinto tamaño (1×1, 2×1, 1×2, 2×2) que encajan sin huecos. CSS 
 | `columns` | `2` · `3` · `4` | "4" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
 
+### Tarjeta de producto — `ProductCard`
+
+Imagen con segunda imagen al pasar el puntero, etiqueta, título, material y precio. Todo el cuadro es un único enlace con nombre claro. Sin JS: el cambio de imagen es CSS.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Jarrón Ola" |
+| `price` | number 0–999 | 48 |
+| `compareAt` | number 0–999 | 0 |
+| `badge` | text | "Novedad" |
+| `meta` | text | "Jarrones · gres" |
+| `soldOut` | boolean | false |
+| `ratio` | text | "4 / 5" |
+
 ## Interacción (`interaccion`)
 
 Respuestas al puntero.
@@ -1043,6 +1057,14 @@ Barra lateral con grupos (plegable a iconos), barra superior y contenido con su 
 
 - height admite 100svh (página entera) o un valor fijo cuando va dentro de otra cosa.
 
+### Filtros y orden — `FilterBar`
+
+Grupos de chips (aria-pressed) con contador, selector de orden, número de resultados anunciado con aria-live y «Quitar filtros». Controlada: el estado vive en tu página.
+
+| prop | tipo | default |
+|---|---|---|
+| `total` | boolean | true |
+
 ## Formularios (`formularios`)
 
 Campos, interruptores y deslizadores.
@@ -1148,6 +1170,24 @@ Casillas de código (SMS, autenticación en dos pasos): el foco avanza solo al e
 | `size` | `sm` · `md` · `lg` | "md" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
+### Selector de cantidad — `QuantityStepper`
+
+− y + con el producto nombrado en cada botón («Quitar una unidad de Taza») y el valor anunciado al cambiar.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Taza Alba" |
+| `size` | `sm` · `md` | "md" |
+
+### Selector de variante (color, talla) — `OptionPicker`
+
+Círculos de color (con su nombre accesible) o chips de texto. Botones de radio nativos: flechas para moverse, la elegida se anuncia y las agotadas quedan tachadas y deshabilitadas.
+
+| prop | tipo | default |
+|---|---|---|
+| `kind` | `swatch` · `chip` | "swatch" |
+| `label` | text | "Esmalte" |
+
 ## Feedback (`feedback`)
 
 Estados, avisos y carga.
@@ -1246,6 +1286,17 @@ Envuelve contenido (`children`), p. ej.: `<Button label="Conectar una integraci�
 | `text` | text | "Conecta tu pasarela de pago o tu CRM para que importemos los clientes." |
 | `glyph` | text | "◌" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
+
+### Precio con rebaja — `PriceTag`
+
+Precio con precio anterior tachado y porcentaje de descuento. El tachado y la rebaja llevan texto accesible: no dependen del color ni del tachado.
+
+| prop | tipo | default |
+|---|---|---|
+| `price` | number 0–999 | 28 |
+| `compareAt` | number 0–999 | 34 |
+| `size` | `sm` · `md` · `lg` | "lg" |
+| `currency` | `EUR` · `USD` · `GBP` | "EUR" |
 
 ## Galerías, vídeo y audio (`galerias`)
 
@@ -1587,6 +1638,16 @@ Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio
 
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
 - Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
+
+### Galería de producto — `ProductGallery`
+
+Imagen principal con zoom que sigue al puntero y miniaturas que son botones reales (aria-pressed). En táctil no hay zoom: la imagen se ve entera.
+
+| prop | tipo | default |
+|---|---|---|
+| `thumbs` | `below` · `side` | "below" |
+| `zoom` | number 1–3 | 1.8 |
+| `ratio` | text | "4 / 5" |
 
 ## Secciones (`secciones`)
 
@@ -1991,6 +2052,17 @@ Caja de búsqueda sobre la página con lista filtrada por varias palabras (sin a
 
 - Se abre con el botón o con Ctrl/⌘ + K. Se pinta en un portal con los tokens del tema.
 
+### Carrito lateral — `CartDrawer`
+
+Líneas con cantidad y quitar, subtotal, barra de envío gratis y botón de pedir. Diálogo modal: atrapa el foco, Esc y el fondo cierran, devuelve el foco. Pensado para usarse con useCart.
+
+| prop | tipo | default |
+|---|---|---|
+| `freeShippingFrom` | number 0–300 | 60 |
+| `empty` | boolean | false |
+
+- El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta.
+
 ## Pixel art (`pixel`)
 
 Iconos SVG que se tiñen con el tema, marcos de 9 cortes y sprites: píxeles hechos a mano, no filtros.
@@ -2167,3 +2239,11 @@ Panel de un SaaS con los patrones de producto: marco de aplicación con barra la
 Carpeta: `components/sites/pulso/` · 4 páginas: Resumen · Clientes · Informes · Ajustes
 
 `KpiCard` ×4 · `Chart` ×4 · `Avatar` ×2 · `DataTable` ×2 · `Button` · `Badge` · `CommandPalette` · `AppShell` · `EmptyState`
+
+### Barro · cerámica hecha a mano — `/sitios/barro`
+
+Tienda de cerámica con el flujo completo de comercio: listado con filtros y orden, ficha con galería y zoom, selector de color y tamaño, carrito lateral con envío gratis, y un pedido por pasos. Usa useCart (estado del carrito con persistencia), ProductCard, OptionPicker, FilterBar y CartDrawer.
+
+Carpeta: `components/sites/barro/` · 11 páginas: Inicio · Tienda · Jarrón Ola · Cuenco Brisa · Taza Alba · Plato Marea · Jarra Nube · Jarrón Sal · Cuenco Arena · Taza Duna · Pedido
+
+`TextField` ×4 · `RollLink` ×2 · `EmptyState` ×2 · `OptionPicker` ×2 · `RadioGroup` · `Stepper` · `SplitText` · `PriceTag` · `QuantityStepper` · `ProductCard` · `ProductGallery` · `FilterBar` · `CartDrawer`

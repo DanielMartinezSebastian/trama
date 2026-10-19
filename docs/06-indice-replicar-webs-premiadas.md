@@ -40,6 +40,13 @@ devuelve el foco), orden y selección de la tabla, gráficos y marco. Lección: 
 brillo interior que no sirven en un panel, así que estas piezas parten de `editorial`. **Pendiente de la fase:** `Kanban`
 (I6), `Onboarding` (I8), `FeatureShowcase` (I9), `Combobox`/`DatePicker`/`Popover`, y todo el bloque de comercio (J1–J6).
 
+**Fase 4, comercio (19-10-2026):** `ProductCard`, `ProductGallery`, `OptionPicker`, `QuantityStepper`, `PriceTag`, `FilterBar`
+y `CartDrawer`, más `useCart` y `money()` (`lib/commerce`, exportados por el paquete) y la demo **Barro**
+(`/sitios/barro`: inicio, tienda con filtros, 8 fichas, carrito lateral con envío gratis y pedido por pasos). El pedido es de
+prueba: no pide datos de pago ni envía nada. Verificado en Chrome: ficha con selector de esmalte y tamaño, carrito (tema,
+barra de envío, subtotal), paso a pedido con resumen, y filtro por tipo con contador. Lección: dos clases nuevas
+(`ui-price`, `ui-chart`) chocaban con las del kit; ver la trampa nueva en la guía §10.
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,
@@ -226,12 +233,12 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
-| J1 | Ficha de producto con galería, variantes, cantidad | Tiendas | ◐ | Hay una tienda de referencia (`/sitios/pixelforge`, `onda`); extraer componentes |
-| J2 | Carrito lateral (`CartDrawer`) | Tiendas | ◐ | Existe dentro de Pixelforge; extraer |
-| J3 | Filtros y orden con chips y contador de resultados | Colección «Search Filters» | ✘ | `FilterBar` |
-| J4 | Selector de color/talla con vista previa 3D o imagen | Tiendas premiadas | ✘ | Reutiliza `DeviceMockup3D` como base |
-| J5 | Proceso de compra por pasos | Tiendas | ◐ | `Stepper` |
-| J6 | Estados de stock, precios tachados, etiquetas | Tiendas | ✘ | Variantes de `Badge`/`PricingCard` |
+| J1 | Ficha de producto con galería, variantes, cantidad | Tiendas | ✔ | `ProductGallery` (zoom + miniaturas), `OptionPicker`, `QuantityStepper`, `PriceTag`; ficha completa en `/sitios/barro/producto/…`
+| J2 | Carrito lateral (`CartDrawer`) | Tiendas | ✔ | `CartDrawer` + `useCart` (estado con persistencia, exportado por el paquete)
+| J3 | Filtros y orden con chips y contador de resultados | Colección «Search Filters» | ✔ | `FilterBar` (chips con contador, orden, resultados con `aria-live`)
+| J4 | Selector de color/talla con vista previa 3D o imagen | Tiendas premiadas | ◐ | `OptionPicker` (color/talla) hecho; la vista 3D del producto puede apoyarse en `ObjectStage`
+| J5 | Proceso de compra por pasos | Tiendas | ◐ | Pedido por pasos con `Stepper` en la demo Barro; falta un componente `Checkout` reutilizable
+| J6 | Estados de stock, precios tachados, etiquetas | Tiendas | ◐ | `PriceTag` (rebaja) y `ProductCard` (`soldOut`, etiqueta); faltan avisos de stock bajo
 
 ### K. Transversales (no son componentes, son reglas)
 

@@ -472,6 +472,22 @@ conviene saber al ampliarlo:
   componentes cliente pequeños dentro (portada de la web: `components/site/HomePage.tsx` con `HomeStage`, `StartSteps`,
   `VariantLab` e `InstallChip`).
 
+### 8.0 Sombras de texto: nunca oscuras sobre texto oscuro
+
+**Regla:** con texto oscuro sobre fondo claro no hay sombra ni brillo de texto por defecto. Una sombra oscura alrededor de
+letras oscuras las empasta y estorba la lectura.
+
+- **Brillos con color del tema** (neón, dot matrix, retro…): se escalan con la variable `--glow` (1 = con brillo, 0 = sin él).
+  `tokensToStyle` la pone sola: 0 si el texto del tema es oscuro (luminancia < 0,4), 1 si es claro (`hasDarkText` en `lib/ui/tokens.ts`).
+  En CSS: `text-shadow: 0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(100% * var(--glow, 1)), transparent)`.
+  Un tema que no pase por `tokensToStyle` pone `--glow: 0` a mano; y `glow: true | false` en el `TokenSet` fuerza el valor.
+- **Legibilidad sobre fondos con movimiento** (ASCII, vídeo, imágenes): halo del **color del fondo del tema**, nunca negro fijo:
+  `var(--legibility-ts)` o `color-mix(in srgb, var(--bg) 90%, transparent)`. Con fondo oscuro es idéntico al antiguo negro; con
+  fondo claro es un halo claro, inocuo.
+- **Nada de `#000`, `black` ni `rgba(0,0,0,…)` en un `text-shadow`.** `npm run check:shadows` lo comprueba en todos los CSS y
+  falla si encuentra una sombra negra fija o un brillo de color sin `--glow`. Excepción justificada (un efecto elegido a propósito
+  como `NeonSign`, o un terminal oscuro por diseño): comentario `/* shadow-ok: motivo */` en la misma regla.
+
 ### 8.1. Accesibilidad y SEO: reglas del kit
 
 Lo comprueba una auditoría con axe-core (WCAG 2.1 AA) sobre la web, las landings y las webs completas. Al crear o cambiar
@@ -546,6 +562,7 @@ sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente
 | Un componente no llega al ancho de su contenedor en un proyecto | Un tope de ancho pensado para la vista previa del catálogo (`Table` tenía `width: min(100%, 520px)`) | Los componentes llenan su contenedor; si la vista previa necesita un tope, se lo pone el `render` de su entrada en `lib/catalog/entries/`, nunca el CSS del componente. `Table` tiene `width="full"` (defecto) o `"auto"` |
 | El scroll va a tirones en móvil con un fondo 3D, aunque en escritorio vaya fino | El compositor del navegador (el que mueve el scroll) comparte la GPU con el WebGL: lienzo a pantalla completa a dpr 2–3, MSAA en el render target, 60–120 fps y `backdrop-filter` encima la saturan | §22.1: `RetroCanvas` ya limita fps, dpr y resolución interna; no pongas `backdrop-filter` sobre el lienzo ni vuelvas a renderizar la página al cambiar de escena |
 | Una barra de borde a borde se queda con márgenes | El layout que la contiene tiene `max-width` o `padding` | `NavBar bleed` ocupa el ancho de la ventana desde cualquier contenedor; `shape="contained"` alinea su contenido con `--nav-max` |
+| Un componente nuevo se ve con estilos «ajenos» (relleno, fuente mono, ancho fijo) | Su clase raíz ya existía en otro CSS del kit (`.ui-price` era el de `PricingCard`, `.ui-chart` el del gráfico ASCII) y las reglas se mezclan | Antes de elegir un prefijo: `grep -n "\.ui-nombre" components/ui/styles/*.css`. Si existe, usa otro (`ui-ptag`, `ui-gchart`) |
 | Doble caja en un `<input>`/`<textarea>` del catálogo | Una regla `.pg` demasiado amplia (pensada para el propio panel) alcanza con descendientes genéricos (`.pg input[type="text"]`) el `<input>` que un componente del catálogo pinta en vivo dentro de `.pg__stage`, y le gana en especificidad a `.ui-field input` | El CSS del panel (`components/playground/playground.css`) nunca usa selectores genéricos `.pg <elemento>`: se ata a clases propias (`.pg__search`, `.pg__theme`, `.pg-field`) que no existen dentro de `.pg__stage` |
 | Scroll o recorte en una celda de «Comparar los 7 estilos» | La celda topaba su alto en `Math.min(stageHeight, 460)` y además vivía en una rejilla de columnas de ~280px — ambos límites pensados para componentes pequeños (botón, campo, tarjeta), que un componente ancho por diseño (`NavBar`, cualquier "sección") o con rejilla propia (`PricingSection`) no puede respetar | Sin alto tope (`entry.stageHeight` a secas) y sin columnas: `.pg__compare` es una sola columna a ancho completo, el mismo que ya funciona en la vista aislada |
 

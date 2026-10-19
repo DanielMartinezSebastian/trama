@@ -203,7 +203,7 @@ html.scrollable::-webkit-scrollbar-thumb:hover, html.scrollable body::-webkit-sc
   z-index: 3;
   font-size: 12px;
   color: #dfe5f5;
-  text-shadow: 0 1px 8px #000;
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--bg, #000) 90%, transparent);
   pointer-events: none;
 }
 

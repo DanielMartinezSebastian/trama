@@ -174,3 +174,20 @@ export function withSize(dataUri: string, w: number, h: number) {
   const svgText = decodeURIComponent(dataUri.slice(prefix.length)).replace("<svg ", `<svg width="${w}" height="${h}" `);
   return `${prefix}${encodeURIComponent(svgText)}`;
 }
+
+/* ---------- Cerámica: piezas sencillas con esmalte de color sobre fondo cálido (tienda de ejemplo) ---------- */
+export type PotteryKind = "vase" | "bowl" | "mug" | "plate" | "jug";
+const CLAY_BG = ["#efe6da", "#e9dfd0", "#f1ebe1", "#e6dccd", "#ece3d6"];
+
+/** Una pieza de cerámica (jarrón, cuenco, taza, plato o jarra) con el esmalte `glaze`. Con tamaño intrínseco, lista para `<img>` y texturas WebGL. */
+export function potteryArt(seed: number, kind: PotteryKind, glaze = "#b5532f") {
+  const bg = CLAY_BG[seed % CLAY_BG.length];
+  const dark = "#00000022";
+  let d = `<rect width="800" height="1000" fill="${bg}"/><ellipse cx="400" cy="830" rx="230" ry="20" fill="#0000001a"/>`;
+  if (kind === "vase") d += `<path d="M350 250 Q352 330 280 470 Q220 600 300 790 L500 790 Q580 600 520 470 Q448 330 450 250 Z" fill="${glaze}"/><ellipse cx="400" cy="250" rx="50" ry="12" fill="#00000030"/><path d="M300 560 Q400 590 505 560" stroke="#ffffff30" stroke-width="6" fill="none"/>`;
+  else if (kind === "bowl") d += `<path d="M180 450 Q180 790 400 790 Q620 790 620 450 Z" fill="${glaze}"/><ellipse cx="400" cy="450" rx="220" ry="46" fill="#00000030"/><ellipse cx="400" cy="450" rx="220" ry="46" fill="none" stroke="#ffffff40" stroke-width="5"/>`;
+  else if (kind === "mug") d += `<rect x="260" y="400" width="250" height="390" rx="26" fill="${glaze}"/><path d="M510 470 Q640 470 640 580 Q640 690 510 690" stroke="${glaze}" stroke-width="34" fill="none"/><ellipse cx="385" cy="400" rx="125" ry="20" fill="#00000030"/>`;
+  else if (kind === "plate") d += `<ellipse cx="400" cy="640" rx="290" ry="86" fill="${glaze}"/><ellipse cx="400" cy="632" rx="220" ry="58" fill="${dark}"/><ellipse cx="400" cy="632" rx="290" ry="86" fill="none" stroke="#ffffff30" stroke-width="5"/>`;
+  else d += `<path d="M300 380 Q280 560 300 790 L500 790 Q530 580 500 380 Z" fill="${glaze}"/><path d="M300 400 Q230 390 210 340 Q290 350 310 380 Z" fill="${glaze}"/><path d="M500 440 Q620 440 620 560 Q620 670 505 670" stroke="${glaze}" stroke-width="30" fill="none"/><ellipse cx="400" cy="380" rx="100" ry="16" fill="#00000030"/>`;
+  return uri(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">${d}</svg>`);
+}
