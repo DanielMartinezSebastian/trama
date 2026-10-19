@@ -589,13 +589,13 @@ Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el 
 
 ### Cursor de página con estados — `CustomCursor`
 
-Punto que persigue al puntero en toda la página y cambia según lo que hay debajo: crece en enlaces, muestra una etiqueta con data-cursor="Ver", se oculta con data-cursor="hide" y se hace barra en campos de texto. Solo con puntero fino.
+Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor="Ver", se oculta con data-cursor="hide" y es una barra en campos de texto. Solo con puntero fino.
 
 | prop | tipo | default |
 |---|---|---|
 | `cursorSize` | number 6–40 | 14 |
 | `follow` | number 0.05–1 | 0.18 |
-| `blend` | `difference` · `none` | "difference" |
+| `blend` | `none` · `difference` | "none" |
 | `hideNative` | boolean | false |
 
 - Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.

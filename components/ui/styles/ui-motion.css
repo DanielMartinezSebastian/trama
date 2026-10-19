@@ -69,21 +69,25 @@ html.ui-intro-lock { overflow: hidden; scrollbar-gutter: stable; }
 @media (prefers-reduced-motion: reduce) { .ui-pre, .ui-pre--fade[data-out] { transition-duration: 0.01s; } }
 
 /* ---------- CustomCursor ---------- */
-.ui-ccur { position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none; opacity: 0; transition: opacity var(--dur-s) linear; }
+.ui-ccur { --cc-fill: #111; --cc-ink: #fff; --cc-ring: #fff; position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none; opacity: 0; transition: opacity var(--dur-s) linear; }
 .ui-ccur[data-on] { opacity: 1; }
-.ui-ccur--diff { mix-blend-mode: difference; }
+/* según el fondo de debajo: sobre claro, punto oscuro con contorno claro; sobre oscuro o imágenes, punto claro con contorno oscuro */
+.ui-ccur[data-bg="dark"], .ui-ccur[data-bg="mixed"] { --cc-fill: #fff; --cc-ink: #111; --cc-ring: #111; }
+.ui-ccur--diff { mix-blend-mode: difference; --cc-fill: #fff !important; --cc-ring: transparent !important; }
 .ui-ccur__dot {
   display: grid; place-items: center; width: var(--cc-size, 14px); height: var(--cc-size, 14px); margin: calc(var(--cc-size, 14px) / -2) 0 0 calc(var(--cc-size, 14px) / -2);
-  border-radius: 50%; background: var(--cc-color, var(--fg)); color: var(--bg); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
-  transition: transform var(--dur-m) var(--ease-out), background var(--dur-s) linear;
+  border-radius: 50%; background: var(--cc-color, var(--cc-fill)); color: var(--cc-ink); box-shadow: 0 0 0 1.5px var(--cc-ring); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+  transition: transform var(--dur-m) var(--ease-out), width var(--dur-m) var(--ease-out), height var(--dur-m) var(--ease-out), margin var(--dur-m) var(--ease-out), background var(--dur-s) linear, box-shadow var(--dur-s) linear, color var(--dur-s) linear;
 }
-.ui-ccur[data-mode="link"] .ui-ccur__dot { transform: scale(3); }
-.ui-ccur[data-mode="label"] .ui-ccur__dot { transform: scale(var(--cc-label-scale, 5.5)); }
-.ui-ccur[data-mode="label"] .ui-ccur__txt { transform: scale(calc(1 / var(--cc-label-scale, 5.5))); }
-.ui-ccur[data-mode="text"] .ui-ccur__dot { transform: scale(0.15, 1.8); border-radius: 2px; }
+/* sobre un enlace: un aro de dos tonos (se ve sobre cualquier fondo) que no tapa el texto. Cambia de tamaño de verdad, sin escalar:
+   el contorno mantiene su grosor y el texto de la etiqueta no se deforma */
+.ui-ccur[data-mode="link"] .ui-ccur__dot { --d: 44px; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); background: transparent; box-shadow: 0 0 0 1.5px var(--cc-fill), 0 0 0 3px var(--cc-ring); }
+.ui-ccur[data-mode="label"] .ui-ccur__dot { --d: var(--cc-label-d, 84px); width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); }
+.ui-ccur[data-mode="text"] .ui-ccur__dot { transform: scale(0.15, 1.8); border-radius: 2px; box-shadow: none; }
 .ui-ccur[data-mode="hide"] { opacity: 0; }
 .ui-ccur[data-down] .ui-ccur__dot { transform: scale(0.7); }
-.ui-ccur__txt { display: block; line-height: 1; }
+/* el texto mide lo que mide (no los 14 px del punto): así queda centrado en la burbuja en vez de desbordar a un lado */
+.ui-ccur__txt { display: block; width: max-content; line-height: 1; text-align: center; }
 html.ui-ccur-native, html.ui-ccur-native * { cursor: none !important; }
 html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]) * { cursor: text !important; }
 @media (prefers-reduced-motion: reduce) { .ui-ccur__dot { transition: none; } }

@@ -102,13 +102,13 @@ export const movimiento: CatalogEntry[] = [
     category: "interaccion",
     styles: ["minimal", "solid", "neon"],
     description:
-      "Punto que persigue al puntero en toda la página y cambia según lo que hay debajo: crece en enlaces, muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y se hace barra en campos de texto. Solo con puntero fino.",
+      "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
     stageHeight: 280,
     notes: ["Es global (position: fixed): en el catálogo actúa sobre toda la ventana mientras esta ficha está abierta.", "hideNative oculta el cursor del sistema, salvo en campos de texto."],
     props: [
       { key: "cursorSize", label: "Tamaño (px)", type: "number", default: 14, min: 6, max: 40, step: 1 },
       { key: "follow", label: "Seguimiento", type: "number", default: 0.18, min: 0.05, max: 1, step: 0.01 },
-      { key: "blend", label: "Mezcla", type: "select", default: "difference", options: ["difference", "none"] },
+      { key: "blend", label: "Mezcla", type: "select", default: "none", options: ["none", "difference"], labels: { none: "se adapta al fondo", difference: "invertir lo de debajo" } },
       { key: "hideNative", label: "Ocultar cursor del sistema", type: "boolean", default: false },
     ],
     render: (p) => (

@@ -10151,7 +10151,7 @@
         "solid",
         "neon"
       ],
-      "description": "Punto que persigue al puntero en toda la página y cambia según lo que hay debajo: crece en enlaces, muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y se hace barra en campos de texto. Solo con puntero fino.",
+      "description": "Punto que persigue al puntero en toda la página y **se ve sobre cualquier fondo**: lee el fondo de debajo (claro, oscuro o imagen) y cambia de color, con un contorno de contraste. Se hace aro sobre enlaces (sin tapar el texto), muestra una etiqueta con data-cursor=\"Ver\", se oculta con data-cursor=\"hide\" y es una barra en campos de texto. Solo con puntero fino.",
       "props": [
         {
           "key": "cursorSize",
@@ -10172,11 +10172,11 @@
         {
           "key": "blend",
           "type": "select",
-          "default": "difference",
+          "default": "none",
           "label": "Mezcla",
           "options": [
-            "difference",
-            "none"
+            "none",
+            "difference"
           ]
         },
         {
