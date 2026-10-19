@@ -5,7 +5,7 @@
 
 Todos los componentes: `import X from "@/components/ui/X"`, CSS una vez con `import "@/components/ui/styles/kit.css"`,
 tema con los tokens `--bg --fg --mut --acc --acc2 --card --ln --r` en cualquier contenedor, estilo con
-`variant` (glass · solid · outline · neon · retro · terminal · minimal · dotmatrix). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con `|`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: `\,` (coma), `\|` (barra) o `\;` (punto y coma), p. ej. `badges="+12 proyectos, 99\,5 % disponibilidad"` (atributo JSX entre comillas; dentro de una cadena JS, `{"…"}`, la barra va doble: `"99\\,5 %"`).
+`variant` (glass · solid · outline · neon · retro · terminal · minimal · dotmatrix · editorial). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con `|`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: `\,` (coma), `\|` (barra) o `\;` (punto y coma), p. ej. `badges="+12 proyectos, 99\,5 % disponibilidad"` (atributo JSX entre comillas; dentro de una cadena JS, `{"…"}`, la barra va doble: `"99\\,5 %"`).
 
 ## Fondos (`fondos`)
 
@@ -187,7 +187,7 @@ Titular de héroe con frases que se escriben y se borran en bucle.
 | `pause` | number 0–5 | 1.4 |
 | `cursor` | `bar` · `block` · `underscore` · `none` | "bar" |
 | `fontSize` | number 16–80 | 40 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Rótulo de neón — `NeonSign`
 
@@ -225,7 +225,7 @@ Filas de texto en bucle, en CSS puro y sin JS. Siete estilos y color por token.
 | prop | tipo | default |
 |---|---|---|
 | `text` | text | "NUEVA COLECCIÓN" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
 | `direction` | `alternate` · `left` · `right` | "alternate" |
 | `duration` | number 6–60 | 18 |
@@ -247,7 +247,7 @@ Sobretítulo, titular, subtítulo y regla decorativa.
 | `subtitle` | text | "Reserva, elige tu horario y nosotros nos ocupamos del resto." |
 | `align` | `left` · `center` | "left" |
 | `rule` | `none` · `line` · `ascii` · `dots` | "line" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Separador — `Divider`
 
@@ -258,7 +258,7 @@ Separador con etiqueta. El modo texto dibuja la regla con caracteres.
 | `label` | text | "o continúa con" |
 | `mode` | `line` · `text` | "line" |
 | `pattern` | text | "-=" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Texto troceado (cinético) — `SplitText`
 
@@ -288,6 +288,19 @@ Una sola línea que llena exactamente el ancho del contenedor (titulares gigante
 | `text` | text | "Hablemos" |
 | `max` | number 0–600 | 0 |
 
+### Texto que se enciende con el scroll — `ScrubText`
+
+Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálculo por fotograma, sin GSAP; el lector de pantalla lo lee entero.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se s…" |
+| `dim` | number 0.05–0.6 | 0.18 |
+| `from` | number 0.4–1 | 0.85 |
+| `to` | number 0–0.8 | 0.35 |
+
+- Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.
+
 ## Tarjetas (`tarjetas`)
 
 Superficies de contenido con capas ASCII.
@@ -301,7 +314,7 @@ Número bitmap, fondo ASCII (15 campos procedurales animados × 8 juegos de cara
 | `title` | text | "Iniciación" |
 | `text` | text | "Grupos de seis, espuma blanda y mucha paciencia. Te levantas el primer día." |
 | `meta` | text | "2 h · desde 35 €" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 | `align` | `left` · `center` | "left" |
 | `minHeight` | number 160–420 | 250 |
 | `reveal` | `none` · `wipe` · `rise` · `dissolve` | "rise" |
@@ -358,7 +371,7 @@ Superficie genérica con barra opcional, título, cuerpo y pie. Base de cualquie
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
 | `image` | text | "gen:3" |
 | `tone` | `acc` · `acc2` | "acc" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Tarjeta de precios — `PricingCard`
 
@@ -378,7 +391,7 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 | `highlighted` | boolean | true |
 | `highlight` | `glow` · `invert` · `border` | "invert" |
 | `badge` | text | "Más popular" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 | `fill` | `surface` · `tint` · `gradient` · `accent` · `pattern` · `image` | "surface" |
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
 | `image` | text | "gen:3" |
@@ -398,7 +411,7 @@ Cita con avatar de iniciales, autor, cargo y valoración.
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
 | `image` | text | "gen:3" |
 | `tone` | `acc` · `acc2` | "acc" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Tarjeta de artículo — `BlogCard`
 
@@ -419,9 +432,33 @@ Artículo con cabecera (imagen, trama de CSS o caracteres), categoría, titular,
 | `date` | text | "12 mar 2026" |
 | `readTime` | text | "4 min" |
 | `href` | text | "#" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 | `fill` | `surface` · `tint` · `gradient` · `accent` | "surface" |
 | `tone` | `acc` · `acc2` | "acc" |
+
+### Tarjetas apiladas — `StackedCards`
+
+Cada tarjeta se pega arriba y la siguiente la cubre al hacer scroll. position: sticky puro; las cubiertas se encogen un poco donde hay animaciones ligadas al scroll.
+
+Envuelve contenido (`children`), p. ej.: `<article>Tarjeta 1</article> <article>Tarjeta 2</article> <article>Tarjeta 3</article>`
+
+| prop | tipo | default |
+|---|---|---|
+| `top` | number 0–200 | 24 |
+| `step` | number 0–60 | 16 |
+| `gap` | number 4–40 | 14 |
+| `shrink` | boolean | true |
+
+- Las tarjetas necesitan fondo opaco para tapar a las anteriores.
+
+### Rejilla bento — `BentoGrid`
+
+Celdas de distinto tamaño (1×1, 2×1, 1×2, 2×2) que encajan sin huecos. CSS puro; cada celda admite título, texto, cifra grande o imagen de fondo.
+
+| prop | tipo | default |
+|---|---|---|
+| `columns` | `2` · `3` · `4` | "4" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
 
 ## Interacción (`interaccion`)
 
@@ -434,7 +471,7 @@ Botón del sistema: 6 colores (acento, neutro, éxito, info, aviso, peligro) × 
 | prop | tipo | default |
 |---|---|---|
 | `label` | text | "Reservar clase" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "solid" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "solid" |
 | `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "accent" |
 | `emphasis` | `primary` · `secondary` · `outline` · `ghost` · `link` | "primary" |
 | `size` | `sm` · `md` · `lg` | "md" |
@@ -458,7 +495,7 @@ Button que se desplaza (y gira un poco) hacia el puntero cuando se acerca. Sin e
 | prop | tipo | default |
 |---|---|---|
 | `label` | text | "Reservar clase" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "solid" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "solid" |
 | `emphasis` | `primary` · `secondary` · `ghost` | "primary" |
 | `size` | `sm` · `md` · `lg` | "md" |
 | `glyph` | text | "" |
@@ -493,7 +530,7 @@ Envuelve contenido (`children`), p. ej.: `<h3>Pasa el puntero</h3> <p>Un foco de
 | `intensity` | number 5–80 | 30 |
 | `border` | boolean | true |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Efectos de hover — `HoverFX`
 
@@ -508,7 +545,7 @@ Envuelve contenido (`children`), p. ej.: `<PricingCard plan="Pro" />`
 | `tone` | `acc` · `acc2` · `fg` · `mut` | "acc" |
 | `radius` | number 60–460 | 220 |
 | `tiltMax` | number 2–25 | 10 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - La mayoría de efectos son CSS puro; «tilt» y «glow» siguen el puntero con GSAP.
 - Se puede combinar con Presence: HoverFX dentro, Presence fuera (o al revés) para tener entrada/salida y hover a la vez.
@@ -522,7 +559,7 @@ Caja de contenido largo (registro de cambios, comentarios, salida de terminal…
 |---|---|---|
 | `content` | text | "Registro de cambios\nv1.4.0 — Panel de tokens con selector de tipografía y fuentes de …" |
 | `height` | number 120–400 | 220 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - La barra de scroll no es exclusiva de este componente: cualquier superficie ui-s--<variante> la hereda automáticamente (ver components/ui/styles/ui-kit.css).
 
@@ -635,7 +672,7 @@ Envuelve contenido (`children`), p. ej.: `<Card /> <Card /> <Card />`
 | `delay` | number 0–2 | 0 |
 | `easing` | `out` · `in-out` · `back` · `linear` | "out" |
 | `stagger` | number 0–0.5 | 0.12 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Con «inview» y «scroll», desplaza el escenario: el contenido empieza debajo.
 - «stagger» escalona los hijos directos (aquí, las tres tarjetas); «split» trocea un texto plano (aquí, el titular).
@@ -685,6 +722,29 @@ Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta 
 
 - Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always.
 
+### Sección fijada con progreso — `PinnedSection`
+
+Se queda fija mientras haces scroll y publica su progreso (0 → 1) en la variable CSS --pin-p para que los hijos se muevan, cambien de opacidad o se recorten con ella. position: sticky, sin GSAP.
+
+Envuelve contenido (`children`), p. ej.: `<h2 className="titulo">Título</h2>`
+
+| prop | tipo | default |
+|---|---|---|
+| `length` | number 1–8 | 2 |
+
+- Ejemplo de CSS: .titulo { transform: translateX(calc(var(--pin-p) * -40vw)); }
+- Ocupa (length + 1) alturas de ventana en el documento.
+
+### Parallax — `Parallax`
+
+Mueve su contenido a distinto ritmo que el scroll (profundidad). Sin GSAP; se apaga con movimiento reducido. Para imágenes: el contenedor recorta y el hijo es más alto.
+
+Envuelve contenido (`children`), p. ej.: `<img src="…" alt="" />`
+
+| prop | tipo | default |
+|---|---|---|
+| `speed` | number -0.5–0.5 | 0.15 |
+
 ## Datos (`datos`)
 
 Cifras, gráficos, terminales y tablas.
@@ -720,7 +780,7 @@ Barras verticales, horizontales, área o sparkline dibujados con caracteres, con
 | `height` | number 4–20 | 10 |
 | `fillChar` | text | "█" |
 | `animate` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
 ### Terminal que escribe sola — `TerminalTyper`
 
@@ -729,7 +789,7 @@ Terminal con escritura carácter a carácter. En estilo retro es un monitor de f
 | prop | tipo | default |
 |---|---|---|
 | `lines` | text | "$ npx create-landing hoja-vivero\n[ok] plantilla descargada\n[ok] gsap ScrollTrigger c…" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 | `chrome` | boolean | true |
 | `title` | text | "zsh — proyecto" |
 | `cursor` | `block` · `bar` · `underscore` | "block" |
@@ -746,7 +806,7 @@ Proceso, hoja de ruta o historial en vertical, con marcadores numerados, punto o
 | `steps` | text | "Reserva\|Eliges día y nivel en menos de un minuto.\nLlegada\|Recibes neopreno y tabla …" |
 | `marker` | `number` · `dot` · `glyph` | "number" |
 | `glyph` | text | "*" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Tabla de datos — `Table`
 
@@ -757,7 +817,7 @@ Tabla a partir de texto CSV. La cabecera y las filas se adaptan a la variante.
 | `csv` | text | "Plan, Clases, Precio\nIniciación, 1, 35 €\nBono 5, 5, 150 €\nSurf trip, 6, 240 €" |
 | `striped` | boolean | true |
 | `width` | `full` · `auto` | "full" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "solid" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "solid" |
 
 ### Bloque de código — `CodeBlock`
 
@@ -769,7 +829,7 @@ Código con cabecera, numeración de línea opcional y botón de copiar. Sin res
 | `language` | text | "tsx" |
 | `filename` | text | "" |
 | `showLineNumbers` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
 ### Hora local — `LocalTime`
 
@@ -810,7 +870,7 @@ Barra de navegación completa: siete disposiciones (o piezas en el orden que qui
 | `collapseAt` | number 0–1400 | 760 |
 | `mobileMenu` | `drawer` · `sheet` | "drawer" |
 | `defaultActive` | number 0–5 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Enlaces como texto, una sección por línea: `Sección > Hijo|descripción|icon:nombre; Hijo=/ruta`. Dentro de un submenú, `#Categoría` abre una columna con título. `Etiqueta=#id` es un enlace real y `Etiqueta [nuevo]` lleva insignia.
 - layout elige una disposición; slots la sustituye pieza a pieza: brand, links, search, actions, spacer y menu separadas por espacios, `|` para otra fila y `/` para columnas alineadas a izquierda, centro y derecha. Ej.: "brand / links / search actions".
@@ -827,7 +887,7 @@ Pestañas con teclado (←/→) y panel. El indicador de la activa cambia con el
 | `items` | text | "Resumen, Detalles, Reseñas" |
 | `content` | text | "Una vista general del producto.\nEspecificaciones técnicas y medidas.\nLo que dicen qu…" |
 | `defaultIndex` | number 0–5 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Acordeón — `Accordion`
 
@@ -838,7 +898,7 @@ Preguntas frecuentes con paneles animados por CSS.
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | false |
 | `defaultOpen` | number 0–5 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Migas de pan — `Breadcrumbs`
 
@@ -848,7 +908,7 @@ Ruta de navegación. El último elemento es la página actual, sin enlace.
 |---|---|---|
 | `items` | text | "Inicio, Cursos, Iniciación al surf" |
 | `separator` | text | "/" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Paginación — `Pagination`
 
@@ -859,7 +919,7 @@ Números de página con elipsis cuando hay muchas. Gestiona su propia página ac
 | `total` | number 1–40 | 9 |
 | `defaultPage` | number 1–40 | 4 |
 | `siblingCount` | number 0–3 | 1 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Menú desplegable — `Dropdown`
 
@@ -870,7 +930,7 @@ Botón que abre una lista de acciones (⋮). Para elegir un valor de formulario,
 | `label` | text | "⋮" |
 | `items` | text | "Editar, Duplicar, Archivar, Eliminar" |
 | `align` | `left` · `right` | "right" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Progreso del scroll — `ScrollProgress`
 
@@ -880,7 +940,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 |---|---|---|
 | `placement` | `top` · `bottom` · `left` · `right` · `top-left` · `top-right` · `bottom-left` · `bottom-right` · `inline` | "top" |
 | `kind` | `bar` · `segments` · `dots` · `ascii` · `ring` | "bar" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "acc" |
 | `size` | `sm` · `md` · `lg` | "md" |
 | `steps` | number 4–60 | 24 |
@@ -904,6 +964,29 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `closeLabel` | text | "close" |
 | `note` | text | "Madrid, ES" |
 
+### Cabecera que se esconde al bajar — `HideOnScroll`
+
+Envoltorio de cabeceras fijas: se esconde al bajar, vuelve al subir o llegar arriba, y no se esconde si un descendiente tiene el foco ni con movimiento reducido.
+
+Envuelve contenido (`children`), p. ej.: `<nav>…tu cabecera…</nav>`
+
+| prop | tipo | default |
+|---|---|---|
+| `offset` | number 0–600 | 120 |
+
+- Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio.
+
+### Indicador de sección — `SectionIndex`
+
+«02 / 05 · Servicios» fijo en una esquina, siguiendo la sección que cruza la mitad de la pantalla. Marca tus secciones con data-section.
+
+| prop | tipo | default |
+|---|---|---|
+| `position` | `left` · `right` | "left" |
+| `selector` | text | "[data-section]" |
+
+- Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio.
+
 ## Formularios (`formularios`)
 
 Campos, interruptores y deslizadores.
@@ -924,7 +1007,7 @@ Entrada con etiqueta, ayuda, prefijo y estados de error o éxito. El foco usa --
 | `type` | `text` · `email` · `password` · `search` | "text" |
 | `multiline` | boolean | false |
 | `rows` | number 2–10 | 4 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Interruptor — `Toggle`
 
@@ -937,7 +1020,7 @@ Interruptor accesible. Retro y terminal lo muestran como texto [ON ]/[OFF].
 | `size` | `sm` · `md` · `lg` | "md" |
 | `onText` | text | "ON " |
 | `offText` | text | "OFF" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Deslizador — `RangeSlider`
 
@@ -952,7 +1035,7 @@ Deslizador con pista y pulgar propios de cada estilo.
 | `defaultValue` | number 0–100 | 40 |
 | `unit` | text | "%" |
 | `showValue` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Desplegable — `Select`
 
@@ -965,7 +1048,7 @@ Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en lo
 | `defaultValue` | text | "" |
 | `placeholder` | text | "Elige una opción" |
 | `size` | `sm` · `md` · `lg` | "md" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Grupo de casillas — `CheckboxGroup`
 
@@ -976,7 +1059,7 @@ Casillas independientes. Retro y terminal las muestran como texto [x]/[ ].
 | `label` | text | "Notificaciones" |
 | `options` | text | "Email, SMS, Push, Newsletter" |
 | `defaultValue` | text | "Email, Push" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Grupo de opciones — `RadioGroup`
 
@@ -987,7 +1070,7 @@ Selección única entre varias opciones. Retro y terminal las muestran como text
 | `label` | text | "Plan" |
 | `options` | text | "Mensual, Anual" |
 | `defaultValue` | text | "Mensual" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Pasos — `Stepper`
 
@@ -997,7 +1080,7 @@ Indicador de progreso por pasos (alta, checkout, onboarding…). No gestiona el 
 |---|---|---|
 | `steps` | text | "Datos, Envío, Pago, Confirmación" |
 | `current` | number 0–5 | 1 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Código de verificación — `OtpInput`
 
@@ -1007,7 +1090,7 @@ Casillas de código (SMS, autenticación en dos pasos): el foco avanza solo al e
 |---|---|---|
 | `length` | number 4–8 | 6 |
 | `size` | `sm` · `md` · `lg` | "md" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
 ## Feedback (`feedback`)
 
@@ -1023,7 +1106,7 @@ Etiqueta de estado en cinco tonos, con punto opcional.
 | `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "accent" |
 | `size` | `md` · `lg` | "md" |
 | `dot` | boolean | false |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Barra de progreso — `Progress`
 
@@ -1038,7 +1121,7 @@ Barra con franjas animadas o dibujada con caracteres. Retro la dibuja por bloque
 | `ascii` | boolean | false |
 | `fillChar` | text | "#" |
 | `emptyChar` | text | "-" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Aviso — `Alert`
 
@@ -1050,7 +1133,7 @@ Mensaje inline con icono según el tipo, permanente (no desaparece solo). Para u
 | `message` | text | "Tu perfil se actualizó correctamente." |
 | `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "success" |
 | `dismissible` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Indicador de carga — `Spinner`
 
@@ -1062,7 +1145,7 @@ Anillo CSS o animaciones de texto: línea, braille, puntos, barra y bloques.
 | `label` | text | "Cargando…" |
 | `fontSize` | number 12–48 | 20 |
 | `fps` | number 2–30 | 12 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
 ### Esqueleto de carga — `Skeleton`
 
@@ -1091,7 +1174,7 @@ Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow
 | `autoplay` | number 0–8 | 0 |
 | `loop` | boolean | false |
 | `zoom` | boolean | false |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "retro" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "retro" |
 
 - Cada línea de «imágenes» es «imagen|título|texto». La imagen puede ser una URL o ruta, o `gen:N` (0, 1, 2…) para una escena de ejemplo generada, sin descargas.
 - Las flechas, los puntos y las imágenes toman borde, radio y sombra de la variante de estilo (variables --s-*).
@@ -1112,7 +1195,7 @@ Carrusel genérico sobre Swiper: cada hijo es una diapositiva. Diapositivas visi
 | `arrows` | boolean | true |
 | `dots` | `none` · `bullets` · `progress` · `fraction` | "bullets" |
 | `ticker` | boolean | false |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Las secciones (testimonios, ventajas, precios, equipo, blog) lo usan por dentro con `layout="carousel"`; úsalo directamente para cualquier lista de tarjetas.
 - En pantallas estrechas baja solo a 2 y a 1 diapositiva visible.
@@ -1318,7 +1401,7 @@ Reproductor sobre el <video> nativo, sin dependencias, con controles propios del
 | `asciiHoverStrength` | number 0–1 | 0.7 |
 | `asciiHoverRadius` | number 0.1–0.6 | 0.28 |
 | `pauseOffscreen` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "retro" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "retro" |
 
 - «Fuente» admite un archivo (.mp4, .webm), un enlace de YouTube (watch, youtu.be, shorts) o de Vimeo. Con un enlace de YouTube/Vimeo solo aplican título, proporción y carátula.
 - Atajos con el reproductor enfocado: espacio o K, ←/→ ±5 s (J/L ±10 s), ↑/↓ volumen, M silencio, F pantalla completa, C subtítulos, 0–9 salta al 0–90 %.
@@ -1341,7 +1424,33 @@ Lista de pistas con visualizador (barras, onda o puntos), repetición, volumen y
 | `dock` | `none` · `bottom` · `top` · `bottom-left` · `bottom-right` | "none" |
 | `dockDraggable` | boolean | true |
 | `dockVisualizer` | `bars` · `wave` · `dots` · `none` | "bars" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
+
+### Scroll horizontal — `HorizontalScroll`
+
+El scroll vertical de la página desplaza una fila de paneles en horizontal. En pantallas estrechas y con movimiento reducido pasa a ser un carrusel nativo con imán, sin secuestrar el scroll.
+
+Envuelve contenido (`children`), p. ej.: `<article>Panel 1</article> <article>Panel 2</article> <article>Panel 3</article>`
+
+| prop | tipo | default |
+|---|---|---|
+| `heading` | text | "Cómo trabajamos" |
+| `gap` | number 0–80 | 24 |
+| `minWidth` | number 320–1400 | 860 |
+
+- Cada hijo directo es un panel. Ver en /sitios/estudio (sección «Cómo trabajamos»).
+- También publica --hs-p (0 → 1).
+
+### Imagen que se descubre — `ImageReveal`
+
+Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño. Reserva su hueco con ratio y espera al Preloader.
+
+| prop | tipo | default |
+|---|---|---|
+| `from` | `bottom` · `top` · `left` · `right` · `center` | "bottom" |
+| `ratio` | text | "4 / 5" |
+| `zoom` | number 1–2 | 1.25 |
+| `duration` | number 0.3–3 | 1.2 |
 
 ## Secciones (`secciones`)
 
@@ -1361,7 +1470,7 @@ Cabecera de landing: sobretítulo, titular, subtítulo, una o dos llamadas a la 
 | `badges` | text | "+500 alumnos, 4.9 ★ valoración, Grupos de 6" |
 | `align` | `left` · `center` | "center" |
 | `backdrop` | `none` · `grid` · `dots` · `glow` | "grid" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Formulario de contacto — `ContactForm`
 
@@ -1376,7 +1485,7 @@ Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado d
 | `submitLabel` | text | "Enviar mensaje" |
 | `successMessage` | text | "Gracias, te contestaremos pronto." |
 | `errorTitle` | text | "No se pudo enviar" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - `onSubmit(data)` puede ser `async`: mientras la promesa está pendiente el botón muestra la carga; si resuelve `{ ok: false, message }` o lanza, sale un `Alert` danger (`role="alert"`) con `errorTitle` y el mensaje (o `errorMessage`) y lo escrito se conserva; si resuelve `{ ok: true }` o nada, el estado de éxito. Sin `onSubmit`, o con uno síncrono sin retorno, siempre éxito (como la demo).
 - Ej.: `onSubmit={async (d) => { const r = await fetch("/api/contacto", { method: "POST", body: JSON.stringify(d) }); return r.ok ? { ok: true } : { ok: false, message: "El servidor no respondió." }; }}`
@@ -1393,7 +1502,7 @@ Cierre de página: titular corto, una frase y uno o dos botones sobre una superf
 | `primaryCta` | text | "Apuntarme" |
 | `secondaryCta` | text | "" |
 | `align` | `left` · `center` | "center" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "neon" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "neon" |
 
 ### Sección de FAQ — `FAQSection`
 
@@ -1405,7 +1514,7 @@ Cabecera de sección más acordeón: las preguntas frecuentes listas para el fin
 | `title` | text | "Todo lo que necesitas saber" |
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | true |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Sección de cifras — `StatsSection`
 
@@ -1436,7 +1545,7 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `cta` | text | "Empezar ahora" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Sección de testimonios — `TestimonialSection`
 
@@ -1451,7 +1560,7 @@ Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
 | `effect` | `slide` · `fade` · `cards` | "slide" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Pie de página — `Footer`
 
@@ -1464,7 +1573,7 @@ Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de c
 | `columns` | text | "Escuela: Clases, Monitores, Ubicación; Ayuda: Reservas, Cancelaciones, FAQ; Legal: Pri…" |
 | `social` | text | "X, IG, YT" |
 | `copyright` | text | "© 2026 Maré Surf Club. Todos los derechos reservados." |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Rejilla de ventajas — `FeatureGrid`
 
@@ -1478,7 +1587,7 @@ Cabecera de sección + rejilla de «por qué elegirnos» (glifo + título + text
 | `layout` | `grid` · `carousel` | "grid" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Sección de equipo — `TeamSection`
 
@@ -1492,7 +1601,7 @@ Cabecera de sección + grid de perfiles con avatar de iniciales: la página «so
 | `layout` | `grid` · `carousel` | "grid" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Tira de marcas — `LogoCloud`
 
@@ -1503,7 +1612,7 @@ Cabecera de sección + grid de perfiles con avatar de iniciales: la página «so
 | `label` | text | "Con la confianza de" |
 | `brands` | text | "Nautilus, Costa Brava FM, Surfrider, Deporte Norte, Vela & Mar" |
 | `layout` | `row` · `ticker` | "row" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Sección de blog — `ArticlesSection`
 
@@ -1520,7 +1629,7 @@ Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con im
 | `vary` | boolean | true |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Lista de proyectos con vista previa — `ProjectList`
 
@@ -1532,6 +1641,19 @@ Filas con título enorme. Al pasar el puntero el resto se atenúa y una imagen s
 | `follow` | number 0.05–1 | 0.14 |
 | `tilt` | number 0–20 | 8 |
 | `cursorLabel` | text | "Ver" |
+
+### Pie de página grande — `BigFooter`
+
+Correo grande, enlaces que ruedan y un titular que llena el ancho, con los colores del tema invertidos. Compone FitText, RollLink y LocalTime.
+
+| prop | tipo | default |
+|---|---|---|
+| `heading` | text | "Hablemos." |
+| `lead` | text | "¿Tienes un proyecto?" |
+| `email` | text | "hola@estudio.example" |
+| `note` | text | "© 2026 Estudio" |
+| `credit` | text | "Hecho con Trama" |
+| `city` | text | "Madrid" |
 
 ## Contenido (`contenido`)
 
@@ -1550,7 +1672,7 @@ La tipografía de un artículo o una página de documentación: títulos con anc
 | `anchors` | boolean | true |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
 | `codeVariant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "terminal" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 - Markdown → elementos React, sin HTML crudo: un texto de un CMS o de un usuario no puede inyectar marcado, y los enlaces solo admiten http(s), mailto, rutas y anclas.
 - Avisos al estilo GitHub: `> [!NOTE] Título`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`. Código: ```lenguaje archivo. Imágenes: `![alt](url "pie")`, con `gen:N` para las de ejemplo.
@@ -1569,7 +1691,7 @@ Nota, consejo, importante, cuidado o peligro dentro de un texto largo. Es conten
 | `kind` | `bar` · `soft` · `outline` | "bar" |
 | `icon` | text | "" |
 | `collapsible` | boolean | false |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 - En Prose se escribe `> [!NOTE] Título` (o TIP, IMPORTANT, WARNING, CAUTION) seguido de las líneas del aviso.
 - El texto admite Markdown de línea; una línea en blanco separa párrafos. Con children se pinta lo que pases.
@@ -1583,7 +1705,7 @@ Nota, consejo, importante, cuidado o peligro dentro de un texto largo. Es conten
 | `title` | text | "En esta página" |
 | `kind` | `rail` · `list` · `numbered` | "rail" |
 | `depth` | `2` · `3` | "3" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 - markdown = mismos ids que Prose con ese texto · target = selector de un contenedor ya pintado (lee sus h2/h3 con id) · items = a mano, `## Título` por línea.
 - En la vista previa, desplaza el texto: el índice marca la sección visible.
@@ -1604,7 +1726,7 @@ Categoría, título, entradilla, autor con cargo, fecha, tiempo de lectura, etiq
 | `tags` | text | "Iniciación, Seguridad, Material" |
 | `cover` | text | "gen:1" |
 | `align` | `left` · `center` | "left" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Artículo completo — `Article`
 
@@ -1620,7 +1742,7 @@ La sección lista para un blog o una documentación: cabecera, índice lateral q
 | `cover` | text | "gen:1" |
 | `dropCap` | boolean | false |
 | `progress` | boolean | false |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "minimal" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 - Un «# Título» al principio del Markdown se quita: el título ya lo pone la cabecera.
 - readTime="auto" calcula los minutos del propio texto.
@@ -1643,7 +1765,7 @@ Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed
 | `cancelLabel` | text | "Cancelar" |
 | `size` | `sm` · `md` · `lg` | "md" |
 | `intent` | `accent` · `neutral` · `success` · `info` · `warning` · `danger` | "accent" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Notificación (Toast) — `Toast`
 
@@ -1656,7 +1778,7 @@ Notificación temporal apilable, construida sobre sonner (apilado, gestos y temp
 | `title` | text | "Cambios guardados" |
 | `description` | text | "Tu perfil se actualizó correctamente." |
 | `position` | `top-left` · `top-center` · `top-right` · `bottom-left` · `bottom-center` · `bottom-right` | "bottom-right" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 | `intentStyle` | `bar` · `icon` · `tint` · `mono` | "bar" |
 | `icons` | `auto` · `svg` · `glyph` · `none` | "auto" |
 | `actionLabel` | text | "" |
@@ -1685,7 +1807,7 @@ Envuelve contenido (`children`), p. ej.: `<Button label="Exportar" glyph="icon:d
 | `offsetX` | number -80–80 | 0 |
 | `offsetY` | number -80–80 | 0 |
 | `inertia` | number 0–0.95 | 0.72 |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Con un único elemento como hijo, este recibe aria-describedby apuntando al tooltip; el foco lo pone el propio botón, sin paradas de tabulador extra.
 - Con follow, el tooltip sigue al ratón (se da la vuelta en los bordes de la ventana y sin inercia con prefers-reduced-motion). Con teclado o en táctil se coloca sobre el disparador, como con follow={false}.
@@ -1700,7 +1822,7 @@ Panel deslizante desde un lateral (menú móvil, carrito, filtros). Se cierra co
 | `side` | `left` · `right` | "left" |
 | `title` | text | "Menú" |
 | `body` | text | "Clases, Tablas, Reservas, Contacto, Ayuda." |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Chat de ayuda (chatbot) — `ChatWidget`
 
@@ -1714,7 +1836,7 @@ Asistente flotante en una esquina: responde por reglas (palabras clave → respu
 | `quickReplies` | text | "Precios, Horarios, Reservar, Hablar con una persona" |
 | `launcherLabel` | text | "¿Te ayudo?" |
 | `position` | `bottom-right` · `bottom-left` | "bottom-right" |
-| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` | "glass" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Reglas, una por línea: `precio, cuesta => Cuesta **35 €**. || Reservar, Horarios`. Gana la que tiene más claves en el mensaje (sin tildes ni mayúsculas); tras `||`, las respuestas rápidas siguientes.
 - onMessage(texto, historial) → texto o { text, quickReplies } (puede ser async): sustituye a las reglas para usar un backend.
@@ -1887,4 +2009,4 @@ Web de un estudio creativo con los patrones de las webs premiadas: scroll suave,
 
 Carpeta: `components/sites/estudio/` · 4 páginas: Inicio · Proyectos · Estudio · Contacto
 
-`SplitText` ×6 · `RollLink` ×2 · `ProjectList` ×2 · `LocalTime` ×2 · `Marquee` · `FitText` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu`
+`SplitText` ×6 · `ProjectList` ×2 · `Parallax` ×2 · `ImageReveal` ×2 · `Marquee` · `RollLink` · `CustomCursor` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `LocalTime` · `ScrubText` · `HideOnScroll` · `SectionIndex` · `HorizontalScroll` · `StackedCards` · `BentoGrid` · `BigFooter`

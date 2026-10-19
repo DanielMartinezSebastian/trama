@@ -30,6 +30,14 @@ export const SERVICES = [
   { n: "04", name: "Contenido y movimiento", text: "Textos, fotografía y animación que cuentan lo mismo que la web." },
 ];
 
+export const PROCESS = [
+  { n: "01", name: "Escuchar", text: "Una semana de conversaciones con tu equipo y con tus clientes. Sin prisa y sin presentaciones." },
+  { n: "02", name: "Dibujar", text: "Mapas, prototipos y pruebas en papel. Lo feo y rápido primero, lo bonito después." },
+  { n: "03", name: "Construir", text: "Diseño y código a la vez, con versiones que puedes tocar cada semana." },
+  { n: "04", name: "Medir", text: "Salimos, miramos qué pasa de verdad y ajustamos lo que no funciona." },
+  { n: "05", name: "Cuidar", text: "Seguimos contigo. Una web viva se mantiene como un jardín, no como una estatua." },
+];
+
 export const FACTS = [
   { v: "12", l: "años" },
   { v: "86", l: "proyectos" },

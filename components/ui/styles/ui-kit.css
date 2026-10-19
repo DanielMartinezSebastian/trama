@@ -66,6 +66,17 @@
   --s-bg: transparent; --s-bd: 0 solid transparent; --s-r: 0px; --s-pri-bg: transparent; --s-pri-fg: var(--fg); --s-pri-bd: 0 solid transparent;
 }
 /*
+ * editorial: la estética de las webs de estudio y de revista. Superficies sin relleno con línea fina, esquinas rectas,
+ * sin sombras, texto en peso medio con tracking ajustado; la acción primaria es un bloque sólido invertido (--fg sobre --bg).
+ * Pensada para fondos claros u oscuros lisos y tipografía grande; con `--display` del tema los titulares toman su fuente.
+ */
+.ui-s--editorial {
+  --s-bg: transparent; --s-bd: 1px solid var(--ln); --s-r: 0px; --s-sh: none; --s-bf: none;
+  --s-fw: 500; --s-ls: -0.01em; --s-tt: none;
+  --s-pri-bg: var(--fg); --s-pri-fg: var(--bg); --s-pri-bd: 1px solid var(--fg); --s-pri-sh: none; --s-pri-ts: none;
+}
+.ui-s--editorial.ui-button--primary:is(:hover, :focus-visible) { background: var(--acc); border-color: var(--acc); color: var(--bg); }
+/*
  * dotmatrix: negro con trama de puntos, borde punteado, sin radio ni sombras; titulares en Doto (matriz de puntos) y cuerpo
  * en IBM Plex Mono. Monocromo por diseño: con `dotmatrixTokens` todo es gris/blanco, con otro tema toma su --acc.
  * La trama va en --s-bg (fondo en capas), así que `fill` la sustituye igual que en las demás variantes.
@@ -91,7 +102,7 @@
  * relleno propio que proteger (outline: solo un borde de 1px ya de por sí contrastado; minimal: sin
  * borde ni relleno), así que no hace falta lo que `filter` daba de más.
  */
-.ui-s--outline, .ui-s--minimal { text-shadow: var(--legibility-ts); }
+.ui-s--outline, .ui-s--minimal, .ui-s--editorial { text-shadow: var(--legibility-ts); }
 
 /*
  * Fuente de titulares: la de la variante (--s-df, solo la define dotmatrix), si no la del tema (--display, token opcional

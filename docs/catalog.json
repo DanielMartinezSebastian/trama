@@ -19,7 +19,8 @@
     "retro",
     "terminal",
     "minimal",
-    "dotmatrix"
+    "dotmatrix",
+    "editorial"
   ],
   "categories": [
     {
@@ -48,7 +49,8 @@
         "section-header",
         "divider",
         "split-text",
-        "fit-text"
+        "fit-text",
+        "scrub-text"
       ]
     },
     {
@@ -60,7 +62,9 @@
         "panel",
         "pricing-card",
         "testimonial",
-        "blog-card"
+        "blog-card",
+        "stacked-cards",
+        "bento-grid"
       ]
     },
     {
@@ -89,7 +93,9 @@
         "element-transition",
         "reveal",
         "presence",
-        "preloader"
+        "preloader",
+        "pinned-section",
+        "parallax"
       ]
     },
     {
@@ -118,7 +124,9 @@
         "pagination",
         "dropdown",
         "scroll-progress",
-        "fullscreen-menu"
+        "fullscreen-menu",
+        "hide-on-scroll",
+        "section-index"
       ]
     },
     {
@@ -160,7 +168,9 @@
         "logo-coin",
         "logo-3d",
         "video-player",
-        "audio-player"
+        "audio-player",
+        "horizontal-scroll",
+        "image-reveal"
       ]
     },
     {
@@ -180,7 +190,8 @@
         "team-section",
         "logo-cloud",
         "articles-section",
-        "project-list"
+        "project-list",
+        "big-footer"
       ]
     },
     {
@@ -1209,7 +1220,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Titular de héroe con frases que se escriben y se borran en bucle.",
       "props": [
@@ -1283,7 +1295,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -1488,7 +1501,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Filas de texto en bucle, en CSS puro y sin JS. Siete estilos y color por token.",
       "props": [
@@ -1512,7 +1526,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -1607,7 +1622,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Sobretítulo, titular, subtítulo y regla decorativa.",
       "props": [
@@ -1665,7 +1681,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -1686,7 +1703,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Separador con etiqueta. El modo texto dibuja la regla con caracteres.",
       "props": [
@@ -1726,7 +1744,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -1747,7 +1766,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Número bitmap, fondo ASCII (15 campos procedurales animados × 8 juegos de caracteres, texto repetido o una escena de AsciiBackground), revelado e inclinación hacia el puntero. Siete estilos.",
       "props": [
@@ -1783,7 +1803,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -2164,7 +2185,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Superficie genérica con barra opcional, título, cuerpo y pie. Base de cualquier tarjeta simple.",
       "props": [
@@ -2266,7 +2288,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -2287,7 +2310,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, tres formas de destacar (halo, invertida, borde), precio tachado y nota.",
       "props": [
@@ -2387,7 +2411,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -2452,7 +2477,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cita con avatar de iniciales, autor, cargo y valoración.",
       "props": [
@@ -2540,7 +2566,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -2561,7 +2588,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Artículo con cabecera (imagen, trama de CSS o caracteres), categoría, titular, extracto, autor y meta. Cuatro maquetaciones: apilada, horizontal, superpuesta (imagen de fondo) y mínima. Con href, toda la tarjeta es un enlace.",
       "props": [
@@ -2680,7 +2708,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -2723,7 +2752,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Botón del sistema: 6 colores (acento, neutro, éxito, info, aviso, peligro) × 5 énfasis (relleno, superficie, borde, fantasma, enlace), estados pulsado, cargando y deshabilitado, solo icono y como enlace. Siete estilos.",
       "props": [
@@ -2747,7 +2777,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -2863,7 +2894,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Button que se desplaza (y gira un poco) hacia el puntero cuando se acerca. Sin efecto en táctil.",
       "props": [
@@ -2887,7 +2919,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -3045,7 +3078,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Superficie con un foco de luz (y borde iluminado) bajo el puntero. Envuelve cualquier contenido.",
       "props": [
@@ -3096,7 +3130,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -3117,7 +3152,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Envoltorio de hover reutilizable en cualquier contenido: elevación, escala, inclinación 3D, brillo que sigue al puntero, destello, barrido de escaneo, micro-glitch, corchetes de objetivo o subrayado.",
       "props": [
@@ -3189,7 +3225,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -3215,7 +3252,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Caja de contenido largo (registro de cambios, comentarios, salida de terminal…) con su propia barra de desplazamiento, distinta en cada estilo.",
       "props": [
@@ -3247,7 +3285,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -3317,7 +3356,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Anima la ventana entera al navegar (todo salvo la cabecera y lo que envuelvas en PageTransitionPersist) con la View Transitions API y el <ViewTransition> de React, sin configurar en el App Router de Next: fundido, deslizamiento, barrido de color, línea de escaneo, pila de barras, persianas, disolución por píxeles, encendido CRT, glitch, iris o escritura de terminal. CSS puro con los tokens del tema; una animación fija o una por tipo de navegación.",
       "props": [
@@ -3403,7 +3443,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Las mismas 11 animaciones de PageTransition, pero sobre la caja de un elemento suelto (una tarjeta, un panel, el contenido de una pestaña) cuando entra o sale dentro de una transición de React. Incluye SharedTransition para elementos compartidos que se transforman de una vista a otra.",
       "props": [
@@ -3486,7 +3527,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Revela lo que envuelve al montar, al entrar en pantalla o siguiendo el scroll: 7 efectos × 4 direcciones, escalonado de hijos o de palabras/letras, curvas con rebote y repetición al volver a entrar.",
       "props": [
@@ -3600,7 +3642,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -3627,7 +3670,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Envuelve cualquier contenido y anima su entrada y salida: capas de glifos que se descifran, glitch con separación RGB y corrupción, datamosh, fragmentos, encendido CRT, parpadeo de neón, estática de TV, censura o arranque de sistema.",
       "props": [
@@ -3908,7 +3952,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Barras verticales, horizontales, área o sparkline dibujados con caracteres, con animación de crecimiento.",
       "props": [
@@ -3970,7 +4015,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -3991,7 +4037,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Terminal con escritura carácter a carácter. En estilo retro es un monitor de fósforo con el color de --acc.",
       "props": [
@@ -4015,7 +4062,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -4079,7 +4127,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Proceso, hoja de ruta o historial en vertical, con marcadores numerados, punto o carácter.",
       "props": [
@@ -4120,7 +4169,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4141,7 +4191,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Tabla a partir de texto CSV. La cabecera y las filas se adaptan a la variante.",
       "props": [
@@ -4181,7 +4232,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4202,7 +4254,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Código con cabecera, numeración de línea opcional y botón de copiar. Sin resaltado de sintaxis.",
       "props": [
@@ -4244,7 +4297,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4265,7 +4319,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Barra de navegación completa: siete disposiciones (o piezas en el orden que quieras), seis formas de barra, submenús desplegables o mega menú con categorías, barra de búsqueda o paleta ⌘K, menú móvil propio, anuncio, dos llamadas a la acción y comportamiento al hacer scroll.",
       "props": [
@@ -4450,7 +4505,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4478,7 +4534,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Pestañas con teclado (←/→) y panel. El indicador de la activa cambia con el estilo.",
       "props": [
@@ -4517,7 +4574,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4538,7 +4596,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Preguntas frecuentes con paneles animados por CSS.",
       "props": [
@@ -4576,7 +4635,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4597,7 +4657,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Ruta de navegación. El último elemento es la página actual, sin enlace.",
       "props": [
@@ -4628,7 +4689,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4649,7 +4711,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Números de página con elipsis cuando hay muchas. Gestiona su propia página activa.",
       "props": [
@@ -4691,7 +4754,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4712,7 +4776,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Botón que abre una lista de acciones (⋮). Para elegir un valor de formulario, ver Select en Formularios.",
       "props": [
@@ -4753,7 +4818,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -4774,7 +4840,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cualquier borde o esquina (de la ventana o de su contenedor) o va en el flujo, como barra, tramos, puntos, caracteres o anillo.",
       "props": [
@@ -4822,7 +4889,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -4900,7 +4968,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Entrada con etiqueta, ayuda, prefijo y estados de error o éxito. El foco usa --acc. Con multiline dibuja un textarea (ver Formulario de contacto).",
       "props": [
@@ -4999,7 +5068,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5020,7 +5090,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Interruptor accesible. Retro y terminal lo muestran como texto [ON ]/[OFF].",
       "props": [
@@ -5073,7 +5144,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5094,7 +5166,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Deslizador con pista y pulgar propios de cada estilo.",
       "props": [
@@ -5162,7 +5235,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5183,7 +5257,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Lista de opciones con estilo propio (no un <select> nativo): mismo aspecto en los 8 estilos, abierto o cerrado.",
       "props": [
@@ -5237,7 +5312,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5258,7 +5334,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Casillas independientes. Retro y terminal las muestran como texto [x]/[ ].",
       "props": [
@@ -5296,7 +5373,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5317,7 +5395,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Selección única entre varias opciones. Retro y terminal las muestran como texto (•)/( ).",
       "props": [
@@ -5354,7 +5433,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5375,7 +5455,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Indicador de progreso por pasos (alta, checkout, onboarding…). No gestiona el contenido de cada paso.",
       "props": [
@@ -5408,7 +5489,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5429,7 +5511,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Casillas de código (SMS, autenticación en dos pasos): el foco avanza solo al escribir.",
       "props": [
@@ -5466,7 +5549,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5487,7 +5571,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Etiqueta de estado en cinco tonos, con punto opcional.",
       "props": [
@@ -5542,7 +5627,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5563,7 +5649,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Barra con franjas animadas o dibujada con caracteres. Retro la dibuja por bloques.",
       "props": [
@@ -5625,7 +5712,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5646,7 +5734,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Mensaje inline con icono según el tipo, permanente (no desaparece solo). Para una notificación temporal, ver Toast en Overlays.",
       "props": [
@@ -5697,7 +5786,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5718,7 +5808,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Anillo CSS o animaciones de texto: línea, braille, puntos, barra y bloques.",
       "props": [
@@ -5772,7 +5863,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5845,7 +5937,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas. Táctil, con teclado y flechas; sin imágenes propias usa escenas pixel art generadas.",
       "props": [
@@ -5925,7 +6018,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -5951,7 +6045,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Carrusel genérico sobre Swiper: cada hijo es una diapositiva. Diapositivas visibles responsivas, reproducción automática, bucle, fundido, baraja apilada o cinta continua, con flechas y puntos cuadrados del estilo activo.",
       "props": [
@@ -6041,7 +6136,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -6066,7 +6162,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Vista previa de una web dentro de un móvil, tablet, portátil, monitor o ventana de navegador dibujados con CSS: web real en un iframe a tamaño de viewport, captura (con recorrido de páginas largas), vídeo o contenido React. Sin WebGL ni dependencias; para enseñar proyectos en un portfolio o una landing.",
       "props": [
@@ -6351,7 +6448,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "El mismo mockup con volumen: carcasa three.js generada (canto, cristal, reflejos, sombra) y la pantalla como DOM real colocado en 3D, así la web en vivo sigue siendo utilizable. Si el equipo no puede con WebGL, va justo o pide reducir movimiento, pinta solo la versión CSS como imagen fija.",
       "props": [
@@ -6650,7 +6748,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Un logo con volumen que gira sobre su eje vertical, como una moneda: la marca en las dos caras y canto visible. CSS 3D puro, sin WebGL ni dependencias: lo anima el compositor, no cuesta nada dentro de un contenedor oculto y no recibe toques. Para dar vida a un menú, una cabecera o una pantalla de carga.",
       "props": [
@@ -6778,7 +6877,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o sigue al puntero, pintado como sólido, malla de alambre, caracteres ASCII o pixel art con el mismo filtro que RetroCanvas (rampas de glifos, dither, scanlines, glow, glitch). Decorativo, para un menú, una cabecera o un hero.",
       "props": [
@@ -7147,7 +7247,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.",
       "props": [
@@ -7341,7 +7442,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7369,7 +7471,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Lista de pistas con visualizador (barras, onda o puntos), repetición, volumen y teclado (espacio, flechas, M). Reproduce archivos o música sintetizada en el navegador (`synth:estilo:bpm:semilla`) para demos sin audio.",
       "props": [
@@ -7472,7 +7575,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7493,7 +7597,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera de landing: sobretítulo, titular, subtítulo, una o dos llamadas a la acción e insignias de confianza. El fondo decorativo es CSS puro.",
       "props": [
@@ -7570,7 +7675,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7591,7 +7697,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Nombre, email y mensaje (o solo email, en línea, para un boletín) con estado de envío propio (carga, error y éxito). Conecta el envío real con la prop `onSubmit`.",
       "props": [
@@ -7659,7 +7766,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7684,7 +7792,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cierre de página: titular corto, una frase y uno o dos botones sobre una superficie destacada.",
       "props": [
@@ -7742,7 +7851,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7763,7 +7873,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.",
       "props": [
@@ -7805,7 +7916,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -7877,7 +7989,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo o con borde) y características no incluidas. Rejilla, lista horizontal o carrusel.",
       "props": [
@@ -7991,7 +8104,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8012,7 +8126,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista para pegar.",
       "props": [
@@ -8087,7 +8202,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8108,7 +8224,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing.",
       "props": [
@@ -8157,7 +8274,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8178,7 +8296,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera de sección + rejilla de «por qué elegirnos» (glifo + título + texto): la sección más pedida en cualquier landing.",
       "props": [
@@ -8241,7 +8360,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8262,7 +8382,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.",
       "props": [
@@ -8325,7 +8446,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8346,7 +8468,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "«Con la confianza de…»: marcas en texto, sin depender de imágenes que el kit no tiene.",
       "props": [
@@ -8388,7 +8511,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8409,7 +8533,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con imagen de fondo), lista o carrusel. Cada tarjeta varía trama y acento sola.",
       "props": [
@@ -8501,7 +8626,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8522,7 +8648,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "La tipografía de un artículo o una página de documentación: títulos con ancla, párrafos, listas anidadas y de tareas, citas con firma, avisos, código, tablas, imágenes con pie, resaltado y teclas. Desde Markdown o desde tu propio HTML/MDX.",
       "props": [
@@ -8609,7 +8736,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8636,7 +8764,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Nota, consejo, importante, cuidado o peligro dentro de un texto largo. Es contenido (lleva párrafos y no se descarta), no un estado de la interfaz como Alert. Puede plegarse.",
       "props": [
@@ -8703,7 +8832,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8728,7 +8858,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "«En esta página»: las secciones de un texto largo, con la que se está leyendo marcada. Sale del mismo Markdown que Prose, de los títulos de un contenedor de la página o de una lista a mano.",
       "props": [
@@ -8773,7 +8904,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8798,7 +8930,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Categoría, título, entradilla, autor con cargo, fecha, tiempo de lectura, etiquetas y portada de una entrada de blog o una página de documentación.",
       "props": [
@@ -8881,7 +9014,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -8902,7 +9036,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "La sección lista para un blog o una documentación: cabecera, índice lateral que sigue la lectura, cuerpo en Markdown con formato y barra de progreso de lectura opcional. En contenedores estrechos el índice sube sobre el texto.",
       "props": [
@@ -8978,7 +9113,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -9004,7 +9140,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Diálogo modal: un botón lo abre, el fondo o Escape lo cierran. position: fixed, sin portal.",
       "props": [
@@ -9078,7 +9215,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -9099,7 +9237,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Notificación temporal apilable, construida sobre sonner (apilado, gestos y temporizador ya resueltos) con el aspecto del kit por encima.",
       "props": [
@@ -9164,7 +9303,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         },
         {
@@ -9240,7 +9380,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Texto de ayuda al posar el ratón o el foco. Envuelve el disparador real (botón, icono, enlace) o pinta un texto subrayado. Por defecto flota junto al ratón y lo sigue con inercia; con follow={false} queda fijo sobre el disparador y funciona solo con CSS.",
       "props": [
@@ -9337,7 +9478,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -9362,7 +9504,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Panel deslizante desde un lateral (menú móvil, carrito, filtros). Se cierra con el fondo, Escape o su botón.",
       "props": [
@@ -9408,7 +9551,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -9429,7 +9573,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Asistente flotante en una esquina: responde por reglas (palabras clave → respuesta, con respuestas rápidas) o, con onMessage, conectado a un modelo o servicio real. Indicador de escritura, aviso de no leídos y teclado.",
       "props": [
@@ -9487,7 +9632,8 @@
             "retro",
             "terminal",
             "minimal",
-            "dotmatrix"
+            "dotmatrix",
+            "editorial"
           ]
         }
       ],
@@ -9513,7 +9659,8 @@
         "retro",
         "terminal",
         "minimal",
-        "dotmatrix"
+        "dotmatrix",
+        "editorial"
       ],
       "description": "Icono SVG de Pixelarticons sobre rejilla de 24 px. Se tiñe con un token del tema o con el color del texto que lo rodea.",
       "props": [
@@ -10255,6 +10402,412 @@
       ],
       "example": "import LocalTime from \"@/components/ui/LocalTime\";\n\n<LocalTime />",
       "preview": "/componentes#local-time"
+    },
+    {
+      "id": "scrub-text",
+      "name": "Texto que se enciende con el scroll",
+      "component": "ScrubText",
+      "import": "import ScrubText from \"@/components/ui/ScrubText\";",
+      "category": "texto",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálculo por fotograma, sin GSAP; el lector de pantalla lo lee entero.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir.",
+          "label": "Texto"
+        },
+        {
+          "key": "dim",
+          "type": "number",
+          "default": 0.18,
+          "label": "Opacidad apagada",
+          "min": 0.05,
+          "max": 0.6
+        },
+        {
+          "key": "from",
+          "type": "number",
+          "default": 0.85,
+          "label": "Empieza (fracción de ventana)",
+          "min": 0.4,
+          "max": 1
+        },
+        {
+          "key": "to",
+          "type": "number",
+          "default": 0.35,
+          "label": "Termina (fracción de ventana)",
+          "min": 0,
+          "max": 0.8
+        }
+      ],
+      "notes": [
+        "Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio."
+      ],
+      "example": "import ScrubText from \"@/components/ui/ScrubText\";\n\n<ScrubText\n  text=\"Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir.\"\n/>",
+      "preview": "/componentes#scrub-text"
+    },
+    {
+      "id": "hide-on-scroll",
+      "name": "Cabecera que se esconde al bajar",
+      "component": "HideOnScroll",
+      "import": "import HideOnScroll from \"@/components/ui/HideOnScroll\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Envoltorio de cabeceras fijas: se esconde al bajar, vuelve al subir o llegar arriba, y no se esconde si un descendiente tiene el foco ni con movimiento reducido.",
+      "props": [
+        {
+          "key": "offset",
+          "type": "number",
+          "default": 120,
+          "label": "Scroll antes de esconderse (px)",
+          "min": 0,
+          "max": 600
+        }
+      ],
+      "notes": [
+        "Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio."
+      ],
+      "example": "import HideOnScroll from \"@/components/ui/HideOnScroll\";\n\n<HideOnScroll>\n  <nav>…tu cabecera…</nav>\n</HideOnScroll>",
+      "preview": "/componentes#hide-on-scroll"
+    },
+    {
+      "id": "section-index",
+      "name": "Indicador de sección",
+      "component": "SectionIndex",
+      "import": "import SectionIndex from \"@/components/ui/SectionIndex\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "«02 / 05 · Servicios» fijo en una esquina, siguiendo la sección que cruza la mitad de la pantalla. Marca tus secciones con data-section.",
+      "props": [
+        {
+          "key": "position",
+          "type": "select",
+          "default": "left",
+          "label": "Posición",
+          "options": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "key": "selector",
+          "type": "text",
+          "default": "[data-section]",
+          "label": "Selector de secciones"
+        }
+      ],
+      "notes": [
+        "Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio."
+      ],
+      "example": "import SectionIndex from \"@/components/ui/SectionIndex\";\n\n<SectionIndex />",
+      "preview": "/componentes#section-index"
+    },
+    {
+      "id": "pinned-section",
+      "name": "Sección fijada con progreso",
+      "component": "PinnedSection",
+      "import": "import PinnedSection from \"@/components/ui/PinnedSection\";",
+      "category": "transiciones",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Se queda fija mientras haces scroll y publica su progreso (0 → 1) en la variable CSS --pin-p para que los hijos se muevan, cambien de opacidad o se recorten con ella. position: sticky, sin GSAP.",
+      "props": [
+        {
+          "key": "length",
+          "type": "number",
+          "default": 2,
+          "label": "Pantallas de recorrido",
+          "min": 1,
+          "max": 8
+        }
+      ],
+      "notes": [
+        "Ejemplo de CSS: .titulo { transform: translateX(calc(var(--pin-p) * -40vw)); }",
+        "Ocupa (length + 1) alturas de ventana en el documento."
+      ],
+      "example": "import PinnedSection from \"@/components/ui/PinnedSection\";\n\n<PinnedSection>\n  <h2 className=\"titulo\">Título</h2>\n</PinnedSection>",
+      "preview": "/componentes#pinned-section"
+    },
+    {
+      "id": "horizontal-scroll",
+      "name": "Scroll horizontal",
+      "component": "HorizontalScroll",
+      "import": "import HorizontalScroll from \"@/components/ui/HorizontalScroll\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "El scroll vertical de la página desplaza una fila de paneles en horizontal. En pantallas estrechas y con movimiento reducido pasa a ser un carrusel nativo con imán, sin secuestrar el scroll.",
+      "props": [
+        {
+          "key": "heading",
+          "type": "text",
+          "default": "Cómo trabajamos",
+          "label": "Texto fijo"
+        },
+        {
+          "key": "gap",
+          "type": "number",
+          "default": 24,
+          "label": "Espacio entre paneles (px)",
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "minWidth",
+          "type": "number",
+          "default": 860,
+          "label": "Ancho mínimo para fijar (px)",
+          "min": 320,
+          "max": 1400
+        }
+      ],
+      "notes": [
+        "Cada hijo directo es un panel. Ver en /sitios/estudio (sección «Cómo trabajamos»).",
+        "También publica --hs-p (0 → 1)."
+      ],
+      "example": "import HorizontalScroll from \"@/components/ui/HorizontalScroll\";\n\n<HorizontalScroll>\n  <article>Panel 1</article>\n  <article>Panel 2</article>\n  <article>Panel 3</article>\n</HorizontalScroll>",
+      "preview": "/componentes#horizontal-scroll"
+    },
+    {
+      "id": "stacked-cards",
+      "name": "Tarjetas apiladas",
+      "component": "StackedCards",
+      "import": "import StackedCards from \"@/components/ui/StackedCards\";",
+      "category": "tarjetas",
+      "styles": [
+        "editorial",
+        "solid",
+        "minimal"
+      ],
+      "description": "Cada tarjeta se pega arriba y la siguiente la cubre al hacer scroll. position: sticky puro; las cubiertas se encogen un poco donde hay animaciones ligadas al scroll.",
+      "props": [
+        {
+          "key": "top",
+          "type": "number",
+          "default": 24,
+          "label": "Distancia al borde (px)",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "step",
+          "type": "number",
+          "default": 16,
+          "label": "Asomo entre tarjetas (px)",
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "gap",
+          "type": "number",
+          "default": 14,
+          "label": "Espacio de scroll (vh)",
+          "min": 4,
+          "max": 40
+        },
+        {
+          "key": "shrink",
+          "type": "boolean",
+          "default": true,
+          "label": "Encoger las cubiertas"
+        }
+      ],
+      "notes": [
+        "Las tarjetas necesitan fondo opaco para tapar a las anteriores."
+      ],
+      "example": "import StackedCards from \"@/components/ui/StackedCards\";\n\n<StackedCards>\n  <article>Tarjeta 1</article>\n  <article>Tarjeta 2</article>\n  <article>Tarjeta 3</article>\n</StackedCards>",
+      "preview": "/componentes#stacked-cards"
+    },
+    {
+      "id": "parallax",
+      "name": "Parallax",
+      "component": "Parallax",
+      "import": "import Parallax from \"@/components/ui/Parallax\";",
+      "category": "transiciones",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Mueve su contenido a distinto ritmo que el scroll (profundidad). Sin GSAP; se apaga con movimiento reducido. Para imágenes: el contenedor recorta y el hijo es más alto.",
+      "props": [
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 0.15,
+          "label": "Velocidad (−0,5 a 0,5)",
+          "min": -0.5,
+          "max": 0.5
+        }
+      ],
+      "example": "import Parallax from \"@/components/ui/Parallax\";\n\n<Parallax>\n  <img src=\"…\" alt=\"\" />\n</Parallax>",
+      "preview": "/componentes#parallax"
+    },
+    {
+      "id": "image-reveal",
+      "name": "Imagen que se descubre",
+      "component": "ImageReveal",
+      "import": "import ImageReveal from \"@/components/ui/ImageReveal\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño. Reserva su hueco con ratio y espera al Preloader.",
+      "props": [
+        {
+          "key": "from",
+          "type": "select",
+          "default": "bottom",
+          "label": "Se abre desde",
+          "options": [
+            "bottom",
+            "top",
+            "left",
+            "right",
+            "center"
+          ]
+        },
+        {
+          "key": "ratio",
+          "type": "text",
+          "default": "4 / 5",
+          "label": "Relación de aspecto"
+        },
+        {
+          "key": "zoom",
+          "type": "number",
+          "default": 1.25,
+          "label": "Ampliación inicial",
+          "min": 1,
+          "max": 2
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 1.2,
+          "label": "Duración (s)",
+          "min": 0.3,
+          "max": 3
+        }
+      ],
+      "example": "import ImageReveal from \"@/components/ui/ImageReveal\";\n\n<ImageReveal />",
+      "preview": "/componentes#image-reveal"
+    },
+    {
+      "id": "bento-grid",
+      "name": "Rejilla bento",
+      "component": "BentoGrid",
+      "import": "import BentoGrid from \"@/components/ui/BentoGrid\";",
+      "category": "tarjetas",
+      "styles": [
+        "editorial",
+        "glass",
+        "solid",
+        "outline",
+        "minimal"
+      ],
+      "description": "Celdas de distinto tamaño (1×1, 2×1, 1×2, 2×2) que encajan sin huecos. CSS puro; cada celda admite título, texto, cifra grande o imagen de fondo.",
+      "props": [
+        {
+          "key": "columns",
+          "type": "select",
+          "default": "4",
+          "label": "Columnas",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "example": "import BentoGrid from \"@/components/ui/BentoGrid\";\n\n<BentoGrid />",
+      "preview": "/componentes#bento-grid"
+    },
+    {
+      "id": "big-footer",
+      "name": "Pie de página grande",
+      "component": "BigFooter",
+      "import": "import BigFooter from \"@/components/ui/BigFooter\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Correo grande, enlaces que ruedan y un titular que llena el ancho, con los colores del tema invertidos. Compone FitText, RollLink y LocalTime.",
+      "props": [
+        {
+          "key": "heading",
+          "type": "text",
+          "default": "Hablemos.",
+          "label": "Titular"
+        },
+        {
+          "key": "lead",
+          "type": "text",
+          "default": "¿Tienes un proyecto?",
+          "label": "Frase"
+        },
+        {
+          "key": "email",
+          "type": "text",
+          "default": "hola@estudio.example",
+          "label": "Correo"
+        },
+        {
+          "key": "note",
+          "type": "text",
+          "default": "© 2026 Estudio",
+          "label": "Nota izquierda"
+        },
+        {
+          "key": "credit",
+          "type": "text",
+          "default": "Hecho con Trama",
+          "label": "Nota derecha"
+        },
+        {
+          "key": "city",
+          "type": "text",
+          "default": "Madrid",
+          "label": "Ciudad (hora local)"
+        }
+      ],
+      "example": "import BigFooter from \"@/components/ui/BigFooter\";\n\n<BigFooter />",
+      "preview": "/componentes#big-footer"
     }
   ],
   "landings": [
@@ -12298,18 +12851,18 @@
           "uses": 6
         },
         {
-          "component": "RollLink",
-          "id": "roll-link",
-          "uses": 2
-        },
-        {
           "component": "ProjectList",
           "id": "project-list",
           "uses": 2
         },
         {
-          "component": "LocalTime",
-          "id": "local-time",
+          "component": "Parallax",
+          "id": "parallax",
+          "uses": 2
+        },
+        {
+          "component": "ImageReveal",
+          "id": "image-reveal",
           "uses": 2
         },
         {
@@ -12318,8 +12871,8 @@
           "uses": 1
         },
         {
-          "component": "FitText",
-          "id": "fit-text",
+          "component": "RollLink",
+          "id": "roll-link",
           "uses": 1
         },
         {
@@ -12340,6 +12893,46 @@
         {
           "component": "FullscreenMenu",
           "id": "fullscreen-menu",
+          "uses": 1
+        },
+        {
+          "component": "LocalTime",
+          "id": "local-time",
+          "uses": 1
+        },
+        {
+          "component": "ScrubText",
+          "id": "scrub-text",
+          "uses": 1
+        },
+        {
+          "component": "HideOnScroll",
+          "id": "hide-on-scroll",
+          "uses": 1
+        },
+        {
+          "component": "SectionIndex",
+          "id": "section-index",
+          "uses": 1
+        },
+        {
+          "component": "HorizontalScroll",
+          "id": "horizontal-scroll",
+          "uses": 1
+        },
+        {
+          "component": "StackedCards",
+          "id": "stacked-cards",
+          "uses": 1
+        },
+        {
+          "component": "BentoGrid",
+          "id": "bento-grid",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
           "uses": 1
         }
       ]

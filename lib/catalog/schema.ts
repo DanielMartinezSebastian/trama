@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 export type Category = "fondos" | "texto" | "tarjetas" | "interaccion" | "transiciones" | "datos" | "navegacion" | "formularios" | "feedback" | "galerias" | "secciones" | "overlays" | "pixel" | "contenido";
-export type StyleTag = "glass" | "solid" | "outline" | "neon" | "retro" | "terminal" | "minimal" | "dotmatrix";
+export type StyleTag = "glass" | "solid" | "outline" | "neon" | "retro" | "terminal" | "minimal" | "dotmatrix" | "editorial";
 
 export const CATEGORIES: { id: Category; label: string; blurb: string }[] = [
   { id: "fondos", label: "Fondos", blurb: "Escenas de caracteres que rellenan un contenedor." },
@@ -29,6 +29,7 @@ export const STYLES: { id: StyleTag; label: string }[] = [
   { id: "terminal", label: "Terminal" },
   { id: "minimal", label: "Minimal" },
   { id: "dotmatrix", label: "Dot matrix" },
+  { id: "editorial", label: "Editorial" },
 ];
 
 type Base = {

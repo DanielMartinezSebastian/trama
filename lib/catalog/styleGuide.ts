@@ -79,4 +79,12 @@ export const styleGuide: Record<StyleTag, StyleRecipe> = {
     avoid: "Colores de acento saturados y degradados: es monocromo.",
     preset: "dotmatrix",
   },
+  editorial: {
+    when: "Estudios, portfolios, revistas y marcas con fotografía: la tipografía y el espacio mandan.",
+    surface: "Sin relleno · línea fina de 1 px · radio 0 · sin sombras; la acción primaria es un bloque sólido invertido.",
+    type: "Sans grotesca grande con tracking ajustado; serif cursiva para el énfasis.",
+    ascii: "Ninguno: SplitText, FitText, RollLink y ProjectList son sus recursos.",
+    avoid: "Neón, glass y degradados: pierde la sobriedad.",
+    preset: "neutro",
+  },
 };

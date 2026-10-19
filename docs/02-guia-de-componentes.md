@@ -61,7 +61,7 @@ El catálogo permite además editar los tokens uno a uno (`bg fg mut acc acc2 r 
 
 ### 2.2 Sistema de estilos (`--s-*`)
 
-Las ocho variantes (`glass solid outline neon retro terminal minimal dotmatrix`) se definen **una sola vez** en `components/ui/styles/ui-kit.css`
+Las nueve variantes (`glass solid outline neon retro terminal minimal dotmatrix editorial`) se definen **una sola vez** en `components/ui/styles/ui-kit.css`
 como variables `--s-*` sobre la clase `ui-s ui-s--<variante>`. Los componentes no conocen el estilo: consumen las variables.
 
 | Variable | Significado |
@@ -83,7 +83,7 @@ tema: significan lo mismo en todos. **Nunca se usan por su nombre de token en un
 
 | Prop | Qué decide | Valores |
 |---|---|---|
-| `variant` | el estilo visual de la superficie | `glass solid outline neon retro terminal minimal dotmatrix` |
+| `variant` | el estilo visual de la superficie | `glass solid outline neon retro terminal minimal dotmatrix editorial` |
 | `intent` | el color semántico | `accent neutral success info warning danger` |
 | `emphasis` (`Button`, `MagneticButton`) | el énfasis del botón | `primary secondary outline ghost link` |
 | `tone` | qué token de color usa una pieza (decorativas y tarjetas) | `acc acc2 fg mut` |
@@ -494,7 +494,7 @@ Categorías: `fondos`, `texto`, `tarjetas`, `interaccion`, `transiciones`, `dato
 Estilos: `glass`, `solid`, `outline`, `neon`, `retro`, `terminal`, `minimal`.
 
 **Cobertura de estilos.** Cada estilo debe tener al menos un componente de cada grupo funcional (acción, entrada,
-superficie, navegación, feedback, datos). Los componentes con `variant` cubren los ocho de golpe; los que solo tienen
+superficie, navegación, feedback, datos). Los componentes con `variant` cubren las nueve de golpe; los que solo tienen
 sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente los que ilustran.
 
 ## 10. Trampas conocidas

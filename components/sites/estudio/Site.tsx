@@ -1,22 +1,30 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, type CSSProperties, type ReactNode } from "react";
+import BentoGrid from "@/components/ui/BentoGrid";
+import BigFooter from "@/components/ui/BigFooter";
 import CustomCursor from "@/components/ui/CustomCursor";
-import FitText from "@/components/ui/FitText";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
+import HideOnScroll from "@/components/ui/HideOnScroll";
+import HorizontalScroll from "@/components/ui/HorizontalScroll";
+import ImageReveal from "@/components/ui/ImageReveal";
 import LocalTime from "@/components/ui/LocalTime";
 import Marquee from "@/components/ui/Marquee";
 import Preloader from "@/components/ui/Preloader";
+import Parallax from "@/components/ui/Parallax";
 import ProjectList from "@/components/ui/ProjectList";
 import RollLink from "@/components/ui/RollLink";
+import ScrubText from "@/components/ui/ScrubText";
+import SectionIndex from "@/components/ui/SectionIndex";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
+import StackedCards from "@/components/ui/StackedCards";
 import { fashionArt } from "@/lib/sites/art";
 import { getLenis } from "@/lib/motion/lenis";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
-import { FACTS, PROJECTS, SERVICES, SLUG } from "./data";
+import { FACTS, PROCESS, PROJECTS, SERVICES, SLUG } from "./data";
 import "./estudio.css";
 
 const TOKENS: CSSProperties = tokensToStyle({
@@ -41,26 +49,8 @@ const LINKS = [
 const MAIL = "hola@marea.example";
 const ITEMS = PROJECTS.map((p) => ({ title: p.title, meta: p.meta, year: p.year, href: href("proyectos"), image: fashionArt(p.seed, p.art), alt: p.lead }));
 
-/** Cabecera que se esconde al bajar y reaparece al subir. */
-function useHideOnScroll() {
-  const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    let last = window.scrollY;
-    const on = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - last) < 8) return;
-      setHidden(y > last && y > 120);
-      last = y;
-    };
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-  return hidden;
-}
-
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
-  const hidden = useHideOnScroll();
   const path = usePathname();
   // al cambiar de página, arriba del todo (también con Lenis)
   useEffect(() => {
@@ -72,29 +62,21 @@ export function Shell({ children }: { children: ReactNode }) {
       <Preloader variant="counter" brand="Marea Studio" meta="Madrid — 2026" duration={1.8} />
       <SmoothScroll />
       <CustomCursor hideNative />
-      <header className="es-head" data-hidden={hidden ? "" : undefined}>
+      <HideOnScroll className="es-head">
         <a className="es-brand" href={href()}>Marea®</a>
         <LocalTime city="Madrid" timeZone="Europe/Madrid" />
         <FullscreenMenu brand="Marea Studio" links={LINKS} footer={[{ label: "Instagram", href: "#" }, { label: "LinkedIn", href: "#" }, { label: MAIL, href: `mailto:${MAIL}` }]} note="Madrid · Lisboa" />
-      </header>
+      </HideOnScroll>
+      <SectionIndex />
       <main id="contenido">{children}</main>
-      <footer className="es-foot">
-        <div className="es-foot__top">
-          <div>
-            <p style={{ margin: 0, opacity: 0.6 }}>¿Tienes un proyecto?</p>
-            <a className="es-foot__mail" href={`mailto:${MAIL}`} data-cursor="Escribir">{MAIL}</a>
-          </div>
-          <nav aria-label="Pie" style={{ display: "grid", gap: 4, justifyItems: "start" }}>
-            {LINKS.map((l) => <RollLink key={l.href} label={l.label} href={l.href} />)}
-          </nav>
-        </div>
-        <div className="es-foot__fit"><FitText>Hablemos.</FitText></div>
-        <div className="es-foot__bot">
-          <span>© 2026 Marea Studio</span>
-          <LocalTime city="Madrid" timeZone="Europe/Madrid" />
-          <span>Demo de Trama</span>
-        </div>
-      </footer>
+      <BigFooter
+        heading="Hablemos."
+        email={MAIL}
+        links={LINKS.map((l) => ({ label: l.label, href: l.href }))}
+        note="© 2026 Marea Studio"
+        credit="Demo de Trama"
+        city="Madrid"
+      />
     </SiteFrame>
   );
 }
@@ -103,7 +85,7 @@ export function Shell({ children }: { children: ReactNode }) {
 function Home() {
   return (
     <>
-      <section className="es-hero">
+      <section className="es-hero" data-section="Inicio">
         <SplitText as="h1" by="lines" trigger="mount" stagger={0.12} duration={1.1} delay={0.1}>
           Diseñamos webs que se sienten, no solo se ven.
         </SplitText>
@@ -117,37 +99,67 @@ function Home() {
         <Marquee text="IDENTIDAD · WEB · PRODUCTO · MOVIMIENTO · 3D" variant="minimal" tone="fg" rows={1} fontSize={28} duration={40} separator="   ✺   " />
       </div>
 
-      <section className="es-sec" id="proyectos">
+      <section className="es-sec es-manifest" data-section="Manifiesto">
+        <ScrubText className="es-scrub" from={0.9} to={0.3}>
+          Creemos que una web es un lugar, no un folleto. Por eso cuidamos cómo se entra, cómo se recorre y qué se siente al salir. Cada animación tiene que ganarse su sitio.
+        </ScrubText>
+      </section>
+
+      <section className="es-sec" id="proyectos" data-section="Proyectos">
         <div className="es-eyebrow"><span>Proyectos seleccionados</span><span>2024 — 2026</span></div>
         <ProjectList items={ITEMS} />
         <p style={{ marginTop: 32 }}><RollLink label="Ver todos los proyectos →" href={href("proyectos")} /></p>
       </section>
 
-      <section className="es-sec">
+      <section className="es-sec" data-section="Servicios">
         <div className="es-eyebrow"><span>Qué hacemos</span><span>04</span></div>
         <SplitText as="h2" by="words" className="es-h2" stagger={0.05}>
           Trabajamos donde la estrategia, el diseño y el código se tocan.
         </SplitText>
-        <ul className="es-svc">
+        <div style={{ height: "clamp(32px, 6vw, 80px)" }} />
+        <StackedCards top={88} step={16} gap={14}>
           {SERVICES.map((s) => (
-            <li key={s.n}>
+            <article key={s.n} className="es-scard">
               <span>{s.n}</span>
               <b>{s.name}</b>
               <p>{s.text}</p>
-            </li>
+            </article>
           ))}
-        </ul>
+        </StackedCards>
       </section>
 
-      <section className="es-sec" style={{ paddingTop: 0 }}>
-        <div className="es-facts">
-          {FACTS.map((f) => (
-            <div key={f.l}>
-              <b>{f.v}</b>
-              <span>{f.l}</span>
-            </div>
+      <section data-section="Proceso" aria-label="Proceso de trabajo">
+        <HorizontalScroll heading="Cómo trabajamos — de izquierda a derecha" gap={20}>
+          {PROCESS.map((p) => (
+            <article key={p.n} className="es-step">
+              <span>{p.n}</span>
+              <b>{p.name}</b>
+              <p>{p.text}</p>
+            </article>
           ))}
-        </div>
+        </HorizontalScroll>
+      </section>
+
+      <section className="es-sec" data-section="Estudio">
+        <div className="es-eyebrow"><span>El estudio</span><span>Madrid · Lisboa</span></div>
+        <BentoGrid
+          columns={4}
+          variant="editorial"
+          cells={[
+            { title: "Años de oficio", stat: FACTS[0].v },
+            { title: "Un estudio pequeño por decisión", text: "Nueve personas, sin capas intermedias. Quien te vende el proyecto lo hace.", span: "2x1" },
+            { title: "Proyectos", stat: FACTS[1].v },
+            { title: "Casa Alba", image: fashionArt(4, "coat"), span: "2x2", href: href("proyectos") },
+            { title: "Personas", stat: FACTS[2].v },
+            { title: "Premios", stat: FACTS[3].v },
+            { title: "Hablemos", text: "Cuéntanos qué tienes entre manos.", span: "2x1", href: href("contacto") },
+          ]}
+        />
+      </section>
+
+      <section className="es-sec es-duo" aria-label="Imágenes">
+        <div className="es-duo__a"><Parallax speed={0.08}><ImageReveal src={fashionArt(2, "arch")} ratio="4 / 5" from="bottom" /></Parallax></div>
+        <div className="es-duo__b"><Parallax speed={-0.06}><ImageReveal src={fashionArt(6, "dress")} ratio="3 / 4" from="left" delay={0.15} /></Parallax></div>
       </section>
     </>
   );

@@ -99,16 +99,16 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
 | Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
-| Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` |
-| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` |
+| Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` |
+| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` |
-| Transiciones | `SceneFlash` · `Preloader` · `Reveal` · `Presence` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
+| Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
 | Datos | `StatCounter` · `LocalTime` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` |
-| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
-| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` |
+| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |

@@ -16,6 +16,15 @@ con ficha en `/componentes`. La demo 1 (**Marea Studio**, `/sitios/estudio`) las
 lista con vista previa y cursor, menú a pantalla completa, navegación y pie. **Sin verificar:** móvil a 390 px, Safari y
 Firefox, teclado y lector de pantalla, rendimiento (Lighthouse).
 
+**Fase 2 (parcial, 19-10-2026):** variante `editorial` (novena del sistema `--s-*`), `HideOnScroll`, `PinnedSection`,
+`HorizontalScroll`, `StackedCards`, `Parallax`, `SectionIndex`, `ScrubText`, `ImageReveal`, `BentoGrid` y `BigFooter`,
+todas con ficha en `/componentes` y usadas en `/sitios/estudio`. Dos fallos encontrados al probar en Chrome y
+corregidos: `Parallax` se realimentaba con velocidad negativa (medía su propio rectángulo ya desplazado) e
+`ImageReveal` no se abría porque Chrome cuenta el `clip-path` del elemento observado por `IntersectionObserver`
+(el recorte va ahora en un hijo). **Pendiente de la fase:** `NavBar` con `hideOnScroll` integrado, cabecera que cambia
+de tema por sección (E3), `MediaCover` (G2), `MasonryGrid`, 404 y contacto editoriales (H5, H6), escala tipográfica
+fluida y fuentes (C8, decisión §7.2).
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,
@@ -108,7 +117,7 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
 | C1 | `SplitText` propio: líneas / palabras / letras, con máscara de recorte | Signal-A, la mayoría | ✔ | `SplitText`: líneas, palabras o letras, con máscara; sin GSAP SplitText
-| C2 | `TextReveal` al hacer scroll (por línea, por palabra con opacidad progresiva) | Párrafos que se «encienden» | ✘ | Variante `scrub` ligada a ScrollTrigger |
+| C2 | `TextReveal` al hacer scroll (por línea, por palabra con opacidad progresiva) | Párrafos que se «encienden» | ✔ | `ScrubText`: palabras que se encienden con el scroll
 | C3 | `ScrambleText` | — | ✔ | Ya existe |
 | C4 | `Marquee` con **velocidad ligada al scroll** y cambio de sentido | Footer de Signal-A | ◐ | `Marquee` existe; añadir `velocityByScroll` |
 | C5 | Titular gigante que llena el ancho (`fit text`) | Pies y héroes | ✔ | `FitText`
@@ -121,11 +130,11 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
-| D1 | `PinnedSection` (sección fijada con escenas por progreso) | Productos, scrollytelling | ◐ | `ScrollStage` y `lib/scroll` ya fijan; empaquetar con API de props |
-| D2 | `HorizontalScroll` (scroll vertical → desplazamiento horizontal) | Colección «Horizontal Scrolling» | ✘ | Con ScrollTrigger + `pin`; fallback vertical en móvil estrecho y con reduced-motion |
-| D3 | `StackedCards` (tarjetas que se apilan al subir) | Portfolios, procesos | ✘ | `position: sticky` + escala/oscurecido; sin JS donde se pueda |
-| D4 | `Parallax` (capas y imágenes con desplazamiento relativo) | Casi todas | ◐ | Hay demos `scroll-parallax`; falta componente `Parallax` reutilizable |
-| D5 | `ScrollProgress` y marcador de sección (índice lateral «01 / 05») | Editorial | ◐ | `ScrollProgress` existe; añadir indicador de sección activa |
+| D1 | `PinnedSection` (sección fijada con escenas por progreso) | Productos, scrollytelling | ✔ | `PinnedSection` (sticky + variable `--pin-p`, sin GSAP)
+| D2 | `HorizontalScroll` (scroll vertical → desplazamiento horizontal) | Colección «Horizontal Scrolling» | ✔ | `HorizontalScroll` (carrusel nativo en pantallas estrechas y con reduced-motion)
+| D3 | `StackedCards` (tarjetas que se apilan al subir) | Portfolios, procesos | ✔ | `StackedCards` (CSS sticky; encoge las cubiertas con `animation-timeline` donde existe)
+| D4 | `Parallax` (capas y imágenes con desplazamiento relativo) | Casi todas | ✔ | `Parallax`
+| D5 | `ScrollProgress` y marcador de sección (índice lateral «01 / 05») | Editorial | ✔ | `SectionIndex` («02 / 06 · Nombre»); `ScrollProgress` ya existía
 | D6 | `CounterOnScroll` | — | ✔ | `StatCounter` |
 | D7 | Scroll-snap por secciones (opcional) | Presentaciones | ✘ | CSS `scroll-snap` y desactivar con Lenis activo |
 
@@ -134,7 +143,7 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
 | E1 | `FullscreenMenu` (botón `[menu]` ⇄ `[close]`, enlaces con revelado, pie con redes) | Signal-A, colección «Menu Inspiration» | ✔ | `FullscreenMenu`
-| E2 | `NavBar` que se esconde al bajar y vuelve al subir | Estándar | ◐ | `NavBar` existe; añadir `hideOnScroll` |
+| E2 | `NavBar` que se esconde al bajar y vuelve al subir | Estándar | ✔ | `HideOnScroll`
 | E3 | Cabecera con modo «sobre imagen» que cambia de color según la sección | Estudios | ✘ | `data-theme` por sección + observador |
 | E4 | Navegación explorable por arrastre con marcadores | Overworld Audio | ✘ | Ver G8 |
 | E5 | Paleta de comandos ⌘K | SaaS | ✘ | Ver I3 |
@@ -157,13 +166,13 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 
 | ID | Pieza | Referencia | Estado | Qué hacer |
 |---|---|---|---|---|
-| G1 | `ImageReveal` (clip-path / cortina al entrar) | Todas | ◐ | `Reveal` tiene `wipe`; añadir variantes de clip-path y escala interna |
+| G1 | `ImageReveal` (clip-path / cortina al entrar) | Todas | ✔ | `ImageReveal` (máscara + asentado de la imagen)
 | G2 | `MediaCover` con carga diferida, `blur-up` y relación de aspecto fija | Rendimiento | ✘ | Integrar con `next/image`; evita saltos de layout |
 | G3 | Imagen con **distorsión al hover** (shader de ondas/desplazamiento) | Codrops, portfolios | ✘ | `DistortImage` con OGL o three; fallback a imagen plana |
 | G4 | Transición entre imágenes con shader (disolución, ruido) | Sliders premiados | ✘ | `ShaderSlider`, como alternativa al `Carousel` (G9) |
 | G5 | Planos WebGL sincronizados con el DOM (imágenes como texturas que siguen el scroll) | Patrón clásico | ✘ | Capa `WebGLStage` fija + `<img>` reales debajo; coste alto, hacer al final |
 | G6 | Galería con **rejilla infinita arrastrable** | Colección «Galleries» | ✘ | `DragGrid` (Draggable/Observer); inercia y límites |
-| G7 | Rejilla bento y masonry | SaaS y portfolios | ✘ | `BentoGrid`, `MasonryGrid` (CSS grid; sin JS) |
+| G7 | Rejilla bento y masonry | SaaS y portfolios | ◐ | `BentoGrid` hecho; falta `MasonryGrid`
 | G8 | Lienzo explorable por arrastre con puntos clicables | Overworld Audio | ✘ | `ExplorableCanvas` |
 | G9 | Carrusel | — | ✔ | `Carousel` (Swiper) |
 | G10 | Vídeo con reproductor propio y vídeo de fondo | — | ✔ | `VideoPlayer`; añadir `BackgroundVideo` (autoplay mudo, `playsInline`, póster) |
@@ -176,7 +185,7 @@ Agrupados como los cataloga Awwwards. Cada patrón apunta a las piezas del §3.
 | H1 | Hero, FeatureGrid, Pricing, FAQ, Stats, Testimonios, CTA, Equipo, LogoCloud | — | ✔ | Existen; falta que luzcan en la variante `editorial` (§7) |
 | H2 | `ProjectList` (filas con título enorme, año, categoría + `HoverPreview`) | Portfolios | ✔ | `ProjectList`
 | H3 | `CaseStudyCard` numerada con etiquetas «reconocimientos» y «alcance» | Signal-A | ✘ | Variante de `BlogCard` |
-| H4 | `BigFooter` (titular gigante, marquee, reloj, redes, «volver arriba») | Colección «Footer Design» | ◐ | `Footer` existe; añadir variante grande |
+| H4 | `BigFooter` (titular gigante, marquee, reloj, redes, «volver arriba») | Colección «Footer Design» | ✔ | `BigFooter`
 | H5 | Página 404 con personalidad | Colección «404» | ✘ | `NotFound` con interacción mínima |
 | H6 | Página de contacto: formulario con campos de línea, correo grande copiable | Colección «Contact Pages» | ◐ | `ContactForm` existe; añadir variante `editorial` y «copiar correo» |
 | H7 | Equipo / «sobre nosotros» con retratos que reaccionan | Colección «Team & About» | ◐ | `TeamSection` |
@@ -267,7 +276,7 @@ Antes de añadir cualquiera, consulta su versión actual y la compatibilidad con
 
 ## 7. Decisiones que necesito de ti
 
-1. **Identidad visual de las demos.** El kit es retro/pixel/ASCII; casi todos los SOTD no lo son. Propongo una novena
+1. **Identidad visual de las demos.** *(Hecho: la variante `editorial` ya existe; falta que confirmes si va por defecto en las demos de cliente.)* El kit es retro/pixel/ASCII; casi todos los SOTD no lo son. Propuse una novena
    variante `editorial` (tipografía grande, mucho blanco, rejilla fina, monocromo + un acento) sin tocar las 8 actuales.
    ¿Las demos de cliente van con `editorial` por defecto y lo retro queda como seña propia?
 2. **Fuentes.** Hay que elegir 2–3 familias (una display, una de texto, una mono) con licencia que permita el uso
