@@ -1,42 +1,41 @@
 "use client";
 
-import { type CSSProperties, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import BlueprintFrame from "@/components/ui/BlueprintFrame";
 import CellGrid from "@/components/ui/CellGrid";
 import EdgeTab from "@/components/ui/EdgeTab";
-import ExplorableCanvas, { type MapBlock } from "@/components/ui/ExplorableCanvas";
+import ExplorableCanvas from "@/components/ui/ExplorableCanvas";
+import FitText from "@/components/ui/FitText";
+import GridBackground from "@/components/ui/GridBackground";
+import ImageReveal from "@/components/ui/ImageReveal";
 import MetaTable from "@/components/ui/MetaTable";
+import PinnedSection from "@/components/ui/PinnedSection";
+import Preloader from "@/components/ui/Preloader";
 import RollLink from "@/components/ui/RollLink";
+import ScrubText from "@/components/ui/ScrubText";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
-import { walls } from "@/lib/sites/maqueta";
+import { getLenis } from "@/lib/motion/lenis";
 import { photo } from "@/lib/sites/photos";
-import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
-import { CLIENTS, FEATURES, ISSUES, MODEL_WORLD, PLAN_WALLS, PROBLEMS, SLUG, SPECS } from "./data";
+import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_WORLD, PROOF, SLUG, SPECS, TOUR } from "./data";
 import "./plano.css";
 
 const PAIR = FONT_PAIRINGS.find((p) => p.id === "tecnico")!;
 // tema del kit `blueprintTokens` con el par tipográfico «técnico»
 const TOKENS: CSSProperties = { ...tokensToStyle({ ...blueprintTokens, display: PAIR.display }), "--font-accent": PAIR.accent } as CSSProperties;
 const href = (p = "") => siteHref(SLUG, p);
+const pad = (n: number) => String(n).padStart(2, "0");
 
-// la maqueta del modelo: muros de cartón sobre una base de madera, fachada de metacrilato, pilares, escalera y árboles
-const ASPECT = MODEL_WORLD.h / MODEL_WORLD.w;
-const MODEL: MapBlock[] = [
-  { x: 50, y: 50, w: 56, d: 66, h: 6, mat: "wood" },
-  ...walls(PLAN_WALLS, { h: 90, thick: 0.45, aspect: ASPECT }),
-  ...walls([[50, 80, 72, 80]], { h: 90, thick: 0.3, aspect: ASPECT, mat: "acrylic" }),
-  ...[30, 40, 55, 68].flatMap((x) => [{ x, y: 30, w: 0.9, d: 0.9 / ASPECT, h: 90, shape: "cylinder" as const }]),
-  ...Array.from({ length: 7 }, (_, i) => ({ x: 31 + i * 1.1, y: 70, w: 1.1, d: 9, h: 10 + i * 11, mat: (i === 6 ? "accent" : "paper") as MapBlock["mat"] })),
-  ...[[14, 26], [16, 44], [13, 70], [86, 30], [88, 58], [84, 78], [40, 90], [60, 92]].map(([x, y]) => ({ x, y, w: 3.4, d: 3.4 / ASPECT, h: 120, shape: "tree" as const })),
-];
+/** pantallas de scroll que dura el relato (algo más de una por parada) */
+const LEN = 13;
 
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <SiteFrame tokens={TOKENS} className="pn">
+      <Preloader variant="words" brand="Cota" meta="Revisión de modelos" words={["Normativa", "Colisiones", "Cotas", "Nomenclatura"]} exit="curtain" />
       <SmoothScroll />
       <div className="pn-wrap">
         <BlueprintFrame>
@@ -44,8 +43,8 @@ export function Shell({ children }: { children: ReactNode }) {
             <a className="pn-brand" href={href()}><span aria-hidden>◩</span> Cota</a>
             <nav className="pn-nav pn-mono" aria-label="Principal">
               <a href={href("producto")}>Producto</a>
-              <a href={href("producto")}>Precios</a>
-              <a href={href()}>Recursos</a>
+              <a href={`${href()}#sala-${ISSUES[0].id}`}>Incidencias</a>
+              <a href={`${href()}#integraciones`}>Integraciones</a>
             </nav>
             <a className="pn-cta pn-mono" href={href("producto")}>Solicitar demo <span aria-hidden>→</span></a>
           </header>
@@ -57,74 +56,208 @@ export function Shell({ children }: { children: ReactNode }) {
         </BlueprintFrame>
       </div>
       <EdgeTab label="Solicitar demo" href={href("producto")} mark="C." top="56%" />
+      {/* grano de papel sobre toda la página (Sleep Well) */}
+      <GridBackground kind="grain" position="fixed" opacity={0.16} fade={false} />
     </SiteFrame>
   );
 }
 
-/* ---------- inicio ---------- */
-function Home() {
+/* ---------- inicio: el relato «De guardar a entregar» ---------- */
+function Chapter({ i, on }: { i: number; on: boolean }) {
+  const c = CHAPTERS[i];
+  const tab = on ? undefined : -1;
+  const issue = c.issue ? ISSUES.find((x) => x.id === c.issue)! : null;
   return (
-    <>
-      <section className="pn-hero">
-        <div className="pn-hero__art">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo("arquitectura", 2).src} alt="Fachada de edificio en blanco y negro" />
-        </div>
-        <div className="pn-hero__row">
-          <SplitText as="h1" by="lines" trigger="mount" stagger={0.1} delay={0.1}>Revisa tus modelos mientras los dibujas.</SplitText>
-          <div className="pn-hero__sub">
-            <p>Cota comprueba normativa, colisiones y cotas cada vez que guardas, dentro de tu programa de siempre.</p>
+    <li className={`pn-ch pn-ch--${c.kind}`} data-on={on ? "" : undefined}>
+      {c.kind === "intro" ? (
+        <div className="pn-ch__row">
+          <h1>{c.title}</h1>
+          <div className="pn-ch__sub">
+            <p>{c.text}</p>
             <span className="pn-mono">Revit · Rhino · ArchiCAD · SketchUp</span>
           </div>
-          <a className="pn-hero__go pn-mono" href="#problema">Descubrir ↓</a>
+          <span className="pn-ch__go pn-mono" aria-hidden>Baja para revisar ↓</span>
         </div>
-      </section>
-
-      <section className="pn-split">
-        <div className="pn-split__art">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={blueprintArt(2, "#c43500")} alt="Dibujo de línea de otro edificio con un círculo de acento" loading="lazy" />
-        </div>
-        <div className="pn-split__txt">
-          <div className="pn-split__body">
-            <SplitText as="h2" by="words" stagger={0.05}>Lo repetitivo del modelado no debería comerse tu semana.</SplitText>
-            <p>Cota se ocupa de lo fiel y manual para que tú te quedes con el diseño, no con el programa.</p>
-            <a className="pn-btn pn-mono" href={href("producto")}><span>Saber más</span><i aria-hidden>→</i></a>
+      ) : c.kind === "step" ? (
+        <>
+          <div className="pn-ch__card">
+            <span className="pn-ch__n" aria-hidden>{c.n}</span>
+            <p className="pn-mono">Paso {c.n} de 04 · la revisión</p>
+            <h2>{c.title}</h2>
+            <p>{c.text}</p>
           </div>
-          <div className="pn-clients">
-            <div className="pn-clients__bar pn-mono"><span>Clientes</span><span aria-hidden>← →</span></div>
-            <CellGrid columns={5} line="dashed" padding={18}>
-              {CLIENTS.map((c) => <span key={c} className="pn-mono" style={{ fontWeight: 700 }}>{c}</span>)}
-            </CellGrid>
+          <div className="pn-ch__word" aria-hidden>
+            <FitText max={200}>{c.word}</FitText>
           </div>
+        </>
+      ) : (
+        <div className="pn-ch__card">
+          <p className="pn-mono">
+            {issue ? `Incidencia ${pad(ISSUES.indexOf(issue) + 1)} / ${pad(ISSUES.length)} · ${issue.meta}` : c.kind === "save" ? "El problema" : c.kind === "scan" ? "1.400 reglas" : "Al cerrar el archivo"}
+          </p>
+          <h2>{c.title}</h2>
+          {c.kind === "save" ? (
+            <ScrubText scope=".ui-pin" range={[0.03, 0.13]} dim={0.22}>{c.text!}</ScrubText>
+          ) : (
+            <p>{c.text}</p>
+          )}
+          {issue && (
+            <a className="pn-btn pn-mono" href={href(`incidencias/${issue.id}`)} tabIndex={tab}>
+              <span>Ver incidencia</span><i aria-hidden>→</i>
+            </a>
+          )}
+          {c.kind === "report" && (
+            <>
+              <ol className="pn-report">
+                {ISSUES.map((x) => (
+                  <li key={x.id}>
+                    <a href={href(`incidencias/${x.id}`)} tabIndex={tab}>
+                      <b>{x.title}</b>
+                      <span className="pn-mono">{x.severity}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <a className="pn-btn pn-mono" href={href("producto")} tabIndex={tab}><span>Ver el producto</span><i aria-hidden>→</i></a>
+            </>
+          )}
         </div>
-      </section>
+      )}
+    </li>
+  );
+}
 
-      <section id="problema" className="pn-sec pn-prob" aria-label="Problemas que resuelve">
-        <CellGrid columns={4} padding={28}>
-          {PROBLEMS.map((p) => (
-            <div key={p.t}><h3>{p.t}</h3><p>{p.p}</p></div>
+function Home() {
+  const [stop, setStop] = useState(0);
+  const dark = CHAPTERS[stop]?.kind === "step";
+  // al volver de una ficha (#sala-c1…): el preloader y el scroll suave arrancan arriba, así que se salta a la sala después
+  useEffect(() => {
+    const el = location.hash.startsWith("#sala-") ? document.getElementById(location.hash.slice(1)) : null;
+    if (!el) return;
+    // se insiste unas veces: el scroll suave puede arrancar después y devolver la página a su posición
+    let tries = 0, t = 0;
+    const go = () => {
+      const y = el.getBoundingClientRect().top + scrollY;
+      if (Math.abs(scrollY - y) < 40 || tries++ > 8) return;
+      const lenis = getLenis();
+      if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+      else scrollTo(0, y);
+      t = window.setTimeout(go, 250);
+    };
+    t = window.setTimeout(go, 120);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <>
+      <div className="pn-story" style={{ "--len": LEN } as CSSProperties}>
+        {/* anclas: cada incidencia tiene su «sala» a la altura de scroll de su parada (la ficha vuelve aquí) */}
+        {ISSUES.map((x) => (
+          <span key={x.id} id={`sala-${x.id}`} className="pn-anchor" style={{ "--at": ISSUE_STOP[x.id] / (TOUR.length - 1) } as CSSProperties} />
+        ))}
+        <PinnedSection length={LEN} className={`pn-tour ${dark ? "is-dark" : ""}`}>
+          <ExplorableCanvas
+            depth="3d"
+            nav="scroll"
+            world={MODEL_WORLD}
+            blocks={MODEL}
+            dims={MODEL_DIMS}
+            path={TOUR}
+            captions={false}
+            onStop={setStop}
+            markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
+            linkLabel="Ver incidencia →"
+            listToggle={false}
+          />
+          {/* foto primero: la fachada se disuelve en la planta con el scroll (Atlas: vídeo → pintura) */}
+          <div className="pn-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photo("arquitectura", 2).src} alt="Fachada de edificio en blanco y negro" />
+          </div>
+          <ol className="pn-chs">
+            {CHAPTERS.map((_, i) => <Chapter key={i} i={i} on={i === stop} />)}
+          </ol>
+          <div className="pn-rail pn-mono" aria-hidden>
+            <span>{pad(stop + 1)} / {pad(CHAPTERS.length)}</span>
+            <ol>{CHAPTERS.map((c, i) => <li key={i} data-on={i === stop ? "" : undefined} data-k={c.kind} />)}</ol>
+          </div>
+        </PinnedSection>
+      </div>
+
+      <section className="pn-dark pn-proof" aria-label="Resultados">
+        <p className="pn-mono">Con Cota · datos de la demo</p>
+        <SplitText as="h2" by="words" stagger={0.05} className="pn-big">Menos semanas perdidas en revisar.</SplitText>
+        <CellGrid columns={3} line="dashed" padding={28}>
+          {PROOF.map((x) => (
+            <div key={x.k} className="pn-stat"><b>{x.v}</b><p>{x.k}</p></div>
           ))}
         </CellGrid>
+        <div className="pn-clients">
+          <div className="pn-clients__bar pn-mono"><span>Estudios que ya revisan con Cota</span><span aria-hidden>← →</span></div>
+          <CellGrid columns={5} line="dashed" padding={18}>
+            {CLIENTS.map((c) => <span key={c} className="pn-mono" style={{ fontWeight: 700 }}>{c}</span>)}
+          </CellGrid>
+        </div>
       </section>
 
-      <section className="pn-mid">
-        <SplitText as="h2" by="words" stagger={0.06}>A tu lado, dentro del modelo.</SplitText>
+      <section id="integraciones" className="pn-int" aria-label="Integraciones">
+        <div className="pn-int__head">
+          <SplitText as="h2" by="words" stagger={0.05} className="pn-big">Dentro de tu programa.</SplitText>
+          <p>Cota no es otra ventana: vive en el programa en el que ya dibujas y revisa el archivo que tienes abierto.</p>
+        </div>
+        <div className="pn-cards">
+          {INTEGRATIONS.map((x) => (
+            <div key={x.t} className="pn-tick">
+              <h3>{x.t}</h3>
+              <p>{x.p}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="pn-model" aria-label="Maqueta del modelo revisado">
-        <p className="pn-mono">Modelo revisado · 4 incidencias</p>
-        <ExplorableCanvas
-          depth="3d"
-          world={MODEL_WORLD}
-          blocks={MODEL}
-          markers={ISSUES.map((i) => ({ ...i, color: "var(--acc)" }))}
-          tilt={50}
-          height="min(76vh, 680px)"
-          hint="Arrastra la maqueta · pulsa una incidencia"
-        />
+      <section className="pn-end" aria-label="Solicitar demo">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={photo("arquitectura", 6).src} alt="Ayuntamiento de Toronto visto desde abajo" loading="lazy" />
+        <div className="pn-end__txt">
+          <SplitText as="h2" by="words" stagger={0.05} className="pn-big">¿Lo vemos con uno de tus modelos?</SplitText>
+          <a className="pn-btn pn-btn--solid pn-mono" href={href("producto")}><span>Solicitar demo</span><i aria-hidden>→</i></a>
+        </div>
       </section>
     </>
+  );
+}
+
+/* ---------- ficha de una incidencia (Cartier: «Explore» → ficha editorial con URL propia) ---------- */
+function IssuePage({ id }: { id: string }) {
+  const k = ISSUES.findIndex((x) => x.id === id);
+  if (k < 0) return null;
+  const x = ISSUES[k];
+  const prev = ISSUES[(k + ISSUES.length - 1) % ISSUES.length], next = ISSUES[(k + 1) % ISSUES.length];
+  return (
+    <article className="pn-issue">
+      <a className="pn-issue__x" href={`${href()}#sala-${x.id}`} aria-label="Volver a la maqueta">×</a>
+      <header className="pn-issue__head">
+        <p className="pn-mono">Incidencia {pad(k + 1)} / {pad(ISSUES.length)} · {x.meta}</p>
+        <SplitText as="h1" by="lines" trigger="mount">{x.title}</SplitText>
+        <p className="pn-issue__short">{x.text}</p>
+      </header>
+      <ImageReveal src={photo(x.photo.topic, x.photo.i).src} alt={x.photo.alt} ratio="16 / 8" from="bottom" className="pn-issue__img" />
+      <ScrubText className="pn-issue__lead" dim={0.2} from={0.9} to={0.6}>{x.detail}</ScrubText>
+      <MetaTable
+        label={`Datos de la incidencia: ${x.title}`}
+        columns={2}
+        rows={[
+          { k: "Regla", v: x.rule },
+          { k: "Elemento", v: x.element },
+          { k: "Gravedad", v: x.severity },
+          { k: "Arreglo propuesto", v: x.fix },
+        ]}
+      />
+      <nav className="pn-issue__nav pn-mono" aria-label="Otras incidencias">
+        <a href={href(`incidencias/${prev.id}`)}>← {prev.title}</a>
+        <a href={`${href()}#sala-${x.id}`}>Volver a la maqueta</a>
+        <a href={href(`incidencias/${next.id}`)}>{next.title} →</a>
+      </nav>
+    </article>
   );
 }
 
@@ -135,6 +268,10 @@ function Product() {
       <section>
         <p className="pn-mono" style={{ marginBottom: 20 }}>Producto</p>
         <SplitText as="h1" by="lines" trigger="mount">Una revisión que no se olvida de nada.</SplitText>
+      </section>
+      <section className="pn-model" aria-label="Maqueta del modelo en despiece">
+        <p className="pn-mono">El modelo por capas · base, estructura, instalaciones y muros</p>
+        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
       </section>
       <section>
         <MetaTable rows={SPECS} columns={2} label="Ficha técnica de Cota" />
@@ -153,8 +290,9 @@ function Product() {
 }
 
 export function Page({ path }: { path: string[] }) {
-  const [a] = path;
+  const [a, b] = path;
   if (!a) return <Home />;
   if (a === "producto") return <Product />;
+  if (a === "incidencias" && b) return <IssuePage id={b} />;
   return null;
 }

@@ -5,7 +5,7 @@
 > Wonders](https://www.cartier.com/en-fr/watchesandwonders#/) (salas y ficha en 2D), [Sleep Well
 > Creatives](https://sleep-well-creatives.com/) (capítulos numerados, fondo que alterna, grano) y Oryzo (anotaciones de
 > CAD). El análisis de las tres está en [`09-ronda-4-threejs.md`](./09-ronda-4-threejs.md#ampliación-cartier-sleep-well-creatives-y-atlas-motion-19-10-2026).
-> **Estado: plan, sin aplicar.**
+> **Estado: aplicado el 19-10-2026** (ver «Qué se hizo» al final; las tablas de abajo son el plan original).
 
 ## Diagnóstico de la Plano actual
 
@@ -112,3 +112,26 @@ Lo específico de Cota (la maqueta por capas, los textos, la ficha) vive en `com
 - Modelos GLB reales (Cartier y Atlas los usan); aquí la maqueta sigue siendo de bloques generados.
 - Sonido (Cartier y Sleep Well lo tienen; en un producto B2B no aporta).
 - Posprocesado tipo Cartier (bloom, profundidad de campo): sigue pendiente de la ronda 4.
+
+## Qué se hizo (19-10-2026)
+
+Aplicado en las seis fases, sin componentes nuevos. Diferencias con el plan:
+
+| Plan | Hecho |
+|---|---|
+| `--stop` / `--stop-p` | `--stop` (parada con decimales) y `--tour-p` (0–1), más `captions={false}` y `onStop` |
+| — | `MapBlock.z` (volúmenes que no apoyan en el tablero: vigas, conductos) y `explode` fijo en modo arrastre (página de producto y catálogo) |
+| — | `ScrubText scope=".ui-pin" range={[a, b]}`: dentro de una sección fijada el párrafo no se mueve, así que el progreso sale de la sección |
+| `Preloader variant="grid"` | No hizo falta: `variant="words"` con los cuatro pasos |
+| Cifras con `StatCounter` | `StatCounter` pinta en ASCII; las cifras van en `CellGrid` |
+| `ElementTransition` hacia la ficha | No: la ficha usa `ImageReveal` y la X vuelve a la sala (`#sala-c1`), con un salto que espera al preloader y al scroll suave |
+| `GridBackground kind="grain"` | Hecho (ruido SVG multiplicado, fijo sobre la página) |
+| Sombras en móvil | `shadow-mapSize` 1024 en pantallas táctiles; en vertical la cámara del recorrido se aleja para que la maqueta quepa a lo ancho |
+
+**Una trampa:** los tokens oscuros de los pasos se aplican solo a los capítulos y al raíl. Si cambian en un ancestro del
+lienzo, `useTokens` lo detecta y la maqueta se reconstruye entera con los colores nuevos; el fondo de la escena ya lo
+cambia `bg` por parada.
+
+**Comprobado:** recorrido completo en Chrome (escritorio y 390 px en un marco), fichas de las cuatro incidencias y vuelta a
+su sala, página de producto con el despiece, catálogo con el control de despiece, Alzado y Sonar sin cambios y sin errores
+en consola; `tsc`, `catalog:check` y `check:shadows`. **Sin hacer:** axe, `npm run build` y `pkg:build`.

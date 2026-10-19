@@ -12,6 +12,7 @@ import {
   Group,
   IcosahedronGeometry,
   LineBasicMaterial,
+  Mesh,
   MeshPhysicalMaterial,
   MeshStandardMaterial,
   PerspectiveCamera,
@@ -31,6 +32,10 @@ import {
  * Con `path` y `progress` la cámara no sigue el arrastre sino una ruta de paradas (un recorrido por scroll, como Oryzo o
  * Primland): la primera parada suele ser cenital y los volúmenes crecen durante el primer tramo. `dims` dibuja cotas sobre el
  * tablero (líneas de medida con su texto), como las anotaciones de CAD.
+ *
+ * Cada parada puede además separar la maqueta por capas (`explode`, el despiece de Atlas), dejar sólida una sola capa y el
+ * resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), encuadrar un punto
+ * y atenuar los demás (`focus`, las salas de Cartier) y cambiar el color del fondo (`bg`).
  */
 
 export type MapBlock = {
@@ -42,11 +47,15 @@ export type MapBlock = {
   d: number;
   /** alto en px del mundo (100 px ≈ el lado de una celda de la cuadrícula) */
   h: number;
+  /** altura a la que empieza (px del mundo; 0 = sobre el tablero): vigas, conductos, forjados */
+  z?: number;
   /** giro en planta, en grados */
   rot?: number;
   shape?: "box" | "cylinder" | "tree";
-  /** paper = cartón pluma · accent = el acento del tema · acrylic = metacrilato · wood = madera de balsa */
-  mat?: "paper" | "accent" | "acrylic" | "wood";
+  /** paper = cartón pluma · accent = el acento del tema · acrylic = metacrilato · wood = madera de balsa · wire = solo aristas */
+  mat?: "paper" | "accent" | "acrylic" | "wood" | "wire";
+  /** capa del despiece (0 = la base): las paradas con `explode` separan las capas en vertical */
+  layer?: number;
 };
 
 export type Map3DColors = { paper: string; bg: string; line: string; accent: string };
@@ -61,6 +70,16 @@ export type CameraStop = {
   zoom?: number;
   /** giro alrededor del punto, en grados */
   yaw?: number;
+  /** separación vertical entre capas (`MapBlock.layer`), en px del mundo */
+  explode?: number;
+  /** capa que se queda sólida; las demás pasan a alambre */
+  focusLayer?: number;
+  /** al llegar a esta parada, un plano de luz barre la maqueta y los puntos aparecen cuando los alcanza */
+  scan?: boolean;
+  /** id del punto que se resalta (los demás se atenúan) */
+  focus?: string;
+  /** color de fondo (y de la niebla) en esta parada */
+  bg?: string;
   /** texto de la parada (lo pinta el componente) */
   title?: string;
   text?: string;
@@ -89,6 +108,8 @@ export type Map3DSceneProps = {
   progress?: MutableRefObject<number>;
   /** inclinación de la cámara respecto a la vertical, en grados */
   tilt: number;
+  /** sin recorrido: separación fija entre capas (px del mundo) */
+  explode?: number;
   intro: boolean;
   active: boolean;
   onReady: () => void;
@@ -142,8 +163,20 @@ function useTextures() {
   }, []);
 }
 
+/** Lo que el `Rig` toca en cada fotograma sin pasar por React */
+type Fx = {
+  /** la mesa (su color sigue al fondo de la parada) */
+  table: MeshStandardMaterial | null;
+  /** el plano de luz del barrido */
+  scan: Group | null;
+  /** materiales por capa: para pasar de sólido a alambre */
+  layers: Map<number, { mats: Material[]; edge: LineBasicMaterial; meshes: Mesh[] }>;
+  /** aristas de los bloques en alambre */
+  wire: LineBasicMaterial | null;
+};
+
 /** El tablero: papel con cuadrícula fina, la huella de cada volumen dibujada a lápiz y, si hay, una imagen encima. */
-function Ground({ world, blocks, colors, groundImage, dims = [], tex }: Pick<Map3DSceneProps, "world" | "blocks" | "colors" | "groundImage" | "dims"> & { tex: CanvasTexture }) {
+function Ground({ world, blocks, colors, groundImage, dims = [], tex, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors" | "groundImage" | "dims"> & { tex: CanvasTexture; fx: MutableRefObject<Fx> }) {
   const map = useMemo(() => {
     const k = 2048 / Math.max(world.w, world.h);
     const c = document.createElement("canvas");
@@ -177,6 +210,7 @@ function Ground({ world, blocks, colors, groundImage, dims = [], tex }: Pick<Map
     ctx.globalAlpha = 0.55;
     ctx.lineWidth = 1.4;
     for (const b of blocks) {
+      if (b.z) continue; // lo que no apoya en el tablero no deja huella
       ctx.save();
       ctx.translate((b.x / 100) * world.w * k, (b.y / 100) * world.h * k);
       ctx.rotate(((b.rot ?? 0) * Math.PI) / 180);
@@ -243,65 +277,91 @@ function Ground({ world, blocks, colors, groundImage, dims = [], tex }: Pick<Map
       {/* la mesa: se extiende más allá del tablero y se funde con el fondo por la niebla */}
       <mesh rotation-x={-Math.PI / 2} position-y={-0.02} receiveShadow>
         <planeGeometry args={[world.w * U * 6, world.h * U * 6]} />
-        <meshStandardMaterial color={colors.bg} roughness={1} />
+        <meshStandardMaterial
+          ref={(m) => {
+            fx.current.table = m;
+          }}
+          color={colors.bg}
+          roughness={1}
+        />
       </mesh>
     </>
   );
 }
 
-type Piece = { group: Group; delay: number };
+type Piece = { group: Group; delay: number; layer: number };
 
-function Blocks({ world, blocks, colors, tex, pieces }: Pick<Map3DSceneProps, "world" | "blocks" | "colors"> & { tex: ReturnType<typeof useTextures>; pieces: MutableRefObject<Piece[]> }) {
+function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors"> & { tex: ReturnType<typeof useTextures>; pieces: MutableRefObject<Piece[]>; fx: MutableRefObject<Fx> }) {
   const root = useRef<Group>(null);
   const built = useMemo(() => {
-    const mats: Record<NonNullable<MapBlock["mat"]>, Material> = {
+    // un juego de materiales por capa, para poder dejar una capa sólida y las demás en alambre
+    const set = () => ({
       paper: new MeshStandardMaterial({ color: colors.paper, map: tex.paper, roughness: 0.95 }),
       accent: new MeshStandardMaterial({ color: colors.accent, map: tex.paper, roughness: 0.85 }),
       acrylic: new MeshPhysicalMaterial({ color: "#dff1f7", roughness: 0.08, metalness: 0, transparent: true, opacity: 0.38, clearcoat: 1 }),
       wood: new MeshStandardMaterial({ color: "#d9b183", map: tex.wood, roughness: 0.8 }),
+      edge: new LineBasicMaterial({ color: colors.line, transparent: true, opacity: 0.35 }),
+    });
+    const sets = new Map<number, ReturnType<typeof set>>();
+    const of = (layer: number) => {
+      if (!sets.has(layer)) sets.set(layer, set());
+      return sets.get(layer)!;
     };
-    const edge = new LineBasicMaterial({ color: colors.line, transparent: true, opacity: 0.35 });
+    const wire = new LineBasicMaterial({ color: colors.line, transparent: true, opacity: 0.85 });
     const geos: BufferGeometry[] = [];
     const cx = world.w / 2, cy = world.h / 2;
     const items = blocks.map((b) => {
-      const w = (b.w / 100) * world.w * U, d = (b.d / 100) * world.h * U, h = Math.max(1, b.h) * U;
-      const x = (b.x / 100) * world.w * U - cx * U, z = (b.y / 100) * world.h * U - cy * U;
+      const layer = b.layer ?? 0;
+      const m = of(layer);
+      const w = (b.w / 100) * world.w * U, d = (b.d / 100) * world.h * U, h = Math.max(1, b.h) * U, z = (b.z ?? 0) * U;
+      const x = (b.x / 100) * world.w * U - cx * U, y = (b.y / 100) * world.h * U - cy * U;
       const shape = b.shape ?? "box";
-      const parts: { geo: BufferGeometry; mat: Material; y: number; edges: boolean; edgeGeo?: BufferGeometry }[] = [];
+      const isWire = b.mat === "wire";
+      const mat = b.mat === "wire" ? null : m[b.mat ?? "paper"];
+      const parts: { geo: BufferGeometry; mat: Material | null; y: number; edges: boolean; edgeGeo?: BufferGeometry }[] = [];
       if (shape === "tree") {
         const r = Math.min(w, d) / 2;
-        parts.push({ geo: new CylinderGeometry(r * 0.08, r * 0.08, h * 0.45, 6), mat: mats.wood, y: h * 0.225, edges: false });
-        parts.push({ geo: new IcosahedronGeometry(r, 1), mat: mats[b.mat ?? "paper"], y: h * 0.45 + r * 0.8, edges: false });
+        parts.push({ geo: new CylinderGeometry(r * 0.08, r * 0.08, h * 0.45, 6), mat: isWire ? null : m.wood, y: z + h * 0.225, edges: isWire });
+        parts.push({ geo: new IcosahedronGeometry(r, 1), mat, y: z + h * 0.45 + r * 0.8, edges: isWire });
       } else if (shape === "cylinder") {
-        parts.push({ geo: new CylinderGeometry(w / 2, w / 2, h, 40), mat: mats[b.mat ?? "paper"], y: h / 2, edges: true });
+        parts.push({ geo: new CylinderGeometry(w / 2, w / 2, h, 40), mat, y: z + h / 2, edges: true });
       } else {
-        parts.push({ geo: new BoxGeometry(w, h, d), mat: mats[b.mat ?? "paper"], y: h / 2, edges: b.mat !== "acrylic" });
+        parts.push({ geo: new BoxGeometry(w, h, d), mat, y: z + h / 2, edges: b.mat !== "acrylic" });
       }
       parts.forEach((p) => {
         if (p.edges) p.edgeGeo = new EdgesGeometry(p.geo, 25);
         geos.push(p.geo, ...(p.edgeGeo ? [p.edgeGeo] : []));
       });
-      return { x, z, rot: ((b.rot ?? 0) * Math.PI) / 180, parts, dist: Math.hypot(x, z) };
+      return { x, z: y, rot: ((b.rot ?? 0) * Math.PI) / 180, parts, dist: Math.hypot(x, y), layer, edge: isWire ? wire : m.edge };
     });
     const far = Math.max(0.001, ...items.map((i) => i.dist));
-    return { mats, edge, geos, items, far };
+    return { sets, wire, geos, items, far };
   }, [world.w, world.h, blocks, colors.paper, colors.accent, colors.line, tex]);
 
   useEffect(
     () => () => {
-      Object.values(built.mats).forEach((m) => m.dispose());
-      built.edge.dispose();
+      built.sets.forEach((s) => Object.values(s).forEach((m) => m.dispose()));
+      built.wire.dispose();
       built.geos.forEach((g) => g.dispose());
     },
     [built],
   );
 
-  // grupos para la intro: crecen desde el centro hacia fuera
+  // grupos para la intro (crecen desde el centro hacia fuera) y materiales por capa para el despiece
   useEffect(() => {
     const g = root.current;
     if (!g) return;
-    pieces.current = g.children.map((c, i) => ({ group: c as Group, delay: (built.items[i].dist / built.far) * 0.55 }));
-  }, [built, pieces]);
+    pieces.current = g.children.map((c, i) => ({ group: c as Group, delay: (built.items[i].dist / built.far) * 0.55, layer: built.items[i].layer }));
+    const layers: Fx["layers"] = new Map();
+    built.sets.forEach((s, l) => {
+      const mats = [s.paper, s.accent, s.acrylic, s.wood];
+      mats.forEach((m) => (m.userData.base = m.opacity));
+      layers.set(l, { mats, edge: s.edge, meshes: [] });
+    });
+    g.children.forEach((c, i) => c.traverse((o) => o instanceof Mesh && layers.get(built.items[i].layer)?.meshes.push(o)));
+    fx.current.layers = layers;
+    fx.current.wire = built.wire;
+  }, [built, pieces, fx]);
 
   return (
     <group ref={root}>
@@ -309,8 +369,8 @@ function Blocks({ world, blocks, colors, tex, pieces }: Pick<Map3DSceneProps, "w
         <group key={i} position={[it.x, 0, it.z]} rotation-y={-it.rot}>
           {it.parts.map((p, j) => (
             <group key={j} position-y={p.y}>
-              <mesh geometry={p.geo} material={p.mat} castShadow receiveShadow />
-              {p.edgeGeo && <lineSegments geometry={p.edgeGeo} material={built.edge} />}
+              {p.mat && <mesh geometry={p.geo} material={p.mat} castShadow receiveShadow />}
+              {p.edgeGeo && <lineSegments geometry={p.edgeGeo} material={it.edge} />}
             </group>
           ))}
         </group>
@@ -319,11 +379,38 @@ function Blocks({ world, blocks, colors, tex, pieces }: Pick<Map3DSceneProps, "w
   );
 }
 
+/** El plano de luz del barrido: una lámina del acento que recorre la maqueta de oeste a este, con su línea en el tablero */
+function Scan({ world, blocks, colors, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors"> & { fx: MutableRefObject<Fx> }) {
+  const h = Math.max(120, ...blocks.map((b) => (b.z ?? 0) + b.h)) * 1.25 * U;
+  return (
+    <group
+      ref={(g) => {
+        fx.current.scan = g;
+      }}
+      visible={false}
+    >
+      <mesh position-y={h / 2}>
+        <boxGeometry args={[0.012, h, world.h * U]} />
+        <meshBasicMaterial color={colors.accent} transparent opacity={0.22} depthWrite={false} />
+      </mesh>
+      <mesh position-y={0.006} rotation-x={-Math.PI / 2}>
+        <planeGeometry args={[0.05, world.h * U]} />
+        <meshBasicMaterial color={colors.accent} transparent opacity={0.9} depthWrite={false} />
+      </mesh>
+    </group>
+  );
+}
+
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
 const easeIO = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
+/** 1 = la capa está sólida en esta parada, 0 = en alambre */
+const solidIn = (s: CameraStop, layer: number) => (s.focusLayer === undefined || s.focusLayer === layer ? 1 : 0);
+/** peso de un punto en esta parada: resaltado, atenuado o normal */
+const weightIn = (s: CameraStop, id: string) => (s.focus === undefined ? 1 : s.focus === id ? 1 : 0.18);
 
-function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, path, progress, pieces, onReady }: Map3DSceneProps & { pieces: MutableRefObject<Piece[]> }) {
+function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, path, progress, explode = 0, pieces, fx, onReady }: Map3DSceneProps & { pieces: MutableRefObject<Piece[]>; fx: MutableRefObject<Fx> }) {
   const camera = useThree((s) => s.camera) as PerspectiveCamera;
   const size = useThree((s) => s.size);
   const scene = useThree((s) => s.scene);
@@ -333,6 +420,19 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
   const ready = useRef(false);
   const v = useMemo(() => new Vector3(), []);
   const target = useMemo(() => new Vector3(), []);
+  // colores por parada (fondo) y los dos tonos de las aristas: tinta sobre claro, papel sobre oscuro
+  const tones = useMemo(() => {
+    const bg = new Color(colors.bg);
+    return {
+      stops: (path ?? []).map((s) => (s.bg ? new Color(s.bg) : bg)),
+      bg,
+      line: new Color(colors.line),
+      paper: new Color(colors.paper),
+      now: new Color(),
+      ink: new Color(),
+    };
+  }, [path, colors.bg, colors.line, colors.paper]);
+  const scanAt = useMemo(() => (path ?? []).findIndex((s) => s.scan), [path]);
 
   useEffect(() => {
     scene.fog = new Fog(new Color(colors.bg), 1, 60);
@@ -346,47 +446,98 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
     // altura a la que la vista cenital enseña tanto como la ventana: así 1 px arrastrado ≈ 1 px del tablero
     const base = (size.height * U) / 2 / Math.tan((FOV * Math.PI) / 360);
     yaw.current += (pointer.current.x * 0.14 - yaw.current) * Math.min(1, dt * 3);
-    let k: number, dist: number, pitch: number, turn = 0;
+    let k: number, dist: number, pitch: number, turn = 0, gap = explode, f = 0, u = 0;
+    let a: CameraStop | null = null, b: CameraStop | null = null;
     if (path && path.length > 1 && progress) {
       // recorrido: la cámara va de parada en parada según el progreso (suavizado); los volúmenes crecen en el primer tramo
       sp.current += (progress.current - sp.current) * Math.min(1, dt * 5);
-      const f = Math.min(0.9999, Math.max(0, sp.current)) * (path.length - 1);
+      f = Math.min(0.9999, Math.max(0, sp.current)) * (path.length - 1);
       const i = Math.floor(f);
-      const u = easeIO(f - i);
-      const a = path[i], b = path[i + 1];
+      u = easeIO(f - i);
+      a = path[i];
+      b = path[i + 1];
       k = ease(f);
-      dist = base / lerp(a.zoom ?? 1, b.zoom ?? 1, u);
+      // en vertical (móvil) la vista se aleja para que la maqueta quepa a lo ancho
+      const fit = Math.min(2.6, Math.max(1, (size.height / size.width) * 1.1));
+      dist = (base * fit) / lerp(a.zoom ?? 1, b.zoom ?? 1, u);
       pitch = (lerp(a.tilt, b.tilt, u) * Math.PI) / 180;
       turn = (lerp(a.yaw ?? 0, b.yaw ?? 0, u) * Math.PI) / 180;
+      gap = lerp(a.explode ?? 0, b.explode ?? 0, u);
       target.set(((lerp(a.x, b.x, u) / 100) * world.w - world.w / 2) * U, 0, ((lerp(a.y, b.y, u) / 100) * world.h - world.h / 2) * U);
+      // fondo de la parada
+      tones.now.lerpColors(tones.stops[i], tones.stops[i + 1], u);
     } else {
       k = intro ? ease((state.clock.elapsedTime - t0.current) / 2.6) : 1;
       dist = base * (1.35 - 0.35 * k);
       pitch = ((tilt * Math.PI) / 180) * k;
       const cx = size.width / 2 - pan.current.x, cy = size.height / 2 - pan.current.y;
       target.set((cx - world.w / 2) * U, 0, (cy - world.h / 2) * U);
+      tones.now.copy(tones.bg);
     }
+    // con el despiece, la cámara mira a media altura de la torre de capas
+    const top = Math.max(0, ...pieces.current.map((p) => p.layer)) * gap * U;
+    target.y = top / 2;
     const ry = yaw.current + turn;
     camera.position.set(target.x + Math.sin(ry) * Math.sin(pitch) * dist, target.y + Math.cos(pitch) * dist, target.z + Math.cos(ry) * Math.sin(pitch) * dist + 0.0001);
     camera.lookAt(target);
     if (state.scene.fog instanceof Fog) {
-      state.scene.fog.near = dist * 1.1;
-      state.scene.fog.far = dist * 3.2;
+      state.scene.fog.near = dist * 1.1 + top;
+      state.scene.fog.far = dist * 3.2 + top;
+      state.scene.fog.color.copy(tones.now);
+    }
+    fx.current.table?.color.copy(tones.now);
+    // aristas: tinta sobre fondo claro, color papel sobre fondo oscuro
+    const lum = 0.2126 * tones.now.r + 0.7152 * tones.now.g + 0.0722 * tones.now.b;
+    tones.ink.lerpColors(tones.line, tones.paper, clamp01((0.42 - lum) / 0.22));
+
+    // la maqueta crece desde el plano y, con el despiece, cada capa sube a su altura
+    for (const p of pieces.current) {
+      p.group.scale.y = Math.max(0.001, ease((k - p.delay) / 0.45));
+      p.group.position.y = p.layer * gap * U;
     }
 
-    // la maqueta crece desde el plano
-    for (const p of pieces.current) p.group.scale.y = Math.max(0.001, ease((k - p.delay) / 0.45));
+    // sólido o alambre por capa
+    fx.current.layers.forEach((L, layer) => {
+      const s = a && b ? lerp(solidIn(a, layer), solidIn(b, layer), u) : 1;
+      for (const m of L.mats) {
+        const t = s < 0.995;
+        if (m.transparent !== (t || m.userData.base < 1)) {
+          m.transparent = t || m.userData.base < 1;
+          m.needsUpdate = true;
+        }
+        m.opacity = m.userData.base * (0.04 + 0.96 * s);
+        m.depthWrite = s > 0.5;
+      }
+      for (const mesh of L.meshes) mesh.castShadow = s > 0.5;
+      L.edge.opacity = 0.35 + 0.55 * (1 - s);
+      L.edge.color.copy(tones.ink);
+    });
+    fx.current.wire?.color.copy(tones.ink);
+
+    // barrido: en el tramo que llega a la parada con `scan`, la lámina cruza la maqueta
+    const sweeping = scanAt > 0 && f > scanAt - 1 && f < scanAt;
+    const sweep = sweeping ? u : f >= scanAt ? 1 : 0;
+    if (fx.current.scan) {
+      fx.current.scan.visible = sweeping && u > 0.01 && u < 0.99;
+      fx.current.scan.position.x = ((-0.04 + sweep * 1.08) * world.w - world.w / 2) * U;
+    }
 
     // los botones del DOM se colocan sobre su punto del tablero
     const W = size.width, H = size.height;
+    const exploded = clamp01(1 - gap / 40);
     for (const m of markers) {
       const el = markerEls.current.get(m.id);
       if (!el) continue;
       v.set(((m.x / 100) * world.w - world.w / 2) * U, 0.04, ((m.y / 100) * world.h - world.h / 2) * U).project(camera);
       const hidden = v.z > 1 || Math.abs(v.x) > 1.2 || Math.abs(v.y) > 1.2;
+      // con barrido, cada punto aparece cuando la lámina lo pasa
+      const found = scanAt < 0 ? 1 : (m.x / 100 + 0.04) / 1.08 <= sweep ? 1 : 0;
+      const w = a && b ? lerp(weightIn(a, m.id), weightIn(b, m.id), u) : 1;
+      const on = a && b ? lerp(a.focus === m.id ? 1 : 0, b.focus === m.id ? 1 : 0, u) : 0;
       el.style.setProperty("--sx", `${((v.x + 1) / 2) * W}px`);
       el.style.setProperty("--sy", `${((1 - v.y) / 2) * H}px`);
-      el.style.setProperty("--so", hidden ? "0" : String(Math.min(1, k * 1.4)));
+      el.style.setProperty("--so", hidden ? "0" : (Math.min(1, k * 1.4) * found * w * exploded).toFixed(3));
+      el.style.setProperty("--sf", on.toFixed(3));
     }
     if (!ready.current) {
       ready.current = true;
@@ -399,6 +550,7 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
 export default function Map3DScene(props: Map3DSceneProps) {
   const tex = useTextures();
   const pieces = useRef<Piece[]>([]);
+  const fx = useRef<Fx>({ table: null, scan: null, layers: new Map(), wire: null });
   useEffect(() => () => Object.values(tex).forEach((t) => t.dispose()), [tex]);
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   const span = Math.max(props.world.w, props.world.h) * U;
@@ -417,7 +569,7 @@ export default function Map3DScene(props: Map3DSceneProps) {
         position={[span * 0.35, span * 0.6, span * 0.25]}
         intensity={1.9}
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[coarse ? 1024 : 2048, coarse ? 1024 : 2048]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.02}
         shadow-camera-left={-span * 0.6}
@@ -426,9 +578,10 @@ export default function Map3DScene(props: Map3DSceneProps) {
         shadow-camera-bottom={-span * 0.6}
         shadow-camera-far={span * 3}
       />
-      <Ground world={props.world} blocks={props.blocks} colors={props.colors} groundImage={props.groundImage} dims={props.dims} tex={tex.paper} />
-      <Blocks world={props.world} blocks={props.blocks} colors={props.colors} tex={tex} pieces={pieces} />
-      <Rig {...props} pieces={pieces} />
+      <Ground world={props.world} blocks={props.blocks} colors={props.colors} groundImage={props.groundImage} dims={props.dims} tex={tex.paper} fx={fx} />
+      <Blocks world={props.world} blocks={props.blocks} colors={props.colors} tex={tex} pieces={pieces} fx={fx} />
+      {props.path?.some((s) => s.scan) && <Scan world={props.world} blocks={props.blocks} colors={props.colors} fx={fx} />}
+      <Rig {...props} pieces={pieces} fx={fx} />
     </Canvas>
   );
 }

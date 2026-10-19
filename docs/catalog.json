@@ -648,7 +648,7 @@
         "terminal",
         "dotmatrix"
       ],
-      "description": "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos.",
+      "description": "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives.",
       "props": [
         {
           "key": "kind",
@@ -659,7 +659,8 @@
             "dots",
             "lines",
             "cross",
-            "diagonal"
+            "diagonal",
+            "grain"
           ]
         },
         {
@@ -10544,7 +10545,8 @@
         }
       ],
       "notes": [
-        "Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio."
+        "Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.",
+        "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."
       ],
       "example": "import ScrubText from \"@/components/ui/ScrubText\";\n\n<ScrubText\n  text=\"Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir.\"\n/>",
       "preview": "/componentes#scrub-text"
@@ -12268,6 +12270,14 @@
           "label": "Intro del plano a la maqueta"
         },
         {
+          "key": "explode",
+          "type": "number",
+          "default": 0,
+          "label": "Despiece: separación entre capas (px)",
+          "min": 0,
+          "max": 160
+        },
+        {
           "key": "listToggle",
           "type": "boolean",
           "default": true,
@@ -12283,7 +12293,9 @@
       "notes": [
         "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
         "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
-        "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado."
+        "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.",
+        "Cada parada de `path` puede separar las capas (`explode`, con `MapBlock.layer`), dejar una sólida y el resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). Con captions={false} y onStop la web pinta sus propios capítulos: ver la portada de /sitios/plano.",
+        "`MapBlock.z` levanta un volumen del tablero (vigas, conductos) y mat=\"wire\" lo dibuja solo en aristas."
       ],
       "example": "import ExplorableCanvas from \"@/components/ui/ExplorableCanvas\";\n\n<ExplorableCanvas />",
       "preview": "/componentes#explorable-canvas"
@@ -14707,7 +14719,7 @@
       "title": "Plano · revisión de modelos de edificación",
       "url": "/sitios/plano",
       "dir": "components/sites/plano",
-      "description": "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos y un único acento naranja. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable y el tema blueprintTokens.",
+      "description": "Web de producto técnico con la fórmula «plano» y un relato en 3D: la foto del edificio se disuelve en la planta con cotas, la planta se levanta en maqueta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos (en alambre y sobre fondo oscuro) y la cámara visita cada incidencia como una sala con su ficha editorial. Usa BlueprintFrame, PinnedSection, ExplorableCanvas (despiece, barrido, foco y fondo por parada), ScrubText, FitText, CellGrid, MetaTable, ImageReveal, EdgeTab y GridBackground (grano).",
       "pages": [
         {
           "path": "/sitios/plano",
@@ -14716,18 +14728,59 @@
         {
           "path": "/sitios/plano/producto",
           "title": "Producto"
+        },
+        {
+          "path": "/sitios/plano/incidencias/c1",
+          "title": "Incidencia: Colisión"
+        },
+        {
+          "path": "/sitios/plano/incidencias/c2",
+          "title": "Incidencia: Altura libre"
+        },
+        {
+          "path": "/sitios/plano/incidencias/c3",
+          "title": "Incidencia: Paso de puerta"
+        },
+        {
+          "path": "/sitios/plano/incidencias/c4",
+          "title": "Incidencia: Escalera"
         }
       ],
       "components": [
         {
           "component": "SplitText",
           "id": "split-text",
-          "uses": 4
+          "uses": 5
         },
         {
           "component": "CellGrid",
           "id": "cell-grid",
           "uses": 3
+        },
+        {
+          "component": "ScrubText",
+          "id": "scrub-text",
+          "uses": 2
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 2
+        },
+        {
+          "component": "ExplorableCanvas",
+          "id": "explorable-canvas",
+          "uses": 2
+        },
+        {
+          "component": "GridBackground",
+          "id": "grid-background",
+          "uses": 1
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
         },
         {
           "component": "RollLink",
@@ -14740,6 +14793,21 @@
           "uses": 1
         },
         {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
+          "component": "PinnedSection",
+          "id": "pinned-section",
+          "uses": 1
+        },
+        {
+          "component": "ImageReveal",
+          "id": "image-reveal",
+          "uses": 1
+        },
+        {
           "component": "BlueprintFrame",
           "id": "blueprint-frame",
           "uses": 1
@@ -14747,16 +14815,6 @@
         {
           "component": "EdgeTab",
           "id": "edge-tab",
-          "uses": 1
-        },
-        {
-          "component": "MetaTable",
-          "id": "meta-table",
-          "uses": 1
-        },
-        {
-          "component": "ExplorableCanvas",
-          "id": "explorable-canvas",
           "uses": 1
         }
       ]

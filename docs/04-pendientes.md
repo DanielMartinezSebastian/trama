@@ -221,7 +221,7 @@ atómico, y **no acumular cientos de componentes** que podrían beber unos de ot
 `ObjectStage`, `Logo3D`, `DeviceMockup3D` y `DistortImage` en `lib/ui/gl.tsx` (`GLBoundary`, `useGLGate`).
 El estudio se amplió con Cartier, Sleep Well Creatives y Atlas Motion, y de ahí sale el **plan de remodelación de Plano**
 ([`10-plan-plano.md`](./10-plan-plano.md)): relato por capítulos sobre un solo lienzo, maqueta por capas en despiece,
-barrido de revisión y ficha por incidencia. Pendiente de aplicar, por fases.
+barrido de revisión y ficha por incidencia. **Aplicado** el mismo día; quedan axe y el build.
 
 **Auditoría periódica:** cada vez que se cierre una ronda de webs, revisar `components/ui/` buscando pares que se puedan
 fundir, y anotar aquí lo que se funda. La biblioteca debería crecer en **opciones**, no en **nombres**.

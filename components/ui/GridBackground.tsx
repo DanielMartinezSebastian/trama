@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
 
 export type GridBackgroundProps = {
-  kind?: "dots" | "lines" | "cross" | "diagonal";
+  /** grain = grano de papel (ruido fijo, sin canvas), para poner encima de todo con `position="fixed"` */
+  kind?: "dots" | "lines" | "cross" | "diagonal" | "grain";
   /** tamaño de la celda en px */
   cellSize?: number;
   /** @deprecated usa `cellSize` */

@@ -25,7 +25,7 @@ export const scroll: CatalogEntry[] = [
     styles: EDITORIAL_STYLES,
     description: "Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálculo por fotograma, sin GSAP; el lector de pantalla lo lee entero.",
     stageHeight: 380,
-    notes: ["Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio."],
+    notes: ["Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.", "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."],
     props: [
       { key: "text", label: "Texto", type: "text", multiline: true, default: "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir." },
       { key: "dim", label: "Opacidad apagada", type: "number", default: 0.3, min: 0.05, max: 0.6, step: 0.01 },

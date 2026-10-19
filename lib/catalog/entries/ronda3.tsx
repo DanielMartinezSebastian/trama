@@ -25,6 +25,8 @@ const MARKERS = [
 
 // la maqueta del catálogo: un barrio de cartón con una plaza en cada punto (mundo de 2600 × 1700)
 const CITY = city({ seed: 3, plazas: MARKERS, aspect: 1700 / 2600, cell: 7, maxH: 150 });
+// el mismo barrio repartido en tres capas para enseñar el despiece (`explode`): árboles en la base, el resto alternando
+const CITY_LAYERS = CITY.map((b, i) => ({ ...b, layer: b.shape === "tree" ? 0 : (i % 3) + 1 }));
 
 const Rings = () => (
   <svg width="100%" height="100%" aria-hidden style={{ position: "absolute", inset: 0 }}>
@@ -50,6 +52,7 @@ export const ronda3: CatalogEntry[] = [
       { key: "depth", label: "Profundidad", type: "select", default: "3d", options: ["flat", "3d"], labels: { flat: "plano 2D", "3d": "maqueta 3D (three.js)" } },
       { key: "tilt", label: "Inclinación de la cámara (°)", type: "number", default: 52, min: 0, max: 70, step: 2, when: (p) => p.depth === "3d" },
       { key: "intro", label: "Intro del plano a la maqueta", type: "boolean", default: true, when: (p) => p.depth === "3d" },
+      { key: "explode", label: "Despiece: separación entre capas (px)", type: "number", default: 0, min: 0, max: 160, step: 10, when: (p) => p.depth === "3d" },
       { key: "listToggle", label: "Botón Mapa / Lista", type: "boolean", default: true },
       { key: "hint", label: "Pista de uso", type: "text", default: "Arrastra para explorar · pulsa un punto" },
     ],
@@ -57,8 +60,10 @@ export const ronda3: CatalogEntry[] = [
       "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
       "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
       "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.",
+      "Cada parada de `path` puede separar las capas (`explode`, con `MapBlock.layer`), dejar una sólida y el resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). Con captions={false} y onStop la web pinta sus propios capítulos: ver la portada de /sitios/plano.",
+      "`MapBlock.z` levanta un volumen del tablero (vigas, conductos) y mat=\"wire\" lo dibuja solo en aristas.",
     ],
-    render: (p) => <ExplorableCanvas key={`${p.depth}${p.intro}`} markers={MARKERS.map((m) => ({ ...m, href: "#" }))} background={p.depth === "3d" ? undefined : <Rings />} blocks={CITY} depth={p.depth as never} tilt={p.tilt as number} intro={p.intro as boolean} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />,
+    render: (p) => <ExplorableCanvas key={`${p.depth}${p.intro}`} markers={MARKERS.map((m) => ({ ...m, href: "#" }))} background={p.depth === "3d" ? undefined : <Rings />} blocks={CITY_LAYERS} depth={p.depth as never} tilt={p.tilt as number} intro={p.intro as boolean} explode={p.explode as number} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />,
   },
   {
     id: "sticker-collage",

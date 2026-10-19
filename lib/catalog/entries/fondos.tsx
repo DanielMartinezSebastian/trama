@@ -151,10 +151,10 @@ export const fondos: CatalogEntry[] = [
     name: "Fondo de rejilla (CSS)",
     category: "fondos",
     styles: ["minimal", "outline", "retro", "terminal", "dotmatrix"],
-    description: "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos.",
+    description: "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives.",
     stageHeight: 320,
     props: [
-      { key: "kind", label: "Tipo", type: "select", default: "dots", options: ["dots", "lines", "cross", "diagonal"] },
+      { key: "kind", label: "Tipo", type: "select", default: "dots", options: ["dots", "lines", "cross", "diagonal", "grain"] },
       { key: "cellSize", label: "Tamaño de celda", type: "number", default: 28, min: 12, max: 80, step: 2 },
       { key: "opacity", label: "Opacidad", type: "number", default: 0.6, min: 0.1, max: 1, step: 0.05 },
       { key: "fade", label: "Difuminar bordes", type: "boolean", default: true },

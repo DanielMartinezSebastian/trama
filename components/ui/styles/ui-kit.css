@@ -830,6 +830,10 @@ a.ui-button { text-decoration: none; }
 .ui-grid--lines .ui-grid__layer { background-image: linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px); background-size: var(--gs, 28px) var(--gs, 28px); }
 .ui-grid--cross .ui-grid__layer { background-image: linear-gradient(var(--acc) 1px, transparent 1px), linear-gradient(90deg, var(--acc) 1px, transparent 1px); background-size: var(--gs, 28px) var(--gs, 28px); mask-image: radial-gradient(circle at center, #000 0 1.5px, transparent 2px); mask-size: var(--gs, 28px) var(--gs, 28px); }
 .ui-grid--diagonal .ui-grid__layer { background-image: repeating-linear-gradient(45deg, var(--ln) 0 1px, transparent 1px var(--gs, 28px)); }
+/* grano: ruido de SVG multiplicado sobre lo que hay debajo; no tapa el puntero ni el fondo */
+.ui-grid--grain { background: none; pointer-events: none; mix-blend-mode: multiply; }
+.ui-grid--grain.ui-grid--fixed { z-index: 60; }
+.ui-grid--grain .ui-grid__layer { inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 160px 160px; }
 .ui-grid--drift .ui-grid__layer { animation: ui-drift 14s linear infinite; }
 @keyframes ui-drift { to { transform: translate(var(--gs, 28px), var(--gs, 28px)); } }
 .ui-grid--fade { mask-image: radial-gradient(ellipse at center, #000 30%, transparent 78%); -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 78%); }

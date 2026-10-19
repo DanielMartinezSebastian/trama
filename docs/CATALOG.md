@@ -65,11 +65,11 @@ Simulaciones por celda con textmode.js: plasma, lluvia, fuego, vida… El punter
 
 ### Fondo de rejilla (CSS) — `GridBackground`
 
-Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos.
+Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind="grain" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position="fixed", como Sleep Well Creatives.
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `dots` · `lines` · `cross` · `diagonal` | "dots" |
+| `kind` | `dots` · `lines` · `cross` · `diagonal` · `grain` | "dots" |
 | `cellSize` | number 12–80 | 28 |
 | `opacity` | number 0.1–1 | 0.6 |
 | `fade` | boolean | true |
@@ -302,6 +302,7 @@ Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálc
 | `to` | number 0–0.8 | 0.35 |
 
 - Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.
+- Dentro de un PinnedSection el párrafo no se mueve: usa scope=".ui-pin" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano).
 
 ### Texto que se dispersa con el scroll — `ScatterText`
 
@@ -1760,12 +1761,15 @@ Un mundo más grande que la ventana con puntos clicables (Overworld Audio): se a
 | `depth` | `flat` · `3d` | "3d" |
 | `tilt` | number 0–70 | 52 |
 | `intro` | boolean | true |
+| `explode` | number 0–160 | 0 |
 | `listToggle` | boolean | true |
 | `hint` | text | "Arrastra para explorar · pulsa un punto" |
 
 - depth="3d" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.
 - Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).
 - nav="scroll" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.
+- Cada parada de `path` puede separar las capas (`explode`, con `MapBlock.layer`), dejar una sólida y el resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). Con captions={false} y onStop la web pinta sus propios capítulos: ver la portada de /sitios/plano.
+- `MapBlock.z` levanta un volumen del tablero (vigas, conductos) y mat="wire" lo dibuja solo en aristas.
 
 ## Secciones (`secciones`)
 
@@ -2393,11 +2397,11 @@ Carpeta: `components/sites/barro/` · 11 páginas: Inicio · Tienda · Jarrón O
 
 ### Plano · revisión de modelos de edificación — `/sitios/plano`
 
-Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos y un único acento naranja. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable y el tema blueprintTokens.
+Web de producto técnico con la fórmula «plano» y un relato en 3D: la foto del edificio se disuelve en la planta con cotas, la planta se levanta en maqueta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos (en alambre y sobre fondo oscuro) y la cámara visita cada incidencia como una sala con su ficha editorial. Usa BlueprintFrame, PinnedSection, ExplorableCanvas (despiece, barrido, foco y fondo por parada), ScrubText, FitText, CellGrid, MetaTable, ImageReveal, EdgeTab y GridBackground (grano).
 
-Carpeta: `components/sites/plano/` · 2 páginas: Inicio · Producto
+Carpeta: `components/sites/plano/` · 6 páginas: Inicio · Producto · Incidencia: Colisión · Incidencia: Altura libre · Incidencia: Paso de puerta · Incidencia: Escalera
 
-`SplitText` ×4 · `CellGrid` ×3 · `RollLink` · `SmoothScroll` · `BlueprintFrame` · `EdgeTab` · `MetaTable` · `ExplorableCanvas`
+`SplitText` ×5 · `CellGrid` ×3 · `ScrubText` ×2 · `MetaTable` ×2 · `ExplorableCanvas` ×2 · `GridBackground` · `FitText` · `RollLink` · `SmoothScroll` · `Preloader` · `PinnedSection` · `ImageReveal` · `BlueprintFrame` · `EdgeTab`
 
 ### ArcoForo · una semana de diseño, arte y cultura digital — `/sitios/foro`
 

@@ -59,6 +59,14 @@ export type ExplorableCanvasProps = {
   nav?: "drag" | "scroll";
   /** con `nav="scroll"`: paradas de la cámara; la de cada momento enseña su `title` y `text` */
   path?: CameraStop[];
+  /** con `nav="scroll"`: false = no pinta el texto de la parada (la web pinta sus propios capítulos con `onStop` o `--stop`) */
+  captions?: boolean;
+  /** con `nav="scroll"`: avisa al cambiar de parada (índice de la más cercana) */
+  onStop?: (i: number) => void;
+  /** con 3D y arrastre: separación fija entre capas (`MapBlock.layer`), en px del mundo: la maqueta en despiece */
+  explode?: number;
+  /** texto del enlace de la ficha de un punto */
+  linkLabel?: string;
   className?: string;
 };
 
@@ -112,7 +120,10 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  *
  * Con `nav="scroll"` dentro de un `PinnedSection` no se arrastra: el scroll lleva la cámara por las paradas de `path` (de la
  * planta cenital a la maqueta y de un detalle a otro, como Oryzo, Primland o las salas de Cartier) y cada parada enseña su
- * texto. `dims` dibuja cotas sobre el tablero, como anotaciones de CAD.
+ * texto. `dims` dibuja cotas sobre el tablero, como anotaciones de CAD. Cada parada puede además separar la maqueta por capas
+ * (`explode`, el despiece de Atlas), dejar una capa sólida y el resto en alambre (`focusLayer`), barrerla con un plano de luz que
+ * descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). El componente publica `--stop` (parada
+ * con decimales) y `--tour-p` (0–1) para que la web anime sus propios capítulos (`captions={false}` + `onStop`).
  *
  * Se compone de piezas del kit: el arrastre es el de `DragGrid` (`lib/ui/dragPan.ts`), el cambio «Mapa / Lista» es un
  * `OptionPicker` y la carga del 3D es la de `ObjectStage` y `Logo3D` (`lib/ui/gl.tsx`).
@@ -120,7 +131,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete) aunque se use en 2D: se importa por subruta,
  * `trama-ui/ExplorableCanvas`.
  */
-export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", groundImage, dims, nav = "drag", path, className = "" }: ExplorableCanvasProps) {
+export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", className = "" }: ExplorableCanvasProps) {
   const box = useRef<HTMLDivElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
@@ -143,6 +154,10 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
     [paper, tokens],
   );
   const pts = useMemo(() => markers.map((m) => ({ id: m.id, x: m.x, y: m.y })), [markers]);
+  // three no entiende cualquier color CSS: los fondos de las paradas se normalizan aquí
+  const route = useMemo(() => path?.map((s) => (s.bg ? { ...s, bg: cssColor(s.bg, colors.bg) } : s)), [path, colors.bg]);
+  const stopCb = useRef(onStop);
+  stopCb.current = onStop;
 
   // el mundo nunca deja ver su borde: la vista se recorta a [ventana − mundo, 0]
   const limits = useCallback(() => {
@@ -154,10 +169,25 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
   useEffect(() => {
     const host = box.current?.closest(".ui-pin") ?? box.current;
     if (!tour || !host || !path) return;
+    let last = -1;
     return trackScroll(host, (r, vh) => {
       const p = host === box.current ? clamp01((vh - r.top) / (r.height + vh)) : clamp01(-r.top / (r.height - vh));
       progress.current = p;
-      setStop(Math.round(p * (path.length - 1)));
+      const f = p * (path.length - 1);
+      const i = Math.round(f);
+      const el = box.current;
+      if (el) {
+        el.style.setProperty("--stop", f.toFixed(3));
+        el.style.setProperty("--tour-p", p.toFixed(4));
+        // fondo de la vista (también la del plano 2D): mezcla de los de las dos paradas que rodean el momento
+        const a = path[Math.floor(f)]?.bg, b = path[Math.min(path.length - 1, Math.floor(f) + 1)]?.bg;
+        if (a || b) el.style.setProperty("--xc-bg", `color-mix(in srgb, ${b ?? "var(--bg)"} ${((f % 1) * 100).toFixed(1)}%, ${a ?? "var(--bg)"})`);
+      }
+      setStop(i);
+      if (i !== last) {
+        last = i;
+        stopCb.current?.(i);
+      }
     });
   }, [tour, path]);
 
@@ -216,7 +246,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
         {sel.meta && <small>{sel.meta}</small>}
         <b>{sel.title}</b>
         {sel.text && <p>{sel.text}</p>}
-        {sel.href && <a href={sel.href}>Ver proyecto →</a>}
+        {sel.href && <a href={sel.href}>{linkLabel}</a>}
       </div>
       <button type="button" className="ui-xcan__x" aria-label="Cerrar ficha" onClick={() => setOpen(null)}>×</button>
     </div>
@@ -252,7 +282,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
             <div className={`ui-xcan__gl ${three ? "is-on" : ""}`} aria-hidden>
               <GLBoundary onError={gl.fail}>
                 <Suspense fallback={null}>
-                  <Map3DScene world={world} blocks={blocks} markers={pts} pan={panPos} markerEls={markerEls} pointer={pointer} colors={colors} groundImage={groundImage} dims={dims} path={tour ? path : undefined} progress={tour ? progress : undefined} tilt={tilt} intro={intro} active={gl.near} onReady={() => setReady3d(true)} />
+                  <Map3DScene world={world} blocks={blocks} markers={pts} pan={panPos} markerEls={markerEls} pointer={pointer} colors={colors} groundImage={groundImage} dims={dims} path={tour ? route : undefined} progress={tour ? progress : undefined} tilt={tilt} explode={explode} intro={intro} active={gl.near} onReady={() => setReady3d(true)} />
                 </Suspense>
               </GLBoundary>
             </div>
@@ -278,7 +308,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
               </button>
             ))}
           </div>
-          {tour && path?.[stop] && (path[stop].title || path[stop].text) ? (
+          {tour && captions && path?.[stop] && (path[stop].title || path[stop].text) ? (
             <div className="ui-xcan__stop" aria-live="polite" key={stop}>
               <small>{String(stop + 1).padStart(2, "0")} / {String(path.length).padStart(2, "0")}</small>
               {path[stop].title && <b>{path[stop].title}</b>}

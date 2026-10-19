@@ -107,10 +107,10 @@ mide dos pantallas para poder fijarse.
 | Capítulos con número e índice fijo | Puntos a la derecha | «01» + «Insights ••••••» | «01»–«04» + puntos | `SectionIndex` |
 | Texto que se enciende al bajar | Ficha | — | Párrafos | `ScrubText` |
 | Alternar fondo claro y oscuro por capítulo | Sala / ficha | Crema / azul | Crema / negro | A mano en cada web |
-| Grano o textura sobre todo | Posprocesado | Ruido | Curvas de nivel | `GridBackground`; falta un grano |
+| Grano o textura sobre todo | Posprocesado | Ruido | Curvas de nivel | `GridBackground kind="grain"` |
 | Detalle en 2D encima del 3D | Ficha con URL | — | — | `Modal size="full"` |
 | Imagen de reserva del 3D | — | — | Por objeto | Plano 2D de `ExplorableCanvas` |
-| Despiece / capas que se separan | — | Anillo de tarjetas | Motor | Pendiente: capas en `ExplorableCanvas` |
+| Despiece / capas que se separan | — | Anillo de tarjetas | Motor | `MapBlock.layer` + `explode` / `focusLayer` por parada |
 
 ## Pendiente de esta ronda
 
@@ -120,5 +120,5 @@ mide dos pantallas para poder fijarse.
 - Cargar modelos GLB reales en la maqueta.
 - Revisar en móvil (390 px) el rendimiento de las sombras.
 - Un solo lienzo WebGL por página cuando hay varias escenas (lo hacen las tres webs de la ampliación).
-- Grano de página (Sleep Well) como opción de `GridBackground`.
-- Remodelación de Plano: [`10-plan-plano.md`](./10-plan-plano.md).
+- ~~Grano de página (Sleep Well)~~: `GridBackground kind="grain"`.
+- ~~Remodelación de Plano~~: hecha, ver [`10-plan-plano.md`](./10-plan-plano.md).
