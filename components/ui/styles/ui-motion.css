@@ -37,8 +37,24 @@ html.lenis, html.lenis body { height: auto; }
 .ui-split--rotate[data-armed]:not([data-in]) .ui-split__u { transform: translateY(110%) rotate(7deg); transform-origin: 0 100%; }
 .ui-split--blur[data-armed]:not([data-in]) .ui-split__u { filter: blur(0.35em); transform: translateY(0.2em); }
 .ui-split[data-in] .ui-split__u { opacity: 1; transform: none; filter: none; }
+/* emphasis: palabras destacadas en la fuente de acento (titular mixto palo seco + serifa) */
+.ui-split__em { font-family: var(--font-accent, inherit); color: var(--acc); font-weight: 400; letter-spacing: -0.01em; }
+/* block: barra de acento que crece desde la izquierda, se retira por la derecha y deja la palabra (Lando Norris).
+   El tramo de la derecha cubre el espacio entre palabras para que la barra de una línea se lea continua. */
+.ui-split--block .ui-split__w { position: relative; }
+.ui-split--block[data-armed] .ui-split__w::after { content: ""; position: absolute; inset: 0.1em -0.28em 0.06em 0; background: var(--split-block, var(--acc)); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
+.ui-split--block[data-armed] .ui-split__w:last-of-type::after { right: 0; }
+.ui-split--block[data-in] .ui-split__w::after { animation: ui-split-block var(--split-dur) var(--ease-io) both; animation-delay: calc(var(--i, 0) * var(--split-step) + var(--split-delay)); }
+.ui-split--block[data-armed] .ui-split__u { transition: opacity 0.01s linear; transition-delay: calc(var(--i, 0) * var(--split-step) + var(--split-delay) + var(--split-dur) * 0.5); }
+@keyframes ui-split-block {
+  0% { transform: scaleX(0); transform-origin: 0 50%; }
+  48% { transform: scaleX(1); transform-origin: 0 50%; }
+  52% { transform: scaleX(1); transform-origin: 100% 50%; }
+  100% { transform: scaleX(0); transform-origin: 100% 50%; }
+}
 @media (prefers-reduced-motion: reduce) {
   .ui-split[data-armed] .ui-split__u { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .ui-split--block .ui-split__w::after { display: none; }
 }
 
 /* ---------- RollLink ---------- */

@@ -65,11 +65,12 @@ Simulaciones por celda con textmode.js: plasma, lluvia, fuego, vida… El punter
 
 ### Fondo de rejilla (CSS) — `GridBackground`
 
-Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind="grain" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position="fixed", como Sleep Well Creatives.
+Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind="grain" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position="fixed", como Sleep Well Creatives. Con kind="contour" son curvas de nivel (mapa topográfico) en SVG calculadas en el servidor, como el fondo de Lando Norris.
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `dots` · `lines` · `cross` · `diagonal` · `grain` | "dots" |
+| `kind` | `dots` · `lines` · `cross` · `diagonal` · `grain` · `contour` | "dots" |
+| `seed` | number 1–99 | 7 |
 | `cellSize` | number 12–80 | 28 |
 | `opacity` | number 0.1–1 | 0.6 |
 | `fade` | boolean | true |
@@ -150,6 +151,21 @@ Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y
 - `npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).
 - `material="clay"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint="scene"`).
 - Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.
+
+### Fondo de color en WebGL (manchas, cinta, haces) — `GradientField`
+
+Fondo de color animado en WebGL sin dependencias: manchas que se mezclan (mesh), la cinta iridiscente de Stripe (ribbon) o los haces de luz en diagonal de Raycast (beams). Usa los colores del tema (--bg, --acc, --acc2) y cambia con él. Media resolución, pausado fuera de pantalla; sin WebGL queda un degradado CSS.
+
+| prop | tipo | default |
+|---|---|---|
+| `kind` | `mesh` · `ribbon` · `beams` | "mesh" |
+| `speed` | number 0–3 | 1 |
+| `intensity` | number 0.1–1.5 | 1 |
+| `grain` | boolean | true |
+
+- Rellena su contenedor (position: absolute; inset: 0) o la ventana con position="fixed".
+- Con movimiento reducido o speed=0 pinta un solo fotograma.
+- Pon el texto encima con contraste suficiente sobre la parte más clara del fondo; intensity baja el color.
 
 ## Texto (`texto`)
 
@@ -268,7 +284,8 @@ Titular o párrafo que entra por líneas, palabras o letras, con máscara de rec
 |---|---|---|
 | `text` | text | "Diseñamos webs que se sienten como una conversación y no como un folleto." |
 | `by` | `lines` · `words` · `chars` | "lines" |
-| `effect` | `rise` · `rotate` · `blur` · `fade` · `none` | "rise" |
+| `effect` | `rise` · `rotate` · `blur` · `fade` · `block` · `none` | "rise" |
+| `emphasis` | boolean | false |
 | `mask` | boolean | true |
 | `trigger` | `mount` · `inview` | "mount" |
 | `stagger` | number 0.01–0.4 | 0.1 |
@@ -280,6 +297,7 @@ Titular o párrafo que entra por líneas, palabras o letras, con máscara de rec
 - by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.
 - El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.
 - Solo admite un string (no trocea texto controlado por React, guía §10).
+- effect="block": una barra del color de acento tapa cada palabra y se retira descubriéndola (Lando Norris); con by=lines o words. emphasis pone las palabras entre *asteriscos* en la fuente de acento (titular mixto palo seco + serifa). Ver /sitios/volt.
 
 ### Texto a todo el ancho — `FitText`
 
@@ -680,6 +698,20 @@ Pegatinas vectoriales que flotan sobre un titular y se pueden arrastrar, apilar 
 |---|---|---|
 | `float` | boolean | true |
 
+### Estela de imágenes bajo el cursor — `ImageTrail`
+
+Al mover el puntero por la zona van apareciendo fotos donde está, que crecen y se desvanecen: uno de los efectos más repetidos en portfolios premiados. Decorativa (las imágenes van aria-hidden); lo que cuenta va en el contenido, por encima.
+
+| prop | tipo | default |
+|---|---|---|
+| `imageWidth` | number 100–400 | 220 |
+| `threshold` | number 20–240 | 80 |
+| `lifetime` | number 0.3–3 | 0.9 |
+| `rotate` | number 0–30 | 8 |
+
+- Solo con puntero fino y sin movimiento reducido; en táctil queda el contenido.
+- Recicla 10 <img>: no crea nodos al mover el ratón.
+
 ## Transiciones (`transiciones`)
 
 Cambios de escena y de sección.
@@ -823,6 +855,34 @@ Envuelve contenido (`children`), p. ej.: `<img src="…" alt="" />`
 | prop | tipo | default |
 |---|---|---|
 | `speed` | number -0.5–0.5 | 0.15 |
+
+### Trazo que se dibuja (firma, subrayado, círculo) — `LineDraw`
+
+Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el scroll: firma, subrayado, círculo o flecha a mano alzada, o cualquier trazado propio (`d` + `viewBox`). La firma sobre la foto de Lando Norris. Decorativo (aria-hidden): el texto va aparte.
+
+| prop | tipo | default |
+|---|---|---|
+| `shape` | `signature` · `underline` · `circle` · `arrow` | "signature" |
+| `trigger` | `inview` · `mount` · `scroll` | "inview" |
+| `duration` | number 0.3–5 | 1.6 |
+| `strokeWidth` | number 1–12 | 3 |
+| `tone` | `acc` · `acc2` · `fg` · `mut` | "acc" |
+
+- Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.
+- trigger="scroll" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.
+- Sin JS o con movimiento reducido el trazo se ve completo.
+
+### Tema que cambia por sección — `ThemeScroll`
+
+Contenedor cuyo tema cambia según la sección que cruza el centro de la ventana (oliva → hueso → negro en Lando Norris). Cada sección elige su tema con data-theme; cambian los tokens, así que todo lo de dentro (también una cabecera fija) cambia con ellos, y el fondo se funde.
+
+| prop | tipo | default |
+|---|---|---|
+| `duration` | number 0–2 | 0.7 |
+
+- Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.
+- Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.
+- Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens.
 
 ## Datos (`datos`)
 
@@ -2006,6 +2066,20 @@ Hero a sangre con fotografías que se funden, titular centrado y botón-píldora
 | `shade` | number 0–0.9 | 0.38 |
 | `drift` | boolean | true |
 
+### Explorador de ventajas con imagen — `FeatureExplorer`
+
+Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre en una tarjeta con su texto y cambia la imagen de al lado con un fundido. Una abierta cada vez; cada píldora es un botón con aria-expanded.
+
+| prop | tipo | default |
+|---|---|---|
+| `items` | text | "Tabla blanda\|Espuma de 8 pies para las primeras olas: flota de sobra y no hace daño s…" |
+| `defaultIndex` | number 0–5 | 0 |
+| `mediaSide` | `right` · `left` | "right" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "editorial" |
+
+- Una ventaja por línea: «Título|Texto|imagen|texto alternativo» (imagen: URL, ruta o gen:N).
+- En móvil la imagen va encima de la lista.
+
 ## Contenido (`contenido`)
 
 Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.
@@ -2469,3 +2543,27 @@ Web corporativa de un grupo industrial con la fórmula «Corporativo claro»: ba
 Carpeta: `components/sites/vertice/` · 11 páginas: Inicio · Sectores · Movilidad · Energía · Agua · Soluciones · Sostenibilidad · Inversores · Sala de prensa · Empleo · Contacto
 
 `Breadcrumbs` ×8 · `FilterBar` ×3 · `DataTable` ×2 · `NavBar` · `ContactForm` · `Footer` · `LogoCloud` · `KpiCard` · `CookieBanner`
+
+### Nora Vidal · ciclista profesional — `/sitios/volt`
+
+Web personal de una ciclista con la fórmula «Atleta en voltaje» (Lando Norris, sitio del año 2025): oliva y amarillo ácido, curvas de nivel de fondo, titular con palabras en serifa que entran tapadas por barras de color, firma que se dibuja sobre la foto, collage con lugar y fecha, estela de fotos bajo el cursor, el tema de la página cambia por sección (oliva → hueso → negro) y fichas de palmarés con la esquina recortada. Usa GridBackground (contour), SplitText (block, emphasis), LineDraw, ThemeScroll, ImageTrail, Marquee, Parallax, MetaTable y BigFooter.
+
+Carpeta: `components/sites/volt/` · 1 páginas: Inicio
+
+`SplitText` ×3 · `LineDraw` ×3 · `Marquee` ×2 · `Button` ×2 · `GridBackground` · `FitText` · `Parallax` · `BigFooter` · `MetaTable` · `ThemeScroll` · `ImageTrail`
+
+### Faro · soporte para equipos y agentes — `/sitios/faro`
+
+Landing de producto con la fórmula «Producto nocturno» (Linear, Raycast): negro casi puro, titular en Inter 510 con tracking negativo, haces de luz en WebGL detrás, la propia aplicación como imagen principal con un foco desde arriba y fundido al suelo, logos de clientes, párrafo en dos tonos, secciones título-texto, explorador de funciones con capturas, atajos con teclas, ⌘K que busca en la página, precios y un cierre con manchas de color. Usa GradientField (beams, mesh), AppShell, FeatureExplorer, Kbd, CommandPalette, LogoCloud, PricingSection, Badge y Footer.
+
+Carpeta: `components/sites/faro/` · 1 páginas: Inicio
+
+`Button` ×3 · `Kbd` ×3 · `GradientField` ×2 · `NavBar` · `Badge` · `PricingSection` · `Footer` · `LogoCloud` · `AppShell` · `FeatureExplorer`
+
+### Hamaca · radio de verano — `/sitios/hamaca`
+
+Radio de verano con la fórmula «Escritorio Y2K» (Poolsuite): papel cuadriculado rosa, barra de menú con la hora, ventanas de sistema antiguo que se arrastran, se apilan y se cierran, reproductor de música sintetizada como ventana principal, foto en semitono y un dock de iconos pixel que abre la agenda, las postales y el club. Con teclado: cada ventana es un diálogo no modal con su botón de cerrar. Usa AudioPlayer (retro), GridBackground, Icon (pixel), LocalTime, TextField y Button.
+
+Carpeta: `components/sites/hamaca/` · 1 páginas: Inicio
+
+`Icon` ×2 · `GridBackground` · `Button` · `TextField` · `AudioPlayer` · `LocalTime`

@@ -7,7 +7,7 @@ import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export const SPLIT_BY = ["lines", "words", "chars"] as const;
 export type SplitBy = (typeof SPLIT_BY)[number];
-export const SPLIT_EFFECTS = ["rise", "rotate", "blur", "fade", "none"] as const;
+export const SPLIT_EFFECTS = ["rise", "rotate", "blur", "fade", "block", "none"] as const;
 export type SplitEffect = (typeof SPLIT_EFFECTS)[number];
 
 export type SplitTextProps = {
@@ -15,7 +15,10 @@ export type SplitTextProps = {
   children: string;
   /** unidad que se escalona: líneas (las que resulten del ancho), palabras o letras */
   by?: SplitBy;
+  /** `block`: una barra del color de acento tapa cada palabra y se retira descubriéndola (Lando Norris); con `lines` o `words` */
   effect?: SplitEffect;
+  /** palabras entre asteriscos (`*así*`, también varias: `*on and off*`) van en la fuente de acento (`--font-accent`) y en `--acc` */
+  emphasis?: boolean;
   /** recorta cada palabra para que el texto «salga» de una línea invisible (solo con rise y rotate) */
   mask?: boolean;
   /** `mount`: al montar · `inview`: al entrar en pantalla. En ambos casos espera al `Preloader`, si lo hay */
@@ -56,6 +59,7 @@ export default function SplitText({
   children: text,
   by = "words",
   effect = "rise",
+  emphasis = false,
   mask = true,
   trigger = "inview",
   stagger,
@@ -72,7 +76,22 @@ export default function SplitText({
   style,
 }: SplitTextProps) {
   const ref = useRef<HTMLElement>(null);
-  const words = text.split(/\s+/).filter(Boolean);
+  // con emphasis, los asteriscos marcan tramos destacados; el lector de pantalla recibe el texto sin ellos
+  const raw = text.split(/\s+/).filter(Boolean);
+  const marked: boolean[] = [];
+  const words = emphasis
+    ? (() => {
+        let on = false;
+        return raw.map((w) => {
+          const opens = w.startsWith("*");
+          if (opens) on = true;
+          marked.push(on);
+          if (/\*[.,;:!?»”)]*$/.test(w) && (w.length > 1 || !opens)) on = false;
+          return w.replace(/\*/g, "");
+        });
+      })()
+    : raw;
+  const plain = emphasis ? words.join(" ") : text;
   const step = stagger ?? STEP[by];
   const masked = mask && !elastic && (effect === "rise" || effect === "rotate");
   const armed = effect !== "none";
@@ -165,7 +184,7 @@ export default function SplitText({
         : null;
     return (
       <Fragment key={i}>
-        <span className="ui-split__w" aria-hidden style={{ "--i": by === "words" ? i : 0 } as CSSProperties}>
+        <span className={`ui-split__w${marked[i] ? " ui-split__em" : ""}`} aria-hidden style={{ "--i": by === "words" ? i : 0 } as CSSProperties}>
           {inner ?? <span className="ui-split__u">{letters(w)}</span>}
         </span>
         {i < words.length - 1 ? " " : null}
@@ -181,7 +200,7 @@ export default function SplitText({
       className: `ui-split ui-split--${effect} ${masked ? "ui-split--mask" : ""} ${className}`.trim(),
       style: { ...style, "--split-step": `${step}s`, "--split-delay": `${delay}s`, "--split-dur": `${duration}s` } as CSSProperties,
     },
-    <span className="ui-sr">{text}</span>,
+    <span className="ui-sr">{plain}</span>,
     ...units,
   );
 }

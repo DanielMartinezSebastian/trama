@@ -1,0 +1,105 @@
+/* Volt (Nora Vidal) · fórmula «Atleta en voltaje» (docs/13). Colores solo por tokens: ThemeScroll los cambia por sección. */
+:where(.vt) a { color: inherit; }
+.vt-main { position: relative; min-height: 100svh; font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif; overflow-x: clip; }
+.vt-contour { background: transparent; }
+.vt-body { position: relative; z-index: 1; }
+
+/* cabecera: marca en dos tipografías, monograma centrado, tienda en el acento */
+.vt-head { position: fixed; inset: 0 0 auto; z-index: 20; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px clamp(16px, 3vw, 32px); pointer-events: none; }
+.vt-head > * { pointer-events: auto; }
+.vt-brand { display: grid; line-height: 0.86; text-decoration: none; font-size: 22px; text-transform: uppercase; }
+.vt-brand i { font-family: var(--font-accent); font-style: normal; font-weight: 400; letter-spacing: -0.02em; }
+.vt-brand b { font-weight: 800; letter-spacing: -0.03em; }
+.vt-mono { font-weight: 800; font-size: 22px; color: var(--acc); letter-spacing: -0.06em; font-style: italic; }
+.vt-head__nav { display: flex; gap: 22px; justify-content: flex-end; align-items: center; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.vt-head__nav > a { text-decoration: none; }
+.vt-head__nav > a:hover { color: var(--acc); }
+.vt .ui-btn { color: #111210; } /* texto oscuro sobre el amarillo en los tres temas */
+@media (max-width: 640px) { .vt-head__nav > a { display: none; } .vt-mono { display: none; } .vt-head { grid-template-columns: 1fr auto; } }
+
+.vt-kicker, .vt-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mut); margin: 0; }
+.vt-label { text-align: center; }
+.vt-h2 { margin: 0; font-size: clamp(48px, 9vw, 140px); line-height: 0.86; font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; }
+
+/* hero: foto centrada con la firma encima, nombre de borde a borde abajo */
+.vt-hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; padding: 96px clamp(16px, 3vw, 32px) 24px; }
+.vt-hero .vt-kicker { text-align: center; }
+.vt-hero__photo { position: relative; margin: 24px auto 0; width: min(440px, 72vw, 46svh); align-self: center; }
+.vt-hero__photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 60% 40%; border-radius: var(--r); filter: saturate(0.8) contrast(1.05); }
+.vt-hero__sign { position: absolute; left: -12%; right: -12%; bottom: 8%; width: 124%; }
+.vt-hero__name { margin: -0.32em 0 0; position: relative; z-index: 2; font-size: 1em; text-transform: uppercase; }
+.vt-hero__name i { font-family: var(--font-accent); font-style: normal; font-weight: 400; color: var(--acc); letter-spacing: -0.03em; }
+.vt-hero__name b { font-weight: 800; letter-spacing: -0.05em; }
+.vt-race { position: absolute; left: clamp(16px, 3vw, 32px); bottom: 28%; width: 230px; z-index: 3; }
+.vt-race p { margin: 0; font-size: 12px; color: var(--mut); }
+.vt-race .vt-race__t { color: var(--fg); font-weight: 800; font-size: 15px; text-transform: uppercase; }
+.vt-race .vt-race__meta { margin-top: 8px; color: var(--acc); font-weight: 700; }
+@media (max-width: 760px) { .vt-race { position: relative; left: auto; bottom: auto; margin-top: 20px; width: 100%; } }
+
+/* ficha recortada: borde con dos capas recortadas igual, etiqueta en el hueco de la esquina */
+.vt-notch { --nw: 58%; --nh: 34px; position: relative; padding-bottom: 0; }
+.vt-notch__card { --cut: polygon(0 0, 100% 0, 100% calc(100% - var(--nh)), calc(100% - var(--nw)) calc(100% - var(--nh)), calc(100% - var(--nw) - var(--nh)) 100%, 0 100%); clip-path: var(--cut); background: var(--ln); padding: 1px; }
+.vt-notch__in { clip-path: var(--cut); background: var(--bg); padding: 14px 14px calc(var(--nh) + 12px); min-height: 100%; position: relative; }
+.vt-notch__label { position: absolute; right: 0; bottom: 0; width: calc(var(--nw) - 6px); height: var(--nh); margin: 0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; font-size: 13px; color: var(--fg); }
+.vt-notch__label b { font-weight: 700; }
+.vt-notch__label span { color: var(--acc); font-weight: 700; }
+
+/* mensaje: dos cintas en sentidos opuestos (serifa y palo seco) que pasan por detrás de la foto firmada */
+.vt-msg { padding: 120px 0 80px; }
+.vt-msg__stage { position: relative; display: grid; place-items: center; margin-top: 140px; margin-bottom: 80px; }
+.vt-msg .vt-msg__m { position: relative; width: 100%; text-transform: uppercase; font-weight: 800; letter-spacing: -0.03em; }
+.vt-msg .vt-msg__m, .vt-msg .vt-msg__m .ui-marquee__row { line-height: 1.05; }
+.vt-msg .vt-msg__m--serif { font-family: var(--font-accent); font-weight: 400; }
+.vt-msg__photo { position: absolute; inset: 50% auto auto 50%; translate: -50% -50%; width: min(520px, 70vw); margin: 0; z-index: 2; }
+.vt-msg__photo img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: grayscale(1) contrast(1.1); mix-blend-mode: luminosity; opacity: 0.85; border-radius: 2px; }
+.vt-msg__sign { position: absolute; inset: -10% -20%; width: 140%; height: 120%; }
+
+/* manifiesto: titular grande con barras de acento */
+.vt-manifesto { padding: 80px clamp(16px, 6vw, 96px) 160px; }
+.vt-manifesto__t { margin: 0 auto; max-width: 16ch; text-align: center; font-size: clamp(40px, 7vw, 108px); line-height: 0.95; font-weight: 800; text-transform: uppercase; letter-spacing: -0.035em; }
+.vt-manifesto__t .ui-split__em, .vt-onoff__t .ui-split__em, .vt-collage__quote .ui-split__em { text-transform: uppercase; letter-spacing: -0.02em; }
+
+/* collage: fotos repartidas con lugar y fecha, cada una a su ritmo */
+.vt-collage { padding: 120px clamp(16px, 3vw, 32px) 80px; }
+.vt-collage__grid { position: relative; list-style: none; margin: 40px 0 0; padding: 0; height: 1120px; }
+.vt-collage__grid > li { position: absolute; left: var(--x); top: var(--y); width: var(--w); }
+.vt-collage figure { margin: 0; }
+.vt-collage figcaption { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mut); margin-bottom: 6px; }
+.vt-collage img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.vt-collage__grid > li:nth-child(2) img { aspect-ratio: 4 / 3; }
+.vt-collage__quote { left: 36% !important; top: 0 !important; width: 30% !important; }
+.vt-collage__quote p { margin: 0; font-family: var(--font-accent); font-size: clamp(20px, 2.2vw, 30px); line-height: 1.15; }
+.vt-collage__sign { width: 90px; margin-top: 10px; }
+@media (max-width: 760px) {
+  .vt-collage__grid { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .vt-collage__grid > li, .vt-collage__quote { position: static; width: auto !important; }
+  .vt-collage__quote { grid-column: 1 / -1; order: -1; }
+}
+
+/* estela de fotos */
+.vt-onoff .ui-trail { min-height: 90svh; display: grid; place-items: center; }
+.vt-onoff__in { text-align: center; padding: 80px 16px; }
+.vt-onoff__t { margin: 0; font-size: clamp(48px, 9vw, 150px); line-height: 0.9; font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; }
+.vt-onoff__hint { margin: 18px 0 0; color: var(--mut); font-size: 14px; }
+
+/* palmarés: fichas recortadas en una rejilla escalonada */
+.vt-wins { padding: 140px clamp(16px, 3vw, 32px) 80px; }
+.vt-wins__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px; align-items: end; }
+.vt-season { width: 100%; }
+.vt-wins__grid { list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.vt-wins__grid > li { margin-top: var(--o); min-width: 0; }
+.vt-wins__grid .vt-notch__in { padding: 0 0 var(--nh); background: color-mix(in srgb, var(--fg) 4%, var(--bg)); }
+.vt-wins__grid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; filter: saturate(0.9); }
+.vt-wins__note { position: absolute; left: 12px; bottom: 9px; font-size: 11px; color: var(--mut); }
+@media (max-width: 900px) { .vt-wins__head { grid-template-columns: minmax(0, 1fr); } .vt-wins__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* calendario y tienda */
+.vt-cal { padding: 80px clamp(16px, 3vw, 32px) 120px; }
+.vt-cal__list { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid var(--ln); }
+.vt-cal__list li { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--ln); align-items: baseline; }
+.vt-cal__d { color: var(--acc); font-weight: 700; text-transform: uppercase; font-size: 14px; }
+.vt-cal__r { font-size: clamp(20px, 3vw, 36px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; }
+.vt-cal__p { color: var(--mut); font-size: 13px; }
+.vt-shop { margin-top: 64px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+.vt-shop p { margin: 0; max-width: 40ch; color: var(--mut); }
+@media (max-width: 560px) { .vt-cal__list li { grid-template-columns: 70px minmax(0, 1fr); } .vt-cal__p { grid-column: 2; } }

@@ -151,10 +151,11 @@ export const fondos: CatalogEntry[] = [
     name: "Fondo de rejilla (CSS)",
     category: "fondos",
     styles: ["minimal", "outline", "retro", "terminal", "dotmatrix"],
-    description: "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives.",
+    description: "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives. Con kind=\"contour\" son curvas de nivel (mapa topográfico) en SVG calculadas en el servidor, como el fondo de Lando Norris.",
     stageHeight: 320,
     props: [
-      { key: "kind", label: "Tipo", type: "select", default: "dots", options: ["dots", "lines", "cross", "diagonal", "grain"] },
+      { key: "kind", label: "Tipo", type: "select", default: "dots", options: ["dots", "lines", "cross", "diagonal", "grain", "contour"] },
+      { key: "seed", label: "Semilla (dibujo)", type: "number", default: 7, min: 1, max: 99, step: 1, when: (p) => p.kind === "contour" },
       { key: "cellSize", label: "Tamaño de celda", type: "number", default: 28, min: 12, max: 80, step: 2 },
       { key: "opacity", label: "Opacidad", type: "number", default: 0.6, min: 0.1, max: 1, step: 0.05 },
       { key: "fade", label: "Difuminar bordes", type: "boolean", default: true },
@@ -162,7 +163,7 @@ export const fondos: CatalogEntry[] = [
     ],
     render: (p) => (
       <>
-        <GridBackground kind={p.kind as never} cellSize={p.cellSize as number} opacity={p.opacity as number} fade={p.fade as boolean} drift={p.drift as boolean} />
+        <GridBackground kind={p.kind as never} seed={p.seed as number} cellSize={p.cellSize as number} opacity={p.opacity as number} fade={p.fade as boolean} drift={p.drift as boolean} />
         <Sample>Sin canvas, sin JS</Sample>
       </>
     ),

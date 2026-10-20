@@ -53,7 +53,7 @@ const barrel = [
   `export * from "./components/ui/intent";`,
   `export * from "./components/ui/fill";`,
   `export * from "./components/ui/variants";`,
-  `export { tokensToStyle, neutralTokens, dotmatrixTokens, editorialTokens, editorialDarkTokens, blueprintTokens, forestTokens, TOKEN_THEMES, FONT_PRESETS, FONT_PAIRINGS, type TokenSet, type KitTheme } from "./lib/ui/tokens";`,
+  `export { tokensToStyle, neutralTokens, dotmatrixTokens, editorialTokens, editorialDarkTokens, blueprintTokens, forestTokens, voltTokens, nightTokens, poolTokens, TOKEN_THEMES, FONT_PRESETS, FONT_PAIRINGS, type TokenSet, type KitTheme } from "./lib/ui/tokens";`,
   `export { splitList, splitEscaped } from "./lib/ui/list";`,
   `export { useCart, type CartLine } from "./lib/commerce/cart";`,
   `export { money, discount } from "./lib/commerce/money";`,

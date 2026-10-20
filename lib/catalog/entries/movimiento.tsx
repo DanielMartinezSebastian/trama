@@ -56,11 +56,13 @@ export const movimiento: CatalogEntry[] = [
       "by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.",
       "El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.",
       "Solo admite un string (no trocea texto controlado por React, guía §10).",
+      "effect=\"block\": una barra del color de acento tapa cada palabra y se retira descubriéndola (Lando Norris); con by=lines o words. emphasis pone las palabras entre *asteriscos* en la fuente de acento (titular mixto palo seco + serifa). Ver /sitios/volt.",
     ],
     props: [
       { key: "text", label: "Texto", type: "text", multiline: true, default: "Diseñamos webs que se sienten como una conversación y no como un folleto." },
       { key: "by", label: "Unidad", type: "select", default: "lines", options: SPLIT_BY, labels: { lines: "líneas", words: "palabras", chars: "letras" } },
       { key: "effect", label: "Efecto", type: "select", default: "rise", options: SPLIT_EFFECTS },
+      { key: "emphasis", label: "Palabras *destacadas*", type: "boolean", default: false, hint: "entre asteriscos, en la fuente de acento y el color --acc" },
       { key: "mask", label: "Máscara de recorte", type: "boolean", default: true },
       { key: "trigger", label: "Disparador", type: "select", default: "mount", options: ["mount", "inview"] },
       { key: "stagger", label: "Escalonado (s)", type: "number", default: 0.1, min: 0.01, max: 0.4, step: 0.01 },
@@ -71,7 +73,7 @@ export const movimiento: CatalogEntry[] = [
     ],
     render: (p, { replay }) => (
       <div style={{ padding: 24, fontSize: "clamp(24px, 4vw, 44px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.03em", maxWidth: 760 }}>
-        <SplitText by={p.by as never} effect={p.effect as never} mask={p.mask as boolean} trigger={p.trigger as never} stagger={p.stagger as number} duration={p.duration as number} delay={p.delay as number} elastic={p.elastic === "off" ? undefined : (p.elastic as never)} stretch={p.stretch as number} playKey={replay}>
+        <SplitText by={p.by as never} effect={p.effect as never} emphasis={p.emphasis as boolean} mask={p.mask as boolean} trigger={p.trigger as never} stagger={p.stagger as number} duration={p.duration as number} delay={p.delay as number} elastic={p.elastic === "off" ? undefined : (p.elastic as never)} stretch={p.stretch as number} playKey={replay}>
           {(p.text as string) || " "}
         </SplitText>
       </div>

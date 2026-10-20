@@ -33,7 +33,8 @@
         "grid-background",
         "crt-overlay",
         "retro-canvas",
-        "retro-model"
+        "retro-model",
+        "gradient-field"
       ]
     },
     {
@@ -86,7 +87,8 @@
         "custom-cursor",
         "smooth-scroll",
         "circle-button",
-        "sticker-collage"
+        "sticker-collage",
+        "image-trail"
       ]
     },
     {
@@ -101,7 +103,9 @@
         "presence",
         "preloader",
         "pinned-section",
-        "parallax"
+        "parallax",
+        "line-draw",
+        "theme-scroll"
       ]
     },
     {
@@ -218,7 +222,8 @@
         "articles-section",
         "project-list",
         "big-footer",
-        "crossfade-hero"
+        "crossfade-hero",
+        "feature-explorer"
       ]
     },
     {
@@ -648,7 +653,7 @@
         "terminal",
         "dotmatrix"
       ],
-      "description": "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives.",
+      "description": "Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para fondos discretos. Con kind=\"grain\" es grano de papel (ruido SVG fijo, multiplicado) para poner sobre toda la página con position=\"fixed\", como Sleep Well Creatives. Con kind=\"contour\" son curvas de nivel (mapa topográfico) en SVG calculadas en el servidor, como el fondo de Lando Norris.",
       "props": [
         {
           "key": "kind",
@@ -660,8 +665,17 @@
             "lines",
             "cross",
             "diagonal",
-            "grain"
+            "grain",
+            "contour"
           ]
+        },
+        {
+          "key": "seed",
+          "type": "number",
+          "default": 7,
+          "label": "Semilla (dibujo)",
+          "min": 1,
+          "max": 99
         },
         {
           "key": "cellSize",
@@ -10121,8 +10135,16 @@
             "rotate",
             "blur",
             "fade",
+            "block",
             "none"
           ]
+        },
+        {
+          "key": "emphasis",
+          "type": "boolean",
+          "default": false,
+          "label": "Palabras *destacadas*",
+          "hint": "entre asteriscos, en la fuente de acento y el color --acc"
         },
         {
           "key": "mask",
@@ -10188,7 +10210,8 @@
       "notes": [
         "by=lines mide cada palabra tras cargar las fuentes y al cambiar el ancho: la entrada es por línea real, no por saltos de línea escritos a mano.",
         "El lector de pantalla lee una copia del texto íntegro; las unidades visuales van aria-hidden.",
-        "Solo admite un string (no trocea texto controlado por React, guía §10)."
+        "Solo admite un string (no trocea texto controlado por React, guía §10).",
+        "effect=\"block\": una barra del color de acento tapa cada palabra y se retira descubriéndola (Lando Norris); con by=lines o words. emphasis pone las palabras entre *asteriscos* en la fuente de acento (titular mixto palo seco + serifa). Ver /sitios/volt."
       ],
       "example": "import SplitText from \"@/components/ui/SplitText\";\n\n<SplitText\n  text=\"Diseñamos webs que se sienten como una conversación y no como un folleto.\"\n/>",
       "preview": "/componentes#split-text"
@@ -12483,6 +12506,286 @@
       ],
       "example": "import CookieBanner from \"@/components/ui/CookieBanner\";\n\n<CookieBanner\n  title=\"¿Qué te parecen las cookies?\"\n/>",
       "preview": "/componentes#cookie-banner"
+    },
+    {
+      "id": "line-draw",
+      "name": "Trazo que se dibuja (firma, subrayado, círculo)",
+      "component": "LineDraw",
+      "import": "import LineDraw from \"@/components/ui/LineDraw\";",
+      "category": "transiciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "glass"
+      ],
+      "description": "Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el scroll: firma, subrayado, círculo o flecha a mano alzada, o cualquier trazado propio (`d` + `viewBox`). La firma sobre la foto de Lando Norris. Decorativo (aria-hidden): el texto va aparte.",
+      "props": [
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "signature",
+          "label": "Trazo",
+          "options": [
+            "signature",
+            "underline",
+            "circle",
+            "arrow"
+          ]
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "inview",
+          "label": "Disparador",
+          "options": [
+            "inview",
+            "mount",
+            "scroll"
+          ]
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 1.6,
+          "label": "Duración (s)",
+          "min": 0.3,
+          "max": 5
+        },
+        {
+          "key": "strokeWidth",
+          "type": "number",
+          "default": 3,
+          "label": "Grosor (px)",
+          "min": 1,
+          "max": 12
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "acc",
+          "label": "Color",
+          "options": [
+            "acc",
+            "acc2",
+            "fg",
+            "mut"
+          ]
+        }
+      ],
+      "notes": [
+        "Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.",
+        "trigger=\"scroll\" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.",
+        "Sin JS o con movimiento reducido el trazo se ve completo."
+      ],
+      "example": "import LineDraw from \"@/components/ui/LineDraw\";\n\n<LineDraw />",
+      "preview": "/componentes#line-draw"
+    },
+    {
+      "id": "gradient-field",
+      "name": "Fondo de color en WebGL (manchas, cinta, haces)",
+      "component": "GradientField",
+      "import": "import GradientField from \"@/components/ui/GradientField\";",
+      "category": "fondos",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "glass"
+      ],
+      "description": "Fondo de color animado en WebGL sin dependencias: manchas que se mezclan (mesh), la cinta iridiscente de Stripe (ribbon) o los haces de luz en diagonal de Raycast (beams). Usa los colores del tema (--bg, --acc, --acc2) y cambia con él. Media resolución, pausado fuera de pantalla; sin WebGL queda un degradado CSS.",
+      "props": [
+        {
+          "key": "kind",
+          "type": "select",
+          "default": "mesh",
+          "label": "Escena",
+          "options": [
+            "mesh",
+            "ribbon",
+            "beams"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad",
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "intensity",
+          "type": "number",
+          "default": 1,
+          "label": "Intensidad",
+          "min": 0.1,
+          "max": 1.5
+        },
+        {
+          "key": "grain",
+          "type": "boolean",
+          "default": true,
+          "label": "Grano"
+        }
+      ],
+      "notes": [
+        "Rellena su contenedor (position: absolute; inset: 0) o la ventana con position=\"fixed\".",
+        "Con movimiento reducido o speed=0 pinta un solo fotograma.",
+        "Pon el texto encima con contraste suficiente sobre la parte más clara del fondo; intensity baja el color."
+      ],
+      "example": "import GradientField from \"@/components/ui/GradientField\";\n\n<GradientField />",
+      "preview": "/componentes#gradient-field"
+    },
+    {
+      "id": "theme-scroll",
+      "name": "Tema que cambia por sección",
+      "component": "ThemeScroll",
+      "import": "import ThemeScroll from \"@/components/ui/ThemeScroll\";",
+      "category": "transiciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "glass"
+      ],
+      "description": "Contenedor cuyo tema cambia según la sección que cruza el centro de la ventana (oliva → hueso → negro en Lando Norris). Cada sección elige su tema con data-theme; cambian los tokens, así que todo lo de dentro (también una cabecera fija) cambia con ellos, y el fondo se funde.",
+      "props": [
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 0.7,
+          "label": "Fundido (s)",
+          "min": 0,
+          "max": 2
+        }
+      ],
+      "notes": [
+        "Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.",
+        "Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.",
+        "Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens."
+      ],
+      "example": "import ThemeScroll from \"@/components/ui/ThemeScroll\";\n\n<ThemeScroll />",
+      "preview": "/componentes#theme-scroll"
+    },
+    {
+      "id": "image-trail",
+      "name": "Estela de imágenes bajo el cursor",
+      "component": "ImageTrail",
+      "import": "import ImageTrail from \"@/components/ui/ImageTrail\";",
+      "category": "interaccion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "glass"
+      ],
+      "description": "Al mover el puntero por la zona van apareciendo fotos donde está, que crecen y se desvanecen: uno de los efectos más repetidos en portfolios premiados. Decorativa (las imágenes van aria-hidden); lo que cuenta va en el contenido, por encima.",
+      "props": [
+        {
+          "key": "imageWidth",
+          "type": "number",
+          "default": 220,
+          "label": "Ancho de cada foto (px)",
+          "min": 100,
+          "max": 400
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "default": 80,
+          "label": "Distancia entre fotos (px)",
+          "min": 20,
+          "max": 240
+        },
+        {
+          "key": "lifetime",
+          "type": "number",
+          "default": 0.9,
+          "label": "Vida (s)",
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "rotate",
+          "type": "number",
+          "default": 8,
+          "label": "Giro máximo (°)",
+          "min": 0,
+          "max": 30
+        }
+      ],
+      "notes": [
+        "Solo con puntero fino y sin movimiento reducido; en táctil queda el contenido.",
+        "Recicla 10 <img>: no crea nodos al mover el ratón."
+      ],
+      "example": "import ImageTrail from \"@/components/ui/ImageTrail\";\n\n<ImageTrail />",
+      "preview": "/componentes#image-trail"
+    },
+    {
+      "id": "feature-explorer",
+      "name": "Explorador de ventajas con imagen",
+      "component": "FeatureExplorer",
+      "import": "import FeatureExplorer from \"@/components/ui/FeatureExplorer\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "glass",
+        "solid",
+        "outline"
+      ],
+      "description": "Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre en una tarjeta con su texto y cambia la imagen de al lado con un fundido. Una abierta cada vez; cada píldora es un botón con aria-expanded.",
+      "props": [
+        {
+          "key": "items",
+          "type": "text",
+          "default": "Tabla blanda|Espuma de 8 pies para las primeras olas: flota de sobra y no hace daño si te cae encima.|/img/naturaleza/02-lush-green-pine-forest-unsplash.jpg|Bosque junto a la playa\nNeopreno a medida|Tallas de la XS a la XXL, de 4/3 mm en invierno y 3/2 en verano.|/img/objetos/03-ice-cream-cafe-in-berlin-unsplash.jpg|Objetos de la escuela sobre una mesa\nMonitores titulados|Un monitor por cada seis alumnos, siempre en el agua contigo.|/img/eventos/02-concert-photos-unsplash.jpg|Grupo escuchando a una monitora",
+          "label": "Ventajas"
+        },
+        {
+          "key": "defaultIndex",
+          "type": "number",
+          "default": 0,
+          "label": "Abierta al empezar",
+          "min": 0,
+          "max": 5
+        },
+        {
+          "key": "mediaSide",
+          "type": "select",
+          "default": "right",
+          "label": "Imagen a la",
+          "options": [
+            "right",
+            "left"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "editorial",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Una ventaja por línea: «Título|Texto|imagen|texto alternativo» (imagen: URL, ruta o gen:N).",
+        "En móvil la imagen va encima de la lista."
+      ],
+      "example": "import FeatureExplorer from \"@/components/ui/FeatureExplorer\";\n\n<FeatureExplorer />",
+      "preview": "/componentes#feature-explorer"
     }
   ],
   "landings": [
@@ -15368,6 +15671,186 @@
         {
           "component": "CookieBanner",
           "id": "cookie-banner",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "volt",
+      "title": "Nora Vidal · ciclista profesional",
+      "url": "/sitios/volt",
+      "dir": "components/sites/volt",
+      "description": "Web personal de una ciclista con la fórmula «Atleta en voltaje» (Lando Norris, sitio del año 2025): oliva y amarillo ácido, curvas de nivel de fondo, titular con palabras en serifa que entran tapadas por barras de color, firma que se dibuja sobre la foto, collage con lugar y fecha, estela de fotos bajo el cursor, el tema de la página cambia por sección (oliva → hueso → negro) y fichas de palmarés con la esquina recortada. Usa GridBackground (contour), SplitText (block, emphasis), LineDraw, ThemeScroll, ImageTrail, Marquee, Parallax, MetaTable y BigFooter.",
+      "pages": [
+        {
+          "path": "/sitios/volt",
+          "title": "Inicio"
+        }
+      ],
+      "components": [
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 3
+        },
+        {
+          "component": "LineDraw",
+          "id": "line-draw",
+          "uses": 3
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 2
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 2
+        },
+        {
+          "component": "GridBackground",
+          "id": "grid-background",
+          "uses": 1
+        },
+        {
+          "component": "FitText",
+          "id": "fit-text",
+          "uses": 1
+        },
+        {
+          "component": "Parallax",
+          "id": "parallax",
+          "uses": 1
+        },
+        {
+          "component": "BigFooter",
+          "id": "big-footer",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 1
+        },
+        {
+          "component": "ThemeScroll",
+          "id": "theme-scroll",
+          "uses": 1
+        },
+        {
+          "component": "ImageTrail",
+          "id": "image-trail",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "faro",
+      "title": "Faro · soporte para equipos y agentes",
+      "url": "/sitios/faro",
+      "dir": "components/sites/faro",
+      "description": "Landing de producto con la fórmula «Producto nocturno» (Linear, Raycast): negro casi puro, titular en Inter 510 con tracking negativo, haces de luz en WebGL detrás, la propia aplicación como imagen principal con un foco desde arriba y fundido al suelo, logos de clientes, párrafo en dos tonos, secciones título-texto, explorador de funciones con capturas, atajos con teclas, ⌘K que busca en la página, precios y un cierre con manchas de color. Usa GradientField (beams, mesh), AppShell, FeatureExplorer, Kbd, CommandPalette, LogoCloud, PricingSection, Badge y Footer.",
+      "pages": [
+        {
+          "path": "/sitios/faro",
+          "title": "Inicio"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 3
+        },
+        {
+          "component": "Kbd",
+          "id": "kbd",
+          "uses": 3
+        },
+        {
+          "component": "GradientField",
+          "id": "gradient-field",
+          "uses": 2
+        },
+        {
+          "component": "NavBar",
+          "id": "navbar",
+          "uses": 1
+        },
+        {
+          "component": "Badge",
+          "id": "badge",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "LogoCloud",
+          "id": "logo-cloud",
+          "uses": 1
+        },
+        {
+          "component": "AppShell",
+          "id": "app-shell",
+          "uses": 1
+        },
+        {
+          "component": "FeatureExplorer",
+          "id": "feature-explorer",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "hamaca",
+      "title": "Hamaca · radio de verano",
+      "url": "/sitios/hamaca",
+      "dir": "components/sites/hamaca",
+      "description": "Radio de verano con la fórmula «Escritorio Y2K» (Poolsuite): papel cuadriculado rosa, barra de menú con la hora, ventanas de sistema antiguo que se arrastran, se apilan y se cierran, reproductor de música sintetizada como ventana principal, foto en semitono y un dock de iconos pixel que abre la agenda, las postales y el club. Con teclado: cada ventana es un diálogo no modal con su botón de cerrar. Usa AudioPlayer (retro), GridBackground, Icon (pixel), LocalTime, TextField y Button.",
+      "pages": [
+        {
+          "path": "/sitios/hamaca",
+          "title": "Inicio"
+        }
+      ],
+      "components": [
+        {
+          "component": "Icon",
+          "id": "icon",
+          "uses": 2
+        },
+        {
+          "component": "GridBackground",
+          "id": "grid-background",
+          "uses": 1
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 1
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "AudioPlayer",
+          "id": "audio-player",
+          "uses": 1
+        },
+        {
+          "component": "LocalTime",
+          "id": "local-time",
           "uses": 1
         }
       ]

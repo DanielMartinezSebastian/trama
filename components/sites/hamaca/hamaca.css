@@ -1,0 +1,55 @@
+/* Hamaca · fórmula «Escritorio Y2K» (docs/13: Poolsuite). Solo tokens del tema «piscina». */
+:where(.hm) a { color: inherit; }
+.hm-desk { position: relative; min-height: 100svh; overflow: hidden; background: var(--bg); padding-bottom: 120px; }
+.hm-paper { background: var(--bg); }
+.hm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* barra de menú del sistema */
+.hm-menubar { position: sticky; top: 0; z-index: 50; display: flex; gap: 16px; align-items: center; padding: 4px 10px; font-size: 12px; background: var(--card); border-bottom: 1.5px solid var(--fg); }
+.hm-menubar__brand { font-family: var(--display); font-size: 13px; border: 1.5px solid var(--fg); padding: 1px 8px; background: var(--bg); }
+.hm-menubar__on { color: var(--mut); }
+.hm-menubar__clock { margin-left: auto; border: 1.5px solid var(--fg); padding: 1px 8px; background: var(--bg); }
+
+/* ventanas: borde de tinta, sombra dura, barra de título rayada */
+.hm-windows { position: relative; z-index: 1; min-height: calc(100svh - 160px); }
+.hm-win { position: absolute; left: var(--x); top: var(--y); width: min(var(--w), 92vw); translate: calc(-50% + var(--dx, 0px)) var(--dy, 0px); background: var(--card); border: 1.5px solid var(--fg); border-radius: var(--r); box-shadow: 4px 4px 0 color-mix(in srgb, var(--fg) 85%, transparent); }
+.hm-win__bar { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-bottom: 1.5px solid var(--fg); cursor: grab; touch-action: none; user-select: none; background: repeating-linear-gradient(var(--card) 0 2px, color-mix(in srgb, var(--fg) 70%, transparent) 2px 3px); }
+.hm-win__bar:active { cursor: grabbing; }
+.hm-win__bar h2 { margin: 0 auto; padding: 0 8px; background: var(--card); font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.02em; }
+.hm-win__close, .hm-win__grip { flex: none; width: 14px; height: 14px; border: 1.5px solid var(--fg); background: var(--card); padding: 0; }
+.hm-win__close { cursor: pointer; }
+.hm-win__close:hover { background: var(--acc2); }
+.hm-win__grip { border-style: dotted; }
+.hm-win__body { padding: 12px; font-size: 13px; }
+
+/* foto en semitono: la imagen se ve a través de una trama de puntos (máscara radial repetida) */
+.hm-halftone { margin: 0 0 12px; border: 1.5px solid var(--fg); background: var(--fg); overflow: hidden; }
+.hm-halftone img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; filter: saturate(1.4) contrast(1.15); -webkit-mask-image: radial-gradient(circle, #000 58%, transparent 62%); mask-image: radial-gradient(circle, #000 58%, transparent 62%); -webkit-mask-size: 5px 5px; mask-size: 5px 5px; }
+
+.hm-agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hm-agenda li { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--ln); }
+.hm-agenda b { grid-row: span 2; font-family: var(--font-accent); font-size: 22px; font-weight: 400; color: var(--acc); }
+.hm-agenda small { color: var(--mut); }
+
+.hm-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hm-cards li { background: #fffdf8; border: 1.5px solid var(--fg); padding: 6px 6px 4px; rotate: -1.5deg; }
+.hm-cards li:nth-child(even) { rotate: 1.5deg; }
+.hm-cards img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.hm-cards span { display: block; margin-top: 4px; font-family: var(--font-accent); font-size: 18px; text-align: center; }
+
+.hm-club { display: grid; gap: 10px; }
+.hm-club p, .hm-ok { margin: 0; }
+
+/* dock con iconos pixel */
+.hm-dock { position: fixed; left: 50%; bottom: 14px; translate: -50% 0; z-index: 60; display: flex; gap: 4px; padding: 6px; background: var(--card); border: 1.5px solid var(--fg); border-radius: var(--r); box-shadow: 4px 4px 0 color-mix(in srgb, var(--fg) 85%, transparent); }
+.hm-dock__b { display: grid; justify-items: center; gap: 2px; min-width: 64px; padding: 6px 6px 4px; border: 1.5px solid transparent; background: none; color: var(--fg); font: inherit; font-size: 11px; text-decoration: none; cursor: pointer; }
+.hm-dock__b:hover, .hm-dock__b[aria-pressed="true"] { border-color: var(--fg); background: var(--bg); }
+
+/* móvil: sin arrastre, las ventanas se apilan como tarjetas */
+@media (max-width: 759px) {
+  .hm-windows { display: grid; gap: 18px; padding: 18px 16px; }
+  .hm-win { position: relative; left: auto; top: auto; width: auto; translate: none; z-index: auto !important; }
+  .hm-win__bar { cursor: default; }
+  .hm-menubar__on { display: none; }
+  .hm-dock__b { min-width: 0; padding-inline: 8px; }
+}

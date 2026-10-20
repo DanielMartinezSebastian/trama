@@ -124,6 +124,61 @@ export const forestTokens: TokenSet = {
 };
 
 /**
+ * Tema «voltaje» (fórmula de Lando Norris, sitio del año 2025): verde oliva casi negro, texto hueso y un único amarillo ácido.
+ * Titulares en palo seco grueso y mayúsculas con palabras sueltas en serifa de alto contraste (`SplitText emphasis`). Deporte,
+ * atletas, motor, marcas personales con mucha fotografía.
+ */
+export const voltTokens: TokenSet = {
+  bg: "#282c20",
+  fg: "#e8eadf",
+  mut: "#a3a893",
+  acc: "#d2ff00",
+  acc2: "#b3c43c",
+  card: "rgba(232,234,223,0.06)",
+  ln: "rgba(232,234,223,0.16)",
+  r: 6,
+  font: 'var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif',
+  display: 'var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif',
+  accentFont: 'var(--font-bodoni-moda), "Didot", Georgia, serif',
+};
+
+/**
+ * Tema «producto nocturno» (Linear, Raycast): negro casi puro, texto blanco roto, grises fríos y un violeta de acento que se usa
+ * poco. Titulares en Inter de peso medio y tracking negativo; etiquetas en mono. SaaS, herramientas para desarrolladores.
+ */
+export const nightTokens: TokenSet = {
+  bg: "#08090a",
+  fg: "#f7f8f8",
+  mut: "#8a8f98",
+  acc: "#7170ff",
+  acc2: "#e2e4e7",
+  card: "rgba(255,255,255,0.035)",
+  ln: "rgba(255,255,255,0.09)",
+  r: 10,
+  font: 'var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif',
+  display: 'var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif',
+  accentFont: 'var(--font-geist-mono), ui-monospace, Consolas, monospace',
+};
+
+/**
+ * Tema «escritorio Y2K» (Poolsuite): rosa de piscina, ventanas de sistema operativo antiguo con borde de tinta y un azul de
+ * botón. Cuerpo en mono, titulares en pixel. Radios, música, comunidades y marcas con humor; con la variante `retro`.
+ */
+export const poolTokens: TokenSet = {
+  bg: "#f4d4d4",
+  fg: "#2b1d1d",
+  mut: "#6b4a4a",
+  acc: "#2f5be0",
+  acc2: "#ffcf4a",
+  card: "#fff7f0",
+  ln: "rgba(43,29,29,0.55)",
+  r: 3,
+  font: 'var(--font-ibm-plex-mono), ui-monospace, Consolas, monospace',
+  display: 'var(--font-silkscreen), var(--font-ibm-plex-mono), monospace',
+  accentFont: 'var(--font-vt323), ui-monospace, monospace',
+};
+
+/**
  * Registro de temas del kit. **Añadir un tema = añadir una entrada aquí**: el selector de `/componentes`, el paquete
  * (`trama-ui/tokens`) y la tabla de `docs/README.md` lo recogen solos (la última, con `npm run catalog`). No hay límite:
  * un tema es solo un objeto de tokens (ver «Temas del kit» en la guía, §2.5).
@@ -137,6 +192,9 @@ export const TOKEN_THEMES: KitTheme[] = [
   { id: "editorial", label: "Editorial · papel", note: "Hueso y tinta con acento naranja. Estudios, portfolios, marcas con fotografía.", variant: "editorial", tokens: editorialTokens },
   { id: "blueprint", label: "Plano técnico", note: "Papel hueso y un acento naranja, mono en etiquetas. Producto técnico, ingeniería, herramientas.", variant: "outline", tokens: blueprintTokens },
   { id: "bosque", label: "Bosque", note: "Verde profundo, crema y oro con serif elegante. Arquitectura, inmobiliario, hostelería.", variant: "editorial", tokens: forestTokens },
+  { id: "voltaje", label: "Voltaje", note: "Oliva casi negro y amarillo ácido, palo seco con serifa de acento. Deporte, atletas, motor.", variant: "editorial", tokens: voltTokens },
+  { id: "nocturno", label: "Producto nocturno", note: "Negro, grises fríos y un violeta que casi no se usa. SaaS y herramientas (Linear, Raycast).", variant: "editorial", tokens: nightTokens },
+  { id: "piscina", label: "Escritorio Y2K", note: "Rosa de piscina y ventanas de sistema antiguo, mono y pixel. Radios, música, comunidades.", variant: "retro", tokens: poolTokens },
   { id: "editorial-oscuro", label: "Editorial · tinta", note: "Negro cálido con el mismo carácter editorial.", variant: "editorial", tokens: editorialDarkTokens },
 ];
 

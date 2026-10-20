@@ -17,6 +17,9 @@ import * as sonar from "@/components/sites/sonar/data";
 import * as mota from "@/components/sites/mota/data";
 import * as alzado from "@/components/sites/alzado/data";
 import * as vertice from "@/components/sites/vertice/data";
+import * as volt from "@/components/sites/volt/data";
+import * as faro from "@/components/sites/faro/data";
+import * as hamaca from "@/components/sites/hamaca/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -37,6 +40,9 @@ export const sites: SiteMeta[] = [
   { ...mota.meta, routes: mota.ROUTES, dir: "components/sites/mota" },
   { ...alzado.meta, routes: alzado.ROUTES, dir: "components/sites/alzado" },
   { ...vertice.meta, routes: vertice.ROUTES, dir: "components/sites/vertice" },
+  { ...volt.meta, routes: volt.ROUTES, dir: "components/sites/volt" },
+  { ...faro.meta, routes: faro.ROUTES, dir: "components/sites/faro" },
+  { ...hamaca.meta, routes: hamaca.ROUTES, dir: "components/sites/hamaca" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

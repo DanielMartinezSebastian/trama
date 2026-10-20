@@ -33,6 +33,9 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   mota: site(() => import("./mota/Site")),
   alzado: site(() => import("./alzado/Site")),
   vertice: site(() => import("./vertice/Site")),
+  volt: site(() => import("./volt/Site")),
+  faro: site(() => import("./faro/Site")),
+  hamaca: site(() => import("./hamaca/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */
