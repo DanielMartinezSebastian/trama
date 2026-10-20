@@ -22,6 +22,7 @@ import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import RingStage, { RingFlat } from "./RingStage";
+import type { RingPose } from "./ringScene";
 import {
   BAND_SHANKS,
   CLASSIC_SOLITAIRE,
@@ -294,12 +295,64 @@ function Engraving({ sel }: { sel: RingSel }) {
 }
 
 /* ---------- inicio: la casa contada por sus siete servicios ---------- */
-const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "garras6", carat: 1, pave: true };
+// el anillo del recorrido se monta con piezas del kit de Blender: aro de pavé y cesta de seis garras
+const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "garras6", carat: 1, pave: true, shank: "aro-pave", head: "cabeza-6-garras", engraving: "Para ti · siempre" };
+
+/**
+ * Coreografía del anillo por capítulo (docs/19 §7): despiece, zoom a la piedra, grabado y giro. Entre capítulos se interpola
+ * con la posición del scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
+ */
+const POSES: RingPose[] = [
+  { explode: 0, head: 0, engrave: 0, yaw: 0 }, // escuchar: el boceto entero
+  { explode: 0.35, head: 0.72, engrave: 0, yaw: 0.6 }, // elegir: la piedra sale de la cesta, de cerca
+  { explode: 1, head: 0, engrave: 0, yaw: 1.4 }, // dar forma: despiece en cera (aro, cabeza, piedra)
+  { explode: 0, head: 0, engrave: 1, yaw: 0 }, // ajustar: dentro del aro, el grabado con luz rasante
+  { explode: 0, head: 0.55, engrave: 0, yaw: 2.4 }, // cuidar: cerca del pavé y las garras
+  { explode: 0.6, head: 0, engrave: 0, yaw: 3.2 }, // transformar: se abre y se rehace
+  { explode: 0, head: 0.15, engrave: 0, yaw: 4 }, // heredar: montado, de vitrina
+];
+const smooth = (t: number) => t * t * (3 - 2 * t);
 
 function Home() {
   const [active, setActive] = useState(0);
   const [clean, setClean] = useState(false);
   const list = useRef<HTMLOListElement>(null);
+  const pose = useRef<RingPose>({ ...POSES[0] });
+  // la pose sale de dónde está la línea media de la ventana entre los centros de dos capítulos
+  useEffect(() => {
+    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-chapter]") ?? []);
+    if (!items.length) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const mid = innerHeight / 2;
+      const centers = items.map((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top + r.height / 2;
+      });
+      let j = 0;
+      while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
+      const t = j >= centers.length - 1 || mid <= centers[0] ? 0 : smooth(Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j]))));
+      const a = POSES[j];
+      const b = POSES[Math.min(j + 1, POSES.length - 1)];
+      const p = pose.current;
+      p.explode = a.explode + (b.explode - a.explode) * t;
+      p.head = a.head + (b.head - a.head) * t;
+      p.engrave = a.engrave + (b.engrave - a.engrave) * t;
+      p.yaw = a.yaw + (b.yaw - a.yaw) * t;
+    };
+    const on = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    addEventListener("scroll", on, { passive: true });
+    addEventListener("resize", on);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener("scroll", on);
+      removeEventListener("resize", on);
+    };
+  }, []);
   useEffect(() => {
     const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-chapter]") ?? []);
     const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(Number(e.target.getAttribute("data-chapter")))), { rootMargin: "-50% 0px -50% 0px" });
@@ -308,7 +361,7 @@ function Home() {
   }, []);
   const ch = CHAPTERS[active];
   const look = ch.id === "cuidar" && clean ? "final" : ch.look;
-  const sel = ch.id === "transformar" ? { ...HERO_RING, metal: "rosa" as const, setting: "bisel" as const, pave: false } : HERO_RING;
+  const sel = ch.id === "transformar" ? { ...HERO_RING, metal: "rosa" as const, head: "cabeza-bisel", shank: "aro-afinado" } : HERO_RING;
 
   return (
     <>
@@ -331,7 +384,7 @@ function Home() {
 
       <section className="ql-chapters" aria-label="Lo que hacemos, en siete servicios">
         <div className="ql-chapters__stage">
-          <RingStage sel={sel} look={look} framing={ch.framing ?? "ring"} height="100%" alt={`El anillo en el capítulo «${ch.title}»`} />
+          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={`El anillo en el capítulo «${ch.title}»`} />
           <p className="ql-chapters__now" aria-hidden>
             <span>{ch.k}</span> {ch.title}
           </p>

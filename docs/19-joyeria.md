@@ -261,6 +261,30 @@ bañada en oro (marca interior «S925»). Se descompone en las piezas del genera
 | Metal | Plata 925 con baño de oro amarillo | metal nuevo `vermeil` (plata de ley con baño de oro de 18 k) |
 | Marca interior | Logotipo de la marca + «S925» | **no se copia**: va el contraste y el punzón de la casa (`750 · QLT` en el grabado) |
 
+**Kit de piezas modelado en Blender** (`public/models/anillos/`, CC0, sesión «blender» del 21-10-2026):
+- **Qué trae**: 9 aros, 11 cabezas y 11 piedras, con su miniatura y un `manifest.json`.
+  - Los aros: liso, afinado, filo de cuchillo, catedral, partido, torsade, bypass, pavé de 22 y canal de 22.
+  - Las cabezas: 4 y 6 garras, garras dobles, de pico, bisel, medio bisel, halo redondo y oval, oval de 4 y de 6, y trilogía.
+  - Las piedras: brillante de 57 facetas, oval, princesa, esmeralda, asscher, cojín, radiante, pera, marquesa, baguette y melé.
+  - Todas están generadas por script (`bpy`), en mm, con materiales `metal`/`gem` y Empties de anclaje (`attach_head`,
+    `attach_shank`, `seat`, `seat_side_L/R`, `pave_NN`, `halo_NN`). Las piedras son convexas y cerradas, que es lo que
+    necesita el trazador.
+- **Peso**: sin Draco ni meshopt, porque la CSP no permite los decodificadores de WebAssembly. Al integrarlas se pasaron
+  por `@gltf-transform/cli@4.1.1` (`weld`, `quantize` con `KHR_mesh_quantization` y `dedup`), que three lee sin
+  decodificador: de 2,9 a 2,2 MB en GLB; la pieza más pesada es la trilogía, con 178 KB.
+- **Cómo se montan** (`pieces.ts`): se hornean las transformaciones, las posiciones cuantizadas se pasan a float y los mm a
+  las unidades de la escena.
+  - La cabeza, hecha para 1 ct, se apoya en `attach_head` del aro y se escala con la raíz cúbica de los quilates.
+  - La piedra va en `seat` y la melé en cada `pave_NN` y `halo_NN` (a 1,1 mm en los halos).
+  - Los laterales de la trilogía van en `seat_side_L/R`.
+- **Planos de faceta en textura**: el cojín y la marquesa tienen hasta 169 caras, así que los planos pasan de uniforms a
+  una textura de hasta 256.
+- **En el configurador**:
+  - Selector con miniaturas: «Montura del taller» y «Aro del taller», más la opción «a medida» procedural.
+  - Las tallas se filtran por la cabeza (`compatibles`) y se avisa de las combinaciones no recomendadas (catedral con
+    trilogía).
+  - La alianza ofrece solo los aros que tienen sentido sin cabeza.
+
 **El medidor de talla** (`/talla`):
 - Se calibra la pantalla con una tarjeta de 85,6 mm y se ajusta un círculo a un anillo que ya tienes.
 - También se puede medir con un hilo (talla española = circunferencia − 40).
@@ -281,6 +305,27 @@ Taller de joyería ficticio en Valencia. Guía visual G1 «lujo tranquilo» en o
 | Taller | Seis servicios con precio y plazo, cada uno con su luz: ajuste, grabado (rasante), limpieza (**`BeforeAfter`**), reparación, transformar, tasación (informe) |
 | Tu talla | Medidor en pantalla |
 | Cita | Motivo (también por `?motivo=`), taller o videollamada, `DatePicker` con huecos y festivos, datos mínimos, la pieza que se lleva y el horario |
+
+**Coreografía del recorrido** (portada):
+- El anillo del recorrido se monta con piezas del kit: aro de pavé, cesta de seis garras, 1 ct y grabado «Para ti · siempre».
+- Sigue una pose por capítulo (`POSES` en `Site.tsx`):
+
+  | Capítulo | Pose |
+  |---|---|
+  | Escuchar | entero |
+  | Elegir | la piedra sale de la cesta y se ve de cerca |
+  | Dar forma | despiece completo en cera |
+  | Ajustar | la cámara entra en el aro y lee el grabado con luz rasante |
+  | Cuidar | cerca del pavé |
+  | Transformar | se abre y se rehace |
+  | Heredar | montado, de vitrina |
+
+- La pose se interpola con la **posición del scroll** entre los centros de dos capítulos (con suavizado), no con el tiempo:
+  hacia atrás deshace exactamente lo mismo, sin saltos. La escena la sigue de cerca para no ir por detrás del gesto.
+- Con movimiento reducido no hay 3D: queda el anillo plano en SVG.
+- **Estudio de luz para el metal**: en lugar del `RoomEnvironment`, un estudio de joyería generado con PMREM. Lleva tiras
+  verticales largas, un softbox cenital y otro trasero alto, un rebote cálido bajo y banderas negras. El metal pulido se
+  lee por las franjas claras y oscuras que corren por el aro al girar.
 
 Base común de la `11` y la `17`:
 - `ActionBar` (llamar, WhatsApp, cita) y `OpeningHours`.

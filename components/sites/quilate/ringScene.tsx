@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import {
   BoxGeometry,
   BufferGeometry as Geometry,
@@ -51,6 +50,21 @@ import { anchorsOf, loadPiece, type Piece } from "./pieces";
 
 export type RingLook = "final" | "boceto" | "cera" | "gema" | "apagado";
 
+/**
+ * Pose del anillo dictada desde fuera (la portada la calcula con el scroll, interpolada entre capítulos): manda sobre el
+ * encuadre y añade despiece y giro. Todos los valores 0–1 salvo `yaw` (radianes).
+ */
+export type RingPose = {
+  /** 0 = montado · 1 = despiece (aro, cabeza y piedra separados por sus anclajes) */
+  explode: number;
+  /** 0 = anillo entero · 1 = la piedra de cerca */
+  head: number;
+  /** 0 = fuera · 1 = dentro del aro, leyendo el grabado */
+  engrave: number;
+  /** giro añadido alrededor del eje del anillo */
+  yaw: number;
+};
+
 export type RingSceneProps = {
   sel: RingSel;
   look: RingLook;
@@ -62,6 +76,8 @@ export type RingSceneProps = {
   /** encuadre: el anillo entero o la cabeza de cerca */
   /** ring = el anillo entero · head = la piedra de cerca · engrave = dentro del aro, leyendo el grabado */
   framing: "ring" | "head" | "engrave";
+  /** pose externa (scroll); si está, sustituye a `framing` */
+  pose?: MutableRefObject<RingPose> | null;
   active: boolean;
   onReady: () => void;
 };
@@ -259,13 +275,46 @@ function hammerNormals() {
   return t;
 }
 
+/**
+ * Entorno del metal: un estudio de fotografía de joyería (docs/19 §5). Fondo oscuro, dos tiras verticales largas y una
+ * cenital (softboxes), un rebote cálido bajo y banderas negras: el metal pulido se lee por esas franjas claras y oscuras
+ * que corren por el aro al girar, que es lo que da el contraste de una foto de producto. Sin archivo HDR: se genera.
+ */
+function studioScene() {
+  const scene = new Scene();
+  scene.background = new Color(0.035, 0.032, 0.03);
+  const geo = new PlaneGeometry(1, 1);
+  const mk = (c: Color) => new MeshBasicMaterial({ color: c, side: 2 });
+  const strip = mk(new Color(1, 1, 1).multiplyScalar(7));
+  const soft = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.2));
+  const warm = mk(new Color(1, 0.78, 0.55).multiplyScalar(1.2));
+  const black = mk(new Color(0, 0, 0));
+  const add = (m: MeshBasicMaterial, [x, y, z, w, h]: number[]) => {
+    const p = new ThreeMesh(geo, m);
+    p.position.set(x, y, z);
+    p.scale.set(w, h, 1);
+    p.lookAt(0, 0, 0);
+    scene.add(p);
+  };
+  add(strip, [-5, 0.5, 2.5, 0.9, 8]);
+  add(strip, [5, 0.5, -1.5, 0.7, 8]);
+  add(soft, [0, 6, 0, 6, 3]);
+  add(soft, [0, 1.5, -6, 5, 2.5]);
+  // panel alto detrás: lo que refleja el interior del aro cuando la cámara entra a leer el grabado
+  add(soft, [0, 4.5, -4.5, 7, 3]);
+  add(warm, [0, -5, 2, 8, 2]);
+  add(black, [4, -3, 4, 2.5, 3]);
+  add(black, [-6, 0, -3, 2, 6]);
+  return { scene, dispose: () => [geo, strip, soft, warm, black].forEach((x) => x.dispose()) };
+}
+
 function Environment() {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
   useEffect(() => {
     const pmrem = new PMREMGenerator(gl);
-    const env = new RoomEnvironment();
-    const rt = pmrem.fromScene(env, 0.03);
+    const env = studioScene();
+    const rt = pmrem.fromScene(env.scene, 0.02);
     scene.environment = rt.texture;
     return () => {
       scene.environment = null;
@@ -423,15 +472,17 @@ const WAX = new Color("#3d7a66");
 const WHITE = new Color(1, 1, 1);
 const SKETCH = new Color("#d9cbb4");
 
-function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<RingSceneProps, "active">) {
+function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omit<RingSceneProps, "active">) {
   const root = useRef<Group>(null);
-  const head = useRef<Group>(null);
+  const headGroup = useRef<Group>(null);
+  const stoneLift = useRef<Group>(null);
+  const engraveMesh = useRef<Mesh>(null);
   const bandMesh = useRef<Mesh>(null);
   const camera = useThree((s) => s.camera);
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
   const spin = useRef(0.6);
-  const k = useRef({ fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const k = useRef({ ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -566,6 +617,18 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     const wantHead = framing === "head" || gemOnly;
     s.fx = lerp(s.fx, wantHead ? 1 : 0, kk);
     s.fe = lerp(s.fe, framing === "engrave" ? 1 : 0, kk);
+    // con pose externa, el scroll ya interpola: se sigue de cerca (sin retraso que la haga ir por detrás del gesto)
+    const P = pose?.current;
+    if (P) {
+      const kp = Math.min(1, dt * 9);
+      s.fx = lerp(s.fx, Math.max(P.head, gemOnly ? 1 : 0), kp);
+      s.fe = lerp(s.fe, P.engrave, kp);
+      s.ex = lerp(s.ex, P.explode, kp);
+      s.yaw = lerp(s.yaw, P.yaw, kp);
+    } else {
+      s.ex = lerp(s.ex, 0, kk);
+      s.yaw = lerp(s.yaw, 0, kk);
+    }
 
     const m = metalOf(sel.metal);
     const base = new Color(m.color);
@@ -650,9 +713,9 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     }
     // giro: solo, con el arrastre y un balanceo leve. Al grabar se para de frente (la vuelta entera más cercana) y el
     // arrastre inclina el aro: así cambia el ángulo de la luz rasante sobre las letras
-    if (framing === "engrave") spin.current = lerp(spin.current, Math.round(spin.current / (Math.PI * 2)) * Math.PI * 2, kk);
+    if (framing === "engrave" || s.fe > 0.5) spin.current = lerp(spin.current, Math.round(spin.current / (Math.PI * 2)) * Math.PI * 2, kk);
     else if (turntable) spin.current += dt * 0.35;
-    g.rotation.y = spin.current + drag.current * (1 - s.fe * 0.7);
+    g.rotation.y = spin.current + s.yaw + drag.current * (1 - s.fe * 0.7);
     // el eje de giro se inclina hacia quien mira: la cabeza (y sus piedras) queda de cara a la cámara
     g.rotation.x = lerp(lerp(0.62, 0.85, s.fx), 0.3, s.fe);
     const bm = bandMesh.current;
@@ -663,8 +726,13 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     }
     if (paveRef.current) {
       paveRef.current.visible = s.band > 0.02;
-      paveRef.current.scale.setScalar(hide);
+      // en el despiece, la melé se separa un poco del aro hacia fuera
+      paveRef.current.scale.setScalar(hide * (1 + s.ex * 0.12));
     }
+    // despiece: la cabeza sube del aro y la piedra sale de la cabeza
+    if (engraveMesh.current) engraveMesh.current.visible = s.band > 0.02;
+    if (headGroup.current) headGroup.current.position.y = s.ex * 0.5;
+    if (stoneLift.current) stoneLift.current.position.y = (s.ex * 0.55) / (useKitHead ? Math.cbrt(sel.carat) : 1);
     if (mount.current) {
       mount.current.visible = s.band > 0.02;
       mount.current.scale.setScalar(hide);
@@ -672,13 +740,18 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     // cámara: el anillo entero o la cabeza de cerca (la cabeza está en el eje Y local: el giro en Y no la mueve)
     const gy = solitaire ? (useKitHead ? kitGirdle : layout.girdle) : R0 + T;
     const head = new Vector3(0, gy, 0).applyEuler(g.rotation);
-    const far = new Vector3(0, 0.6, 7.2);
+    // el despiece necesita más altura de cuadro: la cámara se aleja y apunta más arriba
+    const far = new Vector3(0, 0.6 + s.ex * 0.8, 7.2 + s.ex * 3.4);
     const near = new Vector3(head.x, head.y + 0.8 + R * 1.2, head.z + 1.2 + R * 2.8);
     camera.position.copy(far).lerp(near, s.fx);
-    const aim = new Vector3(0, solitaire ? 0.25 : 0, 0).lerp(head, s.fx);
+    const aim = new Vector3(0, (solitaire ? 0.25 : 0) + s.ex * 0.75, 0).lerp(head, s.fx);
     // grabado: la cámara entra por la boca del aro y mira la parte de abajo por dentro
     const bottom = new Vector3(0, -R0, 0).applyEuler(g.rotation);
-    camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.5, bottom.z + 2.3), s.fe);
+    // más cerca cuanto más estrecho es el aro: la letra mide la mitad del ancho y tiene que leerse
+    // y más lejos en lienzos estrechos (la portada es más alta que ancha): el arco del grabado tiene que caber a lo ancho
+    const aspect = (camera as unknown as { aspect: number }).aspect || 1;
+    const closeIn = Math.min(1.15, Math.max(0.55, (useKitShank ? 2.2 : sel.width) / 3.5)) * Math.min(2, Math.max(1, 1.25 / aspect));
+    camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.85 * closeIn, bottom.z + 1.95 * closeIn), s.fe);
     aim.lerp(bottom, s.fe);
     camera.lookAt(aim);
 
@@ -691,7 +764,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   return (
     <group ref={root}>
       <mesh ref={bandMesh} geometry={useKitShank ? kitShank!.metal! : band} material={mats.metal} />
-      {engrave && <mesh geometry={engrave.geo} material={engrave.mat} />}
+      {engrave && <mesh ref={engraveMesh} geometry={engrave.geo} material={engrave.mat} />}
       <group ref={paveRef}>
       {useKitShank &&
         kitMelee?.gem &&
@@ -703,9 +776,9 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
       })}
       </group>
       {solitaire && useKitHead && (
-        <group ref={head}>
+        <group ref={headGroup}>
           <group matrixAutoUpdate={false} matrix={headM}>
-            {kitStone?.gem && kitHead!.anchors.seat && <mesh geometry={kitStone.gem} material={gems.stone} matrixAutoUpdate={false} matrix={kitHead!.anchors.seat} />}
+            <group ref={stoneLift}>{kitStone?.gem && kitHead!.anchors.seat && <mesh geometry={kitStone.gem} material={gems.stone} matrixAutoUpdate={false} matrix={kitHead!.anchors.seat} />}</group>
             <group ref={mount}>
               <mesh geometry={kitHead!.metal!} material={mats.prong} />
               {kitMelee?.gem && anchorsOf(kitHead, "halo_").map((m, i) => <mesh key={`kh${i}`} geometry={kitMelee.gem!} material={gems.meleeKit} matrixAutoUpdate={false} matrix={scaled(m, 1.1 / 1.3)} />)}
@@ -718,8 +791,10 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
         </group>
       )}
       {solitaire && !useKitHead && (
-        <group ref={head}>
-          <mesh geometry={stone} material={gems.stone} position={[0, layout.girdle, 0]} />
+        <group ref={headGroup}>
+          <group ref={stoneLift}>
+            <mesh geometry={stone} material={gems.stone} position={[0, layout.girdle, 0]} />
+          </group>
           <group ref={mount}>
           {layout.prongs.map((p, i) =>
             layout.classic ? (
