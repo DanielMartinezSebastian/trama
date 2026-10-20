@@ -17213,6 +17213,16 @@
           "uses": 1
         },
         {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "ScrubText",
+          "id": "scrub-text",
+          "uses": 1
+        },
+        {
           "component": "CookieBanner",
           "id": "cookie-banner",
           "uses": 1
