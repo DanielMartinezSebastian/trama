@@ -298,9 +298,10 @@
   .ql-trio__side { display: none; }
 }
 
-/* halo del puntero: cálido, grande y suave; se suma a la luz de la sección (mix-blend screen) sin tapar el texto */
+/* halo del puntero: cálido, grande y suave; aclara lo que hay debajo (soft-light) sin tapar el texto */
 .ql-glow {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: var(--go, 0); transition: opacity 0.6s var(--ease-io, ease);
-  background: radial-gradient(circle 340px at var(--gx, 50%) var(--gy, 50%), rgb(255 214 160 / 0.13), rgb(255 214 160 / 0.04) 45%, transparent 70%);
-  mix-blend-mode: screen;
+  /* por encima de la escena y del anillo (por debajo de la cabecera): la luz cae sobre lo que se ve, no detrás */
+  position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: var(--go, 0); transition: opacity 0.6s var(--ease-io, ease);
+  background: radial-gradient(circle 300px at var(--gx, 50%) var(--gy, 50%), rgb(255 222 175 / 0.16), rgb(255 222 175 / 0.05) 45%, transparent 70%);
+  mix-blend-mode: soft-light;
 }

@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   BoxGeometry,
   BufferGeometry as Geometry,
+  AdditiveBlending,
   CanvasTexture,
   BackSide,
   SRGBColorSpace,
@@ -551,7 +552,24 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     const geo = new CylinderGeometry(r, r, h, 96, 1, true, -arc / 2, arc);
     geo.rotateX(Math.PI / 2);
     const mat = new MeshPhysicalMaterial({ metalness: 1, roughness: 0.2, map: texture, bumpMap: texture, bumpScale: 4, alphaMap: mask, transparent: true, depthWrite: false, side: BackSide });
-    return { geo, mat, texture, mask };
+    // el charco de luz: un óvalo cálido sobre la pared interior, un poco más grande que el texto y detrás de las letras
+    const poolArc = Math.min(Math.PI * 1.2, arc * 1.25);
+    const poolGeo = new CylinderGeometry(r + 0.002, r + 0.002, h * 1.9, 96, 1, true, -poolArc / 2, poolArc);
+    poolGeo.rotateX(Math.PI / 2);
+    const pc = document.createElement("canvas");
+    pc.width = 256;
+    pc.height = 64;
+    const px = pc.getContext("2d")!;
+    const grd = px.createRadialGradient(128, 32, 4, 128, 32, 128);
+    grd.addColorStop(0, "rgba(255,255,255,1)");
+    grd.addColorStop(0.45, "rgba(255,255,255,0.55)");
+    grd.addColorStop(1, "rgba(255,255,255,0)");
+    px.setTransform(1, 0, 0, 0.25, 0, 24);
+    px.fillStyle = grd;
+    px.fillRect(0, -96, 256, 256);
+    const poolTex = new CanvasTexture(pc);
+    const poolMat = new MeshBasicMaterial({ map: poolTex, transparent: true, opacity: 0, depthWrite: false, blending: AdditiveBlending, side: BackSide, toneMapped: false });
+    return { geo, mat, texture, mask, poolGeo, poolMat, poolTex };
   }, [engraveText, sel.font, sel.width]);
   useEffect(
     () => () => {
@@ -559,6 +577,9 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       engrave?.mat.dispose();
       engrave?.texture.dispose();
       engrave?.mask.dispose();
+      engrave?.poolGeo.dispose();
+      engrave?.poolMat.dispose();
+      engrave?.poolTex.dispose();
     },
     [engrave],
   );
@@ -722,21 +743,30 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       const t = state.clock.elapsedTime;
       // luz del grabado: rasante, casi pegada a la pared interior del aro, del lado del que viene la luz de la toma
       if (lights.engrave) {
+        // rasante de verdad: pegada a la pared, dentro del ancho del aro, y barriendo despacio de un lado a otro
         lights.engrave.color.copy(tint).lerp(WHITE, 0.4);
-        lights.engrave.intensity = s.fe * 3.2;
-        const side = Math.sin(t * 0.35) * 0.35;
-        lights.engrave.position.copy(new Vector3(side - 0.55, -R0 + 0.32, 0.26).applyEuler(g.rotation));
+        lights.engrave.intensity = s.fe * 9;
+        const side = Math.sin(t * 0.4) * 0.45;
+        lights.engrave.position.copy(new Vector3(side - 0.15, -R0 + 0.12, 0.02).applyEuler(g.rotation));
+      }
+      if (engrave) {
+        // el charco sigue a la luz y respira un poco: se nota que hay una lámpara que se mueve
+        engrave.poolMat.color.copy(tint).lerp(WHITE, 0.3);
+        engrave.poolMat.opacity = s.fe * (0.32 + Math.sin(t * 0.8) * 0.04);
       }
       // luz del puntero: sigue a la posición del ratón en el mundo con retraso y desplazada hacia arriba y hacia la cámara
       if (lights.cursor) {
         const pt = cursorNdc.current;
         const live = pt.active && !reducedMotion;
-        const target = new Vector3(pt.x, pt.y, 0.35).unproject(camera);
-        target.add(new Vector3(0.6, 0.55, 0.4));
-        cursorPos.current.lerp(target, Math.min(1, dt * 2.2));
+        // a la profundidad del anillo (su centro proyectado), y luego un poco hacia la cámara: ilumina la cara que ves
+        const depth = g.getWorldPosition(new Vector3()).project(camera).z;
+        const target = new Vector3(pt.x, pt.y, depth).unproject(camera);
+        target.lerp(camera.position, 0.28);
+        target.add(new Vector3(0.25, 0.3, 0));
+        cursorPos.current.lerp(target, Math.min(1, dt * 2.6));
         lights.cursor.position.copy(cursorPos.current);
         lights.cursor.color.set("#ffe2b8");
-        lights.cursor.intensity = lerp(lights.cursor.intensity, live ? 2.6 : 0, Math.min(1, dt * 3));
+        lights.cursor.intensity = lerp(lights.cursor.intensity, live ? 5 : 0, Math.min(1, dt * 3));
       }
       lights.spark.forEach((p, i) => {
         p.color.copy(tint);
@@ -831,7 +861,8 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
   return (
     <group ref={root}>
       <mesh ref={bandMesh} geometry={useKitShank ? kitShank!.metal! : band} material={mats.metal} />
-      {engrave && <mesh ref={engraveMesh} geometry={engrave.geo} material={engrave.mat} />}
+      {engrave && <mesh geometry={engrave.poolGeo} material={engrave.poolMat} renderOrder={1} />}
+      {engrave && <mesh ref={engraveMesh} geometry={engrave.geo} material={engrave.mat} renderOrder={2} />}
       <group ref={paveRef}>
       {useKitShank &&
         kitMelee?.gem &&

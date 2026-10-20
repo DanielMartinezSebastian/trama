@@ -402,7 +402,10 @@ function Home() {
       });
       let j = 0;
       while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
-      const t = j >= centers.length - 1 || mid <= centers[0] ? 0 : smooth(Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j]))));
+      // meseta: la pose se queda quieta en el 30 % central alrededor de cada capítulo y la transición ocupa el resto, así
+      // el anillo ya está colocado cuando el cuadro de texto llega al centro (y no salta tarde)
+      const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j])));
+      const t = smooth(Math.min(1, Math.max(0, (raw - 0.15) / 0.7)));
       const a = POSES[j];
       const b = POSES[Math.min(j + 1, POSES.length - 1)];
       const p = pose.current;
