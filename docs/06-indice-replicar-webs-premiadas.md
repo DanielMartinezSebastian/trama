@@ -51,6 +51,15 @@ barra de envío, subtotal), paso a pedido con resumen, y filtro por tipo con con
 `BlueprintFrame`, `CellGrid`, `IslandNav`, `CrossfadeHero`, `ExpandingPanels`, `ScatterText`, `EdgeTab`, `MetaTable`, `CircleButton`, la
 variante `fill` del `Preloader`, los temas `blueprintTokens` y `forestTokens` y las demos **Plano**, **Foro** y **Arbor**.
 
+**Ronda 6 (20-10-2026): continuidad entre rutas** en [`14-transiciones-entre-rutas.md`](./14-transiciones-entre-rutas.md):
+`Traveler` (+ `TravelStage`, `TravelSlot`, `useTraveler`): el mismo elemento, vivo, cambia de caja de una ruta a otra con la View
+Transitions API; `SharedTransition` con `fit="cover"` y `layout`; enlaces de `/sitios` con `data-transition`; la biblioteca de
+vídeo (`npm run videos:fetch`, 13 clips) y la demo **Travesía** (`/sitios/travesia`).
+
+**Ronda 5 (20-10-2026):** sitios del año y webs de producto en [`13-ronda-5-esteticas.md`](./13-ronda-5-esteticas.md):
+`LineDraw`, `GradientField`, `ThemeScroll` (resuelve E3), `ImageTrail`, `FeatureExplorer`, `GridBackground kind="contour"`,
+`SplitText effect="block"` y `emphasis`, los temas `voltTokens`, `nightTokens` y `poolTokens` y las demos **Volt**, **Faro** y **Hamaca**.
+
 ## 0. Resumen ejecutivo
 
 1. **El kit ya cubre ~60 % de las piezas sueltas** (reveal, marquee, cursor, magnético, transiciones de página, 3D,

@@ -186,6 +186,26 @@ contenedor con el fondo del tema. Comprobación repetible en el navegador: recor
 ninguno tenga un `text-shadow` oscuro cuando su texto es oscuro (resultado actual: 0 casos en las 11 webs). Un contraste de axe que
 mide un fondo «más oscuro del real» suele delatar justo una sombra de texto oscura.
 
+## 5b. Las webs de `/sitios` llegan sin su CSS en el HTML (anotado el 20-10-2026)
+
+Cada web se carga con `next/dynamic` dentro de un componente cliente (`components/sites/SiteRouter.tsx`): el código va
+separado por web, pero **su hoja de estilos** (`faro.css`, `vertice.css`…) no viene enlazada en el HTML del servidor; la
+inyecta el JavaScript de la web al cargar. Comprobado en desarrollo y en el build de producción (`next start`).
+
+Consecuencias: sin JavaScript la web sale sin estilos, el fondo decorativo (posicionado) tapa el contenido y no hay scroll
+(`html.scrollable` lo pone un efecto de `SiteFrame`); con red lenta puede verse un instante sin estilo. Con JavaScript, en
+producción, funciona bien. Se descubrió al abrir Faro desde un móvil por la red local contra `next dev`: ver la trampa de
+`allowedDevOrigins` en la guía §10.
+
+- [ ] **Decidir si se arregla.** Probado (y revertido): elegir la web en el servidor (`SiteShell`/`SitePage` como componentes
+      de servidor con un `import()` por web) hace que Next enlace la hoja en el HTML, pero **junta el CSS de las 18 webs** en
+      una sola (≈ 127 KB sin minificar) que se descarga en todas las páginas de `/sitios`. Alternativas: una ruta por web
+      (`app/sitios/faro/…`) para que cada una tenga su propia hoja, o aceptar la hoja común si su peso comprimido es pequeño.
+- [ ] **Scroll sin JavaScript:** que `html:has(.st-page)` dé el mismo scroll que `html.scrollable` en `app/globals.css`, como
+      ya hace `html:has(.tr)` en `components/site/site.css`.
+- [x] Prefijos de clase únicos por web: Faro usaba `.fr-`, igual que Foro, y al navegar de una a otra sin recargar sus
+      estilos se pisaban. Faro pasa a `.fa-`; comprobado que no hay más prefijos repetidos entre webs (salvo los de estado `is-`).
+
 ## 6. Control de la biblioteca: modularidad antes que cantidad (anotado el 19-10-2026)
 
 **El riesgo (palabras de Daniel):** al crear piezas para cada web nueva, la biblioteca se llena de componentes muy explícitos

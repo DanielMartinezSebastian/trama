@@ -413,7 +413,7 @@ conviene saber para usarlo bien:
   transform/filter/clip-path (un `Modal` dentro sigue funcionando). Lo que queda por encima del viewport sin haberse
   visto (recarga a mitad de página, `#ancla`) se muestra sin animar.
 
-### 6.4 Transiciones entre páginas: `PageTransition`, `ElementTransition`, `SharedTransition`
+### 6.4 Transiciones entre páginas: `PageTransition`, `ElementTransition`, `SharedTransition`, `Traveler`
 
 Para animar la **navegación** (no una sección dentro de la página) está `PageTransition`, sobre la View Transitions API
 y el `<ViewTransition>` de React: guía completa en [05-transiciones-de-pagina.md](./05-transiciones-de-pagina.md). Lo que
@@ -437,6 +437,10 @@ conviene saber al ampliarlo:
 - Nada de destellos repetidos (WCAG 2.3.1): lo que aparece no vuelve a ocultarse, y con `prefers-reduced-motion` todo
   queda en un fundido de 120 ms.
 - `ViewTransition` se lee con `Reflect.get(React, …)`: en React 19.0–19.2 no existe y los componentes devuelven sus hijos.
+- `Traveler` (`components/ui/Traveler.tsx`) no es un boundary de React: el viajero lleva `view-transition-name` en línea y
+  el escenario (`TravelStage`) lo recoloca con escrituras directas en el DOM en una microtarea, dentro del commit de la
+  navegación. Un `setState` para mover algo que deba entrar en la captura nueva llega tarde: re-renderiza después.
+  Clases del viaje: `ui-vt-travel` + `--move|--arrive|--leave` + `--live|--crossfade` + `--cover|--stretch` + ritmo.
 
 ## 7. Fondos (painters y sketches)
 
@@ -559,6 +563,10 @@ sentido en algunos (fondos ASCII, CRT, neón) declaran en `styles[]` únicamente
 | Ruta nueva da 404 en dev | `dynamicParams = false` cachea slugs | Reiniciar `next dev` |
 | El servidor de dev se cuelga | `next dev \| head` cierra el pipe | Redirigir a un archivo |
 | Animaciones "paradas" al probar | Pestañas ocultas pausan RAF | Forzar `redraw()` / `gsap.ticker.tick()` |
+| Desde el móvil (por la IP de la red local) una web de `/sitios` solo enseña el fondo y no deja hacer scroll, pero en producción va bien | `next dev` (Next 16) bloquea las peticiones a `/_next/…` desde orígenes que no estén en `allowedDevOrigins`: la página llega sin JavaScript y no hidrata. El log lo dice: «Blocked cross-origin request… from "192.168.x.y"» | Añadir el rango a `allowedDevOrigins` en `next.config.ts` (ya están Tailscale `100.*`, `*.ts.net` y la LAN `192.168.*.*`) y reiniciar `next dev`. Lo que se ve sin JavaScript es el pendiente de `docs/04` §5b |
+| Un elemento compartido (`SharedTransition`) no viaja en móvil, y en escritorio sí | React descarta la pareja si el elemento de la vista de salida estaba fuera del viewport (una tarjeta por debajo del pliegue) | Es a propósito; no dependas del morph de algo que suele quedar abajo. Lo que tenga que viajar siempre, que sea un `Traveler` (docs/05) |
+| Una View Transition no se ve en absoluto (ni la página) | Dos elementos con el mismo `view-transition-name` a la vez (dos copias de un componente con un `id` fijo): el navegador aborta la transición entera | Nombres únicos por instancia: `useId()` (como el ejemplo de `Traveler` en el catálogo) |
+| Una animación CSS no avanza en el Chrome de pruebas (extensión) aunque la pestaña esté visible | El navegador controlado no produce fotogramas entre capturas: `animation.currentTime` se queda en 0 | Para ver un estado intermedio: `el.getAnimations().forEach(a => { a.pause(); a.currentTime = 300 })` y captura (docs/13 §5) |
 | Texto corrupto en `StatCounter`/cifras ASCII | La fuente bitmap 7×7 de `asciifyText` no cubre letras acentuadas ni símbolos como «★» | Usar solo dígitos y símbolos simples (`+ % / -`) en lo que se convierte a bitmap; cualquier palabra va en un `label` de texto normal |
 | Un componente no llega al ancho de su contenedor en un proyecto | Un tope de ancho pensado para la vista previa del catálogo (`Table` tenía `width: min(100%, 520px)`) | Los componentes llenan su contenedor; si la vista previa necesita un tope, se lo pone el `render` de su entrada en `lib/catalog/entries/`, nunca el CSS del componente. `Table` tiene `width="full"` (defecto) o `"auto"` |
 | El scroll va a tirones en móvil con un fondo 3D, aunque en escritorio vaya fino | El compositor del navegador (el que mueve el scroll) comparte la GPU con el WebGL: lienzo a pantalla completa a dpr 2–3, MSAA en el render target, 60–120 fps y `backdrop-filter` encima la saturan | §22.1: `RetroCanvas` ya limita fps, dpr y resolución interna; no pongas `backdrop-filter` sobre el lienzo ni vuelvas a renderizar la página al cambiar de escena |
@@ -1409,6 +1417,10 @@ encajen con el tema. El arte generado (`lib/sites/art.ts`) queda para lo que una
 color elegible (Barro), capturas de interfaz o dibujos de línea con intención de diseño (Plano, segunda imagen). Si falta un
 tema, añádelo a `scripts/fetch-images.mts` y ejecuta `npm run images:fetch -- tema`. Toda demo que muestre fotos enlaza
 `/creditos` en el pie (`creditHref` en `BigFooter`) y da a cada foto un `alt` que la describa, o vacío si es decorativa.
+
+**Vídeo, igual:** `video(tema, i)` / `videos(tema)` (`lib/sites/videos.ts`) con `muted loop playsInline autoPlay`, el póster
+(`posterSrc`) y `aria-label={v.alt}`. Para un tema nuevo, busca con `npm run videos:fetch -- --buscar "texto"`, mira las
+hojas de contacto (`-- --hojas`) antes de elegir el tramo, y añádelo a la lista de `scripts/fetch-videos.mts`.
 
 ## 12. Modularidad: no llenar la biblioteca de componentes
 
