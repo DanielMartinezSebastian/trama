@@ -418,7 +418,8 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     // giro: solo, con el arrastre y un balanceo leve
     if (turntable) spin.current += dt * 0.35;
     g.rotation.y = spin.current + drag.current;
-    g.rotation.x = lerp(-0.42, -0.18, s.fx);
+    // el eje de giro se inclina hacia quien mira: la cabeza (y sus piedras) queda de cara a la cámara
+    g.rotation.x = lerp(0.62, 0.85, s.fx);
     const bm = bandMesh.current;
     const hide = Math.max(0.001, s.band);
     if (bm) {
