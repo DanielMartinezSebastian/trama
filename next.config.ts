@@ -50,9 +50,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Probar el servidor de desarrollo desde otro dispositivo de la red privada (Tailscale): su IP (100.x.y.z) y los nombres
-  // *.ts.net. Solo afecta a `next dev`; en producción no se usa.
-  allowedDevOrigins: ["100.*.*.*", "**.ts.net"],
+  // Probar el servidor de desarrollo desde otro dispositivo: la red privada de Tailscale (100.x.y.z, *.ts.net) y la red local
+  // de casa (192.168.x.y). Sin esto, Next 16 bloquea las peticiones a /_next/… desde esas IP: la página llega sin JavaScript,
+  // no hidrata y en las webs de /sitios solo se ve el fondo. Solo afecta a `next dev`; en producción no se usa.
+  allowedDevOrigins: ["100.*.*.*", "**.ts.net", "192.168.*.*"],
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
