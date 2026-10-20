@@ -23,6 +23,7 @@ import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import RingStage, { RingFlat } from "./RingStage";
 import {
+  CLASSIC_SOLITAIRE,
   CUSTOM_NOTICE,
   DEFAULT_BAND,
   DEFAULT_SOLITAIRE,
@@ -423,10 +424,10 @@ function Bands() {
   return (
     <div className="ql-cfg">
       <div className="ql-cfg__stage" data-view={engraving ? "rasante" : view}>
-        {engraving ? <Engraving sel={band} /> : <RingStage sel={band} draggable height="100%" alt={`Tu alianza: ${describe(band)}`} />}
+        <RingStage sel={band} framing={engraving ? "engrave" : "ring"} draggable height="100%" alt={engraving ? `Interior de tu alianza con el grabado «${band.engraving.trim() || "sin texto"}»` : `Tu alianza: ${describe(band)}`} />
         <div className="ql-cfg__tools">
           {!engraving && <LightSwitch value={view} onChange={setView} options={["vitrina", "honesta", "calida"]} />}
-          <span className="ql-mut ql-hide-sm">{engraving ? "Mueve el puntero: la luz rasante cambia de lado" : "Arrastra para girarla"}</span>
+          <span className="ql-mut ql-hide-sm">{engraving ? "Arrastra: al inclinar el aro, la luz rasante dibuja las letras" : "Arrastra para girarla"}</span>
         </div>
       </div>
       <div className="ql-cfg__panel">
@@ -444,7 +445,7 @@ function Bands() {
         <div className="ql-group" onFocus={() => setEngraving(true)} onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node) && setEngraving(false)}>
           <TextField label={`Grabado interior (hasta ${ENGRAVE_MAX} caracteres)`} placeholder="21·06·2027 · A & M" value={band.engraving} onChange={(v) => set("engraving", v.slice(0, ENGRAVE_MAX))} variant="minimal" />
           <OptionPicker label="Letra del grabado" kind="chip" options={FONTS.map((f) => ({ value: f.value, label: f.label }))} value={band.font} onChange={(v) => set("font", v as RingSel["font"])} />
-          <button type="button" className="ql-chip" aria-pressed={engraving} onClick={() => setEngraving((e) => !e)}>{engraving ? "Volver a la alianza" : "Ver el grabado con luz rasante"}</button>
+          <button type="button" className="ql-chip" aria-pressed={engraving} onClick={() => setEngraving((e) => !e)}>{engraving ? "Ver la alianza entera" : "Ver el grabado dentro del aro"}</button>
         </div>
         <PriceBox sel={band} onCita={() => { setCarry(band); navigate({ href: href("cita?motivo=alianzas") }); }} />
       </div>
@@ -505,7 +506,7 @@ function Engagement() {
   return (
     <div className="ql-cfg">
       <div className="ql-cfg__stage" data-view={cue}>
-        {engraving && sol.engraving ? <Engraving sel={sol} /> : <RingStage sel={sol} framing={s.id === "piedra" ? "head" : "ring"} draggable height="100%" alt={`Tu solitario: ${describe(sol)}`} />}
+        <RingStage sel={sol} framing={s.id === "piedra" ? "head" : engraving && sol.engraving.trim() ? "engrave" : "ring"} draggable height="100%" alt={`Tu solitario: ${describe(sol)}`} />
         <div className="ql-cfg__tools">
           {s.id === "piedra" && (
             <LightSwitch value={cue} onChange={setView} options={colored ? ["fuego", "honesta", "calida"] : ["fuego", "honesta"]} />
@@ -527,6 +528,10 @@ function Engagement() {
 
         {s.id === "montura" && (
           <>
+            <div className="ql-presets">
+              <span className="ql-hint">Partir de un modelo:</span>
+              <button type="button" className="ql-chip" onClick={() => setSol({ ...CLASSIC_SOLITAIRE, size: sol.size, engraving: sol.engraving })}>Solitario clásico</button>
+            </div>
             <OptionPicker label="Montura" kind="chip" options={SETTINGS.map((x) => ({ value: x.value, label: x.label }))} value={sol.setting} onChange={(v) => set("setting", v as RingSel["setting"])} />
             <p className="ql-hint">{SETTINGS.find((x) => x.value === sol.setting)?.note}</p>
           </>

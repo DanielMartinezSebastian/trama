@@ -14,7 +14,8 @@ export type RingStageProps = {
   sel: RingSel;
   /** final · boceto (alambre) · cera (antes de fundir) · gema (solo la piedra, de cerca) · apagado (sin limpiar) */
   look?: RingLook;
-  framing?: "ring" | "head";
+  /** ring = el anillo entero · head = la piedra de cerca · engrave = dentro del aro, leyendo el grabado */
+  framing?: "ring" | "head" | "engrave";
   turntable?: boolean;
   /** arrastrar para girar */
   draggable?: boolean;

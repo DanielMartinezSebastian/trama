@@ -1,10 +1,10 @@
 /** Modelo de las joyas configurables de Quilate: la selección, las opciones, el precio y el plazo. Lo usan la escena 3D,
  * el dibujo plano (SVG), los dos configuradores y la cita (que se lleva la pieza). Sin React. Precios orientativos de demo. */
 
-export type Metal = "amarillo" | "blanco" | "rosa" | "platino";
-export type Profile = "media-cana" | "plana" | "confort";
+export type Metal = "amarillo" | "blanco" | "rosa" | "platino" | "vermeil";
+export type Profile = "media-cana" | "plana" | "confort" | "afinado";
 export type Finish = "pulido" | "satinado" | "martillado";
-export type Setting = "garras4" | "garras6" | "bisel" | "halo" | "trilogia";
+export type Setting = "clasico" | "garras4" | "garras6" | "bisel" | "halo" | "trilogia";
 export type Stone = "diamante" | "diamante-lab" | "zafiro" | "esmeralda" | "rubi";
 export type Shape = "redonda" | "oval" | "princesa" | "esmeralda";
 export type EngraveFont = "romana" | "cursiva" | "palo";
@@ -31,6 +31,12 @@ export type RingSel = {
 };
 
 export const DEFAULT_BAND: RingSel = { kind: "alianza", metal: "amarillo", width: 3.5, profile: "confort", finish: "pulido", setting: "garras4", stone: "diamante", shape: "redonda", carat: 0.5, pave: false, size: 14, engraving: "", font: "romana" };
+/**
+ * El solitario clásico deconstruido (docs/19 §6): aro fino afinado hacia la cabeza, pulido espejo, cuatro garras planas con
+ * galería y un brillante de medio quilate montado bajo.
+ */
+export const CLASSIC_SOLITAIRE: RingSel = { kind: "solitario", metal: "vermeil", width: 2, profile: "afinado", finish: "pulido", setting: "clasico", stone: "diamante-lab", shape: "redonda", carat: 0.5, pave: false, size: 14, engraving: "", font: "romana" };
+
 export const DEFAULT_SOLITAIRE: RingSel = { ...DEFAULT_BAND, kind: "solitario", metal: "blanco", width: 2, profile: "media-cana", setting: "garras6", carat: 0.7 };
 
 type Opt<V extends string> = { value: V; label: string; note?: string; color?: string };
@@ -40,12 +46,14 @@ export const METALS: (Opt<Metal> & { color: string; ley: string; perGram: number
   { value: "blanco", label: "Oro blanco", ley: "oro de 18 k (750 ‰) rodiado", color: "#dfe1e2", perGram: 96, density: 15.6, roughness: 0.14 },
   { value: "rosa", label: "Oro rosa", ley: "oro de 18 k (750 ‰)", color: "#e7ad94", perGram: 92, density: 15.2, roughness: 0.16 },
   { value: "platino", label: "Platino", ley: "platino (950 ‰)", color: "#cfd3d6", perGram: 64, density: 20.7, roughness: 0.2 },
+  { value: "vermeil", label: "Plata bañada en oro", ley: "plata de ley (925 ‰) con baño de oro de 18 k", color: "#e6bd6e", perGram: 3, density: 10.4, roughness: 0.15 },
 ];
 
 export const PROFILES: Opt<Profile>[] = [
   { value: "confort", label: "Confort", note: "redondeado por dentro y por fuera" },
   { value: "media-cana", label: "Media caña", note: "curvo por fuera, plano por dentro" },
   { value: "plana", label: "Plana", note: "cantos vivos, aire contemporáneo" },
+  { value: "afinado", label: "Afinado", note: "se estrecha y adelgaza al subir hacia la piedra (hombros afinados)" },
 ];
 
 export const FINISHES: (Opt<Finish> & { extra: number })[] = [
@@ -55,6 +63,7 @@ export const FINISHES: (Opt<Finish> & { extra: number })[] = [
 ];
 
 export const SETTINGS: (Opt<Setting> & { extra: number; days: number })[] = [
+  { value: "clasico", label: "Clásico", note: "cuatro garras planas y rectas, con galería y la piedra baja: el solitario de siempre", extra: 160, days: 0 },
   { value: "garras4", label: "Cuatro garras", note: "deja entrar más luz en la piedra", extra: 180, days: 0 },
   { value: "garras6", label: "Seis garras", note: "más sujeción, silueta redonda", extra: 220, days: 0 },
   { value: "bisel", label: "Bisel", note: "el metal abraza la piedra; para el día a día", extra: 260, days: 3 },
@@ -100,7 +109,7 @@ export const mmToSize = (diam: number) => Math.round(diam * Math.PI - 40);
 export function grams(sel: RingSel) {
   const { circ } = sizeToMm(sel.size);
   const thick = sel.profile === "plana" ? 1.8 : 1.6;
-  const fill = sel.profile === "media-cana" ? 0.78 : sel.profile === "confort" ? 0.85 : 0.95;
+  const fill = sel.profile === "media-cana" ? 0.78 : sel.profile === "confort" ? 0.85 : sel.profile === "afinado" ? 0.74 : 0.95;
   const mm3 = (circ + Math.PI * thick) * sel.width * thick * fill;
   return (mm3 / 1000) * metalOf(sel.metal).density + (sel.kind === "solitario" ? 0.6 : 0);
 }

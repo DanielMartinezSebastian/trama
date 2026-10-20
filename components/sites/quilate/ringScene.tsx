@@ -4,8 +4,11 @@ import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import {
+  BoxGeometry,
   BufferGeometry as Geometry,
   CanvasTexture,
+  BackSide,
+  SRGBColorSpace,
   CubeCamera,
   HalfFloatType,
   WebGLCubeRenderTarget,
@@ -33,7 +36,7 @@ import {
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
 import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
-import { metalOf, stoneOf, type RingSel, type Shape } from "./ring";
+import { FONTS, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
 
 /*
  * El anillo de Quilate como escena procedural, sin modelos: el aro es una revolución de su sección (confort, media caña o
@@ -55,7 +58,8 @@ export type RingSceneProps = {
   drag: MutableRefObject<number>;
   turntable: boolean;
   /** encuadre: el anillo entero o la cabeza de cerca */
-  framing: "ring" | "head";
+  /** ring = el anillo entero · head = la piedra de cerca · engrave = dentro del aro, leyendo el grabado */
+  framing: "ring" | "head" | "engrave";
   active: boolean;
   onReady: () => void;
 };
@@ -81,7 +85,7 @@ function bandProfile(sel: RingSel): Vector2[] {
     }
     pts.push(new Vector2(R0, W / 2 - 0.01), new Vector2(R0, -W / 2 + 0.01));
   } else {
-    // confort: superelipse (rectángulo de cantos muy redondeados)
+    // confort (y afinado, que es confort que se estrecha hacia la cabeza): superelipse de cantos muy redondeados
     for (let i = 0; i < 36; i++) {
       const a = -Math.PI / 2 + (i / 36) * Math.PI * 2;
       const c = Math.cos(a);
@@ -91,6 +95,59 @@ function bandProfile(sel: RingSel): Vector2[] {
   }
   pts.push(pts[0].clone());
   return pts;
+}
+
+/**
+ * El aro como barrido de su sección alrededor del dedo (eje Z), con la cabeza arriba (+Y). `afinado` estrecha y adelgaza el
+ * aro al subir hacia la piedra («hombros afinados» del solitario clásico): la sección se escala con el ángulo.
+ */
+function sweepBand(sel: RingSel): BufferGeometry {
+  const prof = bandProfile(sel).slice(0, -1);
+  const M = prof.length;
+  const N = 200;
+  const taper = sel.profile === "afinado";
+  const pos: number[] = [];
+  const uv: number[] = [];
+  for (let i = 0; i <= N; i++) {
+    const th = (i / N) * Math.PI * 2;
+    const w = ((th + Math.PI) % (Math.PI * 2)) - Math.PI; // −π…π, 0 arriba
+    const near = Math.exp(-((w / 0.75) ** 2));
+    const sw = taper ? 1 - 0.38 * near : 1;
+    const st = taper ? 1 - 0.18 * near : 1;
+    for (let j = 0; j <= M; j++) {
+      const q = prof[j % M];
+      const r = R0 + (q.x - R0) * st;
+      pos.push(Math.sin(th) * r, Math.cos(th) * r, q.y * sw);
+      uv.push(i / N, j / M);
+    }
+  }
+  const index: number[] = [];
+  for (let i = 0; i < N; i++)
+    for (let j = 0; j < M; j++) {
+      const a = i * (M + 1) + j;
+      const b = (i + 1) * (M + 1) + j;
+      index.push(a, b, a + 1, b, b + 1, a + 1);
+    }
+  const g = new Geometry();
+  g.setAttribute("position", new Float32BufferAttribute(pos, 3));
+  g.setAttribute("uv", new Float32BufferAttribute(uv, 2));
+  g.setIndex(index);
+  g.computeVertexNormals();
+  // las caras tienen que mirar hacia fuera: en el vértice más exterior, la normal debe apuntar lejos del dedo
+  const P = g.getAttribute("position");
+  const nrm = g.getAttribute("normal");
+  let far = 0;
+  for (let k = 1; k < P.count; k++) if (Math.hypot(P.getX(k), P.getY(k)) > Math.hypot(P.getX(far), P.getY(far))) far = k;
+  if (nrm.getX(far) * P.getX(far) + nrm.getY(far) * P.getY(far) < 0) {
+    const idx = g.getIndex()!;
+    for (let k = 0; k < idx.count; k += 3) {
+      const t = idx.getX(k + 1);
+      idx.setX(k + 1, idx.getX(k + 2));
+      idx.setX(k + 2, t);
+    }
+    g.computeVertexNormals();
+  }
+  return g;
 }
 
 /** Radio de la piedra (unidades) por quilates: un brillante de 1 ct mide ~6,5 mm. */
@@ -271,6 +328,61 @@ function useGemEnvironment() {
   return tex;
 }
 
+/**
+ * El grabado como textura de relieve: el texto en negativo (letras más bajas y algo más oscuras) sobre blanco, desenfocado un
+ * pelo para que el borde del corte tenga pendiente y la luz rasante lo dibuje. Va en una franja pegada al interior del aro, en
+ * la parte de abajo (la cabeza está arriba), centrada y con el punzón de la casa al final.
+ */
+function engravingTexture(text: string, font: string) {
+  const H = 128;
+  const c = document.createElement("canvas");
+  const ctx = c.getContext("2d")!;
+  // la fuente es una variable CSS (next/font): se resuelve al nombre real de la familia
+  const family = font.replace(/var\((--[\w-]+)\)/g, (_, v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim() || "serif");
+  const main = `400 76px ${family}`;
+  const mark = `500 30px ui-monospace, monospace`;
+  ctx.font = main;
+  const tw = ctx.measureText(text).width;
+  ctx.font = mark;
+  const mw = ctx.measureText("750 · QLT").width;
+  const W = Math.ceil(tw + mw + 140);
+  c.width = W;
+  c.height = H;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, W, H);
+  ctx.filter = "blur(1.2px)";
+  ctx.fillStyle = "#3c3c3c";
+  ctx.textBaseline = "middle";
+  ctx.font = main;
+  ctx.fillText(text, 40, H / 2 + 4);
+  ctx.font = mark;
+  ctx.fillText("750 · QLT", tw + 100, H / 2 + 4);
+  // máscara: solo las letras (y su borde) tocan la superficie; el resto de la franja es transparente y se ve el aro real
+  const m = document.createElement("canvas");
+  m.width = W;
+  m.height = H;
+  const mx = m.getContext("2d")!;
+  mx.fillStyle = "#000";
+  mx.fillRect(0, 0, W, H);
+  mx.filter = "blur(2.5px)";
+  mx.fillStyle = "#fff";
+  mx.textBaseline = "middle";
+  mx.font = main;
+  mx.fillText(text, 40, H / 2 + 4);
+  mx.font = mark;
+  mx.fillText("750 · QLT", tw + 100, H / 2 + 4);
+  const make = (cv: HTMLCanvasElement, srgb: boolean) => {
+    const t = new CanvasTexture(cv);
+    if (srgb) t.colorSpace = SRGBColorSpace;
+    t.anisotropy = 8;
+    // la franja se ve desde dentro del aro: sin voltearla en vertical, el texto saldría boca abajo
+    t.center.set(0.5, 0.5);
+    t.repeat.set(1, -1);
+    return t;
+  };
+  return { texture: make(c, true), mask: make(m, false), aspect: W / H };
+}
+
 /** Un cilindro fino entre dos puntos (garras). */
 function placeBetween(m: Mesh, a: Vector3, b: Vector3, r: number) {
   const d = new Vector3().subVectors(b, a);
@@ -298,7 +410,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
   const spin = useRef(0.6);
-  const k = useRef({ y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const k = useRef({ fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -311,7 +423,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     }),
     [],
   );
-  const geos = useMemo(() => ({ prong: new CylinderGeometry(1, 1, 1, 10, 1), tip: new SphereGeometry(1, 14, 10), melee: stoneGeometry("redonda", 0.045) }), []);
+  const geos = useMemo(() => ({ prong: new CylinderGeometry(1, 1, 1, 10, 1), flat: new BoxGeometry(1, 1, 1), tip: new SphereGeometry(1, 14, 10), melee: stoneGeometry("redonda", 0.045) }), []);
   useEffect(
     () => () => {
       Object.values(mats).forEach((m) => m.dispose());
@@ -322,11 +434,34 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   );
 
   const band = useMemo(() => {
-    const g = new LatheGeometry(bandProfile(sel), 160);
-    g.rotateX(Math.PI / 2);
-    return g;
+    return sweepBand(sel);
   }, [sel.width, sel.profile]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => () => band.dispose(), [band]);
+
+  // el grabado: textura de relieve + franja del interior del aro con el arco justo para el texto
+  const engraveText = sel.engraving.trim();
+  const engrave = useMemo(() => {
+    if (!engraveText) return null;
+    const font = FONTS.find((f) => f.value === sel.font)?.css ?? "serif";
+    const { texture, mask, aspect } = engravingTexture(engraveText, font);
+    const r = R0 - 0.004;
+    // letra de ~55 % del ancho del aro, más pequeña si el texto no cabe en 1,5 rad (lo que se ve de una vez por dentro)
+    const h = Math.min(Math.max(1.6, sel.width) * MM * 0.55, (1.5 * r) / aspect);
+    const arc = (aspect * h) / r;
+    const geo = new CylinderGeometry(r, r, h, 96, 1, true, -arc / 2, arc);
+    geo.rotateX(Math.PI / 2);
+    const mat = new MeshPhysicalMaterial({ metalness: 1, roughness: 0.2, map: texture, bumpMap: texture, bumpScale: 4, alphaMap: mask, transparent: true, depthWrite: false, side: BackSide });
+    return { geo, mat, texture, mask };
+  }, [engraveText, sel.font, sel.width]);
+  useEffect(
+    () => () => {
+      engrave?.geo.dispose();
+      engrave?.mat.dispose();
+      engrave?.texture.dispose();
+      engrave?.mask.dispose();
+    },
+    [engrave],
+  );
 
   const solitaire = sel.kind === "solitario";
   const R = stoneRadius(sel.carat);
@@ -347,18 +482,22 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   // dónde va cada cosa de la cabeza
   const layout = useMemo(() => {
     const top = R0 + T;
-    const girdle = top + 0.55 * R + 0.06;
-    const n = sel.setting === "garras4" ? 4 : sel.setting === "garras6" || sel.setting === "trilogia" ? 6 : 0;
+    const classic = sel.setting === "clasico";
+    // el clásico monta la piedra baja: el filetín casi a ras del aro
+    const girdle = classic ? top + 0.42 * R + 0.02 : top + 0.55 * R + 0.06;
+    const n = sel.setting === "garras4" || classic ? 4 : sel.setting === "garras6" || sel.setting === "trilogia" ? 6 : 0;
     const sx = sel.shape === "oval" ? 1.32 : sel.shape === "esmeralda" ? 1.38 : sel.shape === "princesa" ? 1.18 : 1;
     const prongs = Array.from({ length: n }, (_, i) => {
       const a = (i / n) * Math.PI * 2 + (n === 4 ? Math.PI / 4 : 0);
       const ex = Math.cos(a) * R * sx * (sel.shape === "princesa" ? 0.86 : 1);
       const ez = Math.sin(a) * R * (sel.shape === "princesa" ? 1.02 : 1);
+      // clásico: garras rectas y verticales que bajan hasta el aro; las demás salen de la base y se abren
+      if (classic) return { a: new Vector3(ex * 1.04, top - 0.08, ez * 1.04), b: new Vector3(ex * 1.02, girdle + 0.26 * R + 0.02, ez * 1.02) };
       return { a: new Vector3(ex * 0.35, top - 0.02, ez * 0.35), b: new Vector3(ex * 1.02, girdle + 0.07 * R + 0.02, ez * 1.02) };
     });
     const halo = sel.setting === "halo" ? Array.from({ length: 18 }, (_, i) => { const a = (i / 18) * Math.PI * 2; return new Vector3(Math.cos(a) * (R * sx + 0.075), girdle - 0.02, Math.sin(a) * (R + 0.075)); }) : [];
     const pave = sel.pave ? Array.from({ length: 14 }, (_, i) => { const f = solitaire ? (i < 7 ? -1.25 + i * 0.13 : 0.47 + (i - 7) * 0.13) : -0.95 + i * 0.146; return f; }) : [];
-    return { top, girdle, prongs, halo, pave, sx };
+    return { top, girdle, prongs, halo, pave, sx, classic };
   }, [sel.setting, sel.shape, sel.pave, R, solitaire]);
 
   useFrame((state, dt) => {
@@ -377,6 +516,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     s.dim = lerp(s.dim, L.dim, kk);
     const wantHead = framing === "head" || gemOnly;
     s.fx = lerp(s.fx, wantHead ? 1 : 0, kk);
+    s.fe = lerp(s.fe, framing === "engrave" ? 1 : 0, kk);
 
     const m = metalOf(sel.metal);
     const base = new Color(m.color);
@@ -454,11 +594,18 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
       (scene as unknown as { environmentIntensity: number }).environmentIntensity = (0.25 + c.softness * 0.95) * c.intensity * s.env;
     }
 
-    // giro: solo, con el arrastre y un balanceo leve
-    if (turntable) spin.current += dt * 0.35;
-    g.rotation.y = spin.current + drag.current;
+    if (engrave) {
+      engrave.mat.color.copy(mats.metal.color);
+      engrave.mat.roughness = mats.metal.roughness;
+      engrave.mat.wireframe = wire;
+    }
+    // giro: solo, con el arrastre y un balanceo leve. Al grabar se para de frente (la vuelta entera más cercana) y el
+    // arrastre inclina el aro: así cambia el ángulo de la luz rasante sobre las letras
+    if (framing === "engrave") spin.current = lerp(spin.current, Math.round(spin.current / (Math.PI * 2)) * Math.PI * 2, kk);
+    else if (turntable) spin.current += dt * 0.35;
+    g.rotation.y = spin.current + drag.current * (1 - s.fe * 0.7);
     // el eje de giro se inclina hacia quien mira: la cabeza (y sus piedras) queda de cara a la cámara
-    g.rotation.x = lerp(0.62, 0.85, s.fx);
+    g.rotation.x = lerp(lerp(0.62, 0.85, s.fx), 0.3, s.fe);
     const bm = bandMesh.current;
     const hide = Math.max(0.001, s.band);
     if (bm) {
@@ -480,6 +627,10 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     const near = new Vector3(head.x, head.y + 0.8 + R * 1.2, head.z + 1.2 + R * 2.8);
     camera.position.copy(far).lerp(near, s.fx);
     const aim = new Vector3(0, solitaire ? 0.25 : 0, 0).lerp(head, s.fx);
+    // grabado: la cámara entra por la boca del aro y mira la parte de abajo por dentro
+    const bottom = new Vector3(0, -R0, 0).applyEuler(g.rotation);
+    camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.5, bottom.z + 2.3), s.fe);
+    aim.lerp(bottom, s.fe);
     camera.lookAt(aim);
 
     if (!ready.current) {
@@ -491,6 +642,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   return (
     <group ref={root}>
       <mesh ref={bandMesh} geometry={band} material={mats.metal} />
+      {engrave && <mesh geometry={engrave.geo} material={engrave.mat} />}
       <group ref={paveRef}>
       {layout.pave.map((f, i) => {
         const r = R0 + T + 0.012;
@@ -502,18 +654,29 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
         <group ref={head}>
           <mesh geometry={stone} material={gems.stone} position={[0, layout.girdle, 0]} />
           <group ref={mount}>
-          {layout.prongs.map((p, i) => (
-            <group key={`g${i}`}>
-              <mesh geometry={geos.prong} material={mats.prong} ref={(m) => m && placeBetween(m, p.a, p.b, 0.022)} />
-              <mesh geometry={geos.tip} material={mats.prong} position={p.b} scale={0.03} />
-            </group>
-          ))}
+          {layout.prongs.map((p, i) =>
+            layout.classic ? (
+              // garra plana de sección cuadrada, cortada en recto, orientada hacia el centro de la piedra
+              <mesh key={`g${i}`} geometry={geos.flat} material={mats.prong} rotation={[0, -Math.atan2(p.b.z, p.b.x), 0]} position={[(p.a.x + p.b.x) / 2, (p.a.y + p.b.y) / 2, (p.a.z + p.b.z) / 2]} scale={[0.07, p.b.y - p.a.y, 0.06]} />
+            ) : (
+              <group key={`g${i}`}>
+                <mesh geometry={geos.prong} material={mats.prong} ref={(m) => m && placeBetween(m, p.a, p.b, 0.022)} />
+                <mesh geometry={geos.tip} material={mats.prong} position={p.b} scale={0.03} />
+              </group>
+            ),
+          )}
+          {layout.classic && (
+            // galería: el aro fino que une las garras por debajo de la piedra
+            <mesh material={mats.prong} position={[0, layout.top + 0.06, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[R * 0.98, 0.022, 10, 48]} />
+            </mesh>
+          )}
           {sel.setting === "bisel" && (
             <mesh material={mats.prong} position={[0, layout.girdle - 0.02, 0]} scale={[R * layout.sx + 0.05, 0.13, R + 0.05]}>
               <cylinderGeometry args={[1, 0.82, 1, 48, 1, true]} />
             </mesh>
           )}
-          {sel.setting !== "bisel" && (
+          {sel.setting !== "bisel" && !layout.classic && (
             <mesh material={mats.prong} position={[0, layout.top + 0.05, 0]} scale={[R * 0.42, 0.08, R * 0.42]}>
               <cylinderGeometry args={[1, 1, 1, 24, 1, true]} />
             </mesh>

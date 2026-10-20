@@ -211,7 +211,7 @@ Reglas que se cumplen:
 | | Alianza (sencilla, `/alianzas`) | Solitario (compleja, `/compromiso`) |
 |---|---|---|
 | Opciones | metal (4, con ley) · ancho de 2 a 6 mm · perfil (confort, media caña, plana) · acabado (pulido, satinado, martillado) · pavé · talla · grabado y su letra | **5 pasos**: montura (4 garras, 6 garras, bisel, halo, trilogía) → piedra (diamante natural o de laboratorio, zafiro, esmeralda, rubí) · talla (brillante, oval, princesa, esmeralda) · quilates de 0,3 a 2 → metal y aro (ancho, perfil, acabado, pavé) → talla y grabado → resumen |
-| Luz | conmutador escaparate / día / cálida; al enfocar el grabado pasa a **rasante** y la vista cambia al interior del aro (como Jenn Zeiss) | una toma por paso: vitrina → **fuego** (con conmutador a luz de día, y a cálida en piedras de color) → vitrina → rasante → lámpara |
+| Luz | conmutador escaparate / día / cálida; al enfocar el grabado pasa a **rasante** y la cámara entra en el aro (como Jenn Zeiss) | una toma por paso: vitrina → **fuego** (con conmutador a luz de día, y a cálida en piedras de color) → vitrina → rasante → lámpara |
 | Precio | desglose en vivo: gramos de metal según talla, ancho, perfil y densidad, hechura, acabado, pavé y grabado (el primero gratis) | lo mismo más la piedra (precio por quilate con exponente según tipo y factor de talla) y la montura |
 | Plazo y aviso | días de taller según opciones; señal del 30 %; **aviso de que lo personalizado no tiene desistimiento** antes de pagar (`17` §6) | igual; la piedra se reserva 7 días para verla en persona |
 | Salida | «Pedir cita con esta pieza»: la cita se lleva el diseño (miniatura, descripción y presupuesto) | ídem |
@@ -239,6 +239,27 @@ Reglas que se cumplen:
 - **Aspectos por capítulo**: boceto (alambre), cera (verde de modelar), gema (solo la piedra, con la cámara en la
   cabeza), apagado (sin brillo y sin iridiscencia, para «Cuidar») y final.
 - **Respaldo**: el mismo anillo en SVG sin WebGL, con movimiento reducido y como miniatura en la cita.
+
+**El grabado, en el propio editor 3D.** Se escribe y se ve en vivo dentro del anillo, sin vista aparte:
+- El texto, con la letra elegida y seguido del punzón `750 · QLT`, se dibuja en un lienzo que hace de color y de **relieve**
+  (`bumpMap`): las letras quedan más bajas que el metal.
+- Se coloca en una franja pegada al interior del aro, abajo (la cabeza está arriba), y la máscara de las letras deja ver el
+  aro real alrededor, sin que se note la franja.
+- La letra mide el 55 % del ancho del aro y se reduce si el texto no cabe en 1,5 rad, lo que se ve de una vez.
+- Al escribir o elegir la letra, la toma pasa a **rasante**, el aro deja de girar, se queda de frente y la cámara entra por
+  su boca. Al arrastrar se inclina el aro, cambia el ángulo de la luz y las letras se dibujan más o menos.
+
+**Deconstrucción de un solitario clásico** (foto de referencia del usuario, 21-10-2026): un anillo comercial de plata
+bañada en oro (marca interior «S925»). Se descompone en las piezas del generador y se reconstruye como «Solitario clásico»
+(`CLASSIC_SOLITAIRE`, botón «Partir de un modelo» en `/compromiso`):
+
+| Pieza | Lo que se ve en la foto | Cómo se hace aquí |
+|---|---|---|
+| Aro | Fino (~2 mm), sección redondeada, pulido espejo; **se estrecha y adelgaza al subir** hasta fundirse con la cabeza | perfil nuevo `afinado`: el aro es un barrido de su sección alrededor del dedo, con la anchura (−38 %) y el grueso (−18 %) reducidos según una campana centrada en la cabeza |
+| Cabeza | **Cuatro garras planas** de sección cuadrada, rectas y verticales, cortadas en recto, que bajan hasta el aro; una **galería** (aro fino) las une bajo la piedra; piedra **montada baja** | montura nueva `clasico`: garras en caja orientadas al centro, galería en toro, filetín a 0,42 R sobre el aro |
+| Piedra | Brillante redondo de ~5 mm (≈ 0,5 ct), blanca (probablemente circonita) | brillante de 0,5 ct con el trazado de rayos; en la web, diamante de laboratorio |
+| Metal | Plata 925 con baño de oro amarillo | metal nuevo `vermeil` (plata de ley con baño de oro de 18 k) |
+| Marca interior | Logotipo de la marca + «S925» | **no se copia**: va el contraste y el punzón de la casa (`750 · QLT` en el grabado) |
 
 **El medidor de talla** (`/talla`):
 - Se calibra la pantalla con una tarjeta de 85,6 mm y se ajusta un círculo a un anillo que ya tienes.
