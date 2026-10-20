@@ -84,7 +84,8 @@ export function RingFlat({ sel, look = "final", className = "" }: { sel: RingSel
   const w = 6 + sel.width * 3;
   const sketch = look === "boceto";
   const solitaire = sel.kind === "solitario";
-  const r = 10 + Math.cbrt(sel.carat) * 14;
+  // redondeado: servidor y navegador no siempre dan el mismo último decimal en la raíz cúbica (aviso de hidratación)
+  const r = Math.round((10 + Math.cbrt(sel.carat) * 14) * 100) / 100;
   const dull = look === "apagado" ? 0.55 : 1;
   return (
     <svg className={`ql-flat ${className}`.trim()} viewBox="0 0 240 240" aria-hidden>

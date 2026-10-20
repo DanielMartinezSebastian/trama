@@ -63,6 +63,12 @@ export type RingPose = {
   engrave: number;
   /** giro añadido alrededor del eje del anillo */
   yaw: number;
+  /** 0 = fuera · 1 = de cerca del hombro del aro (pavé y garras de la cabeza en el mismo cuadro) */
+  pave: number;
+  /** dónde cae el anillo en la pantalla, en fracción del ancho desde el centro (−0,5 izquierda … 0,5 derecha) */
+  x: number;
+  /** distancia de la cámara en el plano general (1 = normal, menos = más cerca) */
+  zoom: number;
 };
 
 export type RingSceneProps = {
@@ -476,13 +482,35 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
   const root = useRef<Group>(null);
   const headGroup = useRef<Group>(null);
   const stoneLift = useRef<Group>(null);
+  // posición del puntero en coordenadas de pantalla −1…1 (el lienzo no recibe eventos: se escucha la ventana)
+  const cursorNdc = useRef({ x: 0, y: 0, active: false });
+  const cursorPos = useRef(new Vector3(2, 2, 3));
+  const reducedMotion = typeof matchMedia !== "undefined" && (matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches);
+  const gl = useThree((st) => st.gl);
+  useEffect(() => {
+    const el = gl.domElement;
+    const on = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      cursorNdc.current.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      cursorNdc.current.y = -(((e.clientY - r.top) / r.height) * 2 - 1);
+      cursorNdc.current.active = true;
+    };
+    const off = () => (cursorNdc.current.active = false);
+    addEventListener("pointermove", on, { passive: true });
+    document.addEventListener("pointerleave", off);
+    return () => {
+      removeEventListener("pointermove", on);
+      document.removeEventListener("pointerleave", off);
+    };
+  }, [gl]);
   const engraveMesh = useRef<Mesh>(null);
   const bandMesh = useRef<Mesh>(null);
   const camera = useThree((s) => s.camera);
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
   const spin = useRef(0.6);
-  const k = useRef({ ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const k = useRef({ fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -625,9 +653,15 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       s.fe = lerp(s.fe, P.engrave, kp);
       s.ex = lerp(s.ex, P.explode, kp);
       s.yaw = lerp(s.yaw, P.yaw, kp);
+      s.fp = lerp(s.fp, P.pave, kp);
+      s.px = lerp(s.px, P.x, kp);
+      s.zm = lerp(s.zm, P.zoom, kp);
     } else {
       s.ex = lerp(s.ex, 0, kk);
       s.yaw = lerp(s.yaw, 0, kk);
+      s.fp = lerp(s.fp, 0, kk);
+      s.px = lerp(s.px, 0, kk);
+      s.zm = lerp(s.zm, 1, kk);
     }
 
     const m = metalOf(sel.metal);
@@ -670,7 +704,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     // luces: la toma de la sección en vivo
     const c = light?.current ?? FALLBACK;
     const tint = new Color(kelvinToHex(c.kelvin));
-    const lights = scene.userData.rig as { key: DirectionalLight; hemi: HemisphereLight; spark: PointLight[] } | undefined;
+    const lights = scene.userData.rig as { key: DirectionalLight; hemi: HemisphereLight; spark: PointLight[]; engrave: PointLight; cursor: PointLight } | undefined;
     if (lights) {
       const hard = 1 - c.softness;
       lights.key.color.copy(tint);
@@ -686,6 +720,24 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       lights.hemi.color.copy(tint);
       lights.hemi.intensity = (0.12 + c.ambient * 0.7) * c.intensity;
       const t = state.clock.elapsedTime;
+      // luz del grabado: rasante, casi pegada a la pared interior del aro, del lado del que viene la luz de la toma
+      if (lights.engrave) {
+        lights.engrave.color.copy(tint).lerp(WHITE, 0.4);
+        lights.engrave.intensity = s.fe * 3.2;
+        const side = Math.sin(t * 0.35) * 0.35;
+        lights.engrave.position.copy(new Vector3(side - 0.55, -R0 + 0.32, 0.26).applyEuler(g.rotation));
+      }
+      // luz del puntero: sigue a la posición del ratón en el mundo con retraso y desplazada hacia arriba y hacia la cámara
+      if (lights.cursor) {
+        const pt = cursorNdc.current;
+        const live = pt.active && !reducedMotion;
+        const target = new Vector3(pt.x, pt.y, 0.35).unproject(camera);
+        target.add(new Vector3(0.6, 0.55, 0.4));
+        cursorPos.current.lerp(target, Math.min(1, dt * 2.2));
+        lights.cursor.position.copy(cursorPos.current);
+        lights.cursor.color.set("#ffe2b8");
+        lights.cursor.intensity = lerp(lights.cursor.intensity, live ? 2.6 : 0, Math.min(1, dt * 3));
+      }
       lights.spark.forEach((p, i) => {
         p.color.copy(tint);
         p.intensity = c.sparkle * hard * 9 * (1 - s.dim);
@@ -741,7 +793,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     const gy = solitaire ? (useKitHead ? kitGirdle : layout.girdle) : R0 + T;
     const head = new Vector3(0, gy, 0).applyEuler(g.rotation);
     // el despiece necesita más altura de cuadro: la cámara se aleja y apunta más arriba
-    const far = new Vector3(0, 0.6 + s.ex * 0.8, 7.2 + s.ex * 3.4);
+    const far = new Vector3(0, 0.6 + s.ex * 0.8, (7.2 + s.ex * 3.4) * s.zm);
     const near = new Vector3(head.x, head.y + 0.8 + R * 1.2, head.z + 1.2 + R * 2.8);
     camera.position.copy(far).lerp(near, s.fx);
     const aim = new Vector3(0, (solitaire ? 0.25 : 0) + s.ex * 0.75, 0).lerp(head, s.fx);
@@ -753,6 +805,21 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     const closeIn = Math.min(1.15, Math.max(0.55, (useKitShank ? 2.2 : sel.width) / 3.5)) * Math.min(2, Math.max(1, 1.25 / aspect));
     camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.85 * closeIn, bottom.z + 1.95 * closeIn), s.fe);
     aim.lerp(bottom, s.fe);
+    // de cerca del hombro: el pavé del aro y las garras de la cabeza en el mismo cuadro
+    const shoulder = new Vector3(Math.sin(0.85) * (R0 + T), Math.cos(0.85) * (R0 + T), 0).applyEuler(g.rotation);
+    camera.position.lerp(new Vector3(shoulder.x + 1.1, shoulder.y + 0.9, shoulder.z + 2.4), s.fp);
+    aim.lerp(shoulder, s.fp);
+    // el anillo cae a un lado de la pantalla: la cámara y su punto de mira se desplazan en paralelo hacia el otro
+    if (Math.abs(s.px) > 1e-3) {
+      const dir = new Vector3().subVectors(aim, camera.position);
+      const dist = dir.length();
+      const right = new Vector3().crossVectors(dir, new Vector3(0, 1, 0)).normalize();
+      const cam = camera as unknown as { fov: number; aspect: number };
+      const halfW = dist * Math.tan(((cam.fov || 30) * Math.PI) / 360) * (cam.aspect || 1);
+      const shift = right.multiplyScalar(-s.px * 2 * halfW);
+      camera.position.add(shift);
+      aim.add(shift);
+    }
     camera.lookAt(aim);
 
     if (!ready.current) {
@@ -845,8 +912,10 @@ function Rig() {
   const key = useRef<DirectionalLight>(null);
   const hemi = useRef<HemisphereLight>(null);
   const sparks = useRef<(PointLight | null)[]>([]);
+  const engrave = useRef<PointLight>(null);
+  const cursor = useRef<PointLight>(null);
   useEffect(() => {
-    scene.userData.rig = { key: key.current, hemi: hemi.current, spark: sparks.current.filter(Boolean) };
+    scene.userData.rig = { key: key.current, hemi: hemi.current, spark: sparks.current.filter(Boolean), engrave: engrave.current, cursor: cursor.current };
     return () => {
       delete scene.userData.rig;
     };
@@ -858,6 +927,10 @@ function Rig() {
       {[0, 1, 2].map((i) => (
         <pointLight key={i} ref={(p) => { sparks.current[i] = p; }} intensity={0} distance={6} decay={1.4} />
       ))}
+      {/* el grabado: una luz pequeña y rasante que se enciende cuando la cámara entra en el aro */}
+      <pointLight ref={engrave} intensity={0} distance={2.2} decay={1.6} />
+      {/* el puntero: una luz cálida que lo sigue con retraso y algo apartada, como una linterna en la mano */}
+      <pointLight ref={cursor} intensity={0} distance={7} decay={1.3} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Fragment, createContext, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import BeforeAfter from "@/components/ui/BeforeAfter";
@@ -12,10 +12,13 @@ import MetaTable from "@/components/ui/MetaTable";
 import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
+import ScrubText from "@/components/ui/ScrubText";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { money } from "@/lib/commerce/money";
+import { getLenis } from "@/lib/motion/lenis";
 import { LIGHT_PRESETS, type LightPresetName } from "@/lib/ui/light";
 import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { photo } from "@/lib/sites/photos";
@@ -144,6 +147,9 @@ export function Shell({ children }: { children: ReactNode }) {
     <SiteFrame tokens={TOKENS} className="ql" icons={{ set: phosphorLight, weight: "light" }}>
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
+          {/* scroll con inercia (Lenis): aceleración y frenada largas, para que el recorrido del anillo se sienta continuo */}
+          <SmoothScroll lerp={0.065} wheelMultiplier={0.85} syncGsap={false} />
+          <PointerGlow />
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>
           <header className="ql-head">
             <a className="ql-brand" href={href()}>Quilate</a>
@@ -174,6 +180,56 @@ export function Shell({ children }: { children: ReactNode }) {
       </QCtx.Provider>
     </SiteFrame>
   );
+}
+
+/**
+ * El puntero lleva luz: un halo cálido y grande que lo sigue con retraso y algo apartado (como una linterna en la mano, no un
+ * cursor), por encima del fondo y por debajo del contenido. Solo con ratón y sin «reducir movimiento». El anillo 3D tiene
+ * además su propia luz de puntero (ringScene).
+ */
+function PointerGlow() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!matchMedia("(pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = ref.current;
+    if (!el) return;
+    const goal = { x: innerWidth / 2, y: innerHeight / 2 };
+    const pos = { ...goal };
+    let on = 0;
+    let raf = 0;
+    let last = 0;
+    const tick = (t: number) => {
+      const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016;
+      last = t;
+      const k = 1 - Math.exp(-dt * 3.2);
+      // apartado del puntero, hacia arriba a la izquierda: la luz llega «desde la mano»
+      pos.x += (goal.x - 70 - pos.x) * k;
+      pos.y += (goal.y - 50 - pos.y) * k;
+      el.style.setProperty("--gx", `${pos.x.toFixed(1)}px`);
+      el.style.setProperty("--gy", `${pos.y.toFixed(1)}px`);
+      el.style.setProperty("--go", String(on));
+      raf = Math.abs(goal.x - 70 - pos.x) + Math.abs(goal.y - 50 - pos.y) > 0.5 ? requestAnimationFrame(tick) : 0;
+      if (!raf) last = 0;
+    };
+    const move = (e: PointerEvent) => {
+      goal.x = e.clientX;
+      goal.y = e.clientY;
+      on = 1;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const leave = () => {
+      on = 0;
+      el.style.setProperty("--go", "0");
+    };
+    addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerleave", leave);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener("pointermove", move);
+      document.removeEventListener("pointerleave", leave);
+    };
+  }, []);
+  return <div ref={ref} className="ql-glow" aria-hidden />;
 }
 
 /** Rótulo fijo con la luz activa y su finalidad: la iluminación se explica, no solo se nota. */
@@ -296,31 +352,45 @@ function Engraving({ sel }: { sel: RingSel }) {
 
 /* ---------- inicio: la casa contada por sus siete servicios ---------- */
 // el anillo del recorrido se monta con piezas del kit de Blender: aro de pavé y cesta de seis garras
+/** Los otros dos anillos de la portada: la gama de la casa de un vistazo (compleja, con halo, y sencilla, trenzada). */
+const HERO_HALO: RingSel = { ...DEFAULT_SOLITAIRE, metal: "rosa", shape: "oval", carat: 0.9, shank: "aro-afinado", head: "cabeza-halo-oval", engraving: "" };
+const HERO_BAND: RingSel = { ...DEFAULT_BAND, metal: "blanco", shank: "aro-torsade", engraving: "" };
 const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "garras6", carat: 1, pave: true, shank: "aro-pave", head: "cabeza-6-garras", engraving: "Para ti · siempre" };
 
 /**
- * Coreografía del anillo por capítulo (docs/19 §7): despiece, zoom a la piedra, grabado y giro. Entre capítulos se interpola
- * con la posición del scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
+ * Escena de scrollytelling (docs/19 §7): un prólogo y los siete capítulos, cada uno con su pose del anillo. El anillo cambia
+ * de lado de la pantalla (`x`) y los cuadros de texto van al contrario; entre pasos todo se interpola con la posición del
+ * scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
  */
 const POSES: RingPose[] = [
-  { explode: 0, head: 0, engrave: 0, yaw: 0 }, // escuchar: el boceto entero
-  { explode: 0.35, head: 0.72, engrave: 0, yaw: 0.6 }, // elegir: la piedra sale de la cesta, de cerca
-  { explode: 1, head: 0, engrave: 0, yaw: 1.4 }, // dar forma: despiece en cera (aro, cabeza, piedra)
-  { explode: 0, head: 0, engrave: 1, yaw: 0 }, // ajustar: dentro del aro, el grabado con luz rasante
-  { explode: 0, head: 0.55, engrave: 0, yaw: 2.4 }, // cuidar: cerca del pavé y las garras
-  { explode: 0.6, head: 0, engrave: 0, yaw: 3.2 }, // transformar: se abre y se rehace
-  { explode: 0, head: 0.15, engrave: 0, yaw: 4 }, // heredar: montado, de vitrina
+  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0.2, zoom: 0.85 }, // prólogo: el anillo entero, grande, a la derecha del manifiesto
+  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0.7, x: 0.22, zoom: 1 }, // escuchar: el boceto, a la derecha
+  { explode: 0.35, head: 0.5, engrave: 0, pave: 0, yaw: 1.1, x: -0.2, zoom: 1 }, // elegir: la piedra sale de la cesta, de cerca
+  { explode: 1, head: 0, engrave: 0, pave: 0, yaw: 1.9, x: 0.2, zoom: 0.95 }, // dar forma: despiece en cera
+  { explode: 0, head: 0, engrave: 1, pave: 0, yaw: 0, x: -0.18, zoom: 1 }, // ajustar: dentro del aro, el grabado
+  { explode: 0, head: 0, engrave: 0, pave: 1, yaw: 0.35, x: 0.2, zoom: 1 }, // cuidar: el hombro, pavé y garras de cerca
+  { explode: 0.6, head: 0, engrave: 0, pave: 0, yaw: 3.4, x: -0.2, zoom: 1 }, // transformar: se abre y se rehace
+  { explode: 0, head: 0.22, engrave: 0, pave: 0, yaw: 4.4, x: 0.2, zoom: 1 }, // heredar: montado, de vitrina
 ];
+const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "zoom"] as const;
 const smooth = (t: number) => t * t * (3 - 2 * t);
+/** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
+const words = (t: string) =>
+  t.split(" ").map((w, i) => (
+    <Fragment key={i}>
+      <span className="ql-w" style={{ "--i": i } as CSSProperties}>{w}</span>{" "}
+    </Fragment>
+  ));
 
 function Home() {
   const [active, setActive] = useState(0);
   const [clean, setClean] = useState(false);
   const list = useRef<HTMLOListElement>(null);
+  const sticky = useRef<HTMLDivElement>(null);
   const pose = useRef<RingPose>({ ...POSES[0] });
-  // la pose sale de dónde está la línea media de la ventana entre los centros de dos capítulos
+  // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos; también el progreso (0–1)
   useEffect(() => {
-    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-chapter]") ?? []);
+    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
     if (!items.length) return;
     let raf = 0;
     const update = () => {
@@ -336,10 +406,11 @@ function Home() {
       const a = POSES[j];
       const b = POSES[Math.min(j + 1, POSES.length - 1)];
       const p = pose.current;
-      p.explode = a.explode + (b.explode - a.explode) * t;
-      p.head = a.head + (b.head - a.head) * t;
-      p.engrave = a.engrave + (b.engrave - a.engrave) * t;
-      p.yaw = a.yaw + (b.yaw - a.yaw) * t;
+      for (const k of POSE_KEYS) p[k] = a[k] + (b[k] - a[k]) * t;
+      // en pantallas estrechas el anillo se queda centrado (los cuadros van debajo)
+      if (innerWidth < 900) p.x = 0;
+      const span = centers[centers.length - 1] - centers[0];
+      sticky.current?.style.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -353,14 +424,34 @@ function Home() {
       removeEventListener("resize", on);
     };
   }, []);
+  // el paso activo (para el aspecto del anillo, la palabra gigante y el índice)
+  const [step, setStep] = useState(0);
   useEffect(() => {
-    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-chapter]") ?? []);
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(Number(e.target.getAttribute("data-chapter")))), { rootMargin: "-50% 0px -50% 0px" });
+    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
+    const io = new IntersectionObserver(
+      (es) =>
+        es.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const i = Number(e.target.getAttribute("data-step"));
+          setStep(i);
+          setActive(Math.max(0, i - 1));
+        }),
+      { rootMargin: "-50% 0px -50% 0px" },
+    );
     items.forEach((i) => io.observe(i));
     return () => io.disconnect();
   }, []);
+  // saltar a un capítulo desde el índice: con Lenis, su propia animación (larga y con frenada); si no, la del navegador
+  const go = (i: number) => {
+    const el = list.current?.querySelector<HTMLElement>(`[data-step="${i}"]`);
+    if (!el) return;
+    const lenis = getLenis();
+    const y = scrollY + el.getBoundingClientRect().top + el.offsetHeight / 2 - innerHeight / 2;
+    if (lenis) lenis.scrollTo(y, { duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    else scrollTo({ top: y, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
   const ch = CHAPTERS[active];
-  const look = ch.id === "cuidar" && clean ? "final" : ch.look;
+  const look = step === 0 ? "final" : ch.id === "cuidar" && clean ? "final" : ch.look;
   const sel = ch.id === "transformar" ? { ...HERO_RING, metal: "rosa" as const, head: "cabeza-bisel", shank: "aro-afinado" } : HERO_RING;
 
   return (
@@ -377,38 +468,60 @@ function Home() {
             </div>
             <Rating />
           </div>
-          <RingStage sel={HERO_RING} height="min(72vh, 640px)" alt="Solitario de oro amarillo con un diamante de un quilate en seis garras y pavé en el aro, girando bajo un foco" className="ql-hero__ring" />
+          <div className="ql-trio">
+            <RingStage sel={HERO_RING} height="100%" alt="Solitario de oro amarillo con un diamante de un quilate en seis garras y pavé en el aro, girando bajo un foco" className="ql-trio__main" />
+            <RingStage sel={HERO_HALO} height="100%" alt="Anillo de oro rosa con un diamante oval rodeado de un halo de diamantes" className="ql-trio__side ql-trio__side--a" />
+            <RingStage sel={HERO_BAND} height="100%" alt="Alianza de oro blanco trenzada en dos hilos" className="ql-trio__side ql-trio__side--b" />
+          </div>
         </div>
         <p className="ql-wrap ql-hero__from">Alianzas desde {money(priceOf({ ...DEFAULT_BAND, width: 2 }), "EUR", "es-ES", true)} · solitarios desde {money(priceOf({ ...DEFAULT_SOLITAIRE, carat: 0.3, stone: "diamante-lab", setting: "garras4" }), "EUR", "es-ES", true)} · precio cerrado antes de empezar</p>
       </section>
 
-      <section className="ql-chapters" aria-label="Lo que hacemos, en siete servicios">
-        <div className="ql-chapters__stage">
-          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={`El anillo en el capítulo «${ch.title}»`} />
-          <p className="ql-chapters__now" aria-hidden>
-            <span>{ch.k}</span> {ch.title}
+      <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">
+        <div className="ql-story__sticky" ref={sticky}>
+          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={step === 0 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
+          {/* la palabra del capítulo, gigante y detrás de todo, se recompone letra a letra al cambiar de paso */}
+          <p key={step} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
+            {(step === 0 ? "Quilate" : ch.title).split("").map((l, i) => (
+              <span key={i} style={{ "--i": i } as CSSProperties}>{l === " " ? " " : l}</span>
+            ))}
           </p>
+          <nav className="ql-story__rail" aria-label="Capítulos">
+            {CHAPTERS.map((c, i) => (
+              <button key={c.id} type="button" aria-current={step === i + 1 ? "step" : undefined} onClick={() => go(i + 1)}>
+                <span>{c.k}</span> <b>{c.title}</b>
+              </button>
+            ))}
+          </nav>
+          <span className="ql-story__bar" aria-hidden />
         </div>
-        <ol className="ql-chapters__list" ref={list}>
+        <ol className="ql-story__steps" ref={list}>
+          <li data-step={0} data-light="vitrina" className="ql-step ql-step--intro" data-side="left">
+            <ScrubText as="p" className="ql-step__manifesto">No te contamos nuestra historia. Te enseñamos lo que hacemos con la tuya: siete gestos, siete luces, un anillo que se abre y se vuelve a cerrar delante de ti.</ScrubText>
+            <p className="ql-step__hint" aria-hidden>Desliza</p>
+          </li>
           {CHAPTERS.map((c, i) => (
-            <li key={c.id} id={c.id} data-chapter={i} data-light={c.light} className="ql-chapter">
-              <p className="ql-chapter__k">{c.k} · {c.title}</p>
-              <h2 className="ql-h2">{c.thesis}</h2>
-              <p className="ql-chapter__how">{c.how}</p>
-              <p className="ql-chapter__what">{c.what}</p>
-              {c.id === "cuidar" && (
-                <button type="button" className="ql-chip" aria-pressed={clean} onClick={() => setClean((v) => !v)}>
-                  {clean ? "Ver cómo llegó" : "Limpiar la pieza"}
-                </button>
-              )}
-              {c.id === "heredar" && (
-                <div className="ql-archive">
-                  <MetaTable label="Ficha de archivo (ejemplo)" rows={ARCHIVE_SAMPLE.split("\n").map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
-                  <QRCode value="https://quilate.example/archivo/0000" shape="rounded" codeSize={120} caption="El QR del estuche abre la ficha" />
-                </div>
-              )}
-              <p className="ql-chapter__light"><span aria-hidden>◐</span> Luz: {c.why}</p>
-              <a className="ql-link ql-chapter__cta" href={href(c.cta.href)}>{c.cta.label} →</a>
+            <li key={c.id} id={c.id} data-step={i + 1} data-light={c.light} className="ql-step" data-side={POSES[i + 1].x > 0 ? "left" : "right"}>
+              <div className="ql-step__card">
+                <span className="ql-step__num" aria-hidden>{c.k}</span>
+                <p className="ql-chapter__k">{c.k} · {c.title}</p>
+                <h2 className="ql-h2 ql-step__thesis">{words(c.thesis)}</h2>
+                <p className="ql-chapter__how">{c.how}</p>
+                <p className="ql-chapter__what">{c.what}</p>
+                {c.id === "cuidar" && (
+                  <button type="button" className="ql-chip" aria-pressed={clean} onClick={() => setClean((v) => !v)}>
+                    {clean ? "Ver cómo llegó" : "Limpiar la pieza"}
+                  </button>
+                )}
+                {c.id === "heredar" && (
+                  <div className="ql-archive">
+                    <MetaTable label="Ficha de archivo (ejemplo)" rows={ARCHIVE_SAMPLE.split("\n").map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
+                    <QRCode value="https://quilate.example/archivo/0000" shape="rounded" codeSize={110} caption="El QR del estuche abre la ficha" />
+                  </div>
+                )}
+                <p className="ql-chapter__light"><span aria-hidden>◐</span> Luz: {c.why}</p>
+                <a className="ql-link ql-chapter__cta" href={href(c.cta.href)}>{c.cta.label} →</a>
+              </div>
             </li>
           ))}
         </ol>

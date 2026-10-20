@@ -65,12 +65,6 @@
 .ql-rating span { color: var(--acc); letter-spacing: 2px; }
 
 /* capítulos: el anillo se queda y la luz cambia */
-.ql-chapters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding-inline: var(--st-gutter); max-width: var(--st-max); margin-inline: auto; }
-.ql-chapters__stage { position: sticky; top: var(--ql-head); height: calc(100svh - var(--ql-head)); }
-.ql-chapters__now { position: absolute; left: 0; bottom: 24px; margin: 0; font-family: var(--display); font-size: 22px; color: var(--mut); }
-.ql-chapters__now span { color: var(--acc); font-family: var(--font, inherit); font-size: 12px; letter-spacing: 0.16em; margin-right: 8px; }
-.ql-chapters__list { list-style: none; margin: 0; padding: 0; }
-.ql-chapter { display: grid; align-content: center; gap: 18px; min-height: 100svh; padding-block: 12vh; padding-left: clamp(0px, 3vw, 48px); }
 .ql-chapter__k { margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc); }
 .ql-chapter__how { margin: 0; max-width: 46ch; font-size: 17px; line-height: 1.6; }
 .ql-chapter__what { margin: 0; max-width: 46ch; font-size: 15px; line-height: 1.55; color: var(--mut); padding-left: 14px; border-left: 1px solid var(--acc); }
@@ -190,11 +184,7 @@
 
 @media (max-width: 960px) {
   .ql-hero__in, .ql-cfg, .ql-service, .ql-appt__grid, .ql-sizer { grid-template-columns: minmax(0, 1fr); }
-  .ql-hero__ring { order: -1; height: 46vh !important; }
-  .ql-chapters { grid-template-columns: minmax(0, 1fr); }
-  .ql-chapters__stage { height: 42svh; z-index: 2; background: linear-gradient(var(--bg) 70%, transparent); }
-  .ql-chapter { min-height: 90svh; padding-left: 0; }
-  .ql-cfg__stage { position: relative; top: 0; height: 52svh; }
+        .ql-cfg__stage { position: relative; top: 0; height: 52svh; }
   .ql-cfg__panel { border-left: 0; border-top: 1px solid var(--ln); }
   .ql-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ql-foot__grid { grid-template-columns: minmax(0, 1fr); }
@@ -213,4 +203,104 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .ql-stage__gl, .ql-cfg__stage, .ql-door img, .ql-btn { transition: none; }
+}
+
+/* ---------- escena de scrollytelling de la portada ----------
+   Un escenario fijo a pantalla completa (anillo, palabra gigante, índice y barra) y, por encima, los pasos que pasan con el
+   scroll. Cada cuadro va al lado contrario del anillo (data-side). Las animaciones de texto van ligadas a la vista de cada
+   paso (animation-timeline: view()), así que avanzan y retroceden con el scroll; sin soporte o con movimiento reducido, el
+   texto se ve quieto y completo. */
+.ql-story { position: relative; }
+.ql-story__sticky { position: sticky; top: var(--ql-head); height: calc(100svh - var(--ql-head)); overflow: hidden; z-index: 0; }
+.ql-story__ring { position: absolute !important; inset: 0; height: 100% !important; }
+.ql-story__steps { position: relative; z-index: 1; list-style: none; margin: calc((100svh - var(--ql-head)) * -1) 0 0; padding: 0; pointer-events: none; }
+.ql-step { display: grid; align-items: center; min-height: 120svh; padding: 10vh var(--st-gutter); max-width: var(--st-max); margin-inline: auto; }
+.ql-step:last-child { min-height: 110svh; }
+.ql-step[data-side="left"] { justify-items: start; }
+.ql-step[data-side="right"] { justify-items: end; }
+.ql-step[data-side="center"] { justify-items: center; text-align: center; }
+.ql-step__card {
+  position: relative; display: grid; gap: 16px; width: min(460px, 100%); padding: clamp(22px, 2.6vw, 34px); pointer-events: auto;
+  background: color-mix(in srgb, var(--bg) 72%, transparent); border: 1px solid var(--ln);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1);
+}
+/* número fantasma del capítulo, que se desliza más despacio que el cuadro (parallax) */
+.ql-step__num { position: absolute; top: -0.42em; right: 12px; font-family: var(--display); font-weight: 300; font-size: clamp(90px, 11vw, 168px); line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 55%, transparent); pointer-events: none; }
+.ql-step[data-side="right"] .ql-step__num { right: auto; left: 12px; }
+.ql-step__thesis { font-size: clamp(30px, 3.4vw, 50px); }
+.ql-w { display: inline-block; }
+.ql-step--intro { min-height: 130svh; }
+.ql-step__manifesto { margin: 0; max-width: 16ch; font-family: var(--display); font-weight: 300; font-size: clamp(34px, 5vw, 76px); line-height: 1.04; letter-spacing: -0.01em; pointer-events: auto; text-wrap: balance; }
+.ql-step__hint { margin: 28px 0 0; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mut); }
+
+/* la palabra del capítulo, detrás del anillo: enorme, en contorno, se recompone letra a letra y deriva con el progreso */
+.ql-story__word {
+  position: absolute; bottom: 6vh; margin: 0; white-space: nowrap; pointer-events: none; z-index: -1;
+  font-family: var(--display); font-weight: 300; font-size: clamp(90px, 17vw, 280px); line-height: 0.9; letter-spacing: -0.02em;
+  color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 22%, transparent);
+  transform: translateX(calc(var(--story-p, 0) * -8vw));
+}
+.ql-story__word[data-side="left"] { left: 4vw; }
+.ql-story__word[data-side="right"] { right: 4vw; }
+.ql-story__word span { display: inline-block; animation: ql-letter 0.9s var(--ease-out, cubic-bezier(.19,1,.22,1)) both; animation-delay: calc(var(--i) * 45ms); }
+@keyframes ql-letter { from { opacity: 0; transform: translateY(0.35em) rotate(4deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* índice lateral y barra de progreso del recorrido */
+.ql-story__rail { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 4px; z-index: 2; }
+.ql-story__rail button { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; padding: 4px 0; border: 0; background: none; color: var(--mut); font: inherit; font-size: 11px; letter-spacing: 0.12em; cursor: pointer; opacity: 0.55; transition: opacity 0.3s, color 0.3s; }
+.ql-story__rail button b { font-weight: 400; letter-spacing: 0.04em; max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 0.4s; }
+.ql-story__rail button:hover, .ql-story__rail button[aria-current="step"] { opacity: 1; color: var(--fg); }
+.ql-story__rail button[aria-current="step"] b, .ql-story__rail button:hover b { max-width: 12ch; }
+.ql-story__rail button[aria-current="step"] span { color: var(--acc); }
+.ql-story__rail button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; opacity: 1; }
+.ql-story__bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--acc); transform-origin: left; transform: scaleX(var(--story-p, 0)); opacity: 0.8; }
+
+@supports (animation-timeline: view()) {
+  /* el cuadro entra desde su lado, se queda y sale al revés: todo con la vista del paso, reversible */
+  .ql-step__card { animation: ql-card linear both; animation-timeline: view(); animation-range: entry 5% exit 95%; }
+  .ql-step[data-side="right"] .ql-step__card { --from: 60px; }
+  .ql-step[data-side="left"] .ql-step__card { --from: -60px; }
+  .ql-step__num { animation: ql-num linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  .ql-step__thesis .ql-w { animation: ql-word linear both; animation-timeline: view(); animation-range: entry calc(20% + var(--i) * 4%) cover calc(38% + var(--i) * 4%); }
+}
+@keyframes ql-card {
+  0% { opacity: 0; transform: translateX(var(--from, 0)) translateY(40px); }
+  22%, 78% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-40px); }
+}
+@keyframes ql-num { from { transform: translateY(60px); } to { transform: translateY(-60px); } }
+@keyframes ql-word { from { opacity: 0; transform: translateY(0.5em); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ql-step__card, .ql-step__num, .ql-step__thesis .ql-w, .ql-story__word span { animation: none !important; }
+  .ql-story__word { transform: none; }
+}
+@media (max-width: 899px) {
+  /* el anillo arriba y centrado; los cuadros pasan por debajo, a todo el ancho */
+  .ql-story__ring { inset: 0 0 34% 0 !important; height: auto !important; }
+  .ql-step, .ql-step[data-side="left"], .ql-step[data-side="right"] { justify-items: stretch; align-items: end; padding-bottom: 6vh; }
+  .ql-step__card { width: 100%; }
+  .ql-story__rail { display: none; }
+  .ql-story__word { bottom: auto; top: 2vh; font-size: 26vw; }
+  .ql-step--intro { align-items: center; }
+}
+
+/* portada: tres anillos (la gama de la casa). El principal manda; los otros dos, más pequeños y desfasados, a los lados.
+   En móvil solo el principal (los ocultos no llegan a montar su lienzo: el 3D se monta al entrar en pantalla). */
+.ql-trio { position: relative; height: min(74vh, 660px); min-width: 0; }
+.ql-trio__main { position: absolute !important; inset: 6% 8% 0 14%; height: auto !important; z-index: 2; }
+.ql-trio__side { position: absolute !important; height: auto !important; width: 38%; aspect-ratio: 1; z-index: 1; }
+.ql-trio__side--a { left: -6%; top: 0; }
+.ql-trio__side--b { right: -4%; bottom: -2%; }
+@media (max-width: 960px) {
+  .ql-trio { order: -1; height: 46vh; }
+  .ql-trio__main { inset: 0; }
+  .ql-trio__side { display: none; }
+}
+
+/* halo del puntero: cálido, grande y suave; se suma a la luz de la sección (mix-blend screen) sin tapar el texto */
+.ql-glow {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: var(--go, 0); transition: opacity 0.6s var(--ease-io, ease);
+  background: radial-gradient(circle 340px at var(--gx, 50%) var(--gy, 50%), rgb(255 214 160 / 0.13), rgb(255 214 160 / 0.04) 45%, transparent 70%);
+  mix-blend-mode: screen;
 }

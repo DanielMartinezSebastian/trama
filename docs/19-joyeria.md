@@ -306,6 +306,32 @@ Taller de joyería ficticio en Valencia. Guía visual G1 «lujo tranquilo» en o
 | Tu talla | Medidor en pantalla |
 | Cita | Motivo (también por `?motivo=`), taller o videollamada, `DatePicker` con huecos y festivos, datos mínimos, la pieza que se lleva y el horario |
 
+**Portada: tres anillos** (la gama de un vistazo): el solitario del recorrido delante y, más pequeños y desfasados, un halo
+oval de oro rosa sobre aro afinado y una alianza torsade de oro blanco, todos con piezas del kit. En móvil solo el
+principal; los otros no llegan a montar su lienzo.
+
+**Escena de scrollytelling** (sustituye a las dos columnas):
+- **Escenario fijo a pantalla completa** con el anillo, la palabra del capítulo gigante en contorno (se recompone letra a
+  letra y deriva con el progreso), un índice lateral clicable y una barra de progreso.
+- **Pasos**: un prólogo con manifiesto (`ScrubText`) y siete capítulos. Cada cuadro de texto va **al lado contrario del
+  anillo**, que cambia de lado en cada paso (`x` en la pose). Las animaciones de texto van con `animation-timeline: view()`:
+  - el cuadro entra desde su lado y sale hacia arriba;
+  - el número fantasma tiene parallax;
+  - el titular se monta palabra a palabra.
+
+  Todo avanza y retrocede con el scroll; sin soporte o con movimiento reducido, el texto se ve quieto.
+- **Poses nuevas**: `pave`, para acercarse al hombro del aro con el pavé y las garras; `x`, para el desplazamiento lateral
+  (la cámara se mueve en paralelo); y `zoom`.
+- **Luz del grabado**: en «Ajustar» se enciende una luz puntual rasante pegada a la pared interior del aro, que se mueve
+  despacio y dibuja las letras.
+- **El puntero emite luz**:
+  - en 3D, una luz cálida que sigue al ratón con retraso y desplazada hacia la cámara;
+  - en la página, un halo grande (`PointerGlow`) que llega apartado del puntero, «desde la mano».
+
+  Solo con ratón y sin movimiento reducido.
+- **Lenis** (`SmoothScroll lerp={0.065}`): aceleración y frenada largas. Medido: una vuelta de rueda sigue avanzando
+  alrededor de 1 s (21 → 330 px en 840 ms). El índice salta con `lenis.scrollTo` (1,6 s, salida en cuarta potencia).
+
 **Coreografía del recorrido** (portada):
 - El anillo del recorrido se monta con piezas del kit: aro de pavé, cesta de seis garras, 1 ct y grabado «Para ti · siempre».
 - Sigue una pose por capítulo (`POSES` en `Site.tsx`):
