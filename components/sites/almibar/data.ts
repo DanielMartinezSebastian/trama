@@ -10,7 +10,7 @@ export const meta = {
   name: "Almíbar",
   title: "Almíbar · pastelería de obrador",
   blurb:
-    "Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger con día y franja, tarta por encargo en pasos con precio y alérgenos en vivo (48 h de antelación, señal del 30 %), barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker, ActionBar, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, Stepper, TestimonialSection, FAQSection y CookieBanner.",
+    "Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger y tarta por encargo en UNA página cada uno (tienda, día con atajos «Hoy · Mañana», hora, nombre y teléfono; pago al recoger; precio y alérgenos en vivo, 48 h de antelación, señal del 30 %), reseñas con resumen y slider, transición de página en barrido frambuesa, barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker (shortcuts), ActionBar, PageTransition, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, TestimonialSection, FAQSection y CookieBanner.",
   accent: "#c2415d",
   tag: "pastelería · obrador",
 };

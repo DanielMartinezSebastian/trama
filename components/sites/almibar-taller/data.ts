@@ -9,7 +9,7 @@ export const meta = {
   name: "Almíbar · Taller",
   title: "Almíbar Taller · tartas a medida",
   blurb:
-    "Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y una solicitud con señal del 30 %. Sin WebGL o con movimiento reducido, la misma tarta en SVG.",
+    "Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y el encargo en la misma pantalla del diseñador (recogida con atajos de día, nombre y teléfono, señal del 30 %). Transiciones de página en iris y la tarta que viaja de la portada al diseñador. Sin WebGL o con movimiento reducido, la misma tarta en SVG.",
   accent: "#b4475d",
   tag: "pastelería · 3D",
 };
@@ -19,7 +19,6 @@ export const ROUTES = [
   { path: "disena", title: "Diseña tu tarta" },
   { path: "bodas", title: "Bodas" },
   { path: "empresas", title: "Empresas" },
-  { path: "solicitud", title: "Solicitud" },
 ];
 
 /** Fases del despiece de la portada (una por tramo del scroll). */

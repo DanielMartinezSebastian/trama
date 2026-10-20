@@ -13,6 +13,8 @@ export type CakeStageProps = {
   sel: CakeSel;
   /** 0 = montada · 1 = despiece; con `explodeVar` se lee de una variable CSS del ancestro (p. ej. `--pin-p` de PinnedSection) */
   explode?: number;
+  /** 0 = entera · 1 = la porción sacada hacia delante (se ve por dentro) */
+  cut?: number;
   /** nombre de la variable CSS (0–1) que manda el despiece; se lee cada fotograma */
   explodeVar?: string;
   /** tramo de esa variable que hace el despiece completo: [inicio, fin] */
@@ -34,12 +36,16 @@ export type CakeStageProps = {
  * el dibujo plano (SVG), y three solo si el equipo puede, no se pide reducir movimiento y está cerca de la pantalla; fuera
  * de ella el lienzo deja de dibujar. Un solo lienzo por tarta.
  */
-export default function CakeStage({ sel, explode = 0, explodeVar, explodeRange = [0, 1], explodeCurve, turntable = true, draggable = false, height = "60vh", alt, className = "" }: CakeStageProps) {
+export default function CakeStage({ sel, explode = 0, cut = 0, explodeVar, explodeRange = [0, 1], explodeCurve, turntable = true, draggable = false, height = "60vh", alt, className = "" }: CakeStageProps) {
   const root = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const [ready, setReady] = useState(false);
   const { use3d, mounted, near, fail } = useGLGate(root, { want: !reduced, margin: "200px" });
   const ex = useRef(explode);
+  const cutRef = useRef(cut);
+  useEffect(() => {
+    cutRef.current = cut;
+  }, [cut]);
   const drag = useRef(0);
   const [r0, r1] = explodeRange;
 
@@ -93,12 +99,13 @@ export default function CakeStage({ sel, explode = 0, explodeVar, explodeRange =
         <div className={`tl-stage__gl ${ready ? "is-on" : ""}`}>
           <GLBoundary onError={fail}>
             <Suspense fallback={null}>
-              <CakeScene sel={sel} explode={ex} drag={drag} turntable={turntable} active={near} onReady={() => setReady(true)} />
+              <CakeScene sel={sel} explode={ex} cut={cutRef} drag={drag} turntable={turntable} active={near} onReady={() => setReady(true)} />
             </Suspense>
           </GLBoundary>
         </div>
       )}
-      {sel.toppings.includes("mensaje") && sel.message.trim() && <p className="tl-stage__msg" aria-hidden>«{sel.message.trim()}»</p>}
+      {/* en 3D el mensaje va escrito en la placa de chocolate; en el dibujo plano, encima */}
+      {!ready && sel.toppings.includes("mensaje") && sel.message.trim() && <p className="tl-stage__msg" aria-hidden>«{sel.message.trim()}»</p>}
     </div>
   );
 }

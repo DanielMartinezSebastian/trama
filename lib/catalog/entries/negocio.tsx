@@ -15,13 +15,15 @@ const HOURS = "L-V|07:30-14:00 17:00-20:30\nS|08:00-14:30\nD|cerrado";
 const MENU =
   "#Bollería|Del horno, cada mañana desde las 6\nCroissant de mantequilla|Hojaldre de 27 capas con mantequilla de Soria|1,90|gluten,huevo,leche|\nNapolitana de chocolate|Con chocolate negro al 70 %|2,20|gluten,huevo,leche,soja|\nPan de masa madre|Fermentación de 24 horas, 750 g|4,50|gluten|vegano\n#Tartas|Porción o entera por encargo\nTarta de queso|Al horno, cremosa por dentro|4,80|leche,huevo,gluten|la más pedida\nTarta de almendra|Sin harina de trigo|4,50|huevo,frutos de cáscara|sin gluten\nBizcocho de aceite y limón|Esponjoso, sin lácteos|3,20|gluten,huevo|sin lactosa";
 
-function DateDemo({ mode, months, slots }: { mode: "single" | "range"; months: 1 | 2; slots: boolean }) {
+function DateDemo({ mode, months, slots, shortcuts, calendar }: { mode: "single" | "range"; months: 1 | 2; slots: boolean; shortcuts: number; calendar: "open" | "collapsed" }) {
   const [v, setV] = useState("");
   const [s, setS] = useState("");
   return (
     <DatePicker
       mode={mode}
       months={months}
+      shortcuts={shortcuts}
+      calendar={calendar}
       value={v}
       onChange={setV}
       slot={s}
@@ -104,12 +106,14 @@ export const negocio: CatalogEntry[] = [
       { key: "mode", label: "Modo", type: "select", default: "single", options: ["single", "range"], labels: { single: "un día", range: "rango (llegada y salida)" } },
       { key: "months", label: "Meses a la vista", type: "select", default: "1", options: ["1", "2"] },
       { key: "slots", label: "Huecos del día (slots)", type: "boolean", default: true, noCode: true, when: (p) => p.mode === "single" },
+      { key: "shortcuts", label: "Atajos («Hoy», «Mañana»…)", type: "number", default: 0, min: 0, max: 6, step: 1, when: (p) => p.mode === "single" },
+      { key: "calendar", label: "Calendario", type: "select", default: "open", options: ["open", "collapsed"], labels: { open: "siempre a la vista", collapsed: "plegado tras «Otro día…»" }, when: (p) => p.mode === "single" && (p.shortcuts as number) > 0 },
       variantProp("minimal"),
     ],
-    notes: ["La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).", "`min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación."],
+    notes: ["La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).", "`min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación.", "Para pedidos rápidos (recoger hoy o mañana): shortcuts={4} calendar=\"collapsed\" — los próximos días disponibles como botones y el calendario solo si se pide (ver /sitios/almibar/pedido)."],
     render: (p) => (
       <div style={{ width: `min(100%, ${p.months === "2" ? 640 : 380}px)`, padding: 16 }}>
-        <DateDemo key={`${p.mode}-${p.months}-${p.slots}`} mode={p.mode as never} months={Number(p.months) as 1 | 2} slots={p.slots as boolean} />
+        <DateDemo key={`${p.mode}-${p.months}-${p.slots}-${p.shortcuts}-${p.calendar}`} mode={p.mode as never} months={Number(p.months) as 1 | 2} slots={p.slots as boolean} shortcuts={p.shortcuts as number} calendar={p.calendar as never} />
       </div>
     ),
   },
