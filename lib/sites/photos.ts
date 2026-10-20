@@ -5,7 +5,7 @@
  */
 import credits from "./photo-credits.json";
 
-export type PhotoTopic = "arquitectura" | "interiores" | "eventos" | "objetos" | "estudio" | "naturaleza" | "ciudad" | "gastronomia" | "deporte" | "verano" | "pasteleria";
+export type PhotoTopic = "arquitectura" | "interiores" | "eventos" | "objetos" | "estudio" | "naturaleza" | "ciudad" | "gastronomia" | "deporte" | "verano" | "pasteleria" | "joyeria";
 export type Photo = { file: string; topic: string; title: string; author: string; license: string; licenseUrl: string; page: string; width: number; height: number; src: string };
 
 const all: Photo[] = (credits as Omit<Photo, "src">[]).map((c) => ({ ...c, src: `/img/${c.file}` }));

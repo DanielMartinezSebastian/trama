@@ -29,7 +29,8 @@ const EXCLUDE: string[] = [
   "Big Desert Wilderness Area, Victoria, Australia (Unsplash).jpg", "Coffee art and iphone (Unsplash).jpg", "Sambazon 2016 (Unsplash).jpg", "Tidal Basin, Washington, United States (Unsplash xVnPN3fVGfY).jpg", "West Rim Trail, Grand Canyon Village, United States (Unsplash).jpg", "plant-in-a-coworking", "paris-coffee", "man-in-cafe", "aerial-view-of-cape-town", "food-of-the-city",
 ];
 
-const TOPICS: Record<string, { n: number; queries: string[] }> = {
+/** `match`: el título tiene que encajar (temas en los que la búsqueda de Commons trae mucho ruido). */
+const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> = {
   arquitectura: { n: 7, queries: ["unsplash modern architecture", "unsplash building facade", "pexels architecture glass building", "modern architecture building facade"] },
   interiores: { n: 6, queries: ["unsplash interior design", "unsplash modern interior living room", "pexels interior lobby", "interior design modern living room"] },
   eventos: { n: 6, queries: ["unsplash concert crowd", "unsplash festival stage lights", "pexels conference audience", "music festival crowd stage"] },
@@ -40,6 +41,7 @@ const TOPICS: Record<string, { n: number; queries: string[] }> = {
   gastronomia: { n: 5, queries: ["unsplash restaurant food", "unsplash coffee cafe", "pexels plated dish", "unsplash bread bakery"] },
   deporte: { n: 8, queries: ["unsplash racing car", "unsplash motorsport", "pexels race car", "unsplash athlete portrait", "unsplash cyclist road", "unsplash helmet"] },
   pasteleria: { n: 14, queries: ["unsplash cake", "unsplash pastry", "unsplash croissant", "unsplash bakery", "unsplash macarons", "unsplash cupcake", "pexels cake", "pexels pastry", "unsplash dessert", "unsplash tart", "unsplash cheesecake", "unsplash donut", "unsplash cinnamon roll", "unsplash wedding cake", "unsplash strawberry cake", "pexels bakery"] },
+  joyeria: { n: 10, queries: ["jewelry unsplash", "jewellery unsplash", "necklace unsplash", "earrings unsplash", "gold ring unsplash", "wedding rings unsplash", "diamond ring macro", "goldsmith at work", "jeweller workshop bench", "jewelry pexels", "gemstones cut", "gold rings"], match: /\b(rings?|bands?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant)\b/i },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 
@@ -67,7 +69,7 @@ async function search(q: string, quality: boolean): Promise<Cand[]> {
     .filter((x): x is Cand => x !== null);
 }
 
-async function pick(topic: string, cfg: { n: number; queries: string[] }): Promise<Cand[]> {
+async function pick(topic: string, cfg: { n: number; queries: string[]; match?: RegExp }): Promise<Cand[]> {
   const pool = new Map<string, Cand>();
   for (const q of cfg.queries) {
     for (const quality of [true, false]) {
@@ -80,7 +82,7 @@ async function pick(topic: string, cfg: { n: number; queries: string[] }): Promi
     }
   }
   // calidad primero, luego resolución; máximo 2 por autor y sin dibujos/mapas por el título
-  const ranked = [...pool.values()].filter((c) => !/\b(map|drawing|plan|diagram|logo|poster|stamp|coat of arms|screenshot)\b/i.test(c.title)).sort((a, b) => Number(/unsplash|pexels/i.test(b.title)) - Number(/unsplash|pexels/i.test(a.title)) || Number(b.quality) - Number(a.quality) || b.w * b.h - a.w * a.h);
+  const ranked = [...pool.values()].filter((c) => !cfg.match || cfg.match.test(c.title)).filter((c) => !/\b(map|drawing|plan|diagram|logo|poster|stamp|coat of arms|screenshot)\b/i.test(c.title)).sort((a, b) => Number(/unsplash|pexels/i.test(b.title)) - Number(/unsplash|pexels/i.test(a.title)) || Number(b.quality) - Number(a.quality) || b.w * b.h - a.w * a.h);
   const per = new Map<string, number>();
   const out: Cand[] = [];
   for (const c of ranked) {
