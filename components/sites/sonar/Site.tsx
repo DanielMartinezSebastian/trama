@@ -14,7 +14,7 @@ import Toggle from "@/components/ui/Toggle";
 import { city } from "@/lib/sites/maqueta";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { SiteFrame, siteHref } from "../shared";
 import { SERVICES, SLUG, WORKS } from "./data";
 import "./sonar.css";
@@ -80,8 +80,8 @@ export function Shell({ children }: { children: ReactNode }) {
   };
 
   return (
-    <SiteFrame tokens={TOKENS} className="sn" icons={{ set: phosphor, weight: "light" }}>
-      <SmoothScroll />
+    <SiteFrame tokens={TOKENS} className="sn" icons={{ set: phosphorLight, weight: "light" }}>
+      <SmoothScroll syncGsap={false} />
       <Modal
         size="full"
         open={gate}

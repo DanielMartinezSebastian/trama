@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { CHARSETS, drawAsciiCover, drawCorruption, drawRedact, drawStatic, hash, type AsciiPattern, type CharsetId } from "@/lib/ui/fx";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type PresenceEffect =
   | "ascii-random"
@@ -129,7 +130,7 @@ export default function Presence({
     if (!el || !c || !canvas || !bootEl) return;
     let disposed = false;
     const cleanups: Array<() => void> = [];
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = prefersReducedMotion();
     const skip = first.current && !autoplay;
     first.current = false;
 

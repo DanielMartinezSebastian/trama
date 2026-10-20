@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { attachDragPan } from "@/lib/ui/dragPan";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type DragGridItem = {
   src: string;
@@ -53,7 +54,7 @@ export default function DragGrid({ items, cellWidth = 260, ratio = 0.8, gap = 14
     const el = view.current;
     const host = pool.current;
     if (!el || !host || items.length === 0) return;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     const cw = cellWidth + gap;
     const ch = cellWidth / ratio + gap;
     let cols = 0;

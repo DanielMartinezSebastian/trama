@@ -12,7 +12,7 @@ import ProjectList from "@/components/ui/ProjectList";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import { photo } from "@/lib/sites/photos";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorBold } from "@/lib/ui/icons-phosphor-bold";
 import { SiteFrame, siteHref } from "../shared";
 import { DAYS, FACTS, SLUG, TALKS } from "./data";
 import "./foro.css";
@@ -31,9 +31,9 @@ const talkItems = (list: typeof TALKS) => list.map((t) => ({ title: t.title, met
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="fr" icons={{ set: phosphor, weight: "bold" }}>
+    <SiteFrame tokens={TOKENS} className="fr" icons={{ set: phosphorBold, weight: "bold" }}>
       <Preloader variant="fill" brand="ArcoForo" duration={1.8} />
-      <SmoothScroll />
+      <SmoothScroll syncGsap={false} />
       <CustomCursor hideNative />
       <main id="contenido">{children}</main>
       <BigFooter heading="ArcoForo" lead="Recibe las novedades del festival" email="hola@arcoforo.example" links={[{ label: "Programa", href: href("programa") }, { label: "Inicio", href: href() }]} note="© 2026 ArcoForo" credit="Créditos de las imágenes" creditHref="/creditos" city="Montreal" timeZone="America/Toronto" />

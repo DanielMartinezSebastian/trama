@@ -24,7 +24,7 @@ import Timeline from "@/components/ui/Timeline";
 import { money } from "@/lib/commerce/money";
 import { BRAND, CAKE, LEGAL, REVIEWS, STORES, bakeryJsonLd, cakeAllergens, cakePrice, pickupSlots } from "@/lib/sites/almibar";
 import { photo } from "@/lib/sites/photos";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import CakeStage from "./CakeStage";
@@ -89,7 +89,7 @@ export function Shell({ children }: { children: ReactNode }) {
   useEffect(() => setMenu(false), [path]);
 
   return (
-    <SiteFrame tokens={TOKENS} className="tl" icons={{ set: phosphor, weight: "light" }}>
+    <SiteFrame tokens={TOKENS} className="tl" icons={{ set: phosphorLight, weight: "light" }}>
       <CakeCtx.Provider value={value}>
         <a className="tl-skip" href="#contenido">Saltar al contenido</a>
         <PageTransitionPersist name="tl-head">
@@ -120,7 +120,7 @@ export function Shell({ children }: { children: ReactNode }) {
           onNavigate={(h) => navigate({ href: h })}
           variant="minimal"
         />
-        <CookieBanner storageKey="almibar-taller-cookies" policyHref="#cookies" position="bottom-left" title="¿Unas cookies?" text="Solo las necesarias para que funcione el diseñador. Las de medición, si nos dejas." variant="minimal" />
+        <CookieBanner storageKey="almibar-taller-cookies" policyHref="#cookies" position="bottom-right" title="¿Unas cookies?" text="Solo las necesarias para que funcione el diseñador. Las de medición, si nos dejas." variant="minimal" />
         {/* eslint-disable-next-line react/no-danger */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bakeryJsonLd(href())).replace(/</g, "\\u003c") }} />
       </CakeCtx.Provider>

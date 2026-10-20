@@ -103,7 +103,7 @@ export const ronda3: CatalogEntry[] = [
     description: "Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Aceptar», hay vista «Personalizar» con categorías y recuerda la elección. No bloquea la página. Está hecho con Button y Toggle: para teñirlo, redefine --bg, --fg y --acc sobre .ui-cook.",
     stageHeight: 400,
     props: [
-      { key: "position", label: "Posición", type: "select", default: "bottom-left", options: ["bottom-left", "bottom-right", "bottom"] },
+      { key: "position", label: "Posición", type: "select", default: "bottom-right", options: ["bottom-right", "bottom-left", "bottom"] },
       { key: "title", label: "Título", type: "text", default: "¿Qué te parecen las cookies?" },
       variantProp("minimal"),
     ],

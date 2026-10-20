@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { tcls, type Tone } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type StatCounterProps = {
   value: number;
@@ -31,7 +32,7 @@ const fmt = (n: number, format: StatCounterProps["format"], decimals: number) =>
 };
 
 /**
- * Cifra grande en ASCII (fuente bitmap 7×7 de asciify-engine) que cuenta hacia arriba con GSAP.
+ * Cifra grande en ASCII (fuente bitmap 7×7 de asciify-engine) que cuenta hacia arriba (rAF con curva power2.out, sin GSAP).
  * Pensada para secciones de "resultados" de una landing.
  */
 export default function StatCounter({
@@ -65,37 +66,39 @@ export default function StatCounter({
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    let disposed = false;
     const cleanups: Array<() => void> = [];
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = prefersReducedMotion();
 
-    (async () => {
-      const { gsap } = await import("gsap");
-      if (disposed) return;
-      const obj = { v: 0 };
-      const run = () => {
-        gsap.killTweensOf(obj);
-        obj.v = 0;
-        gsap.to(obj, { v: value, duration, ease: "power2.out", onUpdate: () => setShown(obj.v) });
+    // cuenta de 0 a `value` con la curva power2.out de GSAP (1 − (1 − t)²), sin cargar GSAP
+    let raf = 0;
+    const stop = () => cancelAnimationFrame(raf);
+    const run = () => {
+      stop();
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const t = duration > 0 ? Math.min(1, (now - t0) / (duration * 1000)) : 1;
+        setShown(value * (1 - (1 - t) * (1 - t)));
+        if (t < 1) raf = requestAnimationFrame(step);
       };
-      if (reduce) {
-        setShown(value);
-      } else if (trigger === "hover") {
-        setShown(value);
-        el.addEventListener("mouseenter", run);
-        cleanups.push(() => el.removeEventListener("mouseenter", run));
-      } else if (trigger === "inview") {
-        const io = new IntersectionObserver(([e]) => e.isIntersecting && run(), { threshold: 0.4 });
-        io.observe(el);
-        cleanups.push(() => io.disconnect());
-      } else {
-        run();
-      }
-      cleanups.push(() => gsap.killTweensOf(obj));
-    })();
+      setShown(0);
+      raf = requestAnimationFrame(step);
+    };
+    if (reduce) {
+      setShown(value);
+    } else if (trigger === "hover") {
+      setShown(value);
+      el.addEventListener("mouseenter", run);
+      cleanups.push(() => el.removeEventListener("mouseenter", run));
+    } else if (trigger === "inview") {
+      const io = new IntersectionObserver(([e]) => e.isIntersecting && run(), { threshold: 0.4 });
+      io.observe(el);
+      cleanups.push(() => io.disconnect());
+    } else {
+      run();
+    }
+    cleanups.push(stop);
 
     return () => {
-      disposed = true;
       cleanups.reverse().forEach((f) => f());
     };
   }, [value, duration, trigger, playKey]);

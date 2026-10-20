@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { tcls, type Tone } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type HoverEffectKind = "none" | "lift" | "scale" | "tilt" | "glow" | "shine" | "scanline" | "jitter" | "brackets" | "underline";
 
@@ -60,15 +61,16 @@ export default function HoverFX({
     const box = inner.current;
     if (!el || !box || disabled) return;
     if (fx !== "tilt" && fx !== "glow") return;
-    if (window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches || prefersReducedMotion()) return;
     let disposed = false;
     let off: (() => void) | undefined;
 
     (async () => {
-      const { gsap } = await import("gsap");
+      // solo `tilt` anima con GSAP; `glow` se queda en dos variables CSS y no lo descarga
+      const gsap = fx === "tilt" ? (await import("gsap")).gsap : null;
       if (disposed) return;
-      const rx = fx === "tilt" ? gsap.quickTo(box, "rotationX", { duration: 0.5, ease: "power3.out" }) : null;
-      const ry = fx === "tilt" ? gsap.quickTo(box, "rotationY", { duration: 0.5, ease: "power3.out" }) : null;
+      const rx = gsap ? gsap.quickTo(box, "rotationX", { duration: 0.5, ease: "power3.out" }) : null;
+      const ry = gsap ? gsap.quickTo(box, "rotationY", { duration: 0.5, ease: "power3.out" }) : null;
       const move = (e: PointerEvent) => {
         const r = el.getBoundingClientRect();
         const nx = (e.clientX - r.left) / r.width;
@@ -91,7 +93,7 @@ export default function HoverFX({
       off = () => {
         el.removeEventListener("pointermove", move);
         el.removeEventListener("pointerleave", leave);
-        gsap.killTweensOf(box);
+        gsap?.killTweensOf(box);
       };
     })();
 

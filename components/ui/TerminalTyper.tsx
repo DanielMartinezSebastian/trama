@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type TerminalTyperProps = {
   /** una línea por renglón; las que empiezan por el prompt se pintan con `--acc2` */
@@ -40,7 +41,7 @@ export default function TerminalTyper({
   const [typed, setTyped] = useState(0);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       setTyped(total);
       return;
     }

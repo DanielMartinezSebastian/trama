@@ -28,7 +28,7 @@ import Timeline from "@/components/ui/Timeline";
 import Toast from "@/components/ui/Toast";
 import { securityArt } from "@/lib/sites/art";
 import { tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorRegular } from "@/lib/ui/icons-phosphor-regular";
 import { PageHeader, Section, SiteFrame, euros, siteHref, useActiveIndex, useSiteNavigate } from "../shared";
 import { CHAT_RULES, PLANS, SERVICES, SLUG, type Service } from "./data";
 import "./vigia.css";
@@ -55,7 +55,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const L = [href(), href("servicios"), href("planes"), href("contacto")];
   const active = useActiveIndex(L);
   return (
-    <SiteFrame tokens={TOKENS} className="vg" icons={{ set: phosphor, weight: "regular" }}>
+    <SiteFrame tokens={TOKENS} className="vg" icons={{ set: phosphorRegular, weight: "regular" }}>
       <div className="st-header">
         <NavBar
           brand="VIGÍA"

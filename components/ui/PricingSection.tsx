@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import PricingCard, { type PricingCardProps } from "./PricingCard";
-import Carousel from "./Carousel";
+import Carousel from "./CarouselLazy";
 import type { CardFill } from "./fill";
 import SectionHeader from "./SectionHeader";
 import { splitEscaped } from "@/lib/ui/list";

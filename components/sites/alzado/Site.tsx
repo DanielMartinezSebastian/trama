@@ -14,7 +14,7 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import SplitText from "@/components/ui/SplitText";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorThin } from "@/lib/ui/icons-phosphor-thin";
 import { SiteFrame, siteHref } from "../shared";
 import { HERO_BLOCKS, HERO_DIMS, HERO_PATH, HERO_WORLD, MAP_BLOCKS, MAP_WORLD, SERVICES, SITES, SLUG, WORKS } from "./data";
 import "./alzado.css";
@@ -39,9 +39,9 @@ const items = () => WORKS.map((w) => ({ title: w.title, meta: w.kind, year: w.ye
 /* ---------- marco ---------- */
 export function Shell({ children }: { children: ReactNode }) {
   return (
-    <SiteFrame tokens={TOKENS} className="az" icons={{ set: phosphor, weight: "thin" }}>
+    <SiteFrame tokens={TOKENS} className="az" icons={{ set: phosphorThin, weight: "thin" }}>
       <Preloader variant="fill" brand="Alzado" meta="Valencia · 2026" exit="curtain" />
-      <SmoothScroll />
+      <SmoothScroll syncGsap={false} />
       <CustomCursor />
       <header className="az-head">
         <a className="az-brand" href={href()}>Alzado<span aria-hidden>°</span></a>

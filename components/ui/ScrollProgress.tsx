@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import { tcls, vcls, type Tone, type Variant } from "./variants";
+import { clamp01 } from "@/lib/motion/progress";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ScrollProgressProps = {
   /** borde o esquina donde se ancla · inline = dentro del flujo, donde lo pongas (cabecera, tarjeta, lateral de un artículo) */
@@ -33,7 +35,6 @@ export type ScrollProgressProps = {
 /** caracteres ascii por variante cuando `chars` está vacío: [lleno, vacío] */
 const ASCII_CHARS: Partial<Record<Variant, string>> = { terminal: "#-", retro: "█░", dotmatrix: "●·", neon: "▰▱", minimal: "━─" };
 
-const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
 
 /** El contenedor con scroll más cercano (o la página si no hay ninguno). */
 function scrollParent(el: HTMLElement | null): HTMLElement | null {
@@ -74,7 +75,7 @@ export default function ScrollProgress({
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     const src: HTMLElement | Window | null =
       target === "window" ? window : target === "parent" ? (scrollParent(el) ?? window) : (document.querySelector<HTMLElement>(target) ?? null);
     if (!src) return;

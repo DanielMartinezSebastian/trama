@@ -1,9 +1,10 @@
 "use client";
 
-import { Children, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Children, useMemo, type ReactNode } from "react";
 import { A11y, Autoplay, EffectCards, EffectFade, FreeMode, Keyboard, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide, type SwiperProps } from "swiper/react";
 import "./swiperCss";
+import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { vcls, type Variant } from "./variants";
 
 export type CarouselProps = {
@@ -28,25 +29,13 @@ export type CarouselProps = {
   className?: string;
 };
 
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const on = () => setReduced(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return reduced;
-}
-
 /**
  * Carrusel genérico sobre Swiper (https://swiperjs.com/) con el lenguaje del kit: flechas y puntos cuadrados que leen las
  * variables `--s-*` de la variante, y sin estilos propios de color (todo sale de los tokens). Sirve para cualquier lista de
  * tarjetas: los componentes de sección lo usan con su prop `layout="carousel"`.
  */
 export default function Carousel({ children, perView = 3, gap = 20, loop = false, autoplay = 0, arrows = true, dots = "bullets", effect = "slide", ticker = false, variant = "glass", label = "Carrusel", className = "" }: CarouselProps) {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion();
   const slides = Children.toArray(children);
   const single = effect !== "slide" && !ticker;
   const pv = single ? 1 : Math.max(1, Math.round(perView));

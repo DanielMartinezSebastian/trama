@@ -2,7 +2,8 @@
 
 import { useSyncExternalStore } from "react";
 
-const QUERY = "(prefers-reduced-motion: reduce)";
+export const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const QUERY = REDUCED_MOTION_QUERY;
 
 const subscribe = (cb: () => void) => {
   const mq = matchMedia(QUERY);
@@ -17,3 +18,6 @@ const subscribe = (cb: () => void) => {
 export function useReducedMotion() {
   return useSyncExternalStore(subscribe, () => matchMedia(QUERY).matches, () => false);
 }
+
+/** Lectura puntual (dentro de un efecto o un manejador): `true` si el sistema pide reducir el movimiento. `false` en el servidor. */
+export const prefersReducedMotion = () => typeof matchMedia === "function" && matchMedia(QUERY).matches;

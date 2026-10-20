@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import type { SourceKind } from "@/lib/asciify/painters";
 import { ANIMATED_FIELDS, drawCardField, type CardCharset, type CardField, type CardFieldColor, type CardFieldHover } from "@/lib/ui/card-fields";
 import { token } from "@/lib/ui/tokens";
 import { useTokens } from "@/lib/ui/useTokens";
-import AsciiBackground, { type ASCII_STYLES } from "./AsciiBackground";
+import type { ASCII_STYLES } from "./AsciiBackground";
 import { fillProps, type CardFill, type CardPattern, type CardTone } from "./fill";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
+
+// solo con `background="scene"`: la escena y sus painters no viajan en el resto de tarjetas
+const AsciiBackground = lazy(() => import("./AsciiBackground"));
 
 export type HoverFx = "spotlight" | "magnify" | "repel" | "glow" | "colorShift" | "attract" | "shatter" | "trail" | "glitchText";
 
@@ -153,7 +157,7 @@ export default function AsciiCard({
 
     let disposed = false;
     const cleanups: Array<() => void> = [];
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = prefersReducedMotion();
     const coarse = window.matchMedia("(pointer: coarse)").matches;
 
     (async () => {
@@ -384,7 +388,9 @@ export default function AsciiCard({
       data-corner={glyph}
     >
       {background === "scene" && (
-        <AsciiBackground scene={scene} asciiStyle={sceneStyle} cellSize={Math.max(4, Math.round(tileSize * 0.7))} palette="tint" tintAmount={0.7} asciiHover="none" bloom={0} vignette={0.4} fps={30} opacity={Math.max(0.1, tileOpacity / 255)} />
+        <Suspense fallback={null}>
+          <AsciiBackground scene={scene} asciiStyle={sceneStyle} cellSize={Math.max(4, Math.round(tileSize * 0.7))} palette="tint" tintAmount={0.7} asciiHover="none" bloom={0} vignette={0.4} fps={30} opacity={Math.max(0.1, tileOpacity / 255)} />
+        </Suspense>
       )}
       <canvas ref={bg} className="ui-card__bg" aria-hidden />
       <canvas ref={fx} className="ui-card__fx" aria-hidden />

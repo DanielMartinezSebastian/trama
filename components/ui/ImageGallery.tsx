@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import { A11y, Autoplay, EffectCards, EffectCoverflow, EffectCreative, EffectCube, EffectFade, FreeMode, Grid, Keyboard, Navigation, Pagination, Thumbs, Zoom } from "swiper/modules";
 import { Swiper, SwiperSlide, type SwiperProps } from "swiper/react";
 import { splitEscaped } from "@/lib/ui/list";
 import { resolveImage } from "@/lib/ui/placeholder";
+import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import "./swiperCss";
 import { vcls, type Variant } from "./variants";
 
@@ -81,14 +82,7 @@ export default function ImageGallery({ images = DEFAULT_IMAGES, layout = "thumbs
   );
 
   const [thumbs, setThumbs] = useState<SwiperClass | null>(null);
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const on = () => setReduced(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
+  const reduced = useReducedMotion();
 
   const play = !reduced && autoplay > 0 ? { delay: autoplay * 1000, disableOnInteraction: false, pauseOnMouseEnter: true } : false;
   const canLoop = loop && shots.length > 3;

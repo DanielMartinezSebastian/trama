@@ -1,5 +1,3 @@
-"use client";
-
 import FitText from "./FitText";
 import LocalTime from "./LocalTime";
 import RollLink from "./RollLink";

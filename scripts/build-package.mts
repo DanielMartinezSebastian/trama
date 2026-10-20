@@ -24,8 +24,9 @@ if (existsSync(OUT)) for (const e of readdirSync(OUT)) rmSync(join(OUT, e), { re
 mkdirSync(SRC, { recursive: true });
 
 // ---------- 1. fuentes con imports relativos ----------
+const PHOSPHOR_WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"];
 // familias de iconos: no las importa ningún componente (se eligen con IconSet), así que entran como entradas propias
-const entries = [...kitComponents(), "components/ui/variants.ts", "components/ui/fill.ts", "components/ui/intent.ts", "lib/ui/icons-phosphor.ts", "lib/ui/icons-lucide.ts", ...ALWAYS];
+const entries = [...kitComponents(), "components/ui/variants.ts", "components/ui/fill.ts", "components/ui/intent.ts", "lib/ui/icons-phosphor.ts", ...PHOSPHOR_WEIGHTS.map((w) => `lib/ui/icons-phosphor-${w}.ts`), "lib/ui/icons-lucide.ts", ...ALWAYS];
 const files = closure(entries).filter((f) => /\.(tsx?|css)$/.test(f));
 for (const f of files) {
   let src = readFileSync(f, "utf8");
@@ -161,6 +162,8 @@ const pkg = {
     "./fonts": { types: "./dist/lib/ui/fonts.d.ts", default: "./dist/lib/ui/fonts.js" },
     "./tokens": { types: "./dist/lib/ui/tokens.d.ts", default: "./dist/lib/ui/tokens.js" },
     "./icons/phosphor": { types: "./dist/lib/ui/icons-phosphor.d.ts", default: "./dist/lib/ui/icons-phosphor.js" },
+    // un solo peso (~1/6 del set completo): `trama-ui/icons/phosphor-light` → `phosphorLight`
+    "./icons/phosphor-*": { types: "./dist/lib/ui/icons-phosphor-*.d.ts", default: "./dist/lib/ui/icons-phosphor-*.js" },
     "./icons/lucide": { types: "./dist/lib/ui/icons-lucide.d.ts", default: "./dist/lib/ui/icons-lucide.js" },
     "./assets/*": "./assets/*",
     "./*": { types: "./dist/components/ui/*.d.ts", default: "./dist/components/ui/*.js" },

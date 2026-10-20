@@ -16,7 +16,7 @@ export type CookieBannerProps = {
   onChoice?: (c: CookieChoice) => void;
   /** clave de `localStorage` donde se recuerda la elección */
   storageKey?: string;
-  /** esquina o franja */
+  /** esquina o franja (por defecto, abajo a la derecha) */
   position?: "bottom-left" | "bottom-right" | "bottom";
   /** estilo de los botones e interruptores */
   variant?: Variant;
@@ -47,7 +47,7 @@ export default function CookieBanner({
   policyHref,
   onChoice,
   storageKey = "ui-cookies",
-  position = "bottom-left",
+  position = "bottom-right",
   variant = "minimal",
   className = "",
 }: CookieBannerProps) {

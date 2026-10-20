@@ -1,7 +1,8 @@
 "use client";
 
 import { createElement, useEffect, useRef, type CSSProperties } from "react";
-import { clamp01, trackScroll } from "@/lib/motion/progress";
+import { clamp01, pinProgress, trackScroll } from "@/lib/motion/progress";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ScrubTextProps = {
   children: string;
@@ -33,7 +34,7 @@ export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to =
     const el = ref.current;
     if (!el) return;
     const ws = Array.from(el.querySelectorAll<HTMLElement>(".ui-scrub__w"));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       ws.forEach((w) => w.style.setProperty("--w", "1"));
       return;
     }
@@ -41,7 +42,7 @@ export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to =
     const [r0, r1] = range;
     if (host)
       return trackScroll(host, (r, vh) => {
-        const p = clamp01((clamp01(-r.top / Math.max(1, r.height - vh)) - r0) / Math.max(0.001, r1 - r0));
+        const p = clamp01((pinProgress(r, vh) - r0) / Math.max(0.001, r1 - r0));
         ws.forEach((w, i) => w.style.setProperty("--w", clamp01(p * ws.length - i).toFixed(3)));
       });
     return trackScroll(el, (r, vh) => {

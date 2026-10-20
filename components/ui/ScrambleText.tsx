@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { tcls, type Tone } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ScrambleTextProps = {
   text: string;
@@ -57,7 +58,7 @@ export default function ScrambleText({
     if (!el) return;
     let disposed = false;
     const cleanups: Array<() => void> = [];
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = prefersReducedMotion();
 
     (async () => {
       const { gsap } = await import("gsap");
