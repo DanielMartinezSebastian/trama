@@ -7,6 +7,10 @@ export type TestimonialProps = {
   role?: string;
   /** 0 = sin estrellas */
   rating?: number;
+  /** body = cita en la fuente del texto · display = en la de titulares (`--display`) */
+  quoteFont?: "body" | "display";
+  /** avatar con las iniciales del autor */
+  avatar?: boolean;
   variant?: Variant;
   /** fondo de la tarjeta: surface · tint · gradient · accent (invertida) · pattern · image (ver fill.ts) */
   fill?: CardFill;
@@ -18,11 +22,11 @@ export type TestimonialProps = {
 };
 
 /** Testimonio con avatar de iniciales, valoración y cita. */
-export default function Testimonial({ quote = "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.", author = "Lucía Pardo", role = "Alumna, curso de iniciación", rating = 5, variant = "glass", fill, pattern, tone, image, className = "" }: TestimonialProps) {
+export default function Testimonial({ quote = "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.", author = "Lucía Pardo", role = "Alumna, curso de iniciación", rating = 5, quoteFont = "body", avatar = true, variant = "glass", fill, pattern, tone, image, className = "" }: TestimonialProps) {
   const f = fillProps({ fill, pattern, tone, image });
   const initials = author.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   return (
-    <figure className={`ui-quote ui-surface ${f.className} ${vcls(variant)} ${className}`} style={{ margin: 0, ...f.style }}>
+    <figure className={`ui-quote ui-quote--${quoteFont} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={{ margin: 0, ...f.style }}>
       {rating > 0 && (
         <div className="ui-quote__stars" role="img" aria-label={`${rating} de 5 estrellas`}>
           {"★".repeat(Math.min(5, rating))}
@@ -31,7 +35,7 @@ export default function Testimonial({ quote = "Levanté la tabla el primer día.
       )}
       <blockquote>“{quote}”</blockquote>
       <figcaption className="ui-quote__by">
-        <span className="ui-quote__avatar" aria-hidden>{initials}</span>
+        {avatar && <span className="ui-quote__avatar" aria-hidden>{initials}</span>}
         <span>
           <strong>{author}</strong>
           <span>{role}</span>

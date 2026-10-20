@@ -64,6 +64,12 @@ const CLIPS: Record<string, Clip[]> = {
     { title: "Aerial views of Budapest, Hungary.webm", start: 58, dur: 10, name: "budapest", alt: "Los baños termales y el parque de la ciudad de Budapest, vistos desde el aire" },
   ],
   cielo: [{ title: "2011-09-05 22-54-01-timelapse-clouds-evening.ogv", start: 0, dur: 10, name: "nubes-atardecer", alt: "Nubes que pasan rápido al anochecer sobre los tejados, a cámara rápida" }],
+  obrador: [
+    { title: "Cookies baking.webm", start: 2, dur: 12, name: "galletas-horno", alt: "Galletas con pepitas de chocolate que crecen y se doran en la bandeja del horno, a cámara rápida" },
+    { title: "Vegan Pastry - Voted Best Croissant in Miami.webm", start: 16, dur: 10, name: "masa-rodillo", alt: "Manos de pastelera que estiran con rodillo una masa de hojaldre sobre una mesa de acero" },
+    { title: "Reflet boulangerie.webm", start: 60, dur: 10, name: "formado", alt: "Panaderos que forman piezas de masa a mano sobre una mesa de madera enharinada" },
+    { title: "Reflet boulangerie.webm", start: 128, dur: 9, name: "barras-horno", alt: "Barras de pan que entran en el horno de un obrador sobre la cinta de carga" },
+  ],
 };
 
 type Info = { title: string; lic: string; licUrl: string; author: string; page: string; width: number; height: number; duration: number; src: string; preview: string };

@@ -15,6 +15,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [14-transiciones-entre-rutas.md](./14-transiciones-entre-rutas.md) | Ronda 6 de webs premiadas: continuidad entre rutas. 16 transiciones de Awwwards vistas fotograma a fotograma, sus patrones (vista previa → portada, texto palabra a palabra, siguiente en dos tiempos, luz ambiental), `Traveler`, `SharedText`, `AmbientLight`, la biblioteca de vídeo, la demo Travesía y cómo probar transiciones con Playwright. |
 | [15-evaluacion-proximas-demos.md](./15-evaluacion-proximas-demos.md) | Ronda 7 (evaluación): SOTD de Awwwards aún sin revisar, conceptos nuevos candidatos y qué demos clonar a continuación. |
 | [16-guias-de-estilo-plan.md](./16-guias-de-estilo-plan.md) | Ronda 8: constantes medidas de las webs premiadas (color, tipo, espacio, movimiento), composiciones, estructuras de relato y plan de guías de estilo con la página `/guias`. |
+| [17-sectores-comerciales.md](./17-sectores-comerciales.md) | Ronda 8: **qué necesita la web de cada sector** (restaurante, pastelería, gimnasio, ropa, joyería, estética) con funciones prácticas (QR de mesa, alérgenos, reservas, horario de clases, guía de tallas, cita en taller), las piezas `OpeningHours`, `MenuList`, `DatePicker`, `ActionBar` y `QRCode`, y la pastelería Almíbar en tres versiones. |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
@@ -110,13 +111,13 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` · `StickerCollage` · `ImageTrail` |
 | Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) · `SharedText` (palabra a palabra) · `Traveler` (viaja entre rutas; + `TravelStage`, `TravelSlot`, `useTraveler`) |
-| Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `EdgeTab` |
-| Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` |
+| Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `OpeningHours` · `QRCode` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `EdgeTab` · `ActionBar` |
+| Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` · `DatePicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
 | Galerías, vídeo y audio | `ImageGallery` · `Carousel` · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` · `GuideFrame` (guías de estilo, ver `/guias` y [16](./16-guias-de-estilo-plan.md)) |
-| Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` |
+| Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` · `MenuList` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` · `CartDrawer` · `CookieBanner` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |
 

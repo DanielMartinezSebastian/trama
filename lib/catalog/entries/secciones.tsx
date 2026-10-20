@@ -258,7 +258,7 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de testimonios",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista para pegar.",
+    description: "Prueba social lista para pegar: cabecera, resumen de valoraciones (media con estrellas parciales, número y fuente enlazada, reparto por estrellas que filtra las citas) y las citas en rejilla o en slider, siempre a la misma altura con el autor abajo. Con align=\"left\" y quoteFont=\"display\" encaja en webs editoriales.",
     stageHeight: 540,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Lo que dicen" },
@@ -275,11 +275,20 @@ export const secciones: CatalogEntry[] = [
       { key: "perView", label: "Visibles en pantalla ancha", type: "number", default: 3, min: 1, max: 4, step: 1, when: (p) => p.layout === "carousel" && p.effect === "slide" },
       { key: "autoplay", label: "Reproducción automática (s, 0 = manual)", type: "number", default: 0, min: 0, max: 8, step: 1, when: (p) => p.layout === "carousel" },
       { key: "effect", label: "Efecto del carrusel", type: "select", default: "slide", options: ["slide", "fade", "cards"], when: (p) => p.layout === "carousel", hint: "fade = una cita que se funde con la siguiente" },
+      { key: "align", label: "Alineación", type: "select", default: "center", options: ["center", "left"], labels: { center: "centrada (landing)", left: "a la izquierda (editorial)" } },
+      { key: "rating", label: "Nota media del resumen (0 = sin resumen)", type: "number", default: 4.8, min: 0, max: 5, step: 0.1 },
+      { key: "count", label: "Número de reseñas", type: "number", default: 214, min: 0, max: 5000, step: 1, when: (p) => (p.rating as number) > 0 },
+      { key: "source", label: "Fuente", type: "text", default: "Google", when: (p) => (p.rating as number) > 0 },
+      { key: "distribution", label: "Reparto por estrellas (filtra las citas)", type: "text", default: "5:180, 4:26, 3:6, 2:1, 1:1", when: (p) => (p.rating as number) > 0 },
+      { key: "pageSize", label: "Citas al principio (0 = todas; rejilla)", type: "number", default: 0, min: 0, max: 6, step: 1, when: (p) => p.layout === "grid" },
+      { key: "quoteFont", label: "Fuente de la cita", type: "select", default: "body", options: ["body", "display"], labels: { body: "la del texto", display: "la de titulares" } },
+      { key: "avatars", label: "Avatares con iniciales", type: "boolean", default: true },
       variantProp("glass"),
     ],
+    notes: ["Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.", "El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar."],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <TestimonialSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} variant={p.variant as never} />
+        <TestimonialSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} align={p.align as never} rating={p.rating as number} count={p.count as number} source={p.source as string} distribution={p.distribution as string} pageSize={p.pageSize as number} quoteFont={p.quoteFont as never} avatars={p.avatars as boolean} variant={p.variant as never} />
       </div>
     ),
   },
