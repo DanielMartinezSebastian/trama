@@ -48,11 +48,15 @@ type ScreenState = {
   /** qué película reproduce la pantalla */
   film: string;
   setFilm: (id: string) => void;
-  /** «siguiente» en curso: la pantalla se acopla a la ventana del final de la ficha antes de navegar */
-  docking: boolean;
-  setDocking: (v: boolean) => void;
+  /**
+   * «Siguiente» en curso: la ficha (slug) que acopla la pantalla a su ventana del final antes de navegar. Es la ficha y no
+   * un booleano porque la ficha siguiente es el mismo componente: con un booleano, en el commit de la navegación ella
+   * también pintaría su ventana de «siguiente» (prioridad 2) y la pantalla no iría a la portada.
+   */
+  docking: string | null;
+  setDocking: (slug: string | null) => void;
 };
-const ScreenContext = createContext<ScreenState>({ film: "reel", setFilm: () => {}, docking: false, setDocking: () => {} });
+const ScreenContext = createContext<ScreenState>({ film: "reel", setFilm: () => {}, docking: null, setDocking: () => {} });
 const useScreen = () => useContext(ScreenContext);
 
 /** Cada página dice qué se reproduce en ella (al montarse). */
@@ -63,9 +67,9 @@ function useFilm(id: string) {
 
 export function Shell({ children }: { children: ReactNode }) {
   const [film, setFilm] = useState("reel");
-  const [docking, setDocking] = useState(false);
+  const [docking, setDocking] = useState<string | null>(null);
   const path = usePathname();
-  useEffect(() => setDocking(false), [path]);
+  useEffect(() => setDocking(null), [path]);
   // los pseudo-elementos de la transición leen los tokens de :root, no del contenedor del tema (docs/05 · Tema)
   useEffect(() => {
     const s = document.documentElement.style;
@@ -176,8 +180,12 @@ function Screen() {
 function Index() {
   const { film, setFilm } = useScreen();
   const active = getDoc(film) ?? DOCS[0];
+  const router = useRouter();
   // al llegar, la pantalla reproduce el último documental señalado (o el primero)
   useFilm(active.slug);
+  // Las fichas, precargadas: la pantalla y el título solo viajan si la página de destino se pinta en el mismo commit
+  // que la navegación (si se queda cargando, la transición termina antes de que llegue el hueco nuevo).
+  useEffect(() => DOCS.forEach((d) => router.prefetch(href(`documentales/${d.slug}`))), [router]);
   return (
     <section className="tv-index" aria-labelledby="tv-index-t">
       <h1 id="tv-index-t" className="tv-sr">
@@ -214,21 +222,25 @@ function Index() {
 /* ---------------------------------------------------------------- ficha */
 
 function Detail({ d }: { d: Doc }) {
-  const { setFilm, docking, setDocking } = useScreen();
+  const { setFilm, docking: dockingFrom, setDocking } = useScreen();
   const router = useRouter();
   useFilm(d.slug);
+  const docking = dockingFrom === d.slug;
   const i = DOCS.indexOf(d);
   const next = DOCS[(i + 1) % DOCS.length];
+  const nextHref = href(`documentales/${next.slug}`);
+  // precargada: el tiempo 2 (navegar) tiene que montar la ficha siguiente en el mismo commit (ver Index)
+  useEffect(() => router.prefetch(nextHref), [router, nextHref]);
   const goNext = (e: MouseEvent) => {
     e.preventDefault();
     if (docking) return;
     // tiempo 1: la pantalla baja a la ventana de «siguiente» y cambia de película por el camino
     startTransition(() => {
-      setDocking(true);
+      setDocking(d.slug);
       setFilm(next.slug);
     });
     // tiempo 2: navegar; la ventana se expande a la portada del siguiente
-    window.setTimeout(() => router.push(href(`documentales/${next.slug}`), { transitionTypes: [NAV_FORWARD] }), 980);
+    window.setTimeout(() => router.push(nextHref, { transitionTypes: [NAV_FORWARD] }), 980);
   };
   return (
     <article className="tv-doc">
@@ -257,7 +269,7 @@ function Detail({ d }: { d: Doc }) {
           </div>
         </div>
       </div>
-      <a className="tv-next" href={href(`documentales/${next.slug}`)} onClick={goNext}>
+      <a className="tv-next" href={nextHref} onClick={goNext} data-navigate="manual">
         <span className="tv-next__k">Siguiente documental</span>
         <span className="tv-next__win">
           {/* el póster espera en la ventana; al pulsar, la pantalla baja aquí (prioridad 2) y lo tapa */}

@@ -129,16 +129,26 @@ export function SharedText({ name, text, as: Tag = "span", stagger = 50, delay =
   return (
     <Tag className={`ui-stext ${className}`.trim()}>
       <span className="ui-stext__sr">{text}</span>
-      {words.map((w, i) => (
-        <Fragment key={i}>
-          {i > 0 && " "}
-          <SharedTransition name={`${name}-${i}`} pace={pace} delay={delay + i * stagger}>
-            <span className={`ui-stext__w ui-stext__w--${i}`} aria-hidden>
-              {w}
-            </span>
-          </SharedTransition>
-        </Fragment>
-      ))}
+      {words.map((w, i) => {
+        const word = (
+          <span className={`ui-stext__w ui-stext__w--${i}`} aria-hidden>
+            {w}
+          </span>
+        );
+        return (
+          <Fragment key={i}>
+            {i > 0 && " "}
+            {ViewTransition ? (
+              // `ui-vt-text`: el texto vuela por encima de lo demás, también de un Traveler (un titular sobre su vídeo)
+              <ViewTransition name={`${name}-${i}`} share={`ui-vt-morph ui-vt-text ui-vt--${pace}${vtDelayClass(delay + i * stagger)}`} enter="none" exit="none" update="none" default="none">
+                {word}
+              </ViewTransition>
+            ) : (
+              word
+            )}
+          </Fragment>
+        );
+      })}
     </Tag>
   );
 }

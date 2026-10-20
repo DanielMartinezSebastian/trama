@@ -19,13 +19,18 @@ import { ViewTransition, vtDelayClass, type PageTransitionPace } from "@/lib/ui/
  * esquina, cabecera fija). Con un antecesor `sticky` se vuelve a medir al hacer scroll.
  *
  * Por qué funciona con React: los huecos se registran en efectos de layout, que corren dentro del callback de
- * `document.startViewTransition` (el commit de la navegación). La recolocación es una escritura directa en el DOM en una
- * microtarea, antes de que el navegador capture el estado nuevo. El viajero no es un boundary de React: React no lo
+ * `document.startViewTransition` (el commit de la navegación). La recolocación es una escritura directa en el DOM cuando
+ * termina la actualización de la transición (`updateCallbackDone`), antes de que el navegador capture el estado nuevo. El viajero no es un boundary de React: React no lo
  * cancela ni lo oculta (ver PageTransitionPersist, mismo motivo).
  */
 
 export type TravelFit = "cover" | "stretch";
 export type TravelBlend = "live" | "crossfade";
+
+type ActiveVt = { updateCallbackDone?: Promise<unknown> };
+type VtDocument = Document & { activeViewTransition?: ActiveVt | null; __reactViewTransition?: ActiveVt | null };
+/** La View Transition del documento en curso, si la hay (estándar o la que registra React al iniciarla). */
+const activeTransition = () => (document as VtDocument).activeViewTransition ?? (document as VtDocument).__reactViewTransition ?? null;
 
 type Slot = { el: HTMLElement; at: string; priority: number; order: number };
 type Rider = { el: HTMLElement; slot: Slot | null; placed: boolean; onMove?: (at: string | null) => void; cleanup?: () => void };
@@ -135,11 +140,18 @@ function createStore() {
     if (changed) listeners.forEach((l) => l());
   };
 
-  /** En una microtarea: el hueco viejo se va y el nuevo llega en el mismo commit; así se decide una sola vez. */
+  /**
+   * Se decide una sola vez, cuando ya se fue el hueco viejo y llegó el nuevo. Con una View Transition en curso, al
+   * terminar su actualización del DOM (`updateCallbackDone`), justo antes de que el navegador capture el estado nuevo:
+   * React no siempre lo hace todo en un paso (espera, por ejemplo, a que carguen las imágenes de la página nueva), y
+   * decidir antes dejaba al viajero «sin hueco» (invisible) en la captura. Sin transición, en una microtarea.
+   */
   const schedule = () => {
     if (queued) return;
     queued = true;
-    queueMicrotask(flush);
+    const vt = activeTransition();
+    if (vt?.updateCallbackDone) vt.updateCallbackDone.then(flush, flush);
+    else queueMicrotask(flush);
   };
 
   return {

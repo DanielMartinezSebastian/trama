@@ -375,6 +375,8 @@
 
 /* SharedText: cada palabra es una caja propia (inline-block) para poder capturarla aparte */
 .ui-stext__w { display: inline-block; }
+/* el texto compartido vuela por encima de todo: de la página (50), de los fijos (100) y de los viajeros (120) */
+::view-transition-group(.ui-vt-text) { z-index: 130; }
 .ui-stext__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Retardos (coreografía): `delay` de SharedTransition, SharedText y Traveler, en pasos de 40 ms. Mientras espera, el
