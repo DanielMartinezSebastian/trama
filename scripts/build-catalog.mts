@@ -56,7 +56,7 @@ for (const f of closure(kitComponents())) {
 
 // Reglas de nombres (guía §2.2, glosario): cada nombre de prop significa una sola cosa. Los alias @deprecated no cuentan.
 const NAME_RULES: { prop: string; ok: (type: string) => boolean; hint: string }[] = [
-  { prop: "size", ok: (t) => /^("(sm|md|lg)"\s*\|?\s*)+$/.test(t.trim()), hint: 'solo un preset "sm" | "md" | "lg"; para px usa fontSize, cellSize, iconSize…' },
+  { prop: "size", ok: (t) => /^("(sm|md|lg|full)"\s*\|?\s*)+$/.test(t.trim()), hint: 'solo un preset "sm" | "md" | "lg" (y "full": pantalla completa); para px usa fontSize, cellSize, iconSize…' },
   { prop: "style", ok: (t) => t.includes("CSSProperties"), hint: "es el style CSS de React; para el render ASCII usa asciiStyle" },
   { prop: "hover", ok: () => false, hint: "demasiado genérico: textHover, fieldHover…" },
   { prop: "trigger", ok: (t) => !/\bstring\b/.test(t), hint: "es cuándo se anima; para el texto de un botón usa triggerLabel" },
@@ -64,7 +64,7 @@ const NAME_RULES: { prop: string; ok: (type: string) => boolean; hint: string }[
   { prop: "speed", ok: (t) => t.trim() === "number", hint: "es un multiplicador; para segundos usa duration" },
 ];
 for (const file of kitComponents()) {
-  const lines = readFileSync(file, "utf8").split("\n");
+  const lines = readFileSync(file, "utf8").split(/\r?\n/); // CRLF o LF: con "\n" a secas, el `\r` final dejaba sin comprobar los archivos con CRLF
   lines.forEach((line, i) => {
     const m = line.match(/^\s+(\w+)\?: (.+);$/);
     if (!m || /@deprecated/.test(lines[i - 1] ?? "")) return;

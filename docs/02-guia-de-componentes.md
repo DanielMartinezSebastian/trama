@@ -95,7 +95,7 @@ renombrado dejando el nombre viejo como alias `@deprecated`):
 
 | Nombre | Significa siempre | Si es otra cosa, usa |
 |---|---|---|
-| `size` | un preset `sm \| md \| lg` | `fontSize` (letra, px) · `cellSize` (celda de rejilla, px) · `iconSize` · `cursorSize` |
+| `size` | un preset `sm \| md \| lg` (más `full`, pantalla completa, donde tenga sentido: `Modal`) | `fontSize` (letra, px) · `cellSize` (celda de rejilla, px) · `iconSize` · `cursorSize` |
 | `speed` | un multiplicador (1 = normal) | `duration` (segundos) · `charsPerSecond` · `fps` |
 | `trigger` | cuándo se anima (`mount`, `inview`, `hover`, `scroll`…) | `triggerLabel` (texto del botón que abre algo) |
 | `style` | el `style` CSS de React, nunca otra cosa | `asciiStyle` (estilo de render ASCII) |
