@@ -2026,7 +2026,7 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 
 ### Sección de testimonios — `TestimonialSection`
 
-Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista para pegar.
+Prueba social lista para pegar: cabecera, resumen de valoraciones (media con estrellas parciales, número y fuente enlazada, reparto por estrellas que filtra las citas) y las citas en rejilla o en slider, siempre a la misma altura con el autor abajo. Con align="left" y quoteFont="display" encaja en webs editoriales.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2037,7 +2037,18 @@ Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
 | `effect` | `slide` · `fade` · `cards` | "slide" |
+| `align` | `center` · `left` | "center" |
+| `rating` | number 0–5 | 4.8 |
+| `count` | number 0–5000 | 214 |
+| `source` | text | "Google" |
+| `distribution` | text | "5:180, 4:26, 3:6, 2:1, 1:1" |
+| `pageSize` | number 0–6 | 0 |
+| `quoteFont` | `body` · `display` | "body" |
+| `avatars` | boolean | true |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
+
+- Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.
+- El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar.
 
 ### Pie de página — `Footer`
 

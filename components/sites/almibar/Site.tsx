@@ -30,7 +30,7 @@ import Toast from "@/components/ui/Toast";
 import { useCart } from "@/lib/commerce/cart";
 import { money } from "@/lib/commerce/money";
 import { JsonLd } from "@/lib/seo";
-import { BRAND, CAKE, CATEGORIES, FAQ, LEGAL, PRODUCTS, REVIEWS, STORES, bakeryJsonLd, cakeAllergens, cakePrice, menuSections, pickupSlots, type Product } from "@/lib/sites/almibar";
+import { BRAND, CAKE, CATEGORIES, FAQ, LEGAL, PRODUCTS, RATING_DISTRIBUTION, REVIEWS, STORES, bakeryJsonLd, cakeAllergens, cakePrice, menuSections, pickupSlots, type Product } from "@/lib/sites/almibar";
 import { photo } from "@/lib/sites/photos";
 import { video, videos } from "@/lib/sites/videos";
 import { phosphor } from "@/lib/ui/icons-phosphor";
@@ -339,11 +339,21 @@ function Home() {
       </section>
 
       <section className="al-wrap al-sec">
-        <div className="al-row">
-          <Head kicker="Lo que dicen" title="642 reseñas, casi todas de vecinos" />
-          <Rating />
-        </div>
-        <TestimonialSection kicker="" title="" items={REVIEWS.map((r) => `${r.quote}|${r.name}|${r.role}|${r.rating}`).join("\n")} variant="editorial" />
+        <TestimonialSection
+          kicker="Lo que dicen"
+          title="642 reseñas, casi todas de vecinos"
+          items={REVIEWS.map((r) => `${r.quote}|${r.name}|${r.role}|${r.rating}`).join("\n")}
+          layout="carousel"
+          perView={3}
+          align="left"
+          rating={BRAND.rating.value}
+          count={BRAND.rating.count}
+          source={BRAND.rating.source}
+          sourceHref="https://www.google.com/maps/search/pasteler%C3%ADa+Zaragoza"
+          distribution={RATING_DISTRIBUTION}
+          quoteFont="display"
+          variant="editorial"
+        />
       </section>
 
       <section className="al-wrap al-sec">

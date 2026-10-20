@@ -169,7 +169,7 @@ function Rating() {
   );
 }
 const algLabel = (ids: string[]) => ids.map((a) => ALLERGENS.find((x) => x.id === a)?.label.toLowerCase() ?? a).join(", ");
-const reviewItems = REVIEWS.map((r) => `${r.quote}|${r.name}|${r.role}|${r.rating}`).join("\n");
+const reviewItems = REVIEWS.slice(0, 3).map((r) => `${r.quote}|${r.name}|${r.role}|${r.rating}`).join("\n");
 
 /* ---------- inicio ---------- */
 const HERO_CAKE: CakeSel = { size: "24", sponge: "chocolate", filling: "frambuesa", covering: "desnuda", toppings: ["frutos-rojos", "flores"], message: "" };

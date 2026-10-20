@@ -787,6 +787,10 @@ a.ui-button { text-decoration: none; }
 .ui-sh p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; text-shadow: var(--legibility-ts); }
 .ui-sh__rule { color: var(--ln); font-family: var(--mono); overflow: hidden; white-space: nowrap; width: 100%; }
 .ui-sh__line { height: 1px; width: 64px; background: var(--acc); }
+/* editorial: titular en la fuente de titulares (--display) a peso normal, como en las webs de revista; sin halos */
+.ui-sh.ui-s--editorial { gap: 12px; }
+.ui-sh.ui-s--editorial h2 { font-family: var(--display, inherit); font-weight: 400; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance; text-shadow: none; }
+.ui-sh.ui-s--editorial .ui-sh__kicker { font-size: 13px; letter-spacing: 0.08em; text-shadow: none; }
 
 /* ---------- Divider ---------- */
 .ui-div { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--mut); font-family: var(--s-ff); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: var(--legibility-ts); }
@@ -1147,6 +1151,44 @@ a.ui-button { text-decoration: none; }
 .ui-stats__row { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(28px, 6vw, 64px); }
 .ui-pricing__grid, .ui-testimonials__grid { width: 100%; min-width: 0; max-width: 980px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: start; }
 .ui-pricing__grid > *, .ui-testimonials__grid > *, .ui-articles__grid > * { width: 100%; }
+/* TestimonialSection: misma altura en rejilla y en slider (la tarjeta llena su celda y el autor queda abajo), resumen de valoraciones */
+.ui-testimonials__grid { align-items: stretch; }
+.ui-testimonials .ui-quote { width: 100%; height: 100%; grid-template-rows: auto 1fr auto; align-content: stretch; }
+.ui-testimonials .ui-quote > blockquote { align-self: start; }
+.ui-testimonials--left { justify-items: stretch; text-align: left; }
+.ui-testimonials--left .ui-testimonials__grid { max-width: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.ui-testimonials--left .ui-car { --car-max: 100%; justify-self: stretch; }
+.ui-testimonials__top { width: 100%; min-width: 0; display: grid; gap: 20px; justify-items: center; }
+.ui-testimonials--left .ui-sh { width: 100%; max-width: 32ch; }
+.ui-testimonials--left .ui-testimonials__top { grid-template-columns: minmax(0, 1fr) auto; align-items: end; justify-items: stretch; gap: 20px clamp(24px, 5vw, 72px); }
+@media (max-width: 760px) { .ui-testimonials--left .ui-sh { width: 100%; max-width: 32ch; }
+.ui-testimonials--left .ui-testimonials__top { grid-template-columns: minmax(0, 1fr); } }
+.ui-testimonials__sum { display: grid; gap: 12px; min-width: min(100%, 280px); justify-items: center; }
+.ui-testimonials--left .ui-testimonials__sum { justify-items: start; }
+.ui-testimonials__avg { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: inherit; gap: 4px 12px; margin: 0; color: var(--mut); font-size: 14px; }
+.ui-testimonials__avg b { font-family: var(--display, inherit); font-size: clamp(36px, 4vw, 52px); font-weight: 400; line-height: 1; letter-spacing: -0.03em; color: var(--fg); }
+.ui-testimonials__count a { color: inherit; text-underline-offset: 3px; }
+.ui-testimonials__count a:hover { color: var(--fg); }
+.ui-stars { position: relative; display: inline-block; color: color-mix(in srgb, var(--fg) 18%, transparent); letter-spacing: 2px; font-size: 16px; line-height: 1; white-space: nowrap; }
+.ui-stars__on { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: var(--acc); }
+.ui-testimonials__dist { display: grid; gap: 4px; width: min(100%, 300px); }
+.ui-testimonials__bar { display: grid; grid-template-columns: 34px minmax(0, 1fr) 42px; align-items: center; gap: 10px; min-height: 28px; padding: 2px 6px; border: 0; border-radius: 6px; background: none; color: var(--mut); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+.ui-testimonials__bar:hover:not(:disabled), .ui-testimonials__bar[aria-pressed="true"] { background: color-mix(in srgb, var(--fg) 7%, transparent); color: var(--fg); }
+.ui-testimonials__bar:disabled { cursor: default; }
+.ui-testimonials__bar:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+.ui-testimonials__track { height: 6px; border-radius: 99px; background: color-mix(in srgb, var(--fg) 10%, transparent); overflow: hidden; }
+.ui-testimonials__track > span { display: block; height: 100%; border-radius: inherit; background: var(--acc); }
+.ui-testimonials__bn { text-align: right; font-variant-numeric: tabular-nums; }
+.ui-testimonials__more { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.ui-testimonials--left .ui-testimonials__more { justify-content: flex-start; }
+.ui-testimonials__more button { min-height: 44px; padding: 8px 18px; border: 1px solid var(--ln); border-radius: 99px; background: none; color: var(--fg); font: inherit; font-size: 14px; cursor: pointer; }
+.ui-testimonials__more button:hover { border-color: var(--fg); }
+.ui-testimonials__more button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+/* cita en la fuente de titulares (quoteFont="display") y editorial: iniciales sin monoespaciada */
+.ui-quote--display blockquote { font-family: var(--display, inherit); font-size: clamp(19px, 1.7vw, 23px); line-height: 1.38; letter-spacing: -0.01em; }
+.ui-s--editorial .ui-quote__avatar { border-radius: 50%; font-family: inherit; font-weight: 600; font-size: 13px; }
+.ui-testimonials--left .ui-quote { text-align: left; }
+.ui-testimonials--center .ui-quote__by { justify-content: center; text-align: left; }
 
 /* ---------- Footer ---------- */
 .ui-footer { width: 100%; padding: clamp(28px, 5vw, 48px) clamp(20px, 5vw, 48px) 20px; }

@@ -8323,7 +8323,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cabecera de sección más un grid de reseñas (Testimonial): prueba social lista para pegar.",
+      "description": "Prueba social lista para pegar: cabecera, resumen de valoraciones (media con estrellas parciales, número y fuente enlazada, reparto por estrellas que filtra las citas) y las citas en rejilla o en slider, siempre a la misma altura con el autor abajo. Con align=\"left\" y quoteFont=\"display\" encaja en webs editoriales.",
       "props": [
         {
           "key": "kicker",
@@ -8383,6 +8383,68 @@
           ]
         },
         {
+          "key": "align",
+          "type": "select",
+          "default": "center",
+          "label": "Alineación",
+          "options": [
+            "center",
+            "left"
+          ]
+        },
+        {
+          "key": "rating",
+          "type": "number",
+          "default": 4.8,
+          "label": "Nota media del resumen (0 = sin resumen)",
+          "min": 0,
+          "max": 5
+        },
+        {
+          "key": "count",
+          "type": "number",
+          "default": 214,
+          "label": "Número de reseñas",
+          "min": 0,
+          "max": 5000
+        },
+        {
+          "key": "source",
+          "type": "text",
+          "default": "Google",
+          "label": "Fuente"
+        },
+        {
+          "key": "distribution",
+          "type": "text",
+          "default": "5:180, 4:26, 3:6, 2:1, 1:1",
+          "label": "Reparto por estrellas (filtra las citas)"
+        },
+        {
+          "key": "pageSize",
+          "type": "number",
+          "default": 0,
+          "label": "Citas al principio (0 = todas; rejilla)",
+          "min": 0,
+          "max": 6
+        },
+        {
+          "key": "quoteFont",
+          "type": "select",
+          "default": "body",
+          "label": "Fuente de la cita",
+          "options": [
+            "body",
+            "display"
+          ]
+        },
+        {
+          "key": "avatars",
+          "type": "boolean",
+          "default": true,
+          "label": "Avatares con iniciales"
+        },
+        {
           "key": "variant",
           "type": "select",
           "default": "glass",
@@ -8400,6 +8462,10 @@
             "editorial"
           ]
         }
+      ],
+      "notes": [
+        "Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.",
+        "El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar."
       ],
       "example": "import TestimonialSection from \"@/components/ui/TestimonialSection\";\n\n<TestimonialSection\n  title=\"Alumnos que ya cogieron su ola\"\n/>",
       "preview": "/componentes#testimonial-section"

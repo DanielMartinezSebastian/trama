@@ -39,7 +39,7 @@ Toda web de pyme de esta ronda cumple B1–B15 de la `11`. Las que más se olvid
 | B1 | Acción principal persistente, en el pulgar en móvil | `ActionBar` (nueva) + CTA de la cabecera |
 | B2 | Teléfono, WhatsApp y dirección a un toque | `ActionBar` (`tel:`, `https://wa.me/…`, enlace a mapa) |
 | B3 | Horario con «abierto ahora» y festivos | `OpeningHours` (nueva) |
-| B5 | Reseñas con número y fuente («4,8 · 642 en Google») | texto + `Testimonial` (falta resumen con reparto, §10) |
+| B5 | Reseñas con número y fuente («4,8 · 642 en Google») | `TestimonialSection` con resumen (`rating`, `count`, `source`, `distribution`) |
 | B10 | Cookies con «Rechazar» al mismo nivel y «Configurar cookies» en el pie | `CookieBanner` |
 | B12 | `schema.org` coherente con la ficha de Google | `openingHoursSchema()` (nueva) + `JsonLd` |
 
@@ -215,7 +215,7 @@ combinar: el QR de mesa de la tercera sirve en cualquiera de las otras dos).
 | Horario semanal de clases con plazas | Gimnasio, academia | `ScheduleGrid`: columnas por día en escritorio, lista por día en móvil, filtro, plazas y reserva (reutiliza la cuadrícula ARIA de `DatePicker`) |
 | Guía de tallas | Ropa | Receta, no componente: `Modal` + `Table` + dos preguntas; si se repite en dos demos, `SizeGuide` |
 | Antes / después | Gimnasio, estética, clínica, reformas | `BeforeAfter` (ya propuesto en la `15`) |
-| Resumen de reseñas (media, número, fuente, reparto) | Todos | Opción `summary` de `TestimonialSection` |
+| ~~Resumen de reseñas~~ **hecho** | Todos | `TestimonialSection` con `rating`, `count`, `source`, `distribution` (filtra las citas), `pageSize`, `align` y `quoteFont`; citas a la misma altura en rejilla y slider |
 | Medidor de talla de anillo | Joyería | Propio de la web (no del kit) |
 | Bloque «envío y devoluciones» en la ficha | Ropa, joyería, comercio | Opción de la ficha de producto (C4 de la `11`) |
 | Generadores de JSON-LD por tipo | Todos | `Restaurant`, `ExerciseGym`, `ClothingStore`, `JewelryStore` sobre el mismo patrón que `bakeryJsonLd` |

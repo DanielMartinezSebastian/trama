@@ -183,7 +183,15 @@ export const REVIEWS = [
   { quote: "La tarta de queso es la mejor de Zaragoza y no exagero. Encargamos la del cumpleaños por WhatsApp y estaba lista a la hora.", name: "Marta G.", role: "Reseña de Google · septiembre 2026", rating: 5 },
   { quote: "Croissant de verdad, de los que dejan migas en el jersey. El café también está muy bien.", name: "Javier L.", role: "Reseña de Google · octubre 2026", rating: 5 },
   { quote: "Hicieron la tarta de la boda de tres pisos sin gluten y nadie lo notó. Atentas a cada detalle.", name: "Lucía y Pablo", role: "Boda en junio de 2026", rating: 5 },
+  { quote: "Vamos cada sábado a por la hogaza. Si llegas después de las doce ya no queda, así que madruga.", name: "Andrés P.", role: "Reseña de Google · agosto 2026", rating: 5 },
+  { quote: "Muy rica la caracola de canela. El local de Delicias es pequeño y a media mañana hay que esperar un poco.", name: "Elena R.", role: "Reseña de Google · octubre 2026", rating: 4 },
+  { quote: "Los huesos de santo como los de antes. Caros, pero lo valen.", name: "Carmen V.", role: "Reseña de Google · noviembre 2025", rating: 4 },
+  { quote: "Nos prepararon la mesa dulce del bautizo con dos días de margen. Repetiremos.", name: "Familia Sanz", role: "Encargo en mayo de 2026", rating: 5 },
+  { quote: "Buen pan, pero el sábado por la tarde la napolitana estaba algo seca. Por la mañana, otra cosa.", name: "Raúl M.", role: "Reseña de Google · julio 2026", rating: 3 },
 ];
+
+/** Reparto de las reseñas de Google por estrellas (suma `BRAND.rating.count`). */
+export const RATING_DISTRIBUTION = "5:528, 4:84, 3:19, 2:6, 1:5";
 
 export const FAQ = [
   { q: "¿Con cuánta antelación tengo que encargar una tarta?", a: "Con 48 horas para tartas de hasta 24 raciones y con 7 días para las de pisos. Si lo necesitas antes, llámanos: muchas veces hay hueco." },

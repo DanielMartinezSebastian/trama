@@ -283,7 +283,7 @@ function Home() {
           </p>
         </div>
         <div className="bb-reviews">
-          {REVIEWS.map((r) => (
+          {REVIEWS.slice(0, 3).map((r) => (
             <figure key={r.name} className="bb-review">
               <Stars n={r.rating} />
               <blockquote>«{r.quote}»</blockquote>
