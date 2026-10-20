@@ -222,8 +222,20 @@ Reglas que se cumplen:
   princesa y esmeralda se hacen por revolución con pocas caras.
 - **Garras, bisel, halo de 18 piedras, trilogía y pavé de 14** se colocan alrededor.
 - **Martillado** con un mapa de normales generado (120 golpes); **satinado** con más rugosidad.
-- **Entorno de gema propio**: sala negra con diez paneles HDR, que da el patrón de facetas claras y oscuras. El metal
-  usa el `RoomEnvironment` de three.
+- **Gemas con trazado de rayos real** (`gemMaterial.ts`). Una talla es un poliedro convexo, así que el punto por el que
+  sale un rayo es el plano de faceta más cercano en su dirección, sin BVH. Los planos se sacan de la geometría (hasta 96).
+  En cada píxel:
+  - reflexión exterior con Fresnel;
+  - refracción hacia dentro (Snell);
+  - hasta 6 rebotes, con reflexión interna total cuando se supera el ángulo crítico (24,4° en el diamante);
+  - **dispersión**: un trazado por canal, con el índice de cada color (diamante 2,407 · 2,418 · 2,451; corindón ~1,77;
+    berilo ~1,58);
+  - las piedras de color absorben según la distancia recorrida dentro (Beer–Lambert).
+
+  La toma de luz tiñe el entorno y añade el reflejo del foco. En pantallas táctiles se traza un solo canal, sin
+  dispersión, para ahorrar GPU.
+- **Entorno de gema propio**: un cubemap de caja de luz gris con diez paneles HDR y cinco banderas negras, que da a la
+  vez brillo y el patrón de facetas claras y oscuras (GIA). El metal usa el `RoomEnvironment` de three.
 - **Aspectos por capítulo**: boceto (alambre), cera (verde de modelar), gema (solo la piedra, con la cámara en la
   cabeza), apagado (sin brillo y sin iridiscencia, para «Cuidar») y final.
 - **Respaldo**: el mismo anillo en SVG sin WebGL, con movimiento reducido y como miniatura en la cita.
@@ -270,8 +282,8 @@ Base común de la `11` y la `17`:
 
 - **Halo del color de la piedra** en el paso «Piedra» (la sombra de color de Cartier): hoy la luz es por temperatura. Una
   opción `tint` en `LightCue` lo resolvería sin pieza nueva.
-- **Dispersión real** (`MeshPhysicalMaterial.dispersion` con `transmission`): necesita algo detrás que refractar y un
-  lienzo opaco. Hoy el fuego se imita con iridiscencia y puntos de luz.
+- La princesa y la esmeralda se generan por revolución (pocas caras): una talla en escalera propia daría a la esmeralda
+  el «salón de espejos» que la caracteriza.
 - Medir Quilate con `npm run refs:probe` contra los rangos de la `16` §2 y pasar axe (B9 de la `11`).
 - En móvil, que la luz `fuego` siga la orientación del dispositivo (`deviceorientation`) en lugar del puntero.
 - Confirmar en fuente primaria la Ley 17/1985 (punzón) y la redacción de la excepción de desistimiento.

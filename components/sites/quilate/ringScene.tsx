@@ -6,6 +6,9 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import {
   BufferGeometry as Geometry,
   CanvasTexture,
+  CubeCamera,
+  HalfFloatType,
+  WebGLCubeRenderTarget,
   Float32BufferAttribute,
   Color,
   CylinderGeometry,
@@ -29,6 +32,7 @@ import {
   type Mesh,
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
+import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
 import { metalOf, stoneOf, type RingSel, type Shape } from "./ring";
 
 /*
@@ -223,7 +227,8 @@ function useGemEnvironment() {
   const gl = useThree((s) => s.gl);
   const [tex, dispose] = useMemo(() => {
     const scene = new Scene();
-    scene.background = new Color(0.03, 0.03, 0.035);
+    // caja de luz gris (brillo, GIA: la luz difusa da el brillo) con paneles fuertes y banderas negras (el patrón oscuro)
+    scene.background = new Color(0.42, 0.42, 0.43);
     const geo = new PlaneGeometry(1, 1);
     // paneles más intensos que el blanco (HDR): son los que se ven como destellos en las facetas
     const mat = new MeshBasicMaterial({ color: new Color(1, 1, 1).multiplyScalar(9) });
@@ -239,17 +244,28 @@ function useGemEnvironment() {
       [2.5, 5, 3, 1, 1],
       [-2.5, 5, -3, 1, 1],
     ];
-    panels.forEach(([x, y, z, w, h]) => {
-      const m = new ThreeMesh(geo, mat);
-      m.position.set(x, y, z);
-      m.scale.set(w, h, 1);
-      m.lookAt(0, 0, 0);
-      scene.add(m);
-    });
-    const pmrem = new PMREMGenerator(gl);
-    const rt = pmrem.fromScene(scene, 0.01);
-    pmrem.dispose();
-    return [rt.texture as Texture, () => { rt.dispose(); geo.dispose(); mat.dispose(); }] as const;
+    const flag = new MeshBasicMaterial({ color: 0x000000 });
+    const flags: [number, number, number, number, number][] = [
+      [0, 1.5, 6, 6, 1.2],
+      [6, 1, -2, 1.2, 4],
+      [-6, 1, -2, 1.2, 4],
+      [0, -4, -5, 7, 2],
+      [-4, -2, 4, 2, 1.5],
+    ];
+    const add = (list: [number, number, number, number, number][], m0: MeshBasicMaterial) =>
+      list.forEach(([x, y, z, w, h]) => {
+        const m = new ThreeMesh(geo, m0);
+        m.position.set(x, y, z);
+        m.scale.set(w, h, 1);
+        m.lookAt(0, 0, 0);
+        scene.add(m);
+      });
+    add(flags, flag);
+    add(panels, mat);
+    // cubemap (no PMREM): el shader de la gema lo muestrea con la dirección exacta de cada rayo que sale de la piedra
+    const rt = new WebGLCubeRenderTarget(256, { type: HalfFloatType });
+    new CubeCamera(0.1, 50, rt).update(gl, scene);
+    return [rt.texture as Texture, () => { rt.dispose(); geo.dispose(); mat.dispose(); flag.dispose(); }] as const;
   }, [gl]);
   useEffect(() => dispose, [dispose]);
   return tex;
@@ -271,6 +287,7 @@ const LOOK = {
   apagado: { rough: 0.42, env: 0.45, op: 1, dim: 1, wax: 0 },
 } as const;
 const WAX = new Color("#3d7a66");
+const WHITE = new Color(1, 1, 1);
 const SKETCH = new Color("#d9cbb4");
 
 function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<RingSceneProps, "active">) {
@@ -291,16 +308,10 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     () => ({
       metal: new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15, clearcoat: 0.3, clearcoatRoughness: 0.2 }),
       prong: new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15 }),
-      stone: new MeshPhysicalMaterial({ metalness: 0.1, roughness: 0, flatShading: true, clearcoat: 1, clearcoatRoughness: 0, ior: 2.4, specularIntensity: 1, iridescence: 1, iridescenceIOR: 1.9, iridescenceThicknessRange: [180, 620], envMapIntensity: 3.2 }),
-      melee: new MeshPhysicalMaterial({ metalness: 0.1, roughness: 0, flatShading: true, color: new Color("#4d5258"), clearcoat: 1, iridescence: 0.9, iridescenceIOR: 1.9, envMapIntensity: 3.2 }),
     }),
     [],
   );
   const geos = useMemo(() => ({ prong: new CylinderGeometry(1, 1, 1, 10, 1), tip: new SphereGeometry(1, 14, 10), melee: stoneGeometry("redonda", 0.045) }), []);
-  useEffect(() => {
-    mats.stone.envMap = gemEnv;
-    mats.melee.envMap = gemEnv;
-  }, [mats, gemEnv]);
   useEffect(
     () => () => {
       Object.values(mats).forEach((m) => m.dispose());
@@ -323,6 +334,15 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   useEffect(() => () => stone.dispose(), [stone]);
   const side = useMemo(() => stoneGeometry("redonda", stoneRadius(0.15)), []);
   useEffect(() => () => side.dispose(), [side]);
+
+  // gemas con trazado de rayos: la central (cambia de talla), las laterales de la trilogía y las de pavé y halo
+  const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
+  const gems = useMemo(
+    () => ({ stone: createGemMaterial(gemEnv, stone, !coarse), side: createGemMaterial(gemEnv, side, !coarse), melee: createGemMaterial(gemEnv, geos.melee, false) }),
+    [gemEnv, side, geos.melee, coarse], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  useEffect(() => setGemGeometry(gems.stone, stone), [gems, stone]);
+  useEffect(() => () => Object.values(gems).forEach((m) => m.dispose()), [gems]);
 
   // dónde va cada cosa de la cabeza
   const layout = useMemo(() => {
@@ -376,15 +396,24 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
     mats.prong.wireframe = wire;
 
     const st = stoneOf(sel.stone);
-    mats.stone.color.set(st.color).multiplyScalar(sel.stone.startsWith("diamante") ? 0.1 : 0.45).lerp(WAX, s.wax).lerp(new Color("#8a8a86"), s.dim * 0.5);
-    mats.stone.iridescence = st.iridescence * (1 - s.dim) * (1 - s.wax);
-    mats.stone.wireframe = wire;
-    mats.stone.transparent = s.op < 0.99;
-    mats.stone.opacity = s.op;
-    mats.stone.envMapIntensity = 3.2 * (1 - s.dim * 0.75);
-    mats.melee.wireframe = wire;
-    mats.melee.color.set("#4d5258").lerp(WAX, s.wax).lerp(new Color("#8a8a86"), s.dim * 0.5);
-    mats.melee.iridescence = 0.9 * (1 - s.dim) * (1 - s.wax);
+    const diamond = sel.stone.startsWith("diamante");
+    for (const [key, g] of Object.entries(gems) as [keyof typeof gems, GemMaterial][]) {
+      const u = g.uniforms;
+      const colored = key !== "melee" && !diamond;
+      // las de color absorben por el camino (Beer–Lambert); el diamante es incoloro
+      // normalizado a su canal dominante: la piedra se queda con su color y absorbe los demás
+      u.uAbsorb.value.set(colored ? st.color : "#ffffff");
+      const peak = Math.max(u.uAbsorb.value.r, u.uAbsorb.value.g, u.uAbsorb.value.b);
+      u.uAbsorb.value.multiplyScalar(1 / peak);
+      u.uAbsorbK.value = colored ? 1.6 : 0;
+      u.uIor.value.copy(key === "melee" || diamond ? DIAMOND_IOR : sel.stone === "esmeralda" ? EMERALD_IOR : CORUNDUM_IOR);
+      u.uFlat.value.copy(wire ? SKETCH : WAX);
+      u.uFlatMix.value = Math.max(s.wax, wire ? 1 : 0);
+      u.uDim.value = s.dim;
+      u.uOpacity.value = s.op;
+      g.transparent = s.op < 0.99;
+      g.wireframe = wire;
+    }
 
     // luces: la toma de la sección en vivo
     const c = light?.current ?? FALLBACK;
@@ -411,6 +440,16 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
         const a = t * (0.7 + i * 0.25) + i * 2.1;
         p.position.set(Math.cos(a) * 1.4 + (c.x / 100 - 0.5) * 3, 2.2 + Math.sin(a * 1.3) * 0.5, 2.4);
       });
+      // la misma toma ilumina las gemas: tinte del entorno, intensidad y el reflejo del foco principal
+      for (const g of Object.values(gems)) {
+        const u = g.uniforms;
+        // el tinte de la luz se suaviza en la piedra: un diamante incoloro no debe leerse como piedra de color
+        u.uTint.value.copy(tint).lerp(WHITE, 0.6);
+        u.uEnvI.value = (0.55 + c.softness * 0.35) * c.intensity;
+        u.uKeyDir.value.copy(lights.key.position).normalize();
+        u.uKeyColor.value.copy(tint);
+        u.uKeyI.value = (1 - c.softness) * 6 * c.intensity;
+      }
       // difusa = más entorno (brillo); dura = menos entorno y más foco (fuego)
       (scene as unknown as { environmentIntensity: number }).environmentIntensity = (0.25 + c.softness * 0.95) * c.intensity * s.env;
     }
@@ -456,12 +495,12 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
       {layout.pave.map((f, i) => {
         const r = R0 + T + 0.012;
         const p = new Vector3(Math.sin(f) * r, Math.cos(f) * r, 0);
-        return <mesh key={`p${i}`} geometry={geos.melee} material={mats.melee} position={p} rotation={[0, 0, -f]} />;
+        return <mesh key={`p${i}`} geometry={geos.melee} material={gems.melee} position={p} rotation={[0, 0, -f]} />;
       })}
       </group>
       {solitaire && (
         <group ref={head}>
-          <mesh geometry={stone} material={mats.stone} position={[0, layout.girdle, 0]} />
+          <mesh geometry={stone} material={gems.stone} position={[0, layout.girdle, 0]} />
           <group ref={mount}>
           {layout.prongs.map((p, i) => (
             <group key={`g${i}`}>
@@ -480,13 +519,13 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
             </mesh>
           )}
           {layout.halo.map((p, i) => (
-            <mesh key={`h${i}`} geometry={geos.melee} material={mats.melee} position={p} scale={1.15} />
+            <mesh key={`h${i}`} geometry={geos.melee} material={gems.melee} position={p} scale={1.15} />
           ))}
           {sel.setting === "trilogia" &&
             [-1, 1].map((sgn) => {
               const a = sgn * (0.3 + R * 0.4);
               const r = R0 + T + stoneRadius(0.15) * 0.55 + 0.03;
-              return <mesh key={`t${sgn}`} geometry={side} material={mats.stone} position={[Math.sin(a) * r, Math.cos(a) * r, 0]} rotation={[0, 0, -a]} />;
+              return <mesh key={`t${sgn}`} geometry={side} material={gems.side} position={[Math.sin(a) * r, Math.cos(a) * r, 0]} rotation={[0, 0, -a]} />;
             })}
           </group>
         </group>

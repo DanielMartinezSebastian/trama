@@ -160,7 +160,7 @@ export function Shell({ children }: { children: ReactNode }) {
           onNavigate={(h) => navigate({ href: h })}
           variant="minimal"
         />
-        <CookieBanner storageKey="quilate-cookies" policyHref="#cookies" position="bottom-left" title="Cookies" text="Solo las necesarias para guardar tu diseño. Las de medición, si nos dejas." variant="minimal" />
+        <CookieBanner storageKey="quilate-cookies" policyHref="#cookies" title="Cookies" text="Solo las necesarias para guardar tu diseño. Las de medición, si nos dejas." variant="minimal" />
         {/* eslint-disable-next-line react/no-danger */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jewelryJsonLd(href())).replace(/</g, "\\u003c") }} />
       </QCtx.Provider>
