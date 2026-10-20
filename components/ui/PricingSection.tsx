@@ -18,12 +18,23 @@ export type PricingSectionProps = {
    * trae precio anual, aparece el selector Mensual / Anual.
    */
   plans?: string;
-  /** grid = rejilla · list = una columna de tarjetas horizontales · carousel = carrusel de Swiper */
-  layout?: "grid" | "list" | "carousel";
+  /**
+   * grid = rejilla de tarjetas · joined = una sola pieza con los planes en columnas separadas por líneas finas (Linear,
+   * Vercel; la insignia va junto al nombre) · list = una columna de tarjetas horizontales · carousel = carrusel de Swiper
+   */
+  layout?: "grid" | "joined" | "list" | "carousel";
   /** maquetación de cada tarjeta en `grid` y `carousel` */
   cardLayout?: "classic" | "compact";
   /** cómo se destaca el plan marcado (ver PricingCard) */
   highlight?: PricingCardProps["highlight"];
+  /** texto de la insignia del plan destacado (vacío = sin insignia) */
+  badge?: string;
+  /** dónde va la insignia (con layout="joined", siempre junto al nombre) */
+  badgePlacement?: PricingCardProps["badgePlacement"];
+  planCase?: PricingCardProps["planCase"];
+  marker?: PricingCardProps["marker"];
+  /** selector Mensual / Anual: accent = la opción elegida en el acento · neutral = gris discreto, el acento solo en el ahorro */
+  toggle?: "accent" | "neutral";
   /** fondo de las tarjetas no destacadas (ver fill.ts) */
   fill?: CardFill;
   /** texto del periodo cuando se elige facturación anual */
@@ -58,6 +69,11 @@ export default function PricingSection({
   layout = "grid",
   cardLayout = "classic",
   highlight = "invert",
+  badge = "Más popular",
+  badgePlacement = "tab",
+  planCase = "upper",
+  marker = "plus",
+  toggle = "accent",
   fill = "surface",
   yearlyPeriod = "/ año",
   yearlyNote = "2 meses gratis",
@@ -74,7 +90,8 @@ export default function PricingSection({
   const [yearly, setYearly] = useState(false);
 
   const cards = rows.map(([plan, price, period, hl, features, description, yearlyPrice], i) => {
-    const useYear = yearly && !!yearlyPrice;
+    // un precio anual igual al mensual («A medida», «0 €») no es una tarifa anual: se queda con su periodo y sin «equivale a»
+    const useYear = yearly && !!yearlyPrice && yearlyPrice !== price;
     const shownPrice = useYear ? yearlyPrice : price;
     const shownPeriod = useYear ? yearlyPeriod : period;
     const href = ctaHref && !/[?#]/.test(ctaHref) ? `${ctaHref}?plan=${encodeURIComponent(plan)}&billing=${useYear ? "yearly" : "monthly"}` : ctaHref;
@@ -91,8 +108,12 @@ export default function PricingSection({
         note={useYear ? `equivale a ${price} ${period}`.replace(/\s+/g, " ") : ""}
         highlighted={hl === "si"}
         highlight={highlight}
+        badge={badge}
+        badgePlacement={layout === "joined" ? "inline" : badgePlacement}
+        planCase={planCase}
+        marker={marker}
         features={splitEscaped(features ?? "", ";").filter(Boolean).join("\n")}
-        layout={layout === "list" ? "horizontal" : cardLayout}
+        layout={layout === "list" ? "horizontal" : layout === "joined" ? "classic" : cardLayout}
         fill={fill}
         variant={variant}
       />
@@ -103,7 +124,7 @@ export default function PricingSection({
     <section className={`ui-pricing ${className}`}>
       {(kicker || title || subtitle) && <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align="center" variant="minimal" />}
       {hasYearly && (
-        <div className={`ui-billing ui-surface ${vcls(variant)}`} role="group" aria-label="Periodo de facturación">
+        <div className={`ui-billing ui-billing--${toggle} ui-surface ${vcls(variant)}`} role="group" aria-label="Periodo de facturación">
           <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>
             Mensual
           </button>

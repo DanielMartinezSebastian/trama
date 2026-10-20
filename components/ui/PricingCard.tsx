@@ -21,9 +21,18 @@ export type PricingCardProps = {
   /** el botón como enlace (p. ej. "#contacto" o "/alta?plan=pro") */
   ctaHref?: string;
   highlighted?: boolean;
-  /** cómo se destaca: glow = borde y halo de acento · invert = fondo de acento (paleta invertida) · border = solo borde grueso */
-  highlight?: "glow" | "invert" | "border";
+  /**
+   * cómo se destaca: glow = borde y halo de acento · invert = fondo de acento (paleta invertida) · border = solo borde grueso ·
+   * lift = superficie apenas más clara con una línea de acento arriba y luz cenital (webs de producto: Linear, Vercel)
+   */
+  highlight?: "glow" | "invert" | "border" | "lift";
   badge?: string;
+  /** tab = insignia a caballo sobre el borde superior · inline = junto al nombre del plan */
+  badgePlacement?: "tab" | "inline";
+  /** upper = nombre en versalitas espaciadas · none = tal cual, en el color del texto */
+  planCase?: "upper" | "none";
+  /** marca de cada característica: «+» (plus) o una marca de verificación fina (check); las no incluidas, atenuadas sin tachar */
+  marker?: "plus" | "check";
   /** classic: vertical · compact: sin lista (características en una línea) · horizontal: datos a la izquierda, precio y botón a la derecha */
   layout?: "classic" | "compact" | "horizontal";
   /** fondo de la tarjeta (ver fill.ts); `highlight="invert"` lo sustituye por el acento cuando está destacada */
@@ -49,6 +58,9 @@ export default function PricingCard({
   highlighted = true,
   highlight = "glow",
   badge = "Más popular",
+  badgePlacement = "tab",
+  planCase = "upper",
+  marker = "plus",
   layout = "classic",
   fill = "surface",
   pattern,
@@ -65,9 +77,14 @@ export default function PricingCard({
     .map((l) => ({ text: l.replace(/^[-+]\s*/, ""), off: l.startsWith("-") }));
   const hl = highlighted ? `ui-price--hl ui-price--hl-${highlight}` : "";
 
+  const showBadge = highlighted && !!badge;
+  const badgeEl = <Badge text={badge} variant={variant} intent="accent" />;
   const head = (
     <div className="ui-price__head">
-      <span className="ui-price__name">{plan.toUpperCase()}</span>
+      <span className="ui-price__name">
+        {planCase === "upper" ? plan.toUpperCase() : plan}
+        {showBadge && badgePlacement === "inline" && badgeEl}
+      </span>
       {description && <p className="ui-price__desc">{description}</p>}
     </div>
   );
@@ -97,12 +114,8 @@ export default function PricingCard({
   const button = <Button label={cta} variant={variant} emphasis={highlighted ? "primary" : "secondary"} fullWidth href={ctaHref} onClick={onSelect} />;
 
   return (
-    <article className={`ui-price ui-price--${layout} ${hl} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={f.style}>
-      {highlighted && badge && (
-        <span className="ui-price__badge">
-          <Badge text={badge} variant={variant} intent="accent" />
-        </span>
-      )}
+    <article className={`ui-price ui-price--${layout} ${hl} ui-price--case-${planCase} ui-price--mark-${marker} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={f.style}>
+      {showBadge && badgePlacement === "tab" && <span className="ui-price__badge">{badgeEl}</span>}
       {layout === "horizontal" ? (
         <>
           <div className="ui-price__main">

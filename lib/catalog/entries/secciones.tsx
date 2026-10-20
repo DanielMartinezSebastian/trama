@@ -199,7 +199,8 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de precios",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo o con borde) y características no incluidas. Rejilla, lista horizontal o carrusel.",
+    description: "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.",
+    notes: ["Fórmula de producto (Linear, Vercel; /sitios/faro): layout=\"joined\", highlight=\"lift\", planCase=\"none\", marker=\"check\", toggle=\"neutral\" y variant=\"editorial\" (botón principal sólido en el color del texto).", "Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a»."],
     stageHeight: 720,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Precios" },
@@ -212,9 +213,13 @@ export const secciones: CatalogEntry[] = [
         multiline: true,
         default: DEFAULT_PLANS,
       },
-      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "list", "carousel"], labels: { grid: "rejilla", list: "lista (tarjetas horizontales)", carousel: "carrusel (Swiper)" } },
-      { key: "cardLayout", label: "Tarjetas", type: "select", default: "classic", options: ["classic", "compact"], when: (p) => p.layout !== "list" },
-      { key: "highlight", label: "Plan destacado", type: "select", default: "invert", options: ["invert", "glow", "border"], labels: { invert: "invertido (fondo de acento)", glow: "halo de acento", border: "borde grueso" } },
+      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "joined", "list", "carousel"], labels: { grid: "rejilla", joined: "una pieza con columnas", list: "lista (tarjetas horizontales)", carousel: "carrusel (Swiper)" } },
+      { key: "cardLayout", label: "Tarjetas", type: "select", default: "classic", options: ["classic", "compact"], when: (p) => p.layout !== "list" && p.layout !== "joined" },
+      { key: "highlight", label: "Plan destacado", type: "select", default: "invert", options: ["invert", "glow", "border", "lift"], labels: { invert: "invertido (fondo de acento)", glow: "halo de acento", border: "borde grueso", lift: "luz cenital (producto)" } },
+      { key: "badge", label: "Insignia del destacado", type: "text", default: "Más popular" },
+      { key: "planCase", label: "Nombre del plan", type: "select", default: "upper", options: ["upper", "none"], labels: { upper: "versalitas", none: "tal cual" } },
+      { key: "marker", label: "Marca de las características", type: "select", default: "plus", options: ["plus", "check"], labels: { plus: "+", check: "✓ fina (no incluidas sin tachar)" } },
+      { key: "toggle", label: "Selector mensual/anual", type: "select", default: "accent", options: ["accent", "neutral"], labels: { accent: "en el acento", neutral: "neutro" } },
       { key: "fill", label: "Fondo del resto", type: "select", default: "surface", options: ["surface", "tint", "gradient", "pattern"], labels: { surface: "el de la variante", tint: "tinte de acento", gradient: "degradado", pattern: "trama" } },
       { key: "yearlyNote", label: "Etiqueta de ahorro anual", type: "text", default: "2 meses gratis" },
       { key: "cta", label: "Botón de cada plan", type: "text", default: "Empezar ahora" },
@@ -232,6 +237,10 @@ export const secciones: CatalogEntry[] = [
           layout={p.layout as never}
           cardLayout={p.cardLayout as never}
           highlight={p.highlight as never}
+          badge={p.badge as string}
+          planCase={p.planCase as never}
+          marker={p.marker as never}
+          toggle={p.toggle as never}
           fill={p.fill as never}
           yearlyNote={p.yearlyNote as string}
           cta={p.cta as string}

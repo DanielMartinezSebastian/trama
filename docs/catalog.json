@@ -2344,7 +2344,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, tres formas de destacar (halo, invertida, borde), precio tachado y nota.",
+      "description": "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, cuatro formas de destacar (halo, invertida, borde, luz cenital), insignia sobre el borde o junto al nombre, marcas + o ✓, precio tachado y nota.",
       "props": [
         {
           "key": "layout",
@@ -2419,7 +2419,8 @@
           "options": [
             "glow",
             "invert",
-            "border"
+            "border",
+            "lift"
           ]
         },
         {
@@ -2427,6 +2428,36 @@
           "type": "text",
           "default": "Más popular",
           "label": "Insignia"
+        },
+        {
+          "key": "badgePlacement",
+          "type": "select",
+          "default": "tab",
+          "label": "Posición de la insignia",
+          "options": [
+            "tab",
+            "inline"
+          ]
+        },
+        {
+          "key": "planCase",
+          "type": "select",
+          "default": "upper",
+          "label": "Nombre del plan",
+          "options": [
+            "upper",
+            "none"
+          ]
+        },
+        {
+          "key": "marker",
+          "type": "select",
+          "default": "plus",
+          "label": "Marca de las características",
+          "options": [
+            "plus",
+            "check"
+          ]
         },
         {
           "key": "variant",
@@ -8030,7 +8061,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo o con borde) y características no incluidas. Rejilla, lista horizontal o carrusel.",
+      "description": "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.",
       "props": [
         {
           "key": "kicker",
@@ -8063,6 +8094,7 @@
           "label": "Disposición",
           "options": [
             "grid",
+            "joined",
             "list",
             "carousel"
           ]
@@ -8085,7 +8117,44 @@
           "options": [
             "invert",
             "glow",
-            "border"
+            "border",
+            "lift"
+          ]
+        },
+        {
+          "key": "badge",
+          "type": "text",
+          "default": "Más popular",
+          "label": "Insignia del destacado"
+        },
+        {
+          "key": "planCase",
+          "type": "select",
+          "default": "upper",
+          "label": "Nombre del plan",
+          "options": [
+            "upper",
+            "none"
+          ]
+        },
+        {
+          "key": "marker",
+          "type": "select",
+          "default": "plus",
+          "label": "Marca de las características",
+          "options": [
+            "plus",
+            "check"
+          ]
+        },
+        {
+          "key": "toggle",
+          "type": "select",
+          "default": "accent",
+          "label": "Selector mensual/anual",
+          "options": [
+            "accent",
+            "neutral"
           ]
         },
         {
@@ -8146,6 +8215,10 @@
             "editorial"
           ]
         }
+      ],
+      "notes": [
+        "Fórmula de producto (Linear, Vercel; /sitios/faro): layout=\"joined\", highlight=\"lift\", planCase=\"none\", marker=\"check\", toggle=\"neutral\" y variant=\"editorial\" (botón principal sólido en el color del texto).",
+        "Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a»."
       ],
       "example": "import PricingSection from \"@/components/ui/PricingSection\";\n\n<PricingSection\n  title=\"Un plan para cada tamaño\"\n/>",
       "preview": "/componentes#pricing-section"

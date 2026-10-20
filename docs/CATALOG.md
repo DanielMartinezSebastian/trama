@@ -391,7 +391,7 @@ Superficie genérica con barra opcional, título, cuerpo y pie. Base de cualquie
 
 ### Tarjeta de precios — `PricingCard`
 
-Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, tres formas de destacar (halo, invertida, borde), precio tachado y nota.
+Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, cuatro formas de destacar (halo, invertida, borde, luz cenital), insignia sobre el borde o junto al nombre, marcas + o ✓, precio tachado y nota.
 
 | prop | tipo | default |
 |---|---|---|
@@ -405,8 +405,11 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 | `features` | text | "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centr…" |
 | `cta` | text | "Empezar ahora" |
 | `highlighted` | boolean | true |
-| `highlight` | `glow` · `invert` · `border` | "invert" |
+| `highlight` | `glow` · `invert` · `border` · `lift` | "invert" |
 | `badge` | text | "Más popular" |
+| `badgePlacement` | `tab` · `inline` | "tab" |
+| `planCase` | `upper` · `none` | "upper" |
+| `marker` | `plus` · `check` | "plus" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 | `fill` | `surface` · `tint` · `gradient` · `accent` · `pattern` · `image` | "surface" |
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
@@ -1854,7 +1857,7 @@ Cabecera de sección más una fila de cifras ASCII que cuentan hacia arriba (Sta
 
 ### Sección de precios — `PricingSection`
 
-Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo o con borde) y características no incluidas. Rejilla, lista horizontal o carrusel.
+Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1862,15 +1865,22 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `title` | text | "Un plan para cada tamaño" |
 | `subtitle` | text | "Cambia o cancela cuando quieras." |
 | `plans` | text | "Básico\|9 €\|/ mes\|no\|Un proyecto;Exportación PNG;Soporte por email;-Dominio propio\…" |
-| `layout` | `grid` · `list` · `carousel` | "grid" |
+| `layout` | `grid` · `joined` · `list` · `carousel` | "grid" |
 | `cardLayout` | `classic` · `compact` | "classic" |
-| `highlight` | `invert` · `glow` · `border` | "invert" |
+| `highlight` | `invert` · `glow` · `border` · `lift` | "invert" |
+| `badge` | text | "Más popular" |
+| `planCase` | `upper` · `none` | "upper" |
+| `marker` | `plus` · `check` | "plus" |
+| `toggle` | `accent` · `neutral` | "accent" |
 | `fill` | `surface` · `tint` · `gradient` · `pattern` | "surface" |
 | `yearlyNote` | text | "2 meses gratis" |
 | `cta` | text | "Empezar ahora" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
+
+- Fórmula de producto (Linear, Vercel; /sitios/faro): layout="joined", highlight="lift", planCase="none", marker="check", toggle="neutral" y variant="editorial" (botón principal sólido en el color del texto).
+- Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a».
 
 ### Sección de testimonios — `TestimonialSection`
 

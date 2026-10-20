@@ -141,7 +141,7 @@ export const tarjetas: CatalogEntry[] = [
     name: "Tarjeta de precios",
     category: "tarjetas",
     styles: ALL_STYLES,
-    description: "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, tres formas de destacar (halo, invertida, borde), precio tachado y nota.",
+    description: "Plan con precio, características (incluidas y no incluidas) y llamada a la acción. Tres maquetaciones, cuatro formas de destacar (halo, invertida, borde, luz cenital), insignia sobre el borde o junto al nombre, marcas + o ✓, precio tachado y nota.",
     stageHeight: 480,
     props: [
       { key: "layout", label: "Maquetación", type: "select", default: "classic", options: ["classic", "compact", "horizontal"] },
@@ -154,8 +154,11 @@ export const tarjetas: CatalogEntry[] = [
       { key: "features", label: "Características (una por línea; «-» = no incluida)", type: "text", multiline: true, default: "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centralizada" },
       { key: "cta", label: "Botón", type: "text", default: "Empezar ahora" },
       { key: "highlighted", label: "Destacada", type: "boolean", default: true },
-      { key: "highlight", label: "Forma de destacar", type: "select", default: "invert", options: ["glow", "invert", "border"], labels: { glow: "halo de acento", invert: "invertida (fondo de acento)", border: "borde grueso" }, when: (p) => p.highlighted === true },
+      { key: "highlight", label: "Forma de destacar", type: "select", default: "invert", options: ["glow", "invert", "border", "lift"], labels: { glow: "halo de acento", invert: "invertida (fondo de acento)", border: "borde grueso", lift: "luz cenital (producto)" }, when: (p) => p.highlighted === true },
       { key: "badge", label: "Insignia", type: "text", default: "Más popular", when: (p) => p.highlighted === true },
+      { key: "badgePlacement", label: "Posición de la insignia", type: "select", default: "tab", options: ["tab", "inline"], labels: { tab: "sobre el borde", inline: "junto al nombre" }, when: (p) => p.highlighted === true },
+      { key: "planCase", label: "Nombre del plan", type: "select", default: "upper", options: ["upper", "none"], labels: { upper: "versalitas", none: "tal cual" } },
+      { key: "marker", label: "Marca de las características", type: "select", default: "plus", options: ["plus", "check"], labels: { plus: "+", check: "✓ fina" } },
       variantProp("glass"),
       ...fillSpecs(),
     ],
@@ -173,6 +176,9 @@ export const tarjetas: CatalogEntry[] = [
             features={p.features as string}
             cta={p.cta as string}
             highlighted={p.highlighted as boolean}
+            badgePlacement={p.badgePlacement as never}
+            planCase={p.planCase as never}
+            marker={p.marker as never}
             highlight={p.highlight as never}
             badge={p.badge as string}
             variant={p.variant as never}
