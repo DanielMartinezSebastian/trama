@@ -1915,3 +1915,8 @@ details.ui-callout[open] .ui-callout__chev { rotate: 180deg; }
    Texto que no se ve pero se lee: la versión legible de un texto animado letra a letra, la etiqueta de un icono… */
 .ui-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
+
+/* AmbientLight: lienzo de 32×18 con el color de un vídeo, estirado y desenfocado detrás del contenido */
+.ui-ambient { inset: -12%; width: 124%; height: 124%; z-index: 0; pointer-events: none; filter: blur(var(--ui-ambient-blur, 90px)) saturate(1.3); opacity: var(--ui-ambient-op, 0.6); background: var(--bg); }
+.ui-ambient--fixed { position: fixed; }
+.ui-ambient--absolute { position: absolute; }

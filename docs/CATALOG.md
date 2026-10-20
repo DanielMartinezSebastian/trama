@@ -762,8 +762,28 @@ Envuelve contenido (`children`), p. ej.: `{/* el elemento que entra o sale */}`
 
 - Anima al montarse o desmontarse dentro de `startTransition`, una navegación o un `<Suspense>`: para cambiar de contenido, cambia su `key`. Sin nodos extra en el DOM.
 - Mismos `kind`, `direction`, `pace`, `tone` y `types` que PageTransition, y los mismos tipos de transición (`nav-forward`, `nav-back`, `trama-<animación>`).
-- Elemento compartido: `<SharedTransition name={`foto-${id}`}>` en la miniatura del listado y en la imagen de la ficha; al navegar de una a otra, el navegador la transforma de una caja a la otra por encima de la animación de página.
+- Elemento compartido: `<SharedTransition name={`foto-${id}`}>` en la miniatura del listado y en la imagen de la ficha; al navegar de una a otra, el navegador la transforma de una caja a la otra por encima de la animación de página. `fit="cover"` si las dos cajas tienen distinta proporción; `layout` para que también se deslice al reordenar o filtrar en la misma vista.
+- React no forma la pareja si el elemento de la vista de salida estaba fuera del viewport (una tarjeta por debajo del pliegue): entonces solo cambia de página.
 - Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte, el cambio es inmediato.
+
+### Elemento que viaja entre rutas — `Traveler`
+
+Un elemento que no desaparece al navegar: vive en el layout (TravelStage) y cada página marca con TravelSlot la caja que ocupa en ella. Al cambiar de ruta, el navegador lo lleva de una caja a otra (posición, tamaño y proporción) con la View Transitions API, con el contenido en directo: un vídeo sigue sonando, un lienzo sigue animando. Para reproductores que se encogen a una esquina, marcas que pasan del titular a la cabecera o una imagen que crece hasta ser la portada.
+
+Envuelve contenido (`children`), p. ej.: `{/* lo que viaja: un <video>, un lienzo, la marca… */}`
+
+| prop | tipo | default |
+|---|---|---|
+| `fit` | `cover` · `stretch` | "cover" |
+| `blend` | `live` · `crossfade` | "live" |
+| `pace` | `fast` · `normal` · `slow` | "normal" |
+
+- En una web: `<TravelStage>` en el layout envolviendo a los `<Traveler id="reel">` y a `{children}`; en cada página, `<TravelSlot id="reel" at="mini" className="…" />` con el tamaño y el sitio por CSS. La página que no tenga hueco lo deja invisible e inerte (sigue vivo).
+- El viajero lleva `data-at` con el nombre del hueco: su CSS cambia de aspecto en cada sitio (esquinas, controles). `useTraveler(id)` da ese nombre en React; `onMove` avisa al cambiar.
+- `blend="live"` (por defecto) muestra solo el estado nuevo, en directo, cambiando de caja: ideal para vídeo y lienzos. `crossfade` funde el viejo con el nuevo (si el contenido cambia de forma). `fit="cover"` recorta si cambia la proporción; `stretch` estira (texto o SVG con la misma proporción).
+- Huecos `position: fixed` (mini reproductor en una esquina, cabecera fija) y dentro de `sticky` funcionan. Con varios huecos a la vez gana el de mayor `priority`.
+- Dentro de una misma página (modo cine, ampliar): monta otro hueco dentro de `startTransition`, como en este ejemplo.
+- Con «reducir movimiento», cambia de sitio con un fundido de 120 ms. Sin la API, salta de caja sin animar. Demo completa: /sitios/travesia.
 
 ### Revelado de contenido — `Reveal`
 
@@ -2567,3 +2587,11 @@ Radio de verano con la fórmula «Escritorio Y2K» (Poolsuite): papel cuadricula
 Carpeta: `components/sites/hamaca/` · 1 páginas: Inicio
 
 `Icon` ×2 · `GridBackground` · `Button` · `TextField` · `AudioPlayer` · `LocalTime`
+
+### Travesía · documentales de mar — `/sitios/travesia`
+
+Productora de documentales con la coreografía de las webs de cine premiadas (docs/14): la portada es un índice tipográfico con una ventana de vídeo que reproduce el título que señalas y tiñe la página con su luz; al abrirlo, esa misma ventana —sin cortar el vídeo— se expande a pantalla completa mientras las palabras del título vuelan hasta el titular; «Siguiente documental» encoge el vídeo a una ventana, cambia de película y lo vuelve a expandir; y la marca de la cabecera se convierte, palabra a palabra, en el titular gigante de la productora. Usa Traveler, TravelSlot, SharedText, AmbientLight, MetaTable y PageTransition.
+
+Carpeta: `components/sites/travesia/` · 9 páginas: Índice · Puntas negras · Marea rosa · Giradores · Barrack Point · Arena negra · El borde del mapa · Productora · Contacto
+
+`MetaTable` ×2 · `PageTransition` · `Traveler` · `BigFooter`

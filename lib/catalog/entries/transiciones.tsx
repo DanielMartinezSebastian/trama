@@ -16,6 +16,8 @@ import Panel from "@/components/ui/Panel";
 import Presence, { PRESENCE_EFFECTS } from "@/components/ui/Presence";
 import Reveal, { REVEAL_KINDS, type RevealDirection, type RevealEasing, type RevealKind } from "@/components/ui/Reveal";
 import SceneFlash from "@/components/ui/SceneFlash";
+import Traveler, { TravelSlot, TravelStage, useTraveler, type TravelBlend, type TravelFit } from "@/components/ui/Traveler";
+import { video } from "@/lib/sites/videos";
 import { vcls } from "@/components/ui/variants";
 import { CHARSETS } from "@/lib/ui/fx";
 import type { CatalogEntry } from "../schema";
@@ -140,6 +142,63 @@ function PageTransitionDemo({ kind, direction, pace, tone, replay, scope }: VtDe
   );
 }
 
+/** Sitios del ejemplo de Traveler: el mismo vídeo cambia de caja sin volver a empezar. */
+const TRAVEL_SPOTS = [
+  { at: "tarjeta", label: "Tarjeta" },
+  { at: "lateral", label: "Columna" },
+  { at: "cine", label: "Cine" },
+  { at: "pildora", label: "Píldora" },
+] as const;
+
+function TravelerTag({ id }: { id: string }) {
+  const at = useTraveler(id);
+  return <span className="pg-travel__tag">{at ?? "—"}</span>;
+}
+
+/**
+ * Mini página con cuatro huecos para el mismo viajero: cada botón monta otro hueco dentro de `startTransition` y el
+ * navegador lleva el vídeo, en directo, de una caja a otra. En una web, los huecos están en páginas distintas.
+ */
+function TravelerDemo({ fit, blend, pace }: { fit: TravelFit; blend: TravelBlend; pace: "fast" | "normal" | "slow" }) {
+  const [spot, setSpot] = useState<(typeof TRAVEL_SPOTS)[number]["at"]>("tarjeta");
+  const id = `demo${useId().replace(/[^a-zA-Z0-9]/g, "")}`; // único: el comparador monta varias copias a la vez
+  const clip = video("oceano", 0);
+  const slot = <TravelSlot key={spot} id={id} at={spot} className={`pg-travel__slot pg-travel__slot--${spot}`} as={spot === "pildora" ? "span" : "div"} />;
+  return (
+    <TravelStage className="pg-travel">
+      <div className="pg-travel__bar" role="group" aria-label="Hueco del vídeo">
+        {TRAVEL_SPOTS.map((s) => (
+          <button key={s.at} type="button" aria-pressed={spot === s.at} onClick={() => startTransition(() => setSpot(s.at))}>
+            {s.label}
+          </button>
+        ))}
+        <TravelerTag id={id} />
+      </div>
+      <Traveler id={id} fit={fit} blend={blend} pace={pace} className="pg-travel__rider">
+        <video src={clip.src} poster={clip.posterSrc} muted loop playsInline autoPlay aria-label={clip.alt} />
+      </Traveler>
+      <div className={`pg-travel__page pg-travel__page--${spot}`}>
+        {spot === "cine" && slot}
+        <div className="pg-travel__main">
+          {spot === "pildora" ? (
+            <p className="pg-travel__title">Hablemos {slot} del mar</p>
+          ) : (
+            <>
+              <p className="pg-travel__title">Documentales de mar</p>
+              <div className="pg-travel__cards">
+                {spot === "tarjeta" ? slot : <span className="pg-travel__ph" />}
+                <span className="pg-travel__ph" />
+                <span className="pg-travel__ph" />
+              </div>
+            </>
+          )}
+        </div>
+        {spot === "lateral" && <aside className="pg-travel__aside">{slot}</aside>}
+      </div>
+    </TravelStage>
+  );
+}
+
 export const transiciones: CatalogEntry[] = [
   {
     id: "scene-flash",
@@ -213,7 +272,8 @@ export const transiciones: CatalogEntry[] = [
     notes: [
       "Anima al montarse o desmontarse dentro de `startTransition`, una navegación o un `<Suspense>`: para cambiar de contenido, cambia su `key`. Sin nodos extra en el DOM.",
       "Mismos `kind`, `direction`, `pace`, `tone` y `types` que PageTransition, y los mismos tipos de transición (`nav-forward`, `nav-back`, `trama-<animación>`).",
-      "Elemento compartido: `<SharedTransition name={`foto-${id}`}>` en la miniatura del listado y en la imagen de la ficha; al navegar de una a otra, el navegador la transforma de una caja a la otra por encima de la animación de página.",
+      "Elemento compartido: `<SharedTransition name={`foto-${id}`}>` en la miniatura del listado y en la imagen de la ficha; al navegar de una a otra, el navegador la transforma de una caja a la otra por encima de la animación de página. `fit=\"cover\"` si las dos cajas tienen distinta proporción; `layout` para que también se deslice al reordenar o filtrar en la misma vista.",
+      "React no forma la pareja si el elemento de la vista de salida estaba fuera del viewport (una tarjeta por debajo del pliegue): entonces solo cambia de página.",
       "Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte, el cambio es inmediato.",
     ],
     props: [
@@ -227,6 +287,32 @@ export const transiciones: CatalogEntry[] = [
         <PageTransitionDemo scope="element" kind={p.kind as PageTransitionKind} direction={dirOf(p.direction)} pace={p.pace as never} tone={p.tone as never} replay={replay} />
       </div>
     ),
+  },
+  {
+    id: "traveler",
+    component: "Traveler",
+    path: "@/components/ui/Traveler",
+    name: "Elemento que viaja entre rutas",
+    category: "transiciones",
+    styles: ALL_STYLES,
+    description:
+      "Un elemento que no desaparece al navegar: vive en el layout (TravelStage) y cada página marca con TravelSlot la caja que ocupa en ella. Al cambiar de ruta, el navegador lo lleva de una caja a otra (posición, tamaño y proporción) con la View Transitions API, con el contenido en directo: un vídeo sigue sonando, un lienzo sigue animando. Para reproductores que se encogen a una esquina, marcas que pasan del titular a la cabecera o una imagen que crece hasta ser la portada.",
+    stageHeight: 460,
+    children: "{/* lo que viaja: un <video>, un lienzo, la marca… */}",
+    notes: [
+      "En una web: `<TravelStage>` en el layout envolviendo a los `<Traveler id=\"reel\">` y a `{children}`; en cada página, `<TravelSlot id=\"reel\" at=\"mini\" className=\"…\" />` con el tamaño y el sitio por CSS. La página que no tenga hueco lo deja invisible e inerte (sigue vivo).",
+      "El viajero lleva `data-at` con el nombre del hueco: su CSS cambia de aspecto en cada sitio (esquinas, controles). `useTraveler(id)` da ese nombre en React; `onMove` avisa al cambiar.",
+      "`blend=\"live\"` (por defecto) muestra solo el estado nuevo, en directo, cambiando de caja: ideal para vídeo y lienzos. `crossfade` funde el viejo con el nuevo (si el contenido cambia de forma). `fit=\"cover\"` recorta si cambia la proporción; `stretch` estira (texto o SVG con la misma proporción).",
+      "Huecos `position: fixed` (mini reproductor en una esquina, cabecera fija) y dentro de `sticky` funcionan. Con varios huecos a la vez gana el de mayor `priority`.",
+      "Dentro de una misma página (modo cine, ampliar): monta otro hueco dentro de `startTransition`, como en este ejemplo.",
+      "Con «reducir movimiento», cambia de sitio con un fundido de 120 ms. Sin la API, salta de caja sin animar. Demo completa: /sitios/travesia.",
+    ],
+    props: [
+      { key: "fit", label: "Proporción distinta", type: "select", default: "cover", options: ["cover", "stretch"], labels: { cover: "recortar (cover)", stretch: "estirar (stretch)" } },
+      { key: "blend", label: "Imagen del viaje", type: "select", default: "live", options: ["live", "crossfade"], labels: { live: "en directo (live)", crossfade: "fundido (crossfade)" } },
+      { key: "pace", label: "Ritmo", type: "select", default: "normal", options: ["fast", "normal", "slow"], labels: { fast: "rápido (420 ms)", normal: "normal (640 ms)", slow: "lento (900 ms)" } },
+    ],
+    render: (p) => <TravelerDemo fit={p.fit as TravelFit} blend={p.blend as TravelBlend} pace={p.pace as never} />,
   },
   {
     id: "reveal",

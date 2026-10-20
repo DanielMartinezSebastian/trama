@@ -368,6 +368,70 @@
 /* ---------- Elementos compartidos (SharedTransition): el morph del navegador (posición, tamaño y fundido cruzado) con
    el ritmo del kit, por encima de la animación de página ---------- */
 ::view-transition-group(.ui-vt-morph) { animation-duration: var(--ui-vt-d); animation-timing-function: var(--ui-vt-ease); z-index: 50; }
+/* fit="cover": si la proporción cambia (miniatura cuadrada → foto apaisada), las dos imágenes recortan en vez de
+   deformarse o asomar por debajo de la caja */
+::view-transition-old(.ui-vt-morph--cover),
+::view-transition-new(.ui-vt-morph--cover) { height: 100%; object-fit: cover; overflow: clip; }
+
+/* SharedText: cada palabra es una caja propia (inline-block) para poder capturarla aparte */
+.ui-stext__w { display: inline-block; }
+.ui-stext__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Retardos (coreografía): `delay` de SharedTransition, SharedText y Traveler, en pasos de 40 ms. Mientras espera, el
+   grupo se queda en la caja de salida (los UA animan con `fill-mode: both`). */
+::view-transition-group(.ui-vt-delay-1), ::view-transition-image-pair(.ui-vt-delay-1), ::view-transition-old(.ui-vt-delay-1), ::view-transition-new(.ui-vt-delay-1) { animation-delay: 40ms; }
+::view-transition-group(.ui-vt-delay-2), ::view-transition-image-pair(.ui-vt-delay-2), ::view-transition-old(.ui-vt-delay-2), ::view-transition-new(.ui-vt-delay-2) { animation-delay: 80ms; }
+::view-transition-group(.ui-vt-delay-3), ::view-transition-image-pair(.ui-vt-delay-3), ::view-transition-old(.ui-vt-delay-3), ::view-transition-new(.ui-vt-delay-3) { animation-delay: 120ms; }
+::view-transition-group(.ui-vt-delay-4), ::view-transition-image-pair(.ui-vt-delay-4), ::view-transition-old(.ui-vt-delay-4), ::view-transition-new(.ui-vt-delay-4) { animation-delay: 160ms; }
+::view-transition-group(.ui-vt-delay-5), ::view-transition-image-pair(.ui-vt-delay-5), ::view-transition-old(.ui-vt-delay-5), ::view-transition-new(.ui-vt-delay-5) { animation-delay: 200ms; }
+::view-transition-group(.ui-vt-delay-6), ::view-transition-image-pair(.ui-vt-delay-6), ::view-transition-old(.ui-vt-delay-6), ::view-transition-new(.ui-vt-delay-6) { animation-delay: 240ms; }
+::view-transition-group(.ui-vt-delay-7), ::view-transition-image-pair(.ui-vt-delay-7), ::view-transition-old(.ui-vt-delay-7), ::view-transition-new(.ui-vt-delay-7) { animation-delay: 280ms; }
+::view-transition-group(.ui-vt-delay-8), ::view-transition-image-pair(.ui-vt-delay-8), ::view-transition-old(.ui-vt-delay-8), ::view-transition-new(.ui-vt-delay-8) { animation-delay: 320ms; }
+::view-transition-group(.ui-vt-delay-9), ::view-transition-image-pair(.ui-vt-delay-9), ::view-transition-old(.ui-vt-delay-9), ::view-transition-new(.ui-vt-delay-9) { animation-delay: 360ms; }
+::view-transition-group(.ui-vt-delay-10), ::view-transition-image-pair(.ui-vt-delay-10), ::view-transition-old(.ui-vt-delay-10), ::view-transition-new(.ui-vt-delay-10) { animation-delay: 400ms; }
+::view-transition-group(.ui-vt-delay-11), ::view-transition-image-pair(.ui-vt-delay-11), ::view-transition-old(.ui-vt-delay-11), ::view-transition-new(.ui-vt-delay-11) { animation-delay: 440ms; }
+::view-transition-group(.ui-vt-delay-12), ::view-transition-image-pair(.ui-vt-delay-12), ::view-transition-old(.ui-vt-delay-12), ::view-transition-new(.ui-vt-delay-12) { animation-delay: 480ms; }
+::view-transition-group(.ui-vt-delay-13), ::view-transition-image-pair(.ui-vt-delay-13), ::view-transition-old(.ui-vt-delay-13), ::view-transition-new(.ui-vt-delay-13) { animation-delay: 520ms; }
+::view-transition-group(.ui-vt-delay-14), ::view-transition-image-pair(.ui-vt-delay-14), ::view-transition-old(.ui-vt-delay-14), ::view-transition-new(.ui-vt-delay-14) { animation-delay: 560ms; }
+::view-transition-group(.ui-vt-delay-15), ::view-transition-image-pair(.ui-vt-delay-15), ::view-transition-old(.ui-vt-delay-15), ::view-transition-new(.ui-vt-delay-15) { animation-delay: 600ms; }
+::view-transition-group(.ui-vt-delay-16), ::view-transition-image-pair(.ui-vt-delay-16), ::view-transition-old(.ui-vt-delay-16), ::view-transition-new(.ui-vt-delay-16) { animation-delay: 640ms; }
+::view-transition-group(.ui-vt-delay-17), ::view-transition-image-pair(.ui-vt-delay-17), ::view-transition-old(.ui-vt-delay-17), ::view-transition-new(.ui-vt-delay-17) { animation-delay: 680ms; }
+::view-transition-group(.ui-vt-delay-18), ::view-transition-image-pair(.ui-vt-delay-18), ::view-transition-old(.ui-vt-delay-18), ::view-transition-new(.ui-vt-delay-18) { animation-delay: 720ms; }
+::view-transition-group(.ui-vt-delay-19), ::view-transition-image-pair(.ui-vt-delay-19), ::view-transition-old(.ui-vt-delay-19), ::view-transition-new(.ui-vt-delay-19) { animation-delay: 760ms; }
+::view-transition-group(.ui-vt-delay-20), ::view-transition-image-pair(.ui-vt-delay-20), ::view-transition-old(.ui-vt-delay-20), ::view-transition-new(.ui-vt-delay-20) { animation-delay: 800ms; }
+
+/* ---------- Viajeros (Traveler): el mismo elemento, vivo, cambia de caja entre rutas. La clase la pone el componente
+   según el viaje: `move` (de un hueco a otro: anima posición y tamaño), `arrive` (aparece donde no estaba) y `leave`
+   (la página no tiene hueco para él). Ritmo propio, más largo que el de página: un viaje tiene que verse. ---------- */
+.ui-travel-stage { position: relative; }
+.ui-traveler { position: absolute; top: 0; left: 0; z-index: var(--ui-travel-z, 30); box-sizing: border-box; }
+.ui-traveler[data-away] { visibility: hidden; opacity: 0; pointer-events: none; }
+.ui-travel-slot[data-travel-host] > * { visibility: hidden; } /* lo de debajo (póster) no asoma por los bordes redondeados */
+
+::view-transition-group(.ui-vt-travel) {
+  --ui-vt-travel-d: 640ms;
+  animation-duration: var(--ui-vt-travel-d);
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 120; /* por encima de los fijos (PageTransitionPersist, 100): puede volar hacia la cabecera */
+}
+::view-transition-group(.ui-vt-travel--fast) { --ui-vt-travel-d: 420ms; }
+::view-transition-group(.ui-vt-travel--slow) { --ui-vt-travel-d: 900ms; }
+::view-transition-old(.ui-vt-travel--cover),
+::view-transition-new(.ui-vt-travel--cover) { height: 100%; object-fit: cover; overflow: clip; }
+::view-transition-old(.ui-vt-travel),
+::view-transition-new(.ui-vt-travel) { animation-duration: var(--ui-vt-travel-d); animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); }
+/* live: solo el estado nuevo, en directo, estirándose de una caja a la otra (un vídeo no se duplica ni parpadea) */
+::view-transition-old(.ui-vt-travel--live.ui-vt-travel--move) { display: none; }
+::view-transition-new(.ui-vt-travel--live.ui-vt-travel--move) { animation: none; }
+/* aparecer y desaparecer: sin viaje de caja (venir de ninguna parte no tiene trayectoria); fundido con un leve zoom */
+::view-transition-group(.ui-vt-travel--arrive),
+::view-transition-group(.ui-vt-travel--leave) { animation: none; }
+::view-transition-new(.ui-vt-travel--arrive) { animation: ui-vt-travel-in calc(var(--ui-vt-travel-d) * 0.7) cubic-bezier(0.22, 1, 0.36, 1) calc(var(--ui-vt-travel-d) * 0.25) both; }
+::view-transition-old(.ui-vt-travel--arrive) { display: none; }
+::view-transition-old(.ui-vt-travel--leave) { animation: ui-vt-travel-out calc(var(--ui-vt-travel-d) * 0.45) ease-in both; }
+::view-transition-new(.ui-vt-travel--leave) { display: none; }
+@keyframes ui-vt-travel-in { from { opacity: 0; scale: 0.92; } }
+@keyframes ui-vt-travel-out { to { opacity: 0; scale: 0.92; } }
 
 /* ---------- Reducir movimiento: sin desplazamientos, recortes ni máscaras; solo un fundido de 120 ms ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -388,4 +452,10 @@
   ::view-transition-group(.ui-vt-morph) { animation: none !important; }
   ::view-transition-old(.ui-vt-morph),
   ::view-transition-new(.ui-vt-morph) { animation-duration: 120ms !important; }
+  /* viajeros: cambian de sitio con un fundido, sin recorrer la pantalla */
+  ::view-transition-group(.ui-vt-travel) { animation: none !important; }
+  ::view-transition-old(.ui-vt-travel) { display: block !important; animation: ui-vt-out 120ms linear both !important; scale: none !important; }
+  ::view-transition-new(.ui-vt-travel) { animation: ui-vt-in 120ms linear both !important; scale: none !important; }
+  ::view-transition-new(.ui-vt-travel--leave) { display: none !important; }
+  ::view-transition-group(*), ::view-transition-image-pair(*), ::view-transition-old(*), ::view-transition-new(*) { animation-delay: 0s !important; }
 }

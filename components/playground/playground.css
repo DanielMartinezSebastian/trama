@@ -246,3 +246,25 @@
 
 /* Vista previa de Prose: el texto (que tiene su propio ancho de línea) centrado en el escenario */
 .pg-center-x { margin-inline: auto; }
+
+/* Traveler: mini página con cuatro huecos para el mismo vídeo (lib/catalog/entries/transiciones.tsx) */
+.pg-travel { width: min(620px, 100%); border: 1px solid var(--ln); border-radius: var(--r); background: var(--bg); color: var(--fg); overflow: hidden; }
+.pg-travel__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; }
+.pg-travel__bar button { padding: 5px 12px; border: 1px solid var(--ln); border-radius: 999px; background: none; color: var(--mut); font: inherit; cursor: pointer; }
+.pg-travel__bar button[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.pg-travel__tag { margin-left: auto; font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 12px; color: var(--acc); }
+.pg-travel__rider { overflow: hidden; border-radius: calc(var(--r) * 0.6); background: var(--card); }
+.pg-travel__rider video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pg-travel__rider[data-at="pildora"] { border-radius: 999px; }
+.pg-travel__rider[data-at="cine"] { border-radius: 0; }
+.pg-travel__page { display: grid; gap: 14px; padding: 14px; min-height: 340px; align-content: start; }
+.pg-travel__page--lateral { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); }
+.pg-travel__main { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.pg-travel__title { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.pg-travel__page--pildora .pg-travel__title { font-size: clamp(30px, 6vw, 48px); line-height: 1.05; padding-top: 60px; }
+.pg-travel__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pg-travel__ph, .pg-travel__slot--tarjeta { aspect-ratio: 4 / 5; border-radius: calc(var(--r) * 0.6); background: var(--card); border: 1px solid var(--ln); }
+.pg-travel__slot--tarjeta { border: 0; background: none; }
+.pg-travel__slot--cine { width: 100%; aspect-ratio: 16 / 7; }
+.pg-travel__aside .pg-travel__slot { width: 100%; aspect-ratio: 3 / 4; }
+.pg-travel__slot--pildora { display: inline-block; width: 2em; height: 0.85em; vertical-align: -0.06em; }

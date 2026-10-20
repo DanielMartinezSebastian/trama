@@ -106,7 +106,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` · `ScatterText` |
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` · `StickerCollage` · `ImageTrail` |
-| Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) |
+| Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) · `Traveler` (viaja entre rutas; + `TravelStage`, `TravelSlot`, `useTraveler`) |
 | Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Table` · `CodeBlock` |
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `EdgeTab` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` |

@@ -60,7 +60,10 @@ export function SiteFrame({ tokens, className = "", icons, children }: { tokens:
       const href = a?.getAttribute("href");
       if (!a || !href || !href.startsWith("/sitios/") || a.target === "_blank" || a.closest(".ui-nav, .ui-nav-portal")) return;
       e.preventDefault();
-      router.push(href);
+      // `data-transition="nav-forward"` (o varios tipos separados por espacios): la navegación lleva esos tipos de View
+      // Transition, como `<Link transitionTypes>`; PageTransition y ElementTransition eligen la animación con ellos
+      const types = a.dataset.transition?.split(/\s+/).filter(Boolean);
+      router.push(href, types?.length ? { transitionTypes: types } : undefined);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);

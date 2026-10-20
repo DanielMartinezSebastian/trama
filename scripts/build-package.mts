@@ -62,6 +62,8 @@ const barrel = [
   `export * from "./components/ui/PageTransition";`,
   // transiciones de elementos sueltos: ElementTransition va por nombre arriba; aquí, SharedTransition y los tipos
   `export * from "./components/ui/ElementTransition";`,
+  // elementos que viajan entre rutas: Traveler va por nombre arriba; aquí, el escenario, los huecos y el hook
+  `export * from "./components/ui/Traveler";`,
   "",
 ].join("\n");
 writeFileSync(join(SRC, "index.ts"), barrel);

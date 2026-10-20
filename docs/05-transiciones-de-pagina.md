@@ -3,18 +3,20 @@
 Trama anima la navegación con la [View Transitions API](https://developer.mozilla.org/es/docs/Web/API/View_Transition_API)
 del navegador, a través del `<ViewTransition>` de React. Las animaciones son CSS puro con los tokens del tema y la
 estética del kit: barrido de color, línea de escaneo, pila de barras, persianas, disolución por píxeles, encendido de
-CRT, glitch, iris o escritura de terminal. Hay tres piezas:
+CRT, glitch, iris o escritura de terminal. Hay cuatro piezas:
 
 | Componente | Qué anima |
 |---|---|
 | `PageTransition` | **La ventana entera** al llegar a la página: fondos fijos, pie, márgenes… todo salvo lo que envuelvas en `PageTransitionPersist` (la cabecera). Es la de siempre para una web. |
 | `ElementTransition` | **Un elemento suelto** (una tarjeta, un panel, el contenido de una pestaña): la animación ocupa solo su caja. |
 | `SharedTransition` | **Un elemento compartido** entre dos vistas (miniatura → imagen de la ficha): el navegador lo transforma de una caja a la otra. |
+| `Traveler` (+ `TravelStage`, `TravelSlot`) | **Un elemento que viaja entre rutas sin desaparecer** (un reproductor que se encoge a una esquina, la marca que pasa del titular a la cabecera): es el mismo nodo, vivo, que cambia de caja en cada página. |
 
 ```tsx
 import PageTransition, { PageTransitionPersist, NAV_FORWARD, NAV_BACK, pageTransitionType } from "trama-ui/PageTransition";
 import ElementTransition, { SharedTransition } from "trama-ui/ElementTransition";
-// o: import { PageTransition, PageTransitionPersist, ElementTransition, SharedTransition } from "trama-ui";
+import Traveler, { TravelStage, TravelSlot, useTraveler } from "trama-ui/Traveler";
+// o: import { PageTransition, PageTransitionPersist, ElementTransition, SharedTransition, Traveler, TravelStage, TravelSlot } from "trama-ui";
 // en este repo o con kit:export: "@/components/ui/PageTransition", "@/components/ui/ElementTransition"
 ```
 
@@ -242,6 +244,92 @@ ajusta la duración.
 
 El `name` tiene que ser único en cada página (una sola miniatura con `foto-3` a la vez).
 
+- **`fit="cover"`** si las dos cajas tienen distinta proporción (miniatura 4:5 → cabecera apaisada): las dos imágenes del
+  morph se recortan en vez de deformarse o asomar por debajo. Para texto, deja `auto`.
+- **`layout`**: además del morph entre vistas, anima los cambios de sitio **dentro de la misma vista** (reordenar,
+  filtrar, cambiar de columnas dentro de `startTransition`): se desliza a su caja nueva y, si entra o sale, se funde.
+- **Fuera de pantalla no hay pareja.** React descarta el par si el elemento de la vista de salida estaba fuera del
+  viewport (una tarjeta por debajo del pliegue; lo mismo al filtrar): ese elemento cambia sin animar. Es a propósito
+  (no anima lo que no se ve), pero en móvil pasa a menudo: no cuentes con que el título de una tarjeta baja siempre viaje.
+
+## Elementos que viajan entre rutas: `Traveler`
+
+`SharedTransition` une **dos elementos distintos** (la miniatura se desmonta, la imagen de la ficha se monta). Un
+`Traveler` es **el mismo elemento** en todas las páginas: vive en el layout, no se desmonta al navegar, y cada página dice
+con un `TravelSlot` qué caja ocupa en ella. Al cambiar de ruta se recoloca sobre el hueco nuevo en el mismo commit y el
+navegador anima su caja (posición, tamaño y proporción) con el contenido **en directo**: un vídeo no se corta, un lienzo
+no se reinicia, un estado no se pierde.
+
+Es lo que una web multipágina tiene que imitar guardando el estado: la demo «Video Zoom» de Chrome
+([view-transitions.chrome.dev](https://view-transitions.chrome.dev/)) guarda `currentTime` en `pageswap` y lo restaura en
+`pagereveal`, con un pequeño salto. Con el App Router no hace falta: el nodo es el mismo.
+
+```tsx
+// app/layout.tsx (o el Shell de la web): el escenario envuelve a los viajeros Y a la página
+import Traveler, { TravelStage, TravelSlot } from "trama-ui/Traveler";
+
+<TravelStage>
+  <header className="cabecera">
+    <TravelSlot id="marca" at="cabecera" className="cabecera__marca" />   {/* prioridad 0 */}
+  </header>
+  <Traveler id="marca" fit="stretch" blend="crossfade"><Logo /></Traveler>
+  <Traveler id="reel"><video src="/video/oceano/01-arrecife.mp4" muted loop autoPlay playsInline /></Traveler>
+  {children}
+</TravelStage>
+
+// app/page.tsx (portada): la marca a todo el ancho y el vídeo a sangre
+<TravelSlot id="marca" at="portada" priority={1} className="hero__marca" />
+<TravelSlot id="reel" at="portada" className="hero__video" />
+
+// app/proyectos/[id]/page.tsx: el vídeo, en una esquina
+<TravelSlot id="reel" at="mini" className="mini" />
+/* .mini { position: fixed; right: 16px; bottom: 16px; width: 320px; aspect-ratio: 16 / 9 } */
+```
+
+- **El hueco manda.** Tamaño y sitio son los del `TravelSlot` (un elemento vacío al que das ancho, `aspect-ratio`,
+  `position: fixed`…). Si el hueco o un antecesor es `fixed`, el viajero pasa a `fixed`; si hay un `sticky`, lo sigue al
+  hacer scroll; en el resto, va en `absolute` dentro del escenario y hace scroll con la página sin escuchar el scroll.
+  `as="span"` sirve para un hueco dentro de un texto (un titular con el vídeo en una píldora). Lo que pongas dentro del
+  hueco (un póster) se ve hasta que llega el viajero y luego queda oculto.
+- **El viajero cambia de aspecto por CSS**: lleva `data-at="<at del hueco>"` (`.reel[data-at="mini"] .controles { … }`).
+  En React, `useTraveler(id)` da ese nombre y `onMove(at)` avisa al cambiar (para pausar un vídeo, por ejemplo). En una
+  página sin hueco para él queda con `data-away`: invisible e inerte, pero vivo.
+- **`blend`**: `live` (por defecto) muestra solo el estado nuevo, en directo, estirándose de caja a caja (vídeo, lienzos:
+  no se duplica ni parpadea). `crossfade` funde la captura vieja con la nueva: mejor si el contenido cambia de forma.
+- **`fit`**: `cover` recorta las capturas si cambia la proporción (fotos, vídeo); `stretch` las estira (texto o SVG con la
+  misma proporción, como una marca que solo cambia de escala).
+- **`pace`**: 420 / 640 / 900 ms, con una curva lenta al principio y al final. Un viaje tiene que verse; por eso dura más
+  que la transición de página, que puede ir a la vez (`PageTransition kind="fade"` funde el resto).
+- **Varios huecos a la vez** (el de la cabecera, que está siempre, y el de la portada): gana el de mayor `priority`; a
+  igualdad, el último montado.
+- **Dentro de la misma página** (modo cine, ampliar una tarjeta): monta otro hueco dentro de `startTransition`, con otra
+  `key` para que sea un hueco nuevo:
+  `startTransition(() => setCine(true))` → `<TravelSlot key={cine ? "cine" : "mini"} id="reel" at={cine ? "cine" : "mini"} />`.
+- **Capas**: durante el viaje el grupo va con `z-index: 120`, por encima de los fijos de `PageTransitionPersist` (100), así
+  que puede volar hacia una cabecera fija. En reposo manda `--ui-travel-z` (30) en el viajero.
+
+**Cómo funciona.** Los huecos se registran en efectos de layout, que corren dentro del callback de
+`document.startViewTransition` del commit de la navegación. El escenario decide en una microtarea (cuando el hueco viejo ya
+se fue y el nuevo llegó) y escribe `left`/`top`/`width`/`height` en el viajero antes de que el navegador capture el estado
+nuevo. El viajero lleva `view-transition-name: ui-travel-<id>` en línea y **no** es un boundary de React (mismo motivo que
+`PageTransitionPersist`: así React no lo cancela ni lo oculta). La clase del viaje depende del caso: `move` (de un hueco a
+otro), `arrive` (aparece sin trayectoria: fundido con un leve zoom) o `leave` (la página no tiene hueco: se funde). Cada
+`TravelSlot` monta un `<ViewTransition>` vacío para que el cambio sea una View Transition aunque la página no lleve
+`PageTransition`.
+
+**Trampas.**
+- **Accesibilidad**: el viajero está en el DOM del layout, no donde se ve. Dale un nombre accesible propio (`aria-label`
+  en el vídeo) y no metas en él contenido que deba leerse en el orden de la página.
+- Un `id` repetido en dos escenarios a la vez (dos copias del mismo componente) da dos `view-transition-name` iguales y el
+  navegador cancela la transición entera: usa `useId()` si el componente puede repetirse.
+- Un hueco dentro de algo que se anima con `transform` al entrar (un `Reveal`) se mide a mitad de animación: deja los huecos
+  fuera de esos envoltorios.
+- Con `prefers-reduced-motion` cambia de sitio con un fundido de 120 ms, sin recorrer la pantalla.
+
+Demo completa: **Travesía** (`/sitios/travesia`). El tráiler viaja por cinco huecos (portada a sangre, ficha destacada
+del listado, mini reproductor fijo con modo cine, retrato dentro de un `sticky` y una píldora dentro del titular de
+contacto) y la marca pasa del titular a la cabecera.
+
 ## Tema
 
 Los pseudo-elementos de la transición cuelgan de `<html>`, no del contenedor donde pones el tema: leen los tokens de
@@ -259,14 +347,14 @@ opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `bl
 ## Accesibilidad y soporte
 
 - **Reducir movimiento**: con `prefers-reduced-motion: reduce`, ninguna animación se mueve, recorta ni enmascara: las
-  páginas se cruzan con un fundido de 120 ms, y los elementos compartidos no viajan (solo se funden).
+  páginas se cruzan con un fundido de 120 ms, y los elementos compartidos y los viajeros no viajan (solo se funden).
 - **Sin destellos** (WCAG 2.3.1): `glitch` y `scanline` suben el brillo o desplazan como mucho una vez; lo que se muestra
   no se vuelve a ocultar y ninguna dura más de medio segundo.
 - **Navegadores**: Chromium 125+, Safari 18.2+ y Firefox recientes (tipos de transición y `view-transition-class`). Sin
   la API, la página cambia sin animar. Sin `@property` (necesario para `wipe`, `scan`, `stack`, `blinds`, `pixelate`,
   `iris`), el efecto salta a mitad en vez de interpolar.
 - **React**: `ViewTransition` está en el React que trae el App Router de Next y en React ≥ 19.3. En 19.0–19.2 estable
-  (Pages Router, Vite…) no existe: los tres componentes devuelven sus hijos tal cual y `markPageTransition` no hace
+  (Pages Router, Vite…) no existe: los componentes devuelven sus hijos tal cual (`Traveler` sigue cambiando de caja, sin animar) y `markPageTransition` no hace
   nada. `pageTransitionsSupported` dice si este React puede animar.
 - Sin transición en curso (primera carga, un commit que no es una transición), `PageTransition` no toca `<html>`.
 

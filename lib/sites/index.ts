@@ -20,6 +20,7 @@ import * as vertice from "@/components/sites/vertice/data";
 import * as volt from "@/components/sites/volt/data";
 import * as faro from "@/components/sites/faro/data";
 import * as hamaca from "@/components/sites/hamaca/data";
+import * as travesia from "@/components/sites/travesia/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -43,6 +44,7 @@ export const sites: SiteMeta[] = [
   { ...volt.meta, routes: volt.ROUTES, dir: "components/sites/volt" },
   { ...faro.meta, routes: faro.ROUTES, dir: "components/sites/faro" },
   { ...hamaca.meta, routes: hamaca.ROUTES, dir: "components/sites/hamaca" },
+  { ...travesia.meta, routes: travesia.ROUTES, dir: "components/sites/travesia" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

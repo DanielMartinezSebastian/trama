@@ -8,6 +8,7 @@ import {
   backDirection,
   pageTransitionType,
   vtClasses,
+  vtDelayClass,
   withDirection,
   type PageTransitionAnimation,
   type PageTransitionDirection,
@@ -70,19 +71,74 @@ export type SharedTransitionProps = {
   name: string;
   /** duración del morph: `fast` ≈ 240 ms, `normal` ≈ 380 ms, `slow` ≈ 560 ms */
   pace?: PageTransitionPace;
+  /** si las dos cajas tienen distinta proporción: `cover` recorta las dos imágenes del morph (fotos, vídeo); `auto` es lo del navegador (bien para texto) */
+  fit?: "auto" | "cover";
+  /** también anima los cambios de sitio dentro de la misma vista (reordenar, filtrar): se desliza a su caja nueva y, si entra o sale, se funde */
+  layout?: boolean;
+  /** retraso del morph en ms (pasos de 40, hasta 800): coreografía, para que no se mueva todo a la vez */
+  delay?: number;
   children: ReactNode;
 };
 
 /**
  * Elemento compartido entre dos vistas (la miniatura de un listado y la imagen grande de su ficha): si en una transición
  * desaparece uno y aparece otro con el mismo `name`, el navegador lo transforma de una caja a la otra (posición, tamaño
- * y fundido cruzado), por encima de la animación de página. Fuera de ese caso no anima nada.
+ * y fundido cruzado), por encima de la animación de página. Fuera de ese caso no anima nada, salvo con `layout`.
  */
-export function SharedTransition({ name, pace = "normal", children }: SharedTransitionProps) {
+export function SharedTransition({ name, pace = "normal", fit = "auto", layout = false, delay = 0, children }: SharedTransitionProps) {
   if (!ViewTransition) return <Fragment>{children}</Fragment>;
+  const morph = `ui-vt-morph ui-vt--${pace}${fit === "cover" ? " ui-vt-morph--cover" : ""}${vtDelayClass(delay)}`;
   return (
-    <ViewTransition name={name} share={`ui-vt-morph ui-vt--${pace}`} enter="none" exit="none" update="none" default="none">
+    <ViewTransition
+      name={name}
+      share={morph}
+      enter={layout ? vtClasses("fade", "in", pace, "acc") : "none"}
+      exit={layout ? vtClasses("fade", "out", pace, "acc") : "none"}
+      update={layout ? morph : "none"}
+      default="none"
+    >
       {children}
     </ViewTransition>
+  );
+}
+
+export type SharedTextProps = {
+  /** nombre base: cada palabra se llama `${name}-0`, `${name}-1`…; el mismo en las dos vistas */
+  name: string;
+  /** el texto (plano): se trocea por palabras */
+  text: string;
+  as?: "span" | "p" | "div" | "h1" | "h2" | "h3";
+  /** retraso entre una palabra y la siguiente, en ms (escalonado) */
+  stagger?: number;
+  /** retraso de la primera palabra, en ms */
+  delay?: number;
+  /** duración de cada palabra: `fast` ≈ 240 ms, `normal` ≈ 380 ms, `slow` ≈ 560 ms */
+  pace?: PageTransitionPace;
+  className?: string;
+};
+
+/**
+ * Texto que viaja palabra a palabra entre dos vistas: el mismo `name` y el mismo texto en las dos (pequeño en una
+ * esquina en una página, titular gigante en otra) y cada palabra vuela a su sitio nuevo, escalonada. El tamaño, la
+ * posición y el color los pone el CSS de cada vista. Lectores de pantalla: leen el texto entero una vez.
+ * Cada palabra lleva `ui-stext__w--<n>` (desde 0) para darle estilo propio. Si una vista tiene palabras de más, esas
+ * solo aparecen o desaparecen.
+ */
+export function SharedText({ name, text, as: Tag = "span", stagger = 50, delay = 0, pace = "slow", className = "" }: SharedTextProps) {
+  const words = text.split(/\s+/).filter(Boolean);
+  return (
+    <Tag className={`ui-stext ${className}`.trim()}>
+      <span className="ui-stext__sr">{text}</span>
+      {words.map((w, i) => (
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <SharedTransition name={`${name}-${i}`} pace={pace} delay={delay + i * stagger}>
+            <span className={`ui-stext__w ui-stext__w--${i}`} aria-hidden>
+              {w}
+            </span>
+          </SharedTransition>
+        </Fragment>
+      ))}
+    </Tag>
   );
 }

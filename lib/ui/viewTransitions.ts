@@ -100,3 +100,12 @@ export function markPageTransition(type: PageTransitionAnimation | PageTransitio
 /** Clases de `view-transition-class` del kit: base + ámbito/fase + animación + ritmo + tono. */
 export const vtClasses = (a: PageTransitionAnimation, scope: "root" | "in" | "out", pace: PageTransitionPace, tone: PageTransitionTone) =>
   `ui-vt ui-vt-${scope} ui-vt-${a} ui-vt--${pace} ui-vt--${tone}`;
+
+/**
+ * Retardo de una animación de transición (coreografía: que no se mueva todo a la vez). Pasos de 40 ms hasta 800 ms; el
+ * CSS (`ui-vt-delay-<n>`) retrasa el grupo y sus dos capturas. 0 → sin clase.
+ */
+export const vtDelayClass = (ms = 0) => {
+  const n = Math.max(0, Math.min(20, Math.round(ms / 40)));
+  return n ? ` ui-vt-delay-${n}` : "";
+};
