@@ -39,7 +39,7 @@ const GLINTS = 7;
 /**
  * Contenedor con una luz que cambia según la **finalidad** de la sección que cruza el centro de la ventana: foco con destellos
  * para emocionar, luz de día difusa para comparar con honestidad, rasante para leer un grabado, lámpara cálida para una
- * conversación (docs/18). Pinta la luz detrás del contenido con degradados CSS (sin lienzo) y publica la toma interpolada en
+ * conversación (docs/19). Pinta la luz detrás del contenido con degradados CSS (sin lienzo) y publica la toma interpolada en
  * variables (`--light-rgb`, `--light-x`, `--light-y`, `--light-i`, `--light-amb`…) y en `useLight()`, para que una escena 3D o
  * una foto se iluminen igual. Con «reducir movimiento», la luz cambia sin fundido, no sigue al puntero y no hay destellos.
  * El contenido no depende de la luz: el texto mantiene su contraste en todas las tomas (la luz va detrás y es tenue).

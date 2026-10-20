@@ -1,5 +1,5 @@
 /**
- * Luz por finalidad (docs/18): una «toma de luz» describe cómo se ilumina una sección según para qué sirve (emocionar,
+ * Luz por finalidad (docs/19): una «toma de luz» describe cómo se ilumina una sección según para qué sirve (emocionar,
  * comparar con honestidad, leer un grabado, intimidad…), con magnitudes físicas —temperatura de color, dureza, dirección—
  * que `LightScroll` pinta en CSS y que una escena 3D puede leer para colocar sus luces. Sin React.
  */
@@ -34,7 +34,7 @@ export type LightCue = {
 export const LIGHT_DEFAULT: LightCue = { kelvin: 4000, intensity: 0.8, kind: "spot", x: 50, y: 40, radius: 55, softness: 0.6, ambient: 0.5, angle: 0, follow: "none", sparkle: 0 };
 
 /**
- * Tomas de luz documentadas (docs/18 §5, de GIA, fotografía de joyería, conservación y fabricantes de vitrinas). Sirven
+ * Tomas de luz documentadas (docs/19 §5, de GIA, fotografía de joyería, conservación y fabricantes de vitrinas). Sirven
  * para joyería y para cualquier producto que se elige mirando (relojes, cerámica, vino, cosmética, piezas de museo).
  */
 export const LIGHT_PRESETS = {

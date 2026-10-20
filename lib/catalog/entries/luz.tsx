@@ -7,7 +7,7 @@ import { LIGHT_PRESETS } from "@/lib/ui/light";
 import type { CatalogEntry } from "../schema";
 import { ALL_STYLES, variantProp } from "./shared";
 
-/** Ronda 9: joyería y luz por finalidad (docs/18-joyeria.md). */
+/** Ronda 9: joyería y luz por finalidad (docs/19-joyeria.md). */
 const PRESETS = Object.keys(LIGHT_PRESETS);
 
 export const luz: CatalogEntry[] = [
@@ -22,7 +22,7 @@ export const luz: CatalogEntry[] = [
       "Contenedor con una luz detrás del contenido que cambia con la sección en pantalla según para qué sirve: foco con destellos para emocionar, luz de día difusa para comparar con honestidad, rasante para leer un grabado, lámpara cálida para conversar. Cada sección elige su toma con data-light; la luz se describe con magnitudes físicas (kelvin, dureza, dirección) y se publica en variables CSS y en useLight() para que una escena 3D se ilumine igual.",
     stageHeight: 460,
     notes: [
-      "Nueve tomas documentadas en LIGHT_PRESETS (lib/ui/light.ts): vitrina, fuego, honesta, calida, rasante, lampara, taller, lupa y memoria. Fuentes en docs/18 §5 (GIA, conservación, fabricantes de vitrinas).",
+      "Nueve tomas documentadas en LIGHT_PRESETS (lib/ui/light.ts): vitrina, fuego, honesta, calida, rasante, lampara, taller, lupa y memoria. Fuentes en docs/19 §5 (GIA, conservación, fabricantes de vitrinas).",
       "`cue` fuerza una toma e ignora el scroll: un paso de un configurador o un conmutador «luz de día / cálida».",
       "Con movimiento reducido la luz cambia sin fundido, no sigue al puntero y no hay destellos. Funciona mejor sobre fondos oscuros o medios.",
       "En el catálogo va con position=\"absolute\"; en una web, `fixed` (la luz es de la ventana). Ver /sitios/quilate.",

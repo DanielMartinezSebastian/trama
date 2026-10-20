@@ -60,7 +60,7 @@
   .ui-fexp__body, .ui-fexp__media img, .ui-fexp__plus { transition: none; }
 }
 
-/* ---------- LightScroll: luz por finalidad (docs/18) ----------
+/* ---------- LightScroll: luz por finalidad (docs/19) ----------
    La luz va detrás del contenido: un foco (radial) o una rasante (lineal) del color de la temperatura (--light-rgb), más un
    baño del resto de la escena (--light-amb). La dureza mueve el borde del núcleo: dura = núcleo pequeño, difusa = caída larga. */
 .ui-light { position: relative; isolation: isolate; }

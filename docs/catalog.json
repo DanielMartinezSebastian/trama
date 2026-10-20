@@ -89,7 +89,8 @@
         "smooth-scroll",
         "circle-button",
         "sticker-collage",
-        "image-trail"
+        "image-trail",
+        "before-after"
       ]
     },
     {
@@ -108,7 +109,8 @@
         "pinned-section",
         "parallax",
         "line-draw",
-        "theme-scroll"
+        "theme-scroll",
+        "light-scroll"
       ]
     },
     {
@@ -13430,6 +13432,127 @@
       "preview": "/componentes#qr-code"
     },
     {
+      "id": "light-scroll",
+      "name": "Luz que cambia según la finalidad de la sección",
+      "component": "LightScroll",
+      "import": "import LightScroll from \"@/components/ui/LightScroll\";",
+      "category": "transiciones",
+      "styles": [
+        "minimal",
+        "editorial",
+        "glass"
+      ],
+      "description": "Contenedor con una luz detrás del contenido que cambia con la sección en pantalla según para qué sirve: foco con destellos para emocionar, luz de día difusa para comparar con honestidad, rasante para leer un grabado, lámpara cálida para conversar. Cada sección elige su toma con data-light; la luz se describe con magnitudes físicas (kelvin, dureza, dirección) y se publica en variables CSS y en useLight() para que una escena 3D se ilumine igual.",
+      "props": [
+        {
+          "key": "cue",
+          "type": "select",
+          "default": "vitrina",
+          "label": "Toma forzada",
+          "options": [
+            "",
+            "vitrina",
+            "fuego",
+            "honesta",
+            "calida",
+            "rasante",
+            "lampara",
+            "taller",
+            "lupa",
+            "memoria"
+          ]
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 0.9,
+          "label": "Fundido (s)",
+          "min": 0,
+          "max": 3
+        }
+      ],
+      "notes": [
+        "Nueve tomas documentadas en LIGHT_PRESETS (lib/ui/light.ts): vitrina, fuego, honesta, calida, rasante, lampara, taller, lupa y memoria. Fuentes en docs/19 §5 (GIA, conservación, fabricantes de vitrinas).",
+        "`cue` fuerza una toma e ignora el scroll: un paso de un configurador o un conmutador «luz de día / cálida».",
+        "Con movimiento reducido la luz cambia sin fundido, no sigue al puntero y no hay destellos. Funciona mejor sobre fondos oscuros o medios.",
+        "En el catálogo va con position=\"absolute\"; en una web, `fixed` (la luz es de la ventana). Ver /sitios/quilate."
+      ],
+      "example": "import LightScroll from \"@/components/ui/LightScroll\";\n\n<LightScroll />",
+      "preview": "/componentes#light-scroll"
+    },
+    {
+      "id": "before-after",
+      "name": "Antes / después con control",
+      "component": "BeforeAfter",
+      "import": "import BeforeAfter from \"@/components/ui/BeforeAfter\";",
+      "category": "interaccion",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido). Para limpiezas, reformas, tratamientos y restauraciones; las dos imágenes con la misma luz.",
+      "props": [
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "slider",
+          "label": "Modo",
+          "options": [
+            "slider",
+            "toggle"
+          ]
+        },
+        {
+          "key": "orientation",
+          "type": "select",
+          "default": "horizontal",
+          "label": "Orientación",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        {
+          "key": "initial",
+          "type": "number",
+          "default": 50,
+          "label": "Posición inicial (%)",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Lo pedían la docs/11 §5 (clínicas, reformas) y la docs/15 (Colonia Zacamil); la primera web que lo usa es Quilate (limpieza de una joya)."
+      ],
+      "example": "import BeforeAfter from \"@/components/ui/BeforeAfter\";\n\n<BeforeAfter />",
+      "preview": "/componentes#before-after"
+    },
+    {
       "id": "guide-frame",
       "name": "Guía de estilo (sistema completo de una web premiada)",
       "component": "GuideFrame",
@@ -17017,6 +17140,106 @@
         {
           "component": "CookieBanner",
           "id": "cookie-banner",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "quilate",
+      "title": "Quilate · taller de joyería",
+      "url": "/sitios/quilate",
+      "dir": "components/sites/quilate",
+      "description": "Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, elegir, dar forma, ajustar, cuidar, transformar, heredar) con un anillo 3D procedural que cambia de estado y una luz que cambia de finalidad en cada uno (LightScroll: vitrina, fuego, luz de día honesta, rasante, lámpara). Configurador de alianza (metal, ancho, perfil, acabado, grabado con luz rasante) y de solitario por pasos (montura, piedra con conmutador de luz, quilates, metal, pavé, talla), con precio desglosado y plazo; medidor de talla en pantalla, servicios del taller con antes/después (BeforeAfter) y cita que se lleva la pieza diseñada.",
+      "pages": [
+        {
+          "path": "/sitios/quilate",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/quilate/alianzas",
+          "title": "Alianzas"
+        },
+        {
+          "path": "/sitios/quilate/compromiso",
+          "title": "Compromiso"
+        },
+        {
+          "path": "/sitios/quilate/taller",
+          "title": "Taller"
+        },
+        {
+          "path": "/sitios/quilate/talla",
+          "title": "Tu talla"
+        },
+        {
+          "path": "/sitios/quilate/cita",
+          "title": "Cita"
+        }
+      ],
+      "components": [
+        {
+          "component": "OptionPicker",
+          "id": "option-picker",
+          "uses": 13
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 5
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 4
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 2
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "TestimonialSection",
+          "id": "testimonial-section",
+          "uses": 1
+        },
+        {
+          "component": "SplitText",
+          "id": "split-text",
+          "uses": 1
+        },
+        {
+          "component": "CookieBanner",
+          "id": "cookie-banner",
+          "uses": 1
+        },
+        {
+          "component": "DatePicker",
+          "id": "date-picker",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        },
+        {
+          "component": "QRCode",
+          "id": "qr-code",
+          "uses": 1
+        },
+        {
+          "component": "LightScroll",
+          "id": "light-scroll",
+          "uses": 1
+        },
+        {
+          "component": "BeforeAfter",
+          "id": "before-after",
           "uses": 1
         }
       ]

@@ -40,6 +40,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   almibar: site(() => import("./almibar/Site")),
   "almibar-taller": site(() => import("./almibar-taller/Site")),
   "almibar-barrio": site(() => import("./almibar-barrio/Site")),
+  quilate: site(() => import("./quilate/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

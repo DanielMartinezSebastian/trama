@@ -17,7 +17,7 @@ import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { money } from "@/lib/commerce/money";
 import { LIGHT_PRESETS, type LightPresetName } from "@/lib/ui/light";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
@@ -133,7 +133,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({ band, setBand, sol, setSol, carry, setCarry, setCue }), [band, sol, carry]);
 
   return (
-    <SiteFrame tokens={TOKENS} className="ql" icons={{ set: phosphor, weight: "light" }}>
+    <SiteFrame tokens={TOKENS} className="ql" icons={{ set: phosphorLight, weight: "light" }}>
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>

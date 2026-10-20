@@ -1,5 +1,5 @@
 /** Quilate — taller de joyería en Valencia (ficticio). La casa se cuenta solo con sus servicios y su filosofía, nunca con su
- * historia (docs/18 §4): siete capítulos-servicio, cada uno con su luz (§5). Datos puros. */
+ * historia (docs/19 §4): siete capítulos-servicio, cada uno con su luz (§5). Datos puros. */
 import type { LightPresetName } from "@/lib/ui/light";
 import { openingHoursSchema } from "@/lib/ui/hours";
 import type { RingLook } from "./ringScene";

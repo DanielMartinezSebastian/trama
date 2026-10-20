@@ -1,5 +1,5 @@
 /**
- * Material de gema con trazado de rayos real dentro de la piedra (docs/18 §6). Una talla es un poliedro convexo: el punto
+ * Material de gema con trazado de rayos real dentro de la piedra (docs/19 §6). Una talla es un poliedro convexo: el punto
  * por el que un rayo sale de ella es el plano de faceta más cercano en su dirección, sin necesidad de BVH. En cada píxel:
  *
  *   1. reflexión exterior en la faceta (Fresnel de Schlick con el índice de la piedra);

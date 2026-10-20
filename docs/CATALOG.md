@@ -727,6 +727,19 @@ Al mover el puntero por la zona van apareciendo fotos donde está, que crecen y 
 - Solo con puntero fino y sin movimiento reducido; en táctil queda el contenido.
 - Recicla 10 <img>: no crea nodos al mover el ratón.
 
+### Antes / después con control — `BeforeAfter`
+
+Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido). Para limpiezas, reformas, tratamientos y restauraciones; las dos imágenes con la misma luz.
+
+| prop | tipo | default |
+|---|---|---|
+| `mode` | `slider` · `toggle` | "slider" |
+| `orientation` | `horizontal` · `vertical` | "horizontal" |
+| `initial` | number 0–100 | 50 |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- Lo pedían la docs/11 §5 (clínicas, reformas) y la docs/15 (Colonia Zacamil); la primera web que lo usa es Quilate (limpieza de una joya).
+
 ## Transiciones (`transiciones`)
 
 Cambios de escena y de sección.
@@ -934,6 +947,20 @@ Contenedor cuyo tema cambia según la sección que cruza el centro de la ventana
 - Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.
 - Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.
 - Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens.
+
+### Luz que cambia según la finalidad de la sección — `LightScroll`
+
+Contenedor con una luz detrás del contenido que cambia con la sección en pantalla según para qué sirve: foco con destellos para emocionar, luz de día difusa para comparar con honestidad, rasante para leer un grabado, lámpara cálida para conversar. Cada sección elige su toma con data-light; la luz se describe con magnitudes físicas (kelvin, dureza, dirección) y se publica en variables CSS y en useLight() para que una escena 3D se ilumine igual.
+
+| prop | tipo | default |
+|---|---|---|
+| `cue` | `` · `vitrina` · `fuego` · `honesta` · `calida` · `rasante` · `lampara` · `taller` · `lupa` · `memoria` | "vitrina" |
+| `duration` | number 0–3 | 0.9 |
+
+- Nueve tomas documentadas en LIGHT_PRESETS (lib/ui/light.ts): vitrina, fuego, honesta, calida, rasante, lampara, taller, lupa y memoria. Fuentes en docs/19 §5 (GIA, conservación, fabricantes de vitrinas).
+- `cue` fuerza una toma e ignora el scroll: un paso de un configurador o un conmutador «luz de día / cálida».
+- Con movimiento reducido la luz cambia sin fundido, no sigue al puntero y no hay destellos. Funciona mejor sobre fondos oscuros o medios.
+- En el catálogo va con position="absolute"; en una web, `fixed` (la luz es de la ventana). Ver /sitios/quilate.
 
 ## Datos (`datos`)
 
@@ -2754,3 +2781,11 @@ Tercera versión de la pastelería Almíbar, fórmula «Café en puntos» (dot m
 Carpeta: `components/sites/almibar-barrio/` · 16 páginas: Inicio · Carta · Mesa 1 · Mesa 2 · Mesa 3 · Mesa 4 · Mesa 5 · Mesa 6 · Mesa 7 · Mesa 8 · Mesa 9 · Mesa 10 · Mesa 11 · Mesa 12 · Club de sellos · Visítanos
 
 `OpeningHours` ×4 · `TextField` ×3 · `QRCode` ×3 · `Toggle` ×2 · `MenuList` ×2 · `ActionBar` ×2 · `PageTransition` · `VideoPlayer` · `Toast` · `QuantityStepper` · `CookieBanner`
+
+### Quilate · taller de joyería — `/sitios/quilate`
+
+Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, elegir, dar forma, ajustar, cuidar, transformar, heredar) con un anillo 3D procedural que cambia de estado y una luz que cambia de finalidad en cada uno (LightScroll: vitrina, fuego, luz de día honesta, rasante, lámpara). Configurador de alianza (metal, ancho, perfil, acabado, grabado con luz rasante) y de solitario por pasos (montura, piedra con conmutador de luz, quilates, metal, pavé, talla), con precio desglosado y plazo; medidor de talla en pantalla, servicios del taller con antes/después (BeforeAfter) y cita que se lleva la pieza diseñada.
+
+Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
+
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `FAQSection` · `TestimonialSection` · `SplitText` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`

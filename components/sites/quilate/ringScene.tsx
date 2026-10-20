@@ -39,7 +39,7 @@ import { metalOf, stoneOf, type RingSel, type Shape } from "./ring";
  * El anillo de Quilate como escena procedural, sin modelos: el aro es una revolución de su sección (confort, media caña o
  * plana), la piedra una revolución facetada (flatShading) de su perfil de talla, y garras, bisel, halo, trilogía y pavé se
  * colocan alrededor. Las luces no son fijas: cada fotograma leen la toma de luz de la sección (LightScroll → `light`) y se
- * colocan como dice su finalidad (foco con destellos, difusa de día, rasante…). docs/18 §5.
+ * colocan como dice su finalidad (foco con destellos, difusa de día, rasante…). docs/19 §5.
  *
  * Unidades: radio interior del aro = 1 ≈ 8,5 mm (talla 14). El aro vive en el plano XY con la cabeza hacia +Y.
  */
@@ -221,7 +221,7 @@ function Environment() {
 /**
  * Entorno propio de las gemas: sala negra con seis paneles de luz pequeños. Una piedra facetada se lee por el contraste entre
  * facetas que reflejan un panel y facetas que reflejan negro (el «patrón» de GIA); con el entorno claro del metal se vería
- * blanca y lechosa. Mismo truco que los configuradores con un mapa para el metal y otro para la gema (docs/18 §3).
+ * blanca y lechosa. Mismo truco que los configuradores con un mapa para el metal y otro para la gema (docs/19 §3).
  */
 function useGemEnvironment() {
   const gl = useThree((s) => s.gl);

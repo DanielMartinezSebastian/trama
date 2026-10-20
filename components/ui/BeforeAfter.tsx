@@ -30,7 +30,7 @@ const clamp = (v: number) => Math.min(100, Math.max(0, v));
 /**
  * Antes / después con control del usuario (docs/11 §5, docs/15 §3): un corte que se arrastra (`role="slider"`, teclado con
  * flechas, Inicio y Fin) o un botón que alterna. Para limpiezas, reformas, tratamientos, día/noche. Regla de honestidad
- * (docs/18 §5): las dos imágenes con la misma luz y el mismo encuadre; el componente no añade filtros a ninguna.
+ * (docs/19 §5): las dos imágenes con la misma luz y el mismo encuadre; el componente no añade filtros a ninguna.
  */
 export default function BeforeAfter({ before, after, beforeLabel = "Antes", afterLabel = "Después", initial = 50, orientation = "horizontal", mode = "slider", ratio = 4 / 3, label = "Comparar antes y después", variant = "minimal", className = "" }: BeforeAfterProps) {
   const [pos, setPos] = useState(clamp(initial));
