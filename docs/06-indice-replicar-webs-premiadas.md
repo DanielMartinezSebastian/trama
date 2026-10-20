@@ -51,6 +51,14 @@ barra de envío, subtotal), paso a pedido con resumen, y filtro por tipo con con
 `BlueprintFrame`, `CellGrid`, `IslandNav`, `CrossfadeHero`, `ExpandingPanels`, `ScatterText`, `EdgeTab`, `MetaTable`, `CircleButton`, la
 variante `fill` del `Preloader`, los temas `blueprintTokens` y `forestTokens` y las demos **Plano**, **Foro** y **Arbor**.
 
+**Ronda 8 (20-10-2026): guías de estilo** en [`16-guias-de-estilo-plan.md`](./16-guias-de-estilo-plan.md): constantes medidas
+de las premiadas (114 + 34 fichas, 31 webs con Playwright, 176 casos de estudio), las 8 guías (`STYLE_GUIDES`, `GuideFrame`), seis
+fuentes nuevas, la página pública `/guias` (guía × composición × relato) y `npm run refs:probe`.
+
+**Ronda 7 (20-10-2026, solo evaluación):** qué demos clonar a continuación en [`15-evaluacion-proximas-demos.md`](./15-evaluacion-proximas-demos.md):
+18 SOTD sin revisar, conceptos candidatos (`PointCloud`, `BeforeAfter`, `DatePicker`, `ImageReveal mask="brush"`, `ObjectStage scroll`,
+`NextPage`) y las demos Clínica, Lodge y Escáner como siguiente ronda.
+
 **Ronda 6 (20-10-2026): continuidad entre rutas** en [`14-transiciones-entre-rutas.md`](./14-transiciones-entre-rutas.md):
 `Traveler` (+ `TravelStage`, `TravelSlot`, `useTraveler`): el mismo elemento, vivo, cambia de caja de una ruta a otra con la View
 Transitions API; `SharedTransition` con `fit="cover"` y `layout`; enlaces de `/sitios` con `data-transition`; la biblioteca de

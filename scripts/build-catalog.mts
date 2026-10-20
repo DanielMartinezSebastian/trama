@@ -43,6 +43,12 @@ for (const c of CATEGORIES) if (!catalog.some((e) => e.category === c.id)) error
 
 const readme = readFileSync("docs/README.md", "utf8");
 for (const e of catalog) if (!readme.includes("`" + e.component + "`")) errors.push(`docs/README.md no menciona \`${e.component}\``);
+// Todo componente del kit tiene ficha en el catálogo o, si es una pieza de otro (RetroFX de RetroCanvas), sale en la tabla
+// de docs/README.md junto a él. Sin esto, un componente nuevo podía publicarse en el paquete sin ficha ni documentación.
+for (const file of kitComponents()) {
+  const name = file.slice(file.lastIndexOf("/") + 1, -4);
+  if (!catalog.some((e) => e.component === name) && !readme.includes("`" + name + "`")) errors.push(`${file}: sin ficha en lib/catalog/entries/ ni mención en la tabla de docs/README.md`);
+}
 
 for (const d of demos.filter((d) => d.render === "kit")) {
   if (!KIT_LANDING_FILES[d.slug]) errors.push(`landing kit sin archivo registrado en scripts/build-catalog.mts: ${d.slug}`);

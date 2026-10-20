@@ -48,7 +48,7 @@ export default function SiteChrome({ children, app = false }: { children: ReactN
               <p className="tr-foot__tag">Componentes ASCII, textmode, pixel art y secciones de landing para Next.js.</p>
             </div>
             <FootCol title="Librería" links={[["Primeros pasos", "/docs/empezar"], ["Documentación", "/docs"], ["Catálogo de props", "/docs/catalogo"], ["Componentes en vivo", "/componentes"]]} />
-            <FootCol title="Ejemplos" links={[["Landings", "/demos#landings"], ["Webs completas", "/demos#webs"], ["Fondos y efectos", "/demos#textmode"]]} />
+            <FootCol title="Ejemplos" links={[["Landings", "/demos#landings"], ["Webs completas", "/demos#webs"], ["Fondos y efectos", "/demos#textmode"], ["Guías de estilo", "/guias"]]} />
             <FootCol title="Proyecto" links={[["GitHub", GITHUB], ["npm · trama-ui", "https://www.npmjs.com/package/trama-ui"], ["Decisiones", "/docs/decisiones"]]} />
           </div>
           <p className="tr-foot__bottom">

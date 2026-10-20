@@ -290,6 +290,13 @@ export const FONT_PRESETS: { id: string; label: string; stack: string }[] = [
   { id: "cormorant-garamond", label: "Editorial serif — Cormorant Garamond", stack: 'var(--font-cormorant-garamond), Georgia, serif' },
   { id: "playfair-display", label: "Editorial serif — Playfair Display", stack: 'var(--font-playfair-display), Georgia, serif' },
   { id: "geist-mono", label: "Editorial mono — Geist Mono", stack: 'var(--font-geist-mono), ui-monospace, Consolas, monospace' },
+  // Guías de estilo (lib/ui/guides.ts, docs/16 §5.2)
+  { id: "anton", label: "Guías — Anton (condensada)", stack: 'var(--font-anton), Impact, "Arial Narrow", sans-serif' },
+  { id: "mona-sans", label: "Guías — Mona Sans", stack: 'var(--font-mona-sans), ui-sans-serif, system-ui, sans-serif' },
+  { id: "onest", label: "Guías — Onest", stack: 'var(--font-onest), ui-sans-serif, system-ui, sans-serif' },
+  { id: "archivo", label: "Guías — Archivo (ancha)", stack: 'var(--font-archivo), ui-sans-serif, system-ui, sans-serif' },
+  { id: "gloock", label: "Guías serif — Gloock", stack: 'var(--font-gloock), Georgia, serif' },
+  { id: "martian-mono", label: "Guías mono — Martian Mono", stack: 'var(--font-martian-mono), ui-monospace, Consolas, monospace' },
   // Pixel — las 46 familias de fonts.google.com/?categoryFilters=Appearance:/Theme/Pixel (lib/ui/fonts.ts).
   { id: "press-start-2p", label: "Pixel — Press Start 2P", stack: 'var(--font-press-start-2p), monospace' },
   { id: "vt323", label: "Pixel — VT323", stack: 'var(--font-vt323), monospace' },

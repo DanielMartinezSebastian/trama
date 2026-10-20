@@ -19,15 +19,17 @@ const isDev = process.env.NODE_ENV === "development";
  * - connect-src: 'self' para los modelos de /models; data:/blob: porque three.js carga los buffers embebidos de un
  *   glTF con fetch("data:…").
  * - worker-src blob:: three.js, textmode.js y asciify pueden crear workers desde blobs.
+ * - style-src/font-src de Fontshare: /guias carga Switzer y General Sans con la hoja oficial (su licencia permite el uso
+ *   web pero no redistribuir los archivos, así que no se autoalojan; ver lib/ui/guides.ts).
  *
  * Quien copie el kit a otra web y use VideoPlayer o DeviceMockup con otros orígenes tendrá que ampliar frame-src / img-src / media-src.
  */
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
   "img-src 'self' blob: data: https://i.ytimg.com https://res.cloudinary.com",
-  "font-src 'self' data:",
+  "font-src 'self' data: https://cdn.fontshare.com",
   "media-src 'self' blob: data: https://res.cloudinary.com",
   "connect-src 'self' data: blob:",
   "frame-src 'self' https://www.youtube-nocookie.com https://player.vimeo.com",

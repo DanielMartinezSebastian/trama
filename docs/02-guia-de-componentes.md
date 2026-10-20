@@ -183,6 +183,7 @@ Catálogo curado (11 familias base + las 46 de la categoría Pixel de Google Fon
 | Mono | JetBrains Mono, Space Mono, IBM Plex Mono, Share Tech Mono | `--font-jetbrains-mono`, `--font-space-mono`, `--font-ibm-plex-mono`, `--font-share-tech-mono` |
 | Display mono | Major Mono Display | `--font-major-mono-display` |
 | Editorial | Inter Tight, Instrument Sans, Geist, Schibsted Grotesk, Bricolage Grotesque · serifs Newsreader, Bodoni Moda · mono Geist Mono | `--font-inter-tight`, `--font-instrument-sans`, `--font-geist`, `--font-schibsted-grotesk`, `--font-bricolage-grotesque`, `--font-newsreader`, `--font-bodoni-moda`, `--font-geist-mono` |
+| Guías de estilo | Anton, Mona Sans, Onest, Archivo (eje de anchura), Gloock, Martian Mono (sin precarga); Switzer y General Sans solo por la hoja de Fontshare en `/guias` (su licencia no deja redistribuir los archivos) | `--font-anton`, `--font-mona-sans`, `--font-onest`, `--font-archivo`, `--font-gloock`, `--font-martian-mono` |
 | Pixel | las 46 de Google Fonts › Appearance › Theme › Pixel (Press Start 2P, VT323, Silkscreen, Pixelify Sans, Jersey, Bitcount, Jacquard…) | `--font-press-start-2p`, `--font-vt323`, … (kebab-case del nombre) |
 
 **Fuentes editoriales y pares (`FONT_PAIRINGS`).** Las ocho familias editoriales (OFL, uso comercial libre, `preload: false`) están pensadas
@@ -213,6 +214,15 @@ y `--font-accent: par.accent` en el contenedor. `/sitios/estudio` usa el primero
 exportando su propia variable igual que las de arriba, súmala a `fontVariables` y regístrala en `FONT_PRESETS` (o
 referénciala directamente en el `font` de un tema). No hace falta tocar ningún componente: todos leen `font-family`
 vía tokens, nunca una fuente concreta a pelo.
+
+### 2.4b Guías de estilo (`STYLE_GUIDES`, `GuideFrame`)
+
+Un tema fija colores y fuentes; una **guía** fija además la escala tipográfica (dos escalones: marca 12–18 vw y titular 3–8 vw),
+el margen lateral, la rejilla, el aire entre secciones, el radio, la sombra y el movimiento (duraciones, curvas, stagger), con
+los valores medidos en las webs premiadas ([`16`](./16-guias-de-estilo-plan.md)). Son ocho, en `lib/ui/guides.ts`.
+`<GuideFrame guide="lujo">` las aplica a un contenedor y, dentro, las clases `ui-g-*` (`ui-g-brand`, `ui-g-h1`, `ui-g-body`,
+`ui-g-btn`, `ui-g-grid`…) y cualquier componente del kit las siguen. Para añadir una: un objeto más en `STYLE_GUIDES` (con
+contraste AA de `fg` y `mut` sobre `bg`) y comprobarla con `npm run refs:probe -- --guides <base>`. Comparador en `/guias`.
 
 ### 2.5 Temas del kit (`TOKEN_THEMES`) y cómo añadir uno
 
