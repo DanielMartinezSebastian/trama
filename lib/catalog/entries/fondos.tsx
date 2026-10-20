@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import AmbientLight from "@/components/ui/AmbientLight";
 import AsciiBackground, { ASCII_CHARSETS, ASCII_SCENES, ASCII_STYLES, type AsciiBackgroundProps } from "@/components/ui/AsciiBackground";
 import CrtOverlay from "@/components/ui/CrtOverlay";
 import GridBackground from "@/components/ui/GridBackground";
@@ -10,6 +11,7 @@ import RetroShapes, { RETRO_SHAPES } from "@/components/ui/RetroShapes";
 import TerminalTyper from "@/components/ui/TerminalTyper";
 import TextmodeBackground, { TEXTMODE_SKETCHES } from "@/components/ui/TextmodeBackground";
 import type { ResolutionInfo } from "@/lib/asciify/resolution";
+import { video } from "@/lib/sites/videos";
 import type { CatalogEntry } from "../schema";
 import { Sample } from "./shared";
 
@@ -47,6 +49,18 @@ function AsciiPreview(props: AsciiBackgroundProps) {
 
 const PROGRESS_SCENES = new Set(ASCII_SCENES.filter((s) => s.progress).map((s) => s.id as string));
 const PALETTES = ["original", "tint", "duotone", "gradient"];
+
+/** Un vídeo de la biblioteca con su luz ambiental detrás: el color del fondo sale del propio vídeo. */
+function AmbientDemo({ blur, opacity, fps }: { blur: number; opacity: number; fps: number }) {
+  const cls = `pg-amb${useId().replace(/[^a-zA-Z0-9]/g, "")}`; // selector único: el comparador monta varias copias a la vez
+  const clip = video("oceano", 2);
+  return (
+    <div className={`pg-amb ${cls}`}>
+      <AmbientLight target={`.${cls} video`} position="absolute" blur={blur} opacity={opacity} fps={fps} />
+      <video src={clip.src} poster={clip.posterSrc} muted loop playsInline autoPlay aria-label={clip.alt} />
+    </div>
+  );
+}
 
 export const fondos: CatalogEntry[] = [
   {
@@ -167,6 +181,29 @@ export const fondos: CatalogEntry[] = [
         <Sample>Sin canvas, sin JS</Sample>
       </>
     ),
+  },
+  {
+    id: "ambient-light",
+    component: "AmbientLight",
+    path: "@/components/ui/AmbientLight",
+    name: "Luz ambiental de un vídeo",
+    category: "fondos",
+    styles: ["minimal", "editorial", "glass", "solid"],
+    description:
+      "El color de un vídeo (o imagen, o lienzo) de la página, muy desenfocado, detrás de todo: el fondo cambia con lo que se reproduce, como en las webs de productoras y directores. No decodifica el vídeo otra vez: copia sus fotogramas a un lienzo de 32×18 que el CSS estira y desenfoca.",
+    stageHeight: 380,
+    notes: [
+      "`target` es un selector CSS del vídeo, imagen o lienzo; se vuelve a buscar en cada muestra, así que sigue al que esté activo (`.pantalla video.is-on`) aunque cambie de página o de película.",
+      "`position=\"fixed\"` (por defecto) cubre toda la ventana detrás del contenido; `absolute`, solo su contenedor (con `position`).",
+      "Coste: un `drawImage` diminuto `fps` veces por segundo. Con «reducir movimiento», una muestra cada dos segundos.",
+      "Demo: /sitios/travesia (la luz cambia con el documental que señalas en el índice).",
+    ],
+    props: [
+      { key: "blur", label: "Desenfoque (px)", type: "number", default: 90, min: 20, max: 200, step: 10 },
+      { key: "opacity", label: "Opacidad", type: "number", default: 0.6, min: 0.1, max: 1, step: 0.05 },
+      { key: "fps", label: "Muestras por segundo", type: "number", default: 12, min: 1, max: 30, step: 1 },
+    ],
+    render: (p) => <AmbientDemo blur={p.blur as number} opacity={p.opacity as number} fps={p.fps as number} />,
   },
   {
     id: "crt-overlay",

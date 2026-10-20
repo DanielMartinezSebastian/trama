@@ -76,6 +76,21 @@ Puntos, líneas, cruces o diagonales con CSS puro. La opción más ligera para f
 | `fade` | boolean | true |
 | `drift` | boolean | false |
 
+### Luz ambiental de un vídeo — `AmbientLight`
+
+El color de un vídeo (o imagen, o lienzo) de la página, muy desenfocado, detrás de todo: el fondo cambia con lo que se reproduce, como en las webs de productoras y directores. No decodifica el vídeo otra vez: copia sus fotogramas a un lienzo de 32×18 que el CSS estira y desenfoca.
+
+| prop | tipo | default |
+|---|---|---|
+| `blur` | number 20–200 | 90 |
+| `opacity` | number 0.1–1 | 0.6 |
+| `fps` | number 1–30 | 12 |
+
+- `target` es un selector CSS del vídeo, imagen o lienzo; se vuelve a buscar en cada muestra, así que sigue al que esté activo (`.pantalla video.is-on`) aunque cambie de página o de película.
+- `position="fixed"` (por defecto) cubre toda la ventana detrás del contenido; `absolute`, solo su contenedor (con `position`).
+- Coste: un `drawImage` diminuto `fps` veces por segundo. Con «reducir movimiento», una muestra cada dos segundos.
+- Demo: /sitios/travesia (la luz cambia con el documental que señalas en el índice).
+
 ### Efecto CRT — `CrtOverlay`
 
 Capa de monitor antiguo: líneas de barrido, viñeta, parpadeo y barra de refresco. Se superpone a cualquier contenido.
@@ -765,6 +780,22 @@ Envuelve contenido (`children`), p. ej.: `{/* el elemento que entra o sale */}`
 - Elemento compartido: `<SharedTransition name={`foto-${id}`}>` en la miniatura del listado y en la imagen de la ficha; al navegar de una a otra, el navegador la transforma de una caja a la otra por encima de la animación de página. `fit="cover"` si las dos cajas tienen distinta proporción; `layout` para que también se deslice al reordenar o filtrar en la misma vista.
 - React no forma la pareja si el elemento de la vista de salida estaba fuera del viewport (una tarjeta por debajo del pliegue): entonces solo cambia de página.
 - Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte, el cambio es inmediato.
+
+### Texto que viaja palabra a palabra — `SharedText`
+
+El mismo texto en dos vistas (la marca pequeña de la cabecera y el titular gigante de otra página, o el título de un índice y el de su ficha): al cambiar de una a otra, cada palabra vuela a su sitio nuevo con un retraso escalonado, por encima de todo. View Transitions API; el tamaño y el color los pone el CSS de cada vista.
+
+| prop | tipo | default |
+|---|---|---|
+| `text` | text | "Travesía Documental" |
+| `stagger` | number 0–200 | 50 |
+| `pace` | `fast` · `normal` · `slow` | "slow" |
+
+- Mismo `name` y mismo `text` en las dos vistas; cada palabra se llama `${name}-0`, `${name}-1`… y tiene que ser única en cada página.
+- Anima en una navegación o dentro de `startTransition` (como en este ejemplo). Las palabras van con z-index 130: por encima de la página, de los fijos y de un `Traveler` (un titular sobre su vídeo).
+- React no forma la pareja si la palabra de la vista de salida estaba fuera del viewport: entonces solo cambia.
+- Cada palabra lleva `ui-stext__w--<n>` para darle estilo propio (la segunda en cursiva, por ejemplo). Los lectores de pantalla leen el texto entero una vez.
+- Demo: /sitios/travesia (título del índice → titular de la ficha, y la marca de la cabecera → titular de la productora).
 
 ### Elemento que viaja entre rutas — `Traveler`
 
@@ -2680,7 +2711,7 @@ Productora de documentales con la coreografía de las webs de cine premiadas (do
 
 Carpeta: `components/sites/travesia/` · 9 páginas: Índice · Puntas negras · Marea rosa · Giradores · Barrack Point · Arena negra · El borde del mapa · Productora · Contacto
 
-`MetaTable` ×2 · `PageTransition` · `Traveler` · `BigFooter`
+`SharedText` ×5 · `MetaTable` ×2 · `AmbientLight` · `PageTransition` · `Traveler` · `BigFooter`
 
 ### Almíbar · pastelería de obrador — `/sitios/almibar`
 

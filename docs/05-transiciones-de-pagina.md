@@ -3,20 +3,22 @@
 Trama anima la navegación con la [View Transitions API](https://developer.mozilla.org/es/docs/Web/API/View_Transition_API)
 del navegador, a través del `<ViewTransition>` de React. Las animaciones son CSS puro con los tokens del tema y la
 estética del kit: barrido de color, línea de escaneo, pila de barras, persianas, disolución por píxeles, encendido de
-CRT, glitch, iris o escritura de terminal. Hay cuatro piezas:
+CRT, glitch, iris o escritura de terminal. Hay cinco piezas:
 
 | Componente | Qué anima |
 |---|---|
 | `PageTransition` | **La ventana entera** al llegar a la página: fondos fijos, pie, márgenes… todo salvo lo que envuelvas en `PageTransitionPersist` (la cabecera). Es la de siempre para una web. |
 | `ElementTransition` | **Un elemento suelto** (una tarjeta, un panel, el contenido de una pestaña): la animación ocupa solo su caja. |
 | `SharedTransition` | **Un elemento compartido** entre dos vistas (miniatura → imagen de la ficha): el navegador lo transforma de una caja a la otra. |
+| `SharedText` | **Un texto que viaja palabra a palabra** entre dos vistas (la marca pequeña de la cabecera → el titular gigante de otra página): cada palabra vuela a su sitio, escalonada. |
 | `Traveler` (+ `TravelStage`, `TravelSlot`) | **Un elemento que viaja entre rutas sin desaparecer** (un reproductor que se encoge a una esquina, la marca que pasa del titular a la cabecera): es el mismo nodo, vivo, que cambia de caja en cada página. |
 
 ```tsx
 import PageTransition, { PageTransitionPersist, NAV_FORWARD, NAV_BACK, pageTransitionType } from "trama-ui/PageTransition";
 import ElementTransition, { SharedTransition } from "trama-ui/ElementTransition";
+import SharedText from "trama-ui/SharedText";
 import Traveler, { TravelStage, TravelSlot, useTraveler } from "trama-ui/Traveler";
-// o: import { PageTransition, PageTransitionPersist, ElementTransition, SharedTransition, Traveler, TravelStage, TravelSlot } from "trama-ui";
+// o: import { PageTransition, PageTransitionPersist, ElementTransition, SharedTransition, SharedText, Traveler, TravelStage, TravelSlot } from "trama-ui";
 // en este repo o con kit:export: "@/components/ui/PageTransition", "@/components/ui/ElementTransition"
 ```
 
@@ -251,6 +253,32 @@ El `name` tiene que ser único en cada página (una sola miniatura con `foto-3` 
 - **Fuera de pantalla no hay pareja.** React descarta el par si el elemento de la vista de salida estaba fuera del
   viewport (una tarjeta por debajo del pliegue; lo mismo al filtrar): ese elemento cambia sin animar. Es a propósito
   (no anima lo que no se ve), pero en móvil pasa a menudo: no cuentes con que el título de una tarjeta baja siempre viaje.
+- **`delay`** (ms, en pasos de 40 hasta 800): coreografía. En las transiciones premiadas nada se mueve a la vez (docs/14
+  §2): primero la imagen, después el título, al final el resto. `Traveler` y `SharedText` aceptan lo mismo.
+
+## Texto que viaja palabra a palabra: `SharedText`
+
+El mismo texto en dos vistas, con el mismo `name`: cada palabra es un elemento compartido propio (`${name}-0`,
+`${name}-1`…) y vuela de su caja vieja a la nueva con un retraso escalonado (`stagger`). Es el gesto de Mario Roudil o Cyd
+Stumpel (docs/14): el nombre pequeño de una esquina se convierte en el titular gigante de la página siguiente.
+
+```tsx
+import SharedText from "trama-ui/SharedText";
+
+// en la cabecera (layout) de todas las páginas menos la productora
+<SharedText name="marca" text="Travesía Documental" />
+// en la página de la productora, como titular
+<h1 className="gigante"><SharedText name="marca" text="Travesía Documental" stagger={70} /></h1>
+```
+
+- El tamaño, el sitio y el color los pone el CSS de cada vista; cada palabra lleva `ui-stext__w--<n>` (desde 0) para darle
+  estilo propio (la segunda en cursiva y en `--acc`, por ejemplo).
+- **El mismo `name` no puede estar dos veces en una página**: si la marca va en la cabecera y en el titular, quítala de la
+  cabecera en esa página (dos `view-transition-name` iguales cancelan la transición entera).
+- Las palabras vuelan con `z-index: 130`, por encima de la página, de los fijos y de un `Traveler`: un titular no queda
+  tapado por el vídeo sobre el que aterriza.
+- A mitad de vuelo, la palabra que crece se ve algo borrosa (es su captura pequeña escalada) y queda nítida al llegar.
+  Es lo esperable en un morph de texto.
 
 ## Elementos que viajan entre rutas: `Traveler`
 
@@ -308,10 +336,11 @@ import Traveler, { TravelStage, TravelSlot } from "trama-ui/Traveler";
 - **Capas**: durante el viaje el grupo va con `z-index: 120`, por encima de los fijos de `PageTransitionPersist` (100), así
   que puede volar hacia una cabecera fija. En reposo manda `--ui-travel-z` (30) en el viajero.
 
-**Cómo funciona.** Los huecos se registran en efectos de layout, que corren dentro del callback de
-`document.startViewTransition` del commit de la navegación. El escenario decide en una microtarea (cuando el hueco viejo ya
-se fue y el nuevo llegó) y escribe `left`/`top`/`width`/`height` en el viajero antes de que el navegador capture el estado
-nuevo. El viajero lleva `view-transition-name: ui-travel-<id>` en línea y **no** es un boundary de React (mismo motivo que
+**Cómo funciona.** Los huecos se registran en efectos de layout, dentro del commit de la navegación. Con una View
+Transition en curso, el escenario decide cuando esta termina de actualizar el DOM (`updateCallbackDone`), justo antes de
+que el navegador capture el estado nuevo, y escribe `left`/`top`/`width`/`height` en el viajero. No basta con una
+microtarea: React no siempre monta la página nueva de una vez (espera, por ejemplo, a que carguen sus imágenes), y
+decidir antes dejaba al viajero sin hueco, invisible, en la captura. Sin transición en curso, decide en una microtarea. El viajero lleva `view-transition-name: ui-travel-<id>` en línea y **no** es un boundary de React (mismo motivo que
 `PageTransitionPersist`: así React no lo cancela ni lo oculta). La clase del viaje depende del caso: `move` (de un hueco a
 otro), `arrive` (aparece sin trayectoria: fundido con un leve zoom) o `leave` (la página no tiene hueco: se funde). Cada
 `TravelSlot` monta un `<ViewTransition>` vacío para que el cambio sea una View Transition aunque la página no lleve
@@ -325,10 +354,20 @@ otro), `arrive` (aparece sin trayectoria: fundido con un leve zoom) o `leave` (l
 - Un hueco dentro de algo que se anima con `transform` al entrar (un `Reveal`) se mide a mitad de animación: deja los huecos
   fuera de esos envoltorios.
 - Con `prefers-reduced-motion` cambia de sitio con un fundido de 120 ms, sin recorrer la pantalla.
+- **La página de destino tiene que montarse en el commit de la navegación.** Si se queda cargando (sin precargar) o si su
+  hueco aparece un render después, la transición ya capturó el estado nuevo y el viajero salta a su sitio al terminar.
+  Precarga las rutas (`router.prefetch`, o `<Link>`) y no hagas depender un hueco de un estado que se resetea en un
+  `useEffect` tras navegar. Caso real en Travesía: la ventana de «siguiente» dependía de un booleano del layout; la ficha
+  siguiente (el mismo componente) también la pintaba durante el commit y la pantalla no iba a la portada. Se arregló
+  guardando qué ficha inicia el acoplamiento.
+- **Coreografía en dos tiempos** (encoger a una ventana y luego expandir a la página siguiente, como Ciel Rose): primero
+  un hueco nuevo dentro de `startTransition`, y la navegación tras un temporizador algo más largo que el viaje. En las webs
+  de `/sitios`, ese enlace lleva `data-navigate="manual"` para que el marco (`SiteFrame`) no navegue al instante.
 
-Demo completa: **Travesía** (`/sitios/travesia`). El tráiler viaja por cinco huecos (portada a sangre, ficha destacada
-del listado, mini reproductor fijo con modo cine, retrato dentro de un `sticky` y una píldora dentro del titular de
-contacto) y la marca pasa del titular a la cabecera.
+Demo completa: **Travesía** (`/sitios/travesia`). La «pantalla» vive en el layout: en el índice reproduce el título que
+señalas (y tiñe la página con `AmbientLight`); al abrirlo se expande a la portada mientras el título vuela con
+`SharedText`; «Siguiente documental» la encoge a una ventana, cambia de película y la expande como portada nueva; en la
+productora es un retrato dentro de un `sticky` y en contacto, una píldora dentro del titular.
 
 ## Tema
 
@@ -347,7 +386,8 @@ opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `bl
 ## Accesibilidad y soporte
 
 - **Reducir movimiento**: con `prefers-reduced-motion: reduce`, ninguna animación se mueve, recorta ni enmascara: las
-  páginas se cruzan con un fundido de 120 ms, y los elementos compartidos y los viajeros no viajan (solo se funden).
+  páginas se cruzan con un fundido de 120 ms, y los elementos compartidos, los textos y los viajeros no viajan (solo se
+  funden); sin retrasos.
 - **Sin destellos** (WCAG 2.3.1): `glitch` y `scanline` suben el brillo o desplazan como mucho una vez; lo que se muestra
   no se vuelve a ocultar y ninguna dura más de medio segundo.
 - **Navegadores**: Chromium 125+, Safari 18.2+ y Firefox recientes (tipos de transición y `view-transition-class`). Sin

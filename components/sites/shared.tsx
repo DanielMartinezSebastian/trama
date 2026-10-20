@@ -58,7 +58,8 @@ export function SiteFrame({ tokens, className = "", icons, children }: { tokens:
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = (e.target as HTMLElement | null)?.closest?.("a");
       const href = a?.getAttribute("href");
-      if (!a || !href || !href.startsWith("/sitios/") || a.target === "_blank" || a.closest(".ui-nav, .ui-nav-portal")) return;
+      // `data-navigate="manual"`: el enlace navega por su cuenta (p. ej. tras una animación propia); aquí no se toca
+      if (!a || !href || !href.startsWith("/sitios/") || a.target === "_blank" || a.closest(".ui-nav, .ui-nav-portal") || a.dataset.navigate === "manual") return;
       e.preventDefault();
       // `data-transition="nav-forward"` (o varios tipos separados por espacios): la navegación lleva esos tipos de View
       // Transition, como `<Link transitionTypes>`; PageTransition y ElementTransition eligen la animación con ellos
