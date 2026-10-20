@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 /*
  * Luz ambiental: el color de un vídeo (o imagen, o lienzo) de la página, muy desenfocado, detrás de todo. Es el fondo
@@ -33,7 +34,7 @@ export default function AmbientLight({ target, blur = 90, opacity = 0.6, fps = 1
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d", { alpha: false });
     if (!canvas || !ctx) return;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     const every = reduced ? 2000 : 1000 / Math.max(1, fps);
     let raf = 0;
     let last = 0;

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { finishIntro } from "@/lib/motion/intro";
 import { lockScroll } from "@/lib/motion/lenis";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type PreloaderProps = {
   /** counter = contador 0–100 · words = palabras que se suceden · bar = solo barra y marca · fill = la marca, gigante y en contorno, se rellena con el progreso */
@@ -67,7 +68,7 @@ export default function Preloader({
     } catch {
       /* sin almacenamiento: se muestra siempre */
     }
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     el.setAttribute("data-preloader", "");
     let finished = false;
     let raf = 0;

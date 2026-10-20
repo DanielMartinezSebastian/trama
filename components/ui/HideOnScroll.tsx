@@ -1,6 +1,7 @@
 "use client";
 
 import { createElement, useEffect, useRef, useState, type ReactNode } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type HideOnScrollProps = {
   children: ReactNode;
@@ -20,7 +21,7 @@ export default function HideOnScroll({ children, offset = 120, as = "header", cl
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
     let last = window.scrollY;
     const on = () => {
       const y = window.scrollY;

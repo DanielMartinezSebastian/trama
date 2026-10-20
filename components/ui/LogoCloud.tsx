@@ -1,4 +1,4 @@
-import Carousel from "./Carousel";
+import Carousel from "./CarouselLazy";
 import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 

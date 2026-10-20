@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type CustomCursorProps = {
   /** diámetro del punto en reposo (px) */
@@ -72,7 +73,7 @@ export default function CustomCursor({ cursorSize = 14, follow = 0.18, blend = "
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches || prefersReducedMotion()) return;
     const html = document.documentElement;
     if (hideNative) html.classList.add("ui-ccur-native");
     let x = -100, y = -100, tx = -100, ty = -100, raf = 0, seen = false, vx = 0;

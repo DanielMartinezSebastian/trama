@@ -19,7 +19,7 @@ import { photo } from "@/lib/sites/photos";
 import { video } from "@/lib/sites/videos";
 import { JsonLd } from "@/lib/seo";
 import { dotmatrixTokens, tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorRegular } from "@/lib/ui/icons-phosphor-regular";
 import { SiteFrame, siteHref, useActiveIndex } from "../shared";
 import { ACCESS, CLUB, GETTING, QR_STEPS, SHOWCASE, SLUG, TABLES, TABLE_STORE } from "./data";
 import "./barrio.css";
@@ -74,7 +74,7 @@ export function Shell({ children }: { children: ReactNode }) {
     setCookieKey((k) => k + 1);
   };
   return (
-    <SiteFrame tokens={TOKENS} className="bb" icons={{ set: phosphor, weight: "regular" }}>
+    <SiteFrame tokens={TOKENS} className="bb" icons={{ set: phosphorRegular, weight: "regular" }}>
         {!atTable && (
           <header className="bb-head">
             <a className="bb-brand" href={href()} aria-label="Almíbar, inicio">

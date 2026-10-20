@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type CrossfadeSlide = { src: string; alt?: string };
 
@@ -36,7 +37,7 @@ export default function CrossfadeHero({ slides, title, kicker = "", cta, interva
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    setReduced(prefersReducedMotion());
   }, []);
   useEffect(() => {
     if (paused || hold || reduced || slides.length < 2) return;

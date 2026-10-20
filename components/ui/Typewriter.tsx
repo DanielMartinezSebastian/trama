@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type TypewriterProps = {
   /** frases, una por línea */
@@ -28,7 +29,7 @@ export default function Typewriter({ phrases = "surf en Cantabria\nolas para tod
   const [text, setText] = useState(list[0] ?? "");
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !list.length) {
+    if (prefersReducedMotion() || !list.length) {
       setText(list[0] ?? "");
       return;
     }

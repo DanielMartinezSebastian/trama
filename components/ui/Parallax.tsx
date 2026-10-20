@@ -2,6 +2,7 @@
 
 import { createElement, useEffect, useRef, type ReactNode } from "react";
 import { trackScroll } from "@/lib/motion/progress";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ParallaxProps = {
   children: ReactNode;
@@ -20,7 +21,7 @@ export default function Parallax({ children, speed = 0.15, as = "div", className
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || prefersReducedMotion()) return;
     // el rectángulo medido ya incluye el desplazamiento aplicado: se resta para medir la posición «de reposo»
     // (si no, con velocidad negativa el cálculo se realimenta y el contenido sale disparado)
     let applied = 0;

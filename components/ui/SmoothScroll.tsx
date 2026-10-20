@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { setLenis } from "@/lib/motion/lenis";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type SmoothScrollProps = {
   /** inercia: 0,05 = muy flotante · 0,2 = casi nativo */
@@ -24,7 +25,7 @@ export type SmoothScrollProps = {
 export default function SmoothScroll({ lerp = 0.1, wheelMultiplier = 1, anchors = true, syncGsap = true, enabled = true }: SmoothScrollProps) {
   useEffect(() => {
     if (!enabled) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(pointer: coarse)").matches) return;
+    if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;
     let disposed = false;
     const cleanups: Array<() => void> = [];
 

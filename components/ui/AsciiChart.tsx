@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type AsciiChartProps = {
   /** valores separados por comas */
@@ -29,7 +30,7 @@ export default function AsciiChart({ data = "12, 18, 9, 24, 31, 27, 40, 36", lab
   const [k, setK] = useState(animate ? 0 : 1);
 
   useEffect(() => {
-    if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!animate || prefersReducedMotion()) {
       setK(1);
       return;
     }

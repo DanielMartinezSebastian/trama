@@ -12,7 +12,7 @@ import LogoCloud from "@/components/ui/LogoCloud";
 import NavBar from "@/components/ui/NavBar";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { SiteFrame, siteHref, useActiveIndex, useSiteNavigate } from "../shared";
 import { AGENDA, AREAS, AWARDS, CLIENTS, GOALS, GROUP_FIGURES, JOBS, KINDS, NEWS, QUOTE, REPORTS, SECTORS, SLUG, SOLUTIONS, STOCK, type SectorId } from "./data";
 import "./vertice.css";
@@ -58,7 +58,7 @@ export function Shell({ children }: { children: ReactNode }) {
     ...JOBS.map((j) => `${j.title}=${href("empleo")}`),
   ].join(", ");
   return (
-    <SiteFrame tokens={TOKENS} className="vx" icons={{ set: phosphor, weight: "light" }}>
+    <SiteFrame tokens={TOKENS} className="vx" icons={{ set: phosphorLight, weight: "light" }}>
       <div className="st-header st-header--flat vx-head">
         <NavBar
           brand="Vértice"
@@ -92,7 +92,7 @@ export function Shell({ children }: { children: ReactNode }) {
           />
         </div>
       </div>
-      <CookieBanner position="bottom-left" policyHref="/creditos" storageKey="vertice-cookies" />
+      <CookieBanner position="bottom-right" policyHref="/creditos" storageKey="vertice-cookies" />
     </SiteFrame>
   );
 }

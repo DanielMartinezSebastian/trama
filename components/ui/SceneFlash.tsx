@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type SceneFlashProps = {
   kind?: "sweep" | "iris" | "slices" | "blinds" | "pixels";
@@ -45,7 +46,7 @@ export default function SceneFlash({ kind = "sweep", duration = 1, loop = false,
           gsap.fromTo(cells, { autoAlpha: 0 }, { autoAlpha: 1, duration: duration * 0.35, ease: "none", stagger: { each: (duration * 0.65) / cells.length, from: kind === "pixels" ? "random" : "start" }, yoyo: true, repeat: 1 });
       };
       // con «reducir movimiento» no hay barrido ni destello (WCAG 2.3.3): el cambio de escena ocurre sin transición
-      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (prefersReducedMotion()) return;
       if (playKey > 0) run();
       if (loop) {
         const id = setInterval(run, (duration + 1.4) * 1000);

@@ -1,6 +1,7 @@
 "use client";
 
 import { Children, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export const REVEAL_KINDS = ["fade", "slide", "scale", "blur", "wipe", "flip", "iris"] as const;
 export type RevealKind = (typeof REVEAL_KINDS)[number];
@@ -125,7 +126,7 @@ export default function Reveal({
 
     let fired = false;
     let anims: Animation[] = [];
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     const reveal = () => {
       if (fired) return;
       fired = true;

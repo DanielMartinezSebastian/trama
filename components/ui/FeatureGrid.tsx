@@ -1,4 +1,4 @@
-import Carousel from "./Carousel";
+import Carousel from "./CarouselLazy";
 import { renderGlyph } from "./Icon";
 import SectionHeader from "./SectionHeader";
 import { splitEscaped } from "@/lib/ui/list";

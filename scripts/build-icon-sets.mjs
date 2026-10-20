@@ -68,6 +68,27 @@ writeFileSync(
     `/** familia Phosphor: el peso sale de \`weight\` del icono o del \`IconSet\` */\nexport const phosphor: IconSetDef = {\n  id: "phosphor",\n  icons: PHOSPHOR_ICONS,\n  props: (w) => ({ weight: w }),\n};\n`,
 );
 
+// Phosphor de un solo peso: cada icono de `dist/ssr` trae sus seis pesos (~3,4 KB), y una web usa uno. Estos módulos
+// guardan solo el SVG de ese peso (los mismos trazos, serializados con react-dom) y pesan ~1/6 del set completo.
+const require = createRequire(import.meta.url);
+const React = require("react");
+const { renderToStaticMarkup } = require("react-dom/server");
+const WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"];
+const defs = {};
+for (const c of phImports) defs[c] = (await import(`../node_modules/@phosphor-icons/react/dist/defs/${c}.es.js`)).default;
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
+for (const w of WEIGHTS) {
+  const svg = (c) => renderToStaticMarkup(React.createElement(React.Fragment, null, defs[c].get(w)));
+  writeFileSync(
+    `lib/ui/icons-phosphor-${w}.ts`,
+    head("Phosphor (MIT, phosphoricons.com)", `Solo el peso \`${w}\`: ~1/6 de \`icons-phosphor\` (los seis pesos). Para una web que usa un único peso.`) +
+      `import { phosphorSvg } from "@/lib/ui/phosphorSvg";\n\n` +
+      `const SVG: Record<string, string> = {\n${names.map((n) => `  "${n}": ${JSON.stringify(svg(MAP[n][0]))},`).join("\n")}\n};\n\n` +
+      `/** familia Phosphor en peso \`${w}\`: el \`weight\` del icono o del \`IconSet\` se ignora (para mezclar pesos, \`phosphor\`) */\n` +
+      `export const phosphor${cap(w)} = phosphorSvg("phosphor", SVG);\n`,
+  );
+}
+
 // Lucide: nombres del paquete (Next optimiza sus imports); las marcas, de Phosphor
 const luImports = [...new Set(names.map((n) => MAP[n][1]).filter(Boolean))].sort();
 const brands = names.filter((n) => !MAP[n][1]);

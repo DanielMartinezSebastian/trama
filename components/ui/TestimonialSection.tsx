@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import Carousel from "./Carousel";
+import Carousel from "./CarouselLazy";
 import SectionHeader from "./SectionHeader";
 import Testimonial from "./Testimonial";
 import type { Variant } from "./variants";

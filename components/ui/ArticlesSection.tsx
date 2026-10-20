@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import BlogCard, { type BlogCardProps } from "./BlogCard";
-import Carousel from "./Carousel";
+import Carousel from "./CarouselLazy";
 import { CARD_PATTERNS, pick, type CardFill } from "./fill";
 import SectionHeader from "./SectionHeader";
 import type { Variant } from "./variants";

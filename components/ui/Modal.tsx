@@ -5,6 +5,7 @@ import { lockScroll } from "@/lib/motion/lenis";
 import Button, { type ButtonEmphasis } from "./Button";
 import type { Intent } from "./intent";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ModalAction = {
   label: string;
@@ -99,7 +100,7 @@ export default function Modal({
   const full = size === "full";
 
   const close = () => {
-    if (!full || matchMedia("(prefers-reduced-motion: reduce)").matches) return setOpen(false);
+    if (!full || prefersReducedMotion()) return setOpen(false);
     setLeaving(true);
     window.setTimeout(() => {
       setLeaving(false);

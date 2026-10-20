@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import { clamp01, trackScroll } from "@/lib/motion/progress";
+import { pinProgress, trackScroll } from "@/lib/motion/progress";
 
 export type PinnedSectionProps = {
   children: ReactNode;
@@ -24,7 +24,7 @@ export default function PinnedSection({ children, length = 2, className = "", st
   useEffect(() => {
     const el = outer.current;
     if (!el) return;
-    return trackScroll(el, (r, vh) => el.style.setProperty("--pin-p", clamp01(-r.top / (r.height - vh)).toFixed(4)));
+    return trackScroll(el, (r, vh) => el.style.setProperty("--pin-p", pinProgress(r, vh).toFixed(4)));
   }, [length]);
   return (
     <div ref={outer} className={`ui-pin ${className}`.trim()} style={{ ...style, "--pin-len": length, "--pin-p": 0 } as CSSProperties}>

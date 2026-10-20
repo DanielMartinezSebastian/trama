@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { headingsOf, type Heading } from "@/lib/ui/markdown";
 import { createSlugger } from "@/lib/ui/markdownInline";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type TableOfContentsProps = {
   /** saca los títulos de este Markdown (el mismo que recibe Prose): mismos ids */
@@ -127,7 +128,7 @@ export default function TableOfContents({ markdown = "", target = "", items = ""
                 const el = document.getElementById(h.id);
                 if (!el) return;
                 e.preventDefault();
-                el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+                el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
                 history.replaceState(null, "", `#${h.id}`);
                 setActive(h.id);
               }}

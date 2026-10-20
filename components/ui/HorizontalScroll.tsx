@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import { clamp01, trackScroll } from "@/lib/motion/progress";
+import { pinProgress, trackScroll } from "@/lib/motion/progress";
 
 export type HorizontalScrollProps = {
   /** cada hijo directo es un panel del recorrido */
@@ -52,7 +52,7 @@ export default function HorizontalScroll({ children, heading = "", gap = 24, min
       ro.observe(t);
       document.fonts?.ready.then(measure);
       off = trackScroll(o, (r, vh) => {
-        const p = clamp01(-r.top / Math.max(1, r.height - vh));
+        const p = pinProgress(r, vh);
         t.style.transform = `translate3d(${-p * dist}px, 0, 0)`;
         o.style.setProperty("--hs-p", p.toFixed(4));
       });

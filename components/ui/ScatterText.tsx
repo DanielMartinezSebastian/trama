@@ -1,7 +1,8 @@
 "use client";
 
 import { createElement, useEffect, useRef, type CSSProperties } from "react";
-import { clamp01, trackScroll } from "@/lib/motion/progress";
+import { clamp01, pinProgress, trackScroll } from "@/lib/motion/progress";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ScatterTextProps = {
   children: string;
@@ -28,11 +29,11 @@ export default function ScatterText({ children: text, mode = "exit", spread = 22
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || prefersReducedMotion()) return;
     const host = scope ? el.closest<HTMLElement>(scope) : null;
     // con `scope`: progreso del recorrido de la sección contenedora (0 al entrar, 1 cuando termina de pasar)
     if (host) {
-      return trackScroll(host, (r, vh) => el.style.setProperty("--p", clamp01(-r.top / Math.max(1, r.height - vh)).toFixed(4)));
+      return trackScroll(host, (r, vh) => el.style.setProperty("--p", pinProgress(r, vh).toFixed(4)));
     }
     return trackScroll(el, (r, vh) => {
       const p = mode === "exit" ? clamp01(-r.top / Math.max(1, r.height * 1.1)) : clamp01(1 - (vh - r.top) / Math.max(1, vh * 0.7));

@@ -33,7 +33,7 @@ import { JsonLd } from "@/lib/seo";
 import { BRAND, CAKE, CATEGORIES, FAQ, LEGAL, PRODUCTS, RATING_DISTRIBUTION, REVIEWS, STORES, bakeryJsonLd, cakeAllergens, cakePrice, menuSections, pickupSlots, type Product } from "@/lib/sites/almibar";
 import { photo } from "@/lib/sites/photos";
 import { video, videos } from "@/lib/sites/videos";
-import { phosphor } from "@/lib/ui/icons-phosphor";
+import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { editorialTokens, tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
 import { HISTORY, NAV, PRODUCT_PHOTO, PROVENANCE, SLUG, TEAM, TILE, VALUES } from "./data";
@@ -152,7 +152,7 @@ export function Shell({ children }: { children: ReactNode }) {
   };
   const centro = STORES[0];
   return (
-    <SiteFrame tokens={TOKENS} className="al" icons={{ set: phosphor, weight: "light" }}>
+    <SiteFrame tokens={TOKENS} className="al" icons={{ set: phosphorLight, weight: "light" }}>
       <ShopCtx.Provider value={value}>
         <a className="al-skip" href="#contenido">Saltar al contenido</a>
         <header className="al-head">
@@ -252,7 +252,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <CookieBanner
           key={cookieKey}
           storageKey="trama:almibar:cookies"
-          position="bottom-left"
+          position="bottom-right"
           variant="minimal"
           title="Cookies, solo las justas"
           text="Usamos las necesarias para que funcionen la bolsa y los encargos. Las de medición, solo si las aceptas."

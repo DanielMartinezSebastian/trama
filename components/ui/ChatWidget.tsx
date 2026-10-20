@@ -7,6 +7,7 @@ import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import { renderGlyph } from "./Icon";
 import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
+import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 
 export type ChatReply = string | { text: string; quickReplies?: string[] };
 
@@ -145,7 +146,7 @@ export default function ChatWidget({
       } else {
         reply = answer(parseRules(rules), text, fallback);
         // una pausa corta, proporcional a la respuesta, para que se lea como una conversación
-        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reduced = prefersReducedMotion();
         await new Promise((r) => setTimeout(r, reduced ? 150 : Math.min(1400, 450 + reply.text.length * 8)));
       }
     } catch {

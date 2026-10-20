@@ -49,7 +49,7 @@ const LEN = 13;
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <SiteFrame tokens={TOKENS} className="pn" icons={{ set: lucide, weight: "light" }}>
-      <SmoothScroll />
+      <SmoothScroll syncGsap={false} />
       <div className="pn-wrap">
         <BlueprintFrame>
           <header className="pn-head">

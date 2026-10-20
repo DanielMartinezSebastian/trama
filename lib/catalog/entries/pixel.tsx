@@ -79,6 +79,7 @@ export const pixel: CatalogEntry[] = [
       "Para un icono fuera del set: `import { Zap } from \"pixelarticons/react/Zap\"` y `<Icon icon={Zap} />` (también valen las variantes …Solid y …Glyph).",
       "Para toda una web: `<IconSet set={phosphor} weight=\"light\">` (import de `@/lib/ui/icons-phosphor`) o `SiteFrame icons`. Los glifos `icon:…` de Button, NavBar, FeatureGrid o Footer también cambian.",
       "Cada familia vive en su módulo (`icons-phosphor`, `icons-lucide`) y solo la descarga la web que la usa. Lucide no dibuja marcas: las suyas salen de Phosphor.",
+      "Si la web usa un solo peso de Phosphor, importa su módulo: `phosphorLight` de `@/lib/ui/icons-phosphor-light` (o `trama-ui/icons/phosphor-light`) pesa ~1/6 del set completo, porque cada icono de `phosphor` trae sus seis pesos.",
       "Licencias: Pixelarticons MIT (© Gerrit Halfmann), Phosphor MIT, Lucide ISC.",
     ],
     render: (p) => (
