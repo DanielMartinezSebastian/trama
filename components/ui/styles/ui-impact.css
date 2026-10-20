@@ -59,3 +59,79 @@
 @media (prefers-reduced-motion: reduce) {
   .ui-fexp__body, .ui-fexp__media img, .ui-fexp__plus { transition: none; }
 }
+
+/* ---------- LightScroll: luz por finalidad (docs/18) ----------
+   La luz va detrás del contenido: un foco (radial) o una rasante (lineal) del color de la temperatura (--light-rgb), más un
+   baño del resto de la escena (--light-amb). La dureza mueve el borde del núcleo: dura = núcleo pequeño, difusa = caída larga. */
+.ui-light { position: relative; isolation: isolate; }
+.ui-light__layer {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(circle var(--light-r, 50vmax) at var(--light-x, 50%) var(--light-y, 40%),
+      rgb(var(--light-rgb, 255 240 220) / calc(var(--light-i, 0.8) * (0.34 - var(--light-soft, 0.5) * 0.12))) 0%,
+      rgb(var(--light-rgb, 255 240 220) / calc(var(--light-i, 0.8) * 0.12)) calc(10% + var(--light-soft, 0.5) * 40%),
+      transparent 100%),
+    linear-gradient(rgb(var(--light-rgb, 255 240 220) / calc(var(--light-amb, 0.4) * 0.09)), rgb(var(--light-rgb, 255 240 220) / calc(var(--light-amb, 0.4) * 0.09)));
+}
+.ui-light--absolute > .ui-light__layer { position: absolute; }
+.ui-light[data-light-kind="rake"] > .ui-light__layer {
+  background:
+    linear-gradient(calc(90deg + var(--light-angle, 8deg)),
+      rgb(var(--light-rgb) / calc(var(--light-i) * 0.4)) 0%,
+      rgb(var(--light-rgb) / calc(var(--light-i) * 0.12)) calc(6% + var(--light-soft) * 30%),
+      transparent 70%),
+    linear-gradient(rgb(var(--light-rgb) / calc(var(--light-amb) * 0.12)), rgb(var(--light-rgb) / calc(var(--light-amb) * 0.12)));
+}
+.ui-light__content { position: relative; z-index: 1; }
+/* destellos de cuatro puntas alrededor del foco: pequeños, lentos (≤ 3 por segundo en total, WCAG 2.3.1) y apagados con movimiento reducido */
+.ui-light__glints { position: absolute; left: var(--light-x); top: var(--light-y); opacity: var(--light-sparkle, 0); }
+.ui-light__glints i {
+  position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; opacity: 0;
+  left: calc(cos(var(--i) * 103deg) * (3vmax + var(--i) * 1.6vmax)); top: calc(sin(var(--i) * 103deg) * (2.4vmax + var(--i) * 1.2vmax));
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 0.95) 0 1.4px, transparent 2.6px),
+    linear-gradient(90deg, transparent 47%, rgb(var(--light-rgb) / 0.85) 50%, transparent 53%),
+    linear-gradient(0deg, transparent 47%, rgb(var(--light-rgb) / 0.85) 50%, transparent 53%);
+  mask: radial-gradient(circle, #000 20%, transparent 70%);
+  animation: ui-light-glint 3.4s ease-in-out calc(var(--i) * -0.49s) infinite;
+}
+@keyframes ui-light-glint {
+  0%, 62%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+  72% { opacity: 1; transform: scale(1) rotate(20deg); }
+  84% { opacity: 0; transform: scale(0.5) rotate(40deg); }
+}
+@media (prefers-reduced-motion: reduce) { .ui-light__glints { display: none; } }
+
+/* ---------- BeforeAfter ---------- */
+.ui-ba { display: grid; gap: 10px; min-width: 0; }
+.ui-ba__box {
+  position: relative; overflow: hidden; aspect-ratio: var(--ba-ratio, 4 / 3); border-radius: var(--s-r, var(--r, 12px));
+  border: var(--s-bd, 1px solid var(--ln)); background: var(--card); touch-action: pan-y; user-select: none;
+}
+.ui-ba--vertical .ui-ba__box { touch-action: pan-x; }
+.ui-ba--slider .ui-ba__box { cursor: ew-resize; }
+.ui-ba--vertical.ui-ba--slider .ui-ba__box { cursor: ns-resize; }
+.ui-ba__pane { position: absolute; inset: 0; }
+.ui-ba__pane > img, .ui-ba__pane > video, .ui-ba__pane > svg, .ui-ba__pane > canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ui-ba__pane--after { clip-path: inset(0 calc(100% - var(--ba-p)) 0 0); }
+.ui-ba--vertical .ui-ba__pane--after { clip-path: inset(0 0 calc(100% - var(--ba-p)) 0); }
+.ui-ba--toggle .ui-ba__pane--after { transition: clip-path 0.6s var(--ease-io, ease); }
+.ui-ba__tag {
+  position: absolute; top: 10px; padding: 3px 9px; border-radius: 999px; font-size: 12px; letter-spacing: 0.04em;
+  background: color-mix(in srgb, var(--bg) 78%, transparent); color: var(--fg); border: 1px solid var(--ln); pointer-events: none;
+}
+.ui-ba__tag--before { right: 10px; }
+.ui-ba__tag--after { left: 10px; }
+.ui-ba__handle { position: absolute; top: 0; bottom: 0; left: var(--ba-p); width: 44px; margin-left: -22px; display: grid; place-items: center; outline: none; }
+.ui-ba__handle::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: var(--fg); opacity: 0.85; }
+.ui-ba__handle span { position: relative; width: 36px; height: 36px; border-radius: 50%; background: var(--bg); border: 2px solid var(--fg); }
+.ui-ba__handle span::before, .ui-ba__handle span::after { content: ""; position: absolute; top: 50%; width: 0; height: 0; margin-top: -5px; border: 5px solid transparent; }
+.ui-ba__handle span::before { left: 4px; border-right-color: var(--fg); }
+.ui-ba__handle span::after { right: 4px; border-left-color: var(--fg); }
+.ui-ba__handle:focus-visible span { outline: 2px solid var(--acc); outline-offset: 3px; }
+.ui-ba--vertical .ui-ba__handle { top: var(--ba-p); bottom: auto; left: 0; right: 0; width: auto; height: 44px; margin: -22px 0 0; }
+.ui-ba--vertical .ui-ba__handle::before { top: 50%; bottom: auto; left: 0; right: 0; width: auto; height: 2px; margin: -1px 0 0; }
+.ui-ba--vertical .ui-ba__handle span { transform: rotate(90deg); }
+.ui-ba__toggle { justify-self: start; font: inherit; font-size: 14px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--fg); cursor: pointer; }
+.ui-ba__toggle:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .ui-ba--toggle .ui-ba__pane--after { transition: none; } }
