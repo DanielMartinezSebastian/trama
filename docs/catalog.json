@@ -31,6 +31,7 @@
         "ascii-background",
         "textmode-background",
         "grid-background",
+        "ambient-light",
         "crt-overlay",
         "retro-canvas",
         "retro-model",
@@ -99,6 +100,7 @@
         "scene-flash",
         "page-transition",
         "element-transition",
+        "shared-text",
         "traveler",
         "reveal",
         "presence",
@@ -709,6 +711,54 @@
       ],
       "example": "import GridBackground from \"@/components/ui/GridBackground\";\n\n<GridBackground />",
       "preview": "/componentes#grid-background"
+    },
+    {
+      "id": "ambient-light",
+      "name": "Luz ambiental de un vídeo",
+      "component": "AmbientLight",
+      "import": "import AmbientLight from \"@/components/ui/AmbientLight\";",
+      "category": "fondos",
+      "styles": [
+        "minimal",
+        "editorial",
+        "glass",
+        "solid"
+      ],
+      "description": "El color de un vídeo (o imagen, o lienzo) de la página, muy desenfocado, detrás de todo: el fondo cambia con lo que se reproduce, como en las webs de productoras y directores. No decodifica el vídeo otra vez: copia sus fotogramas a un lienzo de 32×18 que el CSS estira y desenfoca.",
+      "props": [
+        {
+          "key": "blur",
+          "type": "number",
+          "default": 90,
+          "label": "Desenfoque (px)",
+          "min": 20,
+          "max": 200
+        },
+        {
+          "key": "opacity",
+          "type": "number",
+          "default": 0.6,
+          "label": "Opacidad",
+          "min": 0.1,
+          "max": 1
+        },
+        {
+          "key": "fps",
+          "type": "number",
+          "default": 12,
+          "label": "Muestras por segundo",
+          "min": 1,
+          "max": 30
+        }
+      ],
+      "notes": [
+        "`target` es un selector CSS del vídeo, imagen o lienzo; se vuelve a buscar en cada muestra, así que sigue al que esté activo (`.pantalla video.is-on`) aunque cambie de página o de película.",
+        "`position=\"fixed\"` (por defecto) cubre toda la ventana detrás del contenido; `absolute`, solo su contenedor (con `position`).",
+        "Coste: un `drawImage` diminuto `fps` veces por segundo. Con «reducir movimiento», una muestra cada dos segundos.",
+        "Demo: /sitios/travesia (la luz cambia con el documental que señalas en el índice)."
+      ],
+      "example": "import AmbientLight from \"@/components/ui/AmbientLight\";\n\n<AmbientLight />",
+      "preview": "/componentes#ambient-light"
     },
     {
       "id": "crt-overlay",
@@ -3590,6 +3640,61 @@
       ],
       "example": "import ElementTransition from \"@/components/ui/ElementTransition\";\n\n<ElementTransition>\n  {/* el elemento que entra o sale */}\n</ElementTransition>",
       "preview": "/componentes#element-transition"
+    },
+    {
+      "id": "shared-text",
+      "name": "Texto que viaja palabra a palabra",
+      "component": "SharedText",
+      "import": "import SharedText from \"@/components/ui/SharedText\";",
+      "category": "transiciones",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "El mismo texto en dos vistas (la marca pequeña de la cabecera y el titular gigante de otra página, o el título de un índice y el de su ficha): al cambiar de una a otra, cada palabra vuela a su sitio nuevo con un retraso escalonado, por encima de todo. View Transitions API; el tamaño y el color los pone el CSS de cada vista.",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Travesía Documental",
+          "label": "Texto"
+        },
+        {
+          "key": "stagger",
+          "type": "number",
+          "default": 50,
+          "label": "Escalonado (ms)",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "pace",
+          "type": "select",
+          "default": "slow",
+          "label": "Ritmo",
+          "options": [
+            "fast",
+            "normal",
+            "slow"
+          ]
+        }
+      ],
+      "notes": [
+        "Mismo `name` y mismo `text` en las dos vistas; cada palabra se llama `${name}-0`, `${name}-1`… y tiene que ser única en cada página.",
+        "Anima en una navegación o dentro de `startTransition` (como en este ejemplo). Las palabras van con z-index 130: por encima de la página, de los fijos y de un `Traveler` (un titular sobre su vídeo).",
+        "React no forma la pareja si la palabra de la vista de salida estaba fuera del viewport: entonces solo cambia.",
+        "Cada palabra lleva `ui-stext__w--<n>` para darle estilo propio (la segunda en cursiva, por ejemplo). Los lectores de pantalla leen el texto entero una vez.",
+        "Demo: /sitios/travesia (título del índice → titular de la ficha, y la marca de la cabecera → titular de la productora)."
+      ],
+      "example": "import SharedText from \"@/components/ui/SharedText\";\n\n<SharedText\n  text=\"Travesía Documental\"\n/>",
+      "preview": "/componentes#shared-text"
     },
     {
       "id": "traveler",
@@ -15965,9 +16070,19 @@
       ],
       "components": [
         {
+          "component": "SharedText",
+          "id": "shared-text",
+          "uses": 5
+        },
+        {
           "component": "MetaTable",
           "id": "meta-table",
           "uses": 2
+        },
+        {
+          "component": "AmbientLight",
+          "id": "ambient-light",
+          "uses": 1
         },
         {
           "component": "PageTransition",

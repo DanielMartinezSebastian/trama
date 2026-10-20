@@ -16,6 +16,7 @@ import Panel from "@/components/ui/Panel";
 import Presence, { PRESENCE_EFFECTS } from "@/components/ui/Presence";
 import Reveal, { REVEAL_KINDS, type RevealDirection, type RevealEasing, type RevealKind } from "@/components/ui/Reveal";
 import SceneFlash from "@/components/ui/SceneFlash";
+import SharedText from "@/components/ui/SharedText";
 import Traveler, { TravelSlot, TravelStage, useTraveler, type TravelBlend, type TravelFit } from "@/components/ui/Traveler";
 import { video } from "@/lib/sites/videos";
 import { vcls } from "@/components/ui/variants";
@@ -199,6 +200,28 @@ function TravelerDemo({ fit, blend, pace }: { fit: TravelFit; blend: TravelBlend
   );
 }
 
+/**
+ * Mini página con dos vistas del mismo texto: pequeño en la esquina (como la marca de una cabecera) y titular gigante.
+ * Cada cambio va dentro de `startTransition`, como una navegación: las palabras vuelan de una caja a otra, escalonadas.
+ */
+function SharedTextDemo({ text, stagger, pace }: { text: string; stagger: number; pace: "fast" | "normal" | "slow" }) {
+  const [big, setBig] = useState(false);
+  const name = `demo-st${useId().replace(/[^a-zA-Z0-9]/g, "")}`; // único: el comparador monta varias copias a la vez
+  return (
+    <div className="pg-stext">
+      <div className="pg-stext__bar">
+        <button type="button" aria-pressed={!big} onClick={() => startTransition(() => setBig(false))}>Esquina</button>
+        <button type="button" aria-pressed={big} onClick={() => startTransition(() => setBig(true))}>Titular</button>
+      </div>
+      {big ? (
+        <SharedText key="big" as="h3" name={name} text={text} stagger={stagger} pace={pace} className="pg-stext__big" />
+      ) : (
+        <SharedText key="small" name={name} text={text} stagger={stagger} pace={pace} className="pg-stext__small" />
+      )}
+    </div>
+  );
+}
+
 export const transiciones: CatalogEntry[] = [
   {
     id: "scene-flash",
@@ -287,6 +310,30 @@ export const transiciones: CatalogEntry[] = [
         <PageTransitionDemo scope="element" kind={p.kind as PageTransitionKind} direction={dirOf(p.direction)} pace={p.pace as never} tone={p.tone as never} replay={replay} />
       </div>
     ),
+  },
+  {
+    id: "shared-text",
+    component: "SharedText",
+    path: "@/components/ui/SharedText",
+    name: "Texto que viaja palabra a palabra",
+    category: "transiciones",
+    styles: ALL_STYLES,
+    description:
+      "El mismo texto en dos vistas (la marca pequeña de la cabecera y el titular gigante de otra página, o el título de un índice y el de su ficha): al cambiar de una a otra, cada palabra vuela a su sitio nuevo con un retraso escalonado, por encima de todo. View Transitions API; el tamaño y el color los pone el CSS de cada vista.",
+    stageHeight: 340,
+    notes: [
+      "Mismo `name` y mismo `text` en las dos vistas; cada palabra se llama `${name}-0`, `${name}-1`… y tiene que ser única en cada página.",
+      "Anima en una navegación o dentro de `startTransition` (como en este ejemplo). Las palabras van con z-index 130: por encima de la página, de los fijos y de un `Traveler` (un titular sobre su vídeo).",
+      "React no forma la pareja si la palabra de la vista de salida estaba fuera del viewport: entonces solo cambia.",
+      "Cada palabra lleva `ui-stext__w--<n>` para darle estilo propio (la segunda en cursiva, por ejemplo). Los lectores de pantalla leen el texto entero una vez.",
+      "Demo: /sitios/travesia (título del índice → titular de la ficha, y la marca de la cabecera → titular de la productora).",
+    ],
+    props: [
+      { key: "text", label: "Texto", type: "text", default: "Travesía Documental" },
+      { key: "stagger", label: "Escalonado (ms)", type: "number", default: 50, min: 0, max: 200, step: 10 },
+      { key: "pace", label: "Ritmo", type: "select", default: "slow", options: ["fast", "normal", "slow"], labels: { fast: "rápido (240 ms)", normal: "normal (380 ms)", slow: "lento (560 ms)" } },
+    ],
+    render: (p) => <SharedTextDemo text={p.text as string} stagger={p.stagger as number} pace={p.pace as never} />,
   },
   {
     id: "traveler",

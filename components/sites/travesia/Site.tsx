@@ -4,7 +4,7 @@ import { createContext, startTransition, useContext, useEffect, useLayoutEffect,
 import { usePathname, useRouter } from "next/navigation";
 import AmbientLight from "@/components/ui/AmbientLight";
 import BigFooter from "@/components/ui/BigFooter";
-import { SharedText } from "@/components/ui/ElementTransition";
+import SharedText from "@/components/ui/SharedText";
 import MetaTable from "@/components/ui/MetaTable";
 import PageTransition, { NAV_BACK, NAV_FORWARD, PageTransitionPersist } from "@/components/ui/PageTransition";
 import Traveler, { TravelSlot, TravelStage, useTraveler } from "@/components/ui/Traveler";
