@@ -192,3 +192,28 @@ fidelidad y F5–F6 en paralelo con las demos.
 2. ¿Fontshare (Switzer, General Sans) entra si su licencia permite uso comercial en webs de cliente, o solo Google Fonts?
 3. ¿Playwright como dependencia de desarrollo del repo (F4)? Pesa poco porque reutiliza el Chromium en caché, pero obliga a
    fijar versión.
+
+## 8. Estado (20-10-2026)
+
+Hecho F1–F4, con las decisiones de §7: `/guias` es pública, Fontshare entra y Playwright es dependencia de desarrollo.
+
+| Fase | Qué hay | Dónde |
+|---|---|---|
+| F1 | Las 8 guías como datos (`STYLE_GUIDES`, `guide()`, `guideToStyle()`), clases `ui-g-*` y el componente `GuideFrame` (ficha en `/componentes`, categoría Secciones; exportado por el paquete) | `lib/ui/guides.ts`, `components/ui/GuideFrame.tsx`, `components/ui/styles/ui-guides.css` |
+| F2 | Anton, Mona Sans, Onest, Archivo (con eje de anchura), Gloock y Martian Mono (Google, sin precarga, en `FONT_PRESETS`); Switzer y General Sans por la hoja oficial de Fontshare solo en `/guias` | `lib/ui/fonts.ts`, `components/site/guias/FontshareLink.tsx`, CSP en `next.config.ts` |
+| F3 | `/guias`: guía × composición (C1–C8) × relato (R1–R10) en vivo, comparador de las 8 guías y de los 10 relatos en miniaturas, y el código para copiar. Páginas sueltas `/guias/ver/<guía>/<composición>` (64) y `/guias/relato/<guía>/<relato>` (80) | `app/guias/`, `components/site/guias/` |
+| F4 | `npm run refs:probe -- <url…>` mide cualquier web; `npm run refs:probe -- --guides <base>` mide las 8 guías y las compara con §2 (11 reglas). Resultado: **8/8 guías dentro de rango** | `scripts/probe-refs.mts`, salida en `.refs/` (ignorada) |
+
+**Revisado con Playwright** (escritorio 1440 y móvil 390): las 8 composiciones y los 10 relatos, más el laboratorio con cambio de guía y comparador. Sin errores de consola y sin scroll horizontal.
+
+**Fallos encontrados y corregidos al revisar:**
+- **Las páginas sueltas no se desplazaban.** La raíz del sitio tiene `overflow: hidden` (`app/globals.css`) y cada zona abre el scroll con su regla (`html:has(.tr)`, `html.scrollable`). `/guias/ver` y `/guias/relato` usan `html:has(.gx-page)`.
+- **Botón de la isla sin texto.** `.gx-head a { color: inherit }` ganaba en especificidad a `.ui-g-btn`; la regla excluye ahora los botones (la misma trampa que la [`07`](./07-formulas-webs-top.md) §3).
+- **Chips fuera de la pantalla en móvil.** El bloque de código ensanchaba la columna del grid: `minmax(0, 1fr)` (guía §10).
+- **El sondeo y tsx.** Las funciones que Playwright serializa llevan el `__name()` de esbuild; el script lo define en la página con `addInitScript`.
+- **Titulares mal medidos.** El titular se mide en el primer pantallazo (no la marca del pie), el texto por la moda de los párrafos de hasta 24 px y el margen como el menor desplazamiento que se repite.
+
+**Pendiente:**
+- **F5:** `NavBar layout="split3"`, cinta con ventana de imagen como pieza del kit, `HoldButton`, `BeforeAfter` definitivo (hoy hay una versión mínima en `components/site/guias/parts.tsx`) y calidad por GPU.
+- **F6:** las demos Clínica, Lodge y Escáner sobre sus guías.
+- **Composiciones y relatos en el kit.** Hoy viven en `components/site/guias/` y se copian con el código del laboratorio; pasarlas al kit si se repiten en proyectos.

@@ -226,7 +226,8 @@
         "project-list",
         "big-footer",
         "crossfade-hero",
-        "feature-explorer"
+        "feature-explorer",
+        "guide-frame"
       ]
     },
     {
@@ -12955,6 +12956,57 @@
       ],
       "example": "import FeatureExplorer from \"@/components/ui/FeatureExplorer\";\n\n<FeatureExplorer />",
       "preview": "/componentes#feature-explorer"
+    },
+    {
+      "id": "guide-frame",
+      "name": "Guía de estilo (sistema completo de una web premiada)",
+      "component": "GuideFrame",
+      "import": "import GuideFrame from \"@/components/ui/GuideFrame\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "retro"
+      ],
+      "description": "Aplica una de las ocho guías de estilo (lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Compara guías, portadas y relatos en /guias.",
+      "props": [
+        {
+          "key": "guide",
+          "type": "select",
+          "default": "lujo",
+          "label": "Guía",
+          "options": [
+            "lujo",
+            "monocromo",
+            "tecnico",
+            "nocturno",
+            "electrico",
+            "rotulo",
+            "calido",
+            "ludico"
+          ]
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Luz que llega lejos",
+          "label": "Titular"
+        },
+        {
+          "key": "lead",
+          "type": "text",
+          "default": "Diseñamos lámparas y espacios que aprovechan la luz del día.",
+          "label": "Entradilla"
+        }
+      ],
+      "notes": [
+        "Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).",
+        "Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).",
+        "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest."
+      ],
+      "example": "import GuideFrame from \"@/components/ui/GuideFrame\";\n\n<GuideFrame\n  title=\"Luz que llega lejos\"\n/>",
+      "preview": "/componentes#guide-frame"
     }
   ],
   "landings": [

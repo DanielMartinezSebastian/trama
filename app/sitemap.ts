@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url("/", 1),
     url("/componentes", 0.9),
     url("/demos", 0.8),
+    url("/guias", 0.8),
     url("/creditos", 0.2),
     ...DOC_PAGES.map((p) => url(docHref(p.slug), p.slug === "empezar" ? 0.9 : 0.7)),
     ...demos.map((d) => url(`/demo/${d.slug}`, d.family === "landing" ? 0.6 : 0.4)),

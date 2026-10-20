@@ -2131,6 +2131,20 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 - Una ventaja por línea: «Título|Texto|imagen|texto alternativo» (imagen: URL, ruta o gen:N).
 - En móvil la imagen va encima de la lista.
 
+### Guía de estilo (sistema completo de una web premiada) — `GuideFrame`
+
+Aplica una de las ocho guías de estilo (lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Compara guías, portadas y relatos en /guias.
+
+| prop | tipo | default |
+|---|---|---|
+| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` | "lujo" |
+| `title` | text | "Luz que llega lejos" |
+| `lead` | text | "Diseñamos lámparas y espacios que aprovechan la luz del día." |
+
+- Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
+- Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).
+- Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest.
+
 ## Contenido (`contenido`)
 
 Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.

@@ -1,0 +1,181 @@
+/*
+ * Guías de estilo (lib/ui/guides.ts, docs/16): clases que leen las variables --g-* que publica guideToStyle() / GuideFrame.
+ * Son utilidades, no componentes: titulares en dos escalones (marca y titular), texto con su medida, etiquetas, botón, rejilla
+ * de N columnas con el margen lateral medido, aire entre secciones y una entrada escalonada con la curva y el stagger de la guía.
+ * Valores por defecto razonables por si se usan fuera de una guía.
+ */
+
+.ui-guide {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--g-font-body, inherit);
+  font-size: var(--g-fs-body, 1rem);
+  line-height: var(--g-lh-body, 1.4);
+  min-width: 0;
+}
+
+.ui-g-wrap {
+  padding-inline: var(--g-margin, 16px);
+}
+
+.ui-g-section {
+  padding-block: var(--g-section, 120px);
+}
+
+.ui-g-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--g-cols, 12), minmax(0, 1fr));
+  column-gap: var(--g-gutter, 16px);
+  row-gap: var(--g-gutter, 16px);
+  min-width: 0;
+}
+
+.ui-g-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .ui-g-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ui-g-brand,
+.ui-g-h1,
+.ui-g-h2 {
+  margin: 0;
+  font-family: var(--g-font-display, inherit);
+  font-weight: var(--g-fw-display, 500);
+  line-height: var(--g-lh-display, 1);
+  letter-spacing: var(--g-ls-display, -0.02em);
+  text-transform: var(--g-tt-display, none);
+  text-wrap: balance;
+}
+
+.ui-g-brand {
+  font-size: var(--g-fs-brand, 14vw);
+  white-space: nowrap;
+}
+
+.ui-g-h1 {
+  font-size: var(--g-fs-h1, 6vw);
+}
+
+.ui-g-h2 {
+  font-size: var(--g-fs-h2, 3.5vw);
+  line-height: max(var(--g-lh-display, 1), 1);
+}
+
+.ui-g-h1 em,
+.ui-g-h2 em,
+.ui-g-brand em {
+  font-family: var(--font-accent, inherit);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.ui-g-body {
+  margin: 0;
+  max-width: var(--g-measure, 30em);
+  text-wrap: pretty;
+}
+
+.ui-g-muted {
+  color: var(--mut);
+}
+
+.ui-g-label {
+  margin: 0;
+  font-size: var(--g-fs-label, 0.75rem);
+  text-transform: var(--g-tt-label, uppercase);
+  letter-spacing: var(--g-ls-label, 0.04em);
+  line-height: 1.2;
+}
+
+.ui-g-mono {
+  font-family: var(--g-font-mono, ui-monospace, monospace);
+  font-size: var(--g-fs-label, 0.75rem);
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.ui-g-header {
+  min-height: var(--g-header, 56px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--g-gutter, 16px);
+  padding-inline: var(--g-margin, 16px);
+}
+
+.ui-g-line {
+  border-top: 1px solid var(--ln);
+}
+
+.ui-g-card {
+  background: var(--card);
+  border-radius: var(--g-radius, 0);
+  box-shadow: var(--g-shadow, none);
+}
+
+.ui-g-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.4em;
+  border: 1px solid var(--fg);
+  border-radius: var(--g-radius-btn, 0);
+  background: var(--fg);
+  color: var(--bg);
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--g-shadow, none);
+  transition:
+    background-color var(--g-dur-fast, 0.3s) var(--g-ease, ease),
+    color var(--g-dur-fast, 0.3s) var(--g-ease, ease),
+    transform var(--g-dur-fast, 0.3s) var(--g-ease, ease);
+}
+
+.ui-g-btn:hover {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: var(--bg);
+}
+
+.ui-g-btn--ghost {
+  background: transparent;
+  color: var(--fg);
+}
+
+.ui-g-btn:focus-visible,
+.ui-guide a:focus-visible,
+.ui-guide button:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+
+/* Entrada escalonada con la curva y el stagger de la guía: cada hijo directo lleva --i (0, 1, 2…). */
+.ui-g-rise > * {
+  animation: ui-g-rise var(--g-dur-reveal, 1s) var(--g-ease-reveal, ease) both;
+  animation-delay: calc(var(--i, 0) * var(--g-stagger, 0.06s) * 2);
+}
+
+@keyframes ui-g-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-g-rise > * {
+    animation: none;
+  }
+  .ui-g-btn {
+    transition: none;
+  }
+}
