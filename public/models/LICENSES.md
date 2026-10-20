@@ -1,4 +1,4 @@
-# Modelos de ejemplo de `RetroModel`
+# Modelos de ejemplo
 
 | Archivo | Origen | Licencia |
 |---|---|---|
@@ -8,3 +8,15 @@
 
 `suzanne.glb` y `farol.glb` están aligerados con `scripts/strip-gltf.mts`: solo geometría, sin texturas ni UV (tras el
 filtro retro no se verían). CC0 no exige atribución; se cita igualmente.
+
+## Maquetas de `ExplorableCanvas model`
+
+| Carpeta | Origen | Licencia |
+|---|---|---|
+| `clinica/` | BSI (2020) «Medical-Dental Test Files», buildingSMART International: [Community-Sample-Test-Files](https://github.com/buildingsmart-community/Community-Sample-Test-Files/tree/main/IFC%202.3.0.1%20(IFC%202x3)/Medical-Dental%20Clinic) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| `eixample/` | © colaboradores de [OpenStreetMap](https://www.openstreetmap.org/copyright) (alturas del Catastro), zona del Eixample de Barcelona | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/) |
+
+Cambios en `clinica/`: se juntaron los modelos de arquitectura, estructura y climatización; pilares, vigas, conductos y
+ventanas pasan a cajas orientadas; fuera mobiliario, puertas, falsos techos y cimentación; GLB por capas y planta baja en
+SVG (`scripts/maqueta/ifc_to_glb.py`). `eixample/` sale de `scripts/maqueta/osm_to_glb.py`. Donde se vea el mapa del
+Eixample hay que citar «© OpenStreetMap».

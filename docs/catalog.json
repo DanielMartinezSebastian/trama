@@ -12327,7 +12327,8 @@
       ],
       "notes": [
         "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
-        "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
+        "La maqueta puede ser un modelo real (`model`: GLB por capas). `scripts/maqueta/` convierte un IFC (`ifc_to_glb.py`, la clínica de /sitios/plano) o un barrio de OpenStreetMap (`osm_to_glb.py`, el Eixample de este ejemplo) con su planta en SVG para el tablero y la vista 2D. Los datos de OpenStreetMap piden la atribución a la vista (ODbL).",
+        "También acepta volúmenes generados (`blocks`); `lib/sites/maqueta.ts` trae `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
         "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.",
         "Cada parada de `path` puede separar las capas (`explode`, con `MapBlock.layer`), dejar una sólida y el resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). Con captions={false} y onStop la web pinta sus propios capítulos: ver la portada de /sitios/plano.",
         "`MapBlock.z` levanta un volumen del tablero (vigas, conductos) y mat=\"wire\" lo dibuja solo en aristas."
@@ -14754,7 +14755,7 @@
       "title": "Plano · revisión de modelos de edificación",
       "url": "/sitios/plano",
       "dir": "components/sites/plano",
-      "description": "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos, un único acento naranja sobre blanco y negro y la maqueta 3D del modelo con sus incidencias. En «Recorrido», un relato 3D: la foto se disuelve en la planta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos y la cámara visita cada incidencia como una sala con su ficha. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable, ExplorableCanvas (despiece, barrido, foco y fondo por parada), PinnedSection, ScrubText, FitText, ImageReveal y GridBackground (grano).",
+      "description": "Web de producto técnico con la fórmula «plano»: marco de línea fina con regla de marcas y cruces de registro, navegación en celdas, etiquetas mono en mayúsculas, titulares gruesos y apretados, rejillas de celdas con divisores discontinuos, un único acento naranja sobre blanco y negro y la maqueta 3D de un edificio real (la clínica de muestra de buildingSMART, convertida de IFC) con cuatro incidencias medidas en su modelo. En «Recorrido», un relato 3D: la foto se disuelve en la planta, un barrido de luz encuentra las incidencias, el edificio se separa por capas en cuatro pasos y la cámara visita cada incidencia como una sala con su ficha. Usa BlueprintFrame, CellGrid, EdgeTab, MetaTable, ExplorableCanvas (despiece, barrido, foco y fondo por parada), PinnedSection, ScrubText, FitText, ImageReveal y GridBackground (grano).",
       "pages": [
         {
           "path": "/sitios/plano",
@@ -14778,11 +14779,11 @@
         },
         {
           "path": "/sitios/plano/incidencias/c3",
-          "title": "Incidencia: Paso de puerta"
+          "title": "Incidencia: Escalera"
         },
         {
           "path": "/sitios/plano/incidencias/c4",
-          "title": "Incidencia: Escalera"
+          "title": "Incidencia: Nomenclatura"
         }
       ],
       "components": [

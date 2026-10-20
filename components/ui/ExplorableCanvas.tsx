@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import type { CameraStop, MapBlock, MapDim } from "@/lib/map3d/scene";
+import type { CameraStop, MapBlock, MapDim, MapModel } from "@/lib/map3d/scene";
 import { clamp01, trackScroll } from "@/lib/motion/progress";
 import { attachDragPan, type DragPan } from "@/lib/ui/dragPan";
 import { GLBoundary, useGLGate } from "@/lib/ui/gl";
@@ -9,7 +9,7 @@ import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import OptionPicker from "./OptionPicker";
 
-export type { CameraStop, MapBlock, MapDim };
+export type { CameraStop, MapBlock, MapDim, MapModel };
 
 // three y react-three-fiber solo se descargan con depth="3d", cuando el equipo puede y el mapa está cerca de la pantalla
 const Map3DScene = lazy(() => import("@/lib/map3d/scene"));
@@ -27,6 +27,8 @@ export type MapMarker = {
   href?: string;
   /** color del punto (CSS); por defecto el acento */
   color?: string;
+  /** con 3D: altura del punto sobre el tablero, en px del mundo (una incidencia en una planta alta) */
+  z?: number;
 };
 
 export type ExplorableCanvasProps = {
@@ -45,6 +47,10 @@ export type ExplorableCanvasProps = {
   depth?: "flat" | "3d";
   /** volúmenes de la maqueta (y, en 2D, sus huellas en planta si no hay `background`) */
   blocks?: MapBlock[];
+  /** con 3D: maqueta a partir de un modelo real (GLB por capas: un IFC o OpenStreetMap convertidos con `scripts/maqueta/`).
+   * Con `plan`, el tablero dibuja su planta debajo y esa planta es la vista 2D (mientras carga, sin WebGL o con
+   * movimiento reducido); `hide` quita capas (la cubierta, para ver dentro) */
+  model?: MapModel;
   /** con 3D: inclinación de la cámara respecto a la vertical (grados; 0 = cenital) */
   tilt?: number;
   /** con 3D: la cámara empieza cenital (el plano) y se levanta mientras los volúmenes crecen (la maqueta) */
@@ -86,13 +92,25 @@ const cssColor = (c: string | undefined, fallback: string) => {
 };
 
 /** Huellas en planta de los volúmenes: el fondo 2D cuando hay `blocks` y no hay `background` (y la reserva del 3D) */
-function Footprints({ blocks, dims = [] }: { blocks: MapBlock[]; dims?: MapDim[] }) {
+function Footprints({ blocks, model, world, dims = [] }: { blocks: MapBlock[]; model?: MapModel; world: { w: number; h: number }; dims?: MapDim[] }) {
+  const plan = model?.plan;
+  const pw = plan ? plan.w * model.scale : 0, ph = plan ? plan.h * model.scale : 0;
   return (
     <svg className="ui-xcan__plan" width="100%" height="100%" aria-hidden>
       <defs>
         <pattern id="ui-xcan-grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="currentColor" strokeOpacity=".12" /></pattern>
       </defs>
       <rect width="100%" height="100%" fill="url(#ui-xcan-grid)" />
+      {plan && (
+        <image
+          href={plan.src}
+          x={((model.x ?? 50) / 100) * world.w - pw / 2}
+          y={((model.y ?? 50) / 100) * world.h - ph / 2}
+          width={pw}
+          height={ph}
+          transform={model.rot ? `rotate(${model.rot} ${((model.x ?? 50) / 100) * world.w} ${((model.y ?? 50) / 100) * world.h})` : undefined}
+        />
+      )}
       {blocks.map((b, i) =>
         b.shape && b.shape !== "box" ? (
           <ellipse key={i} cx={`${b.x}%`} cy={`${b.y}%`} rx={`${b.w / 2}%`} ry={`${b.d / 2}%`} />
@@ -125,7 +143,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  *
  * Con `nav="scroll"` dentro de un `PinnedSection` no se arrastra: el scroll lleva la cámara por las paradas de `path` (de la
  * planta cenital a la maqueta y de un detalle a otro, como Oryzo, Primland o las salas de Cartier) y cada parada enseña su
- * texto. `dims` dibuja cotas sobre el tablero, como anotaciones de CAD. Cada parada puede además separar la maqueta por capas
+ * texto. Con `model` la maqueta es un modelo real (GLB por capas, convertido de un IFC o de OpenStreetMap). `dims` dibuja cotas sobre el tablero, como anotaciones de CAD. Cada parada puede además separar la maqueta por capas
  * (`explode`, el despiece de Atlas), dejar una capa sólida y el resto en alambre (`focusLayer`), barrerla con un plano de luz que
  * descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). El componente publica `--stop` (parada
  * con decimales) y `--tour-p` (0–1) para que la web anime sus propios capítulos (`captions={false}` + `onStop`).
@@ -136,7 +154,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete) aunque se use en 2D: se importa por subruta,
  * `trama-ui/ExplorableCanvas`.
  */
-export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], tilt = 52, intro = true, paper = "#f3efe7", wood, groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", frame = true, className = "" }: ExplorableCanvasProps) {
+export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }, background, height = "78vh", listToggle = true, hint = "Arrastra para explorar · pulsa un punto", depth = "flat", blocks = [], model, tilt = 52, intro = true, paper = "#f3efe7", wood, groundImage, dims, nav = "drag", path, captions = true, onStop, explode, linkLabel = "Ver proyecto →", frame = true, className = "" }: ExplorableCanvasProps) {
   const box = useRef<HTMLDivElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
@@ -158,7 +176,7 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
     () => ({ paper: cssColor(paper, "#f3efe7"), bg: cssColor(tokens?.["--bg"], "#f3efe7"), line: cssColor(tokens?.["--fg"], "#222"), accent: cssColor(tokens?.["--acc"], "#ff5a36"), wood: wood ? cssColor(wood, "#d9b183") : undefined }),
     [paper, wood, tokens],
   );
-  const pts = useMemo(() => markers.map((m) => ({ id: m.id, x: m.x, y: m.y })), [markers]);
+  const pts = useMemo(() => markers.map((m) => ({ id: m.id, x: m.x, y: m.y, z: m.z })), [markers]);
   // three no entiende cualquier color CSS: los fondos de las paradas se normalizan aquí
   const route = useMemo(() => path?.map((s) => (s.bg ? { ...s, bg: cssColor(s.bg, colors.bg) } : s)), [path, colors.bg]);
   const stopCb = useRef(onStop);
@@ -287,13 +305,13 @@ export default function ExplorableCanvas({ markers, world = { w: 2600, h: 1700 }
             <div className={`ui-xcan__gl ${three ? "is-on" : ""}`} aria-hidden>
               <GLBoundary onError={gl.fail}>
                 <Suspense fallback={null}>
-                  <Map3DScene world={world} blocks={blocks} markers={pts} pan={panPos} markerEls={markerEls} pointer={pointer} colors={colors} groundImage={groundImage} dims={dims} path={tour ? route : undefined} progress={tour ? progress : undefined} tilt={tilt} explode={explode} intro={intro} active={gl.near} onReady={() => setReady3d(true)} />
+                  <Map3DScene world={world} blocks={blocks} model={model} markers={pts} pan={panPos} markerEls={markerEls} pointer={pointer} colors={colors} groundImage={groundImage} dims={dims} path={tour ? route : undefined} progress={tour ? progress : undefined} tilt={tilt} explode={explode} intro={intro} active={gl.near} onReady={() => setReady3d(true)} />
                 </Suspense>
               </GLBoundary>
             </div>
           )}
           <div ref={layer} className="ui-xcan__world" style={{ width: world.w, height: world.h }}>
-            <div className="ui-xcan__bg">{background ?? (blocks.length > 0 && <Footprints blocks={blocks} dims={dims} />)}</div>
+            <div className="ui-xcan__bg">{background ?? ((blocks.length > 0 || model?.plan) && <Footprints blocks={blocks} model={model} world={world} dims={dims} />)}</div>
             {markers.map((m) => (
               <button
                 key={m.id}

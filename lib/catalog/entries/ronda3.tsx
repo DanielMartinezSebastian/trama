@@ -1,9 +1,8 @@
 "use client";
 
 import CookieBanner from "@/components/ui/CookieBanner";
-import ExplorableCanvas from "@/components/ui/ExplorableCanvas";
+import ExplorableCanvas, { type MapModel } from "@/components/ui/ExplorableCanvas";
 import StickerCollage from "@/components/ui/StickerCollage";
-import { city } from "@/lib/sites/maqueta";
 import { photo } from "@/lib/sites/photos";
 import { sticker } from "@/lib/sites/stickers";
 import type { CatalogEntry } from "../schema";
@@ -16,26 +15,23 @@ const Boxed = ({ h, children }: { h: number; children: React.ReactNode }) => (
   <div style={{ position: "relative", width: "100%", height: h, transform: "translateZ(0)", overflow: "hidden", border: "1px dashed var(--ln)" }}>{children}</div>
 );
 
+// la maqueta del catálogo: un trozo real del Eixample de Barcelona (1083 × 708 m a 1,6 px/m: un mundo de 1733 × 1133 px, girado para que las calles queden en
+// horizontal) sacado de OpenStreetMap con las plantas del Catastro (`scripts/maqueta/osm_to_glb.py`). Cada punto está
+// sobre un edificio real, marcado con el acento; `z` es su altura (m × px por metro)
+const PX_M = 1.6;
+const EIXAMPLE: MapModel = { src: "/models/eixample/modelo.glb", scale: PX_M, plan: { src: "/models/eixample/plan.svg", w: 1083, h: 708 } };
 const MARKERS = [
-  { id: "a", x: 22, y: 30, title: "Eco", meta: "Identidad sonora", text: "Una marca de té que suena a tazas y a lluvia.", image: photo("naturaleza", 3).src },
-  { id: "b", x: 48, y: 58, title: "Faro", meta: "Podcast", text: "Doce episodios sobre arquitectura costera.", image: photo("arquitectura", 4).src },
-  { id: "c", x: 74, y: 34, title: "Ola", meta: "Campaña", text: "Un lanzamiento de un solo día, en directo.", image: photo("eventos", 4).src },
-  { id: "d", x: 62, y: 80, title: "Nodo", meta: "Sonido de producto", text: "Los avisos de una app de logística.", image: photo("estudio", 1).src },
+  { id: "a", x: 18.28, y: 32.5, z: 15.5 * PX_M, title: "Eco", meta: "Identidad sonora", text: "Una marca de té que suena a tazas y a lluvia.", image: photo("naturaleza", 3).src },
+  { id: "b", x: 38.94, y: 79.38, z: 18.6 * PX_M, title: "Faro", meta: "Podcast", text: "Doce episodios sobre arquitectura costera.", image: photo("arquitectura", 4).src },
+  { id: "c", x: 50.81, y: 14.08, z: 15.5 * PX_M, title: "Ola", meta: "Campaña", text: "Un lanzamiento de un solo día, en directo.", image: photo("eventos", 4).src },
+  { id: "d", x: 91.88, y: 62.3, z: 15.5 * PX_M, title: "Nodo", meta: "Sonido de producto", text: "Los avisos de una app de logística.", image: photo("estudio", 1).src },
 ];
 
-// la maqueta del catálogo: un barrio de cartón con una plaza en cada punto (mundo de 2600 × 1700)
-const CITY = city({ seed: 3, plazas: MARKERS, aspect: 1700 / 2600, cell: 7, maxH: 150 });
-// el mismo barrio repartido en tres capas para enseñar el despiece (`explode`): árboles en la base, el resto alternando
-const CITY_LAYERS = CITY.map((b, i) => ({ ...b, layer: b.shape === "tree" ? 0 : (i % 3) + 1 }));
-
-const Rings = () => (
-  <svg width="100%" height="100%" aria-hidden style={{ position: "absolute", inset: 0 }}>
-    <defs>
-      <pattern id="ui-cat-dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="currentColor" opacity=".28" /></pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#ui-cat-dots)" style={{ color: "var(--mut)" }} />
-    {MARKERS.map((m) => [90, 170, 260, 360].map((r) => <circle key={m.id + r} cx={`${m.x}%`} cy={`${m.y}%`} r={r} fill="none" stroke="currentColor" strokeOpacity=".18" style={{ color: "var(--fg)" }} />))}
-  </svg>
+/** atribución de los datos del mapa (ODbL): siempre a la vista sobre el lienzo */
+const OsmCredit = () => (
+  <a href="https://www.openstreetmap.org/copyright" style={{ position: "absolute", right: 10, bottom: 8, zIndex: 3, fontSize: 11, color: "var(--mut)", background: "color-mix(in srgb, var(--bg) 80%, transparent)", padding: "1px 6px", borderRadius: 4 }}>
+    © OpenStreetMap
+  </a>
 );
 
 export const ronda3: CatalogEntry[] = [
@@ -59,12 +55,18 @@ export const ronda3: CatalogEntry[] = [
     ],
     notes: [
       "depth=\"3d\" carga three solo si el equipo puede y el mapa está en pantalla; mientras tanto (y con movimiento reducido) se ve el plano 2D con las huellas de los volúmenes.",
-      "Los volúmenes son datos (`blocks`); `lib/sites/maqueta.ts` trae dos generadores para las demos: `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
+      "La maqueta puede ser un modelo real (`model`: GLB por capas). `scripts/maqueta/` convierte un IFC (`ifc_to_glb.py`, la clínica de /sitios/plano) o un barrio de OpenStreetMap (`osm_to_glb.py`, el Eixample de este ejemplo) con su planta en SVG para el tablero y la vista 2D. Los datos de OpenStreetMap piden la atribución a la vista (ODbL).",
+      "También acepta volúmenes generados (`blocks`); `lib/sites/maqueta.ts` trae `city()` (manzanas con plazas) y `walls()` (muros a partir de un plano).",
       "nav=\"scroll\" necesita un PinnedSection alrededor: ver la portada de la demo Alzado.",
       "Cada parada de `path` puede separar las capas (`explode`, con `MapBlock.layer`), dejar una sólida y el resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), resaltar un punto (`focus`) y cambiar el fondo (`bg`). Con captions={false} y onStop la web pinta sus propios capítulos: ver la portada de /sitios/plano.",
       "`MapBlock.z` levanta un volumen del tablero (vigas, conductos) y mat=\"wire\" lo dibuja solo en aristas.",
     ],
-    render: (p) => <ExplorableCanvas key={`${p.depth}${p.intro}`} markers={MARKERS.map((m) => ({ ...m, href: "#" }))} background={p.depth === "3d" ? undefined : <Rings />} blocks={CITY_LAYERS} depth={p.depth as never} tilt={p.tilt as number} intro={p.intro as boolean} explode={p.explode as number} frame={p.frame as boolean} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />,
+    render: (p) => (
+      <div style={{ position: "relative" }}>
+        <ExplorableCanvas key={`${p.depth}${p.intro}`} markers={MARKERS.map((m) => ({ ...m, href: "#" }))} model={EIXAMPLE} world={{ w: 1733, h: 1133 }} depth={p.depth as never} tilt={p.tilt as number} intro={p.intro as boolean} explode={p.explode as number} frame={p.frame as boolean} height="480px" listToggle={p.listToggle as boolean} hint={p.hint as string} />
+        <OsmCredit />
+      </div>
+    ),
   },
   {
     id: "sticker-collage",

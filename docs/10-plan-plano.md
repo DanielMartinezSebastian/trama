@@ -109,7 +109,7 @@ Lo específico de Cota (la maqueta por capas, los textos, la ficha) vive en `com
 
 ## Fuera de este plan
 
-- Modelos GLB reales (Cartier y Atlas los usan); aquí la maqueta sigue siendo de bloques generados.
+- ~~Modelos GLB reales~~: hecho el 20-10-2026, ver «Modelo real» al final.
 - Sonido (Cartier y Sleep Well lo tienen; en un producto B2B no aporta).
 - Posprocesado tipo Cartier (bloom, profundidad de campo): sigue pendiente de la ronda 4.
 
@@ -151,3 +151,25 @@ Daniel prefiere la maquetación original de la portada. Cambios:
   (madera en gris cálido). Las fotos del recorrido y de las fichas van en blanco y negro.
 - **Sin marco** (`ExplorableCanvas frame={false}`): la maqueta de la portada y la del producto no tienen caja; la escena
   se desvanece hacia la página por los bordes. También el mapa de obras de Alzado.
+
+## Modelo real (20-10-2026)
+
+La maqueta inventada (muros y pilares generados) se cambió por un **edificio real**: la clínica «Medical-Dental Clinic»
+que buildingSMART publica en IFC (CC BY 4.0), con modelos de arquitectura, estructura y climatización por separado.
+
+- **Conversión**: `scripts/maqueta/ifc_to_glb.py` (IfcOpenShell) junta los tres IFC en `public/models/clinica/modelo.glb`
+  (1,1 MB, 80.700 triángulos) y `plan.svg` (planta baja). Muros, forjados, cubiertas y escaleras con su geometría real;
+  pilares, vigas, conductos y ventanas como cajas orientadas (listones de balsa y tiras de metacrilato); fuera mobiliario,
+  puertas, falsos techos y cimentación. Capas: base, estructura, instalaciones, muros y cubierta (con sus viguetas).
+- **Kit**: `ExplorableCanvas model` (`MapModel`: `src`, `scale`, `x`, `y`, `rot`, `hide`, `plan`) y `MapMarker.z`. El
+  GLB usa los mismos materiales, aristas, crecimiento, despiece, alambre y barrido que los bloques; las piezas aplastadas
+  no se pintan, así que la parada cenital enseña la planta dibujada en el tablero.
+- **Incidencias medidas en el IFC** (no inventadas): el conducto 500 × 350 que atraviesa tres vigas W460X60 del forjado
+  de planta 1; el tramo de conducto que deja 2,21 m libres en el laboratorio 2C17; las escaleras con contrahuella de
+  17,58 cm (4,57 m en 26 peldaños) frente a los 17,5 del CTE en uso público; y la planta de cubierta con dos nombres
+  («Roof - Main» y «Roof - Mech»). Cada parada de incidencia deja sólida su capa y el resto en alambre.
+- La portada usa `MODEL_OPEN` (sin cubierta) para que se vean las salas de la planta 1. Créditos en el pie, en
+  `/creditos` y en `public/models/LICENSES.md`.
+
+El catálogo de `ExplorableCanvas` usa ahora un trozo real del Eixample de Barcelona (OpenStreetMap con plantas del
+Catastro, `scripts/maqueta/osm_to_glb.py`), con «© OpenStreetMap» a la vista.

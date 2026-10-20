@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import {
   BoxGeometry,
   CanvasTexture,
@@ -22,6 +22,7 @@ import {
   type BufferGeometry,
   type Material,
 } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 /**
  * Maqueta 3D para `ExplorableCanvas depth="3d"`: el mundo del lienzo (en px) pasa a ser un tablero de papel con volúmenes
@@ -36,6 +37,10 @@ import {
  * Cada parada puede además separar la maqueta por capas (`explode`, el despiece de Atlas), dejar sólida una sola capa y el
  * resto en alambre (`focusLayer`), barrer la maqueta con un plano de luz que descubre los puntos (`scan`), encuadrar un punto
  * y atenuar los demás (`focus`, las salas de Cartier) y cambiar el color del fondo (`bg`).
+ *
+ * Con `model` la maqueta sale de un modelo real (GLB, p. ej. convertido de un IFC o de OpenStreetMap con
+ * `scripts/maqueta/`): cada nodo lleva en `extras` su capa y su material, y se pinta con los mismos materiales, aristas,
+ * crecimiento y despiece que los bloques.
  */
 
 export type MapBlock = {
@@ -56,6 +61,24 @@ export type MapBlock = {
   mat?: "paper" | "accent" | "acrylic" | "wood" | "wire";
   /** capa del despiece (0 = la base): las paradas con `explode` separan las capas en vertical */
   layer?: number;
+};
+
+/** Modelo real para la maqueta: un GLB cuyos nodos llevan `extras: { layer?: number, mat?: MapBlock["mat"] }` */
+export type MapModel = {
+  /** URL del GLB (mismo origen o con CORS) */
+  src: string;
+  /** px del mundo por unidad del modelo (con un modelo en metros: px por metro) */
+  scale: number;
+  /** dónde cae el origen del modelo, en % del mundo (por defecto, el centro) */
+  x?: number;
+  y?: number;
+  /** giro en planta, en grados */
+  rot?: number;
+  /** capas del modelo que no se pintan (p. ej. la cubierta, para ver dentro) */
+  hide?: number[];
+  /** planta del modelo (imagen centrada en su origen; `w` × `h` en unidades del modelo): el tablero la dibuja debajo y
+   * es la vista 2D mientras carga o sin WebGL */
+  plan?: { src: string; w: number; h: number };
 };
 
 export type Map3DColors = { paper: string; bg: string; line: string; accent: string; wood?: string };
@@ -91,7 +114,10 @@ export type MapDim = { x1: number; y1: number; x2: number; y2: number; label: st
 export type Map3DSceneProps = {
   world: { w: number; h: number };
   blocks: MapBlock[];
-  markers: { id: string; x: number; y: number }[];
+  /** modelo real (GLB) que se suma a los bloques */
+  model?: MapModel;
+  /** puntos; `z` = altura sobre el tablero en px del mundo (una incidencia en planta 1) */
+  markers: { id: string; x: number; y: number; z?: number }[];
   /** traslación del mundo que calcula el arrastre (px, como en la vista plana) */
   pan: MutableRefObject<{ x: number; y: number }>;
   /** botones de los puntos, por id */
@@ -173,10 +199,14 @@ type Fx = {
   layers: Map<number, { mats: Material[]; edge: LineBasicMaterial; meshes: Mesh[] }>;
   /** aristas de los bloques en alambre */
   wire: LineBasicMaterial | null;
+  /** la lámina del barrido (se estira hasta lo más alto de la maqueta) */
+  blade: Mesh | null;
+  /** altura de la maqueta, en unidades de three */
+  top: number;
 };
 
 /** El tablero: papel con cuadrícula fina, la huella de cada volumen dibujada a lápiz y, si hay, una imagen encima. */
-function Ground({ world, blocks, colors, groundImage, dims = [], tex, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors" | "groundImage" | "dims"> & { tex: CanvasTexture; fx: MutableRefObject<Fx> }) {
+function Ground({ world, blocks, model, colors, groundImage, dims = [], tex, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "model" | "colors" | "groundImage" | "dims"> & { tex: CanvasTexture; fx: MutableRefObject<Fx> }) {
   const map = useMemo(() => {
     const k = 2048 / Math.max(world.w, world.h);
     const c = document.createElement("canvas");
@@ -255,6 +285,22 @@ function Ground({ world, blocks, colors, groundImage, dims = [], tex, fx }: Pick
     const t = new CanvasTexture(c);
     t.colorSpace = SRGBColorSpace;
     t.anisotropy = 8;
+    // la planta del modelo, a lápiz bajo la maqueta
+    const plan = model?.plan;
+    if (plan) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.save();
+        ctx.globalAlpha = 0.8;
+        ctx.translate((((model.x ?? 50) / 100) * world.w) * k, (((model.y ?? 50) / 100) * world.h) * k);
+        ctx.rotate(((model.rot ?? 0) * Math.PI) / 180);
+        const w = plan.w * model.scale * k, h = plan.h * model.scale * k;
+        ctx.drawImage(img, -w / 2, -h / 2, w, h);
+        ctx.restore();
+        t.needsUpdate = true;
+      };
+      img.src = plan.src;
+    }
     if (groundImage) {
       const img = new Image();
       img.onload = () => {
@@ -265,7 +311,7 @@ function Ground({ world, blocks, colors, groundImage, dims = [], tex, fx }: Pick
       img.src = groundImage;
     }
     return t;
-  }, [world.w, world.h, blocks, colors.paper, colors.line, colors.accent, groundImage, dims, tex]);
+  }, [world.w, world.h, blocks, model, colors.paper, colors.line, colors.accent, groundImage, dims, tex]);
   useEffect(() => () => map.dispose(), [map]);
 
   return (
@@ -291,7 +337,15 @@ function Ground({ world, blocks, colors, groundImage, dims = [], tex, fx }: Pick
 
 type Piece = { group: Group; delay: number; layer: number };
 
-function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors"> & { tex: ReturnType<typeof useTextures>; pieces: MutableRefObject<Piece[]>; fx: MutableRefObject<Fx> }) {
+type BlocksProps = Pick<Map3DSceneProps, "world" | "blocks" | "colors" | "model"> & { tex: ReturnType<typeof useTextures>; pieces: MutableRefObject<Piece[]>; fx: MutableRefObject<Fx>; nodes?: Group };
+
+/** Carga el GLB de `model` (la escena espera a tenerlo) y se lo pasa a `Blocks` */
+function ModelBlocks(props: BlocksProps & { model: MapModel }) {
+  const gltf = useLoader(GLTFLoader, props.model.src);
+  return <Blocks {...props} nodes={gltf.scene} />;
+}
+
+function Blocks({ world, blocks, colors, tex, pieces, fx, model, nodes }: BlocksProps) {
   const root = useRef<Group>(null);
   const built = useMemo(() => {
     // un juego de materiales por capa, para poder dejar una capa sólida y las demás en alambre
@@ -332,11 +386,41 @@ function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps
         if (p.edges) p.edgeGeo = new EdgesGeometry(p.geo, 25);
         geos.push(p.geo, ...(p.edgeGeo ? [p.edgeGeo] : []));
       });
-      return { x, z: y, rot: ((b.rot ?? 0) * Math.PI) / 180, parts, dist: Math.hypot(x, y), layer, edge: isWire ? wire : m.edge };
+      return { x, z: y, rot: ((b.rot ?? 0) * Math.PI) / 180, parts, dist: Math.hypot(x, y), layer, edge: isWire ? wire : m.edge, top: z + h };
     });
+    // el modelo real: cada nodo, con su capa y su material, es una pieza más, con la geometría ya en su sitio del mundo
+    if (model && nodes) {
+      const k = model.scale * U;
+      const ox = (((model.x ?? 50) / 100) * world.w - cx) * U, oz = (((model.y ?? 50) / 100) * world.h - cy) * U;
+      nodes.updateMatrixWorld(true);
+      nodes.traverse((o) => {
+        if (!(o instanceof Mesh)) return;
+        const layer = Number(o.userData.layer ?? 0);
+        if (model.hide?.includes(layer)) return;
+        const kind = (o.userData.mat ?? "paper") as NonNullable<MapBlock["mat"]>;
+        const m = of(layer);
+        const geo = (o.geometry as BufferGeometry).clone().applyMatrix4(o.matrixWorld);
+        geo.scale(k, k, k);
+        geo.rotateY((-(model.rot ?? 0) * Math.PI) / 180);
+        geo.translate(ox, 0, oz);
+        // caras planas: aristas vivas, como cartón cortado
+        const flat = geo.index ? geo.toNonIndexed() : geo;
+        if (flat !== geo) geo.dispose();
+        flat.computeVertexNormals();
+        flat.computeBoundingBox();
+        const bb = flat.boundingBox!;
+        const x = (bb.min.x + bb.max.x) / 2, z = (bb.min.z + bb.max.z) / 2;
+        flat.translate(-x, 0, -z);
+        const isWire = kind === "wire";
+        const edgeGeo = kind === "acrylic" ? undefined : new EdgesGeometry(flat, 25);
+        geos.push(flat, ...(edgeGeo ? [edgeGeo] : []));
+        items.push({ x, z, rot: 0, parts: [{ geo: flat, mat: isWire ? null : m[kind], y: 0, edges: !!edgeGeo, edgeGeo }], dist: Math.hypot(x, z), layer, edge: isWire ? wire : m.edge, top: bb.max.y });
+      });
+    }
     const far = Math.max(0.001, ...items.map((i) => i.dist));
-    return { sets, wire, geos, items, far };
-  }, [world.w, world.h, blocks, colors.paper, colors.accent, colors.line, colors.wood, tex]);
+    const top = Math.max(1.2, ...items.map((i) => i.top));
+    return { sets, wire, geos, items, far, top };
+  }, [world.w, world.h, blocks, model, nodes, colors.paper, colors.accent, colors.line, colors.wood, tex]);
 
   useEffect(
     () => () => {
@@ -361,6 +445,7 @@ function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps
     g.children.forEach((c, i) => c.traverse((o) => o instanceof Mesh && layers.get(built.items[i].layer)?.meshes.push(o)));
     fx.current.layers = layers;
     fx.current.wire = built.wire;
+    fx.current.top = built.top;
   }, [built, pieces, fx]);
 
   return (
@@ -380,8 +465,7 @@ function Blocks({ world, blocks, colors, tex, pieces, fx }: Pick<Map3DSceneProps
 }
 
 /** El plano de luz del barrido: una lámina del acento que recorre la maqueta de oeste a este, con su línea en el tablero */
-function Scan({ world, blocks, colors, fx }: Pick<Map3DSceneProps, "world" | "blocks" | "colors"> & { fx: MutableRefObject<Fx> }) {
-  const h = Math.max(120, ...blocks.map((b) => (b.z ?? 0) + b.h)) * 1.25 * U;
+function Scan({ world, colors, fx }: Pick<Map3DSceneProps, "world" | "colors"> & { fx: MutableRefObject<Fx> }) {
   return (
     <group
       ref={(g) => {
@@ -389,8 +473,13 @@ function Scan({ world, blocks, colors, fx }: Pick<Map3DSceneProps, "world" | "bl
       }}
       visible={false}
     >
-      <mesh position-y={h / 2}>
-        <boxGeometry args={[0.012, h, world.h * U]} />
+      {/* alto 1: el Rig la estira hasta lo más alto de la maqueta */}
+      <mesh
+        ref={(m) => {
+          fx.current.blade = m;
+        }}
+      >
+        <boxGeometry args={[0.012, 1, world.h * U]} />
         <meshBasicMaterial color={colors.accent} transparent opacity={0.22} depthWrite={false} />
       </mesh>
       <mesh position-y={0.006} rotation-x={-Math.PI / 2}>
@@ -493,6 +582,8 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
     // la maqueta crece desde el plano y, con el despiece, cada capa sube a su altura
     for (const p of pieces.current) {
       p.group.scale.y = Math.max(0.001, ease((k - p.delay) / 0.45));
+      // aplastada no se pinta: en la planta cenital del principio manda el dibujo del tablero
+      p.group.visible = p.group.scale.y > 0.004;
       p.group.position.y = p.layer * gap * U;
     }
 
@@ -521,6 +612,10 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
       fx.current.scan.visible = sweeping && u > 0.01 && u < 0.99;
       fx.current.scan.position.x = ((-0.04 + sweep * 1.08) * world.w - world.w / 2) * U;
     }
+    if (fx.current.blade) {
+      fx.current.blade.scale.y = fx.current.top * 1.25;
+      fx.current.blade.position.y = (fx.current.top * 1.25) / 2;
+    }
 
     // los botones del DOM se colocan sobre su punto del tablero
     const W = size.width, H = size.height;
@@ -528,7 +623,7 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
     for (const m of markers) {
       const el = markerEls.current.get(m.id);
       if (!el) continue;
-      v.set(((m.x / 100) * world.w - world.w / 2) * U, 0.04, ((m.y / 100) * world.h - world.h / 2) * U).project(camera);
+      v.set(((m.x / 100) * world.w - world.w / 2) * U, 0.04 + (m.z ?? 0) * U * k, ((m.y / 100) * world.h - world.h / 2) * U).project(camera);
       const hidden = v.z > 1 || Math.abs(v.x) > 1.2 || Math.abs(v.y) > 1.2;
       // con barrido, cada punto aparece cuando la lámina lo pasa
       const found = scanAt < 0 ? 1 : (m.x / 100 + 0.04) / 1.08 <= sweep ? 1 : 0;
@@ -550,7 +645,7 @@ function Rig({ world, markers, pan, markerEls, pointer, tilt, intro, colors, pat
 export default function Map3DScene(props: Map3DSceneProps) {
   const tex = useTextures();
   const pieces = useRef<Piece[]>([]);
-  const fx = useRef<Fx>({ table: null, scan: null, layers: new Map(), wire: null });
+  const fx = useRef<Fx>({ table: null, scan: null, layers: new Map(), wire: null, blade: null, top: 1.2 });
   useEffect(() => () => Object.values(tex).forEach((t) => t.dispose()), [tex]);
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   const span = Math.max(props.world.w, props.world.h) * U;
@@ -578,9 +673,13 @@ export default function Map3DScene(props: Map3DSceneProps) {
         shadow-camera-bottom={-span * 0.6}
         shadow-camera-far={span * 3}
       />
-      <Ground world={props.world} blocks={props.blocks} colors={props.colors} groundImage={props.groundImage} dims={props.dims} tex={tex.paper} fx={fx} />
-      <Blocks world={props.world} blocks={props.blocks} colors={props.colors} tex={tex} pieces={pieces} fx={fx} />
-      {props.path?.some((s) => s.scan) && <Scan world={props.world} blocks={props.blocks} colors={props.colors} fx={fx} />}
+      <Ground world={props.world} blocks={props.blocks} model={props.model} colors={props.colors} groundImage={props.groundImage} dims={props.dims} tex={tex.paper} fx={fx} />
+      {props.model ? (
+        <ModelBlocks world={props.world} blocks={props.blocks} model={props.model} colors={props.colors} tex={tex} pieces={pieces} fx={fx} />
+      ) : (
+        <Blocks world={props.world} blocks={props.blocks} colors={props.colors} tex={tex} pieces={pieces} fx={fx} />
+      )}
+      {props.path?.some((s) => s.scan) && <Scan world={props.world} colors={props.colors} fx={fx} />}
       <Rig {...props} pieces={pieces} fx={fx} />
     </Canvas>
   );

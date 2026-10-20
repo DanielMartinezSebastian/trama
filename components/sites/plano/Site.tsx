@@ -20,7 +20,7 @@ import { blueprintArt } from "@/lib/sites/art";
 import { blueprintTokens, FONT_PAIRINGS, tokensToStyle } from "@/lib/ui/tokens";
 import { lucide } from "@/lib/ui/icons-lucide";
 import { SiteFrame, siteHref } from "../shared";
-import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_WORLD, PROBLEMS, PROOF, SLUG, SPECS, TOUR } from "./data";
+import { CHAPTERS, CLIENTS, FEATURES, INTEGRATIONS, ISSUE_STOP, ISSUES, MODEL, MODEL_DIMS, MODEL_OPEN, MODEL_WORLD, PROBLEMS, PROOF, SLUG, SPECS, TOUR } from "./data";
 import "./plano.css";
 
 const PAIR = FONT_PAIRINGS.find((p) => p.id === "tecnico")!;
@@ -64,7 +64,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <main id="contenido">{children}</main>
           <footer className="pn-foot pn-mono">
             <span>© 2026 Cota · Software de revisión de modelos</span>
-            <span>Demo de Trama — producto ficticio · <a href="/creditos">Créditos de las imágenes</a></span>
+            <span>Demo de Trama — producto ficticio · modelo: «Medical-Dental Clinic», buildingSMART (CC BY 4.0) · <a href="/creditos">Créditos</a></span>
           </footer>
         </BlueprintFrame>
       </div>
@@ -172,12 +172,12 @@ function Tour() {
             depth="3d"
             nav="scroll"
             world={MODEL_WORLD}
-            blocks={MODEL}
+            model={MODEL}
             dims={MODEL_DIMS}
             path={TOUR}
             captions={false}
             onStop={setStop}
-            markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
+            markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, z: x.z, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
             linkLabel="Ver incidencia →"
             listToggle={false}
             paper={TONES.paper}
@@ -300,8 +300,8 @@ function Home() {
         <ExplorableCanvas
           depth="3d"
           world={MODEL_WORLD}
-          blocks={MODEL}
-          markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
+          model={MODEL_OPEN}
+          markers={ISSUES.map((x) => ({ id: x.id, x: x.x, y: x.y, z: x.z, title: x.title, meta: x.meta, text: x.text, href: href(`incidencias/${x.id}`), color: "var(--acc)" }))}
           linkLabel="Ver incidencia →"
           tilt={50}
           frame={false}
@@ -359,8 +359,8 @@ function Product() {
         <SplitText as="h1" by="lines" trigger="mount">Una revisión que no se olvida de nada.</SplitText>
       </section>
       <section className="pn-model" aria-label="Maqueta del modelo en despiece">
-        <p className="pn-mono">El modelo por capas · base, estructura, instalaciones y muros</p>
-        <ExplorableCanvas depth="3d" world={MODEL_WORLD} blocks={MODEL} explode={80} markers={[]} tilt={52} frame={false} paper={TONES.paper} wood={TONES.wood} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
+        <p className="pn-mono">El modelo por capas · base, estructura, instalaciones, muros y cubierta</p>
+        <ExplorableCanvas depth="3d" world={MODEL_WORLD} model={MODEL} explode={170} markers={[]} tilt={52} frame={false} paper={TONES.paper} wood={TONES.wood} listToggle={false} height="min(76vh, 680px)" hint="Arrastra el despiece" />
       </section>
       <section>
         <MetaTable rows={SPECS} columns={2} label="Ficha técnica de Cota" />
