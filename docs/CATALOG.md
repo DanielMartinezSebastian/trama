@@ -1457,10 +1457,13 @@ Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), 
 |---|---|---|
 | `mode` | `single` · `range` | "single" |
 | `months` | `1` · `2` | "1" |
+| `shortcuts` | number 0–6 | 0 |
+| `calendar` | `open` · `collapsed` | "open" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 - La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).
 - `min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación.
+- Para pedidos rápidos (recoger hoy o mañana): shortcuts={4} calendar="collapsed" — los próximos días disponibles como botones y el calendario solo si se pide (ver /sitios/almibar/pedido).
 
 ## Feedback (`feedback`)
 
@@ -2204,6 +2207,20 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 - Una ventaja por línea: «Título|Texto|imagen|texto alternativo» (imagen: URL, ruta o gen:N).
 - En móvil la imagen va encima de la lista.
 
+### Guía de estilo (sistema completo de una web premiada) — `GuideFrame`
+
+Aplica una de las ocho guías de estilo (lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Compara guías, portadas y relatos en /guias.
+
+| prop | tipo | default |
+|---|---|---|
+| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` | "lujo" |
+| `title` | text | "Luz que llega lejos" |
+| `lead` | text | "Diseñamos lámparas y espacios que aprovechan la luz del día." |
+
+- Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
+- Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).
+- Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest.
+
 ## Contenido (`contenido`)
 
 Texto largo con formato para documentación y blogs: prosa desde Markdown, avisos, índice de la página, cabecera de artículo y el artículo completo.
@@ -2715,19 +2732,19 @@ Carpeta: `components/sites/travesia/` · 9 páginas: Índice · Puntas negras ·
 
 ### Almíbar · pastelería de obrador — `/sitios/almibar`
 
-Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger con día y franja, tarta por encargo en pasos con precio y alérgenos en vivo (48 h de antelación, señal del 30 %), barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker, ActionBar, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, Stepper, TestimonialSection, FAQSection y CookieBanner.
+Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger y tarta por encargo en UNA página cada uno (tienda, día con atajos «Hoy · Mañana», hora, nombre y teléfono; pago al recoger; precio y alérgenos en vivo, 48 h de antelación, señal del 30 %), reseñas con resumen y slider, transición de página en barrido frambuesa, barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker (shortcuts), ActionBar, PageTransition, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, TestimonialSection, FAQSection y CookieBanner.
 
 Carpeta: `components/sites/almibar/` · 7 páginas: Inicio · Carta · Pedir para recoger · Tu pedido · Tartas por encargo · El obrador · Tiendas y horario
 
-`TextField` ×7 · `OptionPicker` ×4 · `OpeningHours` ×4 · `RadioGroup` ×3 · `Timeline` ×2 · `Stepper` ×2 · `ImageReveal` ×2 · `EmptyState` ×2 · `DatePicker` ×2 · `Reveal` · `CheckboxGroup` · `FAQSection` · `TestimonialSection` · `TeamSection` · `Modal` · `Toast` · `SplitText` · `QuantityStepper` · `FilterBar` · `CartDrawer` · `CookieBanner` · `GradientField` · `MenuList` · `ActionBar`
+`OptionPicker` ×5 · `TextField` ×4 · `OpeningHours` ×4 · `Timeline` ×2 · `ImageReveal` ×2 · `EmptyState` ×2 · `PageTransition` · `Reveal` · `CheckboxGroup` · `FAQSection` · `TestimonialSection` · `TeamSection` · `Modal` · `Toast` · `SplitText` · `QuantityStepper` · `FilterBar` · `CartDrawer` · `CookieBanner` · `GradientField` · `MenuList` · `DatePicker` · `ActionBar`
 
 ### Almíbar Taller · tartas a medida — `/sitios/almibar-taller`
 
-Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y una solicitud con señal del 30 %. Sin WebGL o con movimiento reducido, la misma tarta en SVG.
+Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y el encargo en la misma pantalla del diseñador (recogida con atajos de día, nombre y teléfono, señal del 30 %). Transiciones de página en iris y la tarta que viaja de la portada al diseñador. Sin WebGL o con movimiento reducido, la misma tarta en SVG.
 
-Carpeta: `components/sites/almibar-taller/` · 5 páginas: Inicio · Diseña tu tarta · Bodas · Empresas · Solicitud
+Carpeta: `components/sites/almibar-taller/` · 4 páginas: Inicio · Diseña tu tarta · Bodas · Empresas
 
-`TextField` ×8 · `OptionPicker` ×5 · `FAQSection` ×2 · `DatePicker` ×2 · `Timeline` · `Table` · `CheckboxGroup` · `TestimonialSection` · `Modal` · `SplitText` · `PinnedSection` · `EmptyState` · `ExpandingPanels` · `CookieBanner` · `GradientField` · `OpeningHours` · `ActionBar`
+`TextField` ×7 · `OptionPicker` ×5 · `FAQSection` ×2 · `DatePicker` ×2 · `PageTransition` · `Timeline` · `Table` · `CheckboxGroup` · `TestimonialSection` · `Modal` · `SplitText` · `PinnedSection` · `ExpandingPanels` · `CookieBanner` · `GradientField` · `OpeningHours` · `ActionBar`
 
 ### Almíbar · café de barrio en puntos — `/sitios/almibar-barrio`
 
@@ -2735,4 +2752,4 @@ Tercera versión de la pastelería Almíbar, fórmula «Café en puntos» (dot m
 
 Carpeta: `components/sites/almibar-barrio/` · 16 páginas: Inicio · Carta · Mesa 1 · Mesa 2 · Mesa 3 · Mesa 4 · Mesa 5 · Mesa 6 · Mesa 7 · Mesa 8 · Mesa 9 · Mesa 10 · Mesa 11 · Mesa 12 · Club de sellos · Visítanos
 
-`OpeningHours` ×4 · `TextField` ×3 · `QRCode` ×3 · `Toggle` ×2 · `MenuList` ×2 · `ActionBar` ×2 · `VideoPlayer` · `Toast` · `QuantityStepper` · `CookieBanner`
+`OpeningHours` ×4 · `TextField` ×3 · `QRCode` ×3 · `Toggle` ×2 · `MenuList` ×2 · `ActionBar` ×2 · `PageTransition` · `VideoPlayer` · `Toast` · `QuantityStepper` · `CookieBanner`

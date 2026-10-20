@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { toast as sonnerToast } from "sonner";
 import ActionBar from "@/components/ui/ActionBar";
@@ -17,11 +17,10 @@ import MenuList, { ALLERGENS } from "@/components/ui/MenuList";
 import Modal from "@/components/ui/Modal";
 import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
+import PageTransition, { PageTransitionPersist } from "@/components/ui/PageTransition";
 import QuantityStepper from "@/components/ui/QuantityStepper";
-import RadioGroup from "@/components/ui/RadioGroup";
 import Reveal from "@/components/ui/Reveal";
 import SplitText from "@/components/ui/SplitText";
-import Stepper from "@/components/ui/Stepper";
 import TeamSection from "@/components/ui/TeamSection";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
@@ -58,8 +57,6 @@ const href = (p = "") => siteHref(SLUG, p);
 const TOAST = "al-toast";
 const ALG = Object.fromEntries(ALLERGENS.map((a) => [a.id, a.label]));
 const algText = (ids: string[]) => (ids.length ? ids.map((a) => ALG[a]?.toLowerCase() ?? a).join(", ") : "ninguno de los 14");
-const STORE_OPTS = STORES.map((s) => s.name).join(", ");
-const storeByName = (name: string) => STORES.find((s) => s.name === name) ?? STORES[0];
 /** Franjas de recogida: las de hoy que ya han pasado (o empiezan en menos de 45 min) no se pueden elegir. */
 const slotsFor = (date: string) => {
   const now = new Date();
@@ -77,19 +74,6 @@ const upcoming = (exceptions: string) => {
   return exceptions.split("\n").filter((l) => l.slice(0, 10) >= today).slice(0, 4).join("\n");
 };
 /** Al cambiar de paso, el formulario vuelve a su cabecera (en móvil el botón «Continuar» queda muy abajo). */
-function useStepScroll(step: number) {
-  const ref = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-  useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    ref.current?.nextElementSibling?.querySelector<HTMLElement>("input:not(:disabled), textarea, button:not(:disabled)")?.focus({ preventScroll: true });
-  }, [step]);
-  return ref;
-}
 
 type Shop = ReturnType<typeof useCart> & { openCart: () => void };
 const ShopCtx = createContext<Shop | null>(null);
@@ -155,6 +139,7 @@ export function Shell({ children }: { children: ReactNode }) {
     <SiteFrame tokens={TOKENS} className="al" icons={{ set: phosphorLight, weight: "light" }}>
       <ShopCtx.Provider value={value}>
         <a className="al-skip" href="#contenido">Saltar al contenido</a>
+        <PageTransitionPersist name="al-head">
         <header className="al-head">
           <a className="al-brand" href={href()} aria-label="Almíbar, inicio">
             Almíbar<small>obrador · 1987</small>
@@ -179,6 +164,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </button>
           </div>
         </header>
+        </PageTransitionPersist>
         <main id="contenido">{children}</main>
         <footer className="al-foot">
           <div className="al-wrap al-foot__grid">
@@ -443,30 +429,52 @@ function Tienda() {
   );
 }
 
-/* ---------- pedido ---------- */
+/* ---------- pedido: una sola página (dónde, cuándo, quién) y un botón ---------- */
+const longDay = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+const PHONE = /^[+\d\s]{9,}$/;
+
+/** Tienda + día (atajos «Hoy · Mañana…», calendario solo si hace falta) + hora: lo comparten el pedido y el encargo. */
+function Pickup({ store, setStore, date, setDate, slot, setSlot, lead = 0, max = 14, extraClosed = "" }: { store: string; setStore: (v: string) => void; date: string; setDate: (v: string) => void; slot: string; setSlot: (v: string) => void; lead?: number; max?: number; extraClosed?: string }) {
+  const st = STORES.find((s) => s.id === store) ?? STORES[0];
+  return (
+    <>
+      <OptionPicker label="Tienda" kind="chip" options={STORES.map((s) => ({ value: s.id, label: s.name.replace("Almíbar ", "").replace(" · obrador", "") }))} value={store} onChange={(v) => { setStore(v); setDate(""); setSlot(""); }} />
+      <p className="al-mut al-small">{st.address}{st.id === "delicias" ? " · cerrada los domingos" : ""}</p>
+      <DatePicker key={`${st.id}-${lead}`} min={lead} max={max} closedDays={st.id === "delicias" ? "0" : ""} disabledDates={["2026-11-01", extraClosed].filter(Boolean).join(", ")} value={date} onChange={(d) => { setDate(d); setSlot(""); }} slots={slotsFor} slot={slot} onSlotChange={setSlot} slotsLabel="Hora" label="Día de recogida" shortcuts={4} calendar="collapsed" variant="minimal" />
+    </>
+  );
+}
+
+/** Nombre y teléfono: lo único que hace falta para apartar algo con tu nombre. */
+function Contact({ f, setF, tried, phoneLabel = "Teléfono" }: { f: { name: string; phone: string }; setF: (fn: (s: { name: string; phone: string; notes: string }) => { name: string; phone: string; notes: string }) => void; tried: boolean; phoneLabel?: string }) {
+  return (
+    <div className="al-pair">
+      <TextField label="Nombre" placeholder="Ana" value={f.name} onChange={(v) => setF((s) => ({ ...s, name: v }))} variant="editorial" name="name" autoComplete="given-name" required className="al-field" {...(tried && f.name.trim().length < 2 ? { intent: "danger" as const, hint: "Escribe tu nombre" } : {})} />
+      <TextField label={phoneLabel} placeholder="600 000 000" type="tel" value={f.phone} onChange={(v) => setF((s) => ({ ...s, phone: v }))} variant="editorial" name="tel" autoComplete="tel" required className="al-field" {...(tried && !PHONE.test(f.phone.trim()) ? { intent: "danger" as const, hint: "Un teléfono de 9 cifras" } : {})} />
+    </div>
+  );
+}
+
+const missingOf = (date: string, slot: string, f: { name: string; phone: string }) => (!date || !slot ? "Elige día y hora de recogida" : f.name.trim().length < 2 ? "Falta tu nombre" : !PHONE.test(f.phone.trim()) ? "Falta un teléfono válido" : "");
+
 function Pedido() {
   const { lines, subtotal, clear, openCart, setQty } = useShop();
-  const [step, setStep] = useState(0);
   const [done, setDone] = useState<null | { code: string; when: string; store: string }>(null);
-  const [store, setStore] = useState(STORES[0].name);
+  const [store, setStore] = useState(STORES[0].id);
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
-  const [f, setF] = useState({ name: "", phone: "", email: "" });
-  const [pay, setPay] = useState("Pago en tienda");
-  const set = (k: keyof typeof f) => (v: string) => setF((s) => ({ ...s, [k]: v }));
-  const st = storeByName(store);
-  const closed = st.id === "delicias" ? "0" : "";
-  const okPickup = !!date && !!slot;
-  const okData = f.name.trim().length > 1 && /^[+\d\s]{9,}$/.test(f.phone.trim()) && (!f.email || /\S+@\S+\.\S+/.test(f.email));
-  const when = date ? `${new Date(`${date}T12:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" })} a las ${slot}` : "";
-  const stepRef = useStepScroll(step);
+  const [f, setF] = useState({ name: "", phone: "", notes: "" });
+  const [tried, setTried] = useState(false);
+  const st = STORES.find((s) => s.id === store) ?? STORES[0];
+  const missing = missingOf(date, slot, f);
+  const when = date ? `${longDay(date)} a las ${slot}` : "";
 
   if (done) {
     return (
       <section className="al-wrap al-sec al-done">
         <p className="al-kicker">Pedido apartado · {done.code}</p>
         <h1 className="al-h1">Te esperamos, {f.name.split(" ")[0]}.</h1>
-        <p className="al-lead">Recógelo en {done.store}, {done.when}. Di tu nombre o el código en el mostrador. Era un pedido de demostración: no se ha guardado ni enviado nada.</p>
+        <p className="al-lead">Recógelo en {done.store}, {done.when}. Di tu nombre o el código en el mostrador y paga allí. Era un pedido de demostración: no se ha guardado ni enviado nada.</p>
         <div className="al-ctas">
           <a className="al-btn al-btn--pri" href={href()}>Volver al inicio</a>
           <a className="al-btn" href={href("encargos")}>Encargar una tarta</a>
@@ -483,62 +491,28 @@ function Pedido() {
       </section>
     );
   }
+  const submit = () => {
+    setTried(true);
+    if (missing) return;
+    setDone({ code: `AL-${String((Math.floor(subtotal * 37) % 9000) + 1000)}`, when, store: st.name });
+    clear();
+  };
   return (
     <section className="al-wrap al-sec">
-      <Head as="h1" kicker="Pedido para recoger" title="¿Dónde y cuándo pasas?" />
-      <div ref={stepRef} className="al-stepanchor">
-        <Stepper steps="Recogida, Tus datos, Revisión" current={step} variant="editorial" />
-      </div>
-      <div className="al-order">
-        <div className="al-box">
-          {step === 0 && (
-            <>
-              <RadioGroup label="Tienda" options={STORE_OPTS} defaultValue={store} onChange={(v) => { setStore(v); setDate(""); setSlot(""); }} variant="editorial" />
-              <p className="al-mut al-small">{st.address}{st.id === "delicias" ? " · cerrada los domingos" : ""}</p>
-              <DatePicker key={st.id} min={0} max={14} closedDays={closed} disabledDates="2026-11-01" value={date} onChange={(d) => { setDate(d); setSlot(""); }} slots={slotsFor} slot={slot} onSlotChange={setSlot} slotsLabel="Franja de recogida" label="Día de recogida" variant="minimal" />
-              <div className="al-actions">
-                <span />
-                <button type="button" className="al-btn al-btn--pri" disabled={!okPickup} onClick={() => setStep(1)}>Continuar</button>
-              </div>
-            </>
-          )}
-          {step === 1 && (
-            <>
-              <TextField label="Nombre" placeholder="Ana Prueba" value={f.name} onChange={set("name")} variant="editorial" name="name" required className="al-field" />
-              <TextField label="Teléfono" placeholder="600 000 000" value={f.phone} onChange={set("phone")} variant="editorial" name="tel" required hint="Solo para avisarte si algo se agota. Es una demo: no se envía." className="al-field" />
-              <TextField label="Correo (opcional)" placeholder="ana@ejemplo.com" type="email" value={f.email} onChange={set("email")} variant="editorial" name="email" className="al-field" />
-              <div className="al-actions">
-                <button type="button" className="al-btn" onClick={() => setStep(0)}>Atrás</button>
-                <button type="button" className="al-btn al-btn--pri" disabled={!okData} onClick={() => setStep(2)}>Continuar</button>
-              </div>
-            </>
-          )}
-          {step === 2 && (
-            <>
-              <p className="al-review">
-                <b>{f.name}</b> · {f.phone}
-                <br />
-                Recogida en <b>{st.name}</b>, {when}.
-              </p>
-              <RadioGroup label="Pago" options="Pago en tienda, Señal online (demo)" defaultValue={pay} onChange={setPay} variant="editorial" />
-              <p className="al-mut al-small">{pay === "Pago en tienda" ? "Pagas con tarjeta, Bizum o efectivo al recoger." : "En una web real aquí iría la pasarela. En la demo no se pide ningún dato de pago."}</p>
-              <div className="al-actions">
-                <button type="button" className="al-btn" onClick={() => setStep(1)}>Atrás</button>
-                <button
-                  type="button"
-                  className="al-btn al-btn--pri"
-                  onClick={() => {
-                    setDone({ code: `AL-${String(Math.floor(subtotal * 37) % 9000 + 1000)}`, when, store: st.name });
-                    clear();
-                  }}
-                >
-                  Apartar mi pedido
-                </button>
-              </div>
-            </>
-          )}
+      <Head as="h1" kicker="Pedido para recoger" title="¿Cuándo pasas?" lead="Lo apartamos con tu nombre y pagas al recoger (tarjeta, Bizum o efectivo). Sin cuenta y sin pago por adelantado." />
+      <form className="al-order" onSubmit={(e) => { e.preventDefault(); submit(); }} noValidate>
+        <div className="al-box al-flow">
+          <fieldset className="al-part">
+            <legend><span>1</span> Recogida</legend>
+            <Pickup store={store} setStore={setStore} date={date} setDate={setDate} slot={slot} setSlot={setSlot} />
+          </fieldset>
+          <fieldset className="al-part">
+            <legend><span>2</span> A nombre de</legend>
+            <Contact f={f} setF={setF} tried={tried} />
+            <p className="al-mut al-small">Solo para avisarte si algo se agota. Es una demo: no se envía nada.</p>
+          </fieldset>
         </div>
-        <aside className="al-box al-sum" aria-label="Resumen del pedido">
+        <aside className="al-box al-sum al-sum--sticky" aria-label="Resumen del pedido">
           <h2>Tu bolsa</h2>
           <ul>
             {lines.map((l) => (
@@ -549,104 +523,79 @@ function Pedido() {
               </li>
             ))}
           </ul>
-          <p className="al-sum__tot"><span>Total</span><b>{money(subtotal)}</b></p>
+          <p className="al-sum__tot"><span>Total · pagas al recoger</span><b>{money(subtotal)}</b></p>
+          <p className="al-mut al-small" aria-live="polite">{date && slot ? `${st.name.replace("Almíbar ", "")}, ${when}` : "Elige día y hora de recogida"}</p>
+          <button type="submit" className="al-btn al-btn--pri al-btn--block">Apartar mi pedido · {money(subtotal)}</button>
+          <p className="al-mut al-small al-missing" aria-live="polite">{tried && missing}</p>
           <button type="button" className="al-link" onClick={openCart}>Editar la bolsa</button>
         </aside>
-      </div>
+      </form>
     </section>
   );
 }
 
-/* ---------- encargos ---------- */
+/* ---------- encargos: la tarta, la recogida y tus datos en una página; el precio y el botón siempre a la vista ---------- */
 function Encargos() {
-  const [step, setStep] = useState(0);
   const [size, setSize] = useState("10");
   const [sponge, setSponge] = useState("vainilla");
   const [filling, setFilling] = useState("pastelera");
   const [covering, setCovering] = useState("nata");
   const [toppings, setToppings] = useState<string[]>([]);
   const [message, setMessage] = useState("");
-  const [store, setStore] = useState(STORES[0].name);
+  const [store, setStore] = useState(STORES[0].id);
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
   const [f, setF] = useState({ name: "", phone: "", notes: "" });
+  const [tried, setTried] = useState(false);
   const [ok, setOk] = useState(false);
   const sel = { size, sponge, filling, covering, toppings };
   const price = cakePrice(sel);
   const deposit = price > 60 ? Math.round(price * 0.3) : 0;
   const algs = cakeAllergens(sel);
-  const st = storeByName(store);
+  const st = STORES.find((s) => s.id === store) ?? STORES[0];
   const lead = Number(size) >= 40 ? 7 : CAKE.leadDays;
   const label = (list: { value: string; label: string }[], v: string) => list.find((o) => o.value === v)?.label ?? v;
-  const when = date ? `${new Date(`${date}T12:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" })}${slot ? ` a las ${slot}` : ""}` : "sin fecha";
-  const okData = f.name.trim().length > 1 && /^[+\d\s]{9,}$/.test(f.phone.trim());
-  const STEPS = ["La tarta", "Detalles", "Recogida", "Tus datos"];
-  const canNext = [true, true, !!date && !!slot, okData][step];
+  const when = date ? `${longDay(date)}${slot ? ` a las ${slot}` : ""}` : "sin fecha";
+  const missing = missingOf(date, slot, f);
   const cake = photo("pasteleria", 13);
-  const stepRef = useStepScroll(step);
 
   return (
     <section className="al-wrap al-sec">
-      <Head as="h1" kicker="Tartas por encargo" title="Una tarta pensada para tu mesa" lead={`Elige tamaño y sabores y te decimos el precio al momento. Encarga con ${CAKE.leadDays} días de antelación (7 para las de pisos) y recógela en tienda.`} />
-      <div ref={stepRef} className="al-stepanchor">
-        <Stepper steps={STEPS.join(", ")} current={step} variant="editorial" />
-      </div>
-      <div className="al-order">
-        <div className="al-box">
-          {step === 0 && (
-            <>
-              <OptionPicker label="Tamaño" kind="chip" options={CAKE.sizes.map((s) => ({ value: s.value, label: s.label }))} value={size} onChange={(v) => { setSize(v); setDate(""); setSlot(""); }} />
-              <OptionPicker label="Bizcocho" kind="swatch" options={CAKE.sponges.map((s) => ({ value: s.value, label: s.label, color: s.color }))} value={sponge} onChange={setSponge} />
-              <OptionPicker label="Relleno" kind="swatch" options={CAKE.fillings.map((s) => ({ value: s.value, label: s.label, color: s.color }))} value={filling} onChange={setFilling} />
-              <OptionPicker label="Cobertura" kind="chip" options={CAKE.coverings.map((s) => ({ value: s.value, label: s.label }))} value={covering} onChange={setCovering} />
-            </>
-          )}
-          {step === 1 && (
-            <>
-              <CheckboxGroup label="Para decorar" options={CAKE.toppings.map((t) => t.label).join(", ")} defaultValue={toppings.map((t) => label(CAKE.toppings, t)).join(", ")} onChange={(vals) => setToppings(CAKE.toppings.filter((t) => vals.includes(t.label)).map((t) => t.value))} variant="editorial" />
-              {toppings.includes("mensaje") && <TextField label="Mensaje (máx. 30 letras)" placeholder="¡Feliz cumple, Lola!" value={message} onChange={(v) => setMessage(v.slice(0, 30))} variant="editorial" name="message" className="al-field" />}
-              <TextField label="Alergias o algo que debamos saber" placeholder="Ej.: uno de los invitados es celíaco" value={f.notes} onChange={(v) => setF((s) => ({ ...s, notes: v }))} variant="editorial" name="notes" multiline rows={3} className="al-field" />
-            </>
-          )}
-          {step === 2 && (
-            <>
-              <RadioGroup label="Tienda de recogida" options={STORE_OPTS} defaultValue={store} onChange={(v) => { setStore(v); setDate(""); setSlot(""); }} variant="editorial" />
-              <DatePicker key={`${st.id}-${lead}`} min={lead} max={60} closedDays={st.id === "delicias" ? "0" : ""} disabledDates="2026-11-01, 2026-12-25, 2027-01-01" value={date} onChange={(d) => { setDate(d); setSlot(""); }} slots={slotsFor} slot={slot} onSlotChange={setSlot} slotsLabel="Hora de recogida" label="Día de recogida" variant="minimal" />
-            </>
-          )}
-          {step === 3 && (
-            <>
-              <TextField label="Nombre" placeholder="Ana Prueba" value={f.name} onChange={(v) => setF((s) => ({ ...s, name: v }))} variant="editorial" name="name" required className="al-field" />
-              <TextField label="Teléfono o WhatsApp" placeholder="600 000 000" value={f.phone} onChange={(v) => setF((s) => ({ ...s, phone: v }))} variant="editorial" name="tel" required hint="Te escribimos para confirmar. Es una demo: no se envía nada." className="al-field" />
-            </>
-          )}
-          <div className="al-actions">
-            {step > 0 ? <button type="button" className="al-btn" onClick={() => setStep(step - 1)}>Atrás</button> : <span />}
-            {step < 3 ? (
-              <button type="button" className="al-btn al-btn--pri" disabled={!canNext} onClick={() => setStep(step + 1)}>Continuar</button>
-            ) : (
-              <button type="button" className="al-btn al-btn--pri" disabled={!okData} onClick={() => setOk(true)}>Enviar el encargo</button>
-            )}
-          </div>
-          {step === 2 && !canNext && <p className="al-mut al-small">Elige un día y una hora para seguir.</p>}
+      <Head as="h1" kicker="Tartas por encargo" title="Una tarta pensada para tu mesa" lead={`Elige y ves el precio al momento. Con ${CAKE.leadDays} días de antelación (7 las de pisos) y recogida en tienda. Te escribimos para confirmar.`} />
+      <form className="al-order" onSubmit={(e) => { e.preventDefault(); setTried(true); if (!missing) setOk(true); }} noValidate>
+        <div className="al-box al-flow">
+          <fieldset className="al-part">
+            <legend><span>1</span> La tarta</legend>
+            <OptionPicker label="Tamaño" kind="chip" options={CAKE.sizes.map((s) => ({ value: s.value, label: s.label }))} value={size} onChange={(v) => { setSize(v); setDate(""); setSlot(""); }} />
+            <OptionPicker label="Bizcocho" kind="swatch" options={CAKE.sponges.map((s) => ({ value: s.value, label: s.label, color: s.color }))} value={sponge} onChange={setSponge} />
+            <OptionPicker label="Relleno" kind="swatch" options={CAKE.fillings.map((s) => ({ value: s.value, label: s.label, color: s.color }))} value={filling} onChange={setFilling} />
+            <OptionPicker label="Cobertura" kind="chip" options={CAKE.coverings.map((s) => ({ value: s.value, label: s.label }))} value={covering} onChange={setCovering} />
+            <CheckboxGroup label="Para decorar (opcional)" options={CAKE.toppings.map((t) => t.label).join(", ")} defaultValue={toppings.map((t) => label(CAKE.toppings, t)).join(", ")} onChange={(vals) => setToppings(CAKE.toppings.filter((t) => vals.includes(t.label)).map((t) => t.value))} variant="editorial" />
+            {toppings.includes("mensaje") && <TextField label="Mensaje (máx. 30 letras)" placeholder="¡Feliz cumple, Lola!" value={message} onChange={(v) => setMessage(v.slice(0, 30))} variant="editorial" name="message" className="al-field" />}
+          </fieldset>
+          <fieldset className="al-part">
+            <legend><span>2</span> Recogida</legend>
+            <Pickup store={store} setStore={setStore} date={date} setDate={setDate} slot={slot} setSlot={setSlot} lead={lead} max={60} extraClosed="2026-12-25, 2027-01-01" />
+          </fieldset>
+          <fieldset className="al-part">
+            <legend><span>3</span> A nombre de</legend>
+            <Contact f={f} setF={setF} tried={tried} phoneLabel="Teléfono o WhatsApp" />
+            <TextField label="Alergias o algo que debamos saber (opcional)" placeholder="Ej.: uno de los invitados es celíaco" value={f.notes} onChange={(v) => setF((s) => ({ ...s, notes: v }))} variant="editorial" name="notes" className="al-field" />
+          </fieldset>
         </div>
-        <aside className="al-box al-sum al-cake" aria-label="Tu tarta">
+        <aside className="al-box al-sum al-cake al-sum--sticky" aria-label="Tu tarta">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={cake.src} alt="Caja de pastelería atada con cordel junto a un ramo de flores" loading="lazy" />
           <h2>Tu tarta</h2>
-          <dl className="al-dl">
-            <div><dt>Tamaño</dt><dd>{label(CAKE.sizes, size)}</dd></div>
-            <div><dt>Bizcocho</dt><dd>{label(CAKE.sponges, sponge)}</dd></div>
-            <div><dt>Relleno</dt><dd>{label(CAKE.fillings, filling)}</dd></div>
-            <div><dt>Cobertura</dt><dd>{label(CAKE.coverings, covering)}</dd></div>
-            {toppings.length > 0 && <div><dt>Decoración</dt><dd>{toppings.map((t) => label(CAKE.toppings, t)).join(", ")}</dd></div>}
-            <div><dt>Recogida</dt><dd>{date ? `${st.name.replace("Almíbar ", "")}, ${when}` : "sin elegir"}</dd></div>
-          </dl>
+          <p className="al-mut al-small">{label(CAKE.sizes, size)} · {label(CAKE.sponges, sponge).toLowerCase()} con {label(CAKE.fillings, filling).toLowerCase()} · {label(CAKE.coverings, covering).toLowerCase()}{toppings.length ? ` · ${toppings.map((t) => label(CAKE.toppings, t).toLowerCase()).join(", ")}` : ""}</p>
           <p className="al-alg" aria-live="polite">Alérgenos: {algText(algs)}</p>
           <p className="al-sum__tot" aria-live="polite"><span>Precio</span><b>{money(price, "EUR", "es-ES", true)}</b></p>
-          <p className="al-mut al-small">{deposit ? `Señal del 30 % (${money(deposit, "EUR", "es-ES", true)}) al confirmar; se descuenta al recoger y se devuelve si cancelas con 48 h.` : "Sin señal: pagas al recoger."}</p>
+          <p className="al-mut al-small">{deposit ? `Señal del 30 % (${money(deposit, "EUR", "es-ES", true)}) al confirmar por WhatsApp; se devuelve si cancelas con 48 h.` : "Sin señal: pagas al recoger."}</p>
+          <p className="al-mut al-small" aria-live="polite">{date && slot ? `Recogida: ${st.name.replace("Almíbar ", "")}, ${when}` : "Recogida: sin elegir"}</p>
+          <button type="submit" className="al-btn al-btn--pri al-btn--block">Encargar · {money(price, "EUR", "es-ES", true)}</button>
+          <p className="al-mut al-small al-missing" aria-live="polite">{tried && missing}</p>
         </aside>
-      </div>
+      </form>
       <Modal
         open={ok}
         onOpenChange={setOk}
@@ -733,14 +682,16 @@ function Tiendas() {
   );
 }
 
+const PAGES: Record<string, () => ReactNode> = { "": Home, carta: Carta, tienda: Tienda, pedido: Pedido, encargos: Encargos, obrador: Obrador, tiendas: Tiendas };
+
+/** Cada página entra con un barrido frambuesa de abajo arriba (la cabecera se queda quieta: PageTransitionPersist). */
 export function Page({ path }: { path: string[] }) {
-  const [a] = path;
-  if (!a) return <Home />;
-  if (a === "carta") return <Carta />;
-  if (a === "tienda") return <Tienda />;
-  if (a === "pedido") return <Pedido />;
-  if (a === "encargos") return <Encargos />;
-  if (a === "obrador") return <Obrador />;
-  if (a === "tiendas") return <Tiendas />;
-  return null;
+  const route = path[0] ?? "";
+  const P = PAGES[route];
+  if (!P) return null;
+  return (
+    <PageTransition key={route} kind="wipe" direction="up" pace="normal" tone="acc">
+      <P />
+    </PageTransition>
+  );
 }

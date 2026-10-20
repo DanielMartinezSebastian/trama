@@ -186,3 +186,14 @@
 .al-stepanchor { scroll-margin-top: 84px; }
 @media (max-width: 640px) { .al-item .al-ptile span { font-size: 14px; } .al-item .al-ptile small { font-size: 9px; } }
 .al-ptile span { max-width: 100%; overflow-wrap: anywhere; padding-inline: 4px; }
+
+/* compra en una página: bloques numerados en vez de pasos */
+.al-flow { gap: 0; padding-block: 8px; }
+.al-part { display: grid; gap: 18px; min-width: 0; margin: 0; padding: clamp(18px, 2.4vw, 28px) 0; border: 0; border-top: 1px solid var(--ln); }
+.al-part:first-child { border-top: 0; }
+.al-part > legend { float: left; width: 100%; display: flex; align-items: center; gap: 12px; padding: 0; margin-bottom: 18px; font-family: var(--display); font-size: 24px; letter-spacing: -0.01em; }
+.al-part > legend span { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--acc); color: var(--bg); font-family: var(--font-inter), sans-serif; font-size: 14px; font-weight: 600; }
+.al-part > legend + * { clear: both; }
+.al-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; }
+.al-btn--block { width: 100%; justify-content: center; }
+.al-missing { min-height: 1.2em; color: var(--acc); }

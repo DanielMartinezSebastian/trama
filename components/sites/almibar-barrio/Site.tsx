@@ -12,6 +12,7 @@ import QuantityStepper from "@/components/ui/QuantityStepper";
 import TextField from "@/components/ui/TextField";
 import Toast from "@/components/ui/Toast";
 import Toggle from "@/components/ui/Toggle";
+import PageTransition, { PageTransitionPersist } from "@/components/ui/PageTransition";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import { money } from "@/lib/commerce/money";
 import { BRAND, FAQ, LEGAL, PRODUCTS, REVIEWS, STORES, bakeryJsonLd, menuSections } from "@/lib/sites/almibar";
@@ -76,6 +77,7 @@ export function Shell({ children }: { children: ReactNode }) {
   return (
     <SiteFrame tokens={TOKENS} className="bb" icons={{ set: phosphorRegular, weight: "regular" }}>
         {!atTable && (
+          <PageTransitionPersist name="bb-head">
           <header className="bb-head">
             <a className="bb-brand" href={href()} aria-label="Almíbar, inicio">
               almíbar<span aria-hidden>·</span>
@@ -89,6 +91,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </nav>
             <OpeningHours hours={centro.hours} exceptions={centro.exceptions} layout="badge" variant="dotmatrix" className="bb-head__hours" />
           </header>
+          </PageTransitionPersist>
         )}
         <main id="contenido">{children}</main>
         {!atTable && <SiteFooter onCookies={reopenCookies} />}
@@ -563,13 +566,20 @@ function Visit() {
   );
 }
 
+/** Cada página entra pixelándose, como la trama de puntos de la web; la cabecera se queda quieta. */
 export function Page({ path }: { path: string[] }) {
   const [a, b] = path;
-  if (!a) return <Home />;
-  if (a === "carta") return <Carta />;
-  if (a === "mesa" && b && TABLES.includes(Number(b))) return <Mesa key={b} n={Number(b)} />;
-  if (a === "club") return <Club />;
-  if (a === "visitanos") return <Visit />;
-  return null;
+  let content: ReactNode = null;
+  if (!a) content = <Home />;
+  else if (a === "carta") content = <Carta />;
+  else if (a === "mesa" && b && TABLES.includes(Number(b))) content = <Mesa key={b} n={Number(b)} />;
+  else if (a === "club") content = <Club />;
+  else if (a === "visitanos") content = <Visit />;
+  if (!content) return null;
+  return (
+    <PageTransition key={path.join("/")} kind="pixelate" pace="fast" tone="acc">
+      {content}
+    </PageTransition>
+  );
 }
 

@@ -17,7 +17,10 @@ export type TextFieldProps = {
   size?: "sm" | "md" | "lg";
   /** carácter delante del texto (@, >, $…) */
   prefix?: string;
-  type?: "text" | "email" | "password" | "search";
+  /** `tel` abre el teclado numérico en el móvil */
+  type?: "text" | "email" | "password" | "search" | "tel" | "url";
+  /** pista de autocompletado del navegador (`name`, `given-name`, `tel`, `email`…) */
+  autoComplete?: string;
   /** nombre del campo, para leerlo con `FormData` (ver `ContactForm`) */
   name?: string;
   /** dibuja un `<textarea>` en vez de un `<input>` */
@@ -44,6 +47,7 @@ export default function TextField({
   prefix = "",
   type = "text",
   name,
+  autoComplete,
   multiline = false,
   rows = 4,
   required = false,
@@ -78,7 +82,7 @@ export default function TextField({
         {multiline ? (
           <textarea key={defaultValue} {...a11y} name={name} rows={rows} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         ) : (
-          <input key={defaultValue} {...a11y} type={type} name={name} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
+          <input key={defaultValue} {...a11y} type={type} name={name} autoComplete={autoComplete} placeholder={placeholder} value={value} required={required} onChange={(e) => change(e.target.value)} />
         )}
       </span>
       {hint && (

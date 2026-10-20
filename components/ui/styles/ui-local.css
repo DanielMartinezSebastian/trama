@@ -90,6 +90,16 @@
 
 /* ---------- DatePicker ---------- */
 .ui-date { display: grid; gap: 14px; min-width: 0; max-width: 100%; font-family: var(--s-ff); }
+.ui-date__quick { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+.ui-date__qd { display: grid; gap: 2px; justify-items: center; min-height: 56px; padding: 8px 6px; border: 1px solid var(--ln); border-radius: calc(var(--r, 12px) * 0.6); background: none; color: inherit; font: inherit; cursor: pointer; }
+.ui-date__qd b { font-weight: 600; font-size: 15px; text-transform: capitalize; }
+.ui-date__qd small { font-size: 12px; color: var(--mut); }
+.ui-date__qd:hover { border-color: var(--mut); }
+.ui-date__qd[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+.ui-date__qd[aria-pressed="true"] small { color: inherit; opacity: 0.8; }
+.ui-date__qd--more { border-style: dashed; }
+.ui-date__qd:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.ui-s--dotmatrix .ui-date__qd, .ui-s--retro .ui-date__qd { border-radius: 0; }
 .ui-date__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .ui-date__label { margin: 0; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mut); }
 .ui-date__nav { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--ln); border-radius: 50%; background: none; color: inherit; font: inherit; font-size: 20px; line-height: 1; cursor: pointer; }

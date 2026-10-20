@@ -44,6 +44,8 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 .tr-nav__link.is-on::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 0; height: 1px; background: var(--acc); }
 .tr-nav__install { margin-left: auto; }
 @media (max-width: 760px) { .tr-nav .tr-nav__install { display: none; } .tr-nav__links { margin-left: auto; } }
+/* a 390 px caben marca + 4 secciones (Docs, Componentes, Demos, Guías) con menos tracking */
+@media (max-width: 440px) { .tr-nav__links { gap: 2px; } .tr-nav__link { letter-spacing: 0.1em; padding: 8px 4px; } .tr-nav__link.is-on::after { left: 4px; right: 4px; } }
 
 /* comando que se copia */
 .tr-install {

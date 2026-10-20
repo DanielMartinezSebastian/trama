@@ -171,4 +171,18 @@
 .tl .tl-steps { margin-top: 28px; max-width: 760px; font-size: 17px; }
 @media (max-width: 760px) { .tl .ui-cook { bottom: calc(84px + env(safe-area-inset-bottom)); } }
 /* en móvil la tarta queda fija arriba: lo que recibe el foco o se desplaza a la vista no debe quedar debajo */
-@media (max-width: 860px) { .tl-design__panel :is(input, button, textarea, a, fieldset) { scroll-margin-top: calc(40svh + var(--tl-head) + 16px); } }
+@media (max-width: 860px) { .tl-design__panel :is(input, button, textarea, a, fieldset) { scroll-margin-top: calc(34svh + var(--tl-head) + 16px); } }
+
+/* la tarta compartida entre portada y diseñador (SharedTransition necesita un elemento propio) */
+.tl-design__cake { height: 100%; min-height: 0; }
+@media (max-width: 860px) { .tl-hero__cake > .tl-stage { height: 100% !important; } }
+/* encargo en el propio diseñador: el total y el botón quedan pegados abajo del panel */
+.tl-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 12px; }
+.tl-buy { position: sticky; bottom: 0; z-index: 2; display: grid; gap: 8px; margin-inline: calc(var(--st-gutter) * -1); padding: 16px var(--st-gutter) 18px; border-top: 1px solid var(--ln); background: color-mix(in srgb, var(--bg) 94%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.tl-buy .tl-sum__price b { font-size: 34px; }
+.tl-missing { min-height: 1.2em; margin: 0; color: var(--acc); }
+/* en móvil la tarta ya va fija arriba: el bloque de compra va en el flujo, al final del panel, para no encajonar las opciones */
+@media (max-width: 860px) {
+  .tl-buy { position: static; margin-inline: 0; padding-inline: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .tl-design__stage { height: 34svh; }
+}

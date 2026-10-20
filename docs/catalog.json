@@ -230,7 +230,8 @@
         "project-list",
         "big-footer",
         "crossfade-hero",
-        "feature-explorer"
+        "feature-explorer",
+        "guide-frame"
       ]
     },
     {
@@ -13218,6 +13219,24 @@
           ]
         },
         {
+          "key": "shortcuts",
+          "type": "number",
+          "default": 0,
+          "label": "Atajos («Hoy», «Mañana»…)",
+          "min": 0,
+          "max": 6
+        },
+        {
+          "key": "calendar",
+          "type": "select",
+          "default": "open",
+          "label": "Calendario",
+          "options": [
+            "open",
+            "collapsed"
+          ]
+        },
+        {
           "key": "variant",
           "type": "select",
           "default": "minimal",
@@ -13238,7 +13257,8 @@
       ],
       "notes": [
         "La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).",
-        "`min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación."
+        "`min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación.",
+        "Para pedidos rápidos (recoger hoy o mañana): shortcuts={4} calendar=\"collapsed\" — los próximos días disponibles como botones y el calendario solo si se pide (ver /sitios/almibar/pedido)."
       ],
       "example": "import DatePicker from \"@/components/ui/DatePicker\";\n\n<DatePicker />",
       "preview": "/componentes#date-picker"
@@ -13407,6 +13427,57 @@
       ],
       "example": "import QRCode from \"@/components/ui/QRCode\";\n\n<QRCode\n  value=\"https://trama.dev/sitios/almibar-barrio/mesa/7\"\n/>",
       "preview": "/componentes#qr-code"
+    },
+    {
+      "id": "guide-frame",
+      "name": "Guía de estilo (sistema completo de una web premiada)",
+      "component": "GuideFrame",
+      "import": "import GuideFrame from \"@/components/ui/GuideFrame\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline",
+        "retro"
+      ],
+      "description": "Aplica una de las ocho guías de estilo (lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Compara guías, portadas y relatos en /guias.",
+      "props": [
+        {
+          "key": "guide",
+          "type": "select",
+          "default": "lujo",
+          "label": "Guía",
+          "options": [
+            "lujo",
+            "monocromo",
+            "tecnico",
+            "nocturno",
+            "electrico",
+            "rotulo",
+            "calido",
+            "ludico"
+          ]
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Luz que llega lejos",
+          "label": "Titular"
+        },
+        {
+          "key": "lead",
+          "type": "text",
+          "default": "Diseñamos lámparas y espacios que aprovechan la luz del día.",
+          "label": "Entradilla"
+        }
+      ],
+      "notes": [
+        "Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).",
+        "Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).",
+        "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest."
+      ],
+      "example": "import GuideFrame from \"@/components/ui/GuideFrame\";\n\n<GuideFrame\n  title=\"Luz que llega lejos\"\n/>",
+      "preview": "/componentes#guide-frame"
     }
   ],
   "landings": [
@@ -16558,7 +16629,7 @@
       "title": "Almíbar · pastelería de obrador",
       "url": "/sitios/almibar",
       "dir": "components/sites/almibar",
-      "description": "Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger con día y franja, tarta por encargo en pasos con precio y alérgenos en vivo (48 h de antelación, señal del 30 %), barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker, ActionBar, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, Stepper, TestimonialSection, FAQSection y CookieBanner.",
+      "description": "Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger y tarta por encargo en UNA página cada uno (tienda, día con atajos «Hoy · Mañana», hora, nombre y teléfono; pago al recoger; precio y alérgenos en vivo, 48 h de antelación, señal del 30 %), reseñas con resumen y slider, transición de página en barrido frambuesa, barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker (shortcuts), ActionBar, PageTransition, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, TestimonialSection, FAQSection y CookieBanner.",
       "pages": [
         {
           "path": "/sitios/almibar",
@@ -16591,13 +16662,13 @@
       ],
       "components": [
         {
-          "component": "TextField",
-          "id": "text-field",
-          "uses": 7
-        },
-        {
           "component": "OptionPicker",
           "id": "option-picker",
+          "uses": 5
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
           "uses": 4
         },
         {
@@ -16606,18 +16677,8 @@
           "uses": 4
         },
         {
-          "component": "RadioGroup",
-          "id": "radio-group",
-          "uses": 3
-        },
-        {
           "component": "Timeline",
           "id": "timeline",
-          "uses": 2
-        },
-        {
-          "component": "Stepper",
-          "id": "stepper",
           "uses": 2
         },
         {
@@ -16631,9 +16692,9 @@
           "uses": 2
         },
         {
-          "component": "DatePicker",
-          "id": "date-picker",
-          "uses": 2
+          "component": "PageTransition",
+          "id": "page-transition",
+          "uses": 1
         },
         {
           "component": "Reveal",
@@ -16706,6 +16767,11 @@
           "uses": 1
         },
         {
+          "component": "DatePicker",
+          "id": "date-picker",
+          "uses": 1
+        },
+        {
           "component": "ActionBar",
           "id": "action-bar",
           "uses": 1
@@ -16717,7 +16783,7 @@
       "title": "Almíbar Taller · tartas a medida",
       "url": "/sitios/almibar-taller",
       "dir": "components/sites/almibar-taller",
-      "description": "Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y una solicitud con señal del 30 %. Sin WebGL o con movimiento reducido, la misma tarta en SVG.",
+      "description": "Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y el encargo en la misma pantalla del diseñador (recogida con atajos de día, nombre y teléfono, señal del 30 %). Transiciones de página en iris y la tarta que viaja de la portada al diseñador. Sin WebGL o con movimiento reducido, la misma tarta en SVG.",
       "pages": [
         {
           "path": "/sitios/almibar-taller",
@@ -16734,17 +16800,13 @@
         {
           "path": "/sitios/almibar-taller/empresas",
           "title": "Empresas"
-        },
-        {
-          "path": "/sitios/almibar-taller/solicitud",
-          "title": "Solicitud"
         }
       ],
       "components": [
         {
           "component": "TextField",
           "id": "text-field",
-          "uses": 8
+          "uses": 7
         },
         {
           "component": "OptionPicker",
@@ -16760,6 +16822,11 @@
           "component": "DatePicker",
           "id": "date-picker",
           "uses": 2
+        },
+        {
+          "component": "PageTransition",
+          "id": "page-transition",
+          "uses": 1
         },
         {
           "component": "Timeline",
@@ -16794,11 +16861,6 @@
         {
           "component": "PinnedSection",
           "id": "pinned-section",
-          "uses": 1
-        },
-        {
-          "component": "EmptyState",
-          "id": "empty-state",
           "uses": 1
         },
         {
@@ -16930,6 +16992,11 @@
           "component": "ActionBar",
           "id": "action-bar",
           "uses": 2
+        },
+        {
+          "component": "PageTransition",
+          "id": "page-transition",
+          "uses": 1
         },
         {
           "component": "VideoPlayer",

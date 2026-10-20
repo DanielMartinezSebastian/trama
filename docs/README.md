@@ -117,7 +117,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` · `DatePicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
 | Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
-| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` |
+| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` · `GuideFrame` (guías de estilo, ver `/guias` y [16](./16-guias-de-estilo-plan.md)) |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` · `MenuList` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` · `CartDrawer` · `CookieBanner` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |

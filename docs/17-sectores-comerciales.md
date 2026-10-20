@@ -190,7 +190,10 @@ la librería. Sirve para enseñar a un cliente **tres direcciones** sobre su pro
 | Estética | Crema, tinta y frambuesa; serif; foto y vídeo a sangre | Rubor claro; la tarta 3D como protagonista sobre `GradientField` | Papel crema y tinta con la variante `dotmatrix` del kit; vídeo en puntos en el hero |
 | Para quién | El cliente diario y el del encargo | El que celebra algo (cumpleaños, boda, empresa) | El que se sienta en el local |
 | Acción principal | Encargar una tarta | Diseñar tu tarta | Pedir desde la mesa |
-| Páginas | inicio · carta · tienda · pedido · encargos · obrador · tiendas | inicio · diseña · bodas · empresas · solicitud | inicio · carta (+ QR imprimibles) · mesa/1–12 · club · visítanos |
+| Páginas | inicio · carta · tienda · pedido · encargos · obrador · tiendas | inicio · diseña · bodas · empresas | inicio · carta (+ QR imprimibles) · mesa/1–12 · club · visítanos |
+| Compra | Pedido y encargo en una página: tienda, día con atajos («Hoy · Mañana…», calendario solo si hace falta), hora, nombre y teléfono; pago al recoger | Se encarga desde el propio diseñador (sin página de solicitud): recogida con atajos, nombre y teléfono, señal del 30 % | Pedido en mesa sin registro: añadir, nota, «Enviar a barra» |
+| Transición entre páginas | `PageTransition kind="wipe"` hacia arriba, en frambuesa | `kind="iris"` y la tarta que viaja de la portada al diseñador (`SharedTransition`) | `kind="pixelate"`, rápida |
+| 3D | — | Tarta torneada con miga, crema, cobertura con grosor, porción que se saca («Ver por dentro»), ganache con goterones, frutos rojos de granitos, velas, placa con el mensaje y peana | — |
 | Piezas nuevas | `MenuList`, `DatePicker` + huecos, `OpeningHours`, `ActionBar` | `DatePicker`, `ActionBar`; tarta 3D propia (`CakeStage`) | `QRCode` en puntos, `MenuList onAdd`, `OpeningHours`, `ActionBar` de mesa |
 | Reutiliza | Barro (carrito y pedido), `SplitText`, `Timeline`, `ImageReveal`, vídeo `obrador` | `ObjectStage`/`lib/object3d` (patrón), `PinnedSection` (despiece), `ExpandingPanels`, `RangeSlider` | `VideoPlayer ascii`, `Drawer`, `QuantityStepper`, `Toast` |
 
@@ -207,6 +210,11 @@ combinar: el QR de mesa de la tercera sirve en cualquiera de las otras dos).
 | `DatePicker` | Un día o un rango, antelación mínima, días cerrados, huecos del día | R2, H1, S1, F1 | Cuadrícula ARIA con teclado completo; `slots` como función para la disponibilidad real |
 | `ActionBar` | Llamar · WhatsApp · Cómo llegar · acción principal, fija en móvil | B1, B2 | Objetivos de 56 px, `safe-area-inset-bottom`, hueco al final de la página |
 | `QRCode` | QR en SVG sin dependencias (versiones 1–10, L/M/Q/H), en cuadrados, puntos o redondeado | — | Codificador en `lib/ui/qr.ts`, comprobado con un decodificador real (OpenCV) en las 10 versiones y los 4 niveles, y en el navegador en las tres formas. Dos hallazgos: los buscadores de las esquinas tienen que ser cuadrados (en círculo no se leen) y en tema oscuro hay que invertir (`contrast="auto"`) |
+
+**Compra en una página (ronda del 21-10-2026).** Los dos flujos de Almíbar tenían pasos con «Continuar» y pedían correo y
+forma de pago. Ahora: una página, solo nombre y teléfono, pago al recoger por defecto y el botón con el total siempre a
+la vista. La pieza que más clics ahorra es `DatePicker shortcuts={4} calendar="collapsed"`: casi todo el que recoge un
+pedido elige hoy o mañana, así que el calendario solo aparece si lo pide («Otro día…»).
 
 ## 10. Lo que falta, por sector (regla de modularidad: primero opción, luego pieza)
 

@@ -31,6 +31,10 @@ export type DatePickerProps = {
   slotsLabel?: string;
   /** noches mínimas en `range` */
   minNights?: number;
+  /** atajos con los próximos N días disponibles («Hoy», «Mañana», «jue 23») encima del calendario (solo `single`) */
+  shortcuts?: number;
+  /** open = calendario siempre a la vista · collapsed = solo los atajos y «Otro día…», que despliega el calendario */
+  calendar?: "open" | "collapsed";
   /** nombre accesible del calendario */
   label?: string;
   variant?: Variant;
@@ -74,6 +78,8 @@ export default function DatePicker({
   months = 1,
   slotsLabel = "Hora",
   minNights = 1,
+  shortcuts = 0,
+  calendar = "open",
   label = mode === "range" ? "Elige las fechas" : "Elige un día",
   variant = "minimal",
   className = "",
@@ -193,8 +199,38 @@ export default function DatePicker({
         ? `${longDate(start)}${curSlot ? ` · ${curSlot}` : ""}`
         : "Ningún día elegido";
 
+  // atajos: los próximos días elegibles a partir de hoy (se conocen tras montar)
+  const quick: string[] = [];
+  if (mode === "single" && shortcuts > 0 && today) {
+    for (let d = minD && minD > today ? minD : today, k = 0; quick.length < shortcuts && k < 60; d = add(d, 1), k++) if (!blocked(d)) quick.push(d);
+  }
+  const quickLabel = (d: string) => {
+    if (d === today) return "Hoy";
+    if (today && d === add(today, 1)) return "Mañana";
+    return fromIso(d).toLocaleDateString("es-ES", { weekday: "short", day: "numeric" }).replace(".", "");
+  };
+  const [showCal, setShowCal] = useState(calendar === "open");
+  const calOpen = calendar === "open" || showCal || (!!start && quick.length > 0 && !quick.includes(start));
+
   return (
     <div className={`ui-date ${vcls(variant)} ${className}`.trim()}>
+      {mode === "single" && shortcuts > 0 && (
+        <div className="ui-date__quick" role="group" aria-label={label}>
+          {quick.map((d) => (
+            <button key={d} type="button" className="ui-date__qd" aria-pressed={start === d} aria-label={longDate(d)} onClick={() => { setFocus(d); setView(d.slice(0, 7)); set(d); }}>
+              <b>{quickLabel(d)}</b>
+              <small aria-hidden>{fromIso(d).toLocaleDateString("es-ES", { day: "numeric", month: "short" }).replace(".", "")}</small>
+            </button>
+          ))}
+          {calendar === "collapsed" && (
+            <button type="button" className="ui-date__qd ui-date__qd--more" aria-expanded={calOpen} onClick={() => setShowCal((v) => !v)}>
+              <b>{calOpen ? "Cerrar" : "Otro día…"}</b>
+              <small aria-hidden>calendario</small>
+            </button>
+          )}
+        </div>
+      )}
+      {calOpen && (<>
       <div className="ui-date__top">
         <button type="button" className="ui-date__nav" onClick={() => setView(shiftMonth(`${view}-01`, -1).slice(0, 7))} disabled={!prevOk} aria-label="Mes anterior">‹</button>
         <p className="ui-date__label" id={`${uid}-l`}>{label}</p>
@@ -246,6 +282,8 @@ export default function DatePicker({
           </div>
         ))}
       </div>
+
+      </>)}
 
       {mode === "single" && start && (slots === "" ? null : (
         <fieldset className="ui-date__slots">

@@ -6,7 +6,6 @@ import ActionBar from "@/components/ui/ActionBar";
 import CheckboxGroup from "@/components/ui/CheckboxGroup";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
-import EmptyState from "@/components/ui/EmptyState";
 import ExpandingPanels from "@/components/ui/ExpandingPanels";
 import FAQSection from "@/components/ui/FAQSection";
 import GradientField from "@/components/ui/GradientField";
@@ -14,6 +13,8 @@ import { ALLERGENS } from "@/components/ui/MenuList";
 import Modal from "@/components/ui/Modal";
 import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
+import PageTransition, { PageTransitionPersist } from "@/components/ui/PageTransition";
+import { SharedTransition } from "@/components/ui/ElementTransition";
 import PinnedSection from "@/components/ui/PinnedSection";
 import SplitText from "@/components/ui/SplitText";
 import Table from "@/components/ui/Table";
@@ -26,7 +27,7 @@ import { photo } from "@/lib/sites/photos";
 import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
-import CakeStage, { CakeFlat } from "./CakeStage";
+import CakeStage from "./CakeStage";
 import { DEFAULT_CAKE, describe, labelOf, leadDaysOf, type CakeSel } from "./cake";
 import { CLIENTS, COLLECTIONS, CORPORATE_TABLE, HOME_FAQ, PHASES, SLUG, TASTING_SLOTS, WEDDING, WEDDING_FAQ, WEDDING_STEPS } from "./data";
 import "./taller.css";
@@ -91,6 +92,7 @@ export function Shell({ children }: { children: ReactNode }) {
     <SiteFrame tokens={TOKENS} className="tl" icons={{ set: phosphorLight, weight: "light" }}>
       <CakeCtx.Provider value={value}>
         <a className="tl-skip" href="#contenido">Saltar al contenido</a>
+        <PageTransitionPersist name="tl-head">
         <header className="tl-head">
           <a className="tl-brand" href={href()}>
             Almíbar <em>Taller</em>
@@ -106,6 +108,7 @@ export function Shell({ children }: { children: ReactNode }) {
             {menu ? "Cerrar" : "Menú"}
           </button>
         </header>
+        </PageTransitionPersist>
         <main id="contenido">{children}</main>
         <Footer />
         <ActionBar
@@ -176,6 +179,7 @@ const HERO_CAKE: CakeSel = { size: "24", sponge: "chocolate", filling: "frambues
 const STORY_CAKE: CakeSel = { size: "16", sponge: "redvelvet", filling: "pastelera", covering: "buttercream", toppings: ["frutos-rojos", "velas"], message: "" };
 
 function Home() {
+  const { setSel } = useCake();
   return (
     <>
       <section className="tl-hero">
@@ -186,12 +190,16 @@ function Home() {
             <SplitText as="h1" by="words" trigger="mount" className="tl-h1" emphasis>{"Tu tarta, *capa a capa.*"}</SplitText>
             <p className="tl-lead">Elige bizcocho, relleno, cobertura y decoración, y mírala girar antes de encargarla. La horneamos en el obrador y la recoges en 48 horas.</p>
             <div className="tl-row">
-              <a className="tl-btn" href={href("disena")}>Diseñar tu tarta</a>
+              <a className="tl-btn" href={href("disena")} onClick={() => setSel(HERO_CAKE)}>Diseñar esta tarta</a>
               <a className="tl-btn tl-btn--ghost" href={href("bodas")}>Bodas y eventos</a>
             </div>
             <Rating />
           </div>
-          <CakeStage sel={HERO_CAKE} height="min(68vh, 620px)" alt="Tarta de dos pisos desnuda: bizcocho de chocolate con capas de frambuesa, frutos rojos y flores, girando" className="tl-hero__cake" />
+          <SharedTransition name="tl-cake" pace="slow">
+            <div className="tl-hero__cake">
+              <CakeStage sel={HERO_CAKE} cut={0.6} height="min(68vh, 620px)" alt="Tarta de dos pisos desnuda, con una porción sacada: bizcocho de chocolate con capas de frambuesa, frutos rojos y flores, girando" />
+            </div>
+          </SharedTransition>
         </div>
         <p className="tl-wrap tl-hero__from">Desde {money(CAKE.sizes[0].price, "EUR", "es-ES", true)} · 6 raciones · señal del 30 % al encargar</p>
       </section>
@@ -257,20 +265,29 @@ const STORY_RANGE: [number, number] = [0, 1];
 /** el despiece se abre en las tres primeras fases y la tarta se vuelve a montar en «Decoración» */
 const storyCurve = (t: number) => (t < 0.1 ? 0 : t < 0.45 ? (t - 0.1) / 0.35 : t < 0.68 ? 1 : t < 0.86 ? 1 - (t - 0.68) / 0.18 : 0);
 
-/* ---------- diseñador ---------- */
+/* ---------- diseñador: diseñar y encargar en la misma pantalla (sin página de solicitud) ---------- */
+const PHONE = /^[+\d\s]{9,}$/;
+
 function Design() {
-  const { sel, setSel, setOrder } = useCake();
-  const navigate = useSiteNavigate();
+  const { sel, setSel } = useCake();
   const [exploded, setExploded] = useState(false);
+  const [inside, setInside] = useState(false);
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
   const [store, setStore] = useState(STORE.id);
+  const [f, setF] = useState({ name: "", phone: "" });
+  const [tried, setTried] = useState(false);
+  const [done, setDone] = useState(false);
   const set = <K extends keyof CakeSel>(k: K, v: CakeSel[K]) => setSel({ ...sel, [k]: v });
   const price = cakePrice(sel);
+  const deposit = Math.round(price * 0.3 * 100) / 100;
   const algs = cakeAllergens(sel);
   const lead = leadDaysOf(sel.size);
   const TOPS = CAKE.toppings.map((t) => t.label).join(", ");
-  const ok = !!date && !!slot;
+  const st = STORES.find((s) => s.id === store) ?? STORE;
+  const okPhone = PHONE.test(f.phone.trim());
+  const missing = !date || !slot ? "Elige día y hora de recogida" : f.name.trim().length < 2 ? "Falta tu nombre" : !okPhone ? "Falta un teléfono válido" : "";
+  const day = date ? new Date(`${date}T12:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }) : "";
 
   // si se cambia a una tarta de pisos, la fecha puede quedar antes del mínimo: se vacía
   useEffect(() => {
@@ -286,13 +303,18 @@ function Design() {
   return (
     <div className="tl-design">
       <div className="tl-design__stage">
-        <CakeStage sel={sel} explode={exploded ? 1 : 0} draggable height="100%" alt={`Tu tarta: ${describe(sel)}`} />
+        <SharedTransition name="tl-cake" pace="slow">
+          <div className="tl-design__cake">
+            <CakeStage sel={sel} explode={exploded ? 1 : 0} cut={inside ? 1 : 0} draggable height="100%" alt={`Tu tarta: ${describe(sel)}`} />
+          </div>
+        </SharedTransition>
         <div className="tl-design__tools">
+          <button type="button" className="tl-chip" aria-pressed={inside} onClick={() => setInside((v) => !v)}>{inside ? "Cerrar la porción" : "Ver por dentro"}</button>
           <button type="button" className="tl-chip" aria-pressed={exploded} onClick={() => setExploded((e) => !e)}>{exploded ? "Montar la tarta" : "Ver despiece"}</button>
           <span className="tl-mut tl-hide-sm">Arrastra para girarla</span>
         </div>
       </div>
-      <div className="tl-design__panel">
+      <form className="tl-design__panel" onSubmit={(e) => { e.preventDefault(); setTried(true); if (!missing) setDone(true); }} noValidate>
         <p className="tl-kicker">Diseña tu tarta</p>
         <h1 className="tl-h2">Capa a capa</h1>
         <OptionPicker label="Tamaño" kind="chip" options={CAKE.sizes.map((s) => ({ value: s.value, label: s.label }))} value={sel.size} onChange={(v) => set("size", v)} />
@@ -309,16 +331,13 @@ function Design() {
         {sel.toppings.includes("mensaje") && (
           <TextField label="Mensaje (hasta 30 letras)" placeholder="Feliz 30, Ana" className="tl-field" value={sel.message} onChange={(v) => set("message", v.slice(0, 30))} variant="minimal" />
         )}
-        <div className="tl-sum">
-          <p className="tl-sum__price"><span>Precio</span> <b>{money(price)}</b></p>
-          <p className="tl-mut">Señal del 30 % al confirmar: {money(Math.round(price * 0.3 * 100) / 100)}. El resto, al recoger.</p>
-          <p className="tl-mut"><b>Contiene:</b> {algLabel(algs) || "—"}. Elaborada en un obrador donde se manipulan los 14 alérgenos.</p>
-        </div>
+        <p className="tl-mut"><b>Contiene:</b> {algLabel(algs) || "—"}. Elaborada en un obrador donde se manipulan los 14 alérgenos.</p>
+
         <div className="tl-pickup">
           <p className="tl-label">Recogida</p>
-          <OptionPicker label="Tienda" kind="chip" options={STORES.map((s) => ({ value: s.id, label: s.name.replace("Almíbar ", "") }))} value={store} onChange={setStore} />
+          <OptionPicker label="Tienda" kind="chip" options={STORES.map((s) => ({ value: s.id, label: s.name.replace("Almíbar ", "").replace(" · obrador", "") }))} value={store} onChange={(v) => { setStore(v); setDate(""); setSlot(""); }} />
           <DatePicker
-            key={lead}
+            key={`${lead}-${store}`}
             label={`Día de recogida (desde ${lead === 2 ? "pasado mañana" : "dentro de 7 días"})`}
             value={date}
             onChange={(v) => { setDate(v); setSlot(""); }}
@@ -330,20 +349,35 @@ function Design() {
             slot={slot}
             onSlotChange={setSlot}
             slotsLabel="Hora de recogida"
+            shortcuts={4}
+            calendar="collapsed"
           />
         </div>
-        <button
-          type="button"
-          className="tl-btn tl-btn--block"
-          disabled={!ok}
-          onClick={() => {
-            setOrder({ sel, date, slot, store });
-            navigate({ href: href("solicitud") });
-          }}
-        >
-          {ok ? `Solicitar · ${money(price)}` : "Elige día y hora de recogida"}
-        </button>
-      </div>
+
+        <div className="tl-pickup">
+          <p className="tl-label">A nombre de</p>
+          <div className="tl-pair">
+            <TextField label="Nombre" placeholder="Ana" className="tl-field" value={f.name} onChange={(v) => setF((s) => ({ ...s, name: v }))} name="name" autoComplete="given-name" required variant="minimal" {...(tried && f.name.trim().length < 2 ? { intent: "danger" as const, hint: "Escribe tu nombre" } : {})} />
+            <TextField label="Teléfono o WhatsApp" placeholder="600 000 000" type="tel" className="tl-field" value={f.phone} onChange={(v) => setF((s) => ({ ...s, phone: v }))} name="tel" autoComplete="tel" required variant="minimal" {...(tried && !okPhone ? { intent: "danger" as const, hint: "Un teléfono de 9 cifras" } : {})} />
+          </div>
+        </div>
+
+        <div className="tl-buy">
+          <p className="tl-sum__price"><span>Total</span> <b>{money(price)}</b></p>
+          <p className="tl-mut">Hoy, solo la señal del 30 % ({money(deposit)}); el resto, al recoger. {date && slot ? `Recogida: ${st.name.replace("Almíbar ", "")}, ${day} a las ${slot}.` : ""}</p>
+          <button type="submit" className="tl-btn tl-btn--block">Encargar · {money(price)}</button>
+          <p className="tl-mut tl-missing" aria-live="polite">{tried && missing}</p>
+        </div>
+      </form>
+      <Modal
+        open={done}
+        onOpenChange={setDone}
+        title="¡Tarta encargada!"
+        body={`Gracias, ${f.name.split(" ")[0] || ""}. La tendrás el ${day} a las ${slot} en ${st.name}. Te escribimos por WhatsApp al ${f.phone} para la señal y la confirmación. (Es una web de ejemplo: no se encarga ni se cobra nada.)`}
+        confirmLabel="Perfecto"
+        cancelLabel=""
+        variant="glass"
+      />
     </div>
   );
 }
@@ -469,76 +503,16 @@ function Business() {
   );
 }
 
-/* ---------- solicitud ---------- */
-function Request() {
-  const { order, setOrder } = useCake();
-  const [f, setF] = useState({ name: "", phone: "", email: "" });
-  const [done, setDone] = useState(false);
-  const set = (k: keyof typeof f) => (v: string) => setF((s) => ({ ...s, [k]: v }));
-  const valid = f.name.trim() && f.phone.replace(/\D/g, "").length >= 9 && /\S+@\S+\.\S+/.test(f.email);
+const PAGES: Record<string, () => ReactNode> = { "": Home, disena: Design, bodas: Weddings, empresas: Business };
 
-  if (!order) {
-    return (
-      <div className="tl-wrap tl-sec">
-        <EmptyState title="Aún no has diseñado ninguna tarta" text="Empieza por el diseñador: eliges capas, decoración y el día de recogida." glyph="◌">
-          <a className="tl-btn" href={href("disena")}>Ir al diseñador</a>
-        </EmptyState>
-      </div>
-    );
-  }
-  const price = cakePrice(order.sel);
-  const store = STORES.find((s) => s.id === order.store) ?? STORE;
-  const day = new Date(`${order.date}T12:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+/** Cada página se abre en un iris desde el centro; la cabecera se queda quieta y la tarta viaja de la portada al diseñador. */
+export function Page({ path }: { path: string[] }) {
+  const route = path[0] ?? "";
+  const P = PAGES[route];
+  if (!P) return null;
   return (
-    <div className="tl-wrap tl-sec">
-      <p className="tl-kicker">Solicitud</p>
-      <h1 className="tl-h2" style={{ marginBottom: 28 }}>Revisa tu tarta</h1>
-      <div className="tl-order">
-        <aside className="tl-box" aria-label="Tu tarta">
-          <CakeFlat sel={order.sel} className="tl-order__flat" />
-          <p>{describe(order.sel)}</p>
-          {order.sel.toppings.includes("mensaje") && order.sel.message && <p className="tl-mut">Mensaje: «{order.sel.message}»</p>}
-          <p className="tl-mut"><b>Contiene:</b> {algLabel(cakeAllergens(order.sel))}.</p>
-          <ul className="tl-lines">
-            <li><span>Recogida</span><span>{day} · {order.slot}</span></li>
-            <li><span>Tienda</span><span>{store.name}</span></li>
-            <li><span>Total</span><span>{money(price)}</span></li>
-            <li className="tl-lines__b"><span>Señal hoy (30 %)</span><span>{money(Math.round(price * 0.3 * 100) / 100)}</span></li>
-          </ul>
-          <a className="tl-link" href={href("disena")}>Cambiar el diseño</a>
-        </aside>
-        <form className="tl-box" onSubmit={(e) => { e.preventDefault(); if (valid) setDone(true); }}>
-          <h2 className="tl-h3">Tus datos</h2>
-          <TextField label="Nombre" placeholder="Ana Prueba" className="tl-field" value={f.name} onChange={set("name")} name="name" required variant="minimal" />
-          <TextField label="Teléfono" placeholder="600 000 000" className="tl-field" value={f.phone} onChange={set("phone")} name="tel" required variant="minimal" hint="Te avisamos por WhatsApp cuando esté lista." />
-          <TextField label="Correo" placeholder="ana@ejemplo.com" className="tl-field" type="email" value={f.email} onChange={set("email")} name="email" required variant="minimal" />
-          <p className="tl-mut">Demo: no se pide ningún dato de pago ni se cobra la señal.</p>
-          <button type="submit" className="tl-btn tl-btn--block" disabled={!valid}>Confirmar solicitud</button>
-        </form>
-      </div>
-      <Modal
-        open={done}
-        onOpenChange={(o) => {
-          setDone(o);
-          if (!o) setOrder(null);
-        }}
-        title="¡Tarta encargada!"
-        body={`Gracias, ${f.name.split(" ")[0] || ""}. La tendrás el ${day} a las ${order.slot} en ${store.name}. Te hemos escrito a ${f.email} con el resumen. (Es una web de ejemplo: no se encarga ni se cobra nada.)`}
-        confirmLabel="Perfecto"
-        cancelLabel=""
-        variant="glass"
-      />
-    </div>
+    <PageTransition key={route} kind="iris" pace="normal" tone="acc">
+      <P />
+    </PageTransition>
   );
 }
-
-export function Page({ path }: { path: string[] }) {
-  const [a] = path;
-  if (!a) return <Home />;
-  if (a === "disena") return <Design />;
-  if (a === "bodas") return <Weddings />;
-  if (a === "empresas") return <Business />;
-  if (a === "solicitud") return <Request />;
-  return null;
-}
-
