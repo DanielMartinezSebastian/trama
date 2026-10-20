@@ -21,6 +21,9 @@ import * as volt from "@/components/sites/volt/data";
 import * as faro from "@/components/sites/faro/data";
 import * as hamaca from "@/components/sites/hamaca/data";
 import * as travesia from "@/components/sites/travesia/data";
+import * as almibar from "@/components/sites/almibar/data";
+import * as almibarTaller from "@/components/sites/almibar-taller/data";
+import * as almibarBarrio from "@/components/sites/almibar-barrio/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -45,6 +48,9 @@ export const sites: SiteMeta[] = [
   { ...faro.meta, routes: faro.ROUTES, dir: "components/sites/faro" },
   { ...hamaca.meta, routes: hamaca.ROUTES, dir: "components/sites/hamaca" },
   { ...travesia.meta, routes: travesia.ROUTES, dir: "components/sites/travesia" },
+  { ...almibar.meta, routes: almibar.ROUTES, dir: "components/sites/almibar" },
+  { ...almibarTaller.meta, routes: almibarTaller.ROUTES, dir: "components/sites/almibar-taller" },
+  { ...almibarBarrio.meta, routes: almibarBarrio.ROUTES, dir: "components/sites/almibar-barrio" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

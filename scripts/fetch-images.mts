@@ -25,7 +25,8 @@ const BAD_LIC = /\b(sa|nd|nc)\b/i;
 const EXCLUDE: string[] = [
   "marakkanam", "salt-pans", "salt pans", "pachalik", "occupation and freedom", "strada lipscani", "conference organisers", "l-22-01-21", "i love you stage",
   "positivus", "snow covered saint charles", "cholla", "shoshone", "savyolovsky", "winnipeg", "wiener weltausstellung", "painting", "gemälde", "oil on canvas",
-  "gov-ball", "plant-in-a-coworking", "paris-coffee", "man-in-cafe", "aerial-view-of-cape-town", "food-of-the-city",
+  "gov-ball",
+  "Big Desert Wilderness Area, Victoria, Australia (Unsplash).jpg", "Coffee art and iphone (Unsplash).jpg", "Sambazon 2016 (Unsplash).jpg", "Tidal Basin, Washington, United States (Unsplash xVnPN3fVGfY).jpg", "West Rim Trail, Grand Canyon Village, United States (Unsplash).jpg", "plant-in-a-coworking", "paris-coffee", "man-in-cafe", "aerial-view-of-cape-town", "food-of-the-city",
 ];
 
 const TOPICS: Record<string, { n: number; queries: string[] }> = {
@@ -38,6 +39,7 @@ const TOPICS: Record<string, { n: number; queries: string[] }> = {
   ciudad: { n: 5, queries: ["unsplash city street night", "unsplash urban skyline", "pexels city lights evening", "unsplash street architecture"] },
   gastronomia: { n: 5, queries: ["unsplash restaurant food", "unsplash coffee cafe", "pexels plated dish", "unsplash bread bakery"] },
   deporte: { n: 8, queries: ["unsplash racing car", "unsplash motorsport", "pexels race car", "unsplash athlete portrait", "unsplash cyclist road", "unsplash helmet"] },
+  pasteleria: { n: 14, queries: ["unsplash cake", "unsplash pastry", "unsplash croissant", "unsplash bakery", "unsplash macarons", "unsplash cupcake", "pexels cake", "pexels pastry", "unsplash dessert", "unsplash tart", "unsplash cheesecake", "unsplash donut", "unsplash cinnamon roll", "unsplash wedding cake", "unsplash strawberry cake", "pexels bakery"] },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 

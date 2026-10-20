@@ -6,7 +6,7 @@
  */
 import credits from "./video-credits.json";
 
-export type VideoTopic = "oceano" | "costa" | "naturaleza" | "ciudad" | "cielo";
+export type VideoTopic = "oceano" | "costa" | "naturaleza" | "ciudad" | "cielo" | "obrador";
 export type Video = {
   file: string;
   poster: string;

@@ -1052,6 +1052,41 @@ Datos clave-valor en una caja de línea fina (fechas, lugar, superficie, plazo).
 | `columns` | `1` · `2` | "1" |
 | `mono` | boolean | true |
 
+### Horario con estado (abierto ahora) — `OpeningHours`
+
+«Abierto ahora · cierra a las 20:30» calculado en la zona horaria del negocio, con tramos partidos, días cerrados, festivos y aperturas especiales. La semana se pinta en el servidor y el estado al montar. openingHoursSchema() da el mismo horario en schema.org para el JSON-LD.
+
+| prop | tipo | default |
+|---|---|---|
+| `hours` | text | "L-V\|07:30-14:00 17:00-20:30\nS\|08:00-14:30\nD\|cerrado" |
+| `exceptions` | text | "2026-12-25\|Navidad\n2026-12-24\|Nochebuena\|08:00-14:00" |
+| `layout` | `full` · `compact` · `badge` | "full" |
+| `timeZone` | text | "Europe/Madrid" |
+| `soonMinutes` | number 0–120 | 30 |
+| `title` | text | "Horario" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- El estado depende de la hora del navegador convertida a la zona del negocio: un visitante de otro país ve si abre según la hora de allí.
+- Para la ficha de Google y la búsqueda con IA: <JsonLd data={{ "@type": "Bakery", openingHoursSpecification: openingHoursSchema(hours, exceptions) }} />.
+
+### Código QR — `QRCode`
+
+Código QR en SVG generado en el propio componente (sin dependencias ni servicios externos; modo byte UTF-8, versiones 1–10, niveles L/M/Q/H). Módulos cuadrados, en puntos (dot matrix) o redondeados, en el color del tema. Para la carta de cada mesa, el enlace de reserva o la ficha de una pieza en el escaparate.
+
+| prop | tipo | default |
+|---|---|---|
+| `value` | text | "https://trama.dev/sitios/almibar-barrio/mesa/7" |
+| `shape` | `square` · `dots` · `rounded` | "square" |
+| `ecc` | `L` · `M` · `Q` · `H` | "M" |
+| `codeSize` | number 80–360 | 200 |
+| `tone` | `fg` · `acc` · `acc2` · `mut` | "fg" |
+| `contrast` | `auto` · `theme` | "auto" |
+| `caption` | text | "Mesa 7 · escanea para ver la carta" |
+
+- Comprobado con un decodificador real (OpenCV): todas las versiones y niveles, en las tres formas. Los buscadores de las esquinas van siempre cuadrados: redondeados o en círculo, OpenCV no los encuentra.
+- En un tema oscuro, contrast="auto" pinta módulos oscuros sobre un cuadro claro (--fg): un QR claro sobre fondo oscuro no lo leen todos los lectores.
+- Para imprimir: contraste alto entre el color de los módulos y --bg, al menos 2 × 2 cm y el margen de 4 módulos alrededor.
+
 ## Navegación (`navegacion`)
 
 Barras, pestañas y acordeones.
@@ -1246,6 +1281,20 @@ Pestaña fija pegada al borde de la ventana con el texto en vertical: una llamad
 
 - Es position: fixed; aquí va contenida en el recuadro de puntos.
 
+### Barra de acciones en móvil — `ActionBar`
+
+Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el pie. Por encima de 760 px se oculta (show="mobile").
+
+| prop | tipo | default |
+|---|---|---|
+| `actions` | text | "Llamar\|tel:+34976000000\|phone\nWhatsApp\|https://wa.me/34600000000\|message\nCómo ll…" |
+| `show` | `mobile` · `always` | "mobile" |
+| `position` | `fixed` · `static` | "static" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "solid" |
+
+- En el catálogo va «en el flujo» para verla en la ficha; en una web, position="fixed" (el valor por defecto).
+- Una sola acción primary: es la que el negocio quiere que hagas (B15 en docs/11).
+
 ## Formularios (`formularios`)
 
 Campos, interruptores y deslizadores.
@@ -1368,6 +1417,19 @@ Círculos de color (con su nombre accesible) o chips de texto. Botones de radio 
 |---|---|---|
 | `kind` | `swatch` · `chip` | "swatch" |
 | `label` | text | "Esmalte" |
+
+### Selector de fecha y hueco — `DatePicker`
+
+Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), con antelación mínima, días cerrados, festivos y los huecos del día elegido. Cuadrícula ARIA con teclado completo (flechas, Inicio/Fin, RePág/AvPág). Valores en ISO: «2026-10-24» o «2026-10-24/2026-10-27».
+
+| prop | tipo | default |
+|---|---|---|
+| `mode` | `single` · `range` | "single" |
+| `months` | `1` · `2` | "1" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).
+- `min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación.
 
 ## Feedback (`feedback`)
 
@@ -2193,6 +2255,19 @@ La sección lista para un blog o una documentación: cabecera, índice lateral q
 - readTime="auto" calcula los minutos del propio texto.
 - progress pinta una barra fija arriba de la ventana: en la vista previa la sigue la página, no la caja.
 
+### Carta con alérgenos — `MenuList`
+
+Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que no puedes tomar, agotados del día y botón de añadir para el pedido en mesa o para recoger.
+
+| prop | tipo | default |
+|---|---|---|
+| `layout` | `list` · `columns` · `cards` | "list" |
+| `filter` | boolean | true |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- La carta como texto: `#Sección|nota` y una línea por plato `Nombre|descripción|precio|alérgenos|etiquetas`. O como datos: `MenuSection[]` con `soldOut` e `image` por plato.
+- Es la carta que abre el QR de la mesa: ver QRCode y /sitios/almibar-barrio/mesa/7.
+
 ## Overlays (`overlays`)
 
 Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.
@@ -2595,3 +2670,27 @@ Productora de documentales con la coreografía de las webs de cine premiadas (do
 Carpeta: `components/sites/travesia/` · 9 páginas: Índice · Puntas negras · Marea rosa · Giradores · Barrack Point · Arena negra · El borde del mapa · Productora · Contacto
 
 `MetaTable` ×2 · `PageTransition` · `Traveler` · `BigFooter`
+
+### Almíbar · pastelería de obrador — `/sitios/almibar`
+
+Pastelería de barrio con la fórmula «Obrador editorial» (relato de procedencia, nivel de movimiento 1–2): crema, tinta y frambuesa, serif grande, foto y vídeo del obrador a sangre. Resuelve lo que pide el sector: horario con estado «abierto ahora» en cada tienda, carta en HTML con los 14 alérgenos y filtro «sin…», pedido para recoger con día y franja, tarta por encargo en pasos con precio y alérgenos en vivo (48 h de antelación, señal del 30 %), barra de acciones en móvil y JSON-LD Bakery. Usa OpeningHours, MenuList, DatePicker, ActionBar, SplitText, ImageReveal, Timeline, OptionPicker, CartDrawer, Stepper, TestimonialSection, FAQSection y CookieBanner.
+
+Carpeta: `components/sites/almibar/` · 7 páginas: Inicio · Carta · Pedir para recoger · Tu pedido · Tartas por encargo · El obrador · Tiendas y horario
+
+`TextField` ×7 · `OptionPicker` ×4 · `OpeningHours` ×4 · `RadioGroup` ×3 · `Timeline` ×2 · `Stepper` ×2 · `ImageReveal` ×2 · `EmptyState` ×2 · `DatePicker` ×2 · `Reveal` · `CheckboxGroup` · `FAQSection` · `TestimonialSection` · `TeamSection` · `Modal` · `Toast` · `SplitText` · `QuantityStepper` · `FilterBar` · `CartDrawer` · `CookieBanner` · `GradientField` · `MenuList` · `ActionBar`
+
+### Almíbar Taller · tartas a medida — `/sitios/almibar-taller`
+
+Tartas a medida con la fórmula «Taller 3D»: la tarta es una escena three.js procedural (pisos, capas de bizcocho y relleno, cobertura con goteo, frutos rojos, flores y velas) que gira sobre un GradientField, hace despiece capa a capa con el scroll (PinnedSection) y cambia en vivo en el configurador con precio, alérgenos y DatePicker de recogida con antelación. Bodas (degustación con cita y estimador por invitados), empresas (precios por volumen) y una solicitud con señal del 30 %. Sin WebGL o con movimiento reducido, la misma tarta en SVG.
+
+Carpeta: `components/sites/almibar-taller/` · 5 páginas: Inicio · Diseña tu tarta · Bodas · Empresas · Solicitud
+
+`TextField` ×8 · `OptionPicker` ×5 · `FAQSection` ×2 · `DatePicker` ×2 · `Timeline` · `Table` · `CheckboxGroup` · `TestimonialSection` · `Modal` · `SplitText` · `PinnedSection` · `EmptyState` · `ExpandingPanels` · `CookieBanner` · `GradientField` · `OpeningHours` · `ActionBar`
+
+### Almíbar · café de barrio en puntos — `/sitios/almibar-barrio`
+
+Tercera versión de la pastelería Almíbar, fórmula «Café en puntos» (dot matrix en claro, movimiento 1): el vídeo del obrador pintado en puntos en el hero y lo práctico del día a día — carta en HTML con los 14 alérgenos y filtro «Sin…», QR imprimible para cada mesa que abre /mesa/<n> con pedido a barra sin registro, barra de acciones en móvil, club de sellos con código personal y horario «abierto ahora» con festivos. Usa VideoPlayer (ascii dots), MenuList, QRCode (dots), OpeningHours, ActionBar, QuantityStepper, Toggle, TextField, Toast y CookieBanner.
+
+Carpeta: `components/sites/almibar-barrio/` · 16 páginas: Inicio · Carta · Mesa 1 · Mesa 2 · Mesa 3 · Mesa 4 · Mesa 5 · Mesa 6 · Mesa 7 · Mesa 8 · Mesa 9 · Mesa 10 · Mesa 11 · Mesa 12 · Club de sellos · Visítanos
+
+`OpeningHours` ×4 · `TextField` ×3 · `QRCode` ×3 · `Toggle` ×2 · `MenuList` ×2 · `ActionBar` ×2 · `VideoPlayer` · `Toast` · `QuantityStepper` · `CookieBanner`
