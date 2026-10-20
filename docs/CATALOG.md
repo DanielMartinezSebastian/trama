@@ -2451,7 +2451,7 @@ Aviso con la marca de la web (Neutomni). «Rechazar» pesa lo mismo que «Acepta
 
 | prop | tipo | default |
 |---|---|---|
-| `position` | `bottom-left` · `bottom-right` · `bottom` | "bottom-left" |
+| `position` | `bottom-right` · `bottom-left` · `bottom` | "bottom-right" |
 | `title` | text | "¿Qué te parecen las cookies?" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
@@ -2475,6 +2475,7 @@ Los mismos 119 nombres en tres familias: pixel art (Pixelarticons), Phosphor (se
 - Para un icono fuera del set: `import { Zap } from "pixelarticons/react/Zap"` y `<Icon icon={Zap} />` (también valen las variantes …Solid y …Glyph).
 - Para toda una web: `<IconSet set={phosphor} weight="light">` (import de `@/lib/ui/icons-phosphor`) o `SiteFrame icons`. Los glifos `icon:…` de Button, NavBar, FeatureGrid o Footer también cambian.
 - Cada familia vive en su módulo (`icons-phosphor`, `icons-lucide`) y solo la descarga la web que la usa. Lucide no dibuja marcas: las suyas salen de Phosphor.
+- Si la web usa un solo peso de Phosphor, importa su módulo: `phosphorLight` de `@/lib/ui/icons-phosphor-light` (o `trama-ui/icons/phosphor-light`) pesa ~1/6 del set completo, porque cada icono de `phosphor` trae sus seis pesos.
 - Licencias: Pixelarticons MIT (© Gerrit Halfmann), Phosphor MIT, Lucide ISC.
 
 ### Marco pixel art — `PixelFrame`
