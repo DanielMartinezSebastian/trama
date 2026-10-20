@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit",
     "catalog": "tsx --import ./scripts/stub-register.mjs scripts/build-catalog.mts",
     "images:fetch": "tsx scripts/fetch-images.mts",
+    "videos:fetch": "tsx scripts/fetch-videos.mts",
     "check:shadows": "tsx scripts/check-text-shadow.mts",
     "catalog:check": "tsx --import ./scripts/stub-register.mjs scripts/build-catalog.mts --check",
     "kit:export": "tsx scripts/kit-export.mts",

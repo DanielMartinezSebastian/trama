@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { allPhotos } from "@/lib/sites/photos";
+import { allVideos } from "@/lib/sites/videos";
 import "./creditos.css";
 
 export const metadata: Metadata = {
-  title: "Créditos de las imágenes · Trama",
-  description: "Autoría y licencia de las fotografías, los modelos 3D y los datos de mapa que usan las webs de demostración de Trama.",
+  title: "Créditos de las imágenes y los vídeos · Trama",
+  description: "Autoría y licencia de las fotografías, los vídeos, los modelos 3D y los datos de mapa que usan las webs de demostración de Trama.",
   alternates: { canonical: "/creditos" },
 };
 
@@ -17,13 +18,17 @@ const TOPICS: Record<string, string> = {
   naturaleza: "Naturaleza",
   ciudad: "Ciudad",
   gastronomia: "Gastronomía",
+  deporte: "Deporte",
+  verano: "Verano",
 };
+
+const VIDEO_TOPICS: Record<string, string> = { oceano: "Océano", costa: "Costa", naturaleza: "Naturaleza", ciudad: "Ciudad", cielo: "Cielo" };
 
 /** Atribución de las fotografías de las demos: autor, licencia y página de origen de cada una. Sale de `lib/sites/photo-credits.json`. */
 export default function CreditosPage() {
   return (
     <main id="contenido" className="cr">
-      <h1>Créditos de las imágenes</h1>
+      <h1>Créditos de las imágenes y los vídeos</h1>
       <p className="cr__lead">
         Las fotografías de las webs de demostración vienen de <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> y se usan con licencias que permiten
         reutilizarlas y redistribuirlas (CC0, dominio público o CC BY). Gracias a quienes las hicieron y las compartieron. Cada foto enlaza a su página de origen.
@@ -43,6 +48,35 @@ export default function CreditosPage() {
                     <a href={p.page}>{p.title.replace(/\.jpe?g$/i, "").replace(/[_-]+/g, " ")}</a>
                     <span>{p.author}</span>
                     <a className="cr__lic" href={p.licenseUrl || p.page}>{p.license}</a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+      <h2 id="t-videos">Vídeos</h2>
+      <p className="cr__lead">
+        Los vídeos también vienen de Wikimedia Commons (CC0, dominio público o CC BY). Son tramos de 7 a 12 segundos de cada original, reducidos a 1280 px, sin
+        sonido y con un fundido al principio y al final para reproducirlos en bucle; el póster es un fotograma del tramo. Cada uno enlaza a su original.
+      </p>
+      {Object.entries(VIDEO_TOPICS).map(([topic, label]) => {
+        const list = allVideos.filter((v) => v.topic === topic);
+        if (list.length === 0) return null;
+        return (
+          <section key={topic} aria-labelledby={`tv-${topic}`}>
+            <h3 id={`tv-${topic}`}>{label}</h3>
+            <ul className="cr__grid">
+              {list.map((v) => (
+                <li key={v.file} className="cr__item">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={v.posterSrc} alt="" loading="lazy" width={160} height={Math.round((160 * v.height) / v.width)} />
+                  <div>
+                    <a href={v.page}>{v.title.replace(/\.(webm|ogv)$/i, "").replace(/[_-]+/g, " ")}</a>
+                    <span>
+                      {v.author} · tramo de {Math.round(v.duration)} s
+                    </span>
+                    <a className="cr__lic" href={v.licenseUrl || v.page}>{v.license}</a>
                   </div>
                 </li>
               ))}

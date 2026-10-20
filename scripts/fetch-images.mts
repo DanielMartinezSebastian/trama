@@ -37,6 +37,8 @@ const TOPICS: Record<string, { n: number; queries: string[] }> = {
   naturaleza: { n: 5, queries: ["unsplash forest trees", "unsplash sunlight forest", "pexels green forest", "unsplash garden plants"] },
   ciudad: { n: 5, queries: ["unsplash city street night", "unsplash urban skyline", "pexels city lights evening", "unsplash street architecture"] },
   gastronomia: { n: 5, queries: ["unsplash restaurant food", "unsplash coffee cafe", "pexels plated dish", "unsplash bread bakery"] },
+  deporte: { n: 8, queries: ["unsplash racing car", "unsplash motorsport", "pexels race car", "unsplash athlete portrait", "unsplash cyclist road", "unsplash helmet"] },
+  verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 
 type Cand = { title: string; w: number; h: number; lic: string; licUrl: string; author: string; thumb: string; page: string; quality: boolean };
