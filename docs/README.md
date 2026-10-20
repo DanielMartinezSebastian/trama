@@ -13,6 +13,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [01-evaluacion.md](./01-evaluacion.md) | Historial de decisiones: por qué el kit es como es. Los conteos de cada apartado son los de su fecha. |
 | [05-transiciones-de-pagina.md](./05-transiciones-de-pagina.md) | **Transiciones de página y de elementos** (`PageTransition`, `ElementTransition`, `SharedTransition`, `Traveler`): la ventana entera al navegar con la View Transitions API (salvo la cabecera), elementos sueltos y compartidos, elementos que viajan entre rutas sin desaparecer, cómo colocarlas en el App Router de Next y elección por enlace. |
 | [14-transiciones-entre-rutas.md](./14-transiciones-entre-rutas.md) | Ronda 6 de webs premiadas: continuidad entre rutas (Awwwards y demos de Chrome), `Traveler`, la biblioteca de vídeo y la demo Travesía. |
+| [15-evaluacion-proximas-demos.md](./15-evaluacion-proximas-demos.md) | Ronda 7 (evaluación): SOTD de Awwwards aún sin revisar, conceptos nuevos candidatos y qué demos clonar a continuación. |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
