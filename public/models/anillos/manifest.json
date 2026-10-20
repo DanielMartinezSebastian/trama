@@ -1,0 +1,657 @@
+{
+  "version": 1,
+  "unidades": "mm",
+  "ejes": "glTF +Y arriba; anillo en el plano XY, dedo por el eje Z; cabeza en +Y",
+  "diametro_interior_ref": 17.2,
+  "materiales": [
+    "metal",
+    "gem"
+  ],
+  "licencia": "CC0-1.0",
+  "notas": {
+    "cabezas": "attach_shank en el origen de la cabeza; seat = centro del filetín, mesa a +Y",
+    "aros": "attach_head en la cara superior exterior (+Y); pave_NN con +Y local hacia fuera",
+    "piedras": "convexas, centradas en el filetín, mesa a +Y; alargadas con el eje largo en Z (la pera apunta a -Z)"
+  },
+  "piezas": [
+    {
+      "id": "aro-afinado",
+      "archivo": "aros/aro-afinado.glb",
+      "nombre": "Afinado hacia la cabeza",
+      "medidas": {
+        "ancho": 2.2,
+        "ancho_inferior": 3.1,
+        "grosor": 1.55,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 6400,
+      "miniatura": "aros/aro-afinado.png"
+    },
+    {
+      "id": "aro-bypass",
+      "archivo": "aros/aro-bypass.glb",
+      "nombre": "Bypass",
+      "medidas": {
+        "ancho": 2.0,
+        "grosor": 1.7,
+        "ancho_superior_total": 4.48,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 7068,
+      "miniatura": "aros/aro-bypass.png"
+    },
+    {
+      "id": "aro-canal",
+      "archivo": "aros/aro-canal.glb",
+      "nombre": "Canal (rail)",
+      "medidas": {
+        "ancho": 2.2,
+        "grosor": 2.0,
+        "ancho_canal": 1.5,
+        "diametro_interior": 17.2
+      },
+      "asientos": {
+        "tipo": "canal",
+        "cantidad": 22,
+        "diametro_piedra": 1.3,
+        "prefijo": "pave_",
+        "admite": [
+          "piedra-melee",
+          "piedra-baguette"
+        ]
+      },
+      "anclajes": [
+        "attach_head",
+        "pave_00",
+        "pave_01",
+        "pave_02",
+        "pave_03",
+        "pave_04",
+        "pave_05",
+        "pave_06",
+        "pave_07",
+        "pave_08",
+        "pave_09",
+        "pave_10",
+        "pave_11",
+        "pave_12",
+        "pave_13",
+        "pave_14",
+        "pave_15",
+        "pave_16",
+        "pave_17",
+        "pave_18",
+        "pave_19",
+        "pave_20",
+        "pave_21"
+      ],
+      "tipo": "aro",
+      "triangulos": 4800,
+      "miniatura": "aros/aro-canal.png"
+    },
+    {
+      "id": "aro-catedral",
+      "archivo": "aros/aro-catedral.glb",
+      "nombre": "Catedral",
+      "medidas": {
+        "ancho": 2.2,
+        "grosor": 1.7,
+        "altura_hombros": 4.0,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 7680,
+      "miniatura": "aros/aro-catedral.png"
+    },
+    {
+      "id": "aro-filo-cuchillo",
+      "archivo": "aros/aro-filo-cuchillo.glb",
+      "nombre": "Filo de cuchillo",
+      "medidas": {
+        "ancho": 2.2,
+        "grosor": 2.0,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 7680,
+      "miniatura": "aros/aro-filo-cuchillo.png"
+    },
+    {
+      "id": "aro-liso-confort",
+      "archivo": "aros/aro-liso-confort.glb",
+      "nombre": "Liso confort",
+      "medidas": {
+        "ancho": 2.2,
+        "grosor": 1.7,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 6400,
+      "miniatura": "aros/aro-liso-confort.png"
+    },
+    {
+      "id": "aro-partido",
+      "archivo": "aros/aro-partido.glb",
+      "nombre": "Aro partido",
+      "medidas": {
+        "ancho": 2.2,
+        "ancho_superior_total": 4.1,
+        "grosor": 1.75,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 11036,
+      "miniatura": "aros/aro-partido.png"
+    },
+    {
+      "id": "aro-pave",
+      "archivo": "aros/aro-pave.glb",
+      "nombre": "Pavé de garras",
+      "medidas": {
+        "ancho": 2.2,
+        "grosor": 1.8,
+        "diametro_interior": 17.2
+      },
+      "asientos": {
+        "tipo": "pave",
+        "cantidad": 22,
+        "diametro_piedra": 1.3,
+        "prefijo": "pave_"
+      },
+      "anclajes": [
+        "attach_head",
+        "pave_00",
+        "pave_01",
+        "pave_02",
+        "pave_03",
+        "pave_04",
+        "pave_05",
+        "pave_06",
+        "pave_07",
+        "pave_08",
+        "pave_09",
+        "pave_10",
+        "pave_11",
+        "pave_12",
+        "pave_13",
+        "pave_14",
+        "pave_15",
+        "pave_16",
+        "pave_17",
+        "pave_18",
+        "pave_19",
+        "pave_20",
+        "pave_21"
+      ],
+      "tipo": "aro",
+      "triangulos": 10240,
+      "miniatura": "aros/aro-pave.png"
+    },
+    {
+      "id": "aro-torsade",
+      "archivo": "aros/aro-torsade.glb",
+      "nombre": "Torsade (dos hilos trenzados)",
+      "medidas": {
+        "ancho": 1.88,
+        "grosor": 1.88,
+        "diametro_interior": 17.2
+      },
+      "anclajes": [
+        "attach_head"
+      ],
+      "tipo": "aro",
+      "triangulos": 11520,
+      "miniatura": "aros/aro-torsade.png"
+    },
+    {
+      "id": "cabeza-4-garras",
+      "archivo": "cabezas/cabeza-4-garras.glb",
+      "nombre": "Cesta de 4 garras",
+      "compatibles": [
+        "piedra-brillante",
+        "piedra-cojin"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 2844,
+      "miniatura": "cabezas/cabeza-4-garras.png"
+    },
+    {
+      "id": "cabeza-6-garras",
+      "archivo": "cabezas/cabeza-6-garras.glb",
+      "nombre": "Cesta de 6 garras",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 3580,
+      "miniatura": "cabezas/cabeza-6-garras.png"
+    },
+    {
+      "id": "cabeza-bisel",
+      "archivo": "cabezas/cabeza-bisel.glb",
+      "nombre": "Bisel completo",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 2496,
+      "miniatura": "cabezas/cabeza-bisel.png"
+    },
+    {
+      "id": "cabeza-garras-dobles",
+      "archivo": "cabezas/cabeza-garras-dobles.glb",
+      "nombre": "Garras dobles (8)",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 4316,
+      "miniatura": "cabezas/cabeza-garras-dobles.png"
+    },
+    {
+      "id": "cabeza-garras-pico",
+      "archivo": "cabezas/cabeza-garras-pico.glb",
+      "nombre": "Garras de pico (princesa)",
+      "compatibles": [
+        "piedra-princesa"
+      ],
+      "medidas": {
+        "lado": 5.5,
+        "altura_asiento": 3.976
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 3964,
+      "miniatura": "cabezas/cabeza-garras-pico.png"
+    },
+    {
+      "id": "cabeza-halo-oval",
+      "archivo": "cabezas/cabeza-halo-oval.glb",
+      "nombre": "Halo oval",
+      "compatibles": [
+        "piedra-oval"
+      ],
+      "medidas": {
+        "filetin_largo": 8.0,
+        "filetin_ancho": 6.0,
+        "altura_asiento": 3.152
+      },
+      "asientos": {
+        "tipo": "halo",
+        "cantidad": 22,
+        "diametro_piedra": 1.1,
+        "prefijo": "halo_"
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat",
+        "halo_00",
+        "halo_01",
+        "halo_02",
+        "halo_03",
+        "halo_04",
+        "halo_05",
+        "halo_06",
+        "halo_07",
+        "halo_08",
+        "halo_09",
+        "halo_10",
+        "halo_11",
+        "halo_12",
+        "halo_13",
+        "halo_14",
+        "halo_15",
+        "halo_16",
+        "halo_17",
+        "halo_18",
+        "halo_19",
+        "halo_20",
+        "halo_21"
+      ],
+      "triangulos": 7916,
+      "miniatura": "cabezas/cabeza-halo-oval.png"
+    },
+    {
+      "id": "cabeza-halo-redondo",
+      "archivo": "cabezas/cabeza-halo-redondo.glb",
+      "nombre": "Halo redondo",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "asientos": {
+        "tipo": "halo",
+        "cantidad": 21,
+        "diametro_piedra": 1.1,
+        "prefijo": "halo_"
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat",
+        "halo_00",
+        "halo_01",
+        "halo_02",
+        "halo_03",
+        "halo_04",
+        "halo_05",
+        "halo_06",
+        "halo_07",
+        "halo_08",
+        "halo_09",
+        "halo_10",
+        "halo_11",
+        "halo_12",
+        "halo_13",
+        "halo_14",
+        "halo_15",
+        "halo_16",
+        "halo_17",
+        "halo_18",
+        "halo_19",
+        "halo_20"
+      ],
+      "triangulos": 7756,
+      "miniatura": "cabezas/cabeza-halo-redondo.png"
+    },
+    {
+      "id": "cabeza-medio-bisel",
+      "archivo": "cabezas/cabeza-medio-bisel.glb",
+      "nombre": "Medio bisel",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "altura_asiento": 3.378
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 2008,
+      "miniatura": "cabezas/cabeza-medio-bisel.png"
+    },
+    {
+      "id": "cabeza-oval-4-garras",
+      "archivo": "cabezas/cabeza-oval-4-garras.glb",
+      "nombre": "Oval, 4 garras",
+      "compatibles": [
+        "piedra-oval"
+      ],
+      "medidas": {
+        "filetin_largo": 8.0,
+        "filetin_ancho": 6.0,
+        "altura_asiento": 3.152
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 3100,
+      "miniatura": "cabezas/cabeza-oval-4-garras.png"
+    },
+    {
+      "id": "cabeza-oval-6-garras",
+      "archivo": "cabezas/cabeza-oval-6-garras.glb",
+      "nombre": "Oval, 6 garras",
+      "compatibles": [
+        "piedra-oval"
+      ],
+      "medidas": {
+        "filetin_largo": 8.0,
+        "filetin_ancho": 6.0,
+        "altura_asiento": 3.152
+      },
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat"
+      ],
+      "triangulos": 3836,
+      "miniatura": "cabezas/cabeza-oval-6-garras.png"
+    },
+    {
+      "id": "cabeza-trilogia",
+      "archivo": "cabezas/cabeza-trilogia.glb",
+      "nombre": "Trilogía",
+      "compatibles": [
+        "piedra-brillante"
+      ],
+      "medidas": {
+        "filetin": 6.5,
+        "filetin_laterales": 4.1,
+        "inclinacion_laterales_grados": 12,
+        "altura_asiento": 3.378
+      },
+      "aros_no_recomendados": [
+        "aro-catedral"
+      ],
+      "nota": "Postes laterales calculados para aros de 1,6-2,0 mm de grosor arriba; en el catedral quedan en el aire.",
+      "tipo": "cabeza",
+      "anclajes": [
+        "attach_shank",
+        "seat",
+        "seat_side_R",
+        "seat_side_L"
+      ],
+      "triangulos": 8100,
+      "miniatura": "cabezas/cabeza-trilogia.png"
+    },
+    {
+      "id": "piedra-asscher",
+      "archivo": "piedras/piedra-asscher.glb",
+      "tipo": "piedra",
+      "nombre": "Asscher",
+      "medidas": {
+        "lado": 5.5
+      },
+      "quilates_ref": 1.0,
+      "caras": 66,
+      "triangulos": 132,
+      "miniatura": "piedras/piedra-asscher.png"
+    },
+    {
+      "id": "piedra-baguette",
+      "archivo": "piedras/piedra-baguette.glb",
+      "tipo": "piedra",
+      "nombre": "Baguette",
+      "medidas": {
+        "largo": 7.0,
+        "ancho": 3.5
+      },
+      "quilates_ref": 1.0,
+      "caras": 26,
+      "triangulos": 52,
+      "miniatura": "piedras/piedra-baguette.png"
+    },
+    {
+      "id": "piedra-brillante",
+      "archivo": "piedras/piedra-brillante.glb",
+      "tipo": "piedra",
+      "nombre": "Brillante redondo",
+      "medidas": {
+        "diametro": 6.5,
+        "mesa_pct": 57,
+        "profundidad_pct": 61
+      },
+      "facetas": 57,
+      "quilates_ref": 1.0,
+      "caras": 89,
+      "triangulos": 256,
+      "miniatura": "piedras/piedra-brillante.png"
+    },
+    {
+      "id": "piedra-cojin",
+      "archivo": "piedras/piedra-cojin.glb",
+      "tipo": "piedra",
+      "nombre": "Cojín",
+      "medidas": {
+        "largo": 6.0,
+        "ancho": 6.0
+      },
+      "quilates_ref": 1.0,
+      "caras": 169,
+      "triangulos": 206,
+      "miniatura": "piedras/piedra-cojin.png"
+    },
+    {
+      "id": "piedra-esmeralda",
+      "archivo": "piedras/piedra-esmeralda.glb",
+      "tipo": "piedra",
+      "nombre": "Esmeralda",
+      "medidas": {
+        "largo": 7.0,
+        "ancho": 5.0
+      },
+      "quilates_ref": 1.0,
+      "caras": 62,
+      "triangulos": 124,
+      "miniatura": "piedras/piedra-esmeralda.png"
+    },
+    {
+      "id": "piedra-marquesa",
+      "archivo": "piedras/piedra-marquesa.glb",
+      "tipo": "piedra",
+      "nombre": "Marquesa",
+      "medidas": {
+        "largo": 10.0,
+        "ancho": 5.0
+      },
+      "quilates_ref": 1.0,
+      "caras": 165,
+      "triangulos": 210,
+      "miniatura": "piedras/piedra-marquesa.png"
+    },
+    {
+      "id": "piedra-melee",
+      "archivo": "piedras/piedra-melee.glb",
+      "tipo": "piedra",
+      "nombre": "Melé redonda",
+      "medidas": {
+        "diametro": 1.3
+      },
+      "facetas": 57,
+      "quilates_ref": 0.009,
+      "caras": 73,
+      "triangulos": 194,
+      "miniatura": "piedras/piedra-melee.png"
+    },
+    {
+      "id": "piedra-oval",
+      "archivo": "piedras/piedra-oval.glb",
+      "tipo": "piedra",
+      "nombre": "Oval",
+      "medidas": {
+        "largo": 8.0,
+        "ancho": 6.0
+      },
+      "quilates_ref": 1.0,
+      "caras": 169,
+      "triangulos": 206,
+      "miniatura": "piedras/piedra-oval.png"
+    },
+    {
+      "id": "piedra-pera",
+      "archivo": "piedras/piedra-pera.glb",
+      "tipo": "piedra",
+      "nombre": "Pera",
+      "medidas": {
+        "largo": 8.5,
+        "ancho": 5.5
+      },
+      "quilates_ref": 1.0,
+      "caras": 109,
+      "triangulos": 144,
+      "miniatura": "piedras/piedra-pera.png"
+    },
+    {
+      "id": "piedra-princesa",
+      "archivo": "piedras/piedra-princesa.glb",
+      "tipo": "piedra",
+      "nombre": "Princesa",
+      "medidas": {
+        "lado": 5.5
+      },
+      "quilates_ref": 1.0,
+      "caras": 41,
+      "triangulos": 46,
+      "miniatura": "piedras/piedra-princesa.png"
+    },
+    {
+      "id": "piedra-radiante",
+      "archivo": "piedras/piedra-radiante.glb",
+      "tipo": "piedra",
+      "nombre": "Radiante",
+      "medidas": {
+        "largo": 6.4,
+        "ancho": 5.3
+      },
+      "quilates_ref": 1.0,
+      "caras": 91,
+      "triangulos": 122,
+      "miniatura": "piedras/piedra-radiante.png"
+    }
+  ]
+}

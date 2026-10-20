@@ -12,9 +12,10 @@
  * Las piedras de color absorben según la distancia recorrida dentro (Beer–Lambert). La luz de la sección (LightScroll) tiñe el
  * entorno y añade el reflejo del foco. Sin React.
  */
-import { Color, ShaderMaterial, Vector3, type BufferGeometry, type Texture } from "three";
+import { Color, DataTexture, FloatType, NearestFilter, RGBAFormat, ShaderMaterial, Vector3, type BufferGeometry, type Texture } from "three";
 
-export const MAX_PLANES = 96;
+/** Caras planas como máximo por piedra (el cojín y la marquesa de Blender tienen 169). Van en una textura, no en uniforms. */
+export const MAX_PLANES = 256;
 
 /** Planos de faceta (normal hacia fuera y distancia) de una geometría convexa, sin repetir los coplanares. */
 export function facetPlanes(geo: BufferGeometry): Float32Array {
@@ -61,7 +62,7 @@ const fragment = /* glsl */ `
 #define BOUNCES 6
 uniform mat4 modelMatrix;
 uniform samplerCube uEnv;
-uniform vec4 uPlanes[MAX_PLANES];
+uniform sampler2D uPlanes;
 uniform int uCount;
 uniform vec3 uIor;
 uniform float uDispersion;
@@ -105,7 +106,7 @@ vec3 trace(vec3 p, vec3 d, vec3 n, float ior) {
     vec3 nh = vec3(0.0, 1.0, 0.0);
     for (int i = 0; i < MAX_PLANES; i++) {
       if (i >= uCount) break;
-      vec4 pl = uPlanes[i];
+      vec4 pl = texelFetch(uPlanes, ivec2(i, 0), 0);
       float dn = dot(pl.xyz, rd);
       if (dn > 1e-5) {
         float t = (pl.w - dot(pl.xyz, pos)) / dn;
@@ -165,7 +166,7 @@ void main() {
 export type GemMaterial = ShaderMaterial & {
   uniforms: {
     uEnv: { value: Texture | null };
-    uPlanes: { value: Float32Array };
+    uPlanes: { value: DataTexture };
     uCount: { value: number };
     uIor: { value: Vector3 };
     uDispersion: { value: number };
@@ -197,7 +198,7 @@ export function createGemMaterial(env: Texture | null, geo: BufferGeometry, disp
     toneMapped: true,
     uniforms: {
       uEnv: { value: env },
-      uPlanes: { value: new Float32Array(MAX_PLANES * 4) },
+      uPlanes: { value: planeTexture(new Float32Array(MAX_PLANES * 4)) },
       uCount: { value: 0 },
       uIor: { value: DIAMOND_IOR.clone() },
       uDispersion: { value: dispersion ? 1 : 0 },
@@ -218,10 +219,18 @@ export function createGemMaterial(env: Texture | null, geo: BufferGeometry, disp
   return mat;
 }
 
+function planeTexture(data: Float32Array) {
+  const t = new DataTexture(data, MAX_PLANES, 1, RGBAFormat, FloatType);
+  t.minFilter = t.magFilter = NearestFilter;
+  t.needsUpdate = true;
+  return t;
+}
+
 /** Cambia la talla de un material ya creado (nuevos planos de faceta). */
 export function setGemGeometry(mat: GemMaterial, geo: BufferGeometry) {
   const planes = facetPlanes(geo);
-  mat.uniforms.uPlanes.value = planes;
+  mat.uniforms.uPlanes.value.dispose();
+  mat.uniforms.uPlanes.value = planeTexture(planes);
   let count = 0;
   for (let i = 0; i < MAX_PLANES; i++) if (planes[i * 4] || planes[i * 4 + 1] || planes[i * 4 + 2]) count = i + 1;
   mat.uniforms.uCount.value = count;

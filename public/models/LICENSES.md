@@ -20,3 +20,12 @@ Cambios en `clinica/`: se juntaron los modelos de arquitectura, estructura y cli
 ventanas pasan a cajas orientadas; fuera mobiliario, puertas, falsos techos y cimentación; GLB por capas y planta baja en
 SVG (`scripts/maqueta/ifc_to_glb.py`). `eixample/` sale de `scripts/maqueta/osm_to_glb.py`. Donde se vea el mapa del
 Eixample hay que citar «© OpenStreetMap».
+
+## Piezas de anillo del configurador de Quilate
+
+| Carpeta | Origen | Licencia |
+|---|---|---|
+| `anillos/` (`aros/`, `cabezas/`, `piedras/`, `manifest.json` y miniaturas) | Geometría propia, generada por script con Blender 5.2 (`bpy` en modo headless) desde un generador paramétrico fuera del repo; no parte de modelos de terceros | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+Las piedras son poliedros convexos y cerrados. El brillante redondo sale de intersecar semiespacios (57 facetas); el
+resto, del cierre convexo de anillos de contorno. Unidades en mm; anclajes y ejes, en `anillos/manifest.json`.

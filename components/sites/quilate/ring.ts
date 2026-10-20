@@ -1,3 +1,5 @@
+import manifest from "@/public/models/anillos/manifest.json";
+
 /** Modelo de las joyas configurables de Quilate: la selección, las opciones, el precio y el plazo. Lo usan la escena 3D,
  * el dibujo plano (SVG), los dos configuradores y la cita (que se lleva la pieza). Sin React. Precios orientativos de demo. */
 
@@ -6,7 +8,7 @@ export type Profile = "media-cana" | "plana" | "confort" | "afinado";
 export type Finish = "pulido" | "satinado" | "martillado";
 export type Setting = "clasico" | "garras4" | "garras6" | "bisel" | "halo" | "trilogia";
 export type Stone = "diamante" | "diamante-lab" | "zafiro" | "esmeralda" | "rubi";
-export type Shape = "redonda" | "oval" | "princesa" | "esmeralda";
+export type Shape = "redonda" | "oval" | "princesa" | "esmeralda" | "asscher" | "cojin" | "radiante" | "pera" | "marquesa";
 export type EngraveFont = "romana" | "cursiva" | "palo";
 
 /** Una pieza: la alianza usa los campos de aro; el solitario, además, los de piedra y montura. */
@@ -28,6 +30,10 @@ export type RingSel = {
   size: number;
   engraving: string;
   font: EngraveFont;
+  /** aro del kit modelado en Blender (id del manifest) · "" = aro a medida (procedural: perfil y ancho) */
+  shank?: string;
+  /** cabeza del kit (id del manifest) · "" = montura procedural (`setting`) */
+  head?: string;
 };
 
 export const DEFAULT_BAND: RingSel = { kind: "alianza", metal: "amarillo", width: 3.5, profile: "confort", finish: "pulido", setting: "garras4", stone: "diamante", shape: "redonda", carat: 0.5, pave: false, size: 14, engraving: "", font: "romana" };
@@ -84,7 +90,36 @@ export const SHAPES: (Opt<Shape> & { factor: number })[] = [
   { value: "oval", label: "Oval", factor: 0.96 },
   { value: "princesa", label: "Princesa", factor: 0.9 },
   { value: "esmeralda", label: "Esmeralda", note: "talla en escalera: enseña la limpieza de la piedra", factor: 0.88 },
+  { value: "asscher", label: "Asscher", note: "escalera cuadrada de esquinas cortadas", factor: 0.86 },
+  { value: "cojin", label: "Cojín", factor: 0.92 },
+  { value: "radiante", label: "Radiante", factor: 0.9 },
+  { value: "pera", label: "Pera", factor: 0.93 },
+  { value: "marquesa", label: "Marquesa", factor: 0.9 },
 ];
+
+/** Tallas que el generador procedural sabe dibujar; las demás solo existen con las piezas del kit. */
+export const PROCEDURAL_SHAPES: Shape[] = ["redonda", "oval", "princesa", "esmeralda"];
+
+/* ---------- kit de piezas modeladas en Blender (public/models/anillos, manifest.json, CC0) ---------- */
+export const KIT_BASE = "/models/anillos/";
+/** La piedra del kit de cada talla. */
+export const STONE_PIECE: Record<Shape, string> = {
+  redonda: "piedra-brillante",
+  oval: "piedra-oval",
+  princesa: "piedra-princesa",
+  esmeralda: "piedra-esmeralda",
+  asscher: "piedra-asscher",
+  cojin: "piedra-cojin",
+  radiante: "piedra-radiante",
+  pera: "piedra-pera",
+  marquesa: "piedra-marquesa",
+};
+export const PIECE_SHAPE: Record<string, Shape> = Object.fromEntries(Object.entries(STONE_PIECE).map(([k, v]) => [v, k as Shape]));
+/** Sobreprecio de cada aro y cabeza del kit (hechura; las piedras de pavé, halo y laterales van aparte). */
+export const SHANK_EXTRA: Record<string, number> = { "aro-liso-confort": 0, "aro-afinado": 40, "aro-filo-cuchillo": 60, "aro-catedral": 120, "aro-bypass": 120, "aro-partido": 140, "aro-torsade": 160, "aro-pave": 380, "aro-canal": 420 };
+export const HEAD_EXTRA: Record<string, number> = { "cabeza-4-garras": 180, "cabeza-6-garras": 220, "cabeza-garras-dobles": 260, "cabeza-garras-pico": 220, "cabeza-bisel": 260, "cabeza-medio-bisel": 240, "cabeza-halo-redondo": 420, "cabeza-halo-oval": 450, "cabeza-oval-4-garras": 190, "cabeza-oval-6-garras": 230, "cabeza-trilogia": 300 };
+/** Aros del kit que tienen sentido sin cabeza (alianzas). */
+export const BAND_SHANKS = ["aro-liso-confort", "aro-filo-cuchillo", "aro-torsade", "aro-pave", "aro-canal"];
 
 export const FONTS: (Opt<EngraveFont> & { css: string })[] = [
   { value: "romana", label: "Romana", css: 'var(--font-cormorant-garamond), Georgia, serif' },
@@ -128,10 +163,24 @@ export function priceLines(sel: RingSel): PriceLine[] {
     const st = stoneOf(sel.stone);
     const sh = SHAPES.find((s) => s.value === sel.shape)!;
     lines.push({ label: `${st.label}, ${sel.carat.toLocaleString("es-ES")} ct, ${sh.label.toLowerCase()}`, amount: Math.round(st.perCarat * Math.pow(sel.carat, st.exp) * sh.factor) });
-    const se = SETTINGS.find((s) => s.value === sel.setting)!;
-    lines.push({ label: `Montura ${se.label.toLowerCase()}`, amount: se.extra });
+    if (sel.head) {
+      const k = kitPiece(sel.head);
+      lines.push({ label: `Montura ${(k?.nombre ?? sel.head).toLowerCase()}`, amount: HEAD_EXTRA[sel.head] ?? 200 });
+      const seats = k?.asientos?.cantidad ?? 0;
+      if (seats) lines.push({ label: `Halo de ${seats} diamantes de 1,1 mm`, amount: seats * 22 });
+      if (sel.head === "cabeza-trilogia") lines.push({ label: "Dos diamantes laterales (2 × 0,25 ct)", amount: 980 });
+    } else {
+      const se = SETTINGS.find((s) => s.value === sel.setting)!;
+      lines.push({ label: `Montura ${se.label.toLowerCase()}`, amount: se.extra });
+    }
   }
-  if (sel.pave) lines.push({ label: "Pavé de 14 diamantes (0,14 ct)", amount: 520 });
+  if (sel.shank) {
+    const k = kitPiece(sel.shank);
+    const extra = SHANK_EXTRA[sel.shank] ?? 0;
+    if (extra) lines.push({ label: `Aro ${(k?.nombre ?? sel.shank).toLowerCase()}`, amount: extra });
+    const seats = k?.asientos?.cantidad ?? 0;
+    if (seats) lines.push({ label: `${seats} diamantes de 1,3 mm en el aro`, amount: seats * 30 });
+  } else if (sel.pave) lines.push({ label: "Pavé de 14 diamantes (0,14 ct)", amount: 520 });
   if (sel.engraving.trim()) lines.push({ label: "Grabado a mano (el primero, gratis)", amount: 0 });
   return lines;
 }
@@ -149,12 +198,32 @@ export function workDays(sel: RingSel) {
 
 export function describe(sel: RingSel) {
   const m = metalOf(sel.metal).label.toLowerCase();
-  const band = `${sel.width.toLocaleString("es-ES")} mm, ${labelOf(PROFILES, sel.profile).toLowerCase()}, ${labelOf(FINISHES, sel.finish).toLowerCase()}`;
+  const band = sel.shank
+    ? `${(kitPiece(sel.shank)?.nombre ?? sel.shank).toLowerCase()}, ${labelOf(FINISHES, sel.finish).toLowerCase()}`
+    : `${sel.width.toLocaleString("es-ES")} mm, ${labelOf(PROFILES, sel.profile).toLowerCase()}, ${labelOf(FINISHES, sel.finish).toLowerCase()}`;
+  const mount = sel.head ? (kitPiece(sel.head)?.nombre ?? sel.head).toLowerCase() : labelOf(SETTINGS, sel.setting).toLowerCase();
   const eng = sel.engraving.trim() ? `; grabado «${sel.engraving.trim()}»` : "";
   if (sel.kind === "alianza") return `Alianza de ${m}, ${band}${sel.pave ? ", con pavé" : ""}, talla ${sel.size}${eng}.`;
-  return `Solitario de ${m} con ${labelOf(STONES, sel.stone).toLowerCase()} de ${sel.carat.toLocaleString("es-ES")} ct en talla ${labelOf(SHAPES, sel.shape).toLowerCase()}, montura ${labelOf(SETTINGS, sel.setting).toLowerCase()}, aro de ${band}${sel.pave ? " con pavé" : ""}, talla ${sel.size}${eng}.`;
+  return `Solitario de ${m} con ${labelOf(STONES, sel.stone).toLowerCase()} de ${sel.carat.toLocaleString("es-ES")} ct en talla ${labelOf(SHAPES, sel.shape).toLowerCase()}, montura ${mount}, aro ${sel.shank ? "" : "de "}${band}${sel.pave ? " con pavé" : ""}, talla ${sel.size}${eng}.`;
 }
 
 /** Aviso legal antes de pagar (docs/17 §6): lo hecho a medida o grabado no se devuelve por desistimiento. */
 export const CUSTOM_NOTICE =
   "Es una pieza hecha a tu medida: no entra en el derecho de desistimiento de 14 días (excepción de bienes personalizados; confirmar redacción con la normativa de consumo). Sí tiene garantía, ajuste de talla gratis el primer año y limpieza de por vida.";
+
+export type KitPiece = {
+  id: string;
+  archivo: string;
+  nombre: string;
+  tipo: "aro" | "cabeza" | "piedra";
+  miniatura: string;
+  compatibles?: string[];
+  asientos?: { tipo: string; cantidad: number; diametro_piedra: number; prefijo: string };
+  aros_no_recomendados?: string[];
+  quilates_ref?: number;
+};
+/** Las piezas del kit (manifest.json de la sesión de Blender). */
+export const KIT = (manifest as { piezas: KitPiece[] }).piezas;
+export const kitPiece = (id: string) => KIT.find((p) => p.id === id);
+/** Tallas que admite una cabeza del kit. */
+export const headShapes = (id: string): Shape[] => (kitPiece(id)?.compatibles ?? []).map((c) => PIECE_SHAPE[c]).filter(Boolean);

@@ -23,7 +23,13 @@ import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import RingStage, { RingFlat } from "./RingStage";
 import {
+  BAND_SHANKS,
   CLASSIC_SOLITAIRE,
+  KIT,
+  KIT_BASE,
+  PROCEDURAL_SHAPES,
+  headShapes,
+  kitPiece,
   CUSTOM_NOTICE,
   DEFAULT_BAND,
   DEFAULT_SOLITAIRE,
@@ -434,13 +440,20 @@ function Bands() {
         <p className="ql-kicker">Alianza a medida</p>
         <h1 className="ql-h2">La sencilla, bien hecha</h1>
         <OptionPicker label="Metal" kind="swatch" showValue options={METALS.map((m) => ({ value: m.value, label: `${m.label} · ${m.ley}`, color: m.color }))} value={band.metal} onChange={(v) => set("metal", v as RingSel["metal"])} />
-        <Range label="Ancho" value={band.width} min={2} max={6} step={0.5} unit="mm" onChange={(v) => set("width", v)} />
-        <OptionPicker label="Perfil" kind="chip" options={PROFILES.map((p) => ({ value: p.value, label: p.label }))} value={band.profile} onChange={(v) => set("profile", v as RingSel["profile"])} />
-        <p className="ql-hint">{PROFILES.find((p) => p.value === band.profile)?.note}</p>
+        <KitPicker label="Aro" kind="aro" value={band.shank ?? ""} customLabel="A medida" only={BAND_SHANKS} onChange={(id) => set("shank", id)} />
+        {!band.shank && (
+          <>
+            <Range label="Ancho" value={band.width} min={2} max={6} step={0.5} unit="mm" onChange={(v) => set("width", v)} />
+            <OptionPicker label="Perfil" kind="chip" options={PROFILES.map((p) => ({ value: p.value, label: p.label }))} value={band.profile} onChange={(v) => set("profile", v as RingSel["profile"])} />
+            <p className="ql-hint">{PROFILES.find((p) => p.value === band.profile)?.note}</p>
+          </>
+        )}
         <OptionPicker label="Acabado" kind="chip" options={FINISHES.map((p) => ({ value: p.value, label: p.label }))} value={band.finish} onChange={(v) => set("finish", v as RingSel["finish"])} />
-        <label className="ql-check">
-          <input type="checkbox" checked={band.pave} onChange={(e) => set("pave", e.target.checked)} /> Pavé de 14 diamantes en la mitad superior
-        </label>
+        {!band.shank && (
+          <label className="ql-check">
+            <input type="checkbox" checked={band.pave} onChange={(e) => set("pave", e.target.checked)} /> Pavé de 14 diamantes en la mitad superior
+          </label>
+        )}
         <SizeField sel={band} onChange={(v) => set("size", v)} />
         <div className="ql-group" onFocus={() => setEngraving(true)} onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node) && setEngraving(false)}>
           <TextField label={`Grabado interior (hasta ${ENGRAVE_MAX} caracteres)`} placeholder="21·06·2027 · A & M" value={band.engraving} onChange={(v) => set("engraving", v.slice(0, ENGRAVE_MAX))} variant="minimal" />
@@ -449,6 +462,36 @@ function Bands() {
         </div>
         <PriceBox sel={band} onCita={() => { setCarry(band); navigate({ href: href("cita?motivo=alianzas") }); }} />
       </div>
+    </div>
+  );
+}
+
+/**
+ * Selector de piezas del kit de Blender con su miniatura. La primera opción es la versión «a medida» (procedural), que
+ * deja a la vista los controles finos (perfil, ancho, montura dibujada).
+ */
+function KitPicker({ label, kind, value, onChange, only, customLabel, warn }: { label: string; kind: "aro" | "cabeza"; value: string; onChange: (id: string) => void; only?: string[]; customLabel: string; warn?: (id: string) => string | undefined }) {
+  const list = KIT.filter((p) => p.tipo === kind && (!only || only.includes(p.id)));
+  const current = value ? kitPiece(value)?.nombre : customLabel;
+  const note = value ? warn?.(value) : undefined;
+  return (
+    <div className="ql-kit">
+      <p className="ql-kit__label">
+        {label} <b>{current}</b>
+      </p>
+      <div className="ql-kit__grid" role="radiogroup" aria-label={label}>
+        <button type="button" role="radio" aria-checked={!value} className="ql-kit__item ql-kit__item--custom" onClick={() => onChange("")}>
+          <span aria-hidden>✎</span>
+          <small>{customLabel}</small>
+        </button>
+        {list.map((p) => (
+          <button key={p.id} type="button" role="radio" aria-checked={value === p.id} className="ql-kit__item" onClick={() => onChange(p.id)} title={p.nombre}>
+            <img src={KIT_BASE + p.miniatura} alt="" loading="lazy" width={96} height={96} />
+            <small>{p.nombre}</small>
+          </button>
+        ))}
+      </div>
+      {note && <p className="ql-note">{note}</p>}
     </div>
   );
 }
@@ -532,14 +575,31 @@ function Engagement() {
               <span className="ql-hint">Partir de un modelo:</span>
               <button type="button" className="ql-chip" onClick={() => setSol({ ...CLASSIC_SOLITAIRE, size: sol.size, engraving: sol.engraving })}>Solitario clásico</button>
             </div>
-            <OptionPicker label="Montura" kind="chip" options={SETTINGS.map((x) => ({ value: x.value, label: x.label }))} value={sol.setting} onChange={(v) => set("setting", v as RingSel["setting"])} />
-            <p className="ql-hint">{SETTINGS.find((x) => x.value === sol.setting)?.note}</p>
+            <KitPicker
+              label="Montura del taller"
+              kind="cabeza"
+              value={sol.head ?? ""}
+              customLabel="Dibujada a medida"
+              onChange={(id) => {
+                // si la talla actual no cabe en la cabeza elegida, se pasa a la primera compatible
+                const shapes = id ? headShapes(id) : PROCEDURAL_SHAPES;
+                setSol({ ...sol, head: id, shape: shapes.includes(sol.shape) ? sol.shape : shapes[0] });
+              }}
+              warn={(id) => (sol.shank && kitPiece(id)?.aros_no_recomendados?.includes(sol.shank) ? `Esta montura no se recomienda con el aro ${kitPiece(sol.shank)?.nombre.toLowerCase()}: los postes laterales quedan en el aire.` : undefined)}
+            />
+            {!sol.head && (
+              <>
+                <OptionPicker label="Montura dibujada" kind="chip" options={SETTINGS.map((x) => ({ value: x.value, label: x.label }))} value={sol.setting} onChange={(v) => set("setting", v as RingSel["setting"])} />
+                <p className="ql-hint">{SETTINGS.find((x) => x.value === sol.setting)?.note}</p>
+              </>
+            )}
           </>
         )}
         {s.id === "piedra" && (
           <>
             <OptionPicker label="Piedra" kind="swatch" showValue options={STONES.map((x) => ({ value: x.value, label: x.label, color: x.color }))} value={sol.stone} onChange={(v) => set("stone", v as RingSel["stone"])} />
-            <OptionPicker label="Talla" kind="chip" options={SHAPES.map((x) => ({ value: x.value, label: x.label }))} value={sol.shape} onChange={(v) => set("shape", v as RingSel["shape"])} />
+            <OptionPicker label="Talla" kind="chip" options={SHAPES.filter((x) => (sol.head ? headShapes(sol.head) : PROCEDURAL_SHAPES).includes(x.value)).map((x) => ({ value: x.value, label: x.label }))} value={sol.shape} onChange={(v) => set("shape", v as RingSel["shape"])} />
+            {sol.head && <p className="ql-hint">Tallas que admite la montura «{kitPiece(sol.head)?.nombre.toLowerCase()}». Para otras, cambia de montura.</p>}
             <Range label="Quilates" value={sol.carat} min={0.3} max={2} step={0.05} unit="ct" onChange={(v) => set("carat", Math.round(v * 100) / 100)} />
             <MetaTable rows={[{ k: "Certificado", v: stone.cert }, { k: "Dureza", v: stone.hard }, { k: "Diámetro aprox.", v: `${(6.5 * Math.cbrt(sol.carat)).toLocaleString("es-ES", { maximumFractionDigits: 1 })} mm` }]} />
             {colored && <p className="ql-hint">Las piedras de color cambian con la luz: mírala con luz de día y con luz cálida antes de decidir (así las compara un laboratorio gemológico).</p>}
@@ -548,12 +608,24 @@ function Engagement() {
         {s.id === "metal" && (
           <>
             <OptionPicker label="Metal" kind="swatch" showValue options={METALS.map((m) => ({ value: m.value, label: `${m.label} · ${m.ley}`, color: m.color }))} value={sol.metal} onChange={(v) => set("metal", v as RingSel["metal"])} />
-            <Range label="Ancho del aro" value={sol.width} min={1.6} max={3} step={0.1} unit="mm" onChange={(v) => set("width", Math.round(v * 10) / 10)} />
-            <OptionPicker label="Perfil" kind="chip" options={PROFILES.map((p) => ({ value: p.value, label: p.label }))} value={sol.profile} onChange={(v) => set("profile", v as RingSel["profile"])} />
+            <KitPicker
+              label="Aro del taller"
+              kind="aro"
+              value={sol.shank ?? ""}
+              customLabel="A medida"
+              onChange={(id) => set("shank", id)}
+              warn={(id) => (sol.head && kitPiece(sol.head)?.aros_no_recomendados?.includes(id) ? `Este aro no se recomienda con la montura ${kitPiece(sol.head)?.nombre.toLowerCase()}.` : undefined)}
+            />
+            {!sol.shank && (
+              <>
+                <Range label="Ancho del aro" value={sol.width} min={1.6} max={3} step={0.1} unit="mm" onChange={(v) => set("width", Math.round(v * 10) / 10)} />
+                <OptionPicker label="Perfil" kind="chip" options={PROFILES.map((p) => ({ value: p.value, label: p.label }))} value={sol.profile} onChange={(v) => set("profile", v as RingSel["profile"])} />
+                <label className="ql-check">
+                  <input type="checkbox" checked={sol.pave} onChange={(e) => set("pave", e.target.checked)} /> Pavé en el aro
+                </label>
+              </>
+            )}
             <OptionPicker label="Acabado" kind="chip" options={FINISHES.map((p) => ({ value: p.value, label: p.label }))} value={sol.finish} onChange={(v) => set("finish", v as RingSel["finish"])} />
-            <label className="ql-check">
-              <input type="checkbox" checked={sol.pave} onChange={(e) => set("pave", e.target.checked)} /> Pavé en el aro
-            </label>
           </>
         )}
         {s.id === "talla" && (

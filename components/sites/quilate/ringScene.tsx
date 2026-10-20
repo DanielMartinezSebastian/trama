@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import {
@@ -19,6 +19,7 @@ import {
   Group,
   HemisphereLight,
   LatheGeometry,
+  Matrix4,
   Mesh as ThreeMesh,
   MeshBasicMaterial,
   PlaneGeometry,
@@ -36,7 +37,8 @@ import {
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
 import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
-import { FONTS, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
+import { FONTS, KIT_BASE, STONE_PIECE, kitPiece, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
+import { anchorsOf, loadPiece, type Piece } from "./pieces";
 
 /*
  * El anillo de Quilate como escena procedural, sin modelos: el aro es una revolución de su sección (confort, media caña o
@@ -383,6 +385,25 @@ function engravingTexture(text: string, font: string) {
   return { texture: make(c, true), mask: make(m, false), aspect: W / H };
 }
 
+/** Una pieza del kit de Blender por id (null mientras carga o si no hay); al cambiar de id se queda la anterior hasta que llega la nueva. */
+function usePiece(id: string | undefined) {
+  const [piece, setPiece] = useState<Piece | null>(null);
+  useEffect(() => {
+    const k = id ? kitPiece(id) : undefined;
+    if (!k) return;
+    let live = true;
+    loadPiece(KIT_BASE + k.archivo, MM)
+      .then((p) => live && setPiece(p))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [id]);
+  return id ? piece : null;
+}
+
+const scaled = (m: Matrix4, k: number) => m.clone().multiply(new Matrix4().makeScale(k, k, k));
+
 /** Un cilindro fino entre dos puntos (garras). */
 function placeBetween(m: Mesh, a: Vector3, b: Vector3, r: number) {
   const d = new Vector3().subVectors(b, a);
@@ -473,10 +494,38 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
   // gemas con trazado de rayos: la central (cambia de talla), las laterales de la trilogía y las de pavé y halo
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   const gems = useMemo(
-    () => ({ stone: createGemMaterial(gemEnv, stone, !coarse), side: createGemMaterial(gemEnv, side, !coarse), melee: createGemMaterial(gemEnv, geos.melee, false) }),
+    () => ({
+      stone: createGemMaterial(gemEnv, stone, !coarse),
+      side: createGemMaterial(gemEnv, side, !coarse),
+      melee: createGemMaterial(gemEnv, geos.melee, false),
+      // las del kit tienen su propia geometría (y sus propios planos de faceta)
+      sideKit: createGemMaterial(gemEnv, side, !coarse),
+      meleeKit: createGemMaterial(gemEnv, geos.melee, false),
+    }),
     [gemEnv, side, geos.melee, coarse], // eslint-disable-line react-hooks/exhaustive-deps
   );
-  useEffect(() => setGemGeometry(gems.stone, stone), [gems, stone]);
+
+  // piezas del kit modelado en Blender: aro, cabeza y su piedra, melé de pavé y halo, laterales de la trilogía
+  const kitShank = usePiece(sel.shank || undefined);
+  const kitHead = usePiece(sel.kind === "solitario" && sel.head ? sel.head : undefined);
+  const kitStone = usePiece(sel.kind === "solitario" && sel.head ? STONE_PIECE[sel.shape] : undefined);
+  const kitMelee = usePiece(sel.shank || sel.head ? "piedra-melee" : undefined);
+  const kitSide = usePiece(sel.head === "cabeza-trilogia" ? "piedra-brillante" : undefined);
+  const useKitHead = !!(sel.kind === "solitario" && sel.head && kitHead?.metal);
+  const useKitShank = !!(sel.shank && kitShank?.metal);
+  useEffect(() => setGemGeometry(gems.stone, useKitHead && kitStone?.gem ? kitStone.gem : stone), [gems, stone, useKitHead, kitStone]);
+  useEffect(() => {
+    if (kitMelee?.gem) setGemGeometry(gems.meleeKit, kitMelee.gem);
+  }, [gems, kitMelee]);
+  useEffect(() => {
+    if (kitSide?.gem) setGemGeometry(gems.sideKit, kitSide.gem);
+  }, [gems, kitSide]);
+  // la cabeza del kit (hecha para 1 ct) se apoya en el anclaje del aro y se escala con los quilates
+  const headM = useMemo(() => {
+    const base = useKitShank ? kitShank!.anchors.attach_head : undefined;
+    return scaled(base ?? new Matrix4().makeTranslation(0, R0 + T, 0), Math.cbrt(sel.carat));
+  }, [useKitShank, kitShank, sel.carat]);
+  const kitGirdle = useMemo(() => (useKitHead && kitHead!.anchors.seat ? new Vector3().setFromMatrixPosition(headM.clone().multiply(kitHead!.anchors.seat)).y : 0), [useKitHead, kitHead, headM]);
   useEffect(() => () => Object.values(gems).forEach((m) => m.dispose()), [gems]);
 
   // dónde va cada cosa de la cabeza
@@ -496,9 +545,9 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
       return { a: new Vector3(ex * 0.35, top - 0.02, ez * 0.35), b: new Vector3(ex * 1.02, girdle + 0.07 * R + 0.02, ez * 1.02) };
     });
     const halo = sel.setting === "halo" ? Array.from({ length: 18 }, (_, i) => { const a = (i / 18) * Math.PI * 2; return new Vector3(Math.cos(a) * (R * sx + 0.075), girdle - 0.02, Math.sin(a) * (R + 0.075)); }) : [];
-    const pave = sel.pave ? Array.from({ length: 14 }, (_, i) => { const f = solitaire ? (i < 7 ? -1.25 + i * 0.13 : 0.47 + (i - 7) * 0.13) : -0.95 + i * 0.146; return f; }) : [];
+    const pave = sel.pave && !sel.shank ? Array.from({ length: 14 }, (_, i) => { const f = solitaire ? (i < 7 ? -1.25 + i * 0.13 : 0.47 + (i - 7) * 0.13) : -0.95 + i * 0.146; return f; }) : [];
     return { top, girdle, prongs, halo, pave, sx, classic };
-  }, [sel.setting, sel.shape, sel.pave, R, solitaire]);
+  }, [sel.setting, sel.shape, sel.pave, sel.shank, R, solitaire]);
 
   useFrame((state, dt) => {
     const g = root.current;
@@ -621,7 +670,7 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
       mount.current.scale.setScalar(hide);
     }
     // cámara: el anillo entero o la cabeza de cerca (la cabeza está en el eje Y local: el giro en Y no la mueve)
-    const gy = solitaire ? layout.girdle : R0 + T;
+    const gy = solitaire ? (useKitHead ? kitGirdle : layout.girdle) : R0 + T;
     const head = new Vector3(0, gy, 0).applyEuler(g.rotation);
     const far = new Vector3(0, 0.6, 7.2);
     const near = new Vector3(head.x, head.y + 0.8 + R * 1.2, head.z + 1.2 + R * 2.8);
@@ -641,16 +690,34 @@ function Ring({ sel, look, light, drag, turntable, framing, onReady }: Omit<Ring
 
   return (
     <group ref={root}>
-      <mesh ref={bandMesh} geometry={band} material={mats.metal} />
+      <mesh ref={bandMesh} geometry={useKitShank ? kitShank!.metal! : band} material={mats.metal} />
       {engrave && <mesh geometry={engrave.geo} material={engrave.mat} />}
       <group ref={paveRef}>
+      {useKitShank &&
+        kitMelee?.gem &&
+        anchorsOf(kitShank, "pave_").map((m, i) => <mesh key={`kp${i}`} geometry={kitMelee.gem!} material={gems.meleeKit} matrixAutoUpdate={false} matrix={m} />)}
       {layout.pave.map((f, i) => {
         const r = R0 + T + 0.012;
         const p = new Vector3(Math.sin(f) * r, Math.cos(f) * r, 0);
         return <mesh key={`p${i}`} geometry={geos.melee} material={gems.melee} position={p} rotation={[0, 0, -f]} />;
       })}
       </group>
-      {solitaire && (
+      {solitaire && useKitHead && (
+        <group ref={head}>
+          <group matrixAutoUpdate={false} matrix={headM}>
+            {kitStone?.gem && kitHead!.anchors.seat && <mesh geometry={kitStone.gem} material={gems.stone} matrixAutoUpdate={false} matrix={kitHead!.anchors.seat} />}
+            <group ref={mount}>
+              <mesh geometry={kitHead!.metal!} material={mats.prong} />
+              {kitMelee?.gem && anchorsOf(kitHead, "halo_").map((m, i) => <mesh key={`kh${i}`} geometry={kitMelee.gem!} material={gems.meleeKit} matrixAutoUpdate={false} matrix={scaled(m, 1.1 / 1.3)} />)}
+              {kitSide?.gem &&
+                (["seat_side_L", "seat_side_R"] as const).map((n) =>
+                  kitHead!.anchors[n] ? <mesh key={n} geometry={kitSide.gem!} material={gems.sideKit} matrixAutoUpdate={false} matrix={scaled(kitHead!.anchors[n], Math.cbrt(0.25))} /> : null,
+                )}
+            </group>
+          </group>
+        </group>
+      )}
+      {solitaire && !useKitHead && (
         <group ref={head}>
           <mesh geometry={stone} material={gems.stone} position={[0, layout.girdle, 0]} />
           <group ref={mount}>
