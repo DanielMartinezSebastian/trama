@@ -9,6 +9,7 @@ import {
   CanvasTexture,
   BackSide,
   SRGBColorSpace,
+  ShaderMaterial,
   CubeCamera,
   HalfFloatType,
   WebGLCubeRenderTarget,
@@ -283,32 +284,27 @@ function hammerNormals() {
 }
 
 /**
- * Entorno del metal: un estudio de fotografía de joyería (docs/19 §5). Fondo oscuro, dos tiras verticales largas y una
- * cenital (softboxes), un rebote cálido bajo y banderas negras: el metal pulido se lee por esas franjas claras y oscuras
- * que corren por el aro al girar, que es lo que da el contraste de una foto de producto. Sin archivo HDR: se genera.
+ * Entorno del metal: un estudio de fotografía de joyería generado (docs/19 §5) que **cambia con la toma de luz de la
+ * sección** (como las escenas de Oryzo o los EXR por sala de Cartier W&W): una cúpula con degradado (techo, horizonte y suelo),
+ * tiras verticales, softboxes de borde suave, un rebote cálido y banderas negras. Cada toma da otra sala: vitrina negra con
+ * tiras duras, caja de luz gris para la luz de día, lámpara baja y cálida para la conversación, flexo cenital para el taller,
+ * una sola tira casi tangente para la rasante. El metal pulido se lee por esas franjas, así que al cambiar de sala cambian
+ * los reflejos del anillo. Se re-renderiza solo mientras la toma se mueve (cubemap de 128 px + PMREM reutilizado).
  */
 function studioScene() {
   const scene = new Scene();
   const disposables: { dispose: () => void }[] = [];
-  // cúpula con degradado: suelo cálido que rebota, horizonte claro, techo en penumbra (el metal siempre refleja «algo»)
-  const dome = document.createElement("canvas");
-  dome.width = 4;
-  dome.height = 256;
-  const dx = dome.getContext("2d")!;
-  const dg = dx.createLinearGradient(0, 0, 0, 256);
-  dg.addColorStop(0, "#0b0a09");
-  dg.addColorStop(0.42, "#2a2620");
-  dg.addColorStop(0.5, "#6a5f50");
-  dg.addColorStop(0.58, "#2b241c");
-  dg.addColorStop(1, "#4a3622");
-  dx.fillStyle = dg;
-  dx.fillRect(0, 0, 4, 256);
-  const domeTex = new CanvasTexture(dome);
-  domeTex.colorSpace = SRGBColorSpace;
-  const domeMat = new MeshBasicMaterial({ map: domeTex, side: BackSide });
+  const dome = new ShaderMaterial({
+    side: BackSide,
+    depthWrite: false,
+    uniforms: { uTop: { value: new Color("#0b0a09") }, uMid: { value: new Color("#6a5f50") }, uBot: { value: new Color("#4a3622") }, uBand: { value: 0.08 } },
+    vertexShader: "varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+    fragmentShader:
+      "uniform vec3 uTop; uniform vec3 uMid; uniform vec3 uBot; uniform float uBand; varying vec3 vP; void main(){ float y = vP.y; vec3 c = y > 0.0 ? mix(uMid, uTop, smoothstep(0.0, 0.9, y)) : mix(uMid, uBot, smoothstep(0.0, 0.6, -y)); c += uMid * exp(-y * y / (uBand * uBand)) * 0.6; gl_FragColor = vec4(c, 1.0); }",
+  });
   const domeGeo = new SphereGeometry(20, 32, 16);
-  scene.add(new ThreeMesh(domeGeo, domeMat));
-  disposables.push(domeTex, domeMat, domeGeo);
+  scene.add(new ThreeMesh(domeGeo, dome));
+  disposables.push(dome, domeGeo);
 
   // softbox con borde suave: centro intenso que cae hacia el canto (reflejos de bordes difusos, no rectángulos duros)
   const box = document.createElement("canvas");
@@ -331,9 +327,12 @@ function studioScene() {
     disposables.push(m);
     return m;
   };
-  const strip = mk(new Color(1, 1, 1).multiplyScalar(6));
-  const soft = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.4));
+  const stripL = mk(new Color(1, 1, 1).multiplyScalar(6));
+  const stripR = mk(new Color(1, 1, 1).multiplyScalar(6));
+  const top = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.4));
+  const back = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.4));
   const warm = mk(new Color(1, 0.78, 0.55).multiplyScalar(1.6));
+  const lamp = mk(new Color(1, 0.7, 0.4).multiplyScalar(0));
   const black = mk(new Color(0, 0, 0), null);
   const add = (m: MeshBasicMaterial, [x, y, z, w, h]: number[]) => {
     const p = new ThreeMesh(geo, m);
@@ -341,34 +340,85 @@ function studioScene() {
     p.scale.set(w, h, 1);
     p.lookAt(0, 0, 0);
     scene.add(p);
+    return p;
   };
-  add(strip, [-5, 0.5, 2.5, 1.4, 9]);
-  add(strip, [5, 0.5, -1.5, 1.1, 9]);
-  add(soft, [0, 6, 0, 7, 4]);
-  add(soft, [0, 1.5, -6, 6, 3]);
+  add(stripL, [-5, 0.5, 2.5, 1.4, 9]);
+  add(stripR, [5, 0.5, -1.5, 1.1, 9]);
+  add(top, [0, 6, 0, 7, 4]);
+  add(back, [0, 1.5, -6, 6, 3]);
   // panel alto detrás: lo que refleja el interior del aro cuando la cámara entra a leer el grabado
-  add(soft, [0, 4.5, -4.5, 8, 3.5]);
+  add(back, [0, 4.5, -4.5, 8, 3.5]);
   add(warm, [0, -5, 2, 9, 3]);
+  // la lámpara de mesa: baja y lateral, solo en las tomas cálidas de conversación
+  add(lamp, [-4.5, -0.6, 3, 2.2, 2.2]);
   add(black, [4, -3, 4, 2.5, 3]);
   add(black, [-6, 0, -3, 2, 6]);
-  return { scene, dispose: () => disposables.forEach((x) => x.dispose()) };
+
+  const tint = new Color();
+  const W = new Color(1, 1, 1);
+  const WARM = new Color(1, 0.74, 0.5);
+  /** Pone la sala de una toma de luz. */
+  const update = (c: LightCue) => {
+    tint.set(kelvinToHex(c.kelvin)).lerp(W, 0.35);
+    const hard = 1 - c.softness;
+    const I = c.intensity;
+    const u = dome.uniforms;
+    // techo: en penumbra salvo en la caja de luz; horizonte: el ambiente; suelo: rebote cálido
+    u.uTop.value.copy(tint).multiplyScalar(0.03 + 0.55 * c.ambient * c.softness);
+    u.uMid.value.copy(tint).multiplyScalar((0.08 + 0.75 * c.ambient) * I);
+    u.uBot.value.copy(WARM).multiplyScalar(0.06 + 0.35 * c.ambient);
+    u.uBand.value = 0.05 + 0.25 * c.softness;
+    const rake = c.kind === "rake";
+    stripL.color.copy(tint).multiplyScalar((1.5 + 6 * hard) * I * (rake ? 1.6 : 1));
+    stripR.color.copy(tint).multiplyScalar(rake ? 0 : (1.2 + 5 * hard) * I);
+    top.color.copy(tint).multiplyScalar((0.6 + 3 * c.softness) * I * (c.y < 15 ? 1.8 : 1));
+    back.color.copy(tint).multiplyScalar((0.5 + 2.2 * c.softness) * I);
+    warm.color.copy(WARM).multiplyScalar(c.kelvin < 3400 ? 1.8 : 0.7);
+    lamp.color.copy(WARM).multiplyScalar(c.kelvin < 3000 ? 4 * I : 0);
+  };
+  return { scene, update, dispose: () => disposables.forEach((x) => x.dispose()) };
 }
 
-function Environment() {
+/** Diferencia entre dos tomas que obliga a volver a pintar el entorno. */
+const cueDelta = (a: LightCue, b: LightCue) =>
+  Math.abs(a.kelvin - b.kelvin) / 400 + Math.abs(a.softness - b.softness) + Math.abs(a.ambient - b.ambient) + Math.abs(a.intensity - b.intensity) + Math.abs(a.y - b.y) / 40 + (a.kind === b.kind ? 0 : 1);
+
+function Environment({ light }: { light: MutableRefObject<LightCue> | null }) {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
-  useEffect(() => {
+  const env = useMemo(() => studioScene(), []);
+  const res = useMemo(() => {
+    const cubeRT = new WebGLCubeRenderTarget(128, { type: HalfFloatType });
+    const cam = new CubeCamera(0.1, 50, cubeRT);
     const pmrem = new PMREMGenerator(gl);
-    const env = studioScene();
-    const rt = pmrem.fromScene(env.scene, 0.035);
-    scene.environment = rt.texture;
+    return { cubeRT, cam, pmrem, out: null as null | ReturnType<PMREMGenerator["fromCubemap"]>, last: null as LightCue | null, t: 0 };
+  }, [gl]);
+  const render = (c: LightCue) => {
+    env.update(c);
+    res.cam.update(gl, env.scene);
+    res.out = res.pmrem.fromCubemap(res.cubeRT.texture, res.out ?? undefined);
+    scene.environment = res.out.texture;
+    res.last = { ...c };
+  };
+  useEffect(() => {
+    render(light?.current ?? FALLBACK);
     return () => {
       scene.environment = null;
-      rt.dispose();
-      pmrem.dispose();
+      res.out?.dispose();
+      res.cubeRT.dispose();
+      res.pmrem.dispose();
       env.dispose();
     };
-  }, [gl, scene]);
+  }, [res, env]); // eslint-disable-line react-hooks/exhaustive-deps
+  // mientras la toma se mueve, la sala se vuelve a pintar (como mucho ~20 veces por segundo)
+  useFrame((_, dt) => {
+    const c = light?.current;
+    if (!c || !res.last) return;
+    res.t += dt;
+    if (res.t < 0.05 || cueDelta(c, res.last) < 0.02) return;
+    res.t = 0;
+    render(c);
+  });
   return null;
 }
 
@@ -877,8 +927,10 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.85 * closeIn, bottom.z + 1.95 * closeIn), s.fe);
     aim.lerp(bottom, s.fe);
     // de cerca del hombro: el pavé del aro y las garras de la cabeza en el mismo cuadro
-    const shoulder = new Vector3(Math.sin(0.85) * (R0 + T), Math.cos(0.85) * (R0 + T), 0).applyEuler(g.rotation);
-    camera.position.lerp(new Vector3(shoulder.x + 1.1, shoulder.y + 0.9, shoulder.z + 2.4), s.fp);
+    // más abajo del hombro (1,25 rad) y la cámara por fuera del aro: el pavé de frente y la cabeza al fondo, sin meterse en la piedra
+    const shoulder = new Vector3(Math.sin(1.25) * (R0 + T), Math.cos(1.25) * (R0 + T), 0).applyEuler(g.rotation);
+    const outward = new Vector3(Math.sin(1.25), Math.cos(1.25), 0).applyEuler(g.rotation);
+    camera.position.lerp(shoulder.clone().addScaledVector(outward, 1.7).add(new Vector3(0, 0.35, 1.6)), s.fp);
     aim.lerp(shoulder, s.fp);
     // el anillo cae a un lado de la pantalla: la cámara y su punto de mira se desplazan en paralelo hacia el otro
     if (Math.abs(s.px) > 1e-3) {
@@ -1011,7 +1063,7 @@ export default function RingScene({ active, ...props }: RingSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   return (
     <Canvas frameloop={active ? "always" : "never"} dpr={[1, coarse ? 1.5 : 2]} gl={{ alpha: true, antialias: true }} camera={{ fov: 30, position: [0, 0.55, 5.6], near: 0.05, far: 40 }} style={{ pointerEvents: "none" }}>
-      <Environment />
+      <Environment light={props.light} />
       <Rig />
       <Ring {...props} />
     </Canvas>

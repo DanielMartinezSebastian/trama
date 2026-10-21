@@ -332,6 +332,33 @@ principal; los otros no llegan a montar su lienzo.
 - **Lenis** (`SmoothScroll lerp={0.065}`): aceleración y frenada largas. Medido: una vuelta de rueda sigue avanzando
   alrededor de 1 s (21 → 330 px en 840 ms). El índice salta con `lenis.scrollTo` (1,6 s, salida en cuarta potencia).
 
+**El entorno cambia al bajar** (inspirado en [Oryzo](https://oryzo.ai), de Lusion, medido con Playwright el 21-10-2026:
+three r178 modificado, varios lienzos, Lenis, una página de ~56.700 px con un único objeto que atraviesa escenas muy
+distintas: un escritorio en foto, un estudio oscuro, un marco con brillo de colores, una galería, una habitación que pasa
+de luz de día a térmica y líneas técnicas de medida alrededor del objeto). Quilate lo aplica en tres capas, todas con el
+mismo progreso de scroll:
+1. **Reflejos 3D**: el estudio del metal (`studioScene`) se reconfigura con la toma de luz de cada sección. Cambian la
+   cúpula (techo, horizonte y suelo), las tiras, los softboxes, el rebote y una lámpara baja en las tomas cálidas. Solo se
+   vuelve a pintar mientras la toma se mueve, con un cubemap de 128 px y el PMREM reutilizado, unas 20 veces por segundo
+   como mucho.
+2. **Sala detrás del anillo** (`SCENES`):
+
+   | Paso | Sala |
+   |---|---|
+   | Prólogo | escaparate (foto desenfocada) |
+   | Escuchar | mesa con lámpara |
+   | Elegir | terciopelo negro con foco |
+   | Dar forma | pared de herramientas del taller |
+   | Ajustar | oscuridad con una raya rasante |
+   | Cuidar | caja de luz gris |
+   | Transformar | vitrina de piezas antiguas |
+   | Heredar | vitrina de museo |
+
+   Cada sala tiene su peso (`--w0`…`--w7`) y se funde con la siguiente.
+3. **Líneas técnicas** (`HUD`): cota circular, mira y datos alrededor del anillo, en «Elegir» (Ø 6,5 mm, 1 ct, 57
+   facetas), «Ajustar» (talla 14, Ø 17,2 mm, punzón) y «Cuidar» (22 × 1,3 mm). Siguen el lado del anillo (`--ring-x`) y se
+   dibujan con `stroke-dashoffset` al llegar.
+
 **Coreografía del recorrido** (portada):
 - El anillo del recorrido se monta con piezas del kit: aro de pavé, cesta de seis garras, 1 ct y grabado «Para ti · siempre».
 - Sigue una pose por capítulo (`POSES` en `Site.tsx`):

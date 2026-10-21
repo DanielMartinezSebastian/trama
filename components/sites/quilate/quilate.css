@@ -357,3 +357,52 @@
   .ql-strip__item { scroll-snap-align: start; }
   .ql-strip__item:nth-child(even) img { margin-top: 0; }
 }
+
+/* ---------- entornos del recorrido (detrás del anillo) y líneas técnicas ---------- */
+.ql-scenes { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.ql-scene {
+  position: absolute; inset: -6%; opacity: var(--w, 0); background-size: cover; background-position: center;
+  transform: scale(calc(1.06 + var(--w, 0) * -0.04)) translateY(calc(var(--story-p, 0) * -2%));
+  will-change: opacity, transform;
+}
+.ql-scene--photo { filter: blur(10px) brightness(0.42) saturate(0.85) sepia(0.15); }
+.ql-scene--lamp { filter: blur(16px) brightness(0.32) sepia(0.45) saturate(1.2); }
+.ql-scene--lamp::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 18% 78%, rgb(255 170 90 / 0.35), transparent 70%); }
+.ql-scene--velvet {
+  background:
+    radial-gradient(38% 46% at 50% 42%, rgb(255 248 235 / 0.13), transparent 70%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.012) 0 2px, transparent 2px 4px),
+    radial-gradient(120% 90% at 50% 40%, #16110e, #050403 70%);
+}
+.ql-scene--rake {
+  background:
+    linear-gradient(97deg, transparent 0 18%, rgb(255 236 200 / 0.10) 30%, rgb(255 236 200 / 0.22) 36%, transparent 48%),
+    radial-gradient(110% 80% at 30% 60%, #1a1511, #070605 75%);
+}
+.ql-scene--lightbox {
+  background:
+    radial-gradient(70% 60% at 50% 45%, #6b6a67, #3d3c3a 75%),
+    linear-gradient(#4a4946, #2c2b29);
+}
+.ql-scenes__vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgb(0 0 0 / 0.55)); }
+
+.ql-hud {
+  position: absolute; z-index: 1; pointer-events: none; overflow: visible;
+  width: min(62vh, 52vw); aspect-ratio: 1; top: 50%;
+  left: calc(50% + var(--ring-x, 0) * 100%); transform: translate(-50%, -50%);
+}
+.ql-hud__g { opacity: var(--w, 0); }
+.ql-hud circle, .ql-hud line {
+  fill: none; stroke: var(--acc); stroke-width: 1; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--w, 0));
+}
+.ql-hud .ql-hud__thin { stroke-opacity: 0.35; stroke-dasharray: 0.004 0.012; stroke-dashoffset: 0; }
+.ql-hud text { fill: var(--mut); font: 400 9px var(--font-geist-mono, ui-monospace, monospace); letter-spacing: 0.08em; text-transform: uppercase; }
+.ql-hud .ql-hud__big { fill: var(--fg); font-size: 12px; }
+@media (max-width: 899px) {
+  .ql-hud { width: 70vw; top: 27%; left: 50%; }
+  .ql-hud text { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ql-scene { transform: none; }
+}

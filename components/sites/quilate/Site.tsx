@@ -372,6 +372,26 @@ const POSES: RingPose[] = [
   { explode: 0.6, head: 0, engrave: 0, pave: 0, yaw: 3.4, x: -0.2, zoom: 1 }, // transformar: se abre y se rehace
   { explode: 0, head: 0.22, engrave: 0, pave: 0, yaw: 4.4, x: 0.2, zoom: 1 }, // heredar: montado, de vitrina
 ];
+/**
+ * El entorno de cada paso (como las escenas de Oryzo): detrás del anillo, una sala distinta que se funde con la siguiente al
+ * ritmo del scroll. Fotos reales desenfocadas (escaparate, taller, vitrina) o luz pintada (terciopelo, caja de luz, rasante).
+ */
+const SCENES: { kind: "photo" | "velvet" | "rake" | "lightbox" | "lamp"; photo?: number }[] = [
+  { kind: "photo", photo: 13 }, // prólogo: el escaparate
+  { kind: "lamp", photo: 5 }, // escuchar: la mesa con la lámpara
+  { kind: "velvet" }, // elegir: terciopelo negro y un foco
+  { kind: "photo", photo: 1 }, // dar forma: la pared de herramientas del taller
+  { kind: "rake" }, // ajustar: oscuridad y una raya de luz rasante
+  { kind: "lightbox" }, // cuidar: caja de luz gris neutra
+  { kind: "photo", photo: 7 }, // transformar: la vitrina de piezas antiguas
+  { kind: "photo", photo: 8 }, // heredar: la vitrina de museo
+];
+/** Líneas técnicas alrededor del anillo en los pasos que miden algo (cota circular, mira y datos). */
+const HUD: { step: number; r: number; labels: string[] }[] = [
+  { step: 2, r: 168, labels: ["Ø 6,5 mm", "1,00 ct · brillante", "57 facetas · GIA"] },
+  { step: 4, r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "750 · QLT"] },
+  { step: 5, r: 100, labels: ["22 × 1,3 mm", "garras revisadas", "ultrasonidos · 20 min"] },
+];
 const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "zoom"] as const;
 const smooth = (t: number) => t * t * (3 - 2 * t);
 /** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
@@ -419,7 +439,11 @@ function Home() {
         p.zoom *= 1.08;
       }
       const span = centers[centers.length - 1] - centers[0];
-      sticky.current?.style.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
+      const st = sticky.current?.style;
+      st?.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
+      // peso de cada escena (fondo y líneas técnicas): la actual se apaga mientras la siguiente se enciende, con el mismo t
+      for (let k = 0; k < POSES.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
+      st?.setProperty("--ring-x", p.x.toFixed(3));
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -488,6 +512,26 @@ function Home() {
 
       <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">
         <div className="ql-story__sticky" ref={sticky}>
+          <div className="ql-scenes" aria-hidden>
+            {SCENES.map((sc, k) => (
+              <div key={k} className={`ql-scene ql-scene--${sc.kind}`} style={{ "--w": `var(--w${k}, ${k === 0 ? 1 : 0})`, ...(sc.photo != null ? { backgroundImage: `url(${photo("joyeria", sc.photo).src})` } : {}) } as CSSProperties} />
+            ))}
+            <div className="ql-scenes__vignette" />
+          </div>
+          <svg className="ql-hud" viewBox="-200 -200 400 400" aria-hidden>
+            {HUD.map((h) => (
+              <g key={h.step} className="ql-hud__g" style={{ "--w": `var(--w${h.step}, 0)` } as CSSProperties}>
+                <circle r={h.r} pathLength={1} />
+                <circle r={h.r + 14} pathLength={1} className="ql-hud__thin" />
+                <line x1={-h.r - 40} y1={0} x2={-h.r - 8} y2={0} pathLength={1} />
+                <line x1={h.r + 8} y1={0} x2={h.r + 40} y2={0} pathLength={1} />
+                <line x1={0} y1={-h.r - 40} x2={0} y2={-h.r - 8} pathLength={1} />
+                {h.labels.map((l, i) => (
+                  <text key={i} x={h.r + 26} y={-h.r * 0.55 + i * 15} className={i === 0 ? "ql-hud__big" : ""}>{l}</text>
+                ))}
+              </g>
+            ))}
+          </svg>
           <RingStage sel={sel} look={look} pose={pose} height="100%" alt={step === 0 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
           {/* la palabra del capítulo, gigante y detrás de todo, se recompone letra a letra al cambiar de paso */}
           <p key={step} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
