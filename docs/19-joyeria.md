@@ -397,6 +397,15 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
     el anillo y su HUD se apartan hacia el otro lado lo justo (`shiftX`). Se mide con la pantalla real y se suma a `x` en
     el bucle de scroll; hoy solo lo necesita «Transformar» (radio 295).
   - Medido con Playwright en los siete cuadros a 1024, 1280, 1440 y 1920 px, y a 390 y 360 px: ningún cuadro toca su HUD.
+- **Portada con mensaje de oficio** (21-10-2026): «Orfebres en Valencia · Joyas hechas a mano en nuestro taller», con
+  un subtítulo de lo que se hace y cómo (dibujo, fundición, engaste, pulido). Sustituye al titular conceptual de las 57
+  facetas.
+- **Tras el recorrido**, en lugar de las dos puertas y la tira de cuatro fotos:
+  - una cinta del oficio (`Marquee`);
+  - «¿Qué quieres que hagamos?»: cuatro caminos en `ExpandingPanels` (alianzas, compromiso, a medida y transformar);
+  - «Así se hace una joya»: el taller en `HorizontalScroll`, con seis fotos que se descubren (`ImageReveal`), alternando
+    vertical y apaisada y con su paso numerado (en móvil, carrusel nativo);
+  - las garantías en un `BentoGrid` con fotos veladas.
 - **Grabado solo en «Ajustar»**: en la portada, «Para ti · siempre» aparece cuando la cámara entra a leerlo (sube con
   `engrave`) y se va con él; en el resto de capítulos el aro va liso. En el configurador, sin pose, se ve siempre.
 - **Niebla al alejarse** (`ringScene.tsx`): lo que se va encogiéndose se disuelve antes en el fondo en vez de quedarse a

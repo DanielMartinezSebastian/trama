@@ -4,13 +4,18 @@ import { Fragment, createContext, useContext, useEffect, useMemo, useRef, useSta
 import { usePathname } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import BeforeAfter from "@/components/ui/BeforeAfter";
+import BentoGrid from "@/components/ui/BentoGrid";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
+import ExpandingPanels from "@/components/ui/ExpandingPanels";
 import FAQSection from "@/components/ui/FAQSection";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import Hero from "@/components/ui/Hero";
+import HorizontalScroll from "@/components/ui/HorizontalScroll";
+import ImageReveal from "@/components/ui/ImageReveal";
 import IslandNav from "@/components/ui/IslandNav";
 import LightScroll from "@/components/ui/LightScroll";
+import Marquee from "@/components/ui/Marquee";
 import MetaTable from "@/components/ui/MetaTable";
 import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
@@ -789,9 +794,9 @@ function Home() {
               align="center"
               backdrop="none"
               variant="minimal"
-              kicker={`Taller de joyería · ${BRAND.city}`}
-              title="Entra por una cara. Sale por cincuenta y siete."
-              subtitle="Cada faceta de un brillante decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal y la mano que lo monta."
+              kicker={`Orfebres en ${BRAND.city}`}
+              title="Joyas hechas a mano en nuestro taller."
+              subtitle="Anillos de compromiso, alianzas y piezas a medida: las dibujamos contigo, fundimos el oro, engastamos cada piedra y las pulimos en nuestro propio banco."
               primaryCta="Pedir cita en el taller"
               primaryHref={href("cita")}
               secondaryCta="Diseñar un solitario"
@@ -819,61 +824,74 @@ function Home() {
         </ol>
       </section>
 
+      {/* tras el recorrido: el oficio en una cinta, los caminos en paneles que se abren, el taller en un recorrido horizontal
+          de fotos que se descubren y las garantías en una rejilla bento con fotos */}
+      <div className="ql-band" data-light="taller" aria-hidden>
+        <Marquee text="Hecho a mano en Valencia · Oro 750 · Platino 950 · Engaste garra a garra · Grabado a buril · Piedras certificadas" separator="✦" rows={1} duration={48} fontSize={40} variant="minimal" tone="fg" edgeFade pauseOnHover={false} className="ql-band__m" />
+      </div>
+
       <section className="ql-wrap ql-sec" data-light="vitrina">
         <div className="ql-sechead">
-          <h2 className="ql-h2">Dos maneras de empezar</h2>
-          <p className="ql-mut">Las dos con precio cerrado, plazo dicho y cita antes de fundir nada.</p>
+          <p className="ql-kicker">Cuatro maneras de empezar</p>
+          <h2 className="ql-h2">¿Qué quieres que hagamos?</h2>
+          <p className="ql-mut">Todas con precio cerrado, plazo dicho y cita antes de fundir nada.</p>
         </div>
-        <div className="ql-doors">
-          <a className="ql-door" href={href("alianzas")}>
-            <img src={photo("joyeria", 11).src} alt="Anillo de oro amarillo visto por dentro, con piedras de colores engastadas en el aro" loading="lazy" />
-            <span className="ql-door__k">Sencilla</span>
-            <b>Alianza</b>
-            <span>Metal, ancho, perfil, acabado y grabado. 12 días.</span>
-          </a>
-          <a className="ql-door" href={href("compromiso")}>
-            <img src={photo("joyeria", 12).src} alt="Anillo de oro con zafiros, esmeralda, citrino y diamantes engastados en línea" loading="lazy" />
-            <span className="ql-door__k">Compleja</span>
-            <b>Solitario</b>
-            <span>Montura, piedra con certificado, quilates, metal y pavé. 4 a 6 semanas.</span>
-          </a>
-        </div>
+        <ExpandingPanels
+          height="min(68svh, 560px)"
+          grow={3.2}
+          className="ql-paths"
+          panels={[
+            { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: photo("joyeria", 11).src, alt: "Anillo de oro con piedras de colores engastadas en el aro", href: href("alianzas") },
+            { title: "Compromiso", meta: "Solitario con piedra certificada · 4 a 6 semanas", image: photo("joyeria", 12).src, alt: "Anillo de oro con zafiros, esmeralda y diamantes engastados en línea", href: href("compromiso") },
+            { title: "A medida", meta: "Del boceto a la pieza, contigo en el taller", image: photo("joyeria", 1).src, alt: "Joyas hechas a mano sobre la mesa de un orfebre", href: href("cita") },
+            { title: "Transformar", meta: "Una joya heredada, rehecha para hoy", image: photo("joyeria", 10).src, alt: "Anillo antiguo de oro con una piedra azul", href: href("taller") },
+          ]}
+        />
       </section>
 
-      <section className="ql-wrap ql-sec" data-light="taller">
-        <div className="ql-sechead">
-          <h2 className="ql-h2">El banco, la vitrina, la pieza</h2>
-          <p className="ql-mut">Donde se hace y donde se enseña. Fotos de talleres y vitrinas de joyería.</p>
+      <section className="ql-gal" data-light="taller" aria-label="El taller, en fotos">
+        <div className="ql-wrap ql-sechead">
+          <p className="ql-kicker">Del banco a la vitrina</p>
+          <h2 className="ql-h2">Así se hace una joya.</h2>
         </div>
-        <div className="ql-strip">
+        <HorizontalScroll gap={28} minWidth={900} className="ql-gal__hs">
           {[
-            { i: 5, alt: "Banco de joyero con flexo, limas y piezas a medio hacer", cap: "El banco: flexo, limas y cera" },
-            { i: 7, alt: "Vitrina con brazaletes y collares de oro iluminados desde arriba", cap: "La vitrina: luz de museo" },
-            { i: 6, alt: "Cadena de oro con piedras y esmalte sobre fondo blanco", cap: "La pieza: oro, piedra y esmalte" },
-            { i: 13, alt: "Escaparate de una joyería con vitrinas iluminadas y lámparas de hojas doradas", cap: "La tienda: el escaparate" },
-          ].map((f) => (
-            <figure key={f.i} className="ql-strip__item">
-              <img src={photo("joyeria", f.i).src} alt={f.alt} loading="lazy" />
-              <figcaption>{f.cap}</figcaption>
+            { i: 5, from: "bottom", cap: "El banco", t: "Flexo, limas y cera: aquí empieza todo.", alt: "Banco de joyero con flexo, limas y piezas a medio hacer" },
+            { i: 4, from: "left", cap: "La fundición", t: "El oro se funde y se vierte en el molde.", alt: "Molde de piedra para fundir joyas" },
+            { i: 0, from: "top", cap: "El hilo", t: "Torcido y soldado a mano, vuelta a vuelta.", alt: "Joyas de hilo de metal retorcido" },
+            { i: 6, from: "bottom", cap: "El esmalte", t: "Color al fuego entre oro y piedra.", alt: "Cadena de oro con piedras y esmalte" },
+            { i: 9, from: "right", cap: "El oficio", t: "Dos mil años haciendo anillos igual: a mano.", alt: "Anillo romano de oro" },
+            { i: 7, from: "center", cap: "La vitrina", t: "Y al final, la luz que la hace brillar.", alt: "Vitrina con brazaletes de oro iluminados" },
+          ].map((f, n) => (
+            <figure key={f.i} className="ql-gal__panel" data-tall={n % 2 === 0 ? "" : undefined}>
+              <ImageReveal src={photo("joyeria", f.i).src} alt={f.alt} ratio={n % 2 === 0 ? "4 / 5" : "5 / 4"} from={f.from as never} zoom={1.2} />
+              <figcaption>
+                <span className="ql-gal__n">{String(n + 1).padStart(2, "0")}</span>
+                <b>{f.cap}</b>
+                <span>{f.t}</span>
+              </figcaption>
             </figure>
           ))}
-        </div>
+        </HorizontalScroll>
       </section>
 
       <section className="ql-wrap ql-sec" data-light="lupa">
-        <div className="ql-trust">
-          {[
-            ["Contraste y punzón", "Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos."],
-            ["Piedras certificadas", "GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color."],
-            ["Precio cerrado", "El desglose que ves es el que pagas. Sin «desde» al final."],
-            ["De por vida", "Limpieza y revisión gratis; ajuste de talla gratis el primer año."],
-          ].map(([t, d]) => (
-            <div key={t}>
-              <h3 className="ql-h3">{t}</h3>
-              <p className="ql-mut">{d}</p>
-            </div>
-          ))}
+        <div className="ql-sechead">
+          <p className="ql-kicker">Por qué fiarte</p>
+          <h2 className="ql-h2">Lo que firmamos con cada pieza.</h2>
         </div>
+        <BentoGrid
+          columns={4}
+          variant="minimal"
+          className="ql-bento"
+          cells={[
+            { title: "Contraste y punzón", text: "Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos.", stat: "750", span: "2x1", image: photo("joyeria", 8).src },
+            { title: "Piedras certificadas", text: "GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color.", stat: "GIA", span: "1x2", image: photo("joyeria", 12).src },
+            { title: "Precio cerrado", text: "El desglose que ves es el que pagas. Sin «desde» al final.", span: "1x1" },
+            { title: "De por vida", text: "Limpieza y revisión gratis; ajuste de talla gratis el primer año.", stat: "∞", span: "1x1" },
+            { title: "Hecho aquí", text: "Sin intermediarios: lo que encargas se dibuja, funde y engasta en el taller.", span: "2x1", image: photo("joyeria", 5).src },
+          ]}
+        />
       </section>
 
       <div data-light="memoria">

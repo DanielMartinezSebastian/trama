@@ -17244,6 +17244,11 @@
           "uses": 2
         },
         {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
           "component": "Hero",
           "id": "hero",
           "uses": 1
@@ -17269,8 +17274,28 @@
           "uses": 1
         },
         {
+          "component": "HorizontalScroll",
+          "id": "horizontal-scroll",
+          "uses": 1
+        },
+        {
+          "component": "ImageReveal",
+          "id": "image-reveal",
+          "uses": 1
+        },
+        {
+          "component": "BentoGrid",
+          "id": "bento-grid",
+          "uses": 1
+        },
+        {
           "component": "IslandNav",
           "id": "island-nav",
+          "uses": 1
+        },
+        {
+          "component": "ExpandingPanels",
+          "id": "expanding-panels",
           "uses": 1
         },
         {
