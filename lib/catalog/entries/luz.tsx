@@ -68,8 +68,8 @@ export const luz: CatalogEntry[] = [
           orientation={p.orientation as "horizontal" | "vertical"}
           initial={p.initial as number}
           variant={p.variant as never}
-          before={<img src={photo("joyeria", 1).src} alt="Alianzas de oro" style={{ filter: "grayscale(1)" }} />}
-          after={<img src={photo("joyeria", 1).src} alt="" />}
+          before={<img src={photo("joyeria", 12).src} alt="Anillo de oro con piedras de colores" style={{ filter: "grayscale(1)" }} />}
+          after={<img src={photo("joyeria", 12).src} alt="" />}
           beforeLabel="Blanco y negro"
           afterLabel="Color"
           label="Comparar la foto en blanco y negro y en color"

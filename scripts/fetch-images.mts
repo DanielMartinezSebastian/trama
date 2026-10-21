@@ -26,6 +26,11 @@ const EXCLUDE: string[] = [
   "marakkanam", "salt-pans", "salt pans", "pachalik", "occupation and freedom", "strada lipscani", "conference organisers", "l-22-01-21", "i love you stage",
   "positivus", "snow covered saint charles", "cholla", "shoshone", "savyolovsky", "winnipeg", "wiener weltausstellung", "painting", "gemälde", "oil on canvas",
   "gov-ball",
+  // joyería: texto religioso de fondo, retrato de moda y reloj con la marca a la vista
+  "Wedding rings (Unsplash).jpg", "Woman in gold in front of graffiti (Unsplash).jpg", "Watch and wedding bands (Unsplash).jpg",
+  "Thomas Rowlandson - Vaux-Hall - Dr. Johnson, Oliver Goldsmith, Mary Robinson, et al.jpg", "(Venice) French goldsmith, mechanical celestial and terrestrial globe, post 1565 - Correr Museum.jpg",
+  "Residence of Hon. W.W. Sullivan, Charlottetown, P.E.I. E.W. Taylor's Jewelry Store, Interior & Exterior, Southside Queen Square (IA dr residence-of-hon-ww-sullivan-charlottetown-pei-ew-taylors-jewelr-4475021).jpg",
+  "Paul Goldsmith 2024.jpg", "Metro Mall Jewelry Mall Downtown Miami FL September 2026 - 02.jpg",
   "Big Desert Wilderness Area, Victoria, Australia (Unsplash).jpg", "Coffee art and iphone (Unsplash).jpg", "Sambazon 2016 (Unsplash).jpg", "Tidal Basin, Washington, United States (Unsplash xVnPN3fVGfY).jpg", "West Rim Trail, Grand Canyon Village, United States (Unsplash).jpg", "plant-in-a-coworking", "paris-coffee", "man-in-cafe", "aerial-view-of-cape-town", "food-of-the-city",
 ];
 
@@ -41,7 +46,7 @@ const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> =
   gastronomia: { n: 5, queries: ["unsplash restaurant food", "unsplash coffee cafe", "pexels plated dish", "unsplash bread bakery"] },
   deporte: { n: 8, queries: ["unsplash racing car", "unsplash motorsport", "pexels race car", "unsplash athlete portrait", "unsplash cyclist road", "unsplash helmet"] },
   pasteleria: { n: 14, queries: ["unsplash cake", "unsplash pastry", "unsplash croissant", "unsplash bakery", "unsplash macarons", "unsplash cupcake", "pexels cake", "pexels pastry", "unsplash dessert", "unsplash tart", "unsplash cheesecake", "unsplash donut", "unsplash cinnamon roll", "unsplash wedding cake", "unsplash strawberry cake", "pexels bakery"] },
-  joyeria: { n: 10, queries: ["jewelry unsplash", "jewellery unsplash", "necklace unsplash", "earrings unsplash", "gold ring unsplash", "wedding rings unsplash", "diamond ring macro", "goldsmith at work", "jeweller workshop bench", "jewelry pexels", "gemstones cut", "gold rings"], match: /\b(rings?|bands?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant)\b/i },
+  joyeria: { n: 14, queries: ["jewelry store interior", "jewellery shop window", "jewelry display case", "jeweller workshop", "goldsmith workbench", "goldsmith at work", "jeweler hands", "gemstones loose", "cut gemstones", "diamond loose", "jewelry unsplash", "gold necklace unsplash", "engagement ring box", "earrings unsplash", "jewellery making"], match: /\b(rings?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant|jeweller\w*|jeweler\w*|workshop|workbench)\b/i },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 

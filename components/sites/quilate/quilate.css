@@ -344,3 +344,16 @@
 }
 @keyframes ql-sheen { from { background-position: 100% 0; } to { background-position: 0% 0; } }
 @media (prefers-reduced-motion: reduce) { .ql::after { animation: none; background-position: 50% 0; } }
+
+/* franja de fotos del oficio: cuatro en fila en escritorio, desplazable en móvil */
+.ql-strip { display: grid; grid-template-columns: 1.1fr 1fr 0.8fr 1fr; gap: clamp(8px, 1.2vw, 16px); }
+.ql-strip__item { margin: 0; display: grid; gap: 8px; min-width: 0; }
+.ql-strip__item img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; filter: saturate(0.9) contrast(1.03); transition: filter 0.5s; }
+.ql-strip__item:nth-child(even) img { margin-top: 40px; }
+.ql-strip__item:hover img { filter: saturate(1.05) contrast(1.05); }
+.ql-strip__item figcaption { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mut); }
+@media (max-width: 760px) {
+  .ql-strip { grid-template-columns: repeat(4, 72%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+  .ql-strip__item { scroll-snap-align: start; }
+  .ql-strip__item:nth-child(even) img { margin-top: 0; }
+}

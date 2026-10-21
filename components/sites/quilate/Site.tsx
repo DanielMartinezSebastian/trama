@@ -543,17 +543,37 @@ function Home() {
         </div>
         <div className="ql-doors">
           <a className="ql-door" href={href("alianzas")}>
-            <img src={photo("joyeria", 1).src} alt="Dos alianzas de oro sobre una superficie clara" loading="lazy" />
+            <img src={photo("joyeria", 11).src} alt="Anillo de oro amarillo visto por dentro, con piedras de colores engastadas en el aro" loading="lazy" />
             <span className="ql-door__k">Sencilla</span>
             <b>Alianza</b>
             <span>Metal, ancho, perfil, acabado y grabado. 12 días.</span>
           </a>
           <a className="ql-door" href={href("compromiso")}>
-            <img src={photo("joyeria", 8).src} alt="Mano con un anillo de compromiso con una piedra grande" loading="lazy" />
+            <img src={photo("joyeria", 12).src} alt="Anillo de oro con zafiros, esmeralda, citrino y diamantes engastados en línea" loading="lazy" />
             <span className="ql-door__k">Compleja</span>
             <b>Solitario</b>
             <span>Montura, piedra con certificado, quilates, metal y pavé. 4 a 6 semanas.</span>
           </a>
+        </div>
+      </section>
+
+      <section className="ql-wrap ql-sec" data-light="taller">
+        <div className="ql-sechead">
+          <h2 className="ql-h2">El banco, la vitrina, la pieza</h2>
+          <p className="ql-mut">Donde se hace y donde se enseña. Fotos de talleres y vitrinas de joyería.</p>
+        </div>
+        <div className="ql-strip">
+          {[
+            { i: 5, alt: "Banco de joyero con flexo, limas y piezas a medio hacer", cap: "El banco: flexo, limas y cera" },
+            { i: 7, alt: "Vitrina con brazaletes y collares de oro iluminados desde arriba", cap: "La vitrina: luz de museo" },
+            { i: 6, alt: "Cadena de oro con piedras y esmalte sobre fondo blanco", cap: "La pieza: oro, piedra y esmalte" },
+            { i: 13, alt: "Escaparate de una joyería con vitrinas iluminadas y lámparas de hojas doradas", cap: "La tienda: el escaparate" },
+          ].map((f) => (
+            <figure key={f.i} className="ql-strip__item">
+              <img src={photo("joyeria", f.i).src} alt={f.alt} loading="lazy" />
+              <figcaption>{f.cap}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
@@ -856,7 +876,7 @@ function Workshop() {
               ) : s.id === "tasacion" ? (
                 <MetaTable label="Informe de tasación (ejemplo)" rows={ARCHIVE_SAMPLE.split("\n").slice(0, 5).map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
               ) : (
-                <img src={photo("joyeria", s.id === "talla" ? 3 : s.id === "reparacion" ? 0 : 9).src} alt="" loading="lazy" />
+                <img src={photo("joyeria", s.id === "talla" ? 5 : s.id === "reparacion" ? 1 : 6).src} alt="" loading="lazy" />
               )}
             </div>
           </section>
