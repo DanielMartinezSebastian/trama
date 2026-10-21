@@ -13,6 +13,10 @@ import { brilliantGeometry, useGemEnvironment } from "./ringScene";
  * es el material trazado de Quilate (refracción, reflexión interna total, dispersión por canal) y su foco principal es el
  * propio haz. Todo en el plano z = 0; la cámara mira de frente.
  *
+ * Créditos: la colocación del haz como un plano estirado entre dos puntos (punto medio, largo y giro con atan2) sigue la de
+ * `Beam.tsx` del ejemplo https://github.com/pmndrs/examples/tree/main/examples/nextjs-prism (MIT © Poimandres). El resto
+ * (material de la gema, destello, abanico y fusión) es propio.
+ *
  * `progress` (0–1) lo mueve la página con el scroll: el diamante se encoge y se desplaza hacia donde aparece el anillo del
  * recorrido siguiente, y el haz y el abanico se apagan (la fusión con la escena siguiente).
  */
