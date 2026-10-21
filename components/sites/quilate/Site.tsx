@@ -14,7 +14,6 @@ import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
 import ScrubText from "@/components/ui/ScrubText";
 import SmoothScroll from "@/components/ui/SmoothScroll";
-import SplitText from "@/components/ui/SplitText";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { money } from "@/lib/commerce/money";
@@ -24,6 +23,7 @@ import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
+import PrismHero from "./PrismHero";
 import RingStage, { RingFlat } from "./RingStage";
 import type { RingPose } from "./ringScene";
 import {
@@ -352,9 +352,6 @@ function Engraving({ sel }: { sel: RingSel }) {
 
 /* ---------- inicio: la casa contada por sus siete servicios ---------- */
 // el anillo del recorrido se monta con piezas del kit de Blender: aro de pavé y cesta de seis garras
-/** Los otros dos anillos de la portada: la gama de la casa de un vistazo (compleja, con halo, y sencilla, trenzada). */
-const HERO_HALO: RingSel = { ...DEFAULT_SOLITAIRE, metal: "rosa", shape: "oval", carat: 0.9, shank: "aro-afinado", head: "cabeza-halo-oval", engraving: "" };
-const HERO_BAND: RingSel = { ...DEFAULT_BAND, metal: "blanco", shank: "aro-torsade", engraving: "" };
 const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "garras6", carat: 1, pave: true, shank: "aro-pave", head: "cabeza-6-garras", engraving: "Para ti · siempre" };
 
 /**
@@ -489,26 +486,21 @@ function Home() {
 
   return (
     <>
-      <section className="ql-hero" data-light="vitrina">
-        <div className="ql-wrap ql-hero__in">
-          <div className="ql-hero__copy">
-            <p className="ql-kicker">Taller de joyería · {BRAND.city}</p>
-            <SplitText as="h1" by="words" trigger="mount" className="ql-h1">{"Siete gestos para una joya."}</SplitText>
-            <p className="ql-lead">No te contamos nuestra historia: te enseñamos lo que hacemos con la tuya. Escuchar, elegir, dar forma, ajustar, cuidar, transformar y heredar.</p>
-            <div className="ql-row">
-              <a className="ql-btn" href={href("cita")}>Pedir cita en el taller</a>
-              <a className="ql-btn ql-btn--ghost" href={href("alianzas")}>Diseñar una alianza</a>
-            </div>
-            <Rating />
-          </div>
-          <div className="ql-trio">
-            <RingStage sel={HERO_RING} height="100%" alt="Solitario de oro amarillo con un diamante de un quilate en seis garras y pavé en el aro, girando bajo un foco" className="ql-trio__main" />
-            <RingStage sel={HERO_HALO} height="100%" alt="Anillo de oro rosa con un diamante oval rodeado de un halo de diamantes" className="ql-trio__side ql-trio__side--a" />
-            <RingStage sel={HERO_BAND} height="100%" alt="Alianza de oro blanco trenzada en dos hilos" className="ql-trio__side ql-trio__side--b" />
-          </div>
+      <PrismHero landing={{ x: 0.25, y: 0.36 }} scaleTo={0.5}>
+        <p className="ql-kicker">Taller de joyería · {BRAND.city}</p>
+        <h1 className="ql-h1 ql-prism__claim">
+          <span>Entra por una cara.</span>
+          <span>Sale por cincuenta y siete.</span>
+        </h1>
+        <p className="ql-lead">Un brillante tiene 57 facetas y cada una decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal, la mano que lo monta y la luz con la que lo eliges.</p>
+        <div className="ql-row">
+          <a className="ql-btn" href={href("cita")}>Pedir cita en el taller</a>
+          <a className="ql-btn ql-btn--ghost" href={href("compromiso")}>Diseñar un solitario</a>
         </div>
-        <p className="ql-wrap ql-hero__from">Alianzas desde {money(priceOf({ ...DEFAULT_BAND, width: 2 }), "EUR", "es-ES", true)} · solitarios desde {money(priceOf({ ...DEFAULT_SOLITAIRE, carat: 0.3, stone: "diamante-lab", setting: "garras4" }), "EUR", "es-ES", true)} · precio cerrado antes de empezar</p>
-      </section>
+        <Rating />
+        <p className="ql-prism__from">Alianzas desde {money(priceOf({ ...DEFAULT_BAND, width: 2 }), "EUR", "es-ES", true)} · solitarios desde {money(priceOf({ ...DEFAULT_SOLITAIRE, carat: 0.3, stone: "diamante-lab", setting: "garras4" }), "EUR", "es-ES", true)} · precio cerrado antes de empezar</p>
+        <p className="ql-prism__hint" aria-hidden>Mueve la luz · desliza</p>
+      </PrismHero>
 
       <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">
         <div className="ql-story__sticky" ref={sticky}>

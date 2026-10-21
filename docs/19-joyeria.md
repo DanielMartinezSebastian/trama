@@ -306,9 +306,24 @@ Taller de joyería ficticio en Valencia. Guía visual G1 «lujo tranquilo» en o
 | Tu talla | Medidor en pantalla |
 | Cita | Motivo (también por `?motivo=`), taller o videollamada, `DatePicker` con huecos y festivos, datos mínimos, la pieza que se lleva y el horario |
 
-**Portada: tres anillos** (la gama de un vistazo): el solitario del recorrido delante y, más pequeños y desfasados, un halo
-oval de oro rosa sobre aro afinado y una alianza torsade de oro blanco, todos con piezas del kit. En móvil solo el
-principal; los otros no llegan a montar su lienzo.
+**Portada: el diamante y el haz** (`PrismHero` + `prismScene.tsx`; sustituye a los tres anillos). Se inspira en los
+ejemplos de pmndrs [diamond-refraction](https://pmndrs.github.io/examples/diamond-refraction/), con `MeshRefractionMaterial`,
+`ior`, rebotes y aberración, y [nextjs-prism](https://pmndrs.github.io/examples/nextjs-prism/), con un haz desde el ratón
+que rebota y se abre en colores. Se ha hecho sin drei ni postprocesado:
+- **Claim**: «Entra por una cara. Sale por cincuenta y siete.» (las 57 facetas del brillante).
+- **El diamante** es el material trazado de Quilate, con índices un poco más separados por canal (2,38 · 2,42 · 2,50)
+  para que el fuego se lea a esa escala.
+- **El haz** sale del puntero (sin ratón, describe un arco solo) y va al diamante. En la silueta salta un destello y por el
+  otro lado sale un abanico de colores en un shader de sector polar, lavado hacia el blanco. El abanico se desvía según el
+  ángulo de entrada respecto a la faceta que gira, como en un prisma.
+- **Mezcla**: color y alfa se suman (`CustomBlending` 1 + 1); así, sobre un lienzo transparente, lo negro de los haces no
+  tapa la página.
+- **Fusión con el recorrido**:
+  - la portada mide dos pantallas y va encima del recorrido, con margen negativo;
+  - en la segunda pantalla el diamante baja, se encoge y **aterriza exactamente en la piedra del anillo** del prólogo;
+  - el texto se desvanece y se desenfoca, y el fondo de la portada se vuelve transparente justo al aterrizar.
+
+  En móvil el diamante empieza arriba y aterriza en el anillo centrado.
 
 **Escena de scrollytelling** (sustituye a las dos columnas):
 - **Escenario fijo a pantalla completa** con el anillo, la palabra del capítulo gigante en contorno (se recompone letra a

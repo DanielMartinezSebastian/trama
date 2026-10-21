@@ -184,7 +184,7 @@ export const stoneRadius = (carat: number) => ((6.5 * Math.cbrt(carat)) / 2) * M
  * facetas bajas de pabellón y 8 principales hasta la culata. Triángulos sueltos: cada faceta tiene su normal (el mosaico de
  * reflejos claros y oscuros que hace brillar una piedra).
  */
-function brilliantGeometry(R: number): BufferGeometry {
+export function brilliantGeometry(R: number): BufferGeometry {
   const at = (deg: number, r: number, h: number) => new Vector3(Math.cos((deg * Math.PI) / 180) * r * R, h * R, Math.sin((deg * Math.PI) / 180) * r * R);
   const T = Array.from({ length: 8 }, (_, k) => at(k * 45, 0.55, 0.32));
   const S = Array.from({ length: 8 }, (_, k) => at(k * 45 + 22.5, 0.8, 0.2));
@@ -427,7 +427,7 @@ function Environment({ light }: { light: MutableRefObject<LightCue> | null }) {
  * facetas que reflejan un panel y facetas que reflejan negro (el «patrón» de GIA); con el entorno claro del metal se vería
  * blanca y lechosa. Mismo truco que los configuradores con un mapa para el metal y otro para la gema (docs/19 §3).
  */
-function useGemEnvironment() {
+export function useGemEnvironment() {
   const gl = useThree((s) => s.gl);
   const [tex, dispose] = useMemo(() => {
     const scene = new Scene();

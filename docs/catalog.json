@@ -17208,11 +17208,6 @@
           "uses": 1
         },
         {
-          "component": "SplitText",
-          "id": "split-text",
-          "uses": 1
-        },
-        {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
           "uses": 1
