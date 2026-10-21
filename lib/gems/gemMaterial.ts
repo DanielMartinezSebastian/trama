@@ -1,5 +1,5 @@
 /**
- * Material de gema con trazado de rayos real dentro de la piedra (docs/19 §6). Una talla es un poliedro convexo: el punto
+ * Material de gema con trazado de rayos real dentro de la piedra (docs/19 §6; nació en Quilate, ahora es un motor del kit). Una talla es un poliedro convexo: el punto
  * por el que un rayo sale de ella es el plano de faceta más cercano en su dirección, sin necesidad de BVH. En cada píxel:
  *
  *   1. reflexión exterior en la faceta (Fresnel de Schlick con el índice de la piedra);
@@ -95,6 +95,8 @@ uniform vec3 uFlat;
 uniform float uFlatMix;
 uniform float uDim;
 uniform float uOpacity;
+// luz que nace dentro de la piedra (0 = ninguna): sale por las facetas teñida por la absorción
+uniform vec3 uGlow;
 #include <fog_pars_fragment>
 varying vec3 vPos;
 varying vec3 vNormal;
@@ -170,6 +172,9 @@ void main() {
   } else {
     inner = trace(vPos, d, n, uIor.g);
   }
+  // brillo interior: más fuerte de frente (la luz sale por la mesa) y con el patrón de facetas de lo trazado
+  float facing = pow(max(dot(-d, n), 0.0), 0.6);
+  inner += uGlow * uAbsorb * (0.35 + 0.65 * facing) * (0.6 + 0.4 * dot(inner, vec3(0.333)));
   vec3 color = outer * F + inner * (1.0 - F);
   // cera, boceto, sin limpiar: la piedra pierde su luz
   vec3 nw = normalize(mat3(modelMatrix) * n);
@@ -203,6 +208,7 @@ export type GemMaterial = ShaderMaterial & {
     uFlatMix: { value: number };
     uDim: { value: number };
     uOpacity: { value: number };
+    uGlow: { value: Color };
   };
 };
 
@@ -242,6 +248,7 @@ export function createGemMaterial(
       uFlatMix: { value: 0 },
       uDim: { value: 0 },
       uOpacity: { value: 1 },
+      uGlow: { value: new Color(0, 0, 0) },
     },
   }) as GemMaterial;
   mat.userData.postFxGem = true;

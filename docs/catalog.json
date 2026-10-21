@@ -152,6 +152,7 @@
         "app-shell",
         "filter-bar",
         "island-nav",
+        "model-nav",
         "edge-tab",
         "action-bar"
       ]
@@ -11508,7 +11509,7 @@
         "editorial",
         "minimal"
       ],
-      "description": "Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado.",
+      "description": "Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado. Con src, un modelo GLB en vez de la forma (con sus materiales, encuadrado al lienzo, Draco desde /draco/): el ojo que te mira de /sitios/anima/info o la tumba de /sitios/anima/entradas; modelRotation lo orienta, follow dice cuánto gira hacia el puntero, glow pone una luz de color delante y env=\"none\" quita los reflejos de estudio para modelos con la luz horneada.",
       "props": [
         {
           "key": "shape",
@@ -11574,6 +11575,47 @@
           "label": "Alto (px)",
           "min": 160,
           "max": 700
+        },
+        {
+          "key": "src",
+          "type": "select",
+          "default": "",
+          "label": "Modelo GLB (en vez de la forma)",
+          "options": [
+            "",
+            "/models/ojo-sangre/ojo-sangre-transformed.glb",
+            "/models/tumba-magica/tumba-magica-transformed.glb"
+          ]
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 0.9,
+          "label": "Giro hacia el puntero (rad)",
+          "min": 0,
+          "max": 1.6
+        },
+        {
+          "key": "glow",
+          "type": "select",
+          "default": "",
+          "label": "Luz de color delante",
+          "options": [
+            "",
+            "acc",
+            "acc2",
+            "fg"
+          ]
+        },
+        {
+          "key": "env",
+          "type": "select",
+          "default": "studio",
+          "label": "Reflejos",
+          "options": [
+            "studio",
+            "none"
+          ]
         }
       ],
       "notes": [
@@ -12459,6 +12501,49 @@
       ],
       "example": "import IslandNav from \"@/components/ui/IslandNav\";\n\n<IslandNav />",
       "preview": "/componentes#island-nav"
+    },
+    {
+      "id": "model-nav",
+      "name": "Navegación «isla» con modelo 3D",
+      "component": "ModelNav",
+      "import": "import ModelNav from \"@/components/ui/ModelNav\";",
+      "category": "navegacion",
+      "styles": [
+        "editorial",
+        "minimal",
+        "outline"
+      ],
+      "description": "IslandNav con un modelo 3D acoplado en el centro: un medallón de vidrio que sobresale de la píldora y lleva cualquier escena de react-three-fiber (`model`). Se inclina hacia el puntero; dentro del modelo, `useModelNavPointer()` dice dónde está el puntero y lo cerca que pasa (`near`), para reaccionar (abrir la boca, brillar…). Sin `model`, una IslandNav normal: útil para quitarlo en la portada si allí ya hay un 3D grande. three solo se descarga cuando hay modelo; sin WebGL o con movimiento reducido, se ve la marca. Nació en /sitios/anima (la calavera pirata con sombrero en las páginas interiores).",
+      "props": [
+        {
+          "key": "withModel",
+          "type": "boolean",
+          "default": true,
+          "label": "Con modelo"
+        },
+        {
+          "key": "emblemSize",
+          "type": "number",
+          "default": 84,
+          "label": "Medallón (px)",
+          "min": 56,
+          "max": 120
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 0.45,
+          "label": "Inclinación hacia el puntero (rad)",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "notes": [
+        "Es position: fixed; aquí va contenida en el recuadro de puntos.",
+        "La marca sigue siendo el enlace y el nombre accesible: el medallón no recibe clics."
+      ],
+      "example": "import ModelNav from \"@/components/ui/ModelNav\";\n\n<ModelNav />",
+      "preview": "/componentes#model-nav"
     },
     {
       "id": "crossfade-hero",
@@ -17455,6 +17540,11 @@
           "uses": 2
         },
         {
+          "component": "ObjectStage",
+          "id": "object-stage",
+          "uses": 2
+        },
+        {
           "component": "Marquee",
           "id": "marquee",
           "uses": 1
@@ -17490,8 +17580,8 @@
           "uses": 1
         },
         {
-          "component": "IslandNav",
-          "id": "island-nav",
+          "component": "ModelNav",
+          "id": "model-nav",
           "uses": 1
         },
         {

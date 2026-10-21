@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
+import { Suspense, useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { CapsuleGeometry, Color, IcosahedronGeometry, MeshPhysicalMaterial, PMREMGenerator, SphereGeometry, TorusGeometry, TorusKnotGeometry, type BufferGeometry, type Mesh } from "three";
+import { Box3, CapsuleGeometry, Color, IcosahedronGeometry, MeshPhysicalMaterial, PMREMGenerator, SphereGeometry, TorusGeometry, TorusKnotGeometry, Vector3, type BufferGeometry, type Group, type Mesh, type Object3D } from "three";
 
 export const OBJECT_SHAPES = ["knot", "sphere", "torus", "capsule", "gem"] as const;
 export const OBJECT_MATERIALS = ["metal", "glass", "gloss", "matte"] as const;
@@ -22,6 +23,16 @@ export type ObjectSceneProps = {
   /** false = fuera de pantalla: el lienzo no dibuja */
   active: boolean;
   onReady: () => void;
+  /** un modelo GLB (con Draco desde `/draco/`) en lugar de la forma: con sus materiales, encuadrado al lienzo */
+  src?: string;
+  /** giro inicial del modelo en grados «x,y,z» (para que su cara frontal mire a la cámara) */
+  modelRotation?: string;
+  /** cuánto gira hacia el puntero, en radianes (con `motion="pointer"`) */
+  follow?: number;
+  /** color CSS de una luz delante del objeto (vacío = sin ella) */
+  glow?: string;
+  /** studio = reflejos de estudio (`RoomEnvironment`) · none = solo las luces (para modelos con su propia iluminación horneada) */
+  env?: "studio" | "none";
 };
 
 const GEOMETRY: Record<ObjectShape, () => BufferGeometry> = {
@@ -66,17 +77,11 @@ function Environment() {
   return null;
 }
 
-function Thing({ shape, material, color, motion, speed, pointer, onReady }: ObjectSceneProps) {
-  const mesh = useRef<Mesh>(null);
-  const geo = useMemo(() => GEOMETRY[shape](), [shape]);
-  const mat = useMemo(() => makeMaterial(material, color, shape === "gem"), [material, color, shape]);
+/** El movimiento común de la forma y del modelo. */
+function useMotion(target: MutableRefObject<Object3D | null>, { motion, speed, pointer, follow = 0.9, onReady }: ObjectSceneProps) {
   const done = useRef(false);
-
-  useEffect(() => () => geo.dispose(), [geo]);
-  useEffect(() => () => mat.dispose(), [mat]);
-
   useFrame((state, dt) => {
-    const m = mesh.current;
+    const m = target.current;
     if (!m) return;
     const t = state.clock.elapsedTime * speed;
     if (motion === "spin") {
@@ -88,14 +93,50 @@ function Thing({ shape, material, color, motion, speed, pointer, onReady }: Obje
       m.position.y = Math.sin(t * 0.9) * 0.12;
     } else if (motion === "pointer") {
       const k = Math.min(1, dt * 5);
-      m.rotation.y += (pointer.current.x * 0.9 - m.rotation.y) * k;
-      m.rotation.x += (pointer.current.y * 0.6 - m.rotation.x) * k;
+      m.rotation.y += (pointer.current.x * follow - m.rotation.y) * k;
+      m.rotation.x += (pointer.current.y * follow * 0.66 - m.rotation.x) * k;
+      m.position.y = Math.sin(t * 0.9) * 0.04;
     }
     if (!done.current) {
       done.current = true;
       onReady();
     }
   });
+}
+
+/** Un GLB encuadrado: centrado y escalado para caber en una esfera de radio 1,35 (como las formas). */
+function Model(props: ObjectSceneProps) {
+  const { scene } = useGLTF(props.src!, "/draco/") as unknown as { scene: Object3D };
+  const obj = useMemo(() => {
+    const o = scene.clone(true);
+    const [rx, ry, rz] = (props.modelRotation ?? "0,0,0").split(",").map((v) => (Number(v) || 0) * (Math.PI / 180));
+    o.rotation.set(rx, ry, rz);
+    o.updateMatrixWorld(true);
+    const box = new Box3().setFromObject(o);
+    const r = box.getSize(new Vector3()).length() / 2 || 1;
+    const k = 1.35 / r;
+    o.scale.multiplyScalar(k);
+    o.position.copy(box.getCenter(new Vector3()).multiplyScalar(-k));
+    return o;
+  }, [scene, props.modelRotation]);
+  const g = useRef<Group>(null);
+  useMotion(g as MutableRefObject<Object3D | null>, props);
+  return (
+    <group ref={g}>
+      <primitive object={obj} />
+    </group>
+  );
+}
+
+function Thing(props: ObjectSceneProps) {
+  const { shape, material, color } = props;
+  const mesh = useRef<Mesh>(null);
+  const geo = useMemo(() => GEOMETRY[shape](), [shape]);
+  const mat = useMemo(() => makeMaterial(material, color, shape === "gem"), [material, color, shape]);
+
+  useEffect(() => () => geo.dispose(), [geo]);
+  useEffect(() => () => mat.dispose(), [mat]);
+  useMotion(mesh as MutableRefObject<Object3D | null>, props);
 
   return <mesh ref={mesh} geometry={geo} material={mat} />;
 }
@@ -104,9 +145,17 @@ export default function ObjectScene(props: ObjectSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   return (
     <Canvas frameloop={props.active ? "always" : "never"} dpr={[1, coarse ? 1.5 : 2]} gl={{ alpha: true, antialias: true }} camera={{ fov: 32, position: [0, 0, 5.4], near: 0.1, far: 40 }} style={{ pointerEvents: "none" }}>
-      <Environment />
+      {props.env !== "none" && <Environment />}
+      <ambientLight intensity={props.env === "none" ? 0.9 : 0} />
       <directionalLight position={[3, 4, 5]} intensity={1.1} />
-      <Thing {...props} />
+      {props.glow && <pointLight position={[0, 0.2, 2.4]} color={props.glow} intensity={6} distance={7} decay={1.6} />}
+      {props.src ? (
+        <Suspense fallback={null}>
+          <Model {...props} />
+        </Suspense>
+      ) : (
+        <Thing {...props} />
+      )}
     </Canvas>
   );
 }

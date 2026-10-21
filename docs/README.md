@@ -19,6 +19,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [18-redundancia-y-temas.md](./18-redundancia-y-temas.md) | **Redundancia y carga útil**: qué fusionar, extraer o atomizar en el kit (criterio por KB y dependencias), lo aplicado (Phosphor por peso, `CarouselLazy`, menos GSAP: −1,24 MB de JS en 30 páginas sin cambiar un píxel), el CSS y las fuentes como siguiente palanca, y un modelo de temas en tres capas que une `TokenSet`, `ThemeDef` y `StyleGuide`. |
 | [19-joyeria.md](./19-joyeria.md) | Ronda 9: **joyería** — 12 joyerías españolas y 15 internacionales medidas (Cartier, Blue Nile, Jenn Zeiss…), relato contado solo con servicios (Sinek, StoryBrand, service blueprint), **luz por finalidad** con datos de GIA (`LightScroll`, `LIGHT_PRESETS`), `BeforeAfter`, y la web Quilate con configurador de alianza y de solitario en 3D. |
 | [20-halloween.md](./20-halloween.md) | Ronda 10: **evento de Halloween** — la web Ánima, la noche contada en seis actos con una **calavera 3D modelada con una función de distancia** (MarchingCubes de three, oclusión por vértice con la propia SDF, mandíbula, trío, ojos que pasan a rojo), entradas y programa, y la pieza nueva **`Countdown`**. |
+| [21-simulacion-fluidos-threejs.md](./21-simulacion-fluidos-threejs.md) | Tutorial: **simulación de fluido/humo con shaders en Three.js** (vídeo de Bandinopla, port del WebGL-Fluid-Simulation de Pavel Dobryakov) — texturas como rejilla, ping-pong, splat, curl, vorticidad, divergencia, presión (Jacobi), resta de gradiente, advección, parámetros y versiones WebGL/WebGPU (TSL). |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
@@ -32,6 +33,7 @@ se quedan atrás o si un componente no aparece en la tabla de abajo.
 | **Kit** — CSS (un solo punto de entrada) | `components/ui/styles/kit.css` (importa `ui-kit.css`, `ui-carousel.css`, `ui-video.css`, `ui-view-transitions.css`) | Sí |
 | **Kit** — tokens, fuentes, iconos, utilidades | `lib/ui/` | Sí |
 | **Kit** — motores de fondos | `lib/asciify/`, `lib/sketches/`, `lib/scroll/`, `lib/text/` | Sí, solo lo que usen los componentes elegidos |
+| **Kit** — motores 3D y de relato | `lib/gems/` (gemas con trazado de rayos, HDR y tallas), `lib/story/` (`useScrollStory`, el motor de los recorridos por pasos), `lib/modelnav/` (la escena de `ModelNav`), `lib/object3d/` (la de `ObjectStage`) | Sí, solo lo que usen los componentes elegidos |
 | Catálogo `/componentes` | `lib/catalog/` (esquema, entradas, escenas, presets), `components/playground/` | No |
 | Web de la librería (portada, docs, demos) | `components/site/`, `lib/docs.ts`, `lib/site-data.ts` | No |
 | Demos | `app/`, `components/*.tsx`, `lib/demos*.ts`, `lib/themes/` | No |
@@ -115,7 +117,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `BeforeAfter` · `HoverFX` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` · `StickerCollage` · `ImageTrail` |
 | Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `LightScroll` (luz por finalidad; + `useLight`, `LIGHT_PRESETS`) · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) · `SharedText` (palabra a palabra) · `Traveler` (viaja entre rutas; + `TravelStage`, `TravelSlot`, `useTraveler`) |
 | Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `OpeningHours` · `QRCode` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Countdown` · `Table` · `CodeBlock` |
-| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `EdgeTab` · `ActionBar` |
+| Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `ModelNav` · `EdgeTab` · `ActionBar` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` · `DatePicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
 | Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
@@ -178,3 +180,23 @@ Los **vídeos** siguen el mismo criterio: `public/video/<tema>/` (clips de 7–1
 `video(tema, i)` / `videos(tema)` de `lib/sites/videos.ts`, créditos en `lib/sites/video-credits.json` y en `/creditos`. La lista es
 curada (cada clip con su tramo) en `scripts/fetch-videos.mts`: `npm run videos:fetch [-- tema]` (necesita `ffmpeg`),
 `-- --buscar "texto"` para candidatos y `-- --hojas` para hojas de contacto con las que elegir el tramo ([14](./14-transiciones-entre-rutas.md) §5).
+
+Los **modelos 3D**, también: `npm run models:fetch` (`scripts/fetch-models.mts`) busca y baja GLB con licencia CC0 o CC BY
+(sin SA, ND ni NC) a `public/models/<nombre>/`, apunta autor, licencia y origen en `public/models/credits.json` y en
+`public/models/LICENSES.md`, y mide cuánto está **articulado** (esqueleto, animaciones, piezas con nombre).
+- **Buscar**: `-- buscar "texto" [--articulado] [--fuente …] [--n 12]`.
+- **Bajar**: `-- bajar fuente:id nombre [--partes] [--res 1k]`.
+- **Revisar**: `-- revisar archivo.glb [nombre] [--partes]`.
+- **Fuentes**:
+  - Sketchfab: buscar no pide nada; bajar pide `SKETCHFAB_TOKEN`. Es la que más modelos animados y con esqueleto tiene.
+  - Las claves van en **`.env.scripts`** (raíz del repo, ignorado por git; Next.js no lo lee). Copia `.env.example` y
+    rellénalo; el script lo carga solo. Nunca en `.env.example` ni en el código.
+  - Poly Pizza: low poly, pide `POLY_PIZZA_KEY`.
+  - Poly Haven: atrezo CC0, sin clave.
+  - Khronos: modelos de muestra de glTF, sin clave.
+- **`--partes`** usa [gltfjsx](https://github.com/pmndrs/gltfjsx) para generar `components/models/<Nombre>.tsx`, con cada
+  pieza como nodo propio y, si hay animaciones, una prop `play`.
+  - Pasa siempre `--keepmeshes`: el `--transform` no junta mallas, así que la articulación se conserva.
+  - Optimiza el GLB (Draco y texturas WebP) y lo deja junto al original.
+  - El decodificador de Draco va en `public/draco/`, sin CDN externo.
+  - El componente usa `useGLTF` y `useAnimations` de `@react-three/drei`.

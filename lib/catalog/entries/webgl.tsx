@@ -68,7 +68,7 @@ export const webgl: CatalogEntry[] = [
     category: "galerias",
     styles: EDITORIAL,
     description:
-      "Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado.",
+      "Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado. Con src, un modelo GLB en vez de la forma (con sus materiales, encuadrado al lienzo, Draco desde /draco/): el ojo que te mira de /sitios/anima/info o la tumba de /sitios/anima/entradas; modelRotation lo orienta, follow dice cuánto gira hacia el puntero, glow pone una luz de color delante y env=\"none\" quita los reflejos de estudio para modelos con la luz horneada.",
     stageHeight: 400,
     notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.", "Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro."],
     props: [
@@ -78,10 +78,14 @@ export const webgl: CatalogEntry[] = [
       { key: "motion", label: "Movimiento", type: "select", default: "pointer", options: ["pointer", "spin", "float", "none"] },
       { key: "speed", label: "Velocidad", type: "number", default: 1, min: 0.2, max: 3, step: 0.1 },
       { key: "height", label: "Alto (px)", type: "number", default: 340, min: 160, max: 700, step: 10 },
+      { key: "src", label: "Modelo GLB (en vez de la forma)", type: "select", default: "", options: ["", "/models/ojo-sangre/ojo-sangre-transformed.glb", "/models/tumba-magica/tumba-magica-transformed.glb"], labels: { "": "ninguno (la forma)", "/models/ojo-sangre/ojo-sangre-transformed.glb": "un ojo", "/models/tumba-magica/tumba-magica-transformed.glb": "una lápida" } },
+      { key: "follow", label: "Giro hacia el puntero (rad)", type: "number", default: 0.9, min: 0, max: 1.6, step: 0.05 },
+      { key: "glow", label: "Luz de color delante", type: "select", default: "", options: ["", "acc", "acc2", "fg"], labels: { "": "ninguna" } },
+      { key: "env", label: "Reflejos", type: "select", default: "studio", options: ["studio", "none"], labels: { studio: "de estudio", none: "solo luces (luz horneada)" } },
     ],
     render: (p) => (
       <div style={{ width: "100%" }}>
-        <ObjectStage shape={p.shape as never} material={p.material as never} tone={p.tone as never} motion={p.motion as never} speed={p.speed as number} height={p.height as number} />
+        <ObjectStage shape={p.shape as never} material={p.material as never} tone={p.tone as never} motion={p.motion as never} speed={p.speed as number} height={p.height as number} src={(p.src as string) || undefined} follow={p.follow as number} glow={p.glow as never} env={p.env as never} />
       </div>
     ),
   },

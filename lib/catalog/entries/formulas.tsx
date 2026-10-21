@@ -7,6 +7,7 @@ import CrossfadeHero from "@/components/ui/CrossfadeHero";
 import EdgeTab from "@/components/ui/EdgeTab";
 import ExpandingPanels from "@/components/ui/ExpandingPanels";
 import IslandNav from "@/components/ui/IslandNav";
+import ModelNav from "@/components/ui/ModelNav";
 import MetaTable from "@/components/ui/MetaTable";
 import ScatterText from "@/components/ui/ScatterText";
 import { moodArt } from "@/lib/sites/art";
@@ -85,6 +86,41 @@ export const formulas: CatalogEntry[] = [
     render: (p) => (
       <Boxed h={140}>
         <IslandNav hideOnScroll={p.hideOnScroll as boolean} brandAlign={p.brandAlign as never} leading={<button type="button" className="ui-fsm__btn">[menu]</button>} brand={<span>◐ Arbor</span>} trailing={<a href="#">Consultar →</a>} />
+      </Boxed>
+    ),
+  },
+  {
+    id: "model-nav",
+    component: "ModelNav",
+    path: "@/components/ui/ModelNav",
+    name: "Navegación «isla» con modelo 3D",
+    category: "navegacion",
+    styles: STYLES,
+    description: "IslandNav con un modelo 3D acoplado en el centro: un medallón de vidrio que sobresale de la píldora y lleva cualquier escena de react-three-fiber (`model`). Se inclina hacia el puntero; dentro del modelo, `useModelNavPointer()` dice dónde está el puntero y lo cerca que pasa (`near`), para reaccionar (abrir la boca, brillar…). Sin `model`, una IslandNav normal: útil para quitarlo en la portada si allí ya hay un 3D grande. three solo se descarga cuando hay modelo; sin WebGL o con movimiento reducido, se ve la marca. Nació en /sitios/anima (la calavera pirata con sombrero en las páginas interiores).",
+    stageHeight: 220,
+    notes: ["Es position: fixed; aquí va contenida en el recuadro de puntos.", "La marca sigue siendo el enlace y el nombre accesible: el medallón no recibe clics."],
+    props: [
+      { key: "withModel", label: "Con modelo", type: "boolean", default: true },
+      { key: "emblemSize", label: "Medallón (px)", type: "number", default: 84, min: 56, max: 120 },
+      { key: "follow", label: "Inclinación hacia el puntero (rad)", type: "number", default: 0.45, min: 0, max: 1, step: 0.05 },
+    ],
+    render: (p) => (
+      <Boxed h={180}>
+        <ModelNav
+          hideOnScroll={false}
+          brandAlign="exact"
+          emblemSize={p.emblemSize as number}
+          follow={p.follow as number}
+          model={p.withModel ? (
+            <mesh scale={0.55}>
+              <torusKnotGeometry args={[0.8, 0.28, 128, 16]} />
+              <meshStandardMaterial color="#c9a46a" metalness={0.8} roughness={0.25} />
+            </mesh>
+          ) : undefined}
+          leading={<button type="button" className="ui-fsm__btn">[menu]</button>}
+          brand={<span>◐ Arbor</span>}
+          trailing={<a href="#">Consultar →</a>}
+        />
       </Boxed>
     ),
   },

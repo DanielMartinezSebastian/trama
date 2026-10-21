@@ -1345,6 +1345,19 @@ Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marc
 
 - Es position: fixed; aquí va contenida en el recuadro de puntos. En una web real cuelga de la ventana.
 
+### Navegación «isla» con modelo 3D — `ModelNav`
+
+IslandNav con un modelo 3D acoplado en el centro: un medallón de vidrio que sobresale de la píldora y lleva cualquier escena de react-three-fiber (`model`). Se inclina hacia el puntero; dentro del modelo, `useModelNavPointer()` dice dónde está el puntero y lo cerca que pasa (`near`), para reaccionar (abrir la boca, brillar…). Sin `model`, una IslandNav normal: útil para quitarlo en la portada si allí ya hay un 3D grande. three solo se descarga cuando hay modelo; sin WebGL o con movimiento reducido, se ve la marca. Nació en /sitios/anima (la calavera pirata con sombrero en las páginas interiores).
+
+| prop | tipo | default |
+|---|---|---|
+| `withModel` | boolean | true |
+| `emblemSize` | number 56–120 | 84 |
+| `follow` | number 0–1 | 0.45 |
+
+- Es position: fixed; aquí va contenida en el recuadro de puntos.
+- La marca sigue siendo el enlace y el nombre accesible: el medallón no recibe clics.
+
 ### Pestaña de borde — `EdgeTab`
 
 Pestaña fija pegada al borde de la ventana con el texto en vertical: una llamada a la acción siempre a mano que no ocupa la cabecera. Enlace o botón real con foco visible.
@@ -1949,7 +1962,7 @@ Rejilla que se arrastra en cualquier dirección sin fin, con inercia, táctil y 
 
 ### Objeto 3D con materiales físicos — `ObjectStage`
 
-Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado.
+Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado. Con src, un modelo GLB en vez de la forma (con sus materiales, encuadrado al lienzo, Draco desde /draco/): el ojo que te mira de /sitios/anima/info o la tumba de /sitios/anima/entradas; modelRotation lo orienta, follow dice cuánto gira hacia el puntero, glow pone una luz de color delante y env="none" quita los reflejos de estudio para modelos con la luz horneada.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1959,6 +1972,10 @@ Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio
 | `motion` | `pointer` · `spin` · `float` · `none` | "pointer" |
 | `speed` | number 0.2–3 | 1 |
 | `height` | number 160–700 | 340 |
+| `src` | `` · `/models/ojo-sangre/ojo-sangre-transformed.glb` · `/models/tumba-magica/tumba-magica-transformed.glb` | "" |
+| `follow` | number 0–1.6 | 0.9 |
+| `glow` | `` · `acc` · `acc2` · `fg` | "" |
+| `env` | `studio` · `none` | "studio" |
 
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
 - Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
@@ -2816,4 +2833,4 @@ Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje d
 
 Carpeta: `components/sites/anima/` · 4 páginas: Inicio · Programa · Entradas · Info
 
-`Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `Marquee` · `TextField` · `Hero` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `IslandNav` · `CookieBanner` · `ActionBar` · `QRCode`
+`Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `Hero` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`

@@ -8,7 +8,6 @@ import {
   BufferGeometry as Geometry,
   AdditiveBlending,
   CanvasTexture,
-  EquirectangularReflectionMapping,
   BackSide,
   SRGBColorSpace,
   ShaderMaterial,
@@ -40,8 +39,10 @@ import {
   type Mesh,
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
-import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
-import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
+import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "@/lib/gems/gemMaterial";
+import { brilliantGeometry } from "@/lib/gems/brilliant";
+import { SHOW_DIAMOND_IOR, loadGemHdr } from "@/lib/gems/hdr";
+import { createGemEnvironment } from "@/lib/gems/environment";
 import { FONTS, KIT_BASE, STONE_PIECE, kitPiece, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
 import MotionFx from "./motionFx";
 import { anchorsOf, loadPiece, type Piece } from "./pieces";
@@ -88,30 +89,13 @@ export type RingPose = {
   gem?: number;
 };
 
-/** El HDR de estudio (Aerodynamics Workshop, Poly Haven, CC0) como cubemap: lo que ven las gemas trazadas. */
-const HDR = "/models/hdr/aerodynamics_workshop_1k.hdr";
+/** El HDR de estudio como cubemap (ahora en el kit: lib/gems/hdr.ts). */
 export function useHdrCube() {
   const gl = useThree((s) => s.gl);
   const [cube, setCube] = useState<Texture | null>(null);
-  useEffect(() => {
-    let rt: WebGLCubeRenderTarget | null = null;
-    let live = true;
-    new HDRLoader().load(HDR, (tex) => {
-      if (!live) return tex.dispose();
-      tex.mapping = EquirectangularReflectionMapping;
-      rt = new WebGLCubeRenderTarget(512, { type: HalfFloatType }).fromEquirectangularTexture(gl, tex);
-      tex.dispose();
-      setCube(rt.texture);
-    });
-    return () => {
-      live = false;
-      rt?.dispose();
-    };
-  }, [gl]);
+  useEffect(() => loadGemHdr(gl, setCube), [gl]);
   return cube;
 }
-/** Diamante «de escaparate»: ior alto y canales separados (como el ior 2.75 del ejemplo de pmndrs) para que el fuego se vea. */
-const SHOW_DIAMOND_IOR = new Vector3(2.65, 2.75, 2.88);
 
 export type RingSceneProps = {
   sel: RingSel;
@@ -241,49 +225,6 @@ function sweepBand(sel: RingSel): BufferGeometry {
 
 /** Radio de la piedra (unidades) por quilates: un brillante de 1 ct mide ~6,5 mm. */
 export const stoneRadius = (carat: number) => ((6.5 * Math.cbrt(carat)) / 2) * MM;
-
-/**
- * Talla brillante simplificada (49 facetas): mesa octogonal, 8 estrellas, 8 cometas, 16 medias lunas de corona, faja, 16
- * facetas bajas de pabellón y 8 principales hasta la culata. Triángulos sueltos: cada faceta tiene su normal (el mosaico de
- * reflejos claros y oscuros que hace brillar una piedra).
- */
-export function brilliantGeometry(R: number): BufferGeometry {
-  const at = (deg: number, r: number, h: number) => new Vector3(Math.cos((deg * Math.PI) / 180) * r * R, h * R, Math.sin((deg * Math.PI) / 180) * r * R);
-  const T = Array.from({ length: 8 }, (_, k) => at(k * 45, 0.55, 0.32));
-  const S = Array.from({ length: 8 }, (_, k) => at(k * 45 + 22.5, 0.8, 0.2));
-  const G = Array.from({ length: 16 }, (_, j) => at(j * 22.5, 1, 0.03));
-  const Gb = Array.from({ length: 16 }, (_, j) => at(j * 22.5, 1, -0.03));
-  const M = Array.from({ length: 8 }, (_, k) => at(k * 45, 0.46, -0.5));
-  const top = new Vector3(0, 0.32 * R, 0);
-  const culet = new Vector3(0, -0.86 * R, 0);
-  const tris: Vector3[][] = [];
-  const m8 = (i: number) => (i + 8) % 8;
-  const m16 = (i: number) => (i + 16) % 16;
-  for (let k = 0; k < 8; k++) {
-    tris.push([top, T[k], T[m8(k + 1)]]); // mesa
-    tris.push([T[k], T[m8(k + 1)], S[k]]); // estrella
-    tris.push([T[k], S[m8(k - 1)], G[2 * k]], [T[k], G[2 * k], S[k]]); // cometa
-    tris.push([S[k], G[2 * k], G[2 * k + 1]], [S[k], G[2 * k + 1], G[m16(2 * k + 2)]]); // medias lunas
-    tris.push([Gb[m16(2 * k - 1)], Gb[2 * k], M[k]], [Gb[2 * k], Gb[2 * k + 1], M[k]], [Gb[2 * k + 1], M[m8(k + 1)], M[k]]); // pabellón bajo
-    tris.push([M[k], M[m8(k + 1)], culet]); // principales
-  }
-  for (let j = 0; j < 16; j++) tris.push([G[j], G[m16(j + 1)], Gb[m16(j + 1)]], [G[j], Gb[m16(j + 1)], Gb[j]]); // faja
-  const center = new Vector3(0, -0.2 * R, 0);
-  const pos: number[] = [];
-  const e1 = new Vector3();
-  const e2 = new Vector3();
-  for (const [a, b, c] of tris) {
-    // cada faceta mirando hacia fuera
-    const n = e1.subVectors(b, a).cross(e2.subVectors(c, a));
-    const mid = new Vector3().add(a).add(b).add(c).divideScalar(3).sub(center);
-    const [p, q, r] = n.dot(mid) < 0 ? [a, c, b] : [a, b, c];
-    pos.push(p.x, p.y, p.z, q.x, q.y, q.z, r.x, r.y, r.z);
-  }
-  const g = new Geometry();
-  g.setAttribute("position", new Float32BufferAttribute(pos, 3));
-  g.computeVertexNormals();
-  return g;
-}
 
 /** Perfil de talla (radio, altura) con la tabla arriba y la culata abajo, y cuántas facetas alrededor. */
 function stoneGeometry(shape: Shape, R: number): BufferGeometry {
@@ -492,50 +433,9 @@ function Environment({ light }: { light: MutableRefObject<LightCue> | null }) {
  */
 export function useGemEnvironment() {
   const gl = useThree((s) => s.gl);
-  const [tex, dispose] = useMemo(() => {
-    const scene = new Scene();
-    // caja de luz gris (brillo, GIA: la luz difusa da el brillo) con paneles fuertes y banderas negras (el patrón oscuro)
-    scene.background = new Color(0.42, 0.42, 0.43);
-    const geo = new PlaneGeometry(1, 1);
-    // paneles más intensos que el blanco (HDR): son los que se ven como destellos en las facetas
-    const mat = new MeshBasicMaterial({ color: new Color(1, 1, 1).multiplyScalar(9) });
-    const panels: [number, number, number, number, number][] = [
-      [0, 6, 0, 3.2, 3.2],
-      [5, 3, 3, 1.4, 2.6],
-      [-5, 3, 3, 1.4, 2.6],
-      [4, 1, -4, 2.2, 1.2],
-      [-4, 3, -4, 1.2, 2.2],
-      [0, 0.5, 6, 4.5, 0.7],
-      [6, -1, 0, 0.8, 3],
-      [-6, -1, 0, 0.8, 3],
-      [2.5, 5, 3, 1, 1],
-      [-2.5, 5, -3, 1, 1],
-    ];
-    const flag = new MeshBasicMaterial({ color: 0x000000 });
-    const flags: [number, number, number, number, number][] = [
-      [0, 1.5, 6, 6, 1.2],
-      [6, 1, -2, 1.2, 4],
-      [-6, 1, -2, 1.2, 4],
-      [0, -4, -5, 7, 2],
-      [-4, -2, 4, 2, 1.5],
-    ];
-    const add = (list: [number, number, number, number, number][], m0: MeshBasicMaterial) =>
-      list.forEach(([x, y, z, w, h]) => {
-        const m = new ThreeMesh(geo, m0);
-        m.position.set(x, y, z);
-        m.scale.set(w, h, 1);
-        m.lookAt(0, 0, 0);
-        scene.add(m);
-      });
-    add(flags, flag);
-    add(panels, mat);
-    // cubemap (no PMREM): el shader de la gema lo muestrea con la dirección exacta de cada rayo que sale de la piedra
-    const rt = new WebGLCubeRenderTarget(256, { type: HalfFloatType });
-    new CubeCamera(0.1, 50, rt).update(gl, scene);
-    return [rt.texture as Texture, () => { rt.dispose(); geo.dispose(); mat.dispose(); flag.dispose(); }] as const;
-  }, [gl]);
-  useEffect(() => dispose, [dispose]);
-  return tex;
+  const env = useMemo(() => createGemEnvironment(gl), [gl]);
+  useEffect(() => env.dispose, [env]);
+  return env.texture;
 }
 
 /**

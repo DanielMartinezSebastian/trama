@@ -122,3 +122,23 @@
 /* ---------- Preloader: variante «fill» ---------- */
 .ui-pre__fill { font-size: clamp(56px, 15vw, 220px); font-weight: 800; letter-spacing: -0.05em; line-height: 0.9; color: transparent; -webkit-text-stroke: 1.5px var(--fg); text-transform: uppercase;
   background: linear-gradient(var(--fg), var(--fg)) 0 100% / 100% calc(var(--p, 0) * 100%) no-repeat; -webkit-background-clip: text; background-clip: text; }
+
+/* ---------- ModelNav: isla con un modelo 3D en un medallón central ---------- */
+.ui-mnav__c { position: relative; display: grid; place-items: center; }
+/* con modelo, la marca no se ve pero sigue ahí: es el enlace y el nombre accesible (el medallón no recibe clics) */
+.ui-mnav__c[data-model] .ui-mnav__brand { opacity: 0; }
+.ui-mnav__emblem {
+  position: absolute; left: 50%; top: 50%; width: var(--mnav-size, 84px); height: var(--mnav-size, 84px); transform: translate(-50%, -50%);
+  border-radius: 50%; pointer-events: none; border: 1px solid color-mix(in srgb, var(--acc) 55%, var(--ln));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 60%, transparent), 0 0 calc(24px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(35% * var(--glow, 1)), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--acc) 18%, transparent), color-mix(in srgb, var(--bg) 70%, transparent));
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+  animation: ui-mnav-in 0.9s var(--ease-out, cubic-bezier(.19,1,.22,1)) both;
+}
+.ui-mnav__c:not([data-model]) .ui-mnav__emblem { display: none; }
+/* el lienzo es mayor que el medallón: el modelo puede asomar por encima (un sombrero, unas orejas) */
+.ui-mnav__emblem > div, .ui-mnav__emblem canvas { position: absolute !important; inset: -30% !important; width: 160% !important; height: 160% !important; }
+@keyframes ui-mnav-in { from { opacity: 0; transform: translate(-50%, -30%) scale(0.4); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .ui-mnav__emblem { animation: none; } }
+/* en pantallas estrechas la isla es corta: el medallón se encoge para no pisar los lados */
+@media (max-width: 420px) { .ui-mnav__emblem { width: calc(var(--mnav-size, 84px) * 0.8); height: calc(var(--mnav-size, 84px) * 0.8); } }

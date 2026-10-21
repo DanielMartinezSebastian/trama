@@ -30,6 +30,19 @@ export type ObjectStageProps = {
   render?: "auto" | "static";
   /** descripción para lectores de pantalla. Vacío = decorativo */
   alt?: string;
+  /**
+   * Un modelo GLB en lugar de la forma (`shape` y `material` no se usan): con sus propios materiales, encuadrado al lienzo,
+   * Draco desde `/draco/` (lo deja `npm run models:fetch -- … --partes`). Requiere `@react-three/drei`.
+   */
+  src?: string;
+  /** giro inicial del modelo en grados «x,y,z», para que su cara frontal mire a la cámara */
+  modelRotation?: string;
+  /** cuánto gira hacia el puntero, en radianes (con `motion="pointer"`; 0,9 por defecto; un ojo que «mira», ~1,2) */
+  follow?: number;
+  /** token de una luz de color delante del objeto («acc», «acc2»…); vacío = sin ella */
+  glow?: Tone | "";
+  /** studio = reflejos de estudio · none = solo las luces (modelos con la iluminación horneada en la textura) */
+  env?: "studio" | "none";
   className?: string;
 };
 
@@ -41,7 +54,7 @@ export type ObjectStageProps = {
  *
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/ObjectStage`.
  */
-export default function ObjectStage({ shape = "knot", material = "metal", tone = "acc", motion = "pointer", speed = 1, height = 320, render = "auto", alt = "", className = "" }: ObjectStageProps) {
+export default function ObjectStage({ shape = "knot", material = "metal", tone = "acc", motion = "pointer", speed = 1, height = 320, render = "auto", alt = "", src, modelRotation, follow = 0.9, glow = "", env = "studio", className = "" }: ObjectStageProps) {
   const root = useRef<HTMLDivElement>(null);
   const pointer = useRef({ x: 0, y: 0 });
   const tokens = useTokens(root);
@@ -77,7 +90,7 @@ export default function ObjectStage({ shape = "knot", material = "metal", tone =
         <div className={`ui-obj__gl ${ready ? "is-on" : ""}`}>
           <GLBoundary onError={fail}>
             <Suspense fallback={null}>
-              <ObjectScene shape={shape} material={material} color={color} motion={motion} speed={speed} pointer={pointer} active={near} onReady={() => setReady(true)} />
+              <ObjectScene shape={shape} material={material} color={color} motion={motion} speed={speed} pointer={pointer} active={near} onReady={() => setReady(true)} src={src} modelRotation={modelRotation} follow={follow} glow={glow ? tokens?.[`--${glow}`] || "" : ""} env={env} />
             </Suspense>
           </GLBoundary>
         </div>
