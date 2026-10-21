@@ -1,14 +1,16 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Fragment, lazy, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import CookieBanner from "@/components/ui/CookieBanner";
 import Countdown from "@/components/ui/Countdown";
 import FAQSection from "@/components/ui/FAQSection";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import Hero from "@/components/ui/Hero";
-import IslandNav from "@/components/ui/IslandNav";
+import ModelNav from "@/components/ui/ModelNav";
 import Marquee from "@/components/ui/Marquee";
+import ObjectStage from "@/components/ui/ObjectStage";
 import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
 import QuantityStepper from "@/components/ui/QuantityStepper";
@@ -16,9 +18,12 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import TextField from "@/components/ui/TextField";
 import Timeline from "@/components/ui/Timeline";
 import { getLenis } from "@/lib/motion/lenis";
+import { smooth, useScrollStory } from "@/lib/story/useScrollStory";
 import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
+import FireRing, { type FireState } from "./FireRing";
+import FluidSmoke, { type SmokeKind, type SmokeState } from "./FluidSmoke";
 import SkullStage from "./SkullStage";
 import { SKULL_REST, type SkullPose } from "./skullScene";
 import { BRAND, CHAPTERS, EVENT, FAQ, FEE, MAX_TICKETS, PROGRAM, RULES, SLUG, TICKETS, eventJsonLd, type Interlude } from "./data";
@@ -56,15 +61,22 @@ function toTopIfHome(e: { currentTarget: HTMLAnchorElement; preventDefault: () =
   else scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// la calavera del navbar: se carga aparte (three solo baja cuando hace falta)
+const NavSkull = lazy(() => import("./navSkull"));
+
 export function Shell({ children }: { children: ReactNode }) {
   const navigate = useSiteNavigate();
+  // en la portada la calavera ya está en el recorrido: el navbar lleva la marca; en el resto, la calavera con sombrero
+  const home = usePathname().replace(/\/$/, "") === href();
   return (
     <SiteFrame tokens={TOKENS} className="an" icons={{ set: phosphorLight, weight: "light" }}>
       {/* scroll con inercia larga: la noche se baja despacio */}
       <SmoothScroll lerp={0.045} wheelMultiplier={0.85} syncGsap={false} />
       <a className="an-skip" href="#contenido">Saltar al contenido</a>
-      <IslandNav
+      <ModelNav
         className="an-island"
+        model={home ? undefined : <NavSkull />}
+        emblemSize={78}
         brandAlign="exact"
         leading={
           <FullscreenMenu
@@ -120,7 +132,11 @@ function Footer() {
           <button type="button" className="an-link" onClick={() => { try { localStorage.removeItem("anima-cookies"); } catch { /* nada */ } location.reload(); }}>Configurar cookies</button>
         </div>
       </div>
-      <p className="an-wrap an-foot__small">{BRAND.legal} · Demo de Trama: el evento no existe y no se cobra nada.</p>
+      <p className="an-wrap an-foot__small">
+        {BRAND.legal} · Demo de Trama: el evento no existe y no se cobra nada. · Calavera 3D:{" "}
+        <a href="https://sketchfab.com/3d-models/the-halloween-pirate-skull-7743a10d48d74c8e814fa5b6759e1ddb" target="_blank" rel="noopener noreferrer">«The Halloween Pirate Skull»</a>, de Machin (
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>), optimizada.
+      </p>
     </footer>
   );
 }
@@ -135,35 +151,40 @@ type Beat = {
   /** la sala de detrás: un color de niebla */
   room: string;
   /** líneas técnicas del cuadro (rotulan lo que enseña la calavera) */
-  hud?: { r: number; labels: string[] };
+  /** el HUD: radio y su efecto (un humo de fluido por acto, o el eclipse de fuego); sin rótulos */
+  hud?: { r: number; fx: SmokeKind | "fuego" };
 };
 const BEATS: Beat[] = [
   // portada: la calavera casi a pantalla, con los ojos encendidos
-  { kind: "hero", chapter: -1, room: "violeta", pose: P({ zoom: 0.5, eye: 0.95, y: 0.06 }) },
+  { kind: "hero", chapter: -1, room: "violeta", pose: P({ zoom: 0.6, eye: 0.95, y: 0.2, jaw: 0.15 }) },
   // prólogo: a la derecha del manifiesto, girada hacia él
   { kind: "intro", chapter: -1, room: "violeta", pose: P({ x: 0.22, zoom: 0.85, yaw: -0.45, eye: 0.5 }) },
   // 01 la puerta: de tres cuartos, despertando → interludio: de frente, la boca entreabierta
-  { kind: "card", chapter: 0, room: "calabaza", pose: P({ x: 0.22, yaw: -0.55, eye: 0.6 }), hud: { r: 150, labels: ["Puertas · 21:00", "aforo 1.200", "+16"] } },
+  { kind: "card", chapter: 0, room: "calabaza", pose: P({ x: 0.22, yaw: -0.55, eye: 0.6 }), hud: { r: 150, fx: "niebla" } },
   { kind: "interlude", chapter: 0, room: "calabaza", pose: P({ yaw: 0.25, zoom: 0.78, jaw: 0.25, eye: 0.85 }) },
   // 02 el pasaje: la cámara entra en la cuenca → interludio: los ojos se tiñen y la boca se abre
-  { kind: "card", chapter: 1, room: "verde", pose: P({ close: 1, eye: 1, x: -0.12 }), hud: { r: 120, labels: ["90 m", "6 personas", "cada 10 min"] } },
+  { kind: "card", chapter: 1, room: "verde", pose: P({ close: 1, eye: 1, x: -0.12 }), hud: { r: 120, fx: "ecto" } },
   { kind: "interlude", chapter: 1, room: "verde", pose: P({ yaw: -0.3, zoom: 0.8, jaw: 0.55, red: 0.45, eye: 1 }) },
   // 03 la pista: castañetea al ritmo → interludio: baila en el centro
-  { kind: "card", chapter: 2, room: "violeta", pose: P({ x: 0.22, yaw: 0.45, talk: 1, jaw: 0.15, eye: 1 }), hud: { r: 150, labels: ["3 DJs", "2 salas", "22:00 – 6:00"] } },
+  { kind: "card", chapter: 2, room: "violeta", pose: P({ x: 0.22, yaw: 0.45, talk: 1, jaw: 0.15, eye: 1 }), hud: { r: 150, fx: "disco" } },
   { kind: "interlude", chapter: 2, room: "violeta", pose: P({ zoom: 0.76, talk: 1, jaw: 0.3, eye: 1, yaw: -0.15 }) },
-  // 04 el concurso: de perfil, mirando al público → interludio: el trío de calaveras
-  { kind: "card", chapter: 3, room: "sangre", pose: P({ x: -0.2, yaw: 0.6, eye: 0.7 }), hud: { r: 150, labels: ["500 €", "vota el público", "1:00"] } },
-  { kind: "interlude", chapter: 3, room: "sangre", pose: P({ trio: 1, zoom: 1.15, talk: 0.5, eye: 0.9 }) },
-  // 05 la cena: el cráneo se abre → interludio: abierto, girando
-  { kind: "card", chapter: 4, room: "calabaza", pose: P({ x: 0.2, split: 1, yaw: 0.5, eye: 0.6 }), hud: { r: 170, labels: ["4 food trucks", "veganas y sin gluten", "barra hasta las 5:30"] } },
-  { kind: "interlude", chapter: 4, room: "calabaza", pose: P({ split: 0.55, yaw: 1.4, zoom: 0.85, eye: 0.7 }) },
+  // 04 el concurso: se pone el sombrero pirata (el disfraz) → interludio: el trío de piratas
+  { kind: "card", chapter: 3, room: "sangre", pose: P({ x: -0.2, yaw: 0.6, eye: 0.7, hat: 1 }), hud: { r: 150, fx: "bengala" } },
+  { kind: "interlude", chapter: 3, room: "sangre", pose: P({ trio: 1, zoom: 1.15, talk: 0.5, eye: 0.9, hat: 1 }) },
+  // 05 la cena: la boca abierta, de lado → interludio: masticando, girando
+  { kind: "card", chapter: 4, room: "calabaza", pose: P({ x: 0.2, jaw: 0.9, yaw: 0.6, eye: 0.6 }), hud: { r: 170, fx: "vapor" } },
+  { kind: "interlude", chapter: 4, room: "calabaza", pose: P({ jaw: 0.3, talk: 0.8, yaw: 1.4, zoom: 0.85, eye: 0.7 }) },
   // 06 medianoche: los ojos en rojo → final: de frente, en rojo, riendo
-  { kind: "card", chapter: 5, room: "sangre", pose: P({ x: -0.2, red: 1, eye: 1, jaw: 0.45, yaw: -0.3 }), hud: { r: 150, labels: ["0:00", "1 minuto a oscuras", "fuego en el patio"] } },
-  { kind: "interlude", chapter: 5, room: "sangre", pose: P({ red: 1, eye: 1, zoom: 0.68, jaw: 0.7, talk: 0.35 }) },
+  { kind: "card", chapter: 5, room: "sangre", pose: P({ x: -0.2, red: 1, eye: 1, jaw: 0.45, yaw: -0.3 }), hud: { r: 150, fx: "fuego" } },
+  // final: entera y centrada (cabe con el fundido de abajo), riendo
+  { kind: "interlude", chapter: 5, room: "sangre", pose: P({ red: 1, eye: 1, zoom: 1.05, y: 0.04, jaw: 0.55, talk: 0.35 }) },
 ];
 const POSE_KEYS = Object.keys(SKULL_REST) as (keyof SkullPose)[];
+/** en móvil el lienzo es alto y estrecho: la cámara se aleja para que la calavera quepa a lo ancho */
+const MOBILE_ZOOM = 1.75;
 const cardStep = (c: number) => BEATS.findIndex((b) => b.kind === "card" && b.chapter === c);
-const smooth = (t: number) => t * t * (3 - 2 * t);
+/** el lienzo del fuego mide esto respecto al HUD (para que quepan rayos, chispas y humo) */
+const FIRE_SCALE = 1.9;
 const MANIFESTO = "Una nave abandonada junto al puerto, dos pistas, un pasaje del terror y mil calaveras encendidas. Ven disfrazado o te disfrazamos en la puerta.";
 const MANIFESTO_WORDS = MANIFESTO.split(" ");
 
@@ -173,75 +194,63 @@ function Home() {
   const intro = useRef<HTMLParagraphElement>(null);
   const pose = useRef<SkullPose>({ ...BEATS[0].pose });
   const focus = useRef<{ x: number; y: number } | null>(null);
+  // el eclipse de fuego (HUD): radio e intensidad, del mismo progreso que las salas
+  const fire = useRef<FireState>({ r: 0.4, a: 0, red: 0 });
+  const smoke = useRef<SmokeState>({ kind: "niebla", a: 0, cx: 0, cy: 0, r: 100 });
   const [step, setStep] = useState(0);
 
-  // la pose, los pesos de las salas, las cintas y los cuadros salen de dónde está la línea media entre los centros de dos pasos
-  useEffect(() => {
-    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
-    const cards = Array.from(sticky.current?.querySelectorAll<HTMLElement>("[data-card]") ?? []);
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!items.length) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const mid = innerHeight / 2;
-      const centers = items.map((el) => {
-        const r = el.getBoundingClientRect();
-        return r.top + r.height / 2;
-      });
-      let j = 0;
-      while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
-      const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j])));
-      const t = smooth(Math.min(1, Math.max(0, (raw - 0.15) / 0.7)));
+  // el motor de recorrido del kit (lib/story): tramo, pesos, cintas y cuadros; aquí, lo propio de Ánima (la pose de la
+  // calavera, el fuego y el humo del HUD, y lo que va a CSS)
+  useScrollStory(list, sticky, {
+    onFrame: ({ j, t }) => {
       const a = BEATS[j].pose, b = BEATS[Math.min(j + 1, BEATS.length - 1)].pose, p = pose.current;
       for (const k of POSE_KEYS) p[k] = a[k] + (b[k] - a[k]) * t;
-      // en móvil la calavera va centrada en la mitad de arriba (los cuadros, debajo), sin trío (no cabe) y sin entrar tanto
+      // cuánto «interludio» hay ahora (0 en un cuadro, 1 en un interludio)
+      const il = (k: number) => (BEATS[k]?.kind === "interlude" ? 1 : 0);
+      const ilv = il(j) * (1 - t) + il(j + 1) * t;
+      // en móvil el lienzo ocupa toda la pantalla: con cuadro, la calavera sube a la mitad de arriba (el cuadro va debajo);
+      // en los interludios baja al centro, entera, y así acaba el recorrido antes de fundirse. Sin trío (no cabe)
       if (innerWidth < 900) {
         p.x = 0;
         p.trio = 0;
         p.close *= 0.7;
-        p.zoom *= 1.15;
+        p.zoom *= MOBILE_ZOOM;
+        p.y = p.y * 0.5 + 0.22 * (1 - ilv);
+      }
+      // fuego: pesos de los dos pasos en juego; el radio, el del paso con HUD (en unidades del lienzo del fuego, que mide
+      // 1,9 veces el HUD: r/200 del medio ancho del HUD)
+      {
+        const ha = BEATS[j].hud, hb = BEATS[Math.min(j + 1, BEATS.length - 1)].hud;
+        const wa = ha ? 1 - t : 0, wb = hb ? t : 0;
+        // el radio, del paso que pesa más (los dos con HUD: se interpola)
+        const ra = ha?.r ?? hb?.r ?? 150, rb = hb?.r ?? ra;
+        const r = ha && hb ? ra + (rb - ra) * t : wa >= wb ? ra : rb;
+        // el fuego, solo en los pasos que lo piden (medianoche); el resto, humo de fluido del paso que pesa más
+        const fa = ha?.fx === "fuego" ? wa : 0, fb = hb?.fx === "fuego" ? wb : 0;
+        fire.current = { r: r / 200 / FIRE_SCALE, a: smooth(Math.min(1, fa + fb)), red: p.red };
+        const sa = ha && ha.fx !== "fuego" ? wa : 0, sb = hb && hb.fx !== "fuego" ? wb : 0;
+        // el humo del paso que pesa más (el fuego no es un humo: si no hay ninguno, se queda el anterior)
+        const pick = sa >= sb ? ha?.fx : hb?.fx;
+        const kind = pick && pick !== "fuego" ? pick : (sa ? ha?.fx : sb ? hb?.fx : undefined) as SmokeKind | undefined;
+        // centro y radio del HUD en px del escenario (en móvil, sobre lo que enseña la cámara)
+        const W = innerWidth, H = innerHeight, mob = W < 900;
+        const hudW = mob ? 0.7 * W : Math.min(0.62 * H, 0.52 * W);
+        const f = focus.current;
+        smoke.current = {
+          kind: kind ?? smoke.current.kind,
+          a: smooth(Math.min(1, sa + sb)),
+          // en escritorio, el centro del HUD (donde cae la calavera); en móvil y con la cámara en la cuenca, lo que enseña
+          // la cámara (`focus`, el ojo). `focus` se mide sin el desplazamiento lateral: solo vale con x ≈ 0 o de cerca
+          cx: f && (mob || p.close > 0.3) ? f.x * W : W * (0.5 + p.x),
+          cy: f && (mob || p.close > 0.3) ? f.y * H : H / 2,
+          r: (r / 200) * (hudW / 2),
+        };
       }
       const st = sticky.current?.style;
-      const span = centers[centers.length - 1] - centers[0];
-      st?.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
-      for (let k = 0; k < BEATS.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
       st?.setProperty("--ring-x", p.x.toFixed(3));
-      const il = (k: number) => (BEATS[k]?.kind === "interlude" ? 1 : 0);
-      st?.setProperty("--ilv", (il(j) * (1 - t) + il(j + 1) * t).toFixed(3));
-      for (let k = 0; k < centers.length; k++) {
-        const gap = (centers[Math.min(k + 1, centers.length - 1)] - centers[Math.max(k - 1, 0)]) / 2 || innerHeight;
-        const r = Math.min(1.2, Math.max(-1.2, (mid - centers[k]) / gap));
-        st?.setProperty(`--r${k}`, r.toFixed(4));
-        st?.setProperty(`--o${k}`, (1 - smooth(Math.min(1, Math.max(0, (Math.abs(r) - 0.3) / 0.15)))).toFixed(3));
-      }
-      // cuadros: suben con el scroll, llegan desde abajo desenfocados y se van por arriba, por detrás de la calavera
-      for (const el of cards) {
-        const k = Number(el.dataset.card);
-        const y = centers[k] - mid;
-        const d = Math.abs(y) / innerHeight;
-        const op = 1 - smooth(Math.min(1, Math.max(0, (d - 0.16) / 0.3)));
-        const blur = still ? 0 : 16 * smooth(Math.min(1, Math.max(0, (d - 0.08) / 0.35)));
-        el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-        el.style.opacity = op.toFixed(3);
-        el.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : "";
-        el.style.visibility = op < 0.02 ? "hidden" : "";
-        el.style.setProperty("--y", y.toFixed(1));
-      }
-      st?.setProperty("--story-end", Math.min(1, Math.max(0, (mid - centers[centers.length - 1]) / (innerHeight * 0.5))).toFixed(3));
-    };
-    const on = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    addEventListener("scroll", on, { passive: true });
-    addEventListener("resize", on);
-    return () => {
-      cancelAnimationFrame(raf);
-      removeEventListener("scroll", on);
-      removeEventListener("resize", on);
-    };
-  }, []);
+      st?.setProperty("--ilv", ilv.toFixed(3));
+    },
+  });
 
   // el paso activo (para el índice)
   useEffect(() => {
@@ -326,20 +335,8 @@ function Home() {
               <div key={k} className={`an-room an-room--${b.room}`} style={{ "--w": `var(--w${k}, ${k === 0 ? 1 : 0})` } as CSSProperties} />
             ))}
           </div>
-          <svg className="an-hud" viewBox="-200 -200 400 400" aria-hidden>
-            {BEATS.map(({ hud: h, pose: bp }, k) => h && (
-              <g key={k} className="an-hud__g" style={{ "--w": `var(--w${k}, 0)` } as CSSProperties}>
-                <circle r={h.r} pathLength={1} />
-                <circle r={h.r + 14} pathLength={1} className="an-hud__thin" />
-                <line x1={-h.r - 40} y1={0} x2={-h.r - 8} y2={0} pathLength={1} />
-                <line x1={h.r + 8} y1={0} x2={h.r + 40} y2={0} pathLength={1} />
-                <line x1={0} y1={-h.r - 40} x2={0} y2={-h.r - 8} pathLength={1} />
-                {h.labels.map((l, i) => (
-                  <text key={i} x={bp.x > 0 ? -h.r - 30 : h.r + 30} y={-h.r * 0.5 + i * 15} textAnchor={bp.x > 0 ? "end" : "start"} className={i === 0 ? "an-hud__big" : ""}>{l}</text>
-                ))}
-              </g>
-            ))}
-          </svg>
+          <FluidSmoke state={smoke} />
+          <FireRing state={fire} />
           {ribbons("back")}
           <p className="an-intro" ref={intro} aria-hidden style={{ "--n": MANIFESTO_WORDS.length } as CSSProperties}>
             {MANIFESTO_WORDS.map((w, i) => (
@@ -495,9 +492,15 @@ function Tickets() {
   const sub = t.price * qty, fees = FEE * qty;
   return (
     <div className="an-page an-wrap">
-      <p className="an-kicker">31 de octubre · {BRAND.venue}</p>
-      <h1 className="an-h1">Entradas</h1>
-      <Countdown to={EVENT.start} label="Faltan" size="sm" variant="minimal" className="an-count" />
+      <div className="an-pagehead">
+        <div>
+          <p className="an-kicker">31 de octubre · {BRAND.venue}</p>
+          <h1 className="an-h1">Entradas</h1>
+          <Countdown to={EVENT.start} label="Faltan" size="sm" variant="minimal" className="an-count" />
+        </div>
+        {/* la tumba de la runa (modelo de Sketchfab, CC BY): se gira un poco hacia el puntero */}
+        <ObjectStage src="/models/tumba-magica/tumba-magica-transformed.glb" motion="pointer" follow={0.35} glow="acc" env="none" height={340} alt="Una lápida vieja con una runa que brilla en rojo" className="an-pagehead__obj" />
+      </div>
       <div className="an-buy">
         <div className="an-buy__form">
           <OptionPicker kind="chip" label="Tipo de entrada" value={type} onChange={setType} options={TICKETS.map((x) => ({ value: x.id, label: `${x.name} · ${money(x.price)}`, disabled: x.soldOut }))} />
@@ -535,8 +538,14 @@ function Tickets() {
 function Info() {
   return (
     <div className="an-page an-wrap">
-      <p className="an-kicker">Antes de venir</p>
-      <h1 className="an-h1">Información</h1>
+      <div className="an-pagehead">
+        <div>
+          <p className="an-kicker">Antes de venir</p>
+          <h1 className="an-h1">Información</h1>
+        </div>
+        {/* un ojo que te sigue con la mirada (modelo de Sketchfab, CC BY) */}
+        <ObjectStage src="/models/ojo-sangre/ojo-sangre-transformed.glb" motion="pointer" follow={1.2} height={260} alt="Un ojo que sigue al puntero con la mirada" className="an-pagehead__obj" />
+      </div>
       <div className="an-split">
         <div>
           <h2 className="an-h3">Dónde</h2>

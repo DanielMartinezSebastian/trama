@@ -32,14 +32,14 @@
    Capas, de atrás adelante: salas (niebla de color), líneas técnicas, cintas de detrás y prólogo, cuadros, calavera,
    cintas de delante, índice. */
 .an-story { position: relative; }
-.an-story__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; z-index: 0;
-  --fade: calc(12vh + var(--story-end, 0) * 48vh);
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade)), rgb(0 0 0 / 0.45) calc(100% - var(--fade) * 0.45), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade)), rgb(0 0 0 / 0.45) calc(100% - var(--fade) * 0.45), transparent);
-}
+.an-story__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; z-index: 0; }
 .an-steps { position: relative; z-index: 1; list-style: none; margin: -100svh 0 0; padding: 0; pointer-events: none; }
 .an-step { min-height: 120svh; }
 .an-step--interlude { min-height: 240svh; }
+/* el último tramo acaba justo cuando se apagan sus cintas: entonces el escenario (sin fundido) se suelta y sube con la
+   calavera entera, y sigue la web. Las cintas se apagan a 0,225·(60 + H/2) svh del centro del paso y el escenario se
+   suelta a H/2 − 50 svh: con H = 190, unos 10 svh después */
+.an-step--interlude:last-child { min-height: 190svh; }
 .an-step--intro { min-height: 130svh; }
 
 /* salas: niebla de color que se funde con la siguiente al ritmo del scroll */
@@ -56,13 +56,10 @@
 .an-stage__gl.is-on { opacity: 1; }
 .an-flat { width: min(46vw, 46vh); height: auto; opacity: 0.9; }
 
-/* líneas técnicas: por detrás de todo, encima solo de las salas */
-.an-hud { position: absolute; z-index: -2; pointer-events: none; overflow: visible; width: min(62vh, 52vw); aspect-ratio: 1; top: 50%; left: calc(50% + var(--ring-x, 0) * 100%); transform: translate(-50%, -50%); }
-.an-hud__g { opacity: var(--w, 0); }
-.an-hud circle, .an-hud line { fill: none; stroke: var(--acc); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--w, 0)); }
-.an-hud .an-hud__thin { stroke: var(--acc2); stroke-opacity: 0.35; stroke-dasharray: 0.004 0.012; stroke-dashoffset: 0; }
-.an-hud text { fill: var(--mut); font: 400 9px var(--font-geist-mono, ui-monospace, monospace); letter-spacing: 0.08em; text-transform: uppercase; }
-.an-hud .an-hud__big { fill: var(--fg); font-size: 13px; }
+/* el humo de fluido (HUD de los actos 01–05): a pantalla completa, detrás de la calavera y de los cuadros */
+.an-smoke { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+/* el eclipse de fuego (HUD): un lienzo WebGL 1,9 veces el HUD, centrado en el mismo sitio, detrás de la calavera */
+.an-fire { position: absolute; z-index: -2; pointer-events: none; width: calc(min(62vh, 52vw) * 1.9); aspect-ratio: 1; top: 50%; left: calc(50% + var(--ring-x, 0) * 100%); transform: translate(-50%, -50%); }
 
 /* cintas: el «cómo» en letra gótica enorme, en pareja (una detrás de la calavera, otra delante), en sentidos opuestos */
 .an-ribbons { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
@@ -144,7 +141,8 @@
 
 /* móvil: la calavera en la mitad de arriba, los cuadros abajo encima de la barra; el prólogo a pantalla completa detrás */
 @media (max-width: 899px) {
-  .an-stage.an-story__skull { inset: 0 0 46% 0; transform: translateY(calc(var(--ilv, 0) * 23svh)); }
+  /* el lienzo ocupa toda la pantalla (la calavera se coloca con la cámara): cabe entera en los interludios y al final, y
+     el fundido inferior lo pone el escenario */
   .an-step { min-height: 100svh; }
   .an-card { align-items: end; justify-items: stretch !important; padding: 0 var(--st-gutter) calc(88px + env(safe-area-inset-bottom)); }
   .an-card__box { width: 100%; gap: 10px; padding: 18px; background: color-mix(in srgb, var(--bg) 50%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
@@ -152,8 +150,7 @@
   .an-card__thesis { font-size: clamp(24px, 7vw, 32px); }
   .an-card__what { font-size: 14px; }
   .an-rail { display: none; }
-  .an-hud { width: 70vw; top: calc(var(--fy, 0.5) * 54% + var(--ilv, 0) * 23svh); left: calc(var(--fx, 0.5) * 100%); }
-  .an-hud text { display: none; }
+  .an-fire { width: calc(70vw * 1.9); top: calc(var(--fy, 0.5) * 100%); left: calc(var(--fx, 0.5) * 100%); }
   .an-ribbon { top: 34%; font-size: min(22vw, 13svh); }
   .an-ribbon[data-pos="bottom"] { top: 66%; }
   .an-intro { inset: calc(var(--an-island) - 10px) var(--st-gutter) calc(84px + env(safe-area-inset-bottom)); justify-content: center; text-align: center; }
@@ -205,3 +202,12 @@
 .an-rules dd { margin: 4px 0 0; color: var(--mut); }
 @media (max-width: 899px) { .an-buy { grid-template-columns: minmax(0, 1fr); } .an-buy__sum { position: static; } }
 .an-page .an-count { justify-items: start; margin-block: 8px 0; }
+
+/* cabecera de página con un objeto 3D (la tumba en entradas, el ojo en información) */
+.an-pagehead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: clamp(16px, 4vw, 48px); align-items: center; }
+@media (max-width: 760px) {
+  .an-pagehead { grid-template-columns: minmax(0, 1fr); }
+  .an-pagehead__obj { order: -1; height: 220px !important; margin-bottom: -12px; }
+}
+/* isla estrecha: la cita se compacta para dejar aire al medallón de la calavera */
+@media (max-width: 420px) { .an-island .ui-island__r a { padding: 7px 11px; font-size: 12px; letter-spacing: 0.04em; } }
