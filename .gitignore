@@ -5,3 +5,7 @@ next-env.d.ts
 dist-npm
 .cache
 .refs
+
+# secretos locales (tokens y claves de los scripts, p. ej. .env.scripts): nunca al repo; la plantilla sí
+.env*
+!.env.example

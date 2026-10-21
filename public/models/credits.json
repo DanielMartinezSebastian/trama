@@ -1,0 +1,85 @@
+[
+  {
+    "name": "calavera-pirata",
+    "file": "calavera-pirata/calavera-pirata-transformed.glb",
+    "source": "sketchfab",
+    "id": "7743a10d48d74c8e814fa5b6759e1ddb",
+    "title": "The Halloween Pirate Skull",
+    "author": "Machin",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/the-halloween-pirate-skull-7743a10d48d74c8e814fa5b6759e1ddb",
+    "fetched": "2026-10-21",
+    "triangles": 13490,
+    "nodes": 17,
+    "meshes": 6,
+    "namedParts": [
+      "Hat_low_lambert2_0",
+      "Skull_low_lambert2_0",
+      "Top_teeth_low_lambert2_0",
+      "Eye_low_lambert2_0",
+      "Jaw_low_lambert2_0",
+      "Bot_teeth_low_lambert2_0"
+    ],
+    "skins": 0,
+    "joints": 0,
+    "animations": [
+      "Take 001"
+    ],
+    "materials": 1,
+    "textures": 4,
+    "kb": 4471,
+    "verdict": "animado por piezas (1 animaciones)",
+    "note": "Optimizado con gltfjsx --transform --keepmeshes (Draco, texturas WebP 1024): 4,58 MB → 0,61 MB; el original no se guarda. Mapa de piezas: components/models/CalaveraPirata.tsx."
+  },
+  {
+    "name": "tumba-magica",
+    "file": "tumba-magica/tumba-magica-transformed.glb",
+    "source": "sketchfab",
+    "id": "c75940f5e70c4a7faf4c0d349cdd215a",
+    "title": "halloween magic grave",
+    "author": "vicente betoret ferrero",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/halloween-magic-grave-c75940f5e70c4a7faf4c0d349cdd215a",
+    "fetched": "2026-10-21",
+    "triangles": 30352,
+    "nodes": 5,
+    "meshes": 1,
+    "namedParts": [
+      "mesh_Material _25_0"
+    ],
+    "skins": 0,
+    "joints": 0,
+    "animations": [],
+    "materials": 1,
+    "textures": 4,
+    "kb": 6663,
+    "verdict": "una sola pieza (para articularlo hay que partirlo: ver docs/20 §2)"
+  },
+  {
+    "name": "ojo-sangre",
+    "file": "ojo-sangre/ojo-sangre-transformed.glb",
+    "source": "sketchfab",
+    "id": "18915d2f17a2431fbefeb3eaf4411f16",
+    "title": "Blue Eyeball (Free)",
+    "author": "Tom Hodes",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/blue-eyeball-free-18915d2f17a2431fbefeb3eaf4411f16",
+    "fetched": "2026-10-21",
+    "triangles": 1296,
+    "nodes": 4,
+    "meshes": 1,
+    "namedParts": [
+      "defaultMaterial"
+    ],
+    "skins": 0,
+    "joints": 0,
+    "animations": [],
+    "materials": 1,
+    "textures": 3,
+    "kb": 2190,
+    "verdict": "una sola pieza (para articularlo hay que partirlo: ver docs/20 §2)"
+  }
+]

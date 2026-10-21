@@ -1433,6 +1433,11 @@ tema, añádelo a `scripts/fetch-images.mts` y ejecuta `npm run images:fetch -- 
 (`posterSrc`) y `aria-label={v.alt}`. Para un tema nuevo, busca con `npm run videos:fetch -- --buscar "texto"`, mira las
 hojas de contacto (`-- --hojas`) antes de elegir el tramo, y añádelo a la lista de `scripts/fetch-videos.mts`.
 
+**Modelos 3D, igual:** busca con `npm run models:fetch -- buscar "texto" --articulado` y prefiere siempre los **articulados**
+(con esqueleto, animaciones o piezas con nombre) a los de una sola pieza. Un modelo de una pieza obliga a partirlo a mano
+(docs/20 §2, la calavera de Ánima). Bájalo con `-- bajar fuente:id nombre --partes`: deja créditos y licencia y genera con
+gltfjsx el componente por piezas. Cita el modelo en `public/models/LICENSES.md` (el script lo hace solo).
+
 ## 12. Modularidad: no llenar la biblioteca de componentes
 
 Antes de crear un componente: busca si ya existe uno parecido (`components/ui/`, catálogo) y **ampliarlo con una opción** antes

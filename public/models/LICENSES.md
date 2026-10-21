@@ -35,3 +35,14 @@ resto, del cierre convexo de anillos de contorno. Unidades en mm; anclajes y eje
 | Archivo | Origen | Licencia |
 |---|---|---|
 | `hdr/aerodynamics_workshop_1k.hdr` | [Aerodynamics Workshop](https://polyhaven.com/a/aerodynamics_workshop), de Oliksiy Yakovlyev, en Poly Haven (1K) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+
+## Descargados con `npm run models:fetch`
+
+| Archivo | Origen | Licencia |
+|---|---|---|
+| `calavera-pirata/calavera-pirata-transformed.glb` | *The Halloween Pirate Skull*, Machin, de [sketchfab](https://sketchfab.com/3d-models/the-halloween-pirate-skull-7743a10d48d74c8e814fa5b6759e1ddb) | [CC Attribution](http://creativecommons.org/licenses/by/4.0/) |
+| `tumba-magica/tumba-magica-transformed.glb` | *halloween magic grave*, vicente betoret ferrero, de [sketchfab](https://sketchfab.com/3d-models/halloween-magic-grave-c75940f5e70c4a7faf4c0d349cdd215a) | [CC Attribution](http://creativecommons.org/licenses/by/4.0/) |
+| `ojo-sangre/ojo-sangre-transformed.glb` | *Blue Eyeball (Free)*, Tom Hodes, de [sketchfab](https://sketchfab.com/3d-models/blue-eyeball-free-18915d2f17a2431fbefeb3eaf4411f16) | [CC Attribution](http://creativecommons.org/licenses/by/4.0/) |
+
+Los `-transformed.glb` salen de `npm run models:fetch -- bajar sketchfab:<id> <nombre> --partes` (gltfjsx con `--keepmeshes`: las piezas se conservan; Draco y texturas WebP). CC BY 4.0 exige atribución: se cita en el pie de la web que los usa (Ánima).
