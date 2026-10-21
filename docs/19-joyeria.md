@@ -144,13 +144,18 @@ No hay un ranking cualitativo serio de 2025–2026; se eligieron por facturació
 
 | # | Servicio | Frase-tesis (porqué) | Trastienda que se enseña (cómo) | Qué y acción | Luz | El anillo |
 |---|---|---|---|---|---|---|
-| 01 | **Escuchar** | «Antes de dibujar nada, te escuchamos.» | Mesa, cuaderno y una hora sin prisa | Cita de 60 min en el taller o por vídeo · Pedir cita | `lampara` 2600 K | en **boceto** (alambre) |
-| 02 | **Elegir** | «Una piedra se elige con luz honesta, no con focos.» | Dos luces: foco para el fuego y luz de día para el color | Piedras certificadas · Ver piedras | `fuego` 4800 K, sigue al puntero | **solo la piedra**, de cerca |
-| 03 | **Dar forma** | «Lo hacemos a mano, y a mano lleva semanas.» | Cera → fundición → limado → engaste → pulido | 12 días una alianza, 4–6 semanas un solitario · Diseñar una alianza | `taller` 4200 K | en **cera** |
-| 04 | **Ajustar** | «Si no encaja en tu mano, no está terminada.» | Medir, ajustar la talla en el banco, grabado a buril y punzón | Talla gratis el primer año · Medir mi talla | `rasante` 8°, 4000 K | acabado |
-| 05 | **Cuidar** | «Lo que sale de aquí vuelve aquí cuando lo necesite.» | Ultrasonidos y revisión de garras, con la **misma luz antes y después** | Limpieza de por vida · botón «Limpiar la pieza» | `honesta` 6500 K | **apagado** → limpio |
-| 06 | **Transformar** | «El oro de una herencia puede volver a llevarse.» | Desmontar, recuperar piedras, refinar el oro | Boceto gratis · Traer una pieza | `memoria` 3100 K | otra pieza (oro rosa, bisel) |
-| 07 | **Heredar** | «Lo hacemos para quien la lleve después de ti.» | La ficha de archivo (boceto, piedra, certificado, ley, punzón, fechas) con QR en el estuche | Garantía transmisible · Pedir cita | `vitrina` 3600 K con destellos | acabado |
+| 01 | **Escuchar** | «El primer boceto sale de una conversación.» | Mesa, cuaderno y una hora sin prisa | Cita de 60 min en el taller o por vídeo · Pedir cita | `lampara` 2600 K | en **boceto** (alambre): el trazo que sale de la cita |
+| 02 | **Elegir** | «El brillo lo decide la talla, no el tamaño.» | 57 facetas; la luz rebota y sale en colores (fuego); foco y luz de día | Piedras certificadas · Ver piedras | `fuego` 4800 K, sigue al puntero | **solo la piedra**, de cerca, rotulada (57 facetas, fuego) |
+| 03 | **Dar forma** | «Un solitario son tres piezas hechas a mano.» | Aro y montura en cera, fundidos por separado, soldados; la piedra se engasta al final | 12 días una alianza, 4–6 semanas un solitario · Diseñar una alianza | `taller` 4200 K | **despiece en metal**: piedra, montura y aro separados y rotulados |
+| 04 | **Ajustar** | «Por dentro: tu talla, tu grabado y nuestra firma.» | Medir, ajustar la talla en el banco, grabado a buril y punzón | Talla gratis el primer año · Medir mi talla | `rasante` 8°, 4000 K | **dentro del aro**: grabado, punzón y talla rotulada |
+| 05 | **Cuidar** | «Una piedra sucia no brilla: la luz no entra.» | Ultrasonidos y revisión de garras, con la **misma luz antes y después** | Limpieza de por vida · botón «Limpiar la pieza» | `honesta` 6500 K | **pavé apagado** de cerca → limpio con el botón |
+| 06 | **Transformar** | «La piedra de tu abuela, en un bisel de hoy.» | Desmontar, recuperar piedras, refinar el oro | Boceto gratis · Traer una pieza | `memoria` 3100 K | otra pieza: **bisel en oro rosa**, de cerca |
+| 07 | **Heredar** | «Cada pieza sale con su ficha, y la ficha viaja con ella.» | La ficha de archivo (boceto, piedra, certificado, ley, punzón, fechas) con QR en el estuche | Garantía transmisible · Pedir cita | `vitrina` 3600 K con destellos | acabado, rotulado con los datos de su ficha |
+
+**Regla del guion** (revisada el 21-10-2026 con capturas de Playwright de cada plano en reposo): la imagen final de cada
+paso enseña un detalle concreto y la tesis habla de ese detalle. Las líneas técnicas (`HUD`) lo rotulan en el hueco entre
+el anillo y el cuadro. Se quitó el despiece en cera verde: en cera no hay piedras y el verde no se entendía. El aspecto
+`cera` sigue en la escena, pero el recorrido ya no lo usa.
 
 Reglas que se cumplen:
 - No hay sección de historia ni fecha de fundación. La continuidad la cuenta el capítulo 07.
@@ -348,6 +353,28 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
   - el titular se monta palabra a palabra.
 
   Todo avanza y retrocede con el scroll; sin soporte o con movimiento reducido, el texto se ve quieto.
+- **Cuadros cortos y cintas** (21-10-2026): el cuadro lleva el rótulo con la temperatura de la luz, la tesis, el servicio con
+  su dato y un pie con la llamada y la luz. El número fantasma va fuera, encima y despegado del cuadro.
+- **Cintas, pocas y en pareja** (`Chapter.ribbons`, solo en Elegir, Ajustar y Heredar): el «cómo» en Cormorant 600 muy
+  grande (`min(13vw, 20svh)`), corriendo de lado con el avance del paso (`--r<k>`, de −1 a 1, en el mismo bucle de scroll
+  que la pose). Siempre dos: `back` se pinta antes del lienzo (el anillo pasa por delante) y `front` después (el anillo
+  pasa por detrás). Van a alturas fijas (24 % y 76 %; `flip` las intercambia) y en sentidos contrarios, y el tope de
+  tamaño por alto de pantalla garantiza que no se toquen. La opacidad (`--o<k>`) ya es 0 a medio camino del paso vecino,
+  así que nunca hay cintas de dos capítulos a la vez. El lienzo es transparente (`alpha: true`): basta con el orden de
+  capas. En los capítulos con cintas, el «cómo» completo queda en el cuadro solo para lectores de pantalla (`ui-sr`); en
+  los demás, el cuadro lo cuenta. La palabra gigante en contorno queda solo en el prólogo. En «Heredar», el QR
+  y la ficha de ejemplo se despliegan con `<details>`.
+- **Velo en los cambios de material** (`ringScene.tsx`, `motionFx.tsx`). Afecta a boceto → piedra → cera → metal, a
+  apagado ↔ limpio y a oro amarillo → rosa. La escena no cambia el material a la vista. Cuando cambian `look` o `sel`,
+  sube un velo en 0,16 s y hace el cambio arriba del todo (lo que se ve va ese instante por detrás de lo pedido). Luego
+  lo baja en 0,75 s. Durante el velo:
+  - desenfoque en toda la imagen y brillo en las luces altas, en la misma pasada de MotionFx (`uVeil`);
+  - los destellos de la toma se encienden fuerte y barren la piedra;
+  - suben el foco y el entorno de las gemas y el entorno del metal.
+
+  Dos cambios seguidos no lo hacen parpadear: el velo sube desde donde esté. Solo con pose externa, porque en el
+  configurador el cambio es inmediato. En táctiles no hay MotionFx: quedan los destellos. Probado con el reloj de
+  Playwright (`page.clock`) y «Limpiar la pieza» en Cuidar.
 - **Poses nuevas**: `pave`, para acercarse al hombro del aro con el pavé y las garras; `x`, para el desplazamiento lateral
   (la cámara se mueve en paralelo); y `zoom`.
 - **Luz del grabado**: en «Ajustar» se enciende una luz puntual rasante pegada a la pared interior del aro, que se mueve
@@ -395,10 +422,10 @@ mismo progreso de scroll:
   |---|---|
   | Escuchar | entero |
   | Elegir | la piedra sale de la cesta y se ve de cerca |
-  | Dar forma | despiece completo en cera |
+  | Dar forma | despiece completo en metal (piedra, montura y aro separados) |
   | Ajustar | la cámara entra en el aro y lee el grabado con luz rasante |
   | Cuidar | cerca del pavé |
-  | Transformar | se abre y se rehace |
+  | Transformar | el bisel nuevo en oro rosa, de cerca |
   | Heredar | montado, de vitrina |
 
 - La pose se interpola con la **posición del scroll** entre los centros de dos capítulos (con suavizado), no con el tiempo:

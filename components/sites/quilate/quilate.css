@@ -62,7 +62,6 @@
 .ql-chapter__light span { color: rgb(var(--light-rgb)); }
 .ql-chapter__cta { justify-self: start; font-size: 15px; }
 .ql-chapter .ql-chip { justify-self: start; }
-.ql-archive { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: start; max-width: 560px; }
 
 /* puertas: sencilla y compleja */
 .ql-sechead { display: grid; gap: 10px; margin-bottom: 32px; }
@@ -183,7 +182,6 @@
 @media (max-width: 760px) {
           .ql-doors, .ql-trust { grid-template-columns: minmax(0, 1fr); }
   .ql-hide-sm { display: none; }
-    .ql-archive { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
   .ql-stage__gl, .ql-cfg__stage, .ql-door img, .ql-btn { transition: none; }
@@ -200,18 +198,40 @@
 .ql-story__steps { position: relative; z-index: 1; list-style: none; margin: calc((100svh - var(--ql-head)) * -1) 0 0; padding: 0; pointer-events: none; }
 .ql-step { display: grid; align-items: center; min-height: 120svh; padding: 10vh var(--st-gutter); max-width: var(--st-max); margin-inline: auto; }
 .ql-step:last-child { min-height: 110svh; }
+/* interludio: sin cuadro, solo recorrido largo (unas dos pantallas y media) para las cintas y el anillo en el centro */
+.ql-step.ql-step--interlude, .ql-step.ql-step--interlude:last-child { min-height: 240svh; padding: 0; }
 .ql-step[data-side="left"] { justify-items: start; }
 .ql-step[data-side="right"] { justify-items: end; }
 .ql-step[data-side="center"] { justify-items: center; text-align: center; }
+/* el cuadro: corto (rótulo con la temperatura de la luz, tesis, el servicio con su dato y el pie con la llamada); el «cómo»
+   va en las cintas de la escena. Filo de oro arriba en vez de marco entero. */
 .ql-step__card {
-  position: relative; display: grid; gap: 16px; width: min(460px, 100%); padding: clamp(22px, 2.6vw, 34px); pointer-events: auto;
-  background: color-mix(in srgb, var(--bg) 72%, transparent); border: 1px solid var(--ln);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1);
+  position: relative; display: grid; gap: 18px; width: min(420px, 100%); padding: clamp(24px, 2.6vw, 34px); pointer-events: auto;
+  background: linear-gradient(color-mix(in srgb, var(--bg) 64%, transparent), color-mix(in srgb, var(--bg) 80%, transparent));
+  border: 1px solid color-mix(in srgb, var(--ln) 60%, transparent); border-top-color: transparent;
+  -webkit-backdrop-filter: blur(16px) saturate(1.15); backdrop-filter: blur(16px) saturate(1.15);
 }
-/* número fantasma del capítulo, que se desliza más despacio que el cuadro (parallax) */
-.ql-step__num { position: absolute; top: -0.42em; right: 12px; font-family: var(--display); font-weight: 300; font-size: clamp(90px, 11vw, 168px); line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 55%, transparent); pointer-events: none; }
-.ql-step[data-side="right"] .ql-step__num { right: auto; left: 12px; }
-.ql-step__thesis { font-size: clamp(30px, 3.4vw, 50px); }
+.ql-step__card::before { content: ""; position: absolute; inset: -1px -1px auto; height: 1px; background: linear-gradient(90deg, var(--acc), color-mix(in srgb, var(--acc) 15%, transparent)); }
+.ql-step[data-side="right"] .ql-step__card::before { background: linear-gradient(270deg, var(--acc), color-mix(in srgb, var(--acc) 15%, transparent)); }
+.ql-step__card .ql-chapter__k { display: flex; align-items: center; gap: 12px; }
+.ql-step__card .ql-chapter__k::after { content: ""; flex: 1; order: 1; height: 1px; background: var(--ln); }
+.ql-chapter__kelvin { order: 2; color: var(--mut); letter-spacing: 0.1em; }
+.ql-step__card .ql-chapter__what { color: var(--fg); opacity: 0.86; }
+.ql-step__qr { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 16px; align-items: center; }
+.ql-step__qr > p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--mut); }
+.ql-step__ficha { grid-column: 1 / -1; font-size: 13px; }
+.ql-step__ficha summary { cursor: pointer; color: var(--acc); letter-spacing: 0.04em; }
+.ql-step__ficha[open] summary { margin-bottom: 10px; }
+.ql-step__ficha .ui-meta { max-height: 34vh; overflow: auto; }
+.ql-step__foot { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--ln); }
+/* número fantasma del capítulo: fuera del cuadro, encima y despegado de él (no pisa el rótulo), con parallax */
+.ql-step__num {
+  position: absolute; bottom: calc(100% + clamp(14px, 2.2vh, 26px)); left: -0.04em; font-family: var(--display); font-weight: 300;
+  font-size: clamp(84px, 9vw, 150px); line-height: 0.74; letter-spacing: 0.04em; color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 60%, transparent); pointer-events: none;
+}
+.ql-step[data-side="right"] .ql-step__num { left: auto; right: -0.04em; }
+.ql-step__thesis { font-size: clamp(30px, 3.2vw, 46px); }
 .ql-w { display: inline-block; }
 .ql-step--intro { min-height: 130svh; }
 .ql-step__manifesto { margin: 0; max-width: 16ch; font-family: var(--display); font-weight: 300; font-size: clamp(34px, 5vw, 76px); line-height: 1.04; letter-spacing: -0.01em; pointer-events: auto; text-wrap: balance; }
@@ -227,11 +247,28 @@
 .ql-story__word[data-side="left"] { left: 4vw; }
 .ql-story__word[data-side="right"] { right: 4vw; }
 .ql-story__word span { display: inline-block; animation: ql-letter 0.9s var(--ease-out, cubic-bezier(.19,1,.22,1)) both; animation-delay: calc(var(--i) * 45ms); }
+/* cintas: en algunos capítulos, el «cómo» en letra gruesa y muy grande, corriendo de lado con el scroll (--r del paso, de
+   −1 a 1) y encendidas solo cerca del centro del paso (--o). Siempre en pareja: una detrás del lienzo (el anillo pasa por
+   delante) y otra delante, a alturas fijas (arriba y abajo) que no se tocan, y en sentidos contrarios. El texto va tres
+   veces y se desplaza una copia de lado a lado. */
+.ql-ribbons { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.ql-ribbons--back { z-index: -1; }
+.ql-ribbons--front { z-index: 1; }
+.ql-ribbon {
+  position: absolute; left: 50%; top: 24%; margin: 0; white-space: nowrap; opacity: var(--o, 0);
+  font-family: var(--display); font-weight: 600; font-size: min(clamp(84px, 13vw, 230px), 20svh); line-height: 0.9; letter-spacing: -0.025em;
+  transform: translate(calc(-50% + var(--dir, 1) * var(--r, 0) * -34%), -50%);
+  will-change: transform, opacity;
+}
+.ql-ribbon[data-pos="bottom"] { top: 76%; }
+.ql-ribbon i { font-style: normal; font-weight: 300; color: var(--acc); }
+.ql-ribbons--back .ql-ribbon { color: color-mix(in srgb, var(--fg) 78%, transparent); }
+.ql-ribbons--front .ql-ribbon { color: var(--fg); }
 @keyframes ql-letter { from { opacity: 0; transform: translateY(0.35em) rotate(4deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
 
 /* índice lateral y barra de progreso del recorrido */
-.ql-story__rail { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 4px; z-index: 2; }
-.ql-story__rail button { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; padding: 4px 0; border: 0; background: none; color: var(--mut); font: inherit; font-size: 11px; letter-spacing: 0.12em; cursor: pointer; opacity: 0.55; transition: opacity 0.3s, color 0.3s; }
+.ql-story__rail { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 14px; z-index: 2; }
+.ql-story__rail button { display: flex; align-items: baseline; justify-content: flex-end; gap: 10px; padding: 6px 0; border: 0; background: none; color: var(--mut); font: inherit; font-size: 11px; letter-spacing: 0.12em; cursor: pointer; opacity: 0.55; transition: opacity 0.3s, color 0.3s; }
 .ql-story__rail button b { font-weight: 400; letter-spacing: 0.04em; max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 0.4s; }
 .ql-story__rail button:hover, .ql-story__rail button[aria-current="step"] { opacity: 1; color: var(--fg); }
 .ql-story__rail button[aria-current="step"] b, .ql-story__rail button:hover b { max-width: 12ch; }
@@ -257,6 +294,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ql-step__card, .ql-step__num, .ql-step__thesis .ql-w, .ql-story__word span { animation: none !important; }
+  .ql-ribbon { transform: translate(-50%, -50%); }
   .ql-story__word { transform: none; }
 }
 @media (max-width: 899px) {
@@ -268,11 +306,18 @@
     padding: 0 var(--st-gutter) calc(88px + env(safe-area-inset-bottom));
   }
   .ql-step__card { width: 100%; max-height: 44svh; gap: 10px; padding: 18px 18px 16px; background: color-mix(in srgb, var(--bg) 90%, transparent); }
-  .ql-step__card .ql-chapter__how, .ql-step__card .ql-archive, .ql-step__card .ql-chapter__light { display: none; }
+  .ql-step__card .ql-chapter__how, .ql-step__card .ql-step__qr, .ql-step__card .ql-chapter__light { display: none; }
+  .ql-step__foot { padding-top: 10px; }
   .ql-step__thesis { font-size: clamp(26px, 7.4vw, 34px); }
-  .ql-step__num { font-size: 72px; top: -0.35em; }
+  .ql-step__num { font-size: 56px; bottom: calc(100% + 10px); }
   .ql-chapter__what { font-size: 14px; }
   .ql-story__rail { display: none; }
+  /* las cintas cruzan la mitad del anillo (arriba), no la de los cuadros */
+  /* en los interludios no hay cuadro: el anillo baja al centro (desplazado, sin cambiar el tamaño del lienzo) y las
+     cintas lo rodean */
+  .ql-story__ring { transform: translateY(calc(var(--ilv, 0) * 23svh)); }
+  .ql-ribbon { top: 34%; font-size: min(21vw, 13svh); }
+  .ql-ribbon[data-pos="bottom"] { top: 66%; }
   .ql-story__word { bottom: auto; top: 1.5vh; font-size: 22vw; -webkit-text-stroke-color: color-mix(in srgb, var(--fg) 12%, transparent); }
   /* el prólogo: el manifiesto abajo, más pequeño, sin pisar el anillo */
   .ql-step--intro { align-items: end; min-height: calc(100svh - var(--ql-head)); }

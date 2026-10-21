@@ -27,7 +27,7 @@ import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import RingStage, { RingFlat } from "./RingStage";
-import type { RingPose } from "./ringScene";
+import type { RingLook, RingPose } from "./ringScene";
 import {
   BAND_SHANKS,
   CLASSIC_SOLITAIRE,
@@ -57,7 +57,7 @@ import {
   workDays,
   type RingSel,
 } from "./ring";
-import { ARCHIVE_SAMPLE, BRAND, CHAPTERS, FAQ, LEGAL, REASONS, REVIEWS, SERVICES, SLUG, appointmentSlots, jewelryJsonLd } from "./data";
+import { ARCHIVE_SAMPLE, BRAND, CHAPTERS, FAQ, LEGAL, REASONS, REVIEWS, SERVICES, SLUG, appointmentSlots, jewelryJsonLd, type Ribbons } from "./data";
 import "./quilate.css";
 
 // noche cálida: tinta casi negra con un punto de sepia, hueso de texto y oro viejo de acento (G1 «lujo tranquilo» en oscuro)
@@ -337,46 +337,73 @@ function Engraving({ sel }: { sel: RingSel }) {
 // el anillo del recorrido se monta con piezas del kit de Blender: aro de pavé y cesta de seis garras
 const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "garras6", carat: 1, pave: true, shank: "aro-pave", head: "cabeza-6-garras", engraving: "Para ti · siempre" };
 
+/** Pose completa a partir de lo que cambia (lo demás, en reposo). */
+const P = (p: Partial<RingPose>): RingPose => ({ explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0, y: 0, zoom: 1, solo: 0, trio: 0, face: 0, ...p });
+type Scene = { kind: "photo" | "velvet" | "rake" | "lightbox" | "lamp"; photo?: number };
+type Companions = { sel: RingSel; side: -1 | 1 }[];
+// la pieza que sale de una herencia (capítulo «Transformar» y su interludio)
+const ROSE_RING: RingSel = { ...HERO_RING, metal: "rosa", head: "cabeza-bisel", shank: "aro-afinado" };
+/** Trío tras «Elegir»: las tres gemas de la casa (diamante en el centro, zafiro y esmeralda a los lados). */
+const TRIO_GEMS: Companions = [
+  { side: -1, sel: { ...HERO_RING, metal: "blanco", stone: "zafiro", shape: "oval", head: "cabeza-oval-4-garras", shank: "aro-liso-confort", pave: false, engraving: "" } },
+  { side: 1, sel: { ...HERO_RING, stone: "esmeralda", shape: "esmeralda", head: "cabeza-4-garras", shank: "aro-afinado", pave: false, engraving: "" } },
+];
+/** Trío del final: los oros de la casa (amarillo en el centro, blanco con halo y rosa a los lados). */
+const TRIO_METALS: Companions = [
+  { side: -1, sel: { ...HERO_RING, metal: "blanco", head: "cabeza-halo-redondo", shank: "aro-catedral", engraving: "" } },
+  { side: 1, sel: { ...HERO_RING, metal: "rosa", head: "cabeza-4-garras", shank: "aro-torsade", engraving: "" } },
+];
+
 /**
- * Escena de scrollytelling (docs/19 §7): un prólogo y los siete capítulos, cada uno con su pose del anillo. El anillo cambia
- * de lado de la pantalla (`x`) y los cuadros de texto van al contrario; entre pasos todo se interpola con la posición del
- * scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
+ * Escena de scrollytelling (docs/19 §7): portada, prólogo y, por cada capítulo, un **cuadro** (un solo anillo, a un lado,
+ * enseñando el detalle del que habla) seguido de un **interludio** largo sin cuadro: dos cintas de texto (una detrás del
+ * lienzo y otra delante) mientras el anillo hace otra cosa en el centro (composiciones `centro`, `trío`, `frente` y
+ * `macro`). El recorrido acaba en un interludio. Entre pasos todo se interpola con la posición del scroll (no con el
+ * tiempo), así que hacia atrás deshace exactamente lo mismo. Los cuadros son los puntos de control de siempre.
  */
-const POSES: RingPose[] = [
-  { explode: 0, head: 0.62, engrave: 0, pave: 0, yaw: 0, x: 0, y: 0.04, zoom: 1, solo: 1 }, // portada: solo la piedra, de cerca y centrada
-  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0.2, y: 0, zoom: 0.85, solo: 0 }, // prólogo: el anillo entero, grande, a la derecha del manifiesto
-  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0.7, x: 0.22, y: 0, zoom: 1, solo: 0 }, // escuchar: el boceto, a la derecha
-  { explode: 0.35, head: 0.5, engrave: 0, pave: 0, yaw: 1.1, x: -0.2, y: 0, zoom: 1, solo: 0 }, // elegir: la piedra sale de la cesta, de cerca
-  { explode: 1, head: 0, engrave: 0, pave: 0, yaw: 1.9, x: 0.2, y: 0, zoom: 0.95, solo: 0 }, // dar forma: despiece en cera
-  { explode: 0, head: 0, engrave: 1, pave: 0, yaw: 0, x: -0.18, y: 0, zoom: 1, solo: 0 }, // ajustar: dentro del aro, el grabado
-  { explode: 0, head: 0, engrave: 0, pave: 1, yaw: 0.35, x: 0.2, y: 0, zoom: 1, solo: 0 }, // cuidar: el hombro, pavé y garras de cerca
-  { explode: 0.6, head: 0, engrave: 0, pave: 0, yaw: 3.4, x: -0.2, y: 0, zoom: 1, solo: 0 }, // transformar: se abre y se rehace
-  { explode: 0, head: 0.22, engrave: 0, pave: 0, yaw: 4.4, x: 0.2, y: 0, zoom: 1, solo: 0 }, // heredar: montado, de vitrina
+type Beat = {
+  pose: RingPose;
+  /** la sala detrás del anillo (como las escenas de Oryzo), fundida con la siguiente al ritmo del scroll */
+  scene: Scene;
+  /** capítulo del cuadro, o el que cierra el interludio (−1 = portada y prólogo) */
+  chapter: number;
+  kind: "hero" | "intro" | "card" | "interlude";
+  /** composición del interludio (la hace la pose; se apunta para leer el guion) */
+  layout?: "centro" | "trío" | "frente" | "macro";
+  /** aspecto del anillo en los interludios (en los cuadros manda el capítulo) */
+  look?: RingLook;
+  sel?: RingSel;
+  /** líneas técnicas: rotulan el detalle que enseña el cuadro */
+  hud?: { r: number; labels: string[] };
+};
+const BEATS: Beat[] = [
+  { kind: "hero", chapter: -1, pose: P({ head: 0.62, y: 0.04, solo: 1 }), scene: { kind: "velvet" } }, // solo la piedra, centrada
+  { kind: "intro", chapter: -1, pose: P({ x: 0.2, zoom: 0.85 }), scene: { kind: "photo", photo: 13 } }, // el anillo entero, junto al manifiesto
+  // 01 Escuchar: el boceto en alambre → interludio: en el centro, el boceto se hace oro mientras gira
+  { kind: "card", chapter: 0, pose: P({ yaw: 0.7, x: 0.22 }), scene: { kind: "lamp", photo: 5 } },
+  { kind: "interlude", chapter: 0, layout: "centro", look: "final", pose: P({ yaw: 2.3, zoom: 0.92, y: -0.03 }), scene: { kind: "lamp", photo: 5 } },
+  // 02 Elegir: la piedra sola, de cerca → interludio: trío de gemas (zafiro, diamante, esmeralda)
+  { kind: "card", chapter: 1, pose: P({ explode: 0.22, head: 0.5, yaw: 1.1, x: -0.2 }), scene: { kind: "velvet" }, hud: { r: 168, labels: ["57 facetas", "brillante · 1,00 ct", "fuego: luz en colores"] } },
+  { kind: "interlude", chapter: 1, layout: "trío", look: "final", pose: P({ trio: 1, yaw: 2.6, zoom: 1.32, y: 0.03 }), scene: { kind: "velvet" } },
+  // 03 Dar forma: las tres piezas separadas → interludio: el aro de frente, como una «O»; la cinta de detrás pasa por el hueco
+  { kind: "card", chapter: 2, pose: P({ explode: 1, yaw: 1.9, x: 0.2, zoom: 1.05 }), scene: { kind: "photo", photo: 1 }, hud: { r: 150, labels: ["3 piezas", "piedra · 1,00 ct", "montura · 6 garras", "aro · pavé · oro 750"] } },
+  { kind: "interlude", chapter: 2, layout: "frente", look: "final", pose: P({ face: 1, zoom: 0.96, y: -0.04 }), scene: { kind: "rake" } },
+  // 04 Ajustar: dentro del aro (la «O» de antes, de cerca) → interludio: la cámara sale y el anillo gira en el centro
+  { kind: "card", chapter: 3, pose: P({ engrave: 1, x: -0.18 }), scene: { kind: "rake" }, hud: { r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "grabado a buril", "punzón 750 · QLT"] } },
+  { kind: "interlude", chapter: 3, layout: "centro", look: "final", pose: P({ yaw: 3.1, zoom: 1.02, y: -0.03 }), scene: { kind: "rake" } },
+  // 05 Cuidar: el pavé apagado → interludio: el mismo pavé, limpio y centrado, llenando la pantalla
+  { kind: "card", chapter: 4, pose: P({ pave: 1, yaw: 0.35, x: 0.2 }), scene: { kind: "lightbox" }, hud: { r: 100, labels: ["Pavé · 1,3 mm", "grasa: la luz no entra", "ultrasonidos · 20 min"] } },
+  { kind: "interlude", chapter: 4, layout: "macro", look: "final", pose: P({ pave: 1, yaw: 0.95 }), scene: { kind: "lightbox" } },
+  // 06 Transformar: el bisel nuevo → interludio: la pieza se abre en el centro (piedra, bisel y aro)
+  { kind: "card", chapter: 5, sel: ROSE_RING, pose: P({ head: 0.4, yaw: 3.4, x: -0.2 }), scene: { kind: "photo", photo: 7 }, hud: { r: 130, labels: ["Bisel", "oro rosa 750", "la piedra de antes"] } },
+  { kind: "interlude", chapter: 5, layout: "centro", look: "final", sel: ROSE_RING, pose: P({ explode: 0.75, yaw: 4.3, zoom: 0.98 }), scene: { kind: "photo", photo: 7 } },
+  // 07 Heredar: el anillo acabado, con su ficha → final: trío de los oros de la casa
+  { kind: "card", chapter: 6, pose: P({ head: 0.22, yaw: 4.4, x: 0.2 }), scene: { kind: "photo", photo: 8 }, hud: { r: 150, labels: ["Ficha nº 0000", "oro 750 · 1,00 ct", "punzón QLT · GIA"] } },
+  { kind: "interlude", chapter: 6, layout: "trío", look: "final", pose: P({ trio: 1, yaw: 5.3, zoom: 1.32, y: 0.03 }), scene: { kind: "photo", photo: 8 } },
 ];
-/**
- * El entorno de cada paso (como las escenas de Oryzo): detrás del anillo, una sala distinta que se funde con la siguiente al
- * ritmo del scroll. Fotos reales desenfocadas (escaparate, taller, vitrina) o luz pintada (terciopelo, caja de luz, rasante).
- */
-const SCENES: { kind: "photo" | "velvet" | "rake" | "lightbox" | "lamp"; photo?: number }[] = [
-  { kind: "velvet" }, // portada: terciopelo negro y un foco sobre la piedra
-  { kind: "photo", photo: 13 }, // prólogo: el escaparate
-  { kind: "lamp", photo: 5 }, // escuchar: la mesa con la lámpara
-  { kind: "velvet" }, // elegir: terciopelo negro y un foco
-  { kind: "photo", photo: 1 }, // dar forma: la pared de herramientas del taller
-  { kind: "rake" }, // ajustar: oscuridad y una raya de luz rasante
-  { kind: "lightbox" }, // cuidar: caja de luz gris neutra
-  { kind: "photo", photo: 7 }, // transformar: la vitrina de piezas antiguas
-  { kind: "photo", photo: 8 }, // heredar: la vitrina de museo
-];
-/** Líneas técnicas alrededor del anillo en los pasos que miden algo (cota circular, mira y datos). */
-const HUD: { step: number; r: number; labels: string[] }[] = [
-  { step: 3, r: 168, labels: ["Ø 6,5 mm", "1,00 ct · brillante", "57 facetas · GIA"] },
-  { step: 5, r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "750 · QLT"] },
-  { step: 6, r: 100, labels: ["22 × 1,3 mm", "garras revisadas", "ultrasonidos · 20 min"] },
-];
-const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo"] as const;
-/** los capítulos empiezan en el paso 2 (0 = portada, 1 = prólogo) */
-const FIRST = 2;
+const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo", "trio", "face"] as const;
+/** el paso del cuadro de cada capítulo */
+const cardStep = (c: number) => BEATS.findIndex((b) => b.kind === "card" && b.chapter === c);
 const smooth = (t: number) => t * t * (3 - 2 * t);
 /** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
 const words = (t: string) =>
@@ -391,7 +418,7 @@ function Home() {
   const [clean, setClean] = useState(false);
   const list = useRef<HTMLOListElement>(null);
   const sticky = useRef<HTMLDivElement>(null);
-  const pose = useRef<RingPose>({ ...POSES[0] });
+  const pose = useRef<RingPose>({ ...BEATS[0].pose });
   // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos; también el progreso (0–1)
   useEffect(() => {
     const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
@@ -410,8 +437,8 @@ function Home() {
       // el anillo ya está colocado cuando el cuadro de texto llega al centro (y no salta tarde)
       const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j])));
       const t = smooth(Math.min(1, Math.max(0, (raw - 0.15) / 0.7)));
-      const a = POSES[j];
-      const b = POSES[Math.min(j + 1, POSES.length - 1)];
+      const a = BEATS[j].pose;
+      const b = BEATS[Math.min(j + 1, BEATS.length - 1)].pose;
       const p = pose.current;
       for (const k of POSE_KEYS) p[k] = a[k] + (b[k] - a[k]) * t;
       // en pantallas estrechas el anillo va centrado en la mitad de arriba (los cuadros, debajo) y los acercamientos son
@@ -422,14 +449,25 @@ function Home() {
         p.y = -0.16 * p.solo;
         p.head *= 0.3;
         p.pave *= 0.55;
-        p.zoom *= 1.08;
+        p.zoom *= 1.08 - 0.22 * p.trio;
       }
       const span = centers[centers.length - 1] - centers[0];
       const st = sticky.current?.style;
       st?.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
       // peso de cada escena (fondo y líneas técnicas): la actual se apaga mientras la siguiente se enciende, con el mismo t
-      for (let k = 0; k < POSES.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
+      for (let k = 0; k < BEATS.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
       st?.setProperty("--ring-x", p.x.toFixed(3));
+      // cuánto «interludio» hay ahora (0 en un cuadro, 1 en un interludio): en móvil el anillo baja al centro sin cuadro
+      const il = (k: number) => (BEATS[k]?.kind === "interlude" ? 1 : 0);
+      st?.setProperty("--ilv", (il(j) * (1 - t) + il(j + 1) * t).toFixed(3));
+      // cintas de texto: avance de cada paso respecto a la línea media (−1 entrando por abajo, 0 centrado, 1 saliendo por
+      // arriba) y su opacidad: las de un interludio se apagan del todo (|r| = 0,45) antes de que asome un cuadro vecino
+      for (let k = 0; k < centers.length; k++) {
+        const gap = (centers[Math.min(k + 1, centers.length - 1)] - centers[Math.max(k - 1, 0)]) / 2 || innerHeight;
+        const r = Math.min(1.2, Math.max(-1.2, (mid - centers[k]) / gap));
+        st?.setProperty(`--r${k}`, r.toFixed(4));
+        st?.setProperty(`--o${k}`, (1 - smooth(Math.min(1, Math.max(0, (Math.abs(r) - 0.3) / 0.15)))).toFixed(3));
+      }
       // cuánto queda del último paso: el fundido inferior crece en el tramo final
       const last = centers[centers.length - 1];
       st?.setProperty("--story-end", Math.min(1, Math.max(0, (mid - last) / (innerHeight * 0.5))).toFixed(3));
@@ -456,7 +494,7 @@ function Home() {
           if (!e.isIntersecting) return;
           const i = Number(e.target.getAttribute("data-step"));
           setStep(i);
-          setActive(Math.max(0, i - FIRST));
+          setActive(Math.max(0, BEATS[i].chapter));
         }),
       { rootMargin: "-50% 0px -50% 0px" },
     );
@@ -473,8 +511,38 @@ function Home() {
     else scrollTo({ top: y, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
   const ch = CHAPTERS[active];
-  const look = step < FIRST ? "final" : ch.id === "cuidar" && clean ? "final" : ch.look;
-  const sel = ch.id === "transformar" ? { ...HERO_RING, metal: "rosa" as const, head: "cabeza-bisel", shank: "aro-afinado" } : HERO_RING;
+  const beat = BEATS[step];
+  const look = beat.kind !== "card" ? beat.look ?? "final" : ch.id === "cuidar" && clean ? "final" : ch.look;
+  const sel = beat.sel ?? HERO_RING;
+  // los acompañantes del trío: las gemas hasta «Cuidar», los oros después (cambian cuando no se ven); solo en pantallas
+  // anchas con ratón (en móvil el lienzo es estrecho y el trío no cabe)
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const mq = matchMedia("(min-width: 900px) and (pointer: fine)");
+    const on = () => setWide(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  const companions = wide ? (step < cardStep(4) ? TRIO_GEMS : TRIO_METALS) : undefined;
+  // las cintas de una capa: `back` se pinta antes del lienzo (el anillo pasa por delante) y `front` después. Solo en los
+  // interludios, una en cada capa, una arriba y otra abajo y en sentidos contrarios
+  const ribbons = (layer: keyof Omit<Ribbons, "flip">) => (
+    <div className={`ql-ribbons ql-ribbons--${layer}`} aria-hidden>
+      {BEATS.map((b, k) => {
+        if (b.kind !== "interlude") return null;
+        const it = CHAPTERS[b.chapter].interlude;
+        const top = (layer === "back") !== !!it.flip;
+        return (
+          <p key={k} className="ql-ribbon" data-pos={top ? "top" : "bottom"} style={{ "--r": `var(--r${k}, -1)`, "--o": `var(--o${k}, 0)`, "--dir": top ? 1 : -1 } as CSSProperties}>
+            {[0, 1, 2].map((n) => (
+              <span key={n}>{it[layer]}<i> ✦ </i></span>
+            ))}
+          </p>
+        );
+      })}
+    </div>
+  );
 
   return (
     <>
@@ -482,35 +550,38 @@ function Home() {
       <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">
         <div className="ql-story__sticky" ref={sticky}>
           <div className="ql-scenes" aria-hidden>
-            {SCENES.map((sc, k) => (
+            {BEATS.map(({ scene: sc }, k) => (
               <div key={k} className={`ql-scene ql-scene--${sc.kind}`} style={{ "--w": `var(--w${k}, ${k === 0 ? 1 : 0})`, ...(sc.photo != null ? { backgroundImage: `url(${photo("joyeria", sc.photo).src})` } : {}) } as CSSProperties} />
             ))}
             <div className="ql-scenes__vignette" />
           </div>
           <svg className="ql-hud" viewBox="-200 -200 400 400" aria-hidden>
-            {HUD.map((h) => (
-              <g key={h.step} className="ql-hud__g" style={{ "--w": `var(--w${h.step}, 0)` } as CSSProperties}>
+            {BEATS.map(({ hud: h, pose: bp }, k) => h && (
+              <g key={k} className="ql-hud__g" style={{ "--w": `var(--w${k}, 0)` } as CSSProperties}>
                 <circle r={h.r} pathLength={1} />
                 <circle r={h.r + 14} pathLength={1} className="ql-hud__thin" />
                 <line x1={-h.r - 40} y1={0} x2={-h.r - 8} y2={0} pathLength={1} />
                 <line x1={h.r + 8} y1={0} x2={h.r + 40} y2={0} pathLength={1} />
                 <line x1={0} y1={-h.r - 40} x2={0} y2={-h.r - 8} pathLength={1} />
+                {/* los datos van en el hueco entre el anillo y el cuadro (del lado del cuadro), no contra el borde ni el índice */}
                 {h.labels.map((l, i) => (
-                  <text key={i} x={h.r + 26} y={-h.r * 0.55 + i * 15} className={i === 0 ? "ql-hud__big" : ""}>{l}</text>
+                  <text key={i} x={bp.x > 0 ? -h.r - 26 : h.r + 26} y={-h.r * 0.55 + i * 15} textAnchor={bp.x > 0 ? "end" : "start"} className={i === 0 ? "ql-hud__big" : ""}>{l}</text>
                 ))}
               </g>
             ))}
           </svg>
-          <RingStage sel={sel} look={look} pose={pose} motionFx height="100%" alt={step === 0 ? "Un diamante talla brillante, de cerca, girando bajo un foco" : step === 1 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
-          {/* la palabra del capítulo, gigante y detrás de todo, se recompone letra a letra al cambiar de paso */}
-          <p key={step} hidden={step === 0} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
-            {(step < FIRST ? "Quilate" : ch.title).split("").map((l, i) => (
+          {ribbons("back")}
+          <RingStage sel={sel} look={look} pose={pose} companions={companions} motionFx height="100%" alt={step === 0 ? "Un diamante talla brillante, de cerca, girando bajo un foco" : step === 1 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
+          {/* la palabra del prólogo, gigante y detrás de todo, se recompone letra a letra; en los capítulos hablan las cintas */}
+          <p key={step} hidden={step !== 1} className="ql-story__word" data-side={beat.pose.x > 0 ? "left" : "right"} aria-hidden>
+            {"Quilate".split("").map((l, i) => (
               <span key={i} style={{ "--i": i } as CSSProperties}>{l === " " ? " " : l}</span>
             ))}
           </p>
+          {ribbons("front")}
           <nav className="ql-story__rail" aria-label="Capítulos">
             {CHAPTERS.map((c, i) => (
-              <button key={c.id} type="button" aria-current={step === i + FIRST ? "step" : undefined} onClick={() => go(i + FIRST)}>
+              <button key={c.id} type="button" aria-current={beat.chapter === i ? "step" : undefined} onClick={() => go(cardStep(i))}>
                 <span>{c.k}</span> <b>{c.title}</b>
               </button>
             ))}
@@ -540,13 +611,26 @@ function Home() {
             <ScrubText as="p" className="ql-step__manifesto">No te contamos nuestra historia. Te enseñamos lo que hacemos con la tuya: siete gestos, siete luces, un anillo que se abre y se vuelve a cerrar delante de ti.</ScrubText>
             <p className="ql-step__hint" aria-hidden>Desliza</p>
           </li>
-          {CHAPTERS.map((c, i) => (
-            <li key={c.id} id={c.id} data-step={i + FIRST} data-light={c.light} className="ql-step" data-side={POSES[i + FIRST].x > 0 ? "left" : "right"}>
+          {BEATS.map((b, k) => {
+            if (b.kind === "interlude") {
+              // interludio: sin cuadro, solo recorrido (las cintas y el anillo van en el escenario); toma la luz del siguiente
+              const next = CHAPTERS[b.chapter + 1];
+              return <li key={k} data-step={k} data-light={next?.light ?? "vitrina"} className="ql-step ql-step--interlude" aria-hidden />;
+            }
+            if (b.kind !== "card") return null;
+            const c = CHAPTERS[b.chapter];
+            return (
+            <li key={c.id} id={c.id} data-step={k} data-light={c.light} className="ql-step" data-side={b.pose.x > 0 ? "left" : "right"}>
               <div className="ql-step__card">
                 <span className="ql-step__num" aria-hidden>{c.k}</span>
-                <p className="ql-chapter__k">{c.k} · {c.title}</p>
+                <p className="ql-chapter__k">
+                  <span className="ui-sr">{c.k} · </span>
+                  {c.title}
+                  <span className="ql-chapter__kelvin" aria-hidden>{c.why.split(" · ")[1]}</span>
+                </p>
                 <h2 className="ql-h2 ql-step__thesis">{words(c.thesis)}</h2>
-                <p className="ql-chapter__how">{c.how}</p>
+                {/* el «cómo» se ve en grande en las cintas del interludio; aquí queda entero para lectores de pantalla */}
+                <p className="ui-sr">{c.how}</p>
                 <p className="ql-chapter__what">{c.what}</p>
                 {c.id === "cuidar" && (
                   <button type="button" className="ql-chip" aria-pressed={clean} onClick={() => setClean((v) => !v)}>
@@ -554,16 +638,24 @@ function Home() {
                   </button>
                 )}
                 {c.id === "heredar" && (
-                  <div className="ql-archive">
-                    <MetaTable label="Ficha de archivo (ejemplo)" rows={ARCHIVE_SAMPLE.split("\n").map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
-                    <QRCode value="https://quilate.example/archivo/0000" shape="rounded" codeSize={110} caption="El QR del estuche abre la ficha" />
+                  // en el cuadro, el QR del estuche; la ficha de ejemplo se despliega (lo que enumera la cinta)
+                  <div className="ql-step__qr">
+                    <QRCode value="https://quilate.example/archivo/0000" shape="rounded" codeSize={84} caption="" />
+                    <p>El QR del estuche abre la ficha de la pieza.</p>
+                    <details className="ql-step__ficha">
+                      <summary>Ver una ficha de ejemplo</summary>
+                      <MetaTable rows={ARCHIVE_SAMPLE.split("\n").map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
+                    </details>
                   </div>
                 )}
-                <p className="ql-chapter__light"><span aria-hidden>◐</span> Luz: {c.why}</p>
-                <a className="ql-link ql-chapter__cta" href={href(c.cta.href)}>{c.cta.label} →</a>
+                <div className="ql-step__foot">
+                  <a className="ql-link ql-chapter__cta" href={href(c.cta.href)}>{c.cta.label} →</a>
+                  <p className="ql-chapter__light"><span aria-hidden>◐</span> Luz: {c.why}</p>
+                </div>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ol>
       </section>
 

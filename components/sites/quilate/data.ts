@@ -61,93 +61,109 @@ export type Chapter = {
   why: string;
   look: RingLook;
   framing?: "ring" | "head";
+  /** el interludio que sigue al capítulo: sus dos cintas, sin cuadro, mientras el anillo pasa al plano siguiente */
+  interlude: Ribbons;
 };
+
+/**
+ * Dos cintas de texto en letra gruesa que corren de lado por el escenario, en sentidos contrarios, durante un interludio
+ * (nunca a la vez que un cuadro): `back` va detrás del lienzo 3D (el anillo pasa por delante) y `front` delante (el anillo
+ * pasa por detrás). Siempre van en pareja y a alturas fijas (arriba y abajo; `flip` las intercambia), así que nunca se pisan.
+ */
+export type Ribbons = { back: string; front: string; flip?: boolean };
 
 export const CHAPTERS: Chapter[] = [
   {
     id: "escuchar",
     k: "01",
     title: "Escuchar",
-    thesis: "Antes de dibujar nada, te escuchamos.",
-    how: "Una mesa, un cuaderno y una hora sin prisa. Nos cuentas para quién es, cómo vive con las manos, qué guarda en un cajón. El primer boceto sale de esa conversación, no de un catálogo.",
+    thesis: "El primer boceto sale de una conversación.",
+    how: "Una mesa, un cuaderno y una hora sin prisa. Nos cuentas para quién es, cómo vive con las manos, qué guarda en un cajón. De ahí sale el primer trazo del anillo, no de un catálogo.",
     what: "Cita de 60 minutos en el taller o por videollamada. Sin compromiso y sin coste.",
     cta: { label: "Pedir cita", href: "cita" },
     light: "lampara",
     why: "lámpara cálida y baja · 2600 K · para conversar",
     look: "boceto",
+    interlude: { back: "Una mesa · un cuaderno · una hora", front: "Para quién es · cómo vive con las manos" },
   },
   {
     id: "elegir",
     k: "02",
     title: "Elegir",
-    thesis: "Una piedra se elige con luz honesta, no con focos.",
-    how: "Te enseñamos cada piedra con dos luces: un foco pequeño que saca su fuego y luz de día difusa que no perdona el color. Si una piedra solo es bonita bajo el foco, te lo decimos.",
+    thesis: "El brillo lo decide la talla, no el tamaño.",
+    how: "Un brillante tiene 57 facetas. Bien proporcionadas, la luz que entra por arriba rebota dentro y sale hacia ti abierta en colores: es el fuego. Mal talladas, se escapa por abajo. Te enseñamos cada piedra con un foco, que saca ese fuego, y con luz de día, que no perdona el color.",
     what: "Diamantes naturales y de laboratorio con certificado (GIA o IGI); zafiros, rubíes y esmeraldas con origen y tratamiento declarados.",
     cta: { label: "Ver piedras en el configurador", href: "compromiso" },
     light: "fuego",
     why: "foco duro que sigue al puntero · 4800 K · para ver el fuego",
     look: "gema",
     framing: "head",
+    interlude: { back: "Diamante · zafiro · esmeralda", front: "Origen y tratamiento, por escrito" },
   },
   {
     id: "forma",
     k: "03",
     title: "Dar forma",
-    thesis: "Lo hacemos a mano, y a mano lleva semanas.",
-    how: "Tallamos la pieza en cera, la fundimos en oro o platino, la limamos, engastamos la piedra garra a garra y la pulimos. Cada paso se puede ver: te mandamos fotos del banco.",
+    thesis: "Un solitario son tres piezas hechas a mano.",
+    how: "El aro y la montura se tallan en cera y se funden en oro o platino por separado; luego se sueldan, se liman y la piedra se engasta al final, garra a garra. Cada paso se puede ver: te mandamos fotos del banco.",
     what: "Alianzas en 12 días laborables; solitarios en 4 a 6 semanas. El plazo se dice antes de encargar, no después.",
     cta: { label: "Diseñar una alianza", href: "alianzas" },
     light: "taller",
     why: "flexo cenital neutro · 4200 K · para trabajar",
-    look: "cera",
+    look: "final",
+    interlude: { back: "Cera · fundición · lima · pulido", front: "Engaste garra a garra" },
   },
   {
     id: "ajustar",
     k: "04",
     title: "Ajustar",
-    thesis: "Si no encaja en tu mano, no está terminada.",
+    thesis: "Por dentro: tu talla, tu grabado y nuestra firma.",
     how: "Medimos el dedo a la temperatura del día, ajustamos la talla en el banco y grabamos por dentro a buril. Con luz rasante se lee el grabado y el punzón de la casa, que firma cada pieza.",
     what: "Ajuste de talla gratis el primer año. El primer grabado, gratis. Mide tu talla en pantalla si no puedes venir.",
     cta: { label: "Medir mi talla", href: "talla" },
     light: "rasante",
     why: "luz rasante a 8° · 4000 K · para leer un grabado",
     look: "final",
+    interlude: { back: "Grabado a buril · el punzón de la casa", front: "Medimos el dedo a la temperatura del día", flip: true },
   },
   {
     id: "cuidar",
     k: "05",
     title: "Cuidar",
-    thesis: "Lo que sale de aquí vuelve aquí cuando lo necesite.",
-    how: "Una piedra con grasa pierde casi todo su brillo: la luz no entra. Limpiamos con ultrasonidos, revisamos garras y cierres, y repulimos. Lo comparas con la misma luz antes y después.",
+    thesis: "Una piedra sucia no brilla: la luz no entra.",
+    how: "La grasa de la piel tapa la parte de abajo de la piedra y la luz ya no rebota dentro. Limpiamos con ultrasonidos, revisamos garras y cierres, y repulimos. Lo comparas con la misma luz antes y después: pulsa «Limpiar la pieza».",
     what: "Limpieza y revisión de por vida para todo lo que sale del taller, en 20 minutos mientras esperas.",
     cta: { label: "Ver el taller", href: "taller" },
     light: "honesta",
     why: "luz de día difusa · 6500 K · la misma antes y después",
     look: "apagado",
+    interlude: { back: "Ultrasonidos · garras · cierres", front: "Lo que sale de aquí vuelve aquí" },
   },
   {
     id: "transformar",
     k: "06",
     title: "Transformar",
-    thesis: "El oro de una herencia puede volver a llevarse.",
-    how: "Desmontamos la pieza, recuperamos las piedras, refinamos el oro y dibujamos algo que se lleve hoy. La piedra de tu abuela, en un anillo para tu mano.",
+    thesis: "La piedra de tu abuela, en un bisel de hoy.",
+    how: "Desmontamos la pieza, recuperamos las piedras y refinamos el oro. Aquí, la piedra de un anillo antiguo pasa a un bisel en oro rosa: un aro de metal que la rodea entera y la protege para llevarla a diario.",
     what: "Boceto gratis. Te decimos cuánto oro aprovechamos y qué cuesta antes de tocar nada.",
     cta: { label: "Traer una pieza", href: "cita?motivo=transformar" },
     light: "memoria",
     why: "cálida y suave · 3100 K · la luz de una casa",
     look: "final",
+    interlude: { back: "Desmontar · recuperar · refinar", front: "La piedra de antes, en un anillo de hoy" },
   },
   {
     id: "heredar",
     k: "07",
     title: "Heredar",
-    thesis: "Lo hacemos para quien la lleve después de ti.",
+    thesis: "Cada pieza sale con su ficha, y la ficha viaja con ella.",
     how: "Cada pieza tiene una ficha en el archivo del taller: el boceto, la piedra con su certificado, el peso del metal, la ley, el punzón y la fecha. La ficha viaja con la joya, de mano en mano.",
     what: "Garantía transmisible y ficha de archivo con QR en el estuche.",
     cta: { label: "Pedir cita", href: "cita" },
     light: "vitrina",
     why: "foco de vitrina con destellos · 3600 K · para emocionar",
     look: "final",
+    interlude: { back: "Boceto · certificado · ley · punzón · fecha", front: "De mano en mano" },
   },
 ];
 

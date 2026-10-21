@@ -16,6 +16,8 @@ import { Vector2, Vector3, type Object3D } from "three";
  *     una lente basculada (efecto maqueta / macro de joyería).
  * Las dos cosas solo se encienden mientras hay transición (cuánto cambia la pose por segundo) y se apagan suaves en reposo:
  * la imagen quieta queda nítida. Sin efecto en pantallas táctiles (coste de GPU) ni con movimiento reducido (allí no hay 3D).
+ * Además, el velo de los cambios de material (`veil`, lo da la escena): desenfoque en toda la imagen y brillo en las luces
+ * altas, para que el cambio (boceto → cera → metal, oro amarillo → rosa…) ocurra tapado y no a la vista.
  */
 
 const MotionShader = {
@@ -25,6 +27,7 @@ const MotionShader = {
     uFocus: { value: 0.5 },
     uTilt: { value: 0 },
     uAspect: { value: 1 },
+    uVeil: { value: 0 },
   },
   vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
   fragmentShader: /* glsl */ `
@@ -33,11 +36,13 @@ const MotionShader = {
     uniform float uFocus;
     uniform float uTilt;
     uniform float uAspect;
+    uniform float uVeil;
     varying vec2 vUv;
     void main() {
       // tilt-shift: radio de desenfoque según la distancia vertical a la franja nítida (con una zona muerta alrededor)
       float d = max(0.0, abs(vUv.y - uFocus) - 0.12);
-      float r = uTilt * d * 0.02;
+      // el velo de los cambios de material: desenfoque en toda la imagen, además del de la lente
+      float r = uTilt * d * 0.02 + uVeil * 0.009;
       // movimiento: un trazo a lo largo de la velocidad, centrado en el píxel
       vec2 mv = uVel;
       vec4 sum = vec4(0.0);
@@ -51,7 +56,10 @@ const MotionShader = {
         sum += texture2D(tDiffuse, vUv + o) * w;
         wsum += w;
       }
-      gl_FragColor = sum / wsum;
+      vec4 col = sum / wsum;
+      // y un brillo que sube las luces altas (la piedra y los reflejos del metal), no las sombras
+      col.rgb += uVeil * 0.9 * col.rgb * col.rgb;
+      gl_FragColor = col;
     }`,
 };
 
@@ -60,9 +68,11 @@ export type MotionFxProps = {
   target: MutableRefObject<Object3D | null>;
   /** cuánta transición hay ahora (0 = quieto); lo calcula la escena con la velocidad de la pose */
   amount: MutableRefObject<number>;
+  /** velo de los cambios de material (0–1): desenfoque en toda la imagen y brillo en las luces altas */
+  veil?: MutableRefObject<number>;
 };
 
-export default function MotionFx({ target, amount }: MotionFxProps) {
+export default function MotionFx({ target, amount, veil }: MotionFxProps) {
   const { gl, scene, camera, size } = useThree();
   const { composer, pass } = useMemo(() => {
     const c = new EffectComposer(gl);
@@ -102,6 +112,7 @@ export default function MotionFx({ target, amount }: MotionFxProps) {
     }
     u.uVel.value.copy(vel.current);
     u.uTilt.value = tilt.current;
+    u.uVeil.value = veil?.current ?? 0;
     u.uAspect.value = size.width / Math.max(1, size.height);
     composer.render(dt);
   }, 1);

@@ -79,6 +79,10 @@ export type RingPose = {
   y: number;
   /** 1 = solo la piedra (aro, montura y pavé fuera de cuadro, debajo); al bajar a 0 llegan y se montan alrededor */
   solo: number;
+  /** 0 = un anillo · 1 = trío: los acompañantes (`companions`) suben a los lados, más atrás y más pequeños */
+  trio: number;
+  /** 0 = de tres cuartos · 1 = de frente: el aro se planta de cara como una «O», con la piedra arriba */
+  face: number;
 };
 
 /** El HDR de estudio (Aerodynamics Workshop, Poly Haven, CC0) como cubemap: lo que ven las gemas trazadas. */
@@ -126,7 +130,22 @@ export type RingSceneProps = {
   /** lo rellena la escena: el grupo del anillo y cuánta transición hay (para MotionFx) */
   fxTarget?: MutableRefObject<Object3D | null>;
   fxAmount?: MutableRefObject<number>;
+  /** velo de los cambios de material (0–1): lo rellena la escena y lo leen los destellos y MotionFx */
+  fxVeil?: MutableRefObject<number>;
+  /** anillos que acompañan al principal en el trío (pose `trio`): a la izquierda (−1) y a la derecha (1) */
+  companions?: { sel: RingSel; side: -1 | 1 }[];
+  /** interno: este anillo es un acompañante (no mueve la cámara ni las luces; su sitio lo da `trio` de la pose del principal) */
+  companion?: { side: -1 | 1; host: MutableRefObject<RingPose> };
 };
+
+/*
+ * Velo de los cambios de material del recorrido (boceto → cera → metal, apagado → limpio, oro amarillo → rosa…): en vez de
+ * cambiar a la vista, la escena sube un velo (desenfoque y brillo en MotionFx, destellos que barren la piedra y el metal),
+ * hace el cambio en lo más alto y lo baja despacio. Solo con pose externa: en el configurador, el cambio es inmediato.
+ */
+const VEIL_IN = 0.16;
+const VEIL_OUT = 0.75;
+const ease = (t: number) => t * t * (3 - 2 * t);
 
 const R0 = 1;
 const T = 0.17;
@@ -606,8 +625,25 @@ const WAX = new Color("#3d7a66");
 const WHITE = new Color(1, 1, 1);
 const SKETCH = new Color("#d9cbb4");
 
-function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTarget, fxAmount }: Omit<RingSceneProps, "active">) {
+function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose, onReady, fxTarget, fxAmount, fxVeil, companion }: Omit<RingSceneProps, "active" | "companions">) {
   const root = useRef<Group>(null);
+  // lo que se ve va un instante por detrás de lo pedido: el cambio llega cuando el velo está arriba
+  const swapKey = `${lookIn}|${JSON.stringify(selIn)}`;
+  const [shown, setShown] = useState({ sel: selIn, look: lookIn, key: swapKey });
+  const veilAt = useRef(-1);
+  // el velo sube desde donde esté (dos cambios seguidos no lo hacen parpadear)
+  const veilNow = useRef(0);
+  const veilFrom = useRef(0);
+  useEffect(() => {
+    if (!pose || shown.key === swapKey) return;
+    veilAt.current = performance.now();
+    veilFrom.current = veilNow.current;
+    const id = setTimeout(() => setShown({ sel: selIn, look: lookIn, key: swapKey }), VEIL_IN * 1000);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [swapKey, pose]);
+  const sel = pose ? shown.sel : selIn;
+  const look = pose ? shown.look : lookIn;
   const lastPose = useRef<RingPose | null>(null);
   const headGroup = useRef<Group>(null);
   const stoneLift = useRef<Group>(null);
@@ -638,8 +674,8 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
   const camera = useThree((s) => s.camera);
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
-  const spin = useRef(0.6);
-  const k = useRef({ py: 0, so: 0, fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const spin = useRef(companion ? 0.6 + companion.side * 2.1 : 0.6);
+  const k = useRef({ fc: 0, py: 0, so: 0, fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -791,6 +827,12 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
     const s = k.current;
     const kk = Math.min(1, dt * 4);
     const L = LOOK[look];
+    // el velo: sube rápido hasta el cambio y baja despacio
+    const vt = veilAt.current < 0 ? Infinity : (performance.now() - veilAt.current) / 1000;
+    const v0 = veilFrom.current;
+    const veil = vt < VEIL_IN ? v0 + (1 - v0) * ease(vt / VEIL_IN) : Math.max(0, 1 - ease(Math.min(1, (vt - VEIL_IN) / VEIL_OUT)));
+    veilNow.current = veil;
+    if (fxVeil) fxVeil.current = veil;
     const gemOnly = look === "gema" && solitaire;
     // estado animado: aspecto (cera, boceto, apagado) y encuadre (anillo entero o solo la piedra)
     s.band = lerp(s.band, gemOnly ? 0 : 1, kk);
@@ -809,7 +851,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
       if (fxAmount) {
         const L = lastPose.current;
         let d = 0;
-        if (L) d = Math.abs(P.explode - L.explode) + Math.abs(P.head - L.head) + Math.abs(P.engrave - L.engrave) + Math.abs(P.pave - L.pave) + Math.abs(P.x - L.x) + Math.abs(P.y - L.y) + Math.abs(P.zoom - L.zoom) + Math.abs(P.solo - L.solo) + Math.abs(P.yaw - L.yaw) * 0.3;
+        if (L) d = Math.abs(P.explode - L.explode) + Math.abs(P.head - L.head) + Math.abs(P.engrave - L.engrave) + Math.abs(P.pave - L.pave) + Math.abs(P.x - L.x) + Math.abs(P.y - L.y) + Math.abs(P.zoom - L.zoom) + Math.abs(P.solo - L.solo) + Math.abs(P.face - L.face) + Math.abs(P.yaw - L.yaw) * 0.3;
         lastPose.current = { ...P };
         fxAmount.current += (Math.min(1.2, (d / Math.max(dt, 1 / 120)) * 0.9) - fxAmount.current) * Math.min(1, dt * 6);
       }
@@ -824,6 +866,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
       s.zm = lerp(s.zm, P.zoom, kp);
       s.so = lerp(s.so, P.solo, kp);
       s.py = lerp(s.py, P.y, kp);
+      s.fc = lerp(s.fc, P.face, kp);
     } else {
       s.ex = lerp(s.ex, 0, kk);
       s.yaw = lerp(s.yaw, 0, kk);
@@ -875,7 +918,18 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
     const c = light?.current ?? FALLBACK;
     const tint = new Color(kelvinToHex(c.kelvin));
     const lights = scene.userData.rig as { key: DirectionalLight; hemi: HemisphereLight; spark: PointLight[]; engrave: PointLight; cursor: PointLight } | undefined;
-    if (lights) {
+    // un acompañante solo lee las luces (las mueve el anillo principal); sus gemas sí toman la misma toma
+    if (lights && companion) {
+      for (const g of Object.values(gems)) {
+        const u = g.uniforms;
+        u.uTint.value.copy(tint).lerp(WHITE, 0.6);
+        u.uEnvI.value = (hdr ? 0.5 + c.softness * 0.25 : 0.55 + c.softness * 0.35) * c.intensity;
+        u.uKeyDir.value.copy(lights.key.position).normalize();
+        u.uKeyColor.value.copy(tint);
+        u.uKeyI.value = (1 - c.softness) * 6 * c.intensity;
+      }
+    }
+    if (lights && !companion) {
       const hard = 1 - c.softness;
       lights.key.color.copy(tint);
       if (c.kind === "rake") {
@@ -918,9 +972,10 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
         lights.cursor.intensity = lerp(lights.cursor.intensity, live ? 5 : 0, Math.min(1, dt * 3));
       }
       lights.spark.forEach((p, i) => {
-        p.color.copy(tint);
-        p.intensity = c.sparkle * hard * 9 * (1 - s.dim);
-        const a = t * (0.7 + i * 0.25) + i * 2.1;
+        p.color.copy(tint).lerp(WHITE, veil * 0.6);
+        // con el velo, los destellos se encienden fuerte y barren deprisa la piedra y el metal
+        p.intensity = c.sparkle * hard * 9 * (1 - s.dim) + veil * 34;
+        const a = t * (0.7 + i * 0.25) + i * 2.1 + veil * veil * (2 + i) * 1.8;
         p.position.set(Math.cos(a) * 1.4 + (c.x / 100 - 0.5) * 3, 2.2 + Math.sin(a * 1.3) * 0.5, 2.4);
       });
       // la misma toma ilumina las gemas: tinte del entorno, intensidad y el reflejo del foco principal
@@ -932,10 +987,11 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
         u.uEnvI.value = (hdr ? 0.5 + c.softness * 0.25 : 0.55 + c.softness * 0.35) * c.intensity;
         u.uKeyDir.value.copy(lights.key.position).normalize();
         u.uKeyColor.value.copy(tint);
-        u.uKeyI.value = (1 - c.softness) * 6 * c.intensity;
+        u.uKeyI.value = (1 - c.softness) * 6 * c.intensity * (1 + veil * 3);
+        u.uEnvI.value *= 1 + veil * 0.7;
       }
       // difusa = más entorno (brillo); dura = menos entorno y más foco (fuego)
-      (scene as unknown as { environmentIntensity: number }).environmentIntensity = (0.25 + c.softness * 0.95) * c.intensity * s.env;
+      (scene as unknown as { environmentIntensity: number }).environmentIntensity = (0.25 + c.softness * 0.95) * c.intensity * s.env * (1 + veil * 0.6);
     }
 
     if (engrave) {
@@ -946,10 +1002,14 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
     // giro: solo, con el arrastre y un balanceo leve. Al grabar se para de frente (la vuelta entera más cercana) y el
     // arrastre inclina el aro: así cambia el ángulo de la luz rasante sobre las letras
     if (framing === "engrave" || s.fe > 0.5) spin.current = lerp(spin.current, Math.round(spin.current / (Math.PI * 2)) * Math.PI * 2, kk);
-    else if (turntable) spin.current += dt * 0.35;
+    // de frente: el giro se para con el aro de cara (la vuelta entera más cercana, contando el giro de la pose)
+    else if (s.fc > 0.5) spin.current = lerp(spin.current, Math.round((spin.current + s.yaw) / (Math.PI * 2)) * Math.PI * 2 - s.yaw, kk);
+    else if (turntable) spin.current += dt * (companion ? 0.28 : 0.35);
     g.rotation.y = spin.current + s.yaw + drag.current * (1 - s.fe * 0.7);
     // el eje de giro se inclina hacia quien mira: la cabeza (y sus piedras) queda de cara a la cámara
-    g.rotation.x = lerp(lerp(0.62, 0.85, s.fx), 0.3, s.fe);
+    g.rotation.x = lerp(lerp(lerp(0.62, 0.85, s.fx), 0.3, s.fe), 0.06, s.fc);
+    // de frente, un balanceo leve para que no parezca una foto
+    if (s.fc > 1e-3) g.rotation.y += Math.sin(state.clock.elapsedTime * 0.5) * 0.14 * s.fc;
     const bm = bandMesh.current;
     // «solo»: el aro, la montura y el pavé están fuera (pequeños y abajo) y llegan volando a montarse alrededor de la piedra
     const arrive = 1 - s.so;
@@ -968,11 +1028,20 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTar
     }
     // despiece: la cabeza sube del aro y la piedra sale de la cabeza
     if (engraveMesh.current) engraveMesh.current.visible = s.band > 0.02 && s.so < 0.5;
-    if (headGroup.current) headGroup.current.position.y = s.ex * 0.5;
-    if (stoneLift.current) stoneLift.current.position.y = (s.ex * 0.55) / (useKitHead ? Math.cbrt(sel.carat) : 1);
+    if (headGroup.current) headGroup.current.position.y = s.ex * 0.85;
+    if (stoneLift.current) stoneLift.current.position.y = (s.ex * 0.75) / (useKitHead ? Math.cbrt(sel.carat) : 1);
     if (mount.current) {
       mount.current.visible = s.band > 0.02;
       mount.current.scale.setScalar(hide);
+    }
+    // un acompañante no toca la cámara: se coloca a su lado del principal según el `trio` de la pose de este, y llega
+    // subiendo desde abajo
+    if (companion) {
+      const e = ease(Math.min(1, Math.max(0, companion.host.current.trio)));
+      g.visible = e > 0.01;
+      g.position.set(companion.side * 2.55, 0.05 - (1 - e) * 2.4, -1.3);
+      g.scale.setScalar(Math.max(0.001, 0.74 * e));
+      return;
     }
     // cámara: el anillo entero o la cabeza de cerca (la cabeza está en el eje Y local: el giro en Y no la mueve)
     const gy = solitaire ? (useKitHead ? kitGirdle : layout.girdle) : R0 + T;
@@ -1125,17 +1194,25 @@ function Rig() {
   );
 }
 
-export default function RingScene({ active, motionFx = false, ...props }: RingSceneProps) {
+const NO_DRAG = { current: 0 };
+const noop = () => {};
+
+export default function RingScene({ active, motionFx = false, companions, ...props }: RingSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   const fxTarget = useRef<Object3D | null>(null);
   const fxAmount = useRef(0);
+  const fxVeil = useRef(0);
   const fx = motionFx && !!props.pose && !coarse;
   return (
     <Canvas frameloop={active ? "always" : "never"} dpr={[1, coarse ? 1.5 : 2]} gl={{ alpha: true, antialias: true }} camera={{ fov: 30, position: [0, 0.55, 5.6], near: 0.05, far: 40 }} style={{ pointerEvents: "none" }}>
       <Environment light={props.light} />
       <Rig />
-      <Ring {...props} fxTarget={fx ? fxTarget : undefined} fxAmount={fx ? fxAmount : undefined} />
-      {fx && <MotionFx target={fxTarget} amount={fxAmount} />}
+      <Ring {...props} fxTarget={fx ? fxTarget : undefined} fxAmount={fx ? fxAmount : undefined} fxVeil={fxVeil} />
+      {props.pose &&
+        companions?.map((c) => (
+          <Ring key={c.side} sel={c.sel} look="final" light={props.light} drag={NO_DRAG} turntable framing="ring" pose={null} onReady={noop} companion={{ side: c.side, host: props.pose! }} />
+        ))}
+      {fx && <MotionFx target={fxTarget} amount={fxAmount} veil={fxVeil} />}
     </Canvas>
   );
 }
