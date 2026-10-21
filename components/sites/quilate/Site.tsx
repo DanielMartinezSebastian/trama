@@ -377,28 +377,28 @@ type Beat = {
   hud?: { r: number; labels: string[] };
 };
 const BEATS: Beat[] = [
-  { kind: "hero", chapter: -1, pose: P({ head: 0.62, y: 0.04, solo: 1 }), scene: { kind: "velvet" } }, // solo la piedra, centrada
+  { kind: "hero", chapter: -1, pose: P({ head: 1.8, y: 0.1, solo: 1 }), scene: { kind: "velvet" } }, // solo la piedra, centrada
   { kind: "intro", chapter: -1, pose: P({ x: 0.2, zoom: 0.85 }), scene: { kind: "photo", photo: 13 } }, // el anillo entero, junto al manifiesto
   // 01 Escuchar: el boceto en alambre → interludio: en el centro, el boceto se hace oro mientras gira
   { kind: "card", chapter: 0, pose: P({ yaw: 0.7, x: 0.22 }), scene: { kind: "lamp", photo: 5 } },
   { kind: "interlude", chapter: 0, layout: "centro", look: "final", pose: P({ yaw: 2.3, zoom: 0.92, y: -0.03 }), scene: { kind: "lamp", photo: 5 } },
   // 02 Elegir: la piedra sola, de cerca → interludio: trío de gemas (zafiro, diamante, esmeralda)
-  { kind: "card", chapter: 1, pose: P({ explode: 0.22, head: 0.5, yaw: 1.1, x: -0.2 }), scene: { kind: "velvet" }, hud: { r: 168, labels: ["57 facetas", "brillante · 1,00 ct", "fuego: luz en colores"] } },
+  { kind: "card", chapter: 1, pose: P({ explode: 0.822, head: 0.5, yaw: 1.1, x: -0.2 }), scene: { kind: "velvet" }, hud: { r: 168, labels: ["57 facetas", "brillante · 1,00 ct", "fuego: luz en colores"] } },
   { kind: "interlude", chapter: 1, layout: "trío", look: "final", pose: P({ trio: 1, yaw: 2.6, zoom: 1.32, y: 0.03 }), scene: { kind: "velvet" } },
   // 03 Dar forma: las tres piezas separadas → interludio: el aro de frente, como una «O»; la cinta de detrás pasa por el hueco
   { kind: "card", chapter: 2, pose: P({ explode: 1, yaw: 1.9, x: 0.2, zoom: 1.05 }), scene: { kind: "photo", photo: 1 }, hud: { r: 150, labels: ["3 piezas", "piedra · 1,00 ct", "montura · 6 garras", "aro · pavé · oro 750"] } },
   { kind: "interlude", chapter: 2, layout: "frente", look: "final", pose: P({ face: 1, zoom: 0.96, y: -0.04 }), scene: { kind: "rake" } },
   // 04 Ajustar: dentro del aro (la «O» de antes, de cerca) → interludio: la cámara sale y el anillo gira en el centro
-  { kind: "card", chapter: 3, pose: P({ engrave: 1, x: -0.18 }), scene: { kind: "rake" }, hud: { r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "grabado a buril", "punzón 750 · QLT"] } },
+  { kind: "card", chapter: 3, pose: P({ engrave: 1, x: -0.18, y: 0.1 }), scene: { kind: "rake" }, hud: { r: 220, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "grabado a buril", "punzón 750 · QLT"] } },
   { kind: "interlude", chapter: 3, layout: "centro", look: "final", pose: P({ yaw: 3.1, zoom: 1.02, y: -0.03 }), scene: { kind: "rake" } },
   // 05 Cuidar: el pavé apagado → interludio: el mismo pavé, limpio y centrado, llenando la pantalla
   { kind: "card", chapter: 4, pose: P({ pave: 1, yaw: 0.35, x: 0.2 }), scene: { kind: "lightbox" }, hud: { r: 100, labels: ["Pavé · 1,3 mm", "grasa: la luz no entra", "ultrasonidos · 20 min"] } },
   { kind: "interlude", chapter: 4, layout: "macro", look: "final", pose: P({ pave: 1, yaw: 0.95 }), scene: { kind: "lightbox" } },
   // 06 Transformar: el bisel nuevo → interludio: la pieza se abre en el centro (piedra, bisel y aro)
-  { kind: "card", chapter: 5, sel: ROSE_RING, pose: P({ head: 0.4, yaw: 3.4, x: -0.2 }), scene: { kind: "photo", photo: 7 }, hud: { r: 130, labels: ["Bisel", "oro rosa 750", "la piedra de antes"] } },
+  { kind: "card", chapter: 5, sel: ROSE_RING, pose: P({ head: 0.4, yaw: 3.4, x: -0.12 }), scene: { kind: "photo", photo: 7 }, hud: { r: 295, labels: ["Bisel", "oro rosa 750", "la piedra de antes"] } },
   { kind: "interlude", chapter: 5, layout: "centro", look: "final", sel: ROSE_RING, pose: P({ explode: 0.75, yaw: 4.3, zoom: 0.98 }), scene: { kind: "photo", photo: 7 } },
   // 07 Heredar: el anillo acabado, con su ficha → final: trío de los oros de la casa
-  { kind: "card", chapter: 6, pose: P({ head: 0.22, yaw: 4.4, x: 0.2 }), scene: { kind: "photo", photo: 8 }, hud: { r: 150, labels: ["Ficha nº 0000", "oro 750 · 1,00 ct", "punzón QLT · GIA"] } },
+  { kind: "card", chapter: 6, pose: P({ head: 0.92, yaw: 4.4, x: 0.18 }), scene: { kind: "photo", photo: 8 }, hud: { r: 150, labels: ["Ficha nº 0000", "oro 750 · 1,00 ct", "punzón QLT · GIA"] } },
   { kind: "interlude", chapter: 6, layout: "trío", look: "final", pose: P({ trio: 1, yaw: 5.3, zoom: 1.32, y: 0.03 }), scene: { kind: "photo", photo: 8 } },
 ];
 const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo", "trio", "face"] as const;
