@@ -321,6 +321,23 @@ la misma luz y el mismo fondo. Así la transición al anillo es real y no un fun
 - **Sin haces visibles**: el usuario los descartó. La luz del ratón sigue moviendo el foco de la escena.
 - **Cuadros de texto**: entran antes (`animation-range: entry 0% exit 100%`, opacidad completa desde el 10 %).
 
+**Desenfoque de movimiento y tilt-shift en las transiciones** (`motionFx.tsx`):
+- **Cómo se hace**: una pasada a pantalla completa con el `EffectComposer` de three (`RenderPass` → `ShaderPass` propio →
+  `OutputPass`), sin dependencias nuevas.
+- **Desenfoque de movimiento**: 12 muestras a lo largo de la velocidad del anillo en pantalla. Es su posición proyectada
+  entre fotogramas, acotada a 0,035 UV por fotograma.
+- **Tilt-shift**: una franja nítida a la altura del anillo; el resto se desenfoca más cuanto más lejos queda, como una lente
+  basculada o un macro de joyería.
+- **Solo en las transiciones**: los dos efectos se encienden con cuánto cambia la pose por segundo y se apagan suaves en
+  reposo, así que la imagen quieta queda nítida.
+- **Fuera en pantallas táctiles** (por coste de GPU) y con movimiento reducido (ahí no hay 3D).
+- **Referencias**: `HorizontalTiltShiftShader` de three (tilt-shift falso modulando un desenfoque por la posición vertical) y
+  el desenfoque de movimiento por velocidad en pantalla.
+
+**Navegación isla** (como Arbor): `IslandNav` del kit con `FullscreenMenu` (inicio, alianzas, compromiso, taller, talla y
+cita; en el pie, teléfono, WhatsApp y correo), la marca en el centro y «Pedir cita →». Sustituye a la barra a todo el ancho.
+El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco arriba (`--ql-island`).
+
 **Escena de scrollytelling** (sustituye a las dos columnas):
 - **Escenario fijo a pantalla completa** con el anillo, la palabra del capítulo gigante en contorno (se recompone letra a
   letra y deriva con el progreso), un índice lateral clicable y una barra de progreso.

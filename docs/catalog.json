@@ -17218,8 +17218,18 @@
           "uses": 1
         },
         {
+          "component": "FullscreenMenu",
+          "id": "fullscreen-menu",
+          "uses": 1
+        },
+        {
           "component": "ScrubText",
           "id": "scrub-text",
+          "uses": 1
+        },
+        {
+          "component": "IslandNav",
+          "id": "island-nav",
           "uses": 1
         },
         {

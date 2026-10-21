@@ -7,7 +7,9 @@ import BeforeAfter from "@/components/ui/BeforeAfter";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
 import FAQSection from "@/components/ui/FAQSection";
+import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import Hero from "@/components/ui/Hero";
+import IslandNav from "@/components/ui/IslandNav";
 import LightScroll from "@/components/ui/LightScroll";
 import MetaTable from "@/components/ui/MetaTable";
 import OpeningHours from "@/components/ui/OpeningHours";
@@ -118,9 +120,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [cue, setCue] = useState<LightPresetName | null>(null);
   const path = usePathname();
   const navigate = useSiteNavigate();
-  const [menu, setMenu] = useState(false);
   useEffect(() => {
-    setMenu(false);
     setCue(null);
   }, [path]);
   // las piezas sobreviven a recargar (sessionStorage), leídas tras montar para no desajustar la hidratación
@@ -151,16 +151,22 @@ export function Shell({ children }: { children: ReactNode }) {
           <SmoothScroll lerp={0.065} wheelMultiplier={0.85} syncGsap={false} />
           <PointerGlow />
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>
-          <header className="ql-head">
-            <a className="ql-brand" href={href()}>Quilate</a>
-            <nav className="ql-nav" aria-label="Principal" id="ql-menu" data-open={menu ? "" : undefined}>
-              {NAV.map((n) => (
-                <a key={n.path} href={href(n.path)} aria-current={path === href(n.path) ? "page" : undefined}>{n.label}</a>
-              ))}
-            </nav>
-            <a className="ql-btn ql-btn--sm ql-head__cta" href={href("cita")}>Pedir cita</a>
-            <button type="button" className="ql-burger" aria-expanded={menu} aria-controls="ql-menu" onClick={() => setMenu((m) => !m)}>{menu ? "Cerrar" : "Menú"}</button>
-          </header>
+          {/* navegación isla (como Arbor): píldora flotante con menú a pantalla completa, la marca y la cita */}
+          <IslandNav
+            className="ql-island"
+            leading={
+              <FullscreenMenu
+                brand="Quilate"
+                openLabel="Menú"
+                closeLabel="Cerrar"
+                links={[{ label: "Inicio", href: href() }, ...NAV.map((n) => ({ label: n.label, href: href(n.path) })), { label: "Pedir cita", href: href("cita") }]}
+                footer={[{ label: BRAND.phone, href: BRAND.phoneHref }, { label: "WhatsApp", href: BRAND.whatsappHref }, { label: BRAND.email, href: `mailto:${BRAND.email}` }]}
+                note={`Quilate · taller de joyería · ${BRAND.city}`}
+              />
+            }
+            brand={<a className="ql-brand" href={href()} aria-label="Quilate, inicio">Quilate</a>}
+            trailing={<a className="ql-island__cta" href={href("cita")}>Pedir cita <span aria-hidden>→</span></a>}
+          />
           <main id="contenido">{children}</main>
           <Footer />
         </LightScroll>
@@ -337,7 +343,7 @@ const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "
  * scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
  */
 const POSES: RingPose[] = [
-  { explode: 0, head: 0.72, engrave: 0, pave: 0, yaw: 0, x: 0, y: 0.17, zoom: 1, solo: 1 }, // portada: solo la piedra, de cerca y centrada
+  { explode: 0, head: 0.62, engrave: 0, pave: 0, yaw: 0, x: 0, y: 0.04, zoom: 1, solo: 1 }, // portada: solo la piedra, de cerca y centrada
   { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0.2, y: 0, zoom: 0.85, solo: 0 }, // prólogo: el anillo entero, grande, a la derecha del manifiesto
   { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0.7, x: 0.22, y: 0, zoom: 1, solo: 0 }, // escuchar: el boceto, a la derecha
   { explode: 0.35, head: 0.5, engrave: 0, pave: 0, yaw: 1.1, x: -0.2, y: 0, zoom: 1, solo: 0 }, // elegir: la piedra sale de la cesta, de cerca
@@ -412,7 +418,8 @@ function Home() {
       // más abiertos: el lienzo es estrecho y una piedra «de cerca» lo llenaría entero
       if (innerWidth < 900) {
         p.x = 0;
-        p.y = 0;
+        // la piedra sola de la portada baja hacia el titular (en móvil el anillo ocupa la mitad de arriba)
+        p.y = -0.16 * p.solo;
         p.head *= 0.3;
         p.pave *= 0.55;
         p.zoom *= 1.08;
@@ -491,7 +498,7 @@ function Home() {
               </g>
             ))}
           </svg>
-          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={step === 0 ? "Un diamante talla brillante, de cerca, girando bajo un foco" : step === 1 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
+          <RingStage sel={sel} look={look} pose={pose} motionFx height="100%" alt={step === 0 ? "Un diamante talla brillante, de cerca, girando bajo un foco" : step === 1 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
           {/* la palabra del capítulo, gigante y detrás de todo, se recompone letra a letra al cambiar de paso */}
           <p key={step} hidden={step === 0} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
             {(step < FIRST ? "Quilate" : ch.title).split("").map((l, i) => (

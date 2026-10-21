@@ -1,6 +1,6 @@
 /* Quilate (/sitios/quilate): prefijo ql-. Solo tokens del tema; la luz la pinta LightScroll (--light-*). */
 
-.ql { --st-max: 1360px; --st-gutter: clamp(16px, 3.6vw, 56px); --ql-head: 64px; background: var(--bg); }
+.ql { --st-max: 1360px; --st-gutter: clamp(16px, 3.6vw, 56px); --ql-head: 0px; --ql-island: 84px; background: var(--bg); }
 .ql a { color: inherit; }
 .ql-wrap { width: 100%; max-width: var(--st-max); margin-inline: auto; padding-inline: var(--st-gutter); }
 .ql-sec { padding-block: clamp(56px, 9vw, 128px); }
@@ -32,16 +32,10 @@
 .ql-chip[aria-pressed="true"], .ql-chip[aria-checked="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .ql-chip[aria-pressed="true"] small, .ql-chip[aria-checked="true"] small { color: var(--bg); }
 .ql-link { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
-.ql-btn:focus-visible, .ql-chip:focus-visible, .ql-link:focus-visible, .ql-burger:focus-visible, .ql-steps button:focus-visible, .ql-door:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.ql-btn:focus-visible, .ql-chip:focus-visible, .ql-link:focus-visible, .ql-steps button:focus-visible, .ql-door:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 
 /* cabecera */
-.ql-head { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 32px; height: var(--ql-head); padding-inline: var(--st-gutter); background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--ln); }
 .ql-brand { margin: 0; font-family: var(--display); font-size: 28px; font-weight: 400; letter-spacing: 0.02em; text-decoration: none; white-space: nowrap; }
-.ql-nav { display: flex; gap: 26px; font-size: 14px; letter-spacing: 0.04em; }
-.ql-nav a { text-decoration: none; padding-block: 6px; border-bottom: 1px solid transparent; }
-.ql-nav a:hover, .ql-nav a[aria-current="page"] { border-bottom-color: var(--acc); }
-.ql-head__cta { margin-left: auto; }
-.ql-burger { display: none; margin-left: auto; min-height: 40px; padding: 6px 16px; border: 1px solid var(--ln); background: none; color: inherit; font: inherit; cursor: pointer; }
 
 
 /* escenario del anillo */
@@ -187,12 +181,7 @@
   .ql-service { min-height: 0; }
 }
 @media (max-width: 760px) {
-  .ql-nav { display: none; position: absolute; top: var(--ql-head); left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px var(--st-gutter) 16px; background: var(--bg); border-bottom: 1px solid var(--ln); }
-  .ql-nav[data-open] { display: flex; }
-  .ql-nav a { padding-block: 12px; }
-  .ql-head__cta { display: none; }
-  .ql-burger { display: inline-grid; place-items: center; }
-  .ql-doors, .ql-trust { grid-template-columns: minmax(0, 1fr); }
+          .ql-doors, .ql-trust { grid-template-columns: minmax(0, 1fr); }
   .ql-hide-sm { display: none; }
     .ql-archive { grid-template-columns: minmax(0, 1fr); }
 }
@@ -422,3 +411,15 @@
   .ql-step__herokit .ui-hero__trust { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .ql-step__hero { animation: none; } }
+
+/* ---------- navegación isla ---------- */
+.ql-island .ql-brand { font-size: 24px; letter-spacing: 0.04em; }
+.ql-island__cta { font-size: 14px; letter-spacing: 0.04em; text-decoration: none; white-space: nowrap; color: var(--acc) !important; }
+.ql-island__cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* la isla flota encima: las páginas interiores dejan su hueco arriba; el recorrido va a sangre por debajo */
+.ql-page, .ql-cfg__panel { padding-top: calc(var(--ql-island) + clamp(16px, 3vw, 40px)) !important; }
+.ql-cfg__stage { padding-top: 0; }
+@media (max-width: 960px) {
+  .ql-cfg { padding-top: var(--ql-island); }
+  .ql-cfg__panel { padding-top: clamp(24px, 4vw, 40px) !important; }
+}

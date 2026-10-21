@@ -35,12 +35,14 @@ import {
   Vector2,
   Vector3,
   type BufferGeometry,
+  type Object3D,
   type Mesh,
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
 import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
 import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
 import { FONTS, KIT_BASE, STONE_PIECE, kitPiece, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
+import MotionFx from "./motionFx";
 import { anchorsOf, loadPiece, type Piece } from "./pieces";
 
 /*
@@ -119,6 +121,11 @@ export type RingSceneProps = {
   pose?: MutableRefObject<RingPose> | null;
   active: boolean;
   onReady: () => void;
+  /** desenfoque de movimiento y tilt-shift en las transiciones de la pose (solo con `pose`; no en táctiles) */
+  motionFx?: boolean;
+  /** lo rellena la escena: el grupo del anillo y cuánta transición hay (para MotionFx) */
+  fxTarget?: MutableRefObject<Object3D | null>;
+  fxAmount?: MutableRefObject<number>;
 };
 
 const R0 = 1;
@@ -599,8 +606,9 @@ const WAX = new Color("#3d7a66");
 const WHITE = new Color(1, 1, 1);
 const SKETCH = new Color("#d9cbb4");
 
-function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omit<RingSceneProps, "active">) {
+function Ring({ sel, look, light, drag, turntable, framing, pose, onReady, fxTarget, fxAmount }: Omit<RingSceneProps, "active">) {
   const root = useRef<Group>(null);
+  const lastPose = useRef<RingPose | null>(null);
   const headGroup = useRef<Group>(null);
   const stoneLift = useRef<Group>(null);
   // posición del puntero en coordenadas de pantalla −1…1 (el lienzo no recibe eventos: se escucha la ventana)
@@ -797,6 +805,15 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     // con pose externa, el scroll ya interpola: se sigue de cerca (sin retraso que la haga ir por detrás del gesto)
     const P = pose?.current;
     if (P) {
+      // cuánta transición hay: lo que ha cambiado la pose desde el fotograma anterior, por segundo (el giro pesa menos)
+      if (fxAmount) {
+        const L = lastPose.current;
+        let d = 0;
+        if (L) d = Math.abs(P.explode - L.explode) + Math.abs(P.head - L.head) + Math.abs(P.engrave - L.engrave) + Math.abs(P.pave - L.pave) + Math.abs(P.x - L.x) + Math.abs(P.y - L.y) + Math.abs(P.zoom - L.zoom) + Math.abs(P.solo - L.solo) + Math.abs(P.yaw - L.yaw) * 0.3;
+        lastPose.current = { ...P };
+        fxAmount.current += (Math.min(1.2, (d / Math.max(dt, 1 / 120)) * 0.9) - fxAmount.current) * Math.min(1, dt * 6);
+      }
+      if (fxTarget && !fxTarget.current) fxTarget.current = root.current;
       const kp = Math.min(1, dt * 9);
       s.fx = lerp(s.fx, Math.max(P.head, gemOnly ? 1 : 0), kp);
       s.fe = lerp(s.fe, P.engrave, kp);
@@ -1108,13 +1125,17 @@ function Rig() {
   );
 }
 
-export default function RingScene({ active, ...props }: RingSceneProps) {
+export default function RingScene({ active, motionFx = false, ...props }: RingSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
+  const fxTarget = useRef<Object3D | null>(null);
+  const fxAmount = useRef(0);
+  const fx = motionFx && !!props.pose && !coarse;
   return (
     <Canvas frameloop={active ? "always" : "never"} dpr={[1, coarse ? 1.5 : 2]} gl={{ alpha: true, antialias: true }} camera={{ fov: 30, position: [0, 0.55, 5.6], near: 0.05, far: 40 }} style={{ pointerEvents: "none" }}>
       <Environment light={props.light} />
       <Rig />
-      <Ring {...props} />
+      <Ring {...props} fxTarget={fx ? fxTarget : undefined} fxAmount={fx ? fxAmount : undefined} />
+      {fx && <MotionFx target={fxTarget} amount={fxAmount} />}
     </Canvas>
   );
 }
