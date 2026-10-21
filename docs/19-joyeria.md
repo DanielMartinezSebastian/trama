@@ -201,8 +201,8 @@ Reglas que se cumplen:
   - Con movimiento reducido, la luz cambia sin fundido, no sigue al puntero y no hay destellos.
   - Los destellos son pequeños y lentos: unos 2 por segundo entre todos (WCAG 2.3.1).
   - El texto nunca depende de la luz y mantiene su contraste en todas las tomas.
-  - Un **rótulo fijo** dice qué luz hay y para qué («Luz de día · difusa y neutra · 6500 K»): la luz también es
-    contenido y se explica, no solo se nota.
+  - El rótulo fijo con la luz activa («Vitrina · foco con destellos · 3600 K») se quitó a petición del usuario; la
+    finalidad de cada luz sigue explicada en el pie de cada capítulo («◐ Luz: …»).
 - **Honestidad** (regla de la ronda): en los antes y después, y al comparar, la luz no cambia entre las dos imágenes.
   El conmutador de luz es siempre explícito, nunca automático.
 

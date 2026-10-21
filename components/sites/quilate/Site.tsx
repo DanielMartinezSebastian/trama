@@ -8,7 +8,7 @@ import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
 import FAQSection from "@/components/ui/FAQSection";
 import Hero from "@/components/ui/Hero";
-import LightScroll, { useLight } from "@/components/ui/LightScroll";
+import LightScroll from "@/components/ui/LightScroll";
 import MetaTable from "@/components/ui/MetaTable";
 import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
@@ -163,7 +163,6 @@ export function Shell({ children }: { children: ReactNode }) {
           </header>
           <main id="contenido">{children}</main>
           <Footer />
-          <LightBadge />
         </LightScroll>
         <ActionBar
           actions={[
@@ -230,20 +229,6 @@ function PointerGlow() {
     };
   }, []);
   return <div ref={ref} className="ql-glow" aria-hidden />;
-}
-
-/** Rótulo fijo con la luz activa y su finalidad: la iluminación se explica, no solo se nota. */
-function LightBadge() {
-  const l = useLight();
-  if (!l) return null;
-  const name = l.name as LightPresetName;
-  return (
-    <p className="ql-badge" aria-live="polite">
-      <span className="ql-badge__dot" aria-hidden />
-      <span>{LIGHT_LABEL[name] ?? name}</span>
-      <b>{Math.round(l.target.kelvin)} K</b>
-    </p>
-  );
 }
 
 function Footer() {
