@@ -1048,6 +1048,21 @@ Código con cabecera, numeración de línea opcional y botón de copiar. Sin res
 | `showLineNumbers` | boolean | true |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "terminal" |
 
+### Cuenta atrás — `Countdown`
+
+Cuenta atrás hasta una fecha (un evento, un lanzamiento, unas rebajas): días, horas, minutos y, si quieres, segundos. Las cifras entran con un desplazamiento al cambiar; al llegar a cero enseña el texto de «hecho». Se calcula en el navegador (antes de hidratar, guiones) y el texto para lectores de pantalla se actualiza al minuto. Nació en la fiesta de Halloween de /sitios/anima.
+
+| prop | tipo | default |
+|---|---|---|
+| `to` | text | "2026-12-31T23:59:00+01:00" |
+| `units` | `dhms` · `dhm` | "dhms" |
+| `label` | text | "Faltan" |
+| `done` | text | "Ya ha empezado" |
+| `size` | `sm` · `md` · `lg` | "md" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- La fecha lleva su zona horaria (+01:00, Z…): así la cuenta es la misma vista desde cualquier sitio.
+
 ### Hora local — `LocalTime`
 
 «Madrid 14:32»: la hora de una ciudad, detalle habitual en estudios. Se pinta al montar, sin desajuste de hidratación.
@@ -2794,3 +2809,11 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
 `OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+
+### Ánima · fiesta de Halloween en Valencia — `/sitios/anima`
+
+Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje del terror, la pista, el concurso de disfraces, la cena de los muertos y la medianoche) con una calavera 3D procedural, modelada con una función de distancia y MarchingCubes, que abre la mandíbula, castañetea, enciende los ojos, se parte y se multiplica. Cuadros que pasan por detrás de la calavera entre niebla y ascuas, cuenta atrás hasta la fiesta (Countdown), programa por horas, entradas con tipo y cantidad, y la información práctica: lugar, normas y preguntas.
+
+Carpeta: `components/sites/anima/` · 4 páginas: Inicio · Programa · Entradas · Info
+
+`Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `Marquee` · `TextField` · `Hero` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `IslandNav` · `CookieBanner` · `ActionBar` · `QRCode`

@@ -124,6 +124,7 @@
         "timeline",
         "table",
         "code-block",
+        "countdown",
         "local-time",
         "kpi-card",
         "chart",
@@ -4557,6 +4558,89 @@
       ],
       "example": "import CodeBlock from \"@/components/ui/CodeBlock\";\n\n<CodeBlock />",
       "preview": "/componentes#code-block"
+    },
+    {
+      "id": "countdown",
+      "name": "Cuenta atrás",
+      "component": "Countdown",
+      "import": "import Countdown from \"@/components/ui/Countdown\";",
+      "category": "datos",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Cuenta atrás hasta una fecha (un evento, un lanzamiento, unas rebajas): días, horas, minutos y, si quieres, segundos. Las cifras entran con un desplazamiento al cambiar; al llegar a cero enseña el texto de «hecho». Se calcula en el navegador (antes de hidratar, guiones) y el texto para lectores de pantalla se actualiza al minuto. Nació en la fiesta de Halloween de /sitios/anima.",
+      "props": [
+        {
+          "key": "to",
+          "type": "text",
+          "default": "2026-12-31T23:59:00+01:00",
+          "label": "Fecha (ISO con zona)"
+        },
+        {
+          "key": "units",
+          "type": "select",
+          "default": "dhms",
+          "label": "Unidades",
+          "options": [
+            "dhms",
+            "dhm"
+          ]
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Faltan",
+          "label": "Texto encima"
+        },
+        {
+          "key": "done",
+          "type": "text",
+          "default": "Ya ha empezado",
+          "label": "Al llegar a cero"
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "La fecha lleva su zona horaria (+01:00, Z…): así la cuenta es la misma vista desde cualquier sitio."
+      ],
+      "example": "import Countdown from \"@/components/ui/Countdown\";\n\n<Countdown\n  label=\"Faltan\"\n/>",
+      "preview": "/componentes#countdown"
     },
     {
       "id": "navbar",
@@ -17326,6 +17410,103 @@
         {
           "component": "BeforeAfter",
           "id": "before-after",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "anima",
+      "title": "Ánima · fiesta de Halloween en Valencia",
+      "url": "/sitios/anima",
+      "dir": "components/sites/anima",
+      "description": "Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje del terror, la pista, el concurso de disfraces, la cena de los muertos y la medianoche) con una calavera 3D procedural, modelada con una función de distancia y MarchingCubes, que abre la mandíbula, castañetea, enciende los ojos, se parte y se multiplica. Cuadros que pasan por detrás de la calavera entre niebla y ascuas, cuenta atrás hasta la fiesta (Countdown), programa por horas, entradas con tipo y cantidad, y la información práctica: lugar, normas y preguntas.",
+      "pages": [
+        {
+          "path": "/sitios/anima",
+          "title": "Inicio"
+        },
+        {
+          "path": "/sitios/anima/programa",
+          "title": "Programa"
+        },
+        {
+          "path": "/sitios/anima/entradas",
+          "title": "Entradas"
+        },
+        {
+          "path": "/sitios/anima/info",
+          "title": "Info"
+        }
+      ],
+      "components": [
+        {
+          "component": "Timeline",
+          "id": "timeline",
+          "uses": 2
+        },
+        {
+          "component": "Countdown",
+          "id": "countdown",
+          "uses": 2
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 2
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "FullscreenMenu",
+          "id": "fullscreen-menu",
+          "uses": 1
+        },
+        {
+          "component": "QuantityStepper",
+          "id": "quantity-stepper",
+          "uses": 1
+        },
+        {
+          "component": "OptionPicker",
+          "id": "option-picker",
+          "uses": 1
+        },
+        {
+          "component": "IslandNav",
+          "id": "island-nav",
+          "uses": 1
+        },
+        {
+          "component": "CookieBanner",
+          "id": "cookie-banner",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        },
+        {
+          "component": "QRCode",
+          "id": "qr-code",
           "uses": 1
         }
       ]

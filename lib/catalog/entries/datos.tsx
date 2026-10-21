@@ -2,6 +2,7 @@
 
 import AsciiChart from "@/components/ui/AsciiChart";
 import CodeBlock from "@/components/ui/CodeBlock";
+import Countdown from "@/components/ui/Countdown";
 import StatCounter from "@/components/ui/StatCounter";
 import Table from "@/components/ui/Table";
 import TerminalTyper from "@/components/ui/TerminalTyper";
@@ -156,6 +157,30 @@ export const datos: CatalogEntry[] = [
     render: (p) => (
       <div className="ui-center">
         <CodeBlock code={p.code as string} language={p.language as string} filename={p.filename as string} showLineNumbers={p.showLineNumbers as boolean} variant={p.variant as never} />
+      </div>
+    ),
+  },
+  {
+    id: "countdown",
+    component: "Countdown",
+    path: "@/components/ui/Countdown",
+    name: "Cuenta atrás",
+    category: "datos",
+    styles: ALL_STYLES,
+    description: "Cuenta atrás hasta una fecha (un evento, un lanzamiento, unas rebajas): días, horas, minutos y, si quieres, segundos. Las cifras entran con un desplazamiento al cambiar; al llegar a cero enseña el texto de «hecho». Se calcula en el navegador (antes de hidratar, guiones) y el texto para lectores de pantalla se actualiza al minuto. Nació en la fiesta de Halloween de /sitios/anima.",
+    stageHeight: 220,
+    props: [
+      { key: "to", label: "Fecha (ISO con zona)", type: "text", default: "2026-12-31T23:59:00+01:00" },
+      { key: "units", label: "Unidades", type: "select", default: "dhms", options: ["dhms", "dhm"], labels: { dhms: "días, horas, minutos y segundos", dhm: "sin segundos" } },
+      { key: "label", label: "Texto encima", type: "text", default: "Faltan" },
+      { key: "done", label: "Al llegar a cero", type: "text", default: "Ya ha empezado" },
+      { key: "size", label: "Tamaño", type: "select", default: "md", options: ["sm", "md", "lg"] },
+      variantProp("minimal"),
+    ],
+    notes: ["La fecha lleva su zona horaria (+01:00, Z…): así la cuenta es la misma vista desde cualquier sitio."],
+    render: (p) => (
+      <div className="ui-center">
+        <Countdown to={p.to as string} units={p.units as never} label={p.label as string} done={p.done as string} size={p.size as never} variant={p.variant as never} />
       </div>
     ),
   },
