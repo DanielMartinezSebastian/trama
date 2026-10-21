@@ -410,8 +410,14 @@ function Home() {
       const b = POSES[Math.min(j + 1, POSES.length - 1)];
       const p = pose.current;
       for (const k of POSE_KEYS) p[k] = a[k] + (b[k] - a[k]) * t;
-      // en pantallas estrechas el anillo se queda centrado (los cuadros van debajo)
-      if (innerWidth < 900) p.x = 0;
+      // en pantallas estrechas el anillo va centrado en la mitad de arriba (los cuadros, debajo) y los acercamientos son
+      // más abiertos: el lienzo es estrecho y una piedra «de cerca» lo llenaría entero
+      if (innerWidth < 900) {
+        p.x = 0;
+        p.head *= 0.3;
+        p.pave *= 0.55;
+        p.zoom *= 1.08;
+      }
       const span = centers[centers.length - 1] - centers[0];
       sticky.current?.style.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
     };

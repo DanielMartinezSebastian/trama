@@ -289,13 +289,52 @@ function hammerNormals() {
  */
 function studioScene() {
   const scene = new Scene();
-  scene.background = new Color(0.035, 0.032, 0.03);
+  const disposables: { dispose: () => void }[] = [];
+  // cúpula con degradado: suelo cálido que rebota, horizonte claro, techo en penumbra (el metal siempre refleja «algo»)
+  const dome = document.createElement("canvas");
+  dome.width = 4;
+  dome.height = 256;
+  const dx = dome.getContext("2d")!;
+  const dg = dx.createLinearGradient(0, 0, 0, 256);
+  dg.addColorStop(0, "#0b0a09");
+  dg.addColorStop(0.42, "#2a2620");
+  dg.addColorStop(0.5, "#6a5f50");
+  dg.addColorStop(0.58, "#2b241c");
+  dg.addColorStop(1, "#4a3622");
+  dx.fillStyle = dg;
+  dx.fillRect(0, 0, 4, 256);
+  const domeTex = new CanvasTexture(dome);
+  domeTex.colorSpace = SRGBColorSpace;
+  const domeMat = new MeshBasicMaterial({ map: domeTex, side: BackSide });
+  const domeGeo = new SphereGeometry(20, 32, 16);
+  scene.add(new ThreeMesh(domeGeo, domeMat));
+  disposables.push(domeTex, domeMat, domeGeo);
+
+  // softbox con borde suave: centro intenso que cae hacia el canto (reflejos de bordes difusos, no rectángulos duros)
+  const box = document.createElement("canvas");
+  box.width = box.height = 128;
+  const bx = box.getContext("2d")!;
+  const bg = bx.createRadialGradient(64, 64, 8, 64, 64, 64);
+  bg.addColorStop(0, "#ffffff");
+  bg.addColorStop(0.55, "#f4efe6");
+  bg.addColorStop(1, "#000000");
+  bx.fillStyle = bg;
+  bx.fillRect(0, 0, 128, 128);
+  const boxTex = new CanvasTexture(box);
+  boxTex.colorSpace = SRGBColorSpace;
+  disposables.push(boxTex);
+
   const geo = new PlaneGeometry(1, 1);
-  const mk = (c: Color) => new MeshBasicMaterial({ color: c, side: 2 });
-  const strip = mk(new Color(1, 1, 1).multiplyScalar(7));
-  const soft = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.2));
-  const warm = mk(new Color(1, 0.78, 0.55).multiplyScalar(1.2));
-  const black = mk(new Color(0, 0, 0));
+  disposables.push(geo);
+  const mk = (c: Color, map: CanvasTexture | null = boxTex) => {
+    const m = new MeshBasicMaterial({ color: c, map, side: 2, toneMapped: false });
+    disposables.push(m);
+    return m;
+  };
+  const strip = mk(new Color(1, 1, 1).multiplyScalar(6));
+  const soft = mk(new Color(1, 0.96, 0.9).multiplyScalar(2.4));
+  const warm = mk(new Color(1, 0.78, 0.55).multiplyScalar(1.6));
+  const black = mk(new Color(0, 0, 0), null);
   const add = (m: MeshBasicMaterial, [x, y, z, w, h]: number[]) => {
     const p = new ThreeMesh(geo, m);
     p.position.set(x, y, z);
@@ -303,16 +342,16 @@ function studioScene() {
     p.lookAt(0, 0, 0);
     scene.add(p);
   };
-  add(strip, [-5, 0.5, 2.5, 0.9, 8]);
-  add(strip, [5, 0.5, -1.5, 0.7, 8]);
-  add(soft, [0, 6, 0, 6, 3]);
-  add(soft, [0, 1.5, -6, 5, 2.5]);
+  add(strip, [-5, 0.5, 2.5, 1.4, 9]);
+  add(strip, [5, 0.5, -1.5, 1.1, 9]);
+  add(soft, [0, 6, 0, 7, 4]);
+  add(soft, [0, 1.5, -6, 6, 3]);
   // panel alto detrás: lo que refleja el interior del aro cuando la cámara entra a leer el grabado
-  add(soft, [0, 4.5, -4.5, 7, 3]);
-  add(warm, [0, -5, 2, 8, 2]);
+  add(soft, [0, 4.5, -4.5, 8, 3.5]);
+  add(warm, [0, -5, 2, 9, 3]);
   add(black, [4, -3, 4, 2.5, 3]);
   add(black, [-6, 0, -3, 2, 6]);
-  return { scene, dispose: () => [geo, strip, soft, warm, black].forEach((x) => x.dispose()) };
+  return { scene, dispose: () => disposables.forEach((x) => x.dispose()) };
 }
 
 function Environment() {
@@ -321,7 +360,7 @@ function Environment() {
   useEffect(() => {
     const pmrem = new PMREMGenerator(gl);
     const env = studioScene();
-    const rt = pmrem.fromScene(env.scene, 0.02);
+    const rt = pmrem.fromScene(env.scene, 0.035);
     scene.environment = rt.texture;
     return () => {
       scene.environment = null;
@@ -689,7 +728,9 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     const base = new Color(m.color);
     const wire = look === "boceto";
     mats.metal.color.copy(base).lerp(WAX, s.wax).lerp(new Color("#7d7468"), s.dim * 0.35);
-    mats.metal.roughness = Math.min(0.9, (sel.finish === "satinado" ? 0.4 : sel.finish === "martillado" ? 0.2 : m.roughness * 0.7) + s.rough);
+    // al leer el grabado el metal pasa a satinado: un espejo devuelve el entorno y tapa el relieve; mate, manda la luz rasante
+    mats.metal.roughness = Math.min(0.9, (sel.finish === "satinado" ? 0.4 : sel.finish === "martillado" ? 0.2 : m.roughness * 0.7) + s.rough + s.fe * 0.32);
+    mats.metal.clearcoat = 0.3 * (1 - s.fe);
     mats.metal.metalness = 1 - s.wax;
     mats.metal.normalMap = sel.finish === "martillado" && !wire ? hammer : null;
     mats.metal.normalScale.set(0.9, 0.9);
@@ -790,7 +831,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
 
     if (engrave) {
       engrave.mat.color.copy(mats.metal.color);
-      engrave.mat.roughness = mats.metal.roughness;
+      engrave.mat.roughness = Math.min(0.9, mats.metal.roughness + 0.1);
       engrave.mat.wireframe = wire;
     }
     // giro: solo, con el arrastre y un balanceo leve. Al grabar se para de frente (la vuelta entera más cercana) y el
@@ -832,7 +873,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     // más cerca cuanto más estrecho es el aro: la letra mide la mitad del ancho y tiene que leerse
     // y más lejos en lienzos estrechos (la portada es más alta que ancha): el arco del grabado tiene que caber a lo ancho
     const aspect = (camera as unknown as { aspect: number }).aspect || 1;
-    const closeIn = Math.min(1.15, Math.max(0.55, (useKitShank ? 2.2 : sel.width) / 3.5)) * Math.min(2, Math.max(1, 1.25 / aspect));
+    const closeIn = Math.min(1.15, Math.max(0.55, (useKitShank ? 2.2 : sel.width) / 3.5)) * (aspect < 1 ? 0.86 : 1);
     camera.position.lerp(new Vector3(bottom.x, bottom.y + 1.85 * closeIn, bottom.z + 1.95 * closeIn), s.fe);
     aim.lerp(bottom, s.fe);
     // de cerca del hombro: el pavé del aro y las garras de la cabeza en el mismo cuadro
