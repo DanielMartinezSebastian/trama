@@ -7,6 +7,7 @@ import BeforeAfter from "@/components/ui/BeforeAfter";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
 import FAQSection from "@/components/ui/FAQSection";
+import Hero from "@/components/ui/Hero";
 import LightScroll, { useLight } from "@/components/ui/LightScroll";
 import MetaTable from "@/components/ui/MetaTable";
 import OpeningHours from "@/components/ui/OpeningHours";
@@ -282,14 +283,6 @@ function Footer() {
 }
 
 /* ---------- piezas comunes ---------- */
-function Rating() {
-  return (
-    <p className="ql-rating">
-      <span aria-hidden>★★★★★</span> <b>{BRAND.rating.value.toLocaleString("es-ES")}</b> · {BRAND.rating.count} reseñas en {BRAND.rating.source}
-    </p>
-  );
-}
-
 /** Conmutador de luz para mirar una pieza (GIA: verla con varias luces). Cambio explícito, nunca automático. */
 function LightSwitch({ value, onChange, options }: { value: LightPresetName; onChange: (v: LightPresetName) => void; options: LightPresetName[] }) {
   return (
@@ -487,19 +480,20 @@ function Home() {
   return (
     <>
       <PrismHero landing={{ x: 0.25, y: 0.36 }} scaleTo={0.5}>
-        <p className="ql-kicker">Taller de joyería · {BRAND.city}</p>
-        <h1 className="ql-h1 ql-prism__claim">
-          <span>Entra por una cara.</span>
-          <span>Sale por cincuenta y siete.</span>
-        </h1>
-        <p className="ql-lead">Un brillante tiene 57 facetas y cada una decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal, la mano que lo monta y la luz con la que lo eliges.</p>
-        <div className="ql-row">
-          <a className="ql-btn" href={href("cita")}>Pedir cita en el taller</a>
-          <a className="ql-btn ql-btn--ghost" href={href("compromiso")}>Diseñar un solitario</a>
-        </div>
-        <Rating />
-        <p className="ql-prism__from">Alianzas desde {money(priceOf({ ...DEFAULT_BAND, width: 2 }), "EUR", "es-ES", true)} · solitarios desde {money(priceOf({ ...DEFAULT_SOLITAIRE, carat: 0.3, stone: "diamante-lab", setting: "garras4" }), "EUR", "es-ES", true)} · precio cerrado antes de empezar</p>
-        <p className="ql-prism__hint" aria-hidden>Mueve la luz · desliza</p>
+        <Hero
+          align="center"
+          backdrop="none"
+          variant="minimal"
+          kicker={`Taller de joyería · ${BRAND.city}`}
+          title="Entra por una cara. Sale por cincuenta y siete."
+          subtitle="Cada faceta de un brillante decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal y la mano que lo monta."
+          primaryCta="Pedir cita en el taller"
+          primaryHref={href("cita")}
+          secondaryCta="Diseñar un solitario"
+          secondaryHref={href("compromiso")}
+          badges={`★ ${BRAND.rating.value.toLocaleString("es-ES").replace(",", "\\,")} · ${BRAND.rating.count} reseñas en Google, Precio cerrado antes de empezar, Taller propio`}
+          className="ql-prism__hero"
+        />
       </PrismHero>
 
       <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">

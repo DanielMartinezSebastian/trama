@@ -29,3 +29,9 @@ Eixample hay que citar «© OpenStreetMap».
 
 Las piedras son poliedros convexos y cerrados. El brillante redondo sale de intersecar semiespacios (57 facetas); el
 resto, del cierre convexo de anillos de contorno. Unidades en mm; anclajes y ejes, en `anillos/manifest.json`.
+
+## Entorno HDR de la portada de Quilate
+
+| Archivo | Origen | Licencia |
+|---|---|---|
+| `hdr/aerodynamics_workshop_1k.hdr` | [Aerodynamics Workshop](https://polyhaven.com/a/aerodynamics_workshop), de Oliksiy Yakovlyev, en Poly Haven (1K) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |

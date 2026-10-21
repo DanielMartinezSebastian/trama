@@ -419,31 +419,27 @@
   background: radial-gradient(70% 60% at 65% 45%, #241c15, var(--bg) 70%);
 }
 .ql-prism__stage { position: absolute; inset: 0; opacity: clamp(0, calc((1 - var(--hero-p, 0)) * 12), 1); }
-.ql-prism__copy { pointer-events: auto; }
+.ql-prism__copy {
+  position: absolute; left: 0; right: 0; bottom: clamp(12px, 4vh, 48px); z-index: 2; display: grid; justify-items: center;
+  opacity: calc(1 - var(--hero-p, 0) * 1.6); transform: translateY(calc(var(--hero-p, 0) * -60px)); filter: blur(calc(var(--hero-p, 0) * 10px));
+  pointer-events: auto;
+}
+/* el Hero del kit, ajustado a la casa: titular en la serifa fina, centrado bajo el diamante, sin fondo */
+.ql-prism__hero.ui-hero { padding: 0 var(--st-gutter); background: none; }
+.ql-prism__hero .ui-hero__inner { max-width: 860px; gap: 14px; }
+.ql-prism__hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(38px, 5.2vw, 76px); line-height: 1; letter-spacing: -0.01em; text-wrap: balance; }
+.ql-prism__hero p { max-width: 56ch; }
 /* el recorrido empieza una pantalla más abajo: su prólogo llega cuando la portada ya se ha fundido */
 .ql-prism + .ql-story .ql-story__steps { padding-top: calc(100svh - var(--ql-head)); }
 .ql-prism__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease-out, ease); }
 .ql-prism__gl.is-on { opacity: 1; }
-.ql-prism__flat { position: absolute !important; left: 50%; top: 10%; width: min(60vh, 60vw) !important; height: auto !important; aspect-ratio: 1; }
-.ql-prism__copy {
-  position: absolute; left: var(--st-gutter); bottom: clamp(32px, 7vh, 80px); z-index: 2; display: grid; gap: 18px; max-width: min(640px, 52vw);
-  opacity: calc(1 - var(--hero-p, 0) * 1.6); transform: translateY(calc(var(--hero-p, 0) * -60px)); filter: blur(calc(var(--hero-p, 0) * 10px));
-  pointer-events: auto;
-}
-.ql-prism__claim { display: grid; font-size: clamp(46px, 7.4vw, 118px); line-height: 0.95; }
-.ql-prism__claim span:last-child { color: transparent; -webkit-text-stroke: 1px var(--fg); font-style: italic; }
-.ql-prism__claim span { display: block; animation: ql-claim 1.4s var(--ease-out, cubic-bezier(.19,1,.22,1)) both; }
-.ql-prism__claim span:last-child { animation-delay: 0.25s; }
-@keyframes ql-claim { from { opacity: 0; transform: translateY(0.4em); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
-.ql-prism__from { margin: 0; font-size: 12px; letter-spacing: 0.06em; color: var(--mut); }
-.ql-prism__hint { margin: 0; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mut); }
+.ql-prism__flat { position: absolute !important; left: 50%; top: 6%; transform: translateX(-50%); width: min(46vh, 60vw) !important; height: auto !important; aspect-ratio: 1; }
 @media (max-width: 899px) {
-  .ql-prism__copy { max-width: none; right: var(--st-gutter); bottom: calc(96px + env(safe-area-inset-bottom)); gap: 12px; }
-  .ql-prism__claim { font-size: clamp(36px, 10.5vw, 52px); }
-  .ql-prism__copy .ql-lead { font-size: 15px; }
-  .ql-prism__from, .ql-prism__hint { display: none; }
+  .ql-prism__copy { bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .ql-prism__hero h1 { font-size: clamp(32px, 9vw, 44px); }
+  .ql-prism__hero p { font-size: 14px; }
+  .ql-prism__hero .ui-hero__trust { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ql-prism__claim span { animation: none; }
   .ql-prism__copy { filter: none; transform: none; }
 }

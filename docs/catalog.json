@@ -17198,6 +17198,11 @@
           "uses": 2
         },
         {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
           "component": "FAQSection",
           "id": "faq-section",
           "uses": 1
