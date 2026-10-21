@@ -37,7 +37,7 @@ const MotionShader = {
     void main() {
       // tilt-shift: radio de desenfoque según la distancia vertical a la franja nítida (con una zona muerta alrededor)
       float d = max(0.0, abs(vUv.y - uFocus) - 0.12);
-      float r = uTilt * d * 0.035;
+      float r = uTilt * d * 0.02;
       // movimiento: un trazo a lo largo de la velocidad, centrado en el píxel
       vec2 mv = uVel;
       vec4 sum = vec4(0.0);
