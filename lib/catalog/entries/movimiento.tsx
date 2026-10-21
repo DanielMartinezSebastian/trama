@@ -233,17 +233,23 @@ export const movimiento: CatalogEntry[] = [
     category: "navegacion",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado.",
+      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio) y align=\"center\" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
     stageHeight: 200,
     props: [
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
       { key: "openLabel", label: "Texto abrir", type: "text", default: "menu" },
       { key: "closeLabel", label: "Texto cerrar", type: "text", default: "close" },
       { key: "note", label: "Nota del pie", type: "text", default: "Madrid, ES" },
+      { key: "trigger", label: "Botón", type: "select", default: "label", options: ["label", "burger"], labels: { label: "[menu]", burger: "hamburguesa" } },
+      { key: "backdrop", label: "Fondo", type: "select", default: "solid", options: ["solid", "blur"], labels: { solid: "sólido", blur: "vidrio" } },
+      { key: "align", label: "Enlaces", type: "select", default: "start", options: ["start", "center"], labels: { start: "a la izquierda", center: "centrados" } },
     ],
     render: (p) => (
       <div className="ui-center">
         <FullscreenMenu
+          trigger={p.trigger as never}
+          backdrop={p.backdrop as never}
+          align={p.align as never}
           brand={p.brand as string}
           openLabel={p.openLabel as string}
           closeLabel={p.closeLabel as string}

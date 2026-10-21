@@ -75,13 +75,16 @@ export const formulas: CatalogEntry[] = [
     name: "Navegación «isla»",
     category: "navegacion",
     styles: STYLES,
-    description: "Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla.",
+    description: "Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla (o la cubre hasta arriba con `cover`). Con brandAlign=\"exact\", la marca queda en el centro exacto de la píldora aunque los lados midan distinto (Quilate: hamburguesa a la izquierda y «Pedir cita →» a la derecha).",
     stageHeight: 200,
     notes: ["Es position: fixed; aquí va contenida en el recuadro de puntos. En una web real cuelga de la ventana."],
-    props: [{ key: "hideOnScroll", label: "Esconder al bajar", type: "boolean", default: false }],
+    props: [
+      { key: "hideOnScroll", label: "Esconder al bajar", type: "boolean", default: false },
+      { key: "brandAlign", label: "Marca", type: "select", default: "balanced", options: ["balanced", "exact"], labels: { balanced: "columna central", exact: "centro exacto" } },
+    ],
     render: (p) => (
       <Boxed h={140}>
-        <IslandNav hideOnScroll={p.hideOnScroll as boolean} leading={<button type="button" className="ui-fsm__btn">[menu]</button>} brand={<span>◐ Arbor</span>} trailing={<a href="#">Consultar →</a>} />
+        <IslandNav hideOnScroll={p.hideOnScroll as boolean} brandAlign={p.brandAlign as never} leading={<button type="button" className="ui-fsm__btn">[menu]</button>} brand={<span>◐ Arbor</span>} trailing={<a href="#">Consultar →</a>} />
       </Boxed>
     ),
   },

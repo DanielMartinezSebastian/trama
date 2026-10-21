@@ -29,6 +29,9 @@ export type ActionBarProps = {
   label?: string;
   /** al pulsar un enlace interno (empieza por `/`): navegación sin recarga del framework */
   onNavigate?: (href: string) => void;
+  /** suave: sin bandeja ni botón relleno; vidrio que se difumina hacia arriba, las acciones iguales y los iconos con
+   * brillo (la principal, en el acento) */
+  soft?: boolean;
   variant?: Variant;
   className?: string;
 };
@@ -51,11 +54,12 @@ export default function ActionBar({
   position = "fixed",
   label = "Acciones rápidas",
   onNavigate,
+  soft = false,
   variant = "solid",
   className = "",
 }: ActionBarProps) {
   const items = typeof actions === "string" ? parse(actions) : actions;
-  const cls = `ui-actionbar ui-actionbar--${position} ui-actionbar--${show} ${vcls(variant)} ${className}`.trim();
+  const cls = `ui-actionbar ui-actionbar--${position} ui-actionbar--${show} ${soft ? "ui-actionbar--soft " : ""}${vcls(variant)} ${className}`.trim();
   return (
     <>
       {position === "fixed" && <div className={`ui-actionbar-spacer ui-actionbar-spacer--${show}`} aria-hidden />}

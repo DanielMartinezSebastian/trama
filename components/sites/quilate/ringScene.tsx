@@ -83,6 +83,8 @@ export type RingPose = {
   trio: number;
   /** 0 = de tres cuartos · 1 = de frente: el aro se planta de cara como una «O», con la piedra arriba */
   face: number;
+  /** 0 = el anillo entero · 1 = solo la piedra: el engarce, el aro y el pavé se van en niebla (la piedra se queda) */
+  gem?: number;
 };
 
 /** El HDR de estudio (Aerodynamics Workshop, Poly Haven, CC0) como cubemap: lo que ven las gemas trazadas. */
@@ -134,6 +136,9 @@ export type RingSceneProps = {
   fxVeil?: MutableRefObject<number>;
   /** anillos que acompañan al principal en el trío (pose `trio`): a la izquierda (−1) y a la derecha (1) */
   companions?: { sel: RingSel; side: -1 | 1 }[];
+  /** lo rellena la escena: dónde cae en el lienzo lo que enseña la cámara (su punto de mira), de 0 a 1 desde arriba a
+   * la izquierda. Sirve para alinear con el anillo lo que va encima (las líneas técnicas de la portada) */
+  focus?: MutableRefObject<{ x: number; y: number } | null>;
   /** interno: este anillo es un acompañante (no mueve la cámara ni las luces; su sitio lo da `trio` de la pose del principal) */
   companion?: { side: -1 | 1; host: MutableRefObject<RingPose> };
 };
@@ -625,7 +630,7 @@ const WAX = new Color("#3d7a66");
 const WHITE = new Color(1, 1, 1);
 const SKETCH = new Color("#d9cbb4");
 
-function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose, onReady, fxTarget, fxAmount, fxVeil, companion }: Omit<RingSceneProps, "active" | "companions">) {
+function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose, onReady, fxTarget, fxAmount, fxVeil, focus, companion }: Omit<RingSceneProps, "active" | "companions">) {
   const root = useRef<Group>(null);
   // lo que se ve va un instante por detrás de lo pedido: el cambio llega cuando el velo está arriba
   const swapKey = `${lookIn}|${JSON.stringify(selIn)}`;
@@ -652,6 +657,14 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
   const cursorPos = useRef(new Vector3(2, 2, 3));
   const reducedMotion = typeof matchMedia !== "undefined" && (matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches);
   const gl = useThree((st) => st.gl);
+  // el color de la niebla: el fondo de la web (el lienzo es transparente y lo que se va se funde con lo de detrás)
+  const fog = useMemo(() => {
+    try {
+      return new Color(getComputedStyle(gl.domElement).getPropertyValue("--bg").trim() || "#000");
+    } catch {
+      return new Color("#000");
+    }
+  }, [gl]);
   useEffect(() => {
     const el = gl.domElement;
     const on = (e: PointerEvent) => {
@@ -675,7 +688,7 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
   const spin = useRef(companion ? 0.6 + companion.side * 2.1 : 0.6);
-  const k = useRef({ fc: 0, py: 0, so: 0, fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const k = useRef({ gm: 0, fc: 0, py: 0, so: 0, fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -842,10 +855,14 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
     s.wax = lerp(s.wax, L.wax, kk);
     s.dim = lerp(s.dim, L.dim, kk);
     const wantHead = framing === "head" || gemOnly;
-    s.fx = lerp(s.fx, wantHead ? 1 : 0, kk);
-    s.fe = lerp(s.fe, framing === "engrave" ? 1 : 0, kk);
     // con pose externa, el scroll ya interpola: se sigue de cerca (sin retraso que la haga ir por detrás del gesto)
     const P = pose?.current;
+    // el encuadre fijo solo manda sin pose: si tirasen los dos a la vez (uno hacia `framing`, otro hacia la pose), el punto
+    // de equilibrio dependería de lo que dura cada fotograma y la cámara temblaría en reposo
+    if (!P) {
+      s.fx = lerp(s.fx, wantHead ? 1 : 0, kk);
+      s.fe = lerp(s.fe, framing === "engrave" ? 1 : 0, kk);
+    }
     if (P) {
       // cuánta transición hay: lo que ha cambiado la pose desde el fotograma anterior, por segundo (el giro pesa menos)
       if (fxAmount) {
@@ -867,6 +884,7 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
       s.so = lerp(s.so, P.solo, kp);
       s.py = lerp(s.py, P.y, kp);
       s.fc = lerp(s.fc, P.face, kp);
+      s.gm = lerp(s.gm, P.gem ?? 0, kp);
     } else {
       s.ex = lerp(s.ex, 0, kk);
       s.yaw = lerp(s.yaw, 0, kk);
@@ -878,7 +896,14 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
     const m = metalOf(sel.metal);
     const base = new Color(m.color);
     const wire = look === "boceto";
-    mats.metal.color.copy(base).lerp(WAX, s.wax).lerp(new Color("#7d7468"), s.dim * 0.35);
+    // niebla: lo que se aleja se disuelve pronto en el fondo (pierde opacidad y toma su color) en vez de quedarse a la vista
+    // hasta ser un punto. Los acompañantes del trío, enteros: ya no se ven por debajo del 60 % de su llegada. En el anillo
+    // principal, el aro, la montura y el pavé: cuando se van y dejan la piedra sola (`solo`, por debajo de la mitad) y
+    // cuando la cámara va a por la piedra (`gem`: ya no se ven pasada la mitad). La piedra, nunca
+    const fade = (v: number) => ease(Math.min(1, Math.max(0, v)));
+    const mistAll = companion ? fade((ease(Math.min(1, Math.max(0, companion.host.current.trio))) - 0.6) / 0.3) : 1;
+    const mistParts = companion ? mistAll : fade((1 - s.so - 0.5) / 0.35) * (1 - fade((s.gm - 0.1) / 0.4));
+    mats.metal.color.copy(base).lerp(WAX, s.wax).lerp(new Color("#7d7468"), s.dim * 0.35).lerp(fog, (1 - mistParts) * 0.85);
     // al leer el grabado el metal pasa a satinado: un espejo devuelve el entorno y tapa el relieve; mate, manda la luz rasante
     mats.metal.roughness = Math.min(0.9, (sel.finish === "satinado" ? 0.4 : sel.finish === "martillado" ? 0.2 : m.roughness * 0.7) + s.rough + s.fe * 0.32);
     mats.metal.clearcoat = 0.3 * (1 - s.fe);
@@ -886,13 +911,15 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
     mats.metal.normalMap = sel.finish === "martillado" && !wire ? hammer : null;
     mats.metal.normalScale.set(0.9, 0.9);
     mats.metal.wireframe = wire;
-    mats.metal.transparent = s.op < 0.99;
-    mats.metal.opacity = s.op;
+    mats.metal.transparent = s.op * mistParts < 0.99;
+    mats.metal.opacity = s.op * mistParts;
     if (wire) mats.metal.color.copy(SKETCH);
     mats.prong.color.copy(mats.metal.color);
     mats.prong.roughness = mats.metal.roughness;
     mats.prong.metalness = mats.metal.metalness;
     mats.prong.wireframe = wire;
+    mats.prong.transparent = mats.metal.transparent;
+    mats.prong.opacity = mats.metal.opacity;
 
     const st = stoneOf(sel.stone);
     const diamond = sel.stone.startsWith("diamante");
@@ -906,11 +933,13 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
       u.uAbsorb.value.multiplyScalar(1 / peak);
       u.uAbsorbK.value = colored ? 1.6 : 0;
       u.uIor.value.copy(key === "melee" || diamond ? (hdr ? SHOW_DIAMOND_IOR : DIAMOND_IOR) : sel.stone === "esmeralda" ? EMERALD_IOR : CORUNDUM_IOR);
-      u.uFlat.value.copy(wire ? SKETCH : WAX);
-      u.uFlatMix.value = Math.max(s.wax, wire ? 1 : 0);
+      // la piedra central del anillo principal no se nubla (es la que se queda sola); el pavé y los acompañantes, sí
+      const mist = key === "stone" ? mistAll : mistParts;
+      u.uFlat.value.copy(mist < 0.99 ? fog : wire ? SKETCH : WAX);
+      u.uFlatMix.value = mist < 0.99 ? (1 - mist) * 0.85 : Math.max(s.wax, wire ? 1 : 0);
       u.uDim.value = s.dim;
-      u.uOpacity.value = s.op;
-      g.transparent = s.op < 0.99;
+      u.uOpacity.value = s.op * mist;
+      g.transparent = s.op * mist < 0.99;
       g.wireframe = wire;
     }
 
@@ -1027,7 +1056,16 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
       paveRef.current.scale.setScalar(hide * (1 + s.ex * 0.12));
     }
     // despiece: la cabeza sube del aro y la piedra sale de la cabeza
-    if (engraveMesh.current) engraveMesh.current.visible = s.band > 0.02 && s.so < 0.5;
+    if (engraveMesh.current) {
+      // con pose (la portada), el grabado solo se ve cuando la cámara entra a leerlo («Ajustar»): aparece con `engrave` y se
+      // va con él; en el resto de capítulos el aro va liso. Sin pose (configurador), siempre
+      const show = P ? fade((s.fe - 0.05) / 0.35) * mistParts * s.op : 1;
+      if (engrave) {
+        engrave.mat.opacity = show;
+        engrave.mat.transparent = true;
+      }
+      engraveMesh.current.visible = s.band > 0.02 && s.so < 0.5 && show > 0.01;
+    }
     if (headGroup.current) headGroup.current.position.y = s.ex * 0.85;
     if (stoneLift.current) stoneLift.current.position.y = (s.ex * 0.75) / (useKitHead ? Math.cbrt(sel.carat) : 1);
     if (mount.current) {
@@ -1049,8 +1087,11 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
     // el despiece necesita más altura de cuadro: la cámara se aleja y apunta más arriba
     const far = new Vector3(0, 0.6 + s.ex * 0.8, (7.2 + s.ex * 3.4) * s.zm);
     const near = new Vector3(head.x, head.y + 0.8 + R * 1.2, head.z + 1.2 + R * 2.8);
-    camera.position.copy(far).lerp(near, s.fx);
-    const aim = new Vector3(0, (solitaire ? 0.25 : 0) + s.ex * 0.75, 0).lerp(head, s.fx);
+    // `head` por encima de 1 no extrapola (la mira se pasaría de la piedra y la dejaría fuera de cuadro): la cámara se
+    // acerca a la piedra por la misma línea, a 1/head de la distancia del encuadre de cerca (la portada, casi a pantalla)
+    camera.position.copy(far).lerp(near, Math.min(1, s.fx));
+    if (s.fx > 1) camera.position.sub(head).divideScalar(s.fx).add(head);
+    const aim = new Vector3(0, (solitaire ? 0.25 : 0) + s.ex * 0.75, 0).lerp(head, Math.min(1, s.fx));
     // grabado: la cámara entra por la boca del aro y mira la parte de abajo por dentro
     const bottom = new Vector3(0, -R0, 0).applyEuler(g.rotation);
     // más cerca cuanto más estrecho es el aro: la letra mide la mitad del ancho y tiene que leerse
@@ -1065,6 +1106,10 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
     const outward = new Vector3(Math.sin(1.25), Math.cos(1.25), 0).applyEuler(g.rotation);
     camera.position.lerp(shoulder.clone().addScaledVector(outward, 1.7).add(new Vector3(0, 0.35, 1.6)), s.fp);
     aim.lerp(shoulder, s.fp);
+    // el detalle del paso (para `focus`): el mismo punto de mira, pero cada encuadre «de cerca» manda en cuanto asoma
+    // (en móvil los acercamientos se quedan a medias y la mira no llega al detalle)
+    const k4 = (v: number) => Math.min(1, Math.max(0, v * 4));
+    const subject = new Vector3(0, (solitaire ? 0.25 : 0) + s.ex * 0.75, 0).lerp(head, k4(s.fx)).lerp(bottom, k4(s.fe)).lerp(shoulder, k4(s.fp));
     // el anillo cae a un lado de la pantalla: la cámara y su punto de mira se desplazan en paralelo hacia el otro
     if (Math.abs(s.px) > 1e-3 || Math.abs(s.py) > 1e-3) {
       const dir = new Vector3().subVectors(aim, camera.position);
@@ -1079,6 +1124,11 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
       aim.add(shift);
     }
     camera.lookAt(aim);
+    if (focus) {
+      camera.updateMatrixWorld();
+      subject.project(camera);
+      focus.current = { x: (subject.x + 1) / 2, y: (1 - subject.y) / 2 };
+    }
 
     if (!ready.current) {
       ready.current = true;

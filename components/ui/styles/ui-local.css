@@ -153,8 +153,19 @@
 .ui-actionbar__a--primary:hover { background: var(--s-pri-bg); filter: brightness(1.08); }
 .ui-s--dotmatrix .ui-actionbar__a, .ui-s--retro .ui-actionbar__a, .ui-s--terminal .ui-actionbar__a { border-radius: 0; }
 .ui-actionbar__ic { position: relative; display: grid; }
+/* soft: vidrio sin bandeja que se difumina hacia arriba (máscara), acciones iguales, iconos brillantes */
+.ui-actionbar--soft { border-top: 0; padding-top: 22px; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 62%, transparent) 40%); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22px); mask-image: linear-gradient(to bottom, transparent, #000 22px); }
+.ui-actionbar--soft.ui-actionbar--fixed { -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15); }
+.ui-actionbar--soft .ui-actionbar__a, .ui-actionbar--soft .ui-actionbar__a--primary { flex-grow: 1; background: none; border: 0; color: var(--mut); font-size: 11px; font-weight: 400; letter-spacing: 0.04em; filter: none; }
+.ui-actionbar--soft .ui-actionbar__ic { color: var(--fg); filter: drop-shadow(0 0 calc(6px * var(--glow, 1)) color-mix(in srgb, var(--fg) calc(45% * var(--glow, 1)), transparent)); }
+.ui-actionbar--soft .ui-actionbar__a--primary .ui-actionbar__ic { color: var(--acc); filter: drop-shadow(0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(70% * var(--glow, 1)), transparent)); }
+.ui-actionbar--soft .ui-actionbar__a--primary { color: var(--fg); }
+.ui-actionbar--soft .ui-actionbar__a:hover { background: none; color: var(--fg); }
 .ui-actionbar__l { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ui-actionbar__badge { position: absolute; top: -6px; right: -10px; min-width: 18px; height: 18px; padding: 0 5px; display: grid; place-items: center; border-radius: 99px; background: var(--acc); color: var(--bg); font-size: 11px; }
+/* con un FullscreenMenu abierto, la barra fija se aparta (no tapa el pie del menú) */
+.ui-actionbar--fixed { transition: opacity 0.35s var(--ease-io, ease), visibility 0s linear 0s; }
+html[data-fsm-open] .ui-actionbar--fixed { opacity: 0; visibility: hidden; transition: opacity 0.35s var(--ease-io, ease), visibility 0s linear 0.35s; }
 .ui-actionbar-spacer { height: calc(72px + env(safe-area-inset-bottom)); }
 @media (min-width: 761px) {
   .ui-actionbar--fixed.ui-actionbar--mobile, .ui-actionbar-spacer--mobile { display: none; }

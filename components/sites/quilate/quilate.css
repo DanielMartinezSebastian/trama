@@ -194,7 +194,16 @@
    texto se ve quieto y completo. */
 .ql-story { position: relative; }
 .ql-story__sticky { position: sticky; top: var(--ql-head); height: calc(100svh - var(--ql-head)); overflow: hidden; z-index: 0; }
-.ql-story__ring { position: absolute !important; inset: 0; height: 100% !important; }
+.ql-story__ring { position: absolute !important; inset: 0; height: 100% !important; pointer-events: none; }
+/* capa de cuadros, por debajo del lienzo (el anillo pasa por delante): cada cuadro va a su lado, centrado en alto, y el
+   bucle de scroll de Home lo desplaza (translate), lo apaga y lo desenfoca según su distancia a la línea media */
+.ql-cards { position: absolute; inset: 0; pointer-events: none; }
+.ql-card {
+  position: absolute; inset: 0; display: grid; align-items: center; padding: 10vh var(--st-gutter);
+  width: 100%; max-width: var(--st-max); margin-inline: auto; will-change: transform, filter, opacity;
+}
+.ql-card[data-side="left"] { justify-items: start; }
+.ql-card[data-side="right"] { justify-items: end; }
 .ql-story__steps { position: relative; z-index: 1; list-style: none; margin: calc((100svh - var(--ql-head)) * -1) 0 0; padding: 0; pointer-events: none; }
 .ql-step { display: grid; align-items: center; min-height: 120svh; padding: 10vh var(--st-gutter); max-width: var(--st-max); margin-inline: auto; }
 .ql-step:last-child { min-height: 110svh; }
@@ -204,49 +213,58 @@
 .ql-step[data-side="right"] { justify-items: end; }
 .ql-step[data-side="center"] { justify-items: center; text-align: center; }
 /* el cuadro: corto (rótulo con la temperatura de la luz, tesis, el servicio con su dato y el pie con la llamada); el «cómo»
-   va en las cintas de la escena. Filo de oro arriba en vez de marco entero. */
+   va en las cintas de la escena. Cristal: casi transparente, esquinas redondeadas, un desenfoque suave detrás y un borde
+   de luz muy fino; nada más. */
 .ql-step__card {
   position: relative; display: grid; gap: 18px; width: min(420px, 100%); padding: clamp(24px, 2.6vw, 34px); pointer-events: auto;
-  background: linear-gradient(color-mix(in srgb, var(--bg) 64%, transparent), color-mix(in srgb, var(--bg) 80%, transparent));
-  border: 1px solid color-mix(in srgb, var(--ln) 60%, transparent); border-top-color: transparent;
-  -webkit-backdrop-filter: blur(16px) saturate(1.15); backdrop-filter: blur(16px) saturate(1.15);
+  border-radius: clamp(14px, 1.4vw, 20px);
+  background: color-mix(in srgb, var(--bg) 26%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fg) 9%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1);
 }
-.ql-step__card::before { content: ""; position: absolute; inset: -1px -1px auto; height: 1px; background: linear-gradient(90deg, var(--acc), color-mix(in srgb, var(--acc) 15%, transparent)); }
-.ql-step[data-side="right"] .ql-step__card::before { background: linear-gradient(270deg, var(--acc), color-mix(in srgb, var(--acc) 15%, transparent)); }
 .ql-step__card .ql-chapter__k { display: flex; align-items: center; gap: 12px; }
-.ql-step__card .ql-chapter__k::after { content: ""; flex: 1; order: 1; height: 1px; background: var(--ln); }
+.ql-step__card .ql-chapter__k::after { content: ""; flex: 1; order: 1; height: 1px; background: color-mix(in srgb, var(--fg) 8%, transparent); }
 .ql-chapter__kelvin { order: 2; color: var(--mut); letter-spacing: 0.1em; }
 .ql-step__card .ql-chapter__what { color: var(--fg); opacity: 0.86; }
+.ql-step__card .ql-chip { border-radius: 999px; justify-self: start; padding-inline: 18px; }
 .ql-step__qr { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 16px; align-items: center; }
 .ql-step__qr > p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--mut); }
 .ql-step__ficha { grid-column: 1 / -1; font-size: 13px; }
 .ql-step__ficha summary { cursor: pointer; color: var(--acc); letter-spacing: 0.04em; }
 .ql-step__ficha[open] summary { margin-bottom: 10px; }
 .ql-step__ficha .ui-meta { max-height: 34vh; overflow: auto; }
-.ql-step__foot { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--ln); }
+.ql-step__foot { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--fg) 8%, transparent); }
 /* número fantasma del capítulo: fuera del cuadro, encima y despegado de él (no pisa el rótulo), con parallax */
 .ql-step__num {
   position: absolute; bottom: calc(100% + clamp(14px, 2.2vh, 26px)); left: -0.04em; font-family: var(--display); font-weight: 300;
   font-size: clamp(84px, 9vw, 150px); line-height: 0.74; letter-spacing: 0.04em; color: transparent;
   -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 60%, transparent); pointer-events: none;
 }
-.ql-step[data-side="right"] .ql-step__num { left: auto; right: -0.04em; }
+.ql-card[data-side="right"] .ql-step__num { left: auto; right: -0.04em; }
+/* el número fantasma se queda un poco atrás al subir (parallax con el desplazamiento del cuadro, --y en px) */
+.ql-step__num { transform: translateY(calc(var(--y, 0) * -0.12px)); }
 .ql-step__thesis { font-size: clamp(30px, 3.2vw, 46px); }
 .ql-w { display: inline-block; }
 .ql-step--intro { min-height: 130svh; }
-.ql-step__manifesto { margin: 0; max-width: 16ch; font-family: var(--display); font-weight: 300; font-size: clamp(34px, 5vw, 76px); line-height: 1.04; letter-spacing: -0.01em; pointer-events: auto; text-wrap: balance; }
-.ql-step__hint { margin: 28px 0 0; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mut); }
 
-/* la palabra del capítulo, detrás del anillo: enorme, en contorno, se recompone letra a letra y deriva con el progreso */
-.ql-story__word {
-  position: absolute; bottom: 6vh; margin: 0; white-space: nowrap; pointer-events: none; z-index: -1;
-  font-family: var(--display); font-weight: 300; font-size: clamp(90px, 17vw, 280px); line-height: 0.9; letter-spacing: -0.02em;
-  color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 22%, transparent);
-  transform: translateX(calc(var(--story-p, 0) * -8vw));
+/* el prólogo: el manifiesto a pantalla completa, detrás del lienzo (el anillo pasa por delante), sin fondo. El cuerpo lo
+   ajusta Home al mayor que cabe en la caja. Las palabras empiezan en contorno y se rellenan una a una con el avance del
+   paso (--r1, de −1 a 1): --f va de 0 a 1 entre r = −0,45 y r = 0,25, y cada palabra se rellena en su tramo de --f. La capa
+   entra cuando ya se ha ido el titular de la portada (r de −0,7 a −0,45) y se va antes de que asome el primer cuadro (r de
+   0,35 a 0,6). */
+.ql-intro {
+  /* escritorio: el manifiesto en la mitad izquierda (el anillo a la derecha); en móvil, a pantalla completa detrás */
+  position: absolute; inset: calc(var(--ql-island, 72px) + 6vh) 50% 10vh var(--st-gutter); z-index: -1; margin: 0; overflow: hidden; pointer-events: none;
+  display: flex; flex-wrap: wrap; align-content: center; justify-content: flex-start; column-gap: 0.24em; text-align: left;
+  font-family: var(--display); font-weight: 400; line-height: 0.98; letter-spacing: -0.015em; text-wrap: balance;
+  --f: clamp(0, calc((var(--r1, -1) + 0.45) / 0.7), 1);
+  opacity: min(clamp(0, calc((var(--r1, -1) + 0.7) * 4), 1), clamp(0, calc((0.6 - var(--r1, -1)) * 4), 1));
 }
-.ql-story__word[data-side="left"] { left: 4vw; }
-.ql-story__word[data-side="right"] { right: 4vw; }
-.ql-story__word span { display: inline-block; animation: ql-letter 0.9s var(--ease-out, cubic-bezier(.19,1,.22,1)) both; animation-delay: calc(var(--i) * 45ms); }
+.ql-intro span {
+  --k: clamp(0, calc(var(--f) * var(--n) - var(--i)), 1);
+  color: color-mix(in srgb, var(--fg) calc(var(--k) * 92%), transparent);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) calc(22% + var(--k) * 10%), transparent);
+}
 /* cintas: en algunos capítulos, el «cómo» en letra gruesa y muy grande, corriendo de lado con el scroll (--r del paso, de
    −1 a 1) y encendidas solo cerca del centro del paso (--o). Siempre en pareja: una detrás del lienzo (el anillo pasa por
    delante) y otra delante, a alturas fijas (arriba y abajo) que no se tocan, y en sentidos contrarios. El texto va tres
@@ -276,40 +294,26 @@
 .ql-story__rail button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; opacity: 1; }
 .ql-story__bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--acc); transform-origin: left; transform: scaleX(var(--story-p, 0)); opacity: 0.8; }
 
-@supports (animation-timeline: view()) {
-  /* el cuadro entra desde su lado, se queda y sale al revés: todo con la vista del paso, reversible */
-  .ql-step__card { animation: ql-card linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
-  .ql-step[data-side="right"] .ql-step__card { --from: 60px; }
-  .ql-step[data-side="left"] .ql-step__card { --from: -60px; }
-  .ql-step__num { animation: ql-num linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
-  .ql-step__thesis .ql-w { animation: ql-word linear both; animation-timeline: view(); animation-range: entry calc(20% + var(--i) * 4%) cover calc(38% + var(--i) * 4%); }
-}
-@keyframes ql-card {
-  0% { opacity: 0; transform: translateX(var(--from, 0)) translateY(40px); }
-  10%, 86% { opacity: 1; transform: none; }
-  100% { opacity: 0; transform: translateY(-40px); }
-}
-@keyframes ql-num { from { transform: translateY(60px); } to { transform: translateY(-60px); } }
-@keyframes ql-word { from { opacity: 0; transform: translateY(0.5em); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ql-step__card, .ql-step__num, .ql-step__thesis .ql-w, .ql-story__word span { animation: none !important; }
+  .ql-step__num { transform: none; }
+  .ql-intro span { --k: 1; }
   .ql-ribbon { transform: translate(-50%, -50%); }
-  .ql-story__word { transform: none; }
 }
 @media (max-width: 899px) {
   /* móvil: el anillo ocupa la mitad de arriba del escenario; cada cuadro, compacto, descansa en la mitad de abajo, encima de
      la barra de acciones, y pasa con el scroll. Lo largo (el «cómo», la ficha de archivo) queda en las páginas interiores. */
   .ql-story__ring { inset: 0 0 46% 0 !important; height: auto !important; }
+  .ql-card { align-items: end; justify-items: stretch !important; padding: 0 var(--st-gutter) calc(88px + env(safe-area-inset-bottom)); }
   .ql-step, .ql-step[data-side="left"], .ql-step[data-side="right"] {
-    justify-items: stretch; align-items: end; align-content: end; min-height: 110svh;
+    justify-items: stretch; align-items: end; align-content: end; min-height: 100svh;
     padding: 0 var(--st-gutter) calc(88px + env(safe-area-inset-bottom));
   }
-  .ql-step__card { width: 100%; max-height: 44svh; gap: 10px; padding: 18px 18px 16px; background: color-mix(in srgb, var(--bg) 90%, transparent); }
+  .ql-step__card { width: 100%; max-height: 44svh; gap: 10px; padding: 18px 18px 16px; background: color-mix(in srgb, var(--bg) 46%, transparent); -webkit-backdrop-filter: blur(12px) saturate(1.1); backdrop-filter: blur(12px) saturate(1.1); }
   .ql-step__card .ql-chapter__how, .ql-step__card .ql-step__qr, .ql-step__card .ql-chapter__light { display: none; }
   .ql-step__foot { padding-top: 10px; }
   .ql-step__thesis { font-size: clamp(26px, 7.4vw, 34px); }
-  .ql-step__num { font-size: 56px; bottom: calc(100% + 10px); }
+  .ql-step__num { font-size: 56px; bottom: calc(100% + 14px); }
   .ql-chapter__what { font-size: 14px; }
   .ql-story__rail { display: none; }
   /* las cintas cruzan la mitad del anillo (arriba), no la de los cuadros */
@@ -318,13 +322,8 @@
   .ql-story__ring { transform: translateY(calc(var(--ilv, 0) * 23svh)); }
   .ql-ribbon { top: 34%; font-size: min(21vw, 13svh); }
   .ql-ribbon[data-pos="bottom"] { top: 66%; }
-  .ql-story__word { bottom: auto; top: 1.5vh; font-size: 22vw; -webkit-text-stroke-color: color-mix(in srgb, var(--fg) 12%, transparent); }
-  /* el prólogo: el manifiesto abajo, más pequeño, sin pisar el anillo */
+  .ql-intro { inset: calc(var(--ql-island, 64px) + 1vh) var(--st-gutter) calc(84px + env(safe-area-inset-bottom)); justify-content: center; text-align: center; }
   .ql-step--intro { align-items: end; min-height: calc(100svh - var(--ql-head)); }
-  .ql-step__manifesto { max-width: none; font-size: clamp(24px, 6.6vw, 30px); padding: 18px; background: color-mix(in srgb, var(--bg) 82%, transparent); }
-  .ql-step__hint { margin-top: 12px; }
-  /* en móvil el titular no se monta palabra a palabra: el cuadro llega abajo de la pantalla y se quedaría borroso */
-  .ql-step__thesis .ql-w { animation: none !important; }
 }
 
 /* portada: tres anillos (la gama de la casa). El principal manda; los otros dos, más pequeños y desfasados, a los lados.
@@ -416,7 +415,8 @@
 .ql-scenes__vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgb(0 0 0 / 0.55)); }
 
 .ql-hud {
-  position: absolute; z-index: 1; pointer-events: none; overflow: visible;
+  /* por detrás de todo (encima solo del fondo): la intro, las cintas, los cuadros y el anillo pasan por delante */
+  position: absolute; z-index: -1; pointer-events: none; overflow: visible;
   width: min(62vh, 52vw); aspect-ratio: 1; top: 50%;
   left: calc(50% + var(--ring-x, 0) * 100%); transform: translate(-50%, -50%);
 }
@@ -428,9 +428,12 @@
 .ql-hud .ql-hud__thin { stroke-opacity: 0.35; stroke-dasharray: 0.004 0.012; stroke-dashoffset: 0; }
 .ql-hud text { fill: var(--mut); font: 400 9px var(--font-geist-mono, ui-monospace, monospace); letter-spacing: 0.08em; text-transform: uppercase; }
 .ql-hud .ql-hud__big { fill: var(--fg); font-size: 12px; }
+.ql-hud .ql-hud__edge { stroke-opacity: 0.9; }
 @media (max-width: 899px) {
-  .ql-hud { width: 70vw; top: 27%; left: 50%; }
-  .ql-hud text { display: none; }
+  /* centrado en el detalle que enseña la cámara (--fx, --fy: su sitio en el lienzo, que en móvil ocupa el 54 % de arriba
+     y baja con --ilv en los interludios) */
+  .ql-hud { width: 70vw; top: calc(var(--fy, 0.5) * 54% + var(--ilv, 0) * 23svh); left: calc(var(--fx, 0.5) * 100%); }
+  .ql-hud text, .ql-hud .ql-hud__veil, .ql-hud .ql-hud__edge { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ql-scene { transform: none; }
@@ -439,7 +442,12 @@
 /* ---------- portada: el primer paso del recorrido ----------
    La piedra sola, de cerca, en el mismo escenario que el resto (una sola escena 3D): al bajar llegan el aro y la montura. */
 .ql-step--hero { min-height: calc(100svh - var(--ql-head)); align-items: end; justify-items: center; padding-bottom: clamp(16px, 5vh, 56px); }
-.ql-step__hero { pointer-events: auto; width: 100%; display: grid; justify-items: center; }
+.ql-step__hero { position: relative; pointer-events: auto; width: 100%; display: grid; justify-items: center; }
+/* el diamante llena casi toda la pantalla: una sombra amplia y difusa bajo el titular para que se lea encima de las facetas */
+.ql-step__hero::before {
+  content: ""; position: absolute; z-index: -1; inset: -18% -20vw -12%; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--bg) 72%, transparent), color-mix(in srgb, var(--bg) 40%, transparent) 60%, transparent);
+}
 .ql-step__herokit.ui-hero { padding: 0 var(--st-gutter); background: none; }
 .ql-step__herokit .ui-hero__inner { max-width: 860px; gap: 14px; }
 .ql-step__herokit h1 { font-family: var(--display); font-weight: 300; font-size: clamp(38px, 5.2vw, 76px); line-height: 1; letter-spacing: -0.01em; text-wrap: balance; }
@@ -461,6 +469,8 @@
 .ql-island .ql-brand { font-size: 24px; letter-spacing: 0.04em; }
 .ql-island__cta { font-size: 14px; letter-spacing: 0.04em; text-decoration: none; white-space: nowrap; color: var(--acc) !important; }
 .ql-island__cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* en móvil la cita se queda en «Cita →» para que la marca quepa centrada en la isla */
+@media (max-width: 520px) { .ql-island__long { display: none; } .ql-island__cta { text-transform: capitalize; } }
 /* la isla flota encima: las páginas interiores dejan su hueco arriba; el recorrido va a sangre por debajo */
 .ql-page, .ql-cfg__panel { padding-top: calc(var(--ql-island) + clamp(16px, 3vw, 40px)) !important; }
 .ql-cfg__stage { padding-top: 0; }

@@ -10793,7 +10793,7 @@
         "solid",
         "outline"
       ],
-      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado.",
+      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio) y align=\"center\" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
       "props": [
         {
           "key": "brand",
@@ -10818,6 +10818,36 @@
           "type": "text",
           "default": "Madrid, ES",
           "label": "Nota del pie"
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "label",
+          "label": "Botón",
+          "options": [
+            "label",
+            "burger"
+          ]
+        },
+        {
+          "key": "backdrop",
+          "type": "select",
+          "default": "solid",
+          "label": "Fondo",
+          "options": [
+            "solid",
+            "blur"
+          ]
+        },
+        {
+          "key": "align",
+          "type": "select",
+          "default": "start",
+          "label": "Enlaces",
+          "options": [
+            "start",
+            "center"
+          ]
         }
       ],
       "example": "import FullscreenMenu from \"@/components/ui/FullscreenMenu\";\n\n<FullscreenMenu />",
@@ -12321,13 +12351,23 @@
         "minimal",
         "outline"
       ],
-      "description": "Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla.",
+      "description": "Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla (o la cubre hasta arriba con `cover`). Con brandAlign=\"exact\", la marca queda en el centro exacto de la píldora aunque los lados midan distinto (Quilate: hamburguesa a la izquierda y «Pedir cita →» a la derecha).",
       "props": [
         {
           "key": "hideOnScroll",
           "type": "boolean",
           "default": false,
           "label": "Esconder al bajar"
+        },
+        {
+          "key": "brandAlign",
+          "type": "select",
+          "default": "balanced",
+          "label": "Marca",
+          "options": [
+            "balanced",
+            "exact"
+          ]
         }
       ],
       "notes": [
@@ -13283,7 +13323,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el pie. Por encima de 760 px se oculta (show=\"mobile\").",
+      "description": "Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el pie. Por encima de 760 px se oculta (show=\"mobile\"). Con soft, sin bandeja ni botón relleno: vidrio que se difumina hacia arriba, acciones iguales e iconos con brillo (la principal, en el acento).",
       "props": [
         {
           "key": "actions",
@@ -13310,6 +13350,12 @@
             "fixed",
             "static"
           ]
+        },
+        {
+          "key": "soft",
+          "type": "boolean",
+          "default": false,
+          "label": "Suave (vidrio difuminado)"
         },
         {
           "key": "variant",
@@ -17220,11 +17266,6 @@
         {
           "component": "FullscreenMenu",
           "id": "fullscreen-menu",
-          "uses": 1
-        },
-        {
-          "component": "ScrubText",
-          "id": "scrub-text",
           "uses": 1
         },
         {

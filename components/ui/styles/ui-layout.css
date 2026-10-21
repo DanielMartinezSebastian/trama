@@ -30,6 +30,11 @@
   border: 1px solid var(--ln); border-radius: 99px; background: color-mix(in srgb, var(--bg) 62%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); color: var(--fg);
 }
 .ui-island__l { justify-self: start; } .ui-island__c { justify-self: center; display: grid; place-items: center; font-weight: 700; letter-spacing: -0.02em; } .ui-island__r { justify-self: end; }
+.ui-island__pill { position: relative; }
+/* brandAlign="exact": la marca, en el centro de la píldora aunque los lados midan distinto */
+.ui-island__pill[data-brand="exact"] { grid-template-columns: auto 1fr auto; }
+.ui-island__pill[data-brand="exact"] > .ui-island__c { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.ui-island__pill[data-brand="exact"] > .ui-island__r { grid-column: 3; }
 .ui-island__r a, .ui-island__r button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--ln); border-radius: 99px; background: transparent; color: inherit; font: inherit; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background var(--dur-s, 0.25s) linear, color var(--dur-s, 0.25s) linear; }
 .ui-island__r :is(a, button):is(:hover, :focus-visible) { background: var(--fg); color: var(--bg); }
 .ui-island__r :is(a, button):focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }

@@ -341,6 +341,20 @@ la misma luz y el mismo fondo. Así la transición al anillo es real y no un fun
 
 **Navegación isla** (como Arbor): `IslandNav` del kit con `FullscreenMenu` (inicio, alianzas, compromiso, taller, talla y
 cita; en el pie, teléfono, WhatsApp y correo), la marca en el centro y «Pedir cita →». Sustituye a la barra a todo el ancho.
+Desde el 21-10-2026, con opciones nuevas del kit:
+- `IslandNav brandAlign="exact"`: la marca, en el centro exacto de la píldora.
+- `FullscreenMenu trigger="burger" cover backdrop="blur" align="center"`:
+  - icono hamburguesa que se cruza en ✕;
+  - el menú llega hasta arriba, de vidrio, con los enlaces centrados en Cormorant.
+- Antes se cortaba: empezaba debajo de la isla y dejaba ver la página por encima. Con `cover` cubre hasta arriba, pero
+  la isla vive dentro del `LightScroll` (`isolation: isolate`, z 1), así que un portal al `body` la tapaba. Con `cover`,
+  el menú se pinta junto a la cabecera, en su mismo contexto de apilamiento; si ahí algo atrapara el `position: fixed`,
+  vuelve al `body`.
+- Con el menú abierto, la `ActionBar` se aparta (`html[data-fsm-open]`).
+- «Inicio» y la marca, en la portada, suben al principio en vez de recargar.
+- En móvil, la cita se queda en «Cita →» para que la marca quepa centrada.
+- La barra de acciones va con `ActionBar soft`: vidrio que se difumina hacia arriba, acciones iguales e iconos con brillo
+  (la cita, en el acento).
 El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco arriba (`--ql-island`).
 
 **Escena de scrollytelling** (sustituye a las dos columnas):
@@ -355,15 +369,82 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
   Todo avanza y retrocede con el scroll; sin soporte o con movimiento reducido, el texto se ve quieto.
 - **Cuadros cortos y cintas** (21-10-2026): el cuadro lleva el rótulo con la temperatura de la luz, la tesis, el servicio con
   su dato y un pie con la llamada y la luz. El número fantasma va fuera, encima y despegado del cuadro.
-- **Cintas, pocas y en pareja** (`Chapter.ribbons`, solo en Elegir, Ajustar y Heredar): el «cómo» en Cormorant 600 muy
-  grande (`min(13vw, 20svh)`), corriendo de lado con el avance del paso (`--r<k>`, de −1 a 1, en el mismo bucle de scroll
-  que la pose). Siempre dos: `back` se pinta antes del lienzo (el anillo pasa por delante) y `front` después (el anillo
-  pasa por detrás). Van a alturas fijas (24 % y 76 %; `flip` las intercambia) y en sentidos contrarios, y el tope de
-  tamaño por alto de pantalla garantiza que no se toquen. La opacidad (`--o<k>`) ya es 0 a medio camino del paso vecino,
-  así que nunca hay cintas de dos capítulos a la vez. El lienzo es transparente (`alpha: true`): basta con el orden de
-  capas. En los capítulos con cintas, el «cómo» completo queda en el cuadro solo para lectores de pantalla (`ui-sr`); en
-  los demás, el cuadro lo cuenta. La palabra gigante en contorno queda solo en el prólogo. En «Heredar», el QR
-  y la ficha de ejemplo se despliegan con `<details>`.
+- **Cuadros de cristal** (21-10-2026): casi transparentes (`--bg` al 26 %; 46 % en móvil), esquinas redondeadas, un
+  desenfoque suave detrás (10–12 px) y un borde de luz muy fino. Sin el filo de oro de antes; los separadores internos, en
+  `--fg` al 8 %.
+- **Prólogo** (`ql-intro`): el manifiesto ya no va en un paso con fondo; va en el escenario, detrás del lienzo. En
+  escritorio ocupa la mitad izquierda y el anillo queda a la derecha; en móvil, la pantalla entera con el anillo delante. `Home` le busca el mayor cuerpo que cabe (búsqueda binaria
+  sobre su caja). Las palabras empiezan en contorno y se rellenan una a una con `--r1` (de r = −0,45 a 0,25). La capa entra
+  cuando se ha ido el titular de la portada y se va antes de que asome el cuadro 01. En el paso queda el texto para
+  lectores de pantalla. Sustituye a la palabra gigante «Quilate» y al «Desliza».
+- **Tamaños**: la piedra de la portada llena casi la pantalla (en escritorio, `head` 1,8 acerca la cámara a 1/1,8 del
+  encuadre de cerca, con una sombra radial amplia bajo el titular para leerlo encima de las facetas; en móvil no se reduce
+  `head` mientras la piedra está sola y queda centrada en la mitad de arriba, llenando el ancho). Los interludios y «Dar
+  forma» se acercan (`zoom` 0,76–0,9; tríos 1,14).
+- **En móvil**: cada paso mide 100svh, así que en reposo el cuadro queda entero encima de la barra de acciones.
+- **Cuadros por detrás del anillo** (`ql-cards`): los cuadros ya no van en los pasos (que quedan como recorrido y ancla
+  del capítulo), sino en una capa del escenario pintada antes del lienzo, así que el anillo pasa por delante. El bucle de
+  scroll de `Home` los mueve 1:1 con el scroll (`translate3d` a la distancia del centro de su paso a la línea media) y los
+  disuelve según esa distancia, como un tilt-shift: nítidos hasta el 8 % del alto, desenfoque de hasta 16 px al 43 % y
+  opacidad entera hasta el 16 % y nula al 46 %. Entran desde abajo desenfocados y se van por arriba igual, por detrás del
+  anillo. Igual en escritorio y en móvil; con movimiento reducido, sin desenfoque. Sustituye a las animaciones
+  `view()` del cuadro, del número fantasma (ahora parallax con `--y`) y del titular palabra a palabra.
+- **El cuadro en reposo, por delante**: a menos del 30 % del alto de la línea media (ya medio disuelto), el cuadro pasa
+  por delante del lienzo (`z-index`). Así, en los encuadres de muy cerca («Cuidar» y «Ajustar», donde el aro llena la
+  pantalla), el aro no tapa el texto. Al entrar y al salir sigue pasando por detrás.
+- **HUD al fondo y sin tocar el cuadro**: las líneas técnicas van por detrás de todo, encima solo de las salas.
+  - Sus radios no se tocan. Si el círculo con su anillo fino y sus cotas (`r + 40`) quedaría a menos de 16 px del cuadro,
+    el anillo y su HUD se apartan hacia el otro lado lo justo (`shiftX`). Se mide con la pantalla real y se suma a `x` en
+    el bucle de scroll; hoy solo lo necesita «Transformar» (radio 295).
+  - Medido con Playwright en los siete cuadros a 1024, 1280, 1440 y 1920 px, y a 390 y 360 px: ningún cuadro toca su HUD.
+- **Grabado solo en «Ajustar»**: en la portada, «Para ti · siempre» aparece cuando la cámara entra a leerlo (sube con
+  `engrave`) y se va con él; en el resto de capítulos el aro va liso. En el configurador, sin pose, se ve siempre.
+- **Niebla al alejarse** (`ringScene.tsx`): lo que se va encogiéndose se disuelve antes en el fondo en vez de quedarse a
+  la vista hasta ser un punto. Pierde opacidad y toma el color de `--bg`, leído del lienzo; en las gemas, con `uFlat` y
+  `uOpacity`.
+  - Los acompañantes del trío desaparecen del todo por debajo del 60 % de su llegada.
+  - En el anillo principal se nublan el aro, la montura, el pavé y las piedras laterales cuando se van y dejan la piedra
+    sola. Pasa en la portada ↔ prólogo (por debajo de la mitad de `solo`) y del acto 1 al 2 («Escuchar» → «Elegir»). Para
+    este último, la pose tiene un valor nuevo, `gem`, que solo lleva el cuadro de «Elegir»; pasada la mitad ya no se ven.
+    La piedra central, nunca.
+- **Temblor en reposo** (arreglado): con pose externa, la escena tiraba de `s.fx` y `s.fe` dos veces por fotograma, hacia
+  `framing` y hacia la pose. El punto de equilibrio dependía de lo que dura cada fotograma, así que con fotogramas
+  irregulares la cámara se acercaba y alejaba sola (y el acercamiento a 1/`head` de la portada lo amplificaba). Ahora,
+  con pose, solo manda la pose. Medido alternando la ralentización de CPU por CDP: en «Heredar» la piedra oscilaba 9,8 px;
+  ahora, 0.
+- **HUD de móvil sobre el detalle**: la escena escribe en `focus` dónde cae en el lienzo el detalle del paso. Es el punto
+  de mira antes del desplazamiento lateral, pero el encuadre de cerca que asome (piedra, grabado, pavé) manda en cuanto
+  pasa del 25 %. En móvil, el HUD se centra ahí (`--fx`, `--fy`). Comprobado en los siete cuadros a 390 px: la piedra,
+  las tres piezas, el grabado, el pavé, el bisel y la piedra de «Heredar» quedan dentro de su círculo.
+- **Cuadros e interludios** (21-10-2026). Cada capítulo es un **cuadro** con un solo anillo a un lado, enseñando el
+  detalle del que habla. Lo sigue un **interludio** largo (240svh) sin cuadro: dos cintas de texto y el anillo haciendo
+  otra cosa en el centro. El recorrido acaba en un interludio. Todo está en `BEATS` (`Site.tsx`): pose, sala, aspecto,
+  pieza y rótulos de cada paso. Los cuadros son los puntos de control anteriores. Composiciones de los interludios:
+
+  | Tras | Composición | El anillo | Cintas (detrás / delante) |
+  |---|---|---|---|
+  | Escuchar | centro | el boceto se hace oro mientras gira | «Una mesa · un cuaderno · una hora» / «Para quién es · cómo vive con las manos» |
+  | Elegir | trío | zafiro, diamante y esmeralda (acompañantes) | «Diamante · zafiro · esmeralda» / «Origen y tratamiento, por escrito» |
+  | Dar forma | frente | el aro de cara, como una «O»; la cinta de detrás asoma por el hueco | «Cera · fundición · lima · pulido» / «Engaste garra a garra» |
+  | Ajustar | centro | la cámara sale del aro y el anillo gira | «Medimos el dedo…» / «Grabado a buril…» |
+  | Cuidar | macro | el pavé, ya limpio, llenando la pantalla | «Ultrasonidos · garras · cierres» / «Lo que sale de aquí vuelve aquí» |
+  | Transformar | centro | la pieza en oro rosa se abre (piedra, bisel y aro) | «Desmontar · recuperar · refinar» / «La piedra de antes, en un anillo de hoy» |
+  | Heredar (final) | trío | los oros de la casa: blanco con halo, amarillo y rosa torsade | «Boceto · certificado · ley · punzón · fecha» / «De mano en mano» |
+
+  - **Poses nuevas**: `trio` (los acompañantes suben a los lados, más atrás y más pequeños) y `face` (el aro se planta
+    de cara, con el giro parado y un balanceo leve).
+  - **Acompañantes**: son el mismo `Ring` en modo acompañante (`companion`), en el mismo lienzo. No mueven la cámara
+    ni las luces (solo las leen), y su sitio lo da el `trio` de la pose principal. Solo en pantallas anchas con ratón; en
+    móvil el trío deja el anillo principal solo.
+  - **Cintas** (`Chapter.interlude`): Cormorant 600, `min(13vw, 20svh)`, siempre en pareja. `back` va detrás del
+    lienzo y `front` delante; alturas fijas, 24 % y 76 % (`flip` las intercambia), y sentidos contrarios. Recorren casi
+    una copia de la frase mientras el interludio cruza (`--r<k>` × 34 %). Se apagan del todo a |r| = 0,45, antes de que
+    asome un cuadro vecino. Medido con Playwright en los 16 pasos y entre cuadro e interludio: nunca coinciden cuadro y
+    cintas.
+  - El «cómo» de cada capítulo queda en su cuadro solo para lectores de pantalla (`ui-sr`); en pantalla lo resumen las
+    cintas.
+  - **En móvil**: los cuadros van abajo y el anillo en la mitad de arriba. En los interludios el anillo baja al centro
+    (`--ilv`, un desplazamiento CSS que no redimensiona el lienzo) y las cintas lo rodean al 34 % y al 66 %.
 - **Velo en los cambios de material** (`ringScene.tsx`, `motionFx.tsx`). Afecta a boceto → piedra → cera → metal, a
   apagado ↔ limpio y a oro amarillo → rosa. La escena no cambia el material a la vista. Cuando cambian `look` o `sel`,
   sube un velo en 0,16 s y hace el cambio arriba del todo (lo que se ve va ese instante por detrás de lo pedido). Luego
@@ -428,6 +509,20 @@ mismo progreso de scroll:
   | Transformar | el bisel nuevo en oro rosa, de cerca |
   | Heredar | montado, de vitrina |
 
+  Entre cuadros van los interludios (ver «Cuadros e interludios»).
+
+- **Encuadres ajustados a mano** (21-10-2026, `BEATS`): portada `head` 1,8 y `y` 0,1; «Elegir» `explode` 0,822; «Ajustar»
+  `y` 0,1 y HUD de radio 220; «Transformar» `x` −0,12 y HUD de 295; «Heredar» `head` 0,92. Son del usuario: no se tocan.
+  Lo que se adaptó alrededor:
+  - `head` por encima de 1 no extrapola la cámara (`ringScene.tsx`): con 1,8 la mira se pasaba de la piedra y la portada
+    salía vacía en escritorio. Ahora la mira se queda en la piedra y la cámara se acerca a 1/`head` de la distancia.
+  - Los rótulos del HUD ya no salen de `r + 26`: con radios grandes caían encima del cuadro. Van a 28 px del borde del
+    cuadro, en el hueco que deja con el anillo, medido en el DOM (`hudX`). Detrás llevan un velo, no una caja: un degradado
+    de `--bg` que se apaga hacia el anillo, difuminado (`ql-veil-soft`), y un filo de oro vertical del lado del cuadro que
+    se dibuja como el resto de cotas. Hace falta porque caen sobre el metal o el pavé. Si el hueco no llega a 180 px, no se pintan. Medido con Playwright a 1024, 1280, 1440
+    y 1920 px: ningún rótulo toca un cuadro.
+  - En móvil, `explode` se reduce cuando hay `head` (solo coinciden en «Elegir»): la piedra subía hacia la cámara y se
+    salía del lienzo estrecho.
 - La pose se interpola con la **posición del scroll** entre los centros de dos capítulos (con suavizado), no con el tiempo:
   hacia atrás deshace exactamente lo mismo, sin saltos. La escena la sigue de cerca para no ir por detrás del gesto.
 - Con movimiento reducido no hay 3D: queda el anillo plano en SVG.

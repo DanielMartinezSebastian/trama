@@ -177,7 +177,23 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm__link:is(:hover, :focus-visible) { color: var(--acc); }
 .ui-fsm__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; font-size: 14px; color: var(--mut); }
 .ui-fsm__foot a { color: inherit; }
-@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
+/* trigger="burger": dos rayas que se cruzan en ✕ */
+.ui-fsm__btn--burger { padding: 10px 6px; }
+.ui-fsm__burger { position: relative; display: block; width: 22px; height: 14px; }
+.ui-fsm__burger i { position: absolute; left: 0; right: 0; top: 2px; height: 1.5px; border-radius: 2px; background: currentColor; transition: transform 0.5s var(--ease-io), top 0.5s var(--ease-io); }
+.ui-fsm__burger i + i { top: 10.5px; }
+.ui-fsm__btn[aria-expanded="true"] .ui-fsm__burger i { top: 6.25px; transform: rotate(45deg); }
+.ui-fsm__btn[aria-expanded="true"] .ui-fsm__burger i + i { transform: rotate(-45deg); }
+/* cover: aunque haya cabecera, el menú llega hasta arriba (la cabecera queda encima) */
+.ui-fsm[data-host][data-cover] { top: 0; padding-top: calc(var(--fsm-top, 0px) + 8px); }
+/* backdrop="blur": vidrio */
+.ui-fsm[data-backdrop="blur"] { background: color-mix(in srgb, var(--bg) 55%, transparent); -webkit-backdrop-filter: blur(28px) saturate(1.2); backdrop-filter: blur(28px) saturate(1.2); }
+/* align="center": enlaces centrados en la tipografía de titulares, más finos; el pie, centrado debajo */
+.ui-fsm[data-align="center"] .ui-fsm__nav { justify-items: center; text-align: center; gap: 0; }
+.ui-fsm[data-align="center"] .ui-fsm__link { justify-content: center; font-family: var(--display, inherit); font-weight: 300; font-size: clamp(38px, min(6.4vw, 9svh), 92px); letter-spacing: -0.01em; line-height: 1.12; }
+.ui-fsm[data-align="center"] .ui-fsm__foot { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; }
+.ui-fsm[data-align="center"] .ui-fsm__foot > span:last-child { justify-content: center; }
+@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link, .ui-fsm__burger i { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
 
 /* ---------- LocalTime ---------- */
 .ui-ltime { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }

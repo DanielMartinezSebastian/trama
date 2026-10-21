@@ -1260,7 +1260,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio) y align="center" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1268,6 +1268,9 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `openLabel` | text | "menu" |
 | `closeLabel` | text | "close" |
 | `note` | text | "Madrid, ES" |
+| `trigger` | `label` · `burger` | "label" |
+| `backdrop` | `solid` · `blur` | "solid" |
+| `align` | `start` · `center` | "start" |
 
 ### Cabecera que se esconde al bajar — `HideOnScroll`
 
@@ -1318,11 +1321,12 @@ Grupos de chips (aria-pressed) con contador, selector de orden, número de resul
 
 ### Navegación «isla» — `IslandNav`
 
-Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla.
+Píldora flotante centrada arriba, con vidrio esmerilado, que agrupa menú, marca y acción (fórmula Belgrade Arbor). Deja pasar los clics fuera de la píldora. Con un FullscreenMenu en `leading`, el menú se abre debajo de la isla (o la cubre hasta arriba con `cover`). Con brandAlign="exact", la marca queda en el centro exacto de la píldora aunque los lados midan distinto (Quilate: hamburguesa a la izquierda y «Pedir cita →» a la derecha).
 
 | prop | tipo | default |
 |---|---|---|
 | `hideOnScroll` | boolean | false |
+| `brandAlign` | `balanced` · `exact` | "balanced" |
 
 - Es position: fixed; aquí va contenida en el recuadro de puntos. En una web real cuelga de la ventana.
 
@@ -1341,13 +1345,14 @@ Pestaña fija pegada al borde de la ventana con el texto en vertical: una llamad
 
 ### Barra de acciones en móvil — `ActionBar`
 
-Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el pie. Por encima de 760 px se oculta (show="mobile").
+Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el pie. Por encima de 760 px se oculta (show="mobile"). Con soft, sin bandeja ni botón relleno: vidrio que se difumina hacia arriba, acciones iguales e iconos con brillo (la principal, en el acento).
 
 | prop | tipo | default |
 |---|---|---|
 | `actions` | text | "Llamar\|tel:+34976000000\|phone\nWhatsApp\|https://wa.me/34600000000\|message\nCómo ll…" |
 | `show` | `mobile` · `always` | "mobile" |
 | `position` | `fixed` · `static` | "static" |
+| `soft` | boolean | false |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "solid" |
 
 - En el catálogo va «en el flujo» para verla en la ficha; en una web, position="fixed" (el valor por defecto).
@@ -2788,4 +2793,4 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
-`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `FullscreenMenu` · `ScrubText` · `IslandNav` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `FullscreenMenu` · `IslandNav` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`

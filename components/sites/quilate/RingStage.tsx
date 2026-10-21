@@ -22,6 +22,8 @@ export type RingStageProps = {
   motionFx?: boolean;
   /** anillos que acompañan al principal cuando la pose pide trío (`trio`) */
   companions?: { sel: RingSel; side: -1 | 1 }[];
+  /** lo rellena la escena: dónde cae en el lienzo lo que enseña la cámara (0–1) */
+  focus?: MutableRefObject<{ x: number; y: number } | null>;
   turntable?: boolean;
   /** arrastrar para girar */
   draggable?: boolean;
@@ -37,7 +39,7 @@ export type RingStageProps = {
  * dibujo plano (SVG) y three solo si el equipo puede, no se pide reducir movimiento y está cerca de la pantalla. Se ilumina
  * con la toma de luz del `LightScroll` que lo contenga (`useLight`).
  */
-export default function RingStage({ sel, look = "final", framing = "ring", pose = null, motionFx = false, companions, turntable = true, draggable = false, height = "60vh", alt, className = "" }: RingStageProps) {
+export default function RingStage({ sel, look = "final", framing = "ring", pose = null, motionFx = false, companions, focus, turntable = true, draggable = false, height = "60vh", alt, className = "" }: RingStageProps) {
   const root = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const lightState = useLight();
@@ -72,7 +74,7 @@ export default function RingStage({ sel, look = "final", framing = "ring", pose 
         <div className={`ql-stage__gl ${ready ? "is-on" : ""}`}>
           <GLBoundary onError={fail}>
             <Suspense fallback={null}>
-              <RingScene sel={sel} look={look} light={lightState?.live ?? null} drag={drag} turntable={turntable} framing={framing} pose={pose} motionFx={motionFx} companions={companions} active={near} onReady={() => setReady(true)} />
+              <RingScene sel={sel} look={look} light={lightState?.live ?? null} drag={drag} turntable={turntable} framing={framing} pose={pose} motionFx={motionFx} companions={companions} focus={focus} active={near} onReady={() => setReady(true)} />
             </Suspense>
           </GLBoundary>
         </div>

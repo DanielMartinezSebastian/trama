@@ -12,6 +12,9 @@ export type IslandNavProps = {
   trailing?: ReactNode;
   /** se esconde al bajar y reaparece al subir */
   hideOnScroll?: boolean;
+  /** marca: balanced = en la columna central de la rejilla (se descentra si un lado es más ancho) · exact = siempre en el
+   * centro de la píldora, aunque los lados midan distinto */
+  brandAlign?: "balanced" | "exact";
   /** distancia al borde superior (px) */
   offset?: number;
   className?: string;
@@ -22,9 +25,9 @@ export type IslandNavProps = {
  * forma compacta (en lugar de una barra a todo el ancho). Deja pasar los clics fuera de la píldora. Con `leading` = `FullscreenMenu`,
  * el menú se abre debajo de la isla. La píldora es una `<header>`, así que cuenta como la cabecera de la página.
  */
-export default function IslandNav({ leading, brand, trailing, hideOnScroll = true, offset = 14, className = "" }: IslandNavProps) {
+export default function IslandNav({ leading, brand, trailing, hideOnScroll = true, brandAlign = "balanced", offset = 14, className = "" }: IslandNavProps) {
   const pill = (
-    <div className="ui-island__pill">
+    <div className="ui-island__pill" data-brand={brandAlign}>
       <div className="ui-island__l">{leading}</div>
       <div className="ui-island__c">{brand}</div>
       <div className="ui-island__r">{trailing}</div>
