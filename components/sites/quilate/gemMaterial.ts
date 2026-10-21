@@ -12,7 +12,17 @@
  * Las piedras de color absorben según la distancia recorrida dentro (Beer–Lambert). La luz de la sección (LightScroll) tiñe el
  * entorno y añade el reflejo del foco. Sin React.
  */
-import { Color, DataTexture, FloatType, NearestFilter, RGBAFormat, ShaderMaterial, Vector3, type BufferGeometry, type Texture } from "three";
+import {
+  Color,
+  DataTexture,
+  FloatType,
+  NearestFilter,
+  RGBAFormat,
+  ShaderMaterial,
+  Vector3,
+  type BufferGeometry,
+  type Texture,
+} from "three";
 
 /** Caras planas como máximo por piedra (el cojín y la marquesa de Blender tienen 169). Van en una textura, no en uniforms. */
 export const MAX_PLANES = 256;
@@ -22,21 +32,26 @@ export function facetPlanes(geo: BufferGeometry): Float32Array {
   const pos = geo.getAttribute("position");
   const idx = geo.getIndex();
   const n = idx ? idx.count : pos.count;
-  const v = (i: number) => new Vector3().fromBufferAttribute(pos, idx ? idx.getX(i) : i);
+  const v = (i: number) =>
+    new Vector3().fromBufferAttribute(pos, idx ? idx.getX(i) : i);
   const center = new Vector3();
-  for (let i = 0; i < pos.count; i++) center.add(new Vector3().fromBufferAttribute(pos, i));
+  for (let i = 0; i < pos.count; i++)
+    center.add(new Vector3().fromBufferAttribute(pos, i));
   center.divideScalar(pos.count);
   const planes: { n: Vector3; d: number }[] = [];
   for (let i = 0; i + 2 < n; i += 3) {
     const a = v(i);
     const b = v(i + 1);
     const c = v(i + 2);
-    const nn = new Vector3().subVectors(b, a).cross(new Vector3().subVectors(c, a));
+    const nn = new Vector3()
+      .subVectors(b, a)
+      .cross(new Vector3().subVectors(c, a));
     if (nn.length() < 1e-9) continue;
     nn.normalize();
     if (nn.dot(new Vector3().subVectors(a, center)) < 0) nn.negate();
     const d = nn.dot(a);
-    if (planes.some((p) => p.n.dot(nn) > 0.9995 && Math.abs(p.d - d) < 1e-4)) continue;
+    if (planes.some((p) => p.n.dot(nn) > 0.9995 && Math.abs(p.d - d) < 1e-4))
+      continue;
     planes.push({ n: nn, d });
     if (planes.length >= MAX_PLANES) break;
   }
@@ -49,11 +64,14 @@ const vertex = /* glsl */ `
 varying vec3 vPos;
 varying vec3 vNormal;
 varying vec3 vCam;
+#include <fog_pars_vertex>
 void main() {
   vPos = position;
   vNormal = normal;
   vCam = (inverse(modelMatrix) * vec4(cameraPosition, 1.0)).xyz;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
 }
 `;
 
@@ -77,6 +95,7 @@ uniform vec3 uFlat;
 uniform float uFlatMix;
 uniform float uDim;
 uniform float uOpacity;
+#include <fog_pars_fragment>
 varying vec3 vPos;
 varying vec3 vNormal;
 varying vec3 vCam;
@@ -158,6 +177,7 @@ void main() {
   color = mix(color, flatc, uFlatMix);
   color *= 1.0 - uDim * 0.7;
   gl_FragColor = vec4(color, uOpacity);
+  #include <fog_fragment>
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
 }
@@ -165,6 +185,8 @@ void main() {
 
 export type GemMaterial = ShaderMaterial & {
   uniforms: {
+    fogColor: { value: Color };
+    fogDensity: { value: number };
     uEnv: { value: Texture | null };
     uPlanes: { value: DataTexture };
     uCount: { value: number };
@@ -191,12 +213,19 @@ export const CORUNDUM_IOR = new Vector3(1.762, 1.77, 1.778);
 /** Berilo (esmeralda): ~1,570–1,582, dispersión 0,014. */
 export const EMERALD_IOR = new Vector3(1.57, 1.575, 1.582);
 
-export function createGemMaterial(env: Texture | null, geo: BufferGeometry, dispersion: boolean): GemMaterial {
+export function createGemMaterial(
+  env: Texture | null,
+  geo: BufferGeometry,
+  dispersion: boolean,
+): GemMaterial {
   const mat = new ShaderMaterial({
     vertexShader: vertex,
     fragmentShader: fragment,
+    fog: true,
     toneMapped: true,
     uniforms: {
+      fogColor: { value: new Color() },
+      fogDensity: { value: 0 },
       uEnv: { value: env },
       uPlanes: { value: planeTexture(new Float32Array(MAX_PLANES * 4)) },
       uCount: { value: 0 },
@@ -215,6 +244,7 @@ export function createGemMaterial(env: Texture | null, geo: BufferGeometry, disp
       uOpacity: { value: 1 },
     },
   }) as GemMaterial;
+  mat.userData.postFxGem = true;
   setGemGeometry(mat, geo);
   return mat;
 }
@@ -232,6 +262,7 @@ export function setGemGeometry(mat: GemMaterial, geo: BufferGeometry) {
   mat.uniforms.uPlanes.value.dispose();
   mat.uniforms.uPlanes.value = planeTexture(planes);
   let count = 0;
-  for (let i = 0; i < MAX_PLANES; i++) if (planes[i * 4] || planes[i * 4 + 1] || planes[i * 4 + 2]) count = i + 1;
+  for (let i = 0; i < MAX_PLANES; i++)
+    if (planes[i * 4] || planes[i * 4 + 1] || planes[i * 4 + 2]) count = i + 1;
   mat.uniforms.uCount.value = count;
 }

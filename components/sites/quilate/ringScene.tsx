@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+
 import {
   BoxGeometry,
   BufferGeometry as Geometry,
@@ -694,13 +695,13 @@ function Ring({ sel: selIn, look: lookIn, light, drag, turntable, framing, pose,
   const gemEnv = useGemEnvironment();
   const mount = useRef<Group>(null);
   const paveRef = useRef<Group>(null);
-  const mats = useMemo(
-    () => ({
-      metal: new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15, clearcoat: 0.3, clearcoatRoughness: 0.2 }),
-      prong: new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15 }),
-    }),
-    [],
-  );
+  const mats = useMemo(() => {
+    const metal = new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15, clearcoat: 0.3, clearcoatRoughness: 0.2 });
+    const prong = new MeshPhysicalMaterial({ metalness: 1, roughness: 0.15 });
+    metal.userData.postFxRing = true;
+    prong.userData.postFxRing = true;
+    return { metal, prong };
+  }, []);
   const geos = useMemo(() => ({ prong: new CylinderGeometry(1, 1, 1, 10, 1), flat: new BoxGeometry(1, 1, 1), tip: new SphereGeometry(1, 14, 10), melee: stoneGeometry("redonda", 0.045) }), []);
   useEffect(
     () => () => {
