@@ -423,3 +423,12 @@
   .ql-cfg { padding-top: var(--ql-island); }
   .ql-cfg__panel { padding-top: clamp(24px, 4vw, 40px) !important; }
 }
+
+/* fin del recorrido sin corte: la barra de progreso se apaga al llegar al final y el escenario se enmascara por abajo
+   (suave siempre y largo en el último tramo): se ve a través el fondo real de la web, con su grano y sus brillos, sin borde */
+.ql-story__bar { opacity: clamp(0, calc((1 - var(--story-p, 0)) * 12), 0.8); }
+.ql-story__sticky {
+  --fade: calc(12vh + var(--story-end, 0) * 48vh);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade)), rgb(0 0 0 / 0.45) calc(100% - var(--fade) * 0.45), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade)), rgb(0 0 0 / 0.45) calc(100% - var(--fade) * 0.45), transparent);
+}

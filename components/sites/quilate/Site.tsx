@@ -430,6 +430,9 @@ function Home() {
       // peso de cada escena (fondo y líneas técnicas): la actual se apaga mientras la siguiente se enciende, con el mismo t
       for (let k = 0; k < POSES.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
       st?.setProperty("--ring-x", p.x.toFixed(3));
+      // cuánto queda del último paso: el fundido inferior crece en el tramo final
+      const last = centers[centers.length - 1];
+      st?.setProperty("--story-end", Math.min(1, Math.max(0, (mid - last) / (innerHeight * 0.5))).toFixed(3));
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(update);
