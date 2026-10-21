@@ -306,26 +306,20 @@ Taller de joyería ficticio en Valencia. Guía visual G1 «lujo tranquilo» en o
 | Tu talla | Medidor en pantalla |
 | Cita | Motivo (también por `?motivo=`), taller o videollamada, `DatePicker` con huecos y festivos, datos mínimos, la pieza que se lleva y el horario |
 
-**Portada: el diamante y el haz** (`PrismHero` + `prismScene.tsx`). Se inspira en los ejemplos de pmndrs
-[diamond-refraction](https://pmndrs.github.io/examples/diamond-refraction/) y
-[nextjs-prism](https://pmndrs.github.io/examples/nextjs-prism/), sin drei ni postprocessing. Lo que los hace espectaculares
-y aquí se reproduce:
-- **Entorno HDR real con mucho contraste**: el mismo que el ejemplo, Aerodynamics Workshop de Poly Haven (CC0, 1,5 MB),
-  pasado a cubemap para el shader de la gema.
-- **ior alto con aberración por canal**: 2,65 · 2,75 · 2,88, como el `ior 2.75` del ejemplo.
-- **Sin mapeo tonal en la piedra**: los brillos pasan de 1.
-- **Bloom con umbral 1** usando `UnrealBloomPass`, que ya viene con three: brillan los destellos y el haz, nada más.
-- **El brillante de 57 facetas** del kit de Blender.
-- **El haz**: luz blanca cálida del puntero al diamante, que sin ratón describe un arco solo. Lleva un destello en el
-  impacto y unos rayos blancos de salida (la luz que devuelve la piedra), **sin arcoíris**, que nunca bajan hacia el titular.
-- **La cabecera** es el `Hero` del kit (centrado, sin fondo, variante `minimal`) bajo el diamante, con la serifa de la casa.
-  - Claim: «Entra por una cara. Sale por cincuenta y siete.»
-  - Insignias: valoración, precio cerrado y taller propio.
-- **Fusión con el recorrido**:
-  - la portada mide dos pantallas y va encima del recorrido, con margen negativo;
-  - en la segunda pantalla el diamante baja, se encoge y **aterriza exactamente en la piedra del anillo** del prólogo;
-  - el texto se desvanece y se desenfoca;
-  - la portada se vuelve transparente justo al aterrizar.
+**Portada: la piedra sola, primer paso del recorrido.** Ya no es una escena aparte: es el paso 0 del mismo escenario 3D, con
+la misma luz y el mismo fondo. Así la transición al anillo es real y no un fundido entre dos lienzos.
+- **Arranque**: el brillante del anillo, sin nada más, centrado y de cerca (pose `solo: 1`, `head: 0.72`, `y: 0.17`) sobre
+  el terciopelo negro de la primera sala.
+- **Al bajar**: el aro, la montura y el pavé, que estaban fuera de cuadro (abajo y pequeños), llegan volando y se montan
+  alrededor de la piedra, mientras la cámara se abre al anillo entero y el fondo pasa al escaparate.
+- **La cabecera** es el `Hero` del kit, centrado bajo la piedra, con el claim «Entra por una cara. Sale por cincuenta y
+  siete.»; se desvanece con `animation-timeline: view()` al salir.
+- **Las gemas brillan como en los ejemplos de pmndrs** (diamond-refraction): todas ven el **HDR real** (Aerodynamics
+  Workshop, Poly Haven, CC0), cargado una vez y pasado a cubemap; usan ior alto con aberración por canal (2,65 · 2,75 · 2,88)
+  y van sin mapeo tonal. Así brillan también la piedra central, el pavé y el halo en todos los capítulos, no solo en la
+  portada.
+- **Sin haces visibles**: el usuario los descartó. La luz del ratón sigue moviendo el foco de la escena.
+- **Cuadros de texto**: entran antes (`animation-range: entry 0% exit 100%`, opacidad completa desde el 10 %).
 
 **Escena de scrollytelling** (sustituye a las dos columnas):
 - **Escenario fijo a pantalla completa** con el anillo, la palabra del capítulo gigante en contorno (se recompone letra a

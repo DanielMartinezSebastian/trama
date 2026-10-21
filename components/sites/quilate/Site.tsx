@@ -24,7 +24,6 @@ import { phosphorLight } from "@/lib/ui/icons-phosphor-light";
 import { photo } from "@/lib/sites/photos";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
-import PrismHero from "./PrismHero";
 import RingStage, { RingFlat } from "./RingStage";
 import type { RingPose } from "./ringScene";
 import {
@@ -353,20 +352,22 @@ const HERO_RING: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo", setting: "
  * scroll (no con el tiempo), así que hacia atrás deshace exactamente lo mismo.
  */
 const POSES: RingPose[] = [
-  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0.2, zoom: 0.85 }, // prólogo: el anillo entero, grande, a la derecha del manifiesto
-  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0.7, x: 0.22, zoom: 1 }, // escuchar: el boceto, a la derecha
-  { explode: 0.35, head: 0.5, engrave: 0, pave: 0, yaw: 1.1, x: -0.2, zoom: 1 }, // elegir: la piedra sale de la cesta, de cerca
-  { explode: 1, head: 0, engrave: 0, pave: 0, yaw: 1.9, x: 0.2, zoom: 0.95 }, // dar forma: despiece en cera
-  { explode: 0, head: 0, engrave: 1, pave: 0, yaw: 0, x: -0.18, zoom: 1 }, // ajustar: dentro del aro, el grabado
-  { explode: 0, head: 0, engrave: 0, pave: 1, yaw: 0.35, x: 0.2, zoom: 1 }, // cuidar: el hombro, pavé y garras de cerca
-  { explode: 0.6, head: 0, engrave: 0, pave: 0, yaw: 3.4, x: -0.2, zoom: 1 }, // transformar: se abre y se rehace
-  { explode: 0, head: 0.22, engrave: 0, pave: 0, yaw: 4.4, x: 0.2, zoom: 1 }, // heredar: montado, de vitrina
+  { explode: 0, head: 0.72, engrave: 0, pave: 0, yaw: 0, x: 0, y: 0.17, zoom: 1, solo: 1 }, // portada: solo la piedra, de cerca y centrada
+  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0, x: 0.2, y: 0, zoom: 0.85, solo: 0 }, // prólogo: el anillo entero, grande, a la derecha del manifiesto
+  { explode: 0, head: 0, engrave: 0, pave: 0, yaw: 0.7, x: 0.22, y: 0, zoom: 1, solo: 0 }, // escuchar: el boceto, a la derecha
+  { explode: 0.35, head: 0.5, engrave: 0, pave: 0, yaw: 1.1, x: -0.2, y: 0, zoom: 1, solo: 0 }, // elegir: la piedra sale de la cesta, de cerca
+  { explode: 1, head: 0, engrave: 0, pave: 0, yaw: 1.9, x: 0.2, y: 0, zoom: 0.95, solo: 0 }, // dar forma: despiece en cera
+  { explode: 0, head: 0, engrave: 1, pave: 0, yaw: 0, x: -0.18, y: 0, zoom: 1, solo: 0 }, // ajustar: dentro del aro, el grabado
+  { explode: 0, head: 0, engrave: 0, pave: 1, yaw: 0.35, x: 0.2, y: 0, zoom: 1, solo: 0 }, // cuidar: el hombro, pavé y garras de cerca
+  { explode: 0.6, head: 0, engrave: 0, pave: 0, yaw: 3.4, x: -0.2, y: 0, zoom: 1, solo: 0 }, // transformar: se abre y se rehace
+  { explode: 0, head: 0.22, engrave: 0, pave: 0, yaw: 4.4, x: 0.2, y: 0, zoom: 1, solo: 0 }, // heredar: montado, de vitrina
 ];
 /**
  * El entorno de cada paso (como las escenas de Oryzo): detrás del anillo, una sala distinta que se funde con la siguiente al
  * ritmo del scroll. Fotos reales desenfocadas (escaparate, taller, vitrina) o luz pintada (terciopelo, caja de luz, rasante).
  */
 const SCENES: { kind: "photo" | "velvet" | "rake" | "lightbox" | "lamp"; photo?: number }[] = [
+  { kind: "velvet" }, // portada: terciopelo negro y un foco sobre la piedra
   { kind: "photo", photo: 13 }, // prólogo: el escaparate
   { kind: "lamp", photo: 5 }, // escuchar: la mesa con la lámpara
   { kind: "velvet" }, // elegir: terciopelo negro y un foco
@@ -378,11 +379,13 @@ const SCENES: { kind: "photo" | "velvet" | "rake" | "lightbox" | "lamp"; photo?:
 ];
 /** Líneas técnicas alrededor del anillo en los pasos que miden algo (cota circular, mira y datos). */
 const HUD: { step: number; r: number; labels: string[] }[] = [
-  { step: 2, r: 168, labels: ["Ø 6,5 mm", "1,00 ct · brillante", "57 facetas · GIA"] },
-  { step: 4, r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "750 · QLT"] },
-  { step: 5, r: 100, labels: ["22 × 1,3 mm", "garras revisadas", "ultrasonidos · 20 min"] },
+  { step: 3, r: 168, labels: ["Ø 6,5 mm", "1,00 ct · brillante", "57 facetas · GIA"] },
+  { step: 5, r: 120, labels: ["Talla 14", "Ø 17,2 mm · 54 mm", "750 · QLT"] },
+  { step: 6, r: 100, labels: ["22 × 1,3 mm", "garras revisadas", "ultrasonidos · 20 min"] },
 ];
-const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "zoom"] as const;
+const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo"] as const;
+/** los capítulos empiezan en el paso 2 (0 = portada, 1 = prólogo) */
+const FIRST = 2;
 const smooth = (t: number) => t * t * (3 - 2 * t);
 /** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
 const words = (t: string) =>
@@ -424,6 +427,7 @@ function Home() {
       // más abiertos: el lienzo es estrecho y una piedra «de cerca» lo llenaría entero
       if (innerWidth < 900) {
         p.x = 0;
+        p.y = 0;
         p.head *= 0.3;
         p.pave *= 0.55;
         p.zoom *= 1.08;
@@ -457,7 +461,7 @@ function Home() {
           if (!e.isIntersecting) return;
           const i = Number(e.target.getAttribute("data-step"));
           setStep(i);
-          setActive(Math.max(0, i - 1));
+          setActive(Math.max(0, i - FIRST));
         }),
       { rootMargin: "-50% 0px -50% 0px" },
     );
@@ -474,27 +478,11 @@ function Home() {
     else scrollTo({ top: y, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
   const ch = CHAPTERS[active];
-  const look = step === 0 ? "final" : ch.id === "cuidar" && clean ? "final" : ch.look;
+  const look = step < FIRST ? "final" : ch.id === "cuidar" && clean ? "final" : ch.look;
   const sel = ch.id === "transformar" ? { ...HERO_RING, metal: "rosa" as const, head: "cabeza-bisel", shank: "aro-afinado" } : HERO_RING;
 
   return (
     <>
-      <PrismHero landing={{ x: 0.25, y: 0.36 }} scaleTo={0.5}>
-        <Hero
-          align="center"
-          backdrop="none"
-          variant="minimal"
-          kicker={`Taller de joyería · ${BRAND.city}`}
-          title="Entra por una cara. Sale por cincuenta y siete."
-          subtitle="Cada faceta de un brillante decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal y la mano que lo monta."
-          primaryCta="Pedir cita en el taller"
-          primaryHref={href("cita")}
-          secondaryCta="Diseñar un solitario"
-          secondaryHref={href("compromiso")}
-          badges={`★ ${BRAND.rating.value.toLocaleString("es-ES").replace(",", "\\,")} · ${BRAND.rating.count} reseñas en Google, Precio cerrado antes de empezar, Taller propio`}
-          className="ql-prism__hero"
-        />
-      </PrismHero>
 
       <section className="ql-story" aria-label="Lo que hacemos, en siete servicios">
         <div className="ql-story__sticky" ref={sticky}>
@@ -518,16 +506,16 @@ function Home() {
               </g>
             ))}
           </svg>
-          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={step === 0 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
+          <RingStage sel={sel} look={look} pose={pose} height="100%" alt={step === 0 ? "Un diamante talla brillante, de cerca, girando bajo un foco" : step === 1 ? "El anillo de la casa, entero" : `El anillo en el capítulo «${ch.title}»`} className="ql-story__ring" />
           {/* la palabra del capítulo, gigante y detrás de todo, se recompone letra a letra al cambiar de paso */}
-          <p key={step} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
-            {(step === 0 ? "Quilate" : ch.title).split("").map((l, i) => (
+          <p key={step} hidden={step === 0} className="ql-story__word" data-side={POSES[step].x > 0 ? "left" : "right"} aria-hidden>
+            {(step < FIRST ? "Quilate" : ch.title).split("").map((l, i) => (
               <span key={i} style={{ "--i": i } as CSSProperties}>{l === " " ? " " : l}</span>
             ))}
           </p>
           <nav className="ql-story__rail" aria-label="Capítulos">
             {CHAPTERS.map((c, i) => (
-              <button key={c.id} type="button" aria-current={step === i + 1 ? "step" : undefined} onClick={() => go(i + 1)}>
+              <button key={c.id} type="button" aria-current={step === i + FIRST ? "step" : undefined} onClick={() => go(i + FIRST)}>
                 <span>{c.k}</span> <b>{c.title}</b>
               </button>
             ))}
@@ -535,12 +523,30 @@ function Home() {
           <span className="ql-story__bar" aria-hidden />
         </div>
         <ol className="ql-story__steps" ref={list}>
-          <li data-step={0} data-light="vitrina" className="ql-step ql-step--intro" data-side="left">
+          <li data-step={0} data-light="vitrina" className="ql-step ql-step--hero" data-side="center">
+            <div className="ql-step__hero">
+            <Hero
+              align="center"
+              backdrop="none"
+              variant="minimal"
+              kicker={`Taller de joyería · ${BRAND.city}`}
+              title="Entra por una cara. Sale por cincuenta y siete."
+              subtitle="Cada faceta de un brillante decide por dónde sale la luz. Nosotros decidimos el resto: la piedra, el metal y la mano que lo monta."
+              primaryCta="Pedir cita en el taller"
+              primaryHref={href("cita")}
+              secondaryCta="Diseñar un solitario"
+              secondaryHref={href("compromiso")}
+              badges={`★ ${BRAND.rating.value.toLocaleString("es-ES").replace(",", "\\,")} · ${BRAND.rating.count} reseñas en Google, Precio cerrado antes de empezar, Taller propio`}
+              className="ql-step__herokit"
+            />
+            </div>
+          </li>
+          <li data-step={1} data-light="vitrina" className="ql-step ql-step--intro" data-side="left">
             <ScrubText as="p" className="ql-step__manifesto">No te contamos nuestra historia. Te enseñamos lo que hacemos con la tuya: siete gestos, siete luces, un anillo que se abre y se vuelve a cerrar delante de ti.</ScrubText>
             <p className="ql-step__hint" aria-hidden>Desliza</p>
           </li>
           {CHAPTERS.map((c, i) => (
-            <li key={c.id} id={c.id} data-step={i + 1} data-light={c.light} className="ql-step" data-side={POSES[i + 1].x > 0 ? "left" : "right"}>
+            <li key={c.id} id={c.id} data-step={i + FIRST} data-light={c.light} className="ql-step" data-side={POSES[i + FIRST].x > 0 ? "left" : "right"}>
               <div className="ql-step__card">
                 <span className="ql-step__num" aria-hidden>{c.k}</span>
                 <p className="ql-chapter__k">{c.k} · {c.title}</p>

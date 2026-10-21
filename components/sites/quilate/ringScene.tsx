@@ -7,6 +7,7 @@ import {
   BufferGeometry as Geometry,
   AdditiveBlending,
   CanvasTexture,
+  EquirectangularReflectionMapping,
   BackSide,
   SRGBColorSpace,
   ShaderMaterial,
@@ -38,6 +39,7 @@ import {
 } from "three";
 import { kelvinToHex, type LightCue } from "@/lib/ui/light";
 import { CORUNDUM_IOR, DIAMOND_IOR, EMERALD_IOR, createGemMaterial, setGemGeometry, type GemMaterial } from "./gemMaterial";
+import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
 import { FONTS, KIT_BASE, STONE_PIECE, kitPiece, metalOf, stoneOf, type RingSel, type Shape } from "./ring";
 import { anchorsOf, loadPiece, type Piece } from "./pieces";
 
@@ -71,7 +73,36 @@ export type RingPose = {
   x: number;
   /** distancia de la cámara en el plano general (1 = normal, menos = más cerca) */
   zoom: number;
+  /** dónde cae el anillo en vertical, en fracción del alto desde el centro (positivo = más arriba) */
+  y: number;
+  /** 1 = solo la piedra (aro, montura y pavé fuera de cuadro, debajo); al bajar a 0 llegan y se montan alrededor */
+  solo: number;
 };
+
+/** El HDR de estudio (Aerodynamics Workshop, Poly Haven, CC0) como cubemap: lo que ven las gemas trazadas. */
+const HDR = "/models/hdr/aerodynamics_workshop_1k.hdr";
+export function useHdrCube() {
+  const gl = useThree((s) => s.gl);
+  const [cube, setCube] = useState<Texture | null>(null);
+  useEffect(() => {
+    let rt: WebGLCubeRenderTarget | null = null;
+    let live = true;
+    new HDRLoader().load(HDR, (tex) => {
+      if (!live) return tex.dispose();
+      tex.mapping = EquirectangularReflectionMapping;
+      rt = new WebGLCubeRenderTarget(512, { type: HalfFloatType }).fromEquirectangularTexture(gl, tex);
+      tex.dispose();
+      setCube(rt.texture);
+    });
+    return () => {
+      live = false;
+      rt?.dispose();
+    };
+  }, [gl]);
+  return cube;
+}
+/** Diamante «de escaparate»: ior alto y canales separados (como el ior 2.75 del ejemplo de pmndrs) para que el fuego se vea. */
+const SHOW_DIAMOND_IOR = new Vector3(2.65, 2.75, 2.88);
 
 export type RingSceneProps = {
   sel: RingSel;
@@ -600,7 +631,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
   const scene = useThree((s) => s.scene);
   const ready = useRef(false);
   const spin = useRef(0.6);
-  const k = useRef({ fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
+  const k = useRef({ py: 0, so: 0, fp: 0, px: 0, zm: 1, ex: 0, yaw: 0, fe: 0, y: 0, s: 1, band: 1, rough: 0, env: 1, op: 1, wax: 0, dim: 0, fx: 0 });
 
   const hammer = useMemo(() => hammerNormals(), []);
   const gemEnv = useGemEnvironment();
@@ -682,6 +713,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
 
   // gemas con trazado de rayos: la central (cambia de talla), las laterales de la trilogía y las de pavé y halo
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
+  const hdr = useHdrCube();
   const gems = useMemo(
     () => ({
       stone: createGemMaterial(gemEnv, stone, !coarse),
@@ -693,6 +725,13 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     }),
     [gemEnv, side, geos.melee, coarse], // eslint-disable-line react-hooks/exhaustive-deps
   );
+
+  useEffect(() => {
+    for (const g of Object.values(gems)) {
+      g.uniforms.uEnv.value = hdr ?? gemEnv;
+      g.toneMapped = !hdr;
+    }
+  }, [gems, hdr, gemEnv]);
 
   // piezas del kit modelado en Blender: aro, cabeza y su piedra, melé de pavé y halo, laterales de la trilogía
   const kitShank = usePiece(sel.shank || undefined);
@@ -766,6 +805,8 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       s.fp = lerp(s.fp, P.pave, kp);
       s.px = lerp(s.px, P.x, kp);
       s.zm = lerp(s.zm, P.zoom, kp);
+      s.so = lerp(s.so, P.solo, kp);
+      s.py = lerp(s.py, P.y, kp);
     } else {
       s.ex = lerp(s.ex, 0, kk);
       s.yaw = lerp(s.yaw, 0, kk);
@@ -804,7 +845,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       const peak = Math.max(u.uAbsorb.value.r, u.uAbsorb.value.g, u.uAbsorb.value.b);
       u.uAbsorb.value.multiplyScalar(1 / peak);
       u.uAbsorbK.value = colored ? 1.6 : 0;
-      u.uIor.value.copy(key === "melee" || diamond ? DIAMOND_IOR : sel.stone === "esmeralda" ? EMERALD_IOR : CORUNDUM_IOR);
+      u.uIor.value.copy(key === "melee" || diamond ? (hdr ? SHOW_DIAMOND_IOR : DIAMOND_IOR) : sel.stone === "esmeralda" ? EMERALD_IOR : CORUNDUM_IOR);
       u.uFlat.value.copy(wire ? SKETCH : WAX);
       u.uFlatMix.value = Math.max(s.wax, wire ? 1 : 0);
       u.uDim.value = s.dim;
@@ -870,7 +911,8 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
         const u = g.uniforms;
         // el tinte de la luz se suaviza en la piedra: un diamante incoloro no debe leerse como piedra de color
         u.uTint.value.copy(tint).lerp(WHITE, 0.6);
-        u.uEnvI.value = (0.55 + c.softness * 0.35) * c.intensity;
+        // con el HDR la piedra ve un estudio real: menos multiplicador (si no, se quema)
+        u.uEnvI.value = (hdr ? 0.5 + c.softness * 0.25 : 0.55 + c.softness * 0.35) * c.intensity;
         u.uKeyDir.value.copy(lights.key.position).normalize();
         u.uKeyColor.value.copy(tint);
         u.uKeyI.value = (1 - c.softness) * 6 * c.intensity;
@@ -892,7 +934,12 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     // el eje de giro se inclina hacia quien mira: la cabeza (y sus piedras) queda de cara a la cámara
     g.rotation.x = lerp(lerp(0.62, 0.85, s.fx), 0.3, s.fe);
     const bm = bandMesh.current;
-    const hide = Math.max(0.001, s.band);
+    // «solo»: el aro, la montura y el pavé están fuera (pequeños y abajo) y llegan volando a montarse alrededor de la piedra
+    const arrive = 1 - s.so;
+    const hide = Math.max(0.001, s.band * arrive);
+    if (bm) bm.position.y = -s.so * 1.6;
+    if (paveRef.current) paveRef.current.position.y = -s.so * 1.6;
+    if (mount.current) mount.current.position.y = -s.so * 0.9;
     if (bm) {
       bm.visible = s.band > 0.02;
       bm.scale.setScalar(hide);
@@ -903,7 +950,7 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
       paveRef.current.scale.setScalar(hide * (1 + s.ex * 0.12));
     }
     // despiece: la cabeza sube del aro y la piedra sale de la cabeza
-    if (engraveMesh.current) engraveMesh.current.visible = s.band > 0.02;
+    if (engraveMesh.current) engraveMesh.current.visible = s.band > 0.02 && s.so < 0.5;
     if (headGroup.current) headGroup.current.position.y = s.ex * 0.5;
     if (stoneLift.current) stoneLift.current.position.y = (s.ex * 0.55) / (useKitHead ? Math.cbrt(sel.carat) : 1);
     if (mount.current) {
@@ -933,13 +980,15 @@ function Ring({ sel, look, light, drag, turntable, framing, pose, onReady }: Omi
     camera.position.lerp(shoulder.clone().addScaledVector(outward, 1.7).add(new Vector3(0, 0.35, 1.6)), s.fp);
     aim.lerp(shoulder, s.fp);
     // el anillo cae a un lado de la pantalla: la cámara y su punto de mira se desplazan en paralelo hacia el otro
-    if (Math.abs(s.px) > 1e-3) {
+    if (Math.abs(s.px) > 1e-3 || Math.abs(s.py) > 1e-3) {
       const dir = new Vector3().subVectors(aim, camera.position);
       const dist = dir.length();
       const right = new Vector3().crossVectors(dir, new Vector3(0, 1, 0)).normalize();
+      const up = new Vector3().crossVectors(right, dir).normalize();
       const cam = camera as unknown as { fov: number; aspect: number };
-      const halfW = dist * Math.tan(((cam.fov || 30) * Math.PI) / 360) * (cam.aspect || 1);
-      const shift = right.multiplyScalar(-s.px * 2 * halfW);
+      const halfH = dist * Math.tan(((cam.fov || 30) * Math.PI) / 360);
+      const halfW = halfH * (cam.aspect || 1);
+      const shift = right.multiplyScalar(-s.px * 2 * halfW).addScaledVector(up, -s.py * 2 * halfH);
       camera.position.add(shift);
       aim.add(shift);
     }

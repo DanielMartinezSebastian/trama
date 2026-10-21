@@ -257,7 +257,7 @@
 
 @supports (animation-timeline: view()) {
   /* el cuadro entra desde su lado, se queda y sale al revés: todo con la vista del paso, reversible */
-  .ql-step__card { animation: ql-card linear both; animation-timeline: view(); animation-range: entry 5% exit 95%; }
+  .ql-step__card { animation: ql-card linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
   .ql-step[data-side="right"] .ql-step__card { --from: 60px; }
   .ql-step[data-side="left"] .ql-step__card { --from: -60px; }
   .ql-step__num { animation: ql-num linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
@@ -265,7 +265,7 @@
 }
 @keyframes ql-card {
   0% { opacity: 0; transform: translateX(var(--from, 0)) translateY(40px); }
-  22%, 78% { opacity: 1; transform: none; }
+  10%, 86% { opacity: 1; transform: none; }
   100% { opacity: 0; transform: translateY(-40px); }
 }
 @keyframes ql-num { from { transform: translateY(60px); } to { transform: translateY(-60px); } }
@@ -407,39 +407,23 @@
   .ql-scene { transform: none; }
 }
 
-/* ---------- portada: el diamante y el haz (PrismHero) ----------
-   Dos pantallas de alto con el escenario fijo: la primera es la portada; en la segunda el diamante baja al anillo del
-   recorrido (--hero-p 0→1), el texto se desvanece y se desenfoca, y el fondo pasa al del recorrido. */
-/* la portada se monta encima del recorrido (margen negativo): el diamante aterriza en la piedra del anillo y la portada se
-   vuelve transparente justo entonces, sin corte entre escenas */
-.ql-prism { position: relative; z-index: 3; height: calc(200svh - 2 * var(--ql-head)); margin-bottom: calc((200svh - 2 * var(--ql-head)) * -1); pointer-events: none; }
-.ql-prism__sticky { position: sticky; top: var(--ql-head); height: calc(100svh - var(--ql-head)); overflow: hidden; }
-.ql-prism__sticky::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; opacity: clamp(0, calc((1 - var(--hero-p, 0)) * 4), 1);
-  background: radial-gradient(70% 60% at 65% 45%, #241c15, var(--bg) 70%);
+/* ---------- portada: el primer paso del recorrido ----------
+   La piedra sola, de cerca, en el mismo escenario que el resto (una sola escena 3D): al bajar llegan el aro y la montura. */
+.ql-step--hero { min-height: calc(100svh - var(--ql-head)); align-items: end; justify-items: center; padding-bottom: clamp(16px, 5vh, 56px); }
+.ql-step__hero { pointer-events: auto; width: 100%; display: grid; justify-items: center; }
+.ql-step__herokit.ui-hero { padding: 0 var(--st-gutter); background: none; }
+.ql-step__herokit .ui-hero__inner { max-width: 860px; gap: 14px; }
+.ql-step__herokit h1 { font-family: var(--display); font-weight: 300; font-size: clamp(38px, 5.2vw, 76px); line-height: 1; letter-spacing: -0.01em; text-wrap: balance; }
+.ql-step__herokit p { max-width: 56ch; }
+@supports (animation-timeline: view()) {
+  /* el titular de la portada se va desvaneciendo al bajar (la piedra se queda y llega el anillo) */
+  .ql-step__hero { animation: ql-hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
 }
-.ql-prism__stage { position: absolute; inset: 0; opacity: clamp(0, calc((1 - var(--hero-p, 0)) * 12), 1); }
-.ql-prism__copy {
-  position: absolute; left: 0; right: 0; bottom: clamp(12px, 4vh, 48px); z-index: 2; display: grid; justify-items: center;
-  opacity: calc(1 - var(--hero-p, 0) * 1.6); transform: translateY(calc(var(--hero-p, 0) * -60px)); filter: blur(calc(var(--hero-p, 0) * 10px));
-  pointer-events: auto;
-}
-/* el Hero del kit, ajustado a la casa: titular en la serifa fina, centrado bajo el diamante, sin fondo */
-.ql-prism__hero.ui-hero { padding: 0 var(--st-gutter); background: none; }
-.ql-prism__hero .ui-hero__inner { max-width: 860px; gap: 14px; }
-.ql-prism__hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(38px, 5.2vw, 76px); line-height: 1; letter-spacing: -0.01em; text-wrap: balance; }
-.ql-prism__hero p { max-width: 56ch; }
-/* el recorrido empieza una pantalla más abajo: su prólogo llega cuando la portada ya se ha fundido */
-.ql-prism + .ql-story .ql-story__steps { padding-top: calc(100svh - var(--ql-head)); }
-.ql-prism__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease-out, ease); }
-.ql-prism__gl.is-on { opacity: 1; }
-.ql-prism__flat { position: absolute !important; left: 50%; top: 6%; transform: translateX(-50%); width: min(46vh, 60vw) !important; height: auto !important; aspect-ratio: 1; }
+@keyframes ql-hero-out { to { opacity: 0; transform: translateY(-40px); filter: blur(8px); } }
 @media (max-width: 899px) {
-  .ql-prism__copy { bottom: calc(92px + env(safe-area-inset-bottom)); }
-  .ql-prism__hero h1 { font-size: clamp(32px, 9vw, 44px); }
-  .ql-prism__hero p { font-size: 14px; }
-  .ql-prism__hero .ui-hero__trust { display: none; }
+  .ql-step--hero { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .ql-step__herokit h1 { font-size: clamp(32px, 9vw, 44px); }
+  .ql-step__herokit p { font-size: 14px; }
+  .ql-step__herokit .ui-hero__trust { display: none; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .ql-prism__copy { filter: none; transform: none; }
-}
+@media (prefers-reduced-motion: reduce) { .ql-step__hero { animation: none; } }
