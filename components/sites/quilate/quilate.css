@@ -497,8 +497,8 @@
 .ql-paths .ui-xpan__txt b { font-family: var(--display); font-weight: 300; font-size: clamp(26px, 2.6vw, 40px); letter-spacing: -0.01em; }
 /* galería: recorrido horizontal con fotos que se descubren, alternando vertical y apaisada, con su paso numerado */
 .ql-gal { padding-top: clamp(48px, 8vw, 110px); }
-.ql-gal__panel { margin: 0; display: grid; gap: 14px; align-content: center; width: min(34vw, 460px); }
-.ql-gal__panel:not([data-tall]) { width: min(46vw, 620px); }
+.ql-gal__panel { margin: 0; display: grid; gap: 14px; align-content: center; width: min(36vw, 52svh, 520px); }
+.ql-gal__panel:not([data-tall]) { width: min(52vw, 80svh, 760px); }
 .ql-gal__panel .ui-imgr, .ql-gal__panel img { border-radius: clamp(12px, 1.2vw, 18px); overflow: hidden; }
 .ql-gal__panel figcaption { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; align-items: baseline; }
 .ql-gal__n { grid-row: span 2; font-family: var(--display); font-size: 44px; font-weight: 300; line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 70%, transparent); }

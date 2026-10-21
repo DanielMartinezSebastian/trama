@@ -186,8 +186,11 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm__btn[aria-expanded="true"] .ui-fsm__burger i + i { transform: rotate(-45deg); }
 /* cover: aunque haya cabecera, el menú llega hasta arriba (la cabecera queda encima) */
 .ui-fsm[data-host][data-cover] { top: 0; padding-top: calc(var(--fsm-top, 0px) + 8px); }
-/* backdrop="blur": vidrio */
-.ui-fsm[data-backdrop="blur"] { background: color-mix(in srgb, var(--bg) 55%, transparent); -webkit-backdrop-filter: blur(28px) saturate(1.2); backdrop-filter: blur(28px) saturate(1.2); }
+/* backdrop="blur": vidrio muy desenfocado que se va haciendo opaco hacia abajo (el pie del menú se lee sobre fondo casi lleno) */
+.ui-fsm[data-backdrop="blur"] {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 52%, transparent), color-mix(in srgb, var(--bg) 60%, transparent) 55%, color-mix(in srgb, var(--bg) 90%, transparent) 82%, color-mix(in srgb, var(--bg) 96%, transparent));
+  -webkit-backdrop-filter: blur(44px) saturate(1.2); backdrop-filter: blur(44px) saturate(1.2);
+}
 /* align="center": enlaces centrados en la tipografía de titulares, más finos; el pie, centrado debajo */
 .ui-fsm[data-align="center"] .ui-fsm__nav { justify-items: center; text-align: center; gap: 0; }
 .ui-fsm[data-align="center"] .ui-fsm__link { justify-content: center; font-family: var(--display, inherit); font-weight: 300; font-size: clamp(38px, min(6.4vw, 9svh), 92px); letter-spacing: -0.01em; line-height: 1.12; }

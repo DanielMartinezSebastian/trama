@@ -152,7 +152,8 @@ export function Shell({ children }: { children: ReactNode }) {
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
           {/* scroll con inercia (Lenis): aceleración y frenada largas, para que el recorrido del anillo se sienta continuo */}
-          <SmoothScroll lerp={0.065} wheelMultiplier={0.85} syncGsap={false} />
+          {/* lerp bajo: la frenada es larga, con mucha cola al soltar la rueda */}
+          <SmoothScroll lerp={0.04} wheelMultiplier={0.85} syncGsap={false} />
           <PointerGlow />
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>
           {/* navegación isla (como Arbor): píldora flotante con menú a pantalla completa, la marca y la cita */}
@@ -532,9 +533,6 @@ function Home() {
         el.style.opacity = a.toFixed(3);
         el.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : "";
         el.style.visibility = a < 0.02 ? "hidden" : "";
-        // entra y sale por detrás del anillo; ya en su sitio (a menos del 30 % del alto, aún medio disuelto) pasa por
-        // delante, para que en los encuadres de muy cerca (el pavé, el grabado) el aro no tape lo que hay que leer
-        el.style.zIndex = d < 0.3 ? "1" : "";
         el.style.setProperty("--y", y.toFixed(1));
       }
       // cuánto queda del último paso: el fundido inferior crece en el tramo final
@@ -860,7 +858,11 @@ function Home() {
             { i: 4, from: "left", cap: "La fundición", t: "El oro se funde y se vierte en el molde.", alt: "Molde de piedra para fundir joyas" },
             { i: 0, from: "top", cap: "El hilo", t: "Torcido y soldado a mano, vuelta a vuelta.", alt: "Joyas de hilo de metal retorcido" },
             { i: 6, from: "bottom", cap: "El esmalte", t: "Color al fuego entre oro y piedra.", alt: "Cadena de oro con piedras y esmalte" },
+            { i: 1, from: "left", cap: "La mesa", t: "Cada pieza, terminada a mano antes de salir.", alt: "Joyas hechas a mano sobre la mesa de un orfebre" },
+            { i: 11, from: "bottom", cap: "El engaste", t: "Piedra a piedra, garra a garra, con lupa.", alt: "Anillo de oro con piedras de colores engastadas en el aro" },
             { i: 9, from: "right", cap: "El oficio", t: "Dos mil años haciendo anillos igual: a mano.", alt: "Anillo romano de oro" },
+            { i: 10, from: "top", cap: "La herencia", t: "Una joya antigua se puede rehacer sin perder su historia.", alt: "Anillo medieval de oro con una piedra azul" },
+            { i: 8, from: "bottom", cap: "El museo", t: "Lo bien hecho dura siglos.", alt: "Corona de hojas de laurel en oro en una vitrina de museo" },
             { i: 7, from: "center", cap: "La vitrina", t: "Y al final, la luz que la hace brillar.", alt: "Vitrina con brazaletes de oro iluminados" },
           ].map((f, n) => (
             <figure key={f.i} className="ql-gal__panel" data-tall={n % 2 === 0 ? "" : undefined}>

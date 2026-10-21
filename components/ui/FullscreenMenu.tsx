@@ -92,6 +92,10 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
   const [top, setTop] = useState<number | null>(null);
   const btn = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
+  // la cabecera se queda por encima del menú también mientras se cierra (la cortina tarda 0,8 s en recogerse): su z-index
+  // original se devuelve al terminar, y si se vuelve a abrir antes, se cancela
+  const hostZ = useRef<string | null>(null);
+  const zTimer = useRef(0);
   const set = useCallback((v: boolean) => { setInner(v); onOpenChange?.(v); }, [onOpenChange]);
 
   // dónde se pinta: en `document.body`, salvo con `cover` y cabecera: entonces junto a la cabecera, en su mismo contexto de
@@ -116,9 +120,10 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
     document.documentElement.setAttribute("data-fsm-open", "");
 
     // con cabecera: sube por encima del menú (que queda debajo) y deja inerte lo demás; sin ella, atrapa el foco en el menú
-    const prevZ = host?.style.zIndex ?? "";
+    clearTimeout(zTimer.current);
     let restoreInert: (() => void) | undefined;
     if (host) {
+      if (hostZ.current === null) hostZ.current = host.style.zIndex;
       host.style.zIndex = "9001";
       restoreInert = inertAround(host, p ?? null);
     }
@@ -139,7 +144,13 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       clearTimeout(t);
       restoreInert?.();
       document.documentElement.removeAttribute("data-fsm-open");
-      if (host) host.style.zIndex = prevZ;
+      if (host) {
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        zTimer.current = window.setTimeout(() => {
+          host.style.zIndex = hostZ.current ?? "";
+          hostZ.current = null;
+        }, reduce ? 0 : 850);
+      }
       unlock();
       trigger?.focus({ preventScroll: true });
     };

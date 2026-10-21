@@ -351,6 +351,8 @@ Desde el 21-10-2026, con opciones nuevas del kit:
   el menú se pinta junto a la cabecera, en su mismo contexto de apilamiento; si ahí algo atrapara el `position: fixed`,
   vuelve al `body`.
 - Con el menú abierto, la `ActionBar` se aparta (`html[data-fsm-open]`).
+- La isla sigue por encima del menú también mientras este se cierra: su `z-index` vuelve al terminar la cortina (0,85 s).
+- El vidrio del menú (`backdrop="blur"`) desenfoca 44 px y se hace casi opaco hacia abajo, donde va el pie.
 - «Inicio» y la marca, en la portada, suben al principio en vez de recargar.
 - En móvil, la cita se queda en «Cita →» para que la marca quepa centrada.
 - La barra de acciones va con `ActionBar soft`: vidrio que se difumina hacia arriba, acciones iguales e iconos con brillo
@@ -389,9 +391,8 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
   opacidad entera hasta el 16 % y nula al 46 %. Entran desde abajo desenfocados y se van por arriba igual, por detrás del
   anillo. Igual en escritorio y en móvil; con movimiento reducido, sin desenfoque. Sustituye a las animaciones
   `view()` del cuadro, del número fantasma (ahora parallax con `--y`) y del titular palabra a palabra.
-- **El cuadro en reposo, por delante**: a menos del 30 % del alto de la línea media (ya medio disuelto), el cuadro pasa
-  por delante del lienzo (`z-index`). Así, en los encuadres de muy cerca («Cuidar» y «Ajustar», donde el aro llena la
-  pantalla), el aro no tapa el texto. Al entrar y al salir sigue pasando por detrás.
+- **Capas** (de atrás adelante): salas, HUD, cintas de detrás y prólogo, cuadros, anillo y cintas de delante. Los cuadros
+  van siempre por debajo del anillo, también en reposo, y por encima del HUD.
 - **HUD al fondo y sin tocar el cuadro**: las líneas técnicas van por detrás de todo, encima solo de las salas.
   - Sus radios no se tocan. Si el círculo con su anillo fino y sus cotas (`r + 40`) quedaría a menos de 16 px del cuadro,
     el anillo y su HUD se apartan hacia el otro lado lo justo (`shiftX`). Se mide con la pantalla real y se suma a `x` en
@@ -403,7 +404,7 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
 - **Tras el recorrido**, en lugar de las dos puertas y la tira de cuatro fotos:
   - una cinta del oficio (`Marquee`);
   - «¿Qué quieres que hagamos?»: cuatro caminos en `ExpandingPanels` (alianzas, compromiso, a medida y transformar);
-  - «Así se hace una joya»: el taller en `HorizontalScroll`, con seis fotos que se descubren (`ImageReveal`), alternando
+  - «Así se hace una joya»: el taller en `HorizontalScroll`, con diez fotos que se descubren (`ImageReveal`), alternando
     vertical y apaisada y con su paso numerado (en móvil, carrusel nativo);
   - las garantías en un `BentoGrid` con fotos veladas.
 - **Grabado solo en «Ajustar»**: en la portada, «Para ti · siempre» aparece cuando la cámara entra a leerlo (sube con
@@ -474,8 +475,8 @@ El recorrido va a sangre bajo la isla; las páginas interiores dejan su hueco ar
   - en la página, un halo grande (`PointerGlow`) que llega apartado del puntero, «desde la mano».
 
   Solo con ratón y sin movimiento reducido.
-- **Lenis** (`SmoothScroll lerp={0.065}`): aceleración y frenada largas. Medido: una vuelta de rueda sigue avanzando
-  alrededor de 1 s (21 → 330 px en 840 ms). El índice salta con `lenis.scrollTo` (1,6 s, salida en cuarta potencia).
+- **Lenis** (`SmoothScroll lerp={0.04}`, antes 0,065): aceleración y frenada largas, con mucha cola al soltar la rueda
+  (con 0,065, una vuelta de rueda seguía avanzando alrededor de 1 s; ahora, bastante más). El índice salta con `lenis.scrollTo` (1,6 s, salida en cuarta potencia).
 
 **El entorno cambia al bajar** (inspirado en [Oryzo](https://oryzo.ai), de Lusion, medido con Playwright el 21-10-2026:
 three r178 modificado, varios lienzos, Lenis, una página de ~56.700 px con un único objeto que atraviesa escenas muy
