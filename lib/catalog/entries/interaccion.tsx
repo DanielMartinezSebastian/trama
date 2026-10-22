@@ -5,6 +5,7 @@ import Button, { BUTTON_INTENTS, BUTTON_EMPHASES } from "@/components/ui/Button"
 import GlyphCursor from "@/components/ui/GlyphCursor";
 import HoverFX, { HOVERFX_EFFECTS } from "@/components/ui/HoverFX";
 import MagneticButton from "@/components/ui/MagneticButton";
+import ScratchReveal, { SCRATCH_COVERS } from "@/components/ui/ScratchReveal";
 import ScrollArea from "@/components/ui/ScrollArea";
 import Spotlight from "@/components/ui/Spotlight";
 import { vcls } from "@/components/ui/variants";
@@ -230,6 +231,38 @@ export const interaccion: CatalogEntry[] = [
       <div className="ui-center">
         <ScrollArea content={p.content as string} height={p.height as number} variant={p.variant as never} />
       </div>
+    ),
+  },
+  {
+    id: "scratch-reveal",
+    component: "ScratchReveal",
+    path: "@/components/ui/ScratchReveal",
+    name: "Rascar para revelar",
+    category: "interaccion",
+    styles: ALL_STYLES,
+    description:
+      "Una capa que se rasca con el puntero o el dedo para descubrir lo que hay debajo: un fósil bajo el sedimento, un premio bajo la lámina (rasca y gana), una imagen bajo la niebla. Mide cuánto se ha rascado y, al pasar del umbral, la capa se retira sola y avisa (onReveal). Lo de debajo es HTML normal.",
+    stageHeight: 380,
+    notes: [
+      "El progreso se calcula con una rejilla de 24 × 24 celdas, sin leer píxeles del lienzo.",
+      "En táctil captura el gesto dentro de la capa (touch-action: none): no la hagas más alta que la pantalla.",
+      "Un botón que aparece con el foco revela sin rascar (teclado y lectores de pantalla).",
+    ],
+    props: [
+      { key: "cover", label: "Capa", type: "select", default: "dust", options: SCRATCH_COVERS, labels: { dust: "sedimento con grano", foil: "lámina metálica", solid: "color plano" } },
+      { key: "brush", label: "Pincel (px)", type: "number", default: 28, min: 8, max: 80, step: 2 },
+      { key: "threshold", label: "Umbral", type: "number", default: 0.6, min: 0.2, max: 0.95, step: 0.05 },
+      { key: "label", label: "Texto de la capa", type: "text", default: "Rasca aquí" },
+    ],
+    render: (p) => (
+      <ScratchReveal key={`${p.cover}-${p.label}`} cover={p.cover as never} brush={p.brush as number} threshold={p.threshold as number} label={p.label as string} style={{ width: "min(100%, 420px)", height: 300 }}>
+        <div style={{ height: "100%", display: "grid", placeItems: "center", textAlign: "center", background: "var(--card)", color: "var(--fg)", padding: 24 }}>
+          <div>
+            <p style={{ margin: 0, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--mut)" }}>Premio</p>
+            <p style={{ margin: "6px 0 0", fontSize: 40, fontWeight: 700, color: "var(--acc)" }}>2 × 1</p>
+          </div>
+        </div>
+      </ScratchReveal>
     ),
   },
 ];

@@ -282,7 +282,8 @@ async function parts(glb: string, name: string) {
   if (!/interface GLTFAction/.test(src)) src = src.replace(/animations: GLTFAction\[\]/g, "animations: THREE.AnimationClip[]");
   if (!/React\./.test(src)) src = src.replace(/import React from 'react'\n/, "");
   if (src.includes("ThreeElements")) src = src.replace(/import \{ ([^}]*) \} from '@react-three\/fiber'/, (_m, g: string) => `import { ${g}, type ThreeElements } from '@react-three/fiber'`);
-  if (src.includes("ThreeElements") && !/from '@react-three\/fiber'/.test(src)) src = src.replace("import React from 'react'", "import React from 'react'\nimport type { ThreeElements } from '@react-three/fiber'");
+  // sin import de fiber (y quizá ya sin el de React): se añade tras el de three
+  if (src.includes("ThreeElements") && !/from '@react-three\/fiber'/.test(src)) src = src.replace("import * as THREE from 'three'", "import * as THREE from 'three'\nimport type { ThreeElements } from '@react-three/fiber'");
   writeFileSync(comp, `"use client";\n// Generado con gltfjsx por scripts/fetch-models.mts (modelo en public/models/${name}/; créditos en public/models/credits.json)\n${src}`);
   console.log(`  componente: ${comp}
   modelo optimizado: ${dest}`);

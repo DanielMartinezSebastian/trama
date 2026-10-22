@@ -654,6 +654,21 @@ Caja de contenido largo (registro de cambios, comentarios, salida de terminal…
 
 - La barra de scroll no es exclusiva de este componente: cualquier superficie ui-s--<variante> la hereda automáticamente (ver components/ui/styles/ui-kit.css).
 
+### Rascar para revelar — `ScratchReveal`
+
+Una capa que se rasca con el puntero o el dedo para descubrir lo que hay debajo: un fósil bajo el sedimento, un premio bajo la lámina (rasca y gana), una imagen bajo la niebla. Mide cuánto se ha rascado y, al pasar del umbral, la capa se retira sola y avisa (onReveal). Lo de debajo es HTML normal.
+
+| prop | tipo | default |
+|---|---|---|
+| `cover` | `dust` · `foil` · `solid` | "dust" |
+| `brush` | number 8–80 | 28 |
+| `threshold` | number 0.2–0.95 | 0.6 |
+| `label` | text | "Rasca aquí" |
+
+- El progreso se calcula con una rejilla de 24 × 24 celdas, sin leer píxeles del lienzo.
+- En táctil captura el gesto dentro de la capa (touch-action: none): no la hagas más alta que la pantalla.
+- Un botón que aparece con el foco revela sin rascar (teclado y lectores de pantalla).
+
 ### Enlace que rueda — `RollLink`
 
 Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.
@@ -2857,3 +2872,11 @@ Topografía con dron contada con una nube de puntos 3D procedural (PointCloud de
 Carpeta: `components/sites/cota/` · 1 páginas: Inicio
 
 `ContactForm` · `StatsSection` · `SmoothScroll` · `BentoGrid` · `PointCloud`
+
+### Maravillas · un gabinete de curiosidades que hay que recomponer — `/sitios/maravillas`
+
+Historia interactiva entre rutas con diseño editorial de letras grandes: cuatro piezas 3D reales (un nautilo, un amonites escaneado por un museo, un astrolabio y un reloj de bolsillo con sus agujas) se perdieron en una tormenta de 1894. Cada sala es una ruta con un juego (girar la concha hasta su espiral, rascar el sedimento, apuntar la alidada a una estrella, poner el reloj en hora) y la pista de una sala resuelve la siguiente. Las piezas viajan entre rutas: del índice a su sala, de la sala al estante de la cabecera y del estante a la vitrina final (Traveler, SharedText, ScratchReveal).
+
+Carpeta: `components/sites/maravillas/` · 6 páginas: Prólogo · Sala I · Mar · Sala II · Tierra · Sala III · Cielo · Sala IV · Tiempo · Vitrina
+
+`SharedText` ×3 · `ScratchReveal` · `PageTransition` · `Traveler` · `SmoothScroll` · `MetaTable`

@@ -84,6 +84,7 @@
         "spotlight",
         "hover-fx",
         "scroll-area",
+        "scratch-reveal",
         "roll-link",
         "custom-cursor",
         "smooth-scroll",
@@ -3433,6 +3434,67 @@
       ],
       "example": "import ScrollArea from \"@/components/ui/ScrollArea\";\n\n<ScrollArea\n  content={\"Registro de cambios\\nv1.4.0 — Panel de tokens con selector de tipografía y fuentes de Google autoalojadas.\\nv1.3.0 — Categoría «Secciones»: hero, contacto, precios, FAQ y más, listos para pegar.\\nv1.2.0 — Entrada, salida y hover por composición (Presence y HoverFX) para todo el catálogo.\\nv1.1.0 — Comparador de los 7 estilos y vista «en caso real» por categoría.\\nv1.0.0 — Primera versión del catálogo: tokens, sistema de estilos y 20 componentes.\"}\n/>",
       "preview": "/componentes#scroll-area"
+    },
+    {
+      "id": "scratch-reveal",
+      "name": "Rascar para revelar",
+      "component": "ScratchReveal",
+      "import": "import ScratchReveal from \"@/components/ui/ScratchReveal\";",
+      "category": "interaccion",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Una capa que se rasca con el puntero o el dedo para descubrir lo que hay debajo: un fósil bajo el sedimento, un premio bajo la lámina (rasca y gana), una imagen bajo la niebla. Mide cuánto se ha rascado y, al pasar del umbral, la capa se retira sola y avisa (onReveal). Lo de debajo es HTML normal.",
+      "props": [
+        {
+          "key": "cover",
+          "type": "select",
+          "default": "dust",
+          "label": "Capa",
+          "options": [
+            "dust",
+            "foil",
+            "solid"
+          ]
+        },
+        {
+          "key": "brush",
+          "type": "number",
+          "default": 28,
+          "label": "Pincel (px)",
+          "min": 8,
+          "max": 80
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "default": 0.6,
+          "label": "Umbral",
+          "min": 0.2,
+          "max": 0.95
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Rasca aquí",
+          "label": "Texto de la capa"
+        }
+      ],
+      "notes": [
+        "El progreso se calcula con una rejilla de 24 × 24 celdas, sin leer píxeles del lienzo.",
+        "En táctil captura el gesto dentro de la capa (touch-action: none): no la hagas más alta que la pantalla.",
+        "Un botón que aparece con el foco revela sin rascar (teclado y lectores de pantalla)."
+      ],
+      "example": "import ScratchReveal from \"@/components/ui/ScratchReveal\";\n\n<ScratchReveal\n  label=\"Rasca aquí\"\n/>",
+      "preview": "/componentes#scratch-reveal"
     },
     {
       "id": "scene-flash",
@@ -17703,6 +17765,71 @@
         {
           "component": "PointCloud",
           "id": "point-cloud",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "maravillas",
+      "title": "Maravillas · un gabinete de curiosidades que hay que recomponer",
+      "url": "/sitios/maravillas",
+      "dir": "components/sites/maravillas",
+      "description": "Historia interactiva entre rutas con diseño editorial de letras grandes: cuatro piezas 3D reales (un nautilo, un amonites escaneado por un museo, un astrolabio y un reloj de bolsillo con sus agujas) se perdieron en una tormenta de 1894. Cada sala es una ruta con un juego (girar la concha hasta su espiral, rascar el sedimento, apuntar la alidada a una estrella, poner el reloj en hora) y la pista de una sala resuelve la siguiente. Las piezas viajan entre rutas: del índice a su sala, de la sala al estante de la cabecera y del estante a la vitrina final (Traveler, SharedText, ScratchReveal).",
+      "pages": [
+        {
+          "path": "/sitios/maravillas",
+          "title": "Prólogo"
+        },
+        {
+          "path": "/sitios/maravillas/sala/mar",
+          "title": "Sala I · Mar"
+        },
+        {
+          "path": "/sitios/maravillas/sala/tierra",
+          "title": "Sala II · Tierra"
+        },
+        {
+          "path": "/sitios/maravillas/sala/cielo",
+          "title": "Sala III · Cielo"
+        },
+        {
+          "path": "/sitios/maravillas/sala/tiempo",
+          "title": "Sala IV · Tiempo"
+        },
+        {
+          "path": "/sitios/maravillas/vitrina",
+          "title": "Vitrina"
+        }
+      ],
+      "components": [
+        {
+          "component": "SharedText",
+          "id": "shared-text",
+          "uses": 3
+        },
+        {
+          "component": "ScratchReveal",
+          "id": "scratch-reveal",
+          "uses": 1
+        },
+        {
+          "component": "PageTransition",
+          "id": "page-transition",
+          "uses": 1
+        },
+        {
+          "component": "Traveler",
+          "id": "traveler",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
           "uses": 1
         }
       ]
