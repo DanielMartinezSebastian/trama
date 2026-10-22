@@ -182,16 +182,19 @@ export const movimiento: CatalogEntry[] = [
     category: "transiciones",
     styles: ["minimal", "solid", "terminal"],
     description:
-      "Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto.",
+      "Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto. Para webs con 3D, carga real: baja los modelos contando bytes (assets), adelanta los fragmentos de JS de las escenas (modules) y espera a que el lienzo pinte (waitFor), con una animación propia (art).",
     stageHeight: 200,
     replayable: true,
-    notes: ["Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always."],
+    notes: [
+      "Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always.",
+      "Carga real (Quilate, Ánima, Cota, Maravillas, Runa): assets={[\"/models/x.glb\"]} modules={[() => import(\"./scene\")]} waitFor={{ root: \".ui-pcloud__gl\", ready: \".is-on\" }} art={<svg…/>}; el arte lee var(--p) de 0 a 1.",
+    ],
     props: [
       { key: "variant", label: "Variante", type: "select", default: "counter", options: ["counter", "words", "bar", "fill"], labels: { counter: "contador", words: "palabras", bar: "barra", fill: "la marca se rellena" } },
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
       { key: "meta", label: "Texto lateral", type: "text", default: "Madrid — 2026" },
       { key: "duration", label: "Duración (s)", type: "number", default: 2, min: 0.5, max: 5, step: 0.1 },
-      { key: "exit", label: "Salida", type: "select", default: "curtain", options: ["curtain", "fade"] },
+      { key: "exit", label: "Salida", type: "select", default: "curtain", options: ["curtain", "fade", "cut", "iris"], labels: { curtain: "cortina", fade: "fundido", cut: "corte seco (CRT)", iris: "iris" } },
     ],
     render: (p, { replay }) =>
       replay > 0 ? (

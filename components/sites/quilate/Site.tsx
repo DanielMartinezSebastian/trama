@@ -2,6 +2,7 @@
 
 import { Fragment, createContext, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import Preloader from "@/components/ui/Preloader";
 import ActionBar from "@/components/ui/ActionBar";
 import BeforeAfter from "@/components/ui/BeforeAfter";
 import BentoGrid from "@/components/ui/BentoGrid";
@@ -117,6 +118,27 @@ const QCtx = createContext<Ctx | null>(null);
 const useQ = () => useContext(QCtx)!;
 const KEY = "trama:quilate";
 
+/** El perfil de un brillante: mesa, corona y pabellón; cada faceta se dibuja en su turno (`--i`). */
+const FACETS = [
+  "M-30 -34 L30 -34", // la mesa
+  "M-30 -34 L-62 -14 M30 -34 L62 -14", // la corona
+  "M-62 -14 L62 -14", // el filetín
+  "M-62 -14 L0 66 M62 -14 L0 66", // el pabellón
+  "M-30 -34 L-12 -14 L0 -34 L12 -14 L30 -34 M-62 -14 L-30 -34 M62 -14 L30 -34", // facetas de la corona
+  "M-38 -14 L0 66 M-14 -14 L0 66 M14 -14 L0 66 M38 -14 L0 66", // facetas del pabellón
+];
+function CutLoading() {
+  return (
+    <svg className="ql-load" viewBox="-100 -100 200 200" aria-hidden>
+      {FACETS.map((d, i) => (
+        // estilos en línea: el dibujo sale bien antes de que llegue el CSS de la web (viene con su JS)
+        <path key={i} d={d} pathLength={1} fill="none" stroke="var(--acc)" strokeWidth={0.9} strokeLinejoin="round" strokeDasharray={1} style={{ "--i": i, strokeDashoffset: `calc(1 - clamp(0, var(--p, 0) * 6.4 - ${i}, 1))` } as CSSProperties} />
+      ))}
+      <circle className="ql-load__spark" cx="22" cy="-30" r="3" fill="var(--fg)" style={{ opacity: "clamp(0, var(--p, 0) * 10 - 9, 1)" }} />
+    </svg>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
   const [band, setBand] = useState<RingSel>(DEFAULT_BAND);
   const [sol, setSol] = useState<RingSel>(DEFAULT_SOLITAIRE);
@@ -149,6 +171,20 @@ export function Shell({ children }: { children: ReactNode }) {
 
   return (
     <SiteFrame tokens={TOKENS} className="ql" icons={{ set: phosphorLight, weight: "light" }}>
+      {/* la carga: el brillante se talla faceta a faceta mientras bajan la escena y la luz (HDR) de las gemas */}
+      <Preloader
+        className="ql-pre"
+        once="always"
+        duration={1.4}
+        exit="iris"
+        label="Tallando la piedra"
+        brand="Quilate"
+        meta="Joyería a medida"
+        assets={["/models/hdr/aerodynamics_workshop_1k.hdr"]}
+        modules={[() => import("./ringScene")]}
+        waitFor={{ root: ".ql-stage__gl", ready: ".is-on" }}
+        art={<CutLoading />}
+      />
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
           {/* scroll con inercia (Lenis): aceleración y frenada largas, para que el recorrido del anillo se sienta continuo */}

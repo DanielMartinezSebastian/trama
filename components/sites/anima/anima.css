@@ -251,3 +251,15 @@
 }
 /* en el navbar, la calavera va por encima del cristal del medallón (la isla está en z 40) y no se lleva los clics */
 .an-trav--skull[data-at="nav"] { z-index: 45; pointer-events: none; }
+
+/* ---------- pantalla de carga: la calavera se llena de fuego ---------- */
+.an-pre { background: var(--bg); }
+.an-pre .ui-pre__top, .an-pre .ui-pre__bot { font-size: 11px; letter-spacing: 0.16em; }
+.an-pre .ui-pre__count--small { font-family: var(--display, serif); font-weight: 400; font-size: clamp(30px, 4vw, 52px); color: var(--acc); }
+.an-load { overflow: visible; }
+.an-load__bone { fill: color-mix(in srgb, var(--fg) 10%, transparent); }
+.an-load__fire { fill: var(--acc); transform: translateY(calc((1 - var(--p, 0)) * 150px)); }
+.an-load__eyes { fill: var(--bg); fill-rule: evenodd; }
+.an-load__flame { fill: #ffd27a; transform-origin: 0 -74px; animation: an-flame 0.9s ease-in-out infinite alternate; }
+@keyframes an-flame { from { scale: 0.85 1; } to { scale: 1.1 1.25; rotate: 4deg; } }
+@media (prefers-reduced-motion: reduce) { .an-load__flame { animation: none; } }

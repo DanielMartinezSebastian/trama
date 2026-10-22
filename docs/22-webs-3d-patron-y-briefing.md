@@ -64,6 +64,8 @@ Por orden de valor:
 1. **Puerta de entrada**: un preloader con el progreso real de los recursos (GLB, HDR, texturas: `THREE.DefaultLoadingManager`)
    y un «entrar» que desbloquea el sonido. Las webs premiadas de la ronda 4 lo tienen todas; nosotros cargamos en silencio
    y el primer fotograma 3D llega tarde en móvil.
+   **Hecho (22-10-2026)** en Quilate, Ánima, Cota, Maravillas y Runa, ampliando `Preloader` del kit (§2b). El sonido sigue
+   aparte (`SoundToggle`).
 2. **Un solo lienzo por página**: Ánima monta hasta cinco contextos de GL (escena, humo, fuego, navbar, ObjectStage). En
    móvil, el límite de contextos y la memoria lo notan. Un lienzo con `View` de drei (varias escenas en un canvas) o
    *scissor* lo resolvería; es la deuda técnica más importante.
@@ -81,6 +83,30 @@ Por orden de valor:
    mientras WebGL baste.
 8. **Texturas comprimidas (KTX2/Basis)**: ahorrarían memoria de GPU, pero el transcodificador es WebAssembly y choca con
    la CSP (§8). Si se activa, añadir `'wasm-unsafe-eval'` a `script-src` a conciencia, documentándolo.
+
+## 2b. La pantalla de carga de las webs 3D (`Preloader` con carga real)
+
+`Preloader` ya era la intro por tiempo del kit (contador, palabras, marca que se rellena). Para las webs 3D se amplió, sin
+romper lo anterior, con cuatro props opcionales:
+
+- `assets`: los archivos pesados de **la página de entrada** (cada web tiene su `preloadFor(path)`: la calavera y el HDR en
+  la portada de Ánima, la tumba en `/entradas`, la pieza de la sala en Maravillas, los tres héroes en la selección de
+  Runa…). Se bajan con `fetch` **contando bytes** y quedan en la caché HTTP, así que el `GLTFLoader` los encuentra al momento.
+  No se usa `THREE.DefaultLoadingManager` porque obligaría a cargar three antes de la pantalla.
+- `modules`: los fragmentos de JS de las escenas (`() => import("./pieceScene")`, el mismo del `lazy`). Es «el bundle».
+- `waitFor`: un selector del lienzo y otro de «ya pinta» (`.ui-pcloud__gl` + `.is-on`, `.mv-piece` + `.is-ready`…). Si en esa
+  ruta no aparece ningún lienzo en 1,5 s, no se espera.
+- `art`: la animación de cada web, que lee `var(--p)` (0–1): el brillante que se talla (Quilate, sale en **iris**), la calavera
+  que se llena de fuego con una vela (Ánima), las curvas de nivel con la línea de escaneo (Cota), la espiral del cuaderno
+  (Maravillas, sale en **cortina**) y la barra de bloques con LOADING y un consejo (Runa, sale con **corte seco** de CRT).
+
+El progreso que se ve persigue al real (72 % bytes, 12 % JS, 4 % fuentes, 12 % lienzo listo), nunca retrocede, no termina
+antes de `duration` y se abre igualmente a los 12 s. Va en el Shell: solo sale al entrar, no al navegar.
+
+**Trampa**: el CSS de cada web llega con su JS (las webs de `/sitios` se cargan con `next/dynamic`), después del HTML del
+servidor. Los dibujos de carga llevan sus estilos esenciales **en línea** (`fill`, `stroke`, `strokeDashoffset` con
+`calc(… var(--p) …)`); si no, el primer instante se ven manchas negras. Y nada aleatorio en lo que se pinta en el servidor
+(el consejo de Runa se elige al azar ya en el navegador), o la hidratación no casa.
 
 ## 3. El patrón de diseño: cuándo un relato y cómo es
 

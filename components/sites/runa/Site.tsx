@@ -4,6 +4,7 @@ import { Suspense, createContext, lazy, startTransition, useCallback, useContext
 import { usePathname, useRouter } from "next/navigation";
 import MetaTable from "@/components/ui/MetaTable";
 import PageTransition, { PageTransitionPersist } from "@/components/ui/PageTransition";
+import Preloader from "@/components/ui/Preloader";
 import SkillCheck from "@/components/ui/SkillCheck";
 import SoundToggle from "@/components/ui/SoundToggle";
 import Traveler, { TravelSlot, TravelStage, useTraveler } from "@/components/ui/Traveler";
@@ -81,7 +82,45 @@ type Game = Saved & {
 const GameCtx = createContext<Game | null>(null);
 const useGame = () => useContext(GameCtx)!;
 
+/** Lo que baja la pantalla de carga según la página de entrada (lo que se ve primero), y las escenas que adelanta. */
+function preloadFor(path: string) {
+  const route = path.split("/").slice(3).join("/");
+  const assets: Record<string, string[]> = {
+    "": [BOSS.src],
+    heroe: HEROES.map((h) => h.src),
+    "nivel-1": [CHEST.src, "/models/hdr/aerodynamics_workshop_1k.hdr"],
+    "nivel-2": [BOSS.src],
+  };
+  return {
+    assets: assets[route] ?? [],
+    modules: [() => import("./actorScene"), ...(route === "nivel-1" || route === "victoria" ? [() => import("./runeScene")] : [])],
+  };
+}
+
+/** La pantalla de carga de Runa: una barra de bloques que se encienden, LOADING parpadeando y un consejo de juego. */
+const TIPS = ["Consejo: la runa es lo único que hiere al jefe.", "Consejo: cuanto más ágil, menos pernos.", "Consejo: los puntos débiles se apagan en un segundo y medio."];
+function RunaLoading() {
+  // el primero en el HTML del servidor; al azar ya en el navegador (si no, la hidratación no casa)
+  const [tip, setTip] = useState(TIPS[0]);
+  useEffect(() => setTip(TIPS[Math.floor(Math.random() * TIPS.length)]), []);
+  return (
+    // estilos en línea mínimos: sale bien antes de que llegue el CSS de la web (viene con su JS)
+    <div className="rn-load" style={{ display: "grid", justifyItems: "center", gap: 22, textAlign: "center", width: "100%" }}>
+      <p className="rn-load__t" style={{ margin: 0, fontFamily: "var(--font-anton), Impact, sans-serif", fontSize: "clamp(72px, 14vw, 180px)", lineHeight: 0.85, color: "var(--acc)" }}>RUNA</p>
+      <div className="rn-load__bar" style={{ position: "relative", width: "100%", height: 30, border: "3px solid var(--fg)", boxSizing: "border-box" }}>
+        <span className="rn-load__lit" style={{ position: "absolute", inset: 3, background: "var(--acc2)", clipPath: "inset(0 calc((1 - var(--p, 0)) * 100%) 0 0)" }} />
+      </div>
+      <p className="rn-load__word" style={{ margin: 0, font: "14px/1 var(--font-press-start-2p), monospace", textTransform: "uppercase", color: "var(--gold)" }}>Loading</p>
+      <p className="rn-load__tip" style={{ margin: 0, maxWidth: "36ch", font: "10px/1.6 var(--font-press-start-2p), monospace", textTransform: "uppercase", color: "var(--mut)" }}>{tip}</p>
+    </div>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
+  const path = usePathname();
+  // se decide al entrar: el preloader solo sale una vez, en la primera página
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const load = useMemo(() => preloadFor(path), []);
   const [saved, setSaved] = useState<Saved>(NEW);
   const [candidate, setCandidate] = useState<HeroId>("caballero");
   const [bossHits, setBossHits] = useState(0);
@@ -144,6 +183,19 @@ export function Shell({ children }: { children: ReactNode }) {
   };
   return (
     <SiteFrame tokens={TOKENS} className="rn">
+      <Preloader
+        className="rn-pre"
+        once="always"
+        duration={1.1}
+        exit="cut"
+        label="Cargando Runa"
+        brand={BRAND.studio}
+        meta={BRAND.release}
+        assets={load.assets}
+        modules={load.modules}
+        waitFor={{ root: ".rn-trav[data-at] .rn-actor, .rn-chest .rn-actor", ready: ".is-ready" }}
+        art={<RunaLoading />}
+      />
       <GameCtx.Provider value={game}>
         <div className="rn-frame" ref={frame} onAnimationEnd={(e) => e.currentTarget.classList.remove("is-hit", "is-hurt")}>
           <TravelStage className="rn-stage">

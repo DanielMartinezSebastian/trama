@@ -3,6 +3,7 @@
 import { Fragment, Suspense, createContext, lazy, startTransition, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
+import Preloader from "@/components/ui/Preloader";
 import CookieBanner from "@/components/ui/CookieBanner";
 import Countdown from "@/components/ui/Countdown";
 import FAQSection from "@/components/ui/FAQSection";
@@ -131,7 +132,37 @@ const TicketIcon = () => (
   </svg>
 );
 
+/** Lo que baja la carga según la página de entrada: la calavera (y la luz de su ojo de gema) o el modelo de esa página. */
+function preloadFor(path: string) {
+  const route = path.split("/").slice(3).join("/");
+  const skull = "/models/calavera-pirata/calavera-pirata-transformed.glb";
+  const assets = route === "entradas" ? ["/models/tumba-magica/tumba-magica-transformed.glb"] : route === "info" ? ["/models/ojo-sangre/ojo-sangre-transformed.glb"] : [skull, "/models/hdr/aerodynamics_workshop_1k.hdr"];
+  return { assets, modules: route === "" ? [() => import("./skullScene")] : [() => import("./skullBust")] };
+}
+
+/** La carga: una calavera que se llena de fuego desde abajo, con una vela que titila encima. */
+function SkullLoading() {
+  return (
+    <svg className="an-load" viewBox="-100 -100 200 200" aria-hidden>
+      <defs>
+        <clipPath id="an-load-skull">
+          <path d="M0 -70 C-44 -70 -62 -40 -60 -6 C-59 14 -48 26 -40 32 L-38 52 L-20 52 L-18 62 L18 62 L20 52 L38 52 L40 32 C48 26 59 14 60 -6 C62 -40 44 -70 0 -70 Z" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#an-load-skull)">
+        {/* estilos en línea: el dibujo sale bien antes de que llegue el CSS de la web (viene con su JS) */}
+        <rect x="-70" y="-80" width="140" height="150" className="an-load__bone" fill="color-mix(in srgb, var(--fg) 10%, transparent)" />
+        <rect x="-70" y="-80" width="140" height="150" className="an-load__fire" fill="var(--acc)" style={{ transform: "translateY(calc((1 - var(--p, 0)) * 150px))" }} />
+      </g>
+      <path className="an-load__eyes" fill="var(--bg)" fillRule="evenodd" d="M-34 -6 a14 16 0 1 0 28 0 a14 16 0 1 0 -28 0 M6 -6 a14 16 0 1 0 28 0 a14 16 0 1 0 -28 0 M-6 22 L0 12 L6 22 Z" />
+      <path className="an-load__flame" fill="#ffd27a" d="M0 -98 C8 -88 9 -80 0 -74 C-9 -80 -8 -88 0 -98 Z" />
+    </svg>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
+  // se decide al entrar: el preloader solo sale una vez, en la primera página
+  const [load] = useState(() => preloadFor(typeof location === "undefined" ? "" : location.pathname));
   const navigate = useSiteNavigate();
   // en la portada la calavera ya está en el recorrido: el navbar se queda sin ella; en el resto, la calavera con sombrero
   // (el mismo viajero que en el laboratorio)
@@ -157,6 +188,19 @@ export function Shell({ children }: { children: ReactNode }) {
   };
   return (
     <SiteFrame tokens={TOKENS} className="an" icons={{ set: phosphorLight, weight: "light" }}>
+      <Preloader
+        className="an-pre"
+        once="always"
+        duration={1.4}
+        exit="fade"
+        label="Encendiendo las velas"
+        brand="Ánima"
+        meta={`31 de octubre · ${BRAND.city}`}
+        assets={load.assets}
+        modules={load.modules}
+        waitFor={{ root: ".an-stage__gl", ready: ".is-on" }}
+        art={<SkullLoading />}
+      />
      <Lab.Provider value={lab}>
      <TravelStage className="an-stage-travel">
       {/* scroll con inercia larga: la noche se baja despacio */}

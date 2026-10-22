@@ -930,7 +930,7 @@ Envuelve contenido (`children`), p. ej.: `<Panel title="ACCESO_CONCEDIDO.sh" bod
 
 ### Preloader — `Preloader`
 
-Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto.
+Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto. Para webs con 3D, carga real: baja los modelos contando bytes (assets), adelanta los fragmentos de JS de las escenas (modules) y espera a que el lienzo pinte (waitFor), con una animación propia (art).
 
 | prop | tipo | default |
 |---|---|---|
@@ -938,9 +938,10 @@ Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta 
 | `brand` | text | "Estudio" |
 | `meta` | text | "Madrid — 2026" |
 | `duration` | number 0.5–5 | 2 |
-| `exit` | `curtain` · `fade` | "curtain" |
+| `exit` | `curtain` · `fade` · `cut` · `iris` | "curtain" |
 
 - Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always.
+- Carga real (Quilate, Ánima, Cota, Maravillas, Runa): assets={["/models/x.glb"]} modules={[() => import("./scene")]} waitFor={{ root: ".ui-pcloud__gl", ready: ".is-on" }} art={<svg…/>}; el arte lee var(--p) de 0 a 1.
 
 ### Sección fijada con progreso — `PinnedSection`
 
@@ -2885,7 +2886,7 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
-`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
 
 ### Ánima · fiesta de Halloween en Valencia — `/sitios/anima`
 
@@ -2893,7 +2894,7 @@ Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje d
 
 Carpeta: `components/sites/anima/` · 5 páginas: Inicio · Programa · Entradas · Info · Laboratorio
 
-`Traveler` ×2 · `Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`
+`Traveler` ×2 · `Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`
 
 ### Cota · topografía con dron y gemelos digitales — `/sitios/cota`
 
@@ -2901,7 +2902,7 @@ Topografía con dron contada con una nube de puntos 3D procedural (PointCloud de
 
 Carpeta: `components/sites/cota/` · 1 páginas: Inicio
 
-`ContactForm` · `StatsSection` · `SmoothScroll` · `BentoGrid` · `PointCloud`
+`ContactForm` · `StatsSection` · `SmoothScroll` · `Preloader` · `BentoGrid` · `PointCloud`
 
 ### Maravillas · un gabinete de curiosidades que hay que recomponer — `/sitios/maravillas`
 
@@ -2909,7 +2910,7 @@ Historia interactiva entre rutas con diseño editorial de letras grandes: cuatro
 
 Carpeta: `components/sites/maravillas/` · 6 páginas: Prólogo · Sala I · Mar · Sala II · Tierra · Sala III · Cielo · Sala IV · Tiempo · Vitrina
 
-`SharedText` ×3 · `ScratchReveal` · `PageTransition` · `Traveler` · `SmoothScroll` · `MetaTable`
+`SharedText` ×3 · `ScratchReveal` · `PageTransition` · `Traveler` · `SmoothScroll` · `Preloader` · `MetaTable`
 
 ### Runa · el roguelite de Estudio Musgo, en una demo que se juega en la web — `/sitios/runa`
 
@@ -2917,4 +2918,4 @@ Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de tí
 
 Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nivel 1 · La cámara · Nivel 2 · El trono · Victoria · prensa
 
-`Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `MetaTable`
+`Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `Preloader` · `MetaTable`

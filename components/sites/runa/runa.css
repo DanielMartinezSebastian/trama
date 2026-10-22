@@ -261,3 +261,19 @@
   .rn-frame.is-hit .rn-main, .rn-frame.is-hurt .rn-main { animation: none; }
   .rn-title .rn-start, .rn-hud__score span, .rn-card__ready, .rn-over__t { animation: none; }
 }
+
+/* ---------- pantalla de carga (Preloader con `art`): bloques que se encienden y corte seco al salir ---------- */
+.rn-pre { background: #000; color: var(--fg); }
+.rn-pre .ui-pre__top, .rn-pre .ui-pre__bot { font: 10px/1.4 var(--pix); color: var(--mut); }
+.rn-pre .ui-pre__bar { display: none; }
+.rn-pre .ui-pre__art { width: min(86vw, 640px); aspect-ratio: auto; }
+.rn-pre .ui-pre__count--small { font: clamp(16px, 2vw, 22px)/1 var(--pix); color: var(--gold); }
+.rn-pre .ui-pre__count--small::after { content: " %"; }
+.rn-load { display: grid; justify-items: center; gap: 22px; text-align: center; }
+.rn-load__t { margin: 0; font-family: var(--display); font-size: clamp(72px, 14vw, 180px); line-height: 0.85; color: var(--acc); letter-spacing: 0.02em; }
+.rn-load__bar { position: relative; width: 100%; height: 30px; border: 3px solid var(--fg); padding: 3px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--fg) 12%, transparent) 0 calc(5% - 3px), transparent calc(5% - 3px) 5%) content-box; }
+/* los bloques encendidos: el mismo dibujo, recortado por el progreso y redondeado a bloques enteros (de 5 en 5 %) */
+.rn-load__lit { position: absolute; inset: 3px; background: repeating-linear-gradient(90deg, var(--acc2) 0 calc(5% - 3px), transparent calc(5% - 3px) 5%) !important; clip-path: inset(0 calc((1 - var(--p)) * 100%) 0 0) !important; clip-path: inset(0 calc(100% - round(down, var(--p) * 100%, 5%)) 0 0) !important; }
+.rn-load__word { margin: 0; font: 14px/1 var(--pix); text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); animation: rn-blink 0.8s steps(1) infinite; }
+.rn-load__tip { margin: 0; max-width: 36ch; font: 10px/1.6 var(--pix); text-transform: uppercase; color: var(--mut); }
+.rn-pre[data-out] .rn-load__word { animation: none; color: var(--acc2); }

@@ -4,6 +4,7 @@ import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import BentoGrid from "@/components/ui/BentoGrid";
 import ContactForm from "@/components/ui/ContactForm";
 import PointCloud, { POINTCLOUD_REST, type PointCloudState } from "@/components/ui/PointCloud";
+import Preloader from "@/components/ui/Preloader";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import StatsSection from "@/components/ui/StatsSection";
 import { useScrollStory } from "@/lib/story/useScrollStory";
@@ -26,9 +27,44 @@ const TOKENS: CSSProperties = tokensToStyle({
   accentFont: 'var(--font-geist-mono), ui-monospace, monospace',
 });
 
+/** La carga: curvas de nivel que se dibujan una tras otra y la línea de escaneo que barre el terreno. */
+const CONTOURS = Array.from({ length: 6 }, (_, i) => {
+  const r = 18 + i * 13, pts: string[] = [];
+  for (let k = 0; k <= 48; k++) {
+    const a = (k / 48) * Math.PI * 2;
+    const w = r * (1 + 0.13 * Math.sin(a * 3 + i * 0.9) + 0.07 * Math.sin(a * 5 - i));
+    pts.push(`${(Math.cos(a) * w * 1.15).toFixed(1)} ${(Math.sin(a) * w * 0.82 + i * 2).toFixed(1)}`);
+  }
+  return `M${pts.join("L")}Z`;
+});
+function ScanLoading() {
+  return (
+    <svg className="ct-load" viewBox="-100 -100 200 200" aria-hidden>
+      {CONTOURS.map((d, i) => (
+        // estilos en línea: el dibujo sale bien antes de que llegue el CSS de la web (viene con su JS)
+        <path key={i} d={d} pathLength={1} fill="none" stroke="var(--acc2)" strokeWidth={0.8} strokeDasharray={1} style={{ "--i": i, strokeDashoffset: `calc(1 - clamp(0, var(--p, 0) * 7 - ${i}, 1))` } as CSSProperties} />
+      ))}
+      <line className="ct-load__scan" x1="0" y1="-96" x2="0" y2="96" stroke="var(--acc)" strokeWidth={0.7} style={{ transform: "translateX(calc(var(--p, 0) * 190px - 95px))" }} />
+      <text y="-86" textAnchor="middle" className="ct-load__cap" fill="var(--mut)" fontSize={6} letterSpacing={0.9}>ESCANEANDO EL TERRENO</text>
+    </svg>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <SiteFrame tokens={TOKENS} className="ct">
+      <Preloader
+        className="ct-pre"
+        once="always"
+        duration={1.2}
+        exit="fade"
+        label="Escaneando el terreno"
+        brand="Cota"
+        meta={`Topografía con dron · ${BRAND.city}`}
+        modules={[() => import("@/lib/pointcloud/scene")]}
+        waitFor={{ root: ".ui-pcloud__gl", ready: ".is-on" }}
+        art={<ScanLoading />}
+      />
       <SmoothScroll lerp={0.07} syncGsap={false} />
       <header className="ct-head">
         <a className="ct-brand" href="#top" aria-label="Cota, arriba">

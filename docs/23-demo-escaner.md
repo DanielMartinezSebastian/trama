@@ -86,5 +86,5 @@ la 22:
 - En móvil, la nube centrada arriba y los cuadros abajo.
 - Comprobada con `next start` (CSP de producción) a 1440 y 390 px.
 
-**Pendiente**: un preloader con el progreso, sonido opcional y que el color por cota dibuje curvas de nivel (franjas cada
+**Pendiente**: ~~un preloader con el progreso~~ (hecho: [22](./22-webs-3d-patron-y-briefing.md) §2b), sonido opcional y que el color por cota dibuje curvas de nivel (franjas cada
 x metros, un `fract()` en el *shader*).

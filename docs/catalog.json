@@ -10922,7 +10922,7 @@
         "solid",
         "terminal"
       ],
-      "description": "Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto.",
+      "description": "Pantalla de entrada con contador, palabras o barra; bloquea el scroll, se salta con clic o Esc y avisa a SplitText para que sus textos entren al abrirse. Solo la primera visita de la pestaña por defecto. Para webs con 3D, carga real: baja los modelos contando bytes (assets), adelanta los fragmentos de JS de las escenas (modules) y espera a que el lienzo pinte (waitFor), con una animación propia (art).",
       "props": [
         {
           "key": "variant",
@@ -10963,12 +10963,15 @@
           "label": "Salida",
           "options": [
             "curtain",
-            "fade"
+            "fade",
+            "cut",
+            "iris"
           ]
         }
       ],
       "notes": [
-        "Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always."
+        "Cubre toda la ventana (position: fixed). En el catálogo se lanza al pulsar «Repetir animación» con once=always.",
+        "Carga real (Quilate, Ánima, Cota, Maravillas, Runa): assets={[\"/models/x.glb\"]} modules={[() => import(\"./scene\")]} waitFor={{ root: \".ui-pcloud__gl\", ready: \".is-on\" }} art={<svg…/>}; el arte lee var(--p) de 0 a 1."
       ],
       "example": "import Preloader from \"@/components/ui/Preloader\";\n\n<Preloader />",
       "preview": "/componentes#preloader"
@@ -17678,6 +17681,11 @@
           "uses": 1
         },
         {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
           "component": "FullscreenMenu",
           "id": "fullscreen-menu",
           "uses": 1
@@ -17809,6 +17817,11 @@
           "uses": 1
         },
         {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
           "component": "FullscreenMenu",
           "id": "fullscreen-menu",
           "uses": 1
@@ -17871,6 +17884,11 @@
         {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "Preloader",
+          "id": "preloader",
           "uses": 1
         },
         {
@@ -17944,6 +17962,11 @@
           "uses": 1
         },
         {
+          "component": "Preloader",
+          "id": "preloader",
+          "uses": 1
+        },
+        {
           "component": "MetaTable",
           "id": "meta-table",
           "uses": 1
@@ -17997,6 +18020,11 @@
         {
           "component": "PageTransition",
           "id": "page-transition",
+          "uses": 1
+        },
+        {
+          "component": "Preloader",
+          "id": "preloader",
           "uses": 1
         },
         {

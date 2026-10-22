@@ -83,7 +83,16 @@ html.ui-intro-lock { overflow: hidden; scrollbar-gutter: stable; }
 .ui-pre__word { font-size: clamp(40px, 9vw, 120px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
 .ui-pre__bar { height: 2px; background: var(--ln); overflow: hidden; }
 .ui-pre__bar > span { display: block; height: 100%; background: var(--acc); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
-@media (prefers-reduced-motion: reduce) { .ui-pre, .ui-pre--fade[data-out] { transition-duration: 0.01s; } }
+.ui-pre--cut[data-out] { transform: none; animation: ui-pre-cut 0.36s steps(1, end) forwards; }
+@keyframes ui-pre-cut { 0% { clip-path: inset(0); } 30% { clip-path: inset(0 0 50% 0); } 55% { clip-path: inset(49% 0 49% 0); } 80% { clip-path: inset(49.8% 35% 49.8% 35%); } 100% { clip-path: inset(50% 50% 50% 50%); visibility: hidden; } }
+.ui-pre--iris { clip-path: circle(150% at 50% 50%); transition: clip-path 0.9s var(--ease-io); }
+.ui-pre--iris[data-out] { transform: none; clip-path: circle(0% at 50% 50%); }
+/* animación propia (prop `art`): ocupa el centro y el contador se hace pequeño */
+.ui-pre__mid:has(.ui-pre__art) { gap: clamp(12px, 2vw, 22px); align-content: center; }
+.ui-pre__art { display: block; width: min(64vw, 46vh); aspect-ratio: 1; }
+.ui-pre__art > * { width: 100%; height: 100%; }
+.ui-pre__count--small { font-size: clamp(28px, 4vw, 52px); }
+@media (prefers-reduced-motion: reduce) { .ui-pre, .ui-pre--fade[data-out], .ui-pre--iris { transition-duration: 0.01s; } .ui-pre--cut[data-out] { animation-duration: 0.01s; } }
 
 /* ---------- CustomCursor ---------- */
 .ui-ccur { --cc-fill: #111; --cc-ink: #fff; --cc-ring: #fff; position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none; opacity: 0; transition: opacity var(--dur-s) linear; }

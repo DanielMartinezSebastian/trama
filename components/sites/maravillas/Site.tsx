@@ -1,9 +1,10 @@
 "use client";
 
 import { Suspense, createContext, lazy, startTransition, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MutableRefObject, type PointerEvent, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MetaTable from "@/components/ui/MetaTable";
 import PageTransition, { NAV_BACK, NAV_FORWARD, PageTransitionPersist } from "@/components/ui/PageTransition";
+import Preloader from "@/components/ui/Preloader";
 import ScratchReveal from "@/components/ui/ScratchReveal";
 import SharedText from "@/components/ui/SharedText";
 import SmoothScroll from "@/components/ui/SmoothScroll";
@@ -72,7 +73,30 @@ const count = (won: Saved["won"]) => ROOMS.filter((r) => won[r.slug]).length;
 /** El puntero en toda la ventana (−1…1): las piezas se inclinan un poco hacia él. */
 const pointer = { current: { x: 0, y: 0 } };
 
+/** Lo que baja la pantalla de carga según la página de entrada: la pieza que se ve primero (en la vitrina, todas). */
+function preloadFor(path: string) {
+  const [first, second] = path.split("/").slice(3);
+  const room = first === "sala" ? getRoom(second ?? "") : first === "vitrina" ? undefined : ROOMS[0];
+  return { assets: first === "vitrina" ? ROOMS.map((r) => r.model.src) : room ? [room.model.src] : [], modules: [() => import("./pieceScene")] };
+}
+
+/** La carga: la espiral del cuaderno de Ordás se dibuja con el progreso (el mismo dibujo de la sala I). */
+function CabinetLoading() {
+  return (
+    <svg className="mv-load" viewBox="-100 -100 200 200" aria-hidden>
+      {/* estilos en línea: el dibujo sale bien antes de que llegue el CSS de la web (viene con su JS) */}
+      <circle r="96" className="mv-load__ring" fill="none" stroke="var(--ln)" strokeDasharray="2 3" strokeWidth={0.5} />
+      <path d={spiralPath()} pathLength={1} className="mv-load__spiral" fill="none" stroke="var(--acc2)" strokeWidth={1.1} strokeLinecap="round" strokeDasharray={1} style={{ strokeDashoffset: "calc(1 - var(--p, 0))" }} />
+      <text y="88" textAnchor="middle" className="mv-load__cap" fill="var(--mut)" fontSize={6} letterSpacing={0.7}>LÁM. XII · ABRIENDO EL GABINETE</text>
+    </svg>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
+  const path = usePathname();
+  // se decide al entrar: el preloader solo sale una vez, en la primera página
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const load = useMemo(() => preloadFor(path), []);
   const [saved, setSaved] = useState<Saved>(NONE);
   const [stowed, stow] = useState<RoomSlug | null>(null);
   const poses = useMemo(() => Object.fromEntries(ROOMS.map((r) => [r.slug, { current: { ...POSE_START[r.slug] } }])) as Game["poses"], []);
@@ -139,6 +163,19 @@ export function Shell({ children }: { children: ReactNode }) {
   };
   return (
     <SiteFrame tokens={TOKENS} className="mv">
+      <Preloader
+        className="mv-pre"
+        once="always"
+        duration={1.3}
+        exit="curtain"
+        label="Abriendo el gabinete"
+        brand={BRAND.long}
+        meta={`${BRAND.city} · ${BRAND.founded}`}
+        assets={load.assets}
+        modules={load.modules}
+        waitFor={{ root: ".mv-trav[data-at] .mv-piece", ready: ".is-ready" }}
+        art={<CabinetLoading />}
+      />
       <GameCtx.Provider value={game}>
         <TravelStage className="mv-stage">
           <SmoothScroll lerp={0.08} syncGsap={false} />
