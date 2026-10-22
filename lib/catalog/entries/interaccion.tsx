@@ -7,6 +7,7 @@ import HoverFX, { HOVERFX_EFFECTS } from "@/components/ui/HoverFX";
 import MagneticButton from "@/components/ui/MagneticButton";
 import ScratchReveal, { SCRATCH_COVERS } from "@/components/ui/ScratchReveal";
 import ScrollArea from "@/components/ui/ScrollArea";
+import SkillCheck, { SKILLCHECK_SHAPES } from "@/components/ui/SkillCheck";
 import Spotlight from "@/components/ui/Spotlight";
 import { vcls } from "@/components/ui/variants";
 import type { CatalogEntry } from "../schema";
@@ -263,6 +264,33 @@ export const interaccion: CatalogEntry[] = [
           </div>
         </div>
       </ScratchReveal>
+    ),
+  },
+  {
+    id: "skill-check",
+    component: "SkillCheck",
+    path: "@/components/ui/SkillCheck",
+    name: "Minijuego de precisión",
+    category: "interaccion",
+    styles: ALL_STYLES,
+    description:
+      "Una aguja recorre un anillo o una barra y hay que pulsar cuando pasa por la zona buena: tras cada acierto la zona cambia de sitio y la aguja acelera. Para forzar una cerradura en un juego, cargar un golpe o una promoción con juego. Clic, toque, Espacio o Enter.",
+    stageHeight: 380,
+    notes: [
+      "onHit, onMiss y onComplete avisan de cada jugada; resetKey lo vuelve a empezar.",
+      "globalKey escucha Espacio en toda la página (para un juego a pantalla completa).",
+      "La aguja se mueve escribiendo en el DOM, sin re-renderizar; con movimiento reducido va a la mitad.",
+    ],
+    props: [
+      { key: "shape", label: "Forma", type: "select", default: "ring", options: SKILLCHECK_SHAPES, labels: { ring: "anillo", bar: "barra" } },
+      { key: "rounds", label: "Aciertos", type: "number", default: 3, min: 1, max: 8, step: 1 },
+      { key: "speed", label: "Velocidad", type: "number", default: 0.8, min: 0.2, max: 2, step: 0.1 },
+      { key: "zone", label: "Zona buena", type: "number", default: 0.16, min: 0.05, max: 0.4, step: 0.01 },
+      { key: "resetOnMiss", label: "Un fallo reinicia", type: "boolean", default: false },
+      { key: "actionLabel", label: "Botón", type: "text", default: "¡Ahora!" },
+    ],
+    render: (p) => (
+      <SkillCheck shape={p.shape as never} rounds={p.rounds as number} speed={p.speed as number} zone={p.zone as number} resetOnMiss={p.resetOnMiss as boolean} actionLabel={p.actionLabel as string} />
     ),
   },
 ];

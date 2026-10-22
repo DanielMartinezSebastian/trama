@@ -669,6 +669,23 @@ Una capa que se rasca con el puntero o el dedo para descubrir lo que hay debajo:
 - En táctil captura el gesto dentro de la capa (touch-action: none): no la hagas más alta que la pantalla.
 - Un botón que aparece con el foco revela sin rascar (teclado y lectores de pantalla).
 
+### Minijuego de precisión — `SkillCheck`
+
+Una aguja recorre un anillo o una barra y hay que pulsar cuando pasa por la zona buena: tras cada acierto la zona cambia de sitio y la aguja acelera. Para forzar una cerradura en un juego, cargar un golpe o una promoción con juego. Clic, toque, Espacio o Enter.
+
+| prop | tipo | default |
+|---|---|---|
+| `shape` | `bar` · `ring` | "ring" |
+| `rounds` | number 1–8 | 3 |
+| `speed` | number 0.2–2 | 0.8 |
+| `zone` | number 0.05–0.4 | 0.16 |
+| `resetOnMiss` | boolean | false |
+| `actionLabel` | text | "¡Ahora!" |
+
+- onHit, onMiss y onComplete avisan de cada jugada; resetKey lo vuelve a empezar.
+- globalKey escucha Espacio en toda la página (para un juego a pantalla completa).
+- La aguja se mueve escribiendo en el DOM, sin re-renderizar; con movimiento reducido va a la mitad.
+
 ### Enlace que rueda — `RollLink`
 
 Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.
@@ -2880,3 +2897,11 @@ Historia interactiva entre rutas con diseño editorial de letras grandes: cuatro
 Carpeta: `components/sites/maravillas/` · 6 páginas: Prólogo · Sala I · Mar · Sala II · Tierra · Sala III · Cielo · Sala IV · Tiempo · Vitrina
 
 `SharedText` ×3 · `ScratchReveal` · `PageTransition` · `Traveler` · `SmoothScroll` · `MetaTable`
+
+### Runa · el roguelite de Estudio Musgo, en una demo que se juega en la web — `/sitios/runa`
+
+Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de título con el jefe detrás de las letras, selección de héroe entre tres modelos 3D animados (el elegido se queda en el HUD de todas las páginas), un cofre que se abre forzando la cerradura (SkillCheck) y suelta una runa (la gema de Quilate) que vuela al inventario, y el jefe, que viaja desde la portada, al que solo se le hace daño con la runa. Transiciones duras entre rutas (pixelado, glitch, barrido de líneas), cartel de nivel y temblor de pantalla; marcador, lista de deseados y kit de prensa.
+
+Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nivel 1 · La cámara · Nivel 2 · El trono · Victoria · prensa
+
+`Traveler` ×3 · `SkillCheck` · `PageTransition` · `MetaTable`

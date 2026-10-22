@@ -129,3 +129,30 @@
 }
 .ui-scratch__skip:focus-visible { opacity: 1; pointer-events: auto; outline: 2px solid var(--acc); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .ui-scratch__cover { transition: none; } }
+
+/* ---------- SkillCheck ---------- */
+.ui-skill { --sz: 220px; display: grid; justify-items: center; gap: 14px; color: var(--fg); user-select: none; -webkit-user-select: none; }
+.ui-skill__track { position: relative; cursor: pointer; touch-action: manipulation; }
+.ui-skill--ring .ui-skill__track { width: var(--sz); aspect-ratio: 1; }
+.ui-skill__ring { width: 100%; height: 100%; rotate: -90deg; overflow: visible; }
+.ui-skill__base { fill: none; stroke: color-mix(in srgb, var(--fg) 16%, transparent); stroke-width: 7; }
+.ui-skill__zone { fill: none; stroke: var(--acc); stroke-width: 9; transition: stroke-dashoffset 0.25s steps(3); }
+.ui-skill--ring .ui-skill__needle {
+  position: absolute; left: 50%; top: 4%; width: 3px; height: 46%; margin-left: -1.5px; border-radius: 2px; background: var(--fg);
+  transform-origin: 50% 100%; rotate: calc(var(--p, 0) * 360deg);
+}
+.ui-skill--bar .ui-skill__track { width: min(100%, 420px); height: 22px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 12%, transparent); }
+.ui-skill__zonebar { position: absolute; top: 0; bottom: 0; left: calc((var(--za) - var(--z) / 2) * 100%); width: calc(var(--z) * 100%); border-radius: 999px; background: var(--acc); transition: left 0.25s steps(3); }
+.ui-skill--bar .ui-skill__needle { position: absolute; top: -6px; bottom: -6px; width: 4px; margin-left: -2px; border-radius: 2px; background: var(--fg); left: calc(var(--p, 0) * 100%); }
+.ui-skill__foot { display: flex; align-items: center; gap: 14px; }
+.ui-skill__pips { display: flex; gap: 6px; }
+.ui-skill__pips i { width: 10px; height: 10px; border-radius: 2px; border: 1px solid color-mix(in srgb, var(--fg) 40%, transparent); }
+.ui-skill__pips i.is-on { background: var(--acc); border-color: var(--acc); }
+.ui-skill__btn { font: inherit; font-weight: 600; padding: 9px 16px; border-radius: var(--r, 8px); border: 1px solid var(--acc); background: var(--acc); color: var(--bg); cursor: pointer; }
+.ui-skill__btn:disabled { opacity: 0.5; cursor: default; }
+.ui-skill__btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.ui-skill.is-hit .ui-skill__zone, .ui-skill.is-hit .ui-skill__zonebar { stroke: var(--fg); background: var(--fg); }
+.ui-skill.is-miss .ui-skill__track { animation: ui-skill-shake 0.32s steps(6); }
+.ui-skill.is-done .ui-skill__needle { opacity: 0.25; }
+@keyframes ui-skill-shake { 0%, 100% { translate: 0 0; } 20% { translate: -6px 0; } 40% { translate: 5px 0; } 60% { translate: -4px 0; } 80% { translate: 3px 0; } }
+@media (prefers-reduced-motion: reduce) { .ui-skill.is-miss .ui-skill__track { animation: none; } }

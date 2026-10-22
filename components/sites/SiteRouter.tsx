@@ -44,6 +44,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   anima: site(() => import("./anima/Site")),
   cota: site(() => import("./cota/Site")),
   maravillas: site(() => import("./maravillas/Site")),
+  runa: site(() => import("./runa/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

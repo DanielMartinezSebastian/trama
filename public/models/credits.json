@@ -182,5 +182,136 @@
     "textures": 4,
     "kb": 3455,
     "verdict": "una sola pieza (para articularlo hay que partirlo: ver docs/20 §2)"
+  },
+  {
+    "name": "caballero",
+    "file": "caballero/caballero-transformed.glb",
+    "source": "sketchfab",
+    "id": "98a655cb943d41d68974848ac2409559",
+    "title": "knight of the blood order",
+    "author": "DJMaesen",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/knight-of-the-blood-order-98a655cb943d41d68974848ac2409559",
+    "fetched": "2026-10-22",
+    "triangles": 7724,
+    "nodes": 88,
+    "meshes": 1,
+    "namedParts": [],
+    "skins": 1,
+    "joints": 65,
+    "animations": [
+      "idle"
+    ],
+    "materials": 1,
+    "textures": 4,
+    "kb": 4888,
+    "verdict": "con esqueleto (65 huesos) y 1 animaciones"
+  },
+  {
+    "name": "doctor-peste",
+    "file": "doctor-peste/doctor-peste-transformed.glb",
+    "source": "sketchfab",
+    "id": "41f7a1dfd6984135b876f334908e3ca4",
+    "title": "Plague Doctor",
+    "author": "BeardenInc",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/plague-doctor-41f7a1dfd6984135b876f334908e3ca4",
+    "fetched": "2026-10-22",
+    "triangles": 6205,
+    "nodes": 55,
+    "meshes": 2,
+    "namedParts": [],
+    "skins": 1,
+    "joints": 46,
+    "animations": [
+      "Take 001"
+    ],
+    "materials": 2,
+    "textures": 3,
+    "kb": 2409,
+    "verdict": "con esqueleto (46 huesos) y 1 animaciones"
+  },
+  {
+    "name": "exploradora",
+    "file": "exploradora/exploradora-transformed.glb",
+    "source": "sketchfab",
+    "id": "0c702359f0594f08b2a1e7b8d1f01d67",
+    "title": "Explorer",
+    "author": "Bento",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/explorer-0c702359f0594f08b2a1e7b8d1f01d67",
+    "fetched": "2026-10-22",
+    "triangles": 7656,
+    "nodes": 51,
+    "meshes": 3,
+    "namedParts": [
+      "Cylinder.001_Material.001_0"
+    ],
+    "skins": 1,
+    "joints": 37,
+    "animations": [
+      "Idle"
+    ],
+    "materials": 3,
+    "textures": 3,
+    "kb": 1561,
+    "verdict": "con esqueleto (37 huesos) y 1 animaciones"
+  },
+  {
+    "name": "cofre",
+    "file": "cofre/cofre-transformed.glb",
+    "source": "sketchfab",
+    "id": "b124919b7bc3470c82daeef72823f941",
+    "title": "Treasure Chest",
+    "author": "Multipainkiller Studio",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/treasure-chest-b124919b7bc3470c82daeef72823f941",
+    "fetched": "2026-10-22",
+    "triangles": 4588,
+    "nodes": 13,
+    "meshes": 2,
+    "namedParts": [],
+    "skins": 1,
+    "joints": 3,
+    "animations": [
+      "Armature|A_Open",
+      "Armature|A_Close"
+    ],
+    "materials": 2,
+    "textures": 6,
+    "kb": 4221,
+    "verdict": "con esqueleto (3 huesos) y 2 animaciones"
+  },
+  {
+    "name": "senor-esqueleto",
+    "file": "senor-esqueleto/senor-esqueleto-transformed.glb",
+    "source": "sketchfab",
+    "id": "a3f7b44275cf4c489ad62c535268ac16",
+    "title": "Skeleton Lord",
+    "author": "DJMaesen",
+    "license": "CC Attribution",
+    "licenseUrl": "http://creativecommons.org/licenses/by/4.0/",
+    "page": "https://sketchfab.com/3d-models/skeleton-lord-a3f7b44275cf4c489ad62c535268ac16",
+    "fetched": "2026-10-22",
+    "triangles": 8665,
+    "nodes": 127,
+    "meshes": 5,
+    "namedParts": [
+      "scabbard_2_sword_0",
+      "sword_sword_0"
+    ],
+    "skins": 1,
+    "joints": 89,
+    "animations": [
+      "tposeidlewalk"
+    ],
+    "materials": 4,
+    "textures": 12,
+    "kb": 10658,
+    "verdict": "con esqueleto (89 huesos) y 1 animaciones"
   }
 ]

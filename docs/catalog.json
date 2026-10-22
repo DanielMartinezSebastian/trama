@@ -85,6 +85,7 @@
         "hover-fx",
         "scroll-area",
         "scratch-reveal",
+        "skill-check",
         "roll-link",
         "custom-cursor",
         "smooth-scroll",
@@ -3495,6 +3496,80 @@
       ],
       "example": "import ScratchReveal from \"@/components/ui/ScratchReveal\";\n\n<ScratchReveal\n  label=\"Rasca aquí\"\n/>",
       "preview": "/componentes#scratch-reveal"
+    },
+    {
+      "id": "skill-check",
+      "name": "Minijuego de precisión",
+      "component": "SkillCheck",
+      "import": "import SkillCheck from \"@/components/ui/SkillCheck\";",
+      "category": "interaccion",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Una aguja recorre un anillo o una barra y hay que pulsar cuando pasa por la zona buena: tras cada acierto la zona cambia de sitio y la aguja acelera. Para forzar una cerradura en un juego, cargar un golpe o una promoción con juego. Clic, toque, Espacio o Enter.",
+      "props": [
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "ring",
+          "label": "Forma",
+          "options": [
+            "bar",
+            "ring"
+          ]
+        },
+        {
+          "key": "rounds",
+          "type": "number",
+          "default": 3,
+          "label": "Aciertos",
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 0.8,
+          "label": "Velocidad",
+          "min": 0.2,
+          "max": 2
+        },
+        {
+          "key": "zone",
+          "type": "number",
+          "default": 0.16,
+          "label": "Zona buena",
+          "min": 0.05,
+          "max": 0.4
+        },
+        {
+          "key": "resetOnMiss",
+          "type": "boolean",
+          "default": false,
+          "label": "Un fallo reinicia"
+        },
+        {
+          "key": "actionLabel",
+          "type": "text",
+          "default": "¡Ahora!",
+          "label": "Botón"
+        }
+      ],
+      "notes": [
+        "onHit, onMiss y onComplete avisan de cada jugada; resetKey lo vuelve a empezar.",
+        "globalKey escucha Espacio en toda la página (para un juego a pantalla completa).",
+        "La aguja se mueve escribiendo en el DOM, sin re-renderizar; con movimiento reducido va a la mitad."
+      ],
+      "example": "import SkillCheck from \"@/components/ui/SkillCheck\";\n\n<SkillCheck />",
+      "preview": "/componentes#skill-check"
     },
     {
       "id": "scene-flash",
@@ -17825,6 +17900,57 @@
         {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "MetaTable",
+          "id": "meta-table",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "runa",
+      "title": "Runa · el roguelite de Estudio Musgo, en una demo que se juega en la web",
+      "url": "/sitios/runa",
+      "dir": "components/sites/runa",
+      "description": "Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de título con el jefe detrás de las letras, selección de héroe entre tres modelos 3D animados (el elegido se queda en el HUD de todas las páginas), un cofre que se abre forzando la cerradura (SkillCheck) y suelta una runa (la gema de Quilate) que vuela al inventario, y el jefe, que viaja desde la portada, al que solo se le hace daño con la runa. Transiciones duras entre rutas (pixelado, glitch, barrido de líneas), cartel de nivel y temblor de pantalla; marcador, lista de deseados y kit de prensa.",
+      "pages": [
+        {
+          "path": "/sitios/runa",
+          "title": "Título"
+        },
+        {
+          "path": "/sitios/runa/heroe",
+          "title": "Elige héroe"
+        },
+        {
+          "path": "/sitios/runa/nivel-1",
+          "title": "Nivel 1 · La cámara"
+        },
+        {
+          "path": "/sitios/runa/nivel-2",
+          "title": "Nivel 2 · El trono"
+        },
+        {
+          "path": "/sitios/runa/victoria",
+          "title": "Victoria · prensa"
+        }
+      ],
+      "components": [
+        {
+          "component": "Traveler",
+          "id": "traveler",
+          "uses": 3
+        },
+        {
+          "component": "SkillCheck",
+          "id": "skill-check",
+          "uses": 1
+        },
+        {
+          "component": "PageTransition",
+          "id": "page-transition",
           "uses": 1
         },
         {

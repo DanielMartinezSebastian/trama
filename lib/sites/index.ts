@@ -28,6 +28,7 @@ import * as quilate from "@/components/sites/quilate/data";
 import * as anima from "@/components/sites/anima/data";
 import * as cota from "@/components/sites/cota/data";
 import * as maravillas from "@/components/sites/maravillas/data";
+import * as runa from "@/components/sites/runa/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -59,6 +60,7 @@ export const sites: SiteMeta[] = [
   { ...anima.meta, routes: anima.ROUTES, dir: "components/sites/anima" },
   { ...cota.meta, routes: cota.ROUTES, dir: "components/sites/cota" },
   { ...maravillas.meta, routes: maravillas.ROUTES, dir: "components/sites/maravillas" },
+  { ...runa.meta, routes: runa.ROUTES, dir: "components/sites/runa" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);
