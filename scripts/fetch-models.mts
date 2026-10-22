@@ -25,16 +25,18 @@
  *
  * Salida: `public/models/<nombre>/<nombre>.glb` (un único GLB, texturas incluidas), una entrada en
  * `public/models/credits.json` (autor, licencia, origen y el informe de articulación) y una fila en `public/models/LICENSES.md`.
- * Con `--partes`: `npx gltfjsx --transform --keepmeshes --keepnames --types` (Draco y texturas WebP a `--res`, pero **sin
- * juntar mallas**, para no perder la articulación), el GLB optimizado al lado y el componente en `components/models/`.
- * El decodificador de Draco se copia una vez a `public/draco/` (sin CDN externo). Los componentes usan `useGLTF` y, si hay
- * animaciones, `useAnimations` de `@react-three/drei`.
+ * Con `--partes`: `npx gltfjsx --transform --keepmeshes --keepnames --types` (texturas WebP a `--res`, **sin juntar mallas**,
+ * para no perder la articulación), el componente en `components/models/` y el GLB optimizado en su carpeta, **sin Draco**:
+ * la CSP de producción no deja compilar WebAssembly (los decodificadores de Draco y meshopt), así que se deshace y se
+ * cuantiza (`KHR_mesh_quantization`, sin decodificador). `-- sin-draco archivo.glb` lo hace con cualquier GLB. Los
+ * componentes usan `useGLTF` y, si hay animaciones, `useAnimations` de `@react-three/drei`.
  */
 import { execFileSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync, statSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { NodeIO } from "@gltf-transform/core";
 import { ALL_EXTENSIONS } from "@gltf-transform/extensions";
+import { prune, quantize } from "@gltf-transform/functions";
 
 // secretos locales: `.env.scripts` en la raíz (ignorado por git y fuera del alcance de Next.js; plantilla en `.env.example`).
 // Lo que ya venga en el entorno manda. Los tokens solo viajan en cabeceras: nunca se escriben en la salida ni en los créditos.
@@ -225,24 +227,36 @@ const printReport = (r: Report) => {
   if (r.animations.length) console.log(`  animaciones: ${r.animations.slice(0, 12).join(", ")}${r.animations.length > 12 ? "…" : ""}`);
 };
 
+/**
+ * Sin Draco: la CSP de producción (next.config.ts) no permite compilar WebAssembly, que es lo que usan los decodificadores
+ * de Draco y de meshopt. Se deshace la compresión de Draco y se cuantiza (`KHR_mesh_quantization`, que three lee sin
+ * decodificador), como las piezas de Quilate (docs/19 §6). Las texturas WebP se quedan.
+ */
+async function undraco(file: string) {
+  // @ts-expect-error draco3dgltf no trae tipos
+  const draco3d = (await import("draco3dgltf")).default as { createDecoderModule: () => Promise<unknown> };
+  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ "draco3d.decoder": await draco3d.createDecoderModule() });
+  const doc = await io.read(file);
+  for (const ext of doc.getRoot().listExtensionsUsed()) if (ext.extensionName === "KHR_draco_mesh_compression") ext.dispose();
+  await doc.transform(quantize(), prune());
+  await io.write(file, doc);
+}
+
 /* ---------- gltfjsx: el componente por piezas ---------- */
-function parts(glb: string, name: string) {
-  // decodificador de Draco local (gltfjsx --transform comprime con Draco; useGLTF lo busca en /draco/)
-  const draco = "public/draco";
-  if (!existsSync(join(draco, "draco_decoder.wasm"))) {
-    mkdirSync(draco, { recursive: true });
-    for (const f of ["draco_decoder.js", "draco_decoder.wasm", "draco_wasm_wrapper.js"]) copyFileSync(join("node_modules/three/examples/jsm/libs/draco/gltf", f), join(draco, f));
-  }
+async function parts(glb: string, name: string) {
   const comp = join("components/models", `${pascal(name)}.tsx`);
   mkdirSync(dirname(comp), { recursive: true });
   // gltfjsx con node directamente (sin shell). --keepmeshes: el --transform no junta mallas (si no, se pierden las piezas);
   // --keepnames: los nombres de origen
   const res = opt("res", "1024").replace(/^(\d)k$/, (_, d: string) => String(Number(d) * 1024));
-  execFileSync(process.execPath, [join("node_modules", "gltfjsx", "cli.js"), glb, "--transform", "--keepmeshes", "--keepnames", "--types", "--resolution", res, "--draco", "/draco/", "--output", comp], { stdio: "inherit" });
-  // el GLB optimizado sale junto al componente: va a public/models/<nombre>/
+  execFileSync(process.execPath, [join("node_modules", "gltfjsx", "cli.js"), glb, "--transform", "--keepmeshes", "--keepnames", "--types", "--resolution", res, "--output", comp], { stdio: "inherit" });
+  // el GLB optimizado sale junto al componente: va a public/models/<nombre>/, sin Draco (ver undraco)
   const made = join(dirname(comp), `${basename(glb, ".glb")}-transformed.glb`);
   const dest = join(dirname(glb), basename(made));
-  if (existsSync(made)) renameSync(made, dest);
+  if (existsSync(made)) {
+    renameSync(made, dest);
+    await undraco(dest);
+  }
   // adaptar el código a este proyecto: React 19 (sin JSX global, useRef con valor inicial), los módulos de three que ya usa
   // el repo en vez de three-stdlib, y la ruta pública del GLB
   let src = readFileSync(comp, "utf8")
@@ -251,7 +265,11 @@ function parts(glb: string, name: string) {
     .replace(/import \{ GLTF \} from 'three-stdlib'/, `import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js"`)
     .replace(/JSX\.IntrinsicElements\['group'\]/g, "ThreeElements['group']")
     .replace(/React\.useRef<THREE\.Group>\(\)/g, "React.useRef<THREE.Group>(null)")
-    .replace(/ as GLTFResult/g, " as unknown as GLTFResult");
+    .replace(/ as GLTFResult/g, " as unknown as GLTFResult")
+    // sin Draco ni meshopt (ver undraco): drei activa meshopt por defecto y su decodificador compila WebAssembly al
+    // cargarse, que la CSP de producción no permite; `useGLTF(url, false, false)` no carga ninguno
+    .replace(/useGLTF\((["'][^"']+["'])(?:, '\/draco\/')?\)/g, "useGLTF($1, false, false)")
+    .replace(/useGLTF\.preload\((["'][^"']+["'])\)/g, "useGLTF.preload($1, false, false)");
   // con animaciones: una prop `play` con el nombre de la que debe sonar (fundido de 0,3 s al cambiar)
   if (/const \{ actions \} = useAnimations\(animations, group\)/.test(src))
     src = src
@@ -329,7 +347,7 @@ if (cmd === "buscar" && a1) {
   printReport(report);
   credit({ name, file: `${name}/${name}.glb`, source, id, title: got.title, author: got.author, license: got.license, licenseUrl: got.licenseUrl, page: got.page, fetched: new Date().toISOString().slice(0, 10), ...report });
   if (flag("partes")) {
-    parts(to, name);
+    await parts(to, name);
     // la web sirve el optimizado: el original (pesado) no se guarda y los créditos apuntan al optimizado
     const opt = join(dirname(to), `${name}-transformed.glb`);
     if (existsSync(opt)) {
@@ -343,7 +361,11 @@ if (cmd === "buscar" && a1) {
   }
 } else if (cmd === "revisar" && a1) {
   printReport(await inspect(a1));
-  if (flag("partes")) parts(a1, a2 ?? basename(a1, ".glb"));
+  if (flag("partes")) await parts(a1, a2 ?? basename(a1, ".glb"));
+} else if (cmd === "sin-draco" && a1) {
+  await undraco(a1);
+  console.log(`  ${a1}: sin Draco, cuantizado`);
+  printReport(await inspect(a1));
 } else {
   console.log(readFileSync(new URL(import.meta.url), "utf8").split("*/")[0].replace(/^\/\*\*|\n \* ?/g, "\n"));
 }

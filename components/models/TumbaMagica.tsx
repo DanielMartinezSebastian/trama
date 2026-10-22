@@ -26,7 +26,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Model(props: ThreeElements['group']) {
-  const { nodes, materials } = useGLTF("/models/tumba-magica/tumba-magica-transformed.glb", '/draco/') as unknown as GLTFResult
+  const { nodes, materials } = useGLTF("/models/tumba-magica/tumba-magica-transformed.glb", false, false) as unknown as GLTFResult
   return (
     <group {...props} dispose={null}>
       <mesh name="mesh_Material__25_0" geometry={nodes.mesh_Material__25_0.geometry} material={materials.Material__25} position={[-0.008, 1.068, 0.046]} rotation={[-Math.PI / 2, 0, 0]} scale={0.025} />
@@ -34,4 +34,4 @@ export function Model(props: ThreeElements['group']) {
   )
 }
 
-useGLTF.preload("/models/tumba-magica/tumba-magica-transformed.glb")
+useGLTF.preload("/models/tumba-magica/tumba-magica-transformed.glb", false, false)

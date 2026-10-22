@@ -18,6 +18,7 @@ export const ROUTES = [
   { path: "programa", title: "Programa" },
   { path: "entradas", title: "Entradas" },
   { path: "info", title: "Info" },
+  { path: "laboratorio", title: "Laboratorio" },
 ];
 
 export const BRAND = {

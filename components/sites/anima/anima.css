@@ -119,16 +119,22 @@
 .an-story__bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--acc); transform-origin: left; transform: scaleX(var(--story-p, 0)); opacity: clamp(0, calc((1 - var(--story-p, 0)) * 12), 0.8); }
 
 /* portada */
-.an-step--hero { display: grid; min-height: 100svh; align-items: end; justify-items: center; padding-bottom: clamp(16px, 5vh, 56px); }
-.an-step__hero { position: relative; pointer-events: auto; display: grid; justify-items: center; gap: 18px; width: 100%; }
-.an-step__hero::before { content: ""; position: absolute; z-index: -1; inset: -20% -20vw -12%; pointer-events: none; background: radial-gradient(closest-side, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 40%, transparent) 60%, transparent); }
-.an-step__herokit.ui-hero { padding: 0 var(--st-gutter); background: none; }
-.an-step__herokit .ui-hero__inner { max-width: 900px; gap: 14px; }
-.an-step__herokit h1 { font-family: var(--display); font-weight: 400; font-size: clamp(38px, 5.4vw, 80px); line-height: 1; letter-spacing: -0.015em; text-wrap: balance; }
+.an-step--hero { display: grid; min-height: 100svh; align-items: center; justify-items: center; padding: calc(var(--an-island) + 2vh) var(--st-gutter) clamp(16px, 5vh, 56px); }
+/* la portada: el titular gigante con un hueco (la O) donde se encaja la calavera 3D; nada encima de ella */
+.an-hero { pointer-events: auto; display: grid; justify-items: center; gap: clamp(10px, 2vh, 18px); width: 100%; text-align: center; }
+.an-hero__title {
+  margin: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap;
+  font-family: var(--font-accent, var(--display)); font-weight: 400; font-size: min(14vw, 30svh); line-height: 0.82; letter-spacing: -0.01em;
+  color: var(--fg); text-transform: uppercase;
+}
+/* la O: un hueco del tamaño de una letra redonda (la calavera se encaja ahí) */
+.an-hero__o { display: inline-block; width: 0.78em; height: 0.82em; margin-inline: 0.02em; }
+.an-hero__sub { margin: 0; max-width: 46ch; font-size: clamp(15px, 1.4vw, 19px); line-height: 1.5; color: var(--mut); text-wrap: balance; }
+.an-hero__cta { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; justify-content: center; }
 .an-count { justify-items: center; }
 .an-count .ui-count__num { font-family: var(--display); font-weight: 400; color: var(--fg); }
 @supports (animation-timeline: view()) {
-  .an-step__hero { animation: an-hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
+  .an-hero { animation: an-hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
 }
 @keyframes an-hero-out { to { opacity: 0; transform: translateY(-40px); filter: blur(8px); } }
 
@@ -136,7 +142,7 @@
   .an-ribbon { transform: translate(-50%, -50%); }
   .an-intro span { --k: 1; }
   .an-card__num { transform: none; }
-  .an-step__hero { animation: none; }
+  .an-hero { animation: none; }
 }
 
 /* móvil: la calavera en la mitad de arriba, los cuadros abajo encima de la barra; el prólogo a pantalla completa detrás */
@@ -155,8 +161,7 @@
   .an-ribbon[data-pos="bottom"] { top: 66%; }
   .an-intro { inset: calc(var(--an-island) - 10px) var(--st-gutter) calc(84px + env(safe-area-inset-bottom)); justify-content: center; text-align: center; }
   .an-step--hero { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
-  .an-step__herokit h1 { font-size: clamp(32px, 9vw, 44px); }
-  .an-step__herokit p { font-size: 14px; }
+  .an-hero__sub { font-size: 14px; }
 }
 
 /* ---------- tras el recorrido ---------- */
@@ -211,3 +216,38 @@
 }
 /* isla estrecha: la cita se compacta para dejar aire al medallón de la calavera */
 @media (max-width: 420px) { .an-island .ui-island__r a { padding: 7px 11px; font-size: 12px; letter-spacing: 0.04em; } }
+
+/* ---------- viajeros (Traveler): la calavera en busto y la gema; su caja es la del hueco en el que estén ---------- */
+.an-bust, .an-gem { position: absolute; inset: 0; }
+.an-bust canvas, .an-gem canvas { display: block; }
+/* navbar mínimo: la marca no se ve (es el enlace accesible bajo el medallón; en la portada, una cruz pequeña) */
+.an-island .ui-mnav__c:not([data-model]) .an-brand--sr { font-size: 18px; color: var(--acc); }
+.an-island .ui-mnav__c[data-model] .an-brand--sr { opacity: 0; }
+.an-island__cta { display: inline-flex !important; align-items: center; gap: 8px; }
+@media (max-width: 520px) { .an-island__long { display: none; } .an-island .ui-island__r a { padding: 8px 10px; } }
+/* el hueco de la calavera en el navbar: algo mayor que el medallón (asoma el sombrero) */
+.an-navslot { display: block; }
+
+/* laboratorio */
+.an-lab__steps { display: grid; gap: 10px; margin: 8px 0 28px; padding: 0; list-style: none; counter-reset: s; max-width: 640px; }
+.an-lab__steps li { counter-increment: s; padding-left: 40px; position: relative; color: var(--mut); transition: color 0.4s; }
+.an-lab__steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: var(--display); color: var(--acc); opacity: 0.5; }
+.an-lab__steps li[data-on] { color: var(--fg); }
+.an-lab__steps li[data-on]::before { opacity: 1; }
+.an-lab__scene { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 260px); gap: clamp(16px, 4vw, 48px); align-items: center; }
+.an-lab__skull { position: relative; width: min(100%, 560px, 64svh); aspect-ratio: 1; justify-self: center; }
+.an-lab__skullslot { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--acc) 14%, transparent), transparent); }
+/* la cuenca izquierda del busto (en % del hueco de la calavera) */
+.an-lab__eye { position: absolute; left: var(--eye-x, 44%); top: var(--eye-y, 52%); width: 9%; aspect-ratio: 1; transform: translate(-50%, -50%); }
+.an-lab__case { display: grid; justify-items: center; gap: 14px; padding: 22px; border-radius: 22px; border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent); background: color-mix(in srgb, var(--card) 70%, transparent); min-height: 260px; align-content: center; }
+.an-lab__gemslot { width: 150px; aspect-ratio: 1; }
+.an-lab__take { border: 1px solid var(--acc); background: none; color: var(--acc); border-radius: 99px; padding: 10px 18px; font: inherit; cursor: pointer; }
+.an-lab__take:hover, .an-lab__take:focus-visible { background: var(--acc); color: var(--bg); }
+.an-lab__actions { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-top: 28px; }
+@media (max-width: 760px) {
+  .an-lab__scene { grid-template-columns: minmax(0, 1fr); }
+  .an-lab__case { min-height: 0; }
+  .an-lab__gemslot { width: 120px; }
+}
+/* en el navbar, la calavera va por encima del cristal del medallón (la isla está en z 40) y no se lleva los clics */
+.an-trav--skull[data-at="nav"] { z-index: 45; pointer-events: none; }

@@ -137,7 +137,9 @@
 }
 .ui-mnav__c:not([data-model]) .ui-mnav__emblem { display: none; }
 /* el lienzo es mayor que el medallón: el modelo puede asomar por encima (un sombrero, unas orejas) */
-.ui-mnav__emblem > div, .ui-mnav__emblem canvas { position: absolute !important; inset: -30% !important; width: 160% !important; height: 160% !important; }
+.ui-mnav__emblem:not(.ui-mnav__emblem--slot) > div, .ui-mnav__emblem canvas { position: absolute !important; inset: -30% !important; width: 160% !important; height: 160% !important; }
+/* con `emblem` (p. ej. un TravelSlot), el hueco ocupa el medallón y algo más (lo que viaja puede asomar) */
+.ui-mnav__emblem--slot > * { position: absolute; inset: -30%; }
 @keyframes ui-mnav-in { from { opacity: 0; transform: translate(-50%, -30%) scale(0.4); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @media (prefers-reduced-motion: reduce) { .ui-mnav__emblem { animation: none; } }
 /* en pantallas estrechas la isla es corta: el medallón se encoge para no pisar los lados */

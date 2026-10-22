@@ -1962,7 +1962,7 @@ Rejilla que se arrastra en cualquier dirección sin fin, con inercia, táctil y 
 
 ### Objeto 3D con materiales físicos — `ObjectStage`
 
-Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado. Con src, un modelo GLB en vez de la forma (con sus materiales, encuadrado al lienzo, Draco desde /draco/): el ojo que te mira de /sitios/anima/info o la tumba de /sitios/anima/entradas; modelRotation lo orienta, follow dice cuánto gira hacia el puntero, glow pone una luz de color delante y env="none" quita los reflejos de estudio para modelos con la luz horneada.
+Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio, sin cargar ningún HDR (RoomEnvironment de three). El color sale de los tokens del tema. Sin WebGL o con movimiento reducido, una esfera plana con degradado. Con src, un modelo GLB en vez de la forma (con sus materiales, encuadrado al lienzo; sin Draco ni meshopt, que piden WebAssembly): el ojo que te mira de /sitios/anima/info o la tumba de /sitios/anima/entradas; modelRotation lo orienta, follow dice cuánto gira hacia el puntero, glow pone una luz de color delante y env="none" quita los reflejos de estudio para modelos con la luz horneada.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2831,6 +2831,6 @@ Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compro
 
 Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje del terror, la pista, el concurso de disfraces, la cena de los muertos y la medianoche) con una calavera 3D procedural, modelada con una función de distancia y MarchingCubes, que abre la mandíbula, castañetea, enciende los ojos, se parte y se multiplica. Cuadros que pasan por detrás de la calavera entre niebla y ascuas, cuenta atrás hasta la fiesta (Countdown), programa por horas, entradas con tipo y cantidad, y la información práctica: lugar, normas y preguntas.
 
-Carpeta: `components/sites/anima/` · 4 páginas: Inicio · Programa · Entradas · Info
+Carpeta: `components/sites/anima/` · 5 páginas: Inicio · Programa · Entradas · Info · Laboratorio
 
-`Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `Hero` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`
+`Traveler` ×2 · `Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`

@@ -32,7 +32,8 @@ export type ObjectStageProps = {
   alt?: string;
   /**
    * Un modelo GLB en lugar de la forma (`shape` y `material` no se usan): con sus propios materiales, encuadrado al lienzo,
-   * Draco desde `/draco/` (lo deja `npm run models:fetch -- … --partes`). Requiere `@react-three/drei`.
+   * sin Draco ni meshopt, que piden WebAssembly (lo deja así `npm run models:fetch -- … --partes`; la cuantización sí vale).
+   * Requiere `@react-three/drei`.
    */
   src?: string;
   /** giro inicial del modelo en grados «x,y,z», para que su cara frontal mire a la cámara */

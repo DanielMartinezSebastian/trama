@@ -23,7 +23,7 @@ export type ObjectSceneProps = {
   /** false = fuera de pantalla: el lienzo no dibuja */
   active: boolean;
   onReady: () => void;
-  /** un modelo GLB (con Draco desde `/draco/`) en lugar de la forma: con sus materiales, encuadrado al lienzo */
+  /** un modelo GLB (sin Draco: la CSP no deja compilar WebAssembly; cuantizado sí) en lugar de la forma: con sus materiales, encuadrado al lienzo */
   src?: string;
   /** giro inicial del modelo en grados «x,y,z» (para que su cara frontal mire a la cámara) */
   modelRotation?: string;
@@ -104,9 +104,13 @@ function useMotion(target: MutableRefObject<Object3D | null>, { motion, speed, p
   });
 }
 
-/** Un GLB encuadrado: centrado y escalado para caber en una esfera de radio 1,35 (como las formas). */
+/**
+ * Un GLB encuadrado: centrado y escalado para caber en una esfera de radio 1,35 (como las formas). `useGLTF(url, false,
+ * false)`: sin Draco ni meshopt. drei activa meshopt por defecto y su decodificador compila WebAssembly nada más cargarse,
+ * que la CSP de producción no permite (aunque el modelo no lo use).
+ */
 function Model(props: ObjectSceneProps) {
-  const { scene } = useGLTF(props.src!, "/draco/") as unknown as { scene: Object3D };
+  const { scene } = useGLTF(props.src!, false, false) as unknown as { scene: Object3D };
   const obj = useMemo(() => {
     const o = scene.clone(true);
     const [rx, ry, rz] = (props.modelRotation ?? "0,0,0").split(",").map((v) => (Number(v) || 0) * (Math.PI / 180));

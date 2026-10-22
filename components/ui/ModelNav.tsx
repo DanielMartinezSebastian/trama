@@ -18,6 +18,11 @@ export type ModelNavProps = IslandNavProps & {
    * no recibe clics) y el nombre accesible.
    */
   model?: ReactNode;
+  /**
+   * En lugar de `model`, cualquier nodo DOM dentro del medallón: p. ej. un `TravelSlot` para que un `Traveler` (un modelo 3D
+   * que vive en el layout y viaja entre rutas) se coloque en el navbar. El medallón no dibuja nada propio.
+   */
+  emblem?: ReactNode;
   /** clave del modelo: al cambiar, el medallón vuelve a entrar con su animación */
   modelKey?: string;
   /** diámetro del medallón en px (sobresale de la isla por arriba y por abajo) */
@@ -32,15 +37,15 @@ export type ModelNavProps = IslandNavProps & {
  * además dónde está y lo cerca que pasa, para reaccionar a su manera. Sin modelo es una `IslandNav` normal. Sin WebGL o con
  * movimiento reducido, se ve la marca. Hereda todas las props de `IslandNav`.
  */
-export default function ModelNav({ model, modelKey = "model", emblemSize = 84, follow = 0.45, brand, className = "", ...nav }: ModelNavProps) {
+export default function ModelNav({ model, emblem: emblemNode, modelKey = "model", emblemSize = 84, follow = 0.45, brand, className = "", ...nav }: ModelNavProps) {
   const reduced = useReducedMotion();
   const emblem = useRef<HTMLSpanElement>(null);
   const pointer = useRef<ModelNavPointer>({ x: 0, y: 0, near: 0 });
   const { use3d, mounted, near, fail } = useGLGate(emblem, { want: !!model && !reduced, margin: "0px", optimistic: true });
-  const on = !!model && use3d;
+  const on = (!!model && use3d) || !!emblemNode;
 
   useEffect(() => {
-    if (!on) return;
+    if (!on || !model) return;
     const move = (e: PointerEvent) => {
       const r = emblem.current?.getBoundingClientRect();
       if (!r) return;
@@ -52,7 +57,7 @@ export default function ModelNav({ model, modelKey = "model", emblemSize = 84, f
     };
     addEventListener("pointermove", move, { passive: true });
     return () => removeEventListener("pointermove", move);
-  }, [on]);
+  }, [on, model]);
 
   return (
     <IslandNav
@@ -61,7 +66,12 @@ export default function ModelNav({ model, modelKey = "model", emblemSize = 84, f
       brand={
         <span className="ui-mnav__c" data-model={on ? "" : undefined} style={{ ["--mnav-size" as string]: `${emblemSize}px` }}>
           <span className="ui-mnav__brand">{brand}</span>
-          {model && (
+          {emblemNode && (
+            <span key={modelKey} className="ui-mnav__emblem ui-mnav__emblem--slot">
+              {emblemNode}
+            </span>
+          )}
+          {model && !emblemNode && (
             <span ref={emblem} key={modelKey} className="ui-mnav__emblem" aria-hidden>
               {on && mounted && (
                 <GLBoundary onError={fail}>

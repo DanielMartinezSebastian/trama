@@ -45,4 +45,4 @@ resto, del cierre convexo de anillos de contorno. Unidades en mm; anclajes y eje
 | `tumba-magica/tumba-magica-transformed.glb` | *halloween magic grave*, vicente betoret ferrero, de [sketchfab](https://sketchfab.com/3d-models/halloween-magic-grave-c75940f5e70c4a7faf4c0d349cdd215a) | [CC Attribution](http://creativecommons.org/licenses/by/4.0/) |
 | `ojo-sangre/ojo-sangre-transformed.glb` | *Blue Eyeball (Free)*, Tom Hodes, de [sketchfab](https://sketchfab.com/3d-models/blue-eyeball-free-18915d2f17a2431fbefeb3eaf4411f16) | [CC Attribution](http://creativecommons.org/licenses/by/4.0/) |
 
-Los `-transformed.glb` salen de `npm run models:fetch -- bajar sketchfab:<id> <nombre> --partes` (gltfjsx con `--keepmeshes`: las piezas se conservan; Draco y texturas WebP). CC BY 4.0 exige atribución: se cita en el pie de la web que los usa (Ánima).
+Los `-transformed.glb` salen de `npm run models:fetch -- bajar sketchfab:<id> <nombre> --partes` (gltfjsx con `--keepmeshes`: las piezas se conservan; texturas WebP y geometría cuantizada, sin Draco por la CSP). CC BY 4.0 exige atribución: se cita en el pie de la web que los usa (Ánima).

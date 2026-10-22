@@ -1,16 +1,19 @@
 "use client";
 
-import { Fragment, lazy, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Fragment, Suspense, createContext, lazy, startTransition, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import CookieBanner from "@/components/ui/CookieBanner";
 import Countdown from "@/components/ui/Countdown";
 import FAQSection from "@/components/ui/FAQSection";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
-import Hero from "@/components/ui/Hero";
 import ModelNav from "@/components/ui/ModelNav";
 import Marquee from "@/components/ui/Marquee";
 import ObjectStage from "@/components/ui/ObjectStage";
+import Traveler, { TravelSlot, TravelStage, useTraveler } from "@/components/ui/Traveler";
+import { GLBoundary } from "@/lib/ui/gl";
+import { useReducedMotion } from "@/lib/ui/useReducedMotion";
+import type { ModelNavPointer } from "@/lib/modelnav/pointer";
 import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
 import QuantityStepper from "@/components/ui/QuantityStepper";
@@ -25,6 +28,7 @@ import { SiteFrame, siteHref, useSiteNavigate } from "../shared";
 import FireRing, { type FireState } from "./FireRing";
 import FluidSmoke, { type SmokeKind, type SmokeState } from "./FluidSmoke";
 import SkullStage from "./SkullStage";
+import { bustEye } from "./bustEye";
 import { SKULL_REST, type SkullPose } from "./skullScene";
 import { BRAND, CHAPTERS, EVENT, FAQ, FEE, MAX_TICKETS, PROGRAM, RULES, SLUG, TICKETS, eventJsonLd, type Interlude } from "./data";
 import "./anima.css";
@@ -61,21 +65,109 @@ function toTopIfHome(e: { currentTarget: HTMLAnchorElement; preventDefault: () =
   else scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// la calavera del navbar: se carga aparte (three solo baja cuando hace falta)
-const NavSkull = lazy(() => import("./navSkull"));
+// los viajeros (docs/20 §2e): la calavera en busto y la gema del laboratorio. Su 3D se carga aparte (three solo baja
+// cuando hace falta) y viven en el Shell: son el mismo nodo, vivo, en todas las páginas, y cada página dice con un
+// `TravelSlot` dónde va (el navbar, el laboratorio, el ojo)
+const SkullBust = lazy(() => import("./skullBust"));
+const GemBit = lazy(() => import("./gemBit"));
+
+/** El estado del laboratorio que sobrevive al navegar: si la gema ya es el ojo de la calavera. */
+type LabCtx = { gemSet: boolean; setGemSet: (v: boolean) => void };
+const Lab = createContext<LabCtx>({ gemSet: false, setGemSet: () => {} });
+
+/** El viajero de la calavera: un lienzo, que se inclina hacia el puntero y abre la boca si pasa cerca. */
+function SkullTraveler() {
+  const { gemSet } = useContext(Lab);
+  const at = useTraveler("calavera");
+  const reduced = useReducedMotion();
+  const box = useRef<HTMLDivElement>(null);
+  const pointer = useRef<ModelNavPointer>({ x: 0, y: 0, near: 0 });
+  useEffect(() => {
+    const move = (e: PointerEvent) => {
+      const r = box.current?.getBoundingClientRect();
+      if (!r || !r.width) return;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2, dx = e.clientX - cx, dy = e.clientY - cy;
+      pointer.current.x = Math.max(-1, Math.min(1, dx / (innerWidth / 2)));
+      pointer.current.y = Math.max(-1, Math.min(1, -dy / (innerHeight / 2)));
+      pointer.current.near = Math.max(0, Math.min(1, 1 - (Math.hypot(dx, dy) - r.width / 3) / 180));
+    };
+    addEventListener("pointermove", move, { passive: true });
+    return () => removeEventListener("pointermove", move);
+  }, []);
+  return (
+    <div ref={box} className="an-bust" aria-hidden>
+      {!reduced && (
+        <GLBoundary onError={() => {}}>
+          <Suspense fallback={null}>
+            <SkullBust pointer={pointer} active={at !== null} gem={gemSet} />
+          </Suspense>
+        </GLBoundary>
+      )}
+    </div>
+  );
+}
+
+function GemTraveler() {
+  const at = useTraveler("gema");
+  const reduced = useReducedMotion();
+  return (
+    <div className="an-gem" aria-hidden>
+      {!reduced && (
+        <GLBoundary onError={() => {}}>
+          <Suspense fallback={null}>
+            <GemBit active={at !== null} />
+          </Suspense>
+        </GLBoundary>
+      )}
+    </div>
+  );
+}
+
+/** El icono de las entradas: un tique con su troquel. */
+const TicketIcon = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden>
+    <path d="M3 7.5V5.8c0-.4.4-.8.8-.8h16.4c.4 0 .8.4.8.8v1.7a2.5 2.5 0 0 0 0 5v1.7c0 .4-.4.8-.8.8H3.8c-.4 0-.8-.4-.8-.8v-1.7a2.5 2.5 0 0 0 0-5Z" transform="translate(0 2)" />
+    <path d="M15 7v1.5M15 11v1.5M15 15v1.5" strokeLinecap="round" />
+  </svg>
+);
 
 export function Shell({ children }: { children: ReactNode }) {
   const navigate = useSiteNavigate();
-  // en la portada la calavera ya está en el recorrido: el navbar lleva la marca; en el resto, la calavera con sombrero
+  // en la portada la calavera ya está en el recorrido: el navbar se queda sin ella; en el resto, la calavera con sombrero
+  // (el mismo viajero que en el laboratorio)
   const home = usePathname().replace(/\/$/, "") === href();
+  const [gemSet, setGemSet] = useState(false);
+  useEffect(() => {
+    try {
+      setGemSet(sessionStorage.getItem("anima-gema") === "1");
+    } catch {
+      /* sin almacenamiento */
+    }
+  }, []);
+  const lab: LabCtx = {
+    gemSet,
+    setGemSet: (v) => {
+      setGemSet(v);
+      try {
+        sessionStorage.setItem("anima-gema", v ? "1" : "0");
+      } catch {
+        /* sin almacenamiento */
+      }
+    },
+  };
   return (
     <SiteFrame tokens={TOKENS} className="an" icons={{ set: phosphorLight, weight: "light" }}>
+     <Lab.Provider value={lab}>
+     <TravelStage className="an-stage-travel">
       {/* scroll con inercia larga: la noche se baja despacio */}
       <SmoothScroll lerp={0.045} wheelMultiplier={0.85} syncGsap={false} />
       <a className="an-skip" href="#contenido">Saltar al contenido</a>
+      {/* navbar mínimo: menú, la calavera (su hueco; fuera de la portada) y las entradas. Fija (sin esconderse al bajar):
+          la calavera que viaja hasta aquí es `fixed` y no seguiría a una cabecera que se desplaza */}
       <ModelNav
         className="an-island"
-        model={home ? undefined : <NavSkull />}
+        hideOnScroll={false}
+        emblem={home ? undefined : <TravelSlot id="calavera" at="nav" className="an-navslot" />}
         emblemSize={78}
         brandAlign="exact"
         leading={
@@ -92,9 +184,15 @@ export function Shell({ children }: { children: ReactNode }) {
             note={`31 de octubre · ${BRAND.venue} · ${BRAND.city}`}
           />
         }
-        brand={<a className="an-brand" href={href()} aria-label="Ánima, inicio" onClick={toTopIfHome}>Ánima</a>}
-        trailing={<a className="an-island__cta" href={href("entradas")}>Entradas <span aria-hidden>→</span></a>}
+        brand={<a className="an-brand an-brand--sr" href={href()} aria-label="Ánima, inicio" onClick={toTopIfHome}><span aria-hidden>✝</span></a>}
+        trailing={<a className="an-island__cta" href={href("entradas")} aria-label="Entradas"><TicketIcon /><span className="an-island__long">Entradas</span></a>}
       />
+      <Traveler id="calavera" className="an-trav an-trav--skull" pace="slow" blend="live">
+        <SkullTraveler />
+      </Traveler>
+      <Traveler id="gema" className="an-trav an-trav--gem" pace="slow" blend="live">
+        <GemTraveler />
+      </Traveler>
       <main id="contenido">{children}</main>
       <Footer />
       <ActionBar
@@ -110,6 +208,8 @@ export function Shell({ children }: { children: ReactNode }) {
       <CookieBanner storageKey="anima-cookies" policyHref="#cookies" title="Cookies" text="Solo las necesarias para guardar tus entradas. Las de medición, si nos dejas." variant="minimal" />
       {/* eslint-disable-next-line react/no-danger */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd(href("entradas"))).replace(/</g, "\\u003c") }} />
+     </TravelStage>
+     </Lab.Provider>
     </SiteFrame>
   );
 }
@@ -156,7 +256,8 @@ type Beat = {
 };
 const BEATS: Beat[] = [
   // portada: la calavera casi a pantalla, con los ojos encendidos
-  { kind: "hero", chapter: -1, room: "violeta", pose: P({ zoom: 0.6, eye: 0.95, y: 0.2, jaw: 0.15 }) },
+  // la pose de la portada (x, y, zoom) la calcula `Home` a partir del hueco de la O del titular
+  { kind: "hero", chapter: -1, room: "violeta", pose: P({ zoom: 1.4, eye: 0.95, y: 0.15, jaw: 0.1, yaw: 0.15 }) },
   // prólogo: a la derecha del manifiesto, girada hacia él
   { kind: "intro", chapter: -1, room: "violeta", pose: P({ x: 0.22, zoom: 0.85, yaw: -0.45, eye: 0.5 }) },
   // 01 la puerta: de tres cuartos, despertando → interludio: de frente, la boca entreabierta
@@ -198,11 +299,40 @@ function Home() {
   const fire = useRef<FireState>({ r: 0.4, a: 0, red: 0 });
   const smoke = useRef<SmokeState>({ kind: "niebla", a: 0, cx: 0, cy: 0, r: 100 });
   const [step, setStep] = useState(0);
+  // el hueco de la O del titular: de su caja salen la posición y el tamaño de la calavera en la portada
+  const heroGap = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = heroGap.current;
+    if (!el) return;
+    const title = el.parentElement!;
+    const fit = () => {
+      // el titular, lo más grande que quepa a lo ancho (92 %) y sin pasar del 34 % del alto
+      title.style.fontSize = "100px";
+      const k = (innerWidth * 0.92) / title.scrollWidth;
+      title.style.fontSize = `${Math.min(100 * k, innerHeight * 0.34)}px`;
+      // el tamaño de la calavera sale del hueco: la cámara mira a 3,9·zoom y la calavera mide ~1,15
+      const r = el.getBoundingClientRect();
+      BEATS[0].pose.zoom = (1.15 * innerHeight) / (2 * Math.tan((16 * Math.PI) / 180) * 3.9 * r.height * 1.1);
+      dispatchEvent(new Event("resize"));
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    document.fonts?.ready.then(fit);
+    return () => ro.disconnect();
+  }, []);
 
   // el motor de recorrido del kit (lib/story): tramo, pesos, cintas y cuadros; aquí, lo propio de Ánima (la pose de la
   // calavera, el fuego y el humo del HUD, y lo que va a CSS)
   useScrollStory(list, sticky, {
     onFrame: ({ j, t }) => {
+      // la portada: la calavera va donde esté ahora el hueco de la O (sube con el texto) hasta que el tramo la suelta
+      const gap = heroGap.current;
+      if (gap && j === 0) {
+        const r = gap.getBoundingClientRect();
+        BEATS[0].pose.x = (r.left + r.width / 2) / innerWidth - 0.5;
+        BEATS[0].pose.y = 0.5 - (r.top + r.height / 2) / innerHeight;
+      }
       const a = BEATS[j].pose, b = BEATS[Math.min(j + 1, BEATS.length - 1)].pose, p = pose.current;
       for (const k of POSE_KEYS) p[k] = a[k] + (b[k] - a[k]) * t;
       // cuánto «interludio» hay ahora (0 en un cuadro, 1 en un interludio)
@@ -211,11 +341,13 @@ function Home() {
       // en móvil el lienzo ocupa toda la pantalla: con cuadro, la calavera sube a la mitad de arriba (el cuadro va debajo);
       // en los interludios baja al centro, entera, y así acaba el recorrido antes de fundirse. Sin trío (no cabe)
       if (innerWidth < 900) {
-        p.x = 0;
+        // cuánto pesa la portada (1 en ella, 0 al llegar al prólogo): ahí manda el hueco de la O del titular
+        const hw = j === 0 ? 1 - t : 0;
+        p.x *= hw;
         p.trio = 0;
         p.close *= 0.7;
-        p.zoom *= MOBILE_ZOOM;
-        p.y = p.y * 0.5 + 0.22 * (1 - ilv);
+        p.zoom *= 1 + (MOBILE_ZOOM - 1) * (1 - hw);
+        p.y = p.y * hw + (p.y * 0.5 + 0.22 * (1 - ilv)) * (1 - hw);
       }
       // fuego: pesos de los dos pasos en juego; el radio, el del paso con HUD (en unidades del lienzo del fuego, que mide
       // 1,9 veces el HUD: r/200 del medio ancho del HUD)
@@ -381,22 +513,22 @@ function Home() {
         </div>
         <ol className="an-steps" ref={list}>
           <li data-step={0} className="an-step an-step--hero">
-            <div className="an-step__hero">
-              <Hero
-                align="center"
-                backdrop="none"
-                variant="minimal"
-                kicker={`31 de octubre · ${BRAND.city}`}
-                title="La fiesta de Halloween más terrorífica de Valencia."
-                subtitle={`Pasaje del terror, dos pistas hasta las seis y concurso de disfraces en ${BRAND.venue}. Abrimos a las nueve.`}
-                primaryCta="Comprar entradas"
-                primaryHref={href("entradas")}
-                secondaryCta="Ver el programa"
-                secondaryHref={href("programa")}
-                badges=""
-                className="an-step__herokit"
-              />
-              <Countdown to={EVENT.start} label="Faltan" done="¡Ya ha empezado! Te esperamos dentro." size="md" variant="minimal" className="an-count" />
+            {/* la portada: «HALLOWEEN» gigante con la calavera 3D en el sitio de la primera O (el hueco se mide y la pose de
+                la portada la encaja ahí); al bajar, sale del texto hacia su siguiente posición */}
+            <div className="an-hero">
+              <p className="an-kicker an-hero__kicker">31 de octubre · {BRAND.city} · 21:00 – 6:00</p>
+              <h1 className="an-hero__title">
+                <span aria-hidden>Hall</span>
+                <span className="an-hero__o" ref={heroGap} aria-hidden />
+                <span aria-hidden>ween</span>
+                <span className="ui-sr">Halloween en Ánima</span>
+              </h1>
+              <p className="an-hero__sub">La fiesta más terrorífica de Valencia: pasaje del terror, dos pistas hasta las seis y concurso de disfraces en {BRAND.venue}.</p>
+              <div className="an-hero__cta">
+                <a className="an-btn" href={href("entradas")}>Comprar entradas</a>
+                <a className="an-link" href={href("programa")}>Ver el programa →</a>
+              </div>
+              <Countdown to={EVENT.start} label="Faltan" done="¡Ya ha empezado! Te esperamos dentro." size="sm" variant="minimal" className="an-count" />
             </div>
           </li>
           <li data-step={1} className="an-step an-step--intro">
@@ -534,6 +666,76 @@ function Tickets() {
   );
 }
 
+/* ---------- laboratorio: contar una historia moviendo cosas entre sitios y entre rutas ---------- */
+/**
+ * Tres gestos (docs/20 §2e), con dos `Traveler` que viven en el Shell:
+ * 1. una gema sin dueño, en una vitrina;
+ * 2. al pulsarla, viaja hasta la cuenca de la calavera (otro hueco en la misma página, dentro de `startTransition`) y,
+ *    al llegar, la calavera la toma como ojo (el estado vive en el Shell: dura al navegar);
+ * 3. «Que vigile la noche»: se navega al programa y la calavera, la misma, vuela del laboratorio al navbar.
+ */
+function Laboratory() {
+  const { gemSet, setGemSet } = useContext(Lab);
+  const [placing, setPlacing] = useState(false);
+  // dónde está la cuenca del busto al pulsar (el busto la mide en cada fotograma)
+  const [eyeAt, setEyeAt] = useState({ x: bustEye.x, y: bustEye.y });
+  const gemAt = useTraveler("gema");
+  // al llegar al ojo, la calavera la incorpora y el viajero se va (su hueco desaparece)
+  useEffect(() => {
+    if (gemAt !== "ojo") return;
+    const t = setTimeout(() => {
+      setGemSet(true);
+      setPlacing(false);
+    }, 950);
+    return () => clearTimeout(t);
+  }, [gemAt, setGemSet]);
+  const step = gemSet ? 3 : placing ? 2 : 1;
+  return (
+    <div className="an-page an-wrap an-lab">
+      <p className="an-kicker">Laboratorio · historias que se mueven</p>
+      <h1 className="an-h1">El ojo de la calavera</h1>
+      <ol className="an-lab__steps">
+        <li data-on={step === 1 ? "" : undefined}><b>Una gema sin dueño.</b> Lleva siglos en esta vitrina esperando a alguien.</li>
+        <li data-on={step === 2 ? "" : undefined}><b>Devuélvele el ojo.</b> Pulsa la gema: volará hasta la cuenca vacía.</li>
+        <li data-on={step === 3 ? "" : undefined}><b>Que vigile la noche.</b> La calavera se va al navbar y te acompaña por la web.</li>
+      </ol>
+      <div className="an-lab__scene">
+        <div className="an-lab__skull">
+          <TravelSlot id="calavera" at="lab" priority={1} className="an-lab__skullslot" />
+          {/* el hueco del ojo, sobre la cuenca del busto (su sitio, en % del hueco de la calavera) */}
+          {placing && !gemSet && <TravelSlot key="ojo" id="gema" at="ojo" className="an-lab__eye" style={{ left: `${eyeAt.x * 100}%`, top: `${eyeAt.y * 100}%` }} />}
+        </div>
+        <div className="an-lab__case">
+          {!placing && !gemSet && (
+            <>
+              <TravelSlot key="vitrina" id="gema" at="vitrina" className="an-lab__gemslot" />
+              <button type="button" className="an-lab__take" onClick={() => {
+                setEyeAt({ x: bustEye.x, y: bustEye.y });
+                startTransition(() => setPlacing(true));
+              }}>
+                Coger la gema
+              </button>
+            </>
+          )}
+          {gemSet && <p className="an-mut">La vitrina está vacía.</p>}
+        </div>
+      </div>
+      <div className="an-lab__actions">
+        {gemSet ? (
+          <a className="an-btn" href={href("programa")}>Que vigile la noche →</a>
+        ) : (
+          <p className="an-mut">Primero, la gema.</p>
+        )}
+        {gemSet && (
+          <button type="button" className="an-link" onClick={() => setGemSet(false)}>
+            Devolver la gema a la vitrina
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ---------- información práctica ---------- */
 function Info() {
   return (
@@ -568,5 +770,6 @@ export function Page({ path }: { path: string[] }) {
   if (p === "programa") return <Program />;
   if (p === "entradas") return <Tickets />;
   if (p === "info") return <Info />;
+  if (p === "laboratorio") return <Laboratory />;
   return <Home />;
 }

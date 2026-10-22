@@ -276,7 +276,7 @@ function Skull({ pose, focus, onReady, side = 0 }: { pose: MutableRefObject<Skul
 export const PIRATE_URL = "/models/calavera-pirata/calavera-pirata-transformed.glb";
 export const GHOST = new Color("#7dffa8");
 /** color de absorción de la gema del ojo (Beer–Lambert): esmeralda y, a medianoche, rubí */
-const EMERALD = new Color(0.25, 1, 0.45);
+export const EMERALD = new Color(0.25, 1, 0.45);
 const RUBY = new Color(1, 0.12, 0.18);
 /**
  * La piedra del ojo de cada calavera (0 = la del centro; −1 y 1 = las del trío): color de absorción y cuánto absorbe. Todas
@@ -293,7 +293,7 @@ const EYE_GEMS: Record<number, { color: Color; k: number }> = {
 let hdrCube: Texture | null = null;
 let hdrStarted = false;
 const hdrWait: ((t: Texture) => void)[] = [];
-function useGemHdr(gl: Parameters<typeof loadGemHdr>[0]) {
+export function useGemHdr(gl: Parameters<typeof loadGemHdr>[0]) {
   const [t, setT] = useState<Texture | null>(hdrCube);
   useEffect(() => {
     if (hdrCube) return setT(hdrCube);
@@ -358,7 +358,7 @@ export function buildPirate(scene: Object3D): PirateRig {
 }
 
 function PirateSkull({ pose, focus, onReady, side = 0 }: { pose: MutableRefObject<SkullPose>; focus?: SceneProps["focus"]; onReady?: () => void; side?: -1 | 0 | 1 }) {
-  const { scene } = useGLTF(PIRATE_URL, "/draco/") as unknown as { scene: Object3D };
+  const { scene } = useGLTF(PIRATE_URL, false, false) as unknown as { scene: Object3D };
   const rig = useMemo(() => buildPirate(scene), [scene]);
   useEffect(() => () => { rig.skin.forEach((m) => m.dispose()); rig.eye.dispose(); }, [rig]);
   // el ojo: una talla brillante que llena la cuenca, con el material de gema de trazado de rayos del kit (lib/gems). Una
@@ -386,10 +386,60 @@ function PirateSkull({ pose, focus, onReady, side = 0 }: { pose: MutableRefObjec
   const root = useRef<Group>(null);
   const glow = useRef<PointLight>(null);
   const gemMesh = useRef<Mesh>(null);
+  // el puntero (−1…1, y hacia arriba), hacia dónde mira, y los dos muelles: mandíbula y retroceso de la cabeza
+  const { camera } = useThree();
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const look = useRef({ x: 0, y: 0 });
+  const spring = useRef({ x: 0, v: 0 });
+  const recoil = useRef({ x: 0, v: 0 });
+  const size = useThree((st) => st.size);
+  useEffect(() => {
+    if (side) return;
+    const cv = gl.domElement;
+    let last = { x: 0, y: 0, t: 0 };
+    // ¿el puntero está sobre la calavera? Su centro y su radio en pantalla, proyectados con la cámara actual
+    const over = (cx: number, cy: number) => {
+      const g = root.current;
+      if (!g) return 0;
+      const r = cv.getBoundingClientRect();
+      const c = new Vector3().setFromMatrixPosition(g.matrixWorld);
+      const top = c.clone().add(new Vector3(0, 0.62, 0)).project(camera);
+      c.project(camera);
+      const px = r.left + ((c.x + 1) / 2) * r.width, py = r.top + ((1 - c.y) / 2) * r.height;
+      const rad = Math.abs(((1 - top.y) / 2) * r.height + r.top - py);
+      const d = Math.hypot(cx - px, cy - py);
+      return d < rad ? Math.sign(cx - px) || 1 : 0;
+    };
+    const hit = (dir: number, force: number) => {
+      spring.current.v += 9 * force;
+      recoil.current.v += 3.2 * force * dir;
+    };
+    const move = (e: PointerEvent) => {
+      pointerRef.current.x = (e.clientX / innerWidth) * 2 - 1;
+      pointerRef.current.y = -((e.clientY / innerHeight) * 2 - 1);
+      // una pasada rápida por encima también es un golpe (más flojo)
+      const now = performance.now(), dtm = Math.max(1, now - last.t);
+      const speed = Math.hypot(e.clientX - last.x, e.clientY - last.y) / dtm;
+      last = { x: e.clientX, y: e.clientY, t: now };
+      if (speed > 2.2) {
+        const side2 = over(e.clientX, e.clientY);
+        if (side2) hit(side2, Math.min(1, speed / 5) * 0.6);
+      }
+    };
+    const down = (e: PointerEvent) => {
+      const side2 = over(e.clientX, e.clientY);
+      if (side2) hit(side2, 1);
+    };
+    addEventListener("pointermove", move, { passive: true });
+    addEventListener("pointerdown", down, { passive: true });
+    return () => {
+      removeEventListener("pointermove", move);
+      removeEventListener("pointerdown", down);
+    };
+  }, [side, gl, camera, size]);
   const s = useRef<SkullPose>({ ...SKULL_REST });
   const ready = useRef(false);
   const red = useRef(false);
-  const { camera } = useThree();
   const seed = side * 1.7;
 
   useFrame((state, dt) => {
@@ -443,11 +493,24 @@ function PirateSkull({ pose, focus, onReady, side = 0 }: { pose: MutableRefObjec
       return;
     }
 
-    g.rotation.y = S.yaw + Math.sin(t * 0.45) * 0.12;
-    g.rotation.x = 0.06 + Math.sin(t * 0.33) * 0.04;
-    g.position.y = Math.sin(t * 0.8) * 0.02;
-    // el modelo viene con la boca abierta: JAW_SHUT la cierra y desde ahí abre la pose
-    rig.pivot.rotation.x = JAW_SHUT + S.jaw * 0.5 + Math.max(0, Math.sin(t * 10)) * 0.16 * S.talk;
+    // mira al puntero (con retraso), cabecea hacia abajo de vez en cuando y retrocede si se la golpea
+    const ptr = pointerRef.current, kk = Math.min(1, dt * 3);
+    look.current.x += (ptr.x * 0.32 - look.current.x) * kk;
+    look.current.y += (-ptr.y * 0.18 - look.current.y) * kk;
+    const nod = 0.16 * Math.pow(Math.max(0, Math.sin(t * 0.21 - 1)), 6);
+    // la mandíbula y el golpe: un muelle amortiguado (sin motor de físicas; docs/20 §2f). x'' = −k·x − c·x' + impulsos
+    const sp = spring.current, dts = Math.min(dt, 1 / 30);
+    sp.v += (-140 * sp.x - 7 * sp.v) * dts;
+    sp.x += sp.v * dts;
+    const hr = recoil.current;
+    hr.v += (-90 * hr.x - 9 * hr.v) * dts;
+    hr.x += hr.v * dts;
+    g.rotation.y = S.yaw + Math.sin(t * 0.45) * 0.12 + look.current.x + hr.x * 0.6;
+    g.rotation.x = 0.06 + Math.sin(t * 0.33) * 0.04 + nod + look.current.y - hr.x * 0.35;
+    // un pelín más abajo que el centro (la cabeza tiende a quedar alta) y un respiro arriba y abajo
+    g.position.y = -0.07 + Math.sin(t * 0.8) * 0.02;
+    // el modelo viene con la boca abierta: JAW_SHUT la cierra y desde ahí abre la pose (y el muelle la balancea)
+    rig.pivot.rotation.x = JAW_SHUT + S.jaw * 0.5 + Math.max(0, Math.sin(t * 10)) * 0.16 * S.talk + Math.max(-0.12, sp.x);
     // el sombrero cae desde arriba y se asienta
     rig.hat.visible = S.hat > 0.01;
     rig.hat.position.y = rig.hatY + (1 - S.hat) * (1 - S.hat) * rig.hatDrop;

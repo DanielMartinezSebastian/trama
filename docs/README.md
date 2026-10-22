@@ -197,6 +197,7 @@ Los **modelos 3D**, también: `npm run models:fetch` (`scripts/fetch-models.mts`
 - **`--partes`** usa [gltfjsx](https://github.com/pmndrs/gltfjsx) para generar `components/models/<Nombre>.tsx`, con cada
   pieza como nodo propio y, si hay animaciones, una prop `play`.
   - Pasa siempre `--keepmeshes`: el `--transform` no junta mallas, así que la articulación se conserva.
-  - Optimiza el GLB (Draco y texturas WebP) y lo deja junto al original.
-  - El decodificador de Draco va en `public/draco/`, sin CDN externo.
+  - Optimiza el GLB (texturas WebP) y, en vez de Draco, lo **cuantiza** (`KHR_mesh_quantization`): la CSP de producción
+    no deja compilar WebAssembly, que es lo que usan los decodificadores de Draco y de meshopt. `-- sin-draco archivo.glb`
+    lo hace con cualquier GLB. Guarda solo el optimizado.
   - El componente usa `useGLTF` y `useAnimations` de `@react-three/drei`.

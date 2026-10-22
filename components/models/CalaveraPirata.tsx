@@ -39,7 +39,7 @@ type GLTFResult = GLTF & {
 
 export function Model({ play, ...props }: ThreeElements['group'] & { play?: ActionName }) {
   const group = React.useRef<THREE.Group>(null)
-  const { nodes, materials, animations } = useGLTF("/models/calavera-pirata/calavera-pirata-transformed.glb", '/draco/') as unknown as GLTFResult
+  const { nodes, materials, animations } = useGLTF("/models/calavera-pirata/calavera-pirata-transformed.glb", false, false) as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
   React.useEffect(() => {
     const a = play ? actions[play] : null
@@ -76,4 +76,4 @@ export function Model({ play, ...props }: ThreeElements['group'] & { play?: Acti
   )
 }
 
-useGLTF.preload("/models/calavera-pirata/calavera-pirata-transformed.glb")
+useGLTF.preload("/models/calavera-pirata/calavera-pirata-transformed.glb", false, false)

@@ -26,7 +26,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Model(props: ThreeElements['group']) {
-  const { nodes, materials } = useGLTF("/models/ojo-sangre/ojo-sangre-transformed.glb", '/draco/') as unknown as GLTFResult
+  const { nodes, materials } = useGLTF("/models/ojo-sangre/ojo-sangre-transformed.glb", false, false) as unknown as GLTFResult
   return (
     <group {...props} dispose={null}>
       <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materials.blinn2} />
@@ -34,4 +34,4 @@ export function Model(props: ThreeElements['group']) {
   )
 }
 
-useGLTF.preload("/models/ojo-sangre/ojo-sangre-transformed.glb")
+useGLTF.preload("/models/ojo-sangre/ojo-sangre-transformed.glb", false, false)
