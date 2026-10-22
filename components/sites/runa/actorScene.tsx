@@ -37,6 +37,8 @@ export type ActorSceneProps = {
   active: boolean;
   /** dónde cae el modelo en el lienzo (fracciones), para poner encima elementos de la página */
   screen?: MutableRefObject<ScreenBox>;
+  /** mallas que no se pintan (p. ej. una peana que no casa con la escena) */
+  hide?: string[];
   /** color de los contraluces (los tokens de la web) */
   rim?: [string, string];
   onReady?: () => void;
@@ -94,7 +96,7 @@ function measure(root: THREE.Object3D, mixer: THREE.AnimationMixer | null, dur: 
   return { offset: c.clone().negate(), halfH: (box.max.y - box.min.y) / 2, rad, box };
 }
 
-function Actor({ src, loop, once, rest, play, yaw = 0, follow = 0.15, spin = 0, hit = 0, down = false, screen, onReady }: Omit<ActorSceneProps, "active" | "rim">) {
+function Actor({ src, loop, once, rest, hide, play, yaw = 0, follow = 0.15, spin = 0, hit = 0, down = false, screen, onReady }: Omit<ActorSceneProps, "active" | "rim">) {
   const { scene, animations } = useGLTF(src, false, false);
   const { camera, size } = useThree();
   const outer = useRef<THREE.Group>(null);
@@ -107,6 +109,7 @@ function Actor({ src, loop, once, rest, play, yaw = 0, follow = 0.15, spin = 0, 
     scene.traverse((o) => {
       const m = o as THREE.Mesh;
       if (m.isMesh) m.frustumCulled = false;
+      if (hide?.includes(o.name)) o.visible = false;
     });
     const mixer = new THREE.AnimationMixer(scene);
     let clip = loop?.name ? animations.find((a) => a.name === loop.name) : rest ? undefined : animations.find((a) => a.name !== once);

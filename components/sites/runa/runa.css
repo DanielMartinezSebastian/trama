@@ -52,6 +52,8 @@
 .rn-hearts i { font-style: normal; color: color-mix(in srgb, var(--fg) 20%, transparent); }
 .rn-hearts i.is-on { color: var(--acc); }
 .rn-hud__time { color: var(--acc2); }
+.rn-sound { padding: 6px; border-radius: 0; border: 2px solid color-mix(in srgb, var(--fg) 30%, transparent); color: var(--mut); }
+.rn-sound.is-on { border-color: var(--acc2); color: var(--acc2); }
 .rn-dock {
   position: fixed; left: 16px; bottom: 16px; z-index: 55; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; gap: 6px 10px; align-items: end;
   padding: 8px; background: color-mix(in srgb, var(--bg) 85%, transparent); border: 2px solid var(--fg);
@@ -70,6 +72,11 @@
 .rn-actor, .rn-rune { position: relative; width: 100%; height: 100%; }
 .rn-actor canvas { opacity: 0; transition: opacity 0.3s steps(3); }
 .rn-actor.is-ready canvas { opacity: 1; }
+/* la imagen fija del modelo, debajo del lienzo; se va cuando el 3D está listo */
+.rn-sprite { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.rn-actor > div { position: absolute !important; inset: 0; }
+.rn-actor.is-ready > .rn-sprite { visibility: hidden; }
+.rn-actor--boss.is-down > .rn-sprite { transform: translateY(40%) rotate(-12deg); opacity: 0; transition: transform 1s steps(6), opacity 1s steps(6); }
 
 /* ---------- cartel de nivel: corte seco, como apagar un CRT ---------- */
 .rn-card {
@@ -212,6 +219,12 @@
 .rn-features b { display: block; margin: 10px 0 6px; font-family: var(--display); font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1; text-transform: uppercase; }
 .rn-features p { margin: 0; color: var(--mut); line-height: 1.5; }
 .rn-press__contact { margin: 16px 0 20px; }
+.rn-h3 { margin: 56px 0 16px; font: 14px/1 var(--pix); text-transform: uppercase; color: var(--acc2); }
+.rn-shots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.rn-shots img { display: block; width: 100%; height: auto; border: 2px solid color-mix(in srgb, var(--fg) 25%, transparent); }
+.rn-shots a:hover img, .rn-shots a:focus-visible img { border-color: var(--gold); }
+.rn-shots p { margin: 8px 0 0; font: 9px/1.5 var(--pix); text-transform: uppercase; color: var(--mut); }
+.rn-shots p a { color: var(--acc2); }
 .rn-foot { margin-top: 60px; font-size: 13px; color: var(--mut); line-height: 1.6; }
 .rn-foot ul { margin: 6px 0 12px; padding-left: 18px; }
 

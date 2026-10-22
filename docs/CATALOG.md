@@ -686,6 +686,19 @@ Una aguja recorre un anillo o una barra y hay que pulsar cuando pasa por la zona
 - globalKey escucha Espacio en toda la página (para un juego a pantalla completa).
 - La aguja se mueve escribiendo en el DOM, sin re-renderizar; con movimiento reducido va a la mitad.
 
+### Sonido de 8 bits (interruptor y efectos) — `SoundToggle`
+
+Efectos de sonido de 8 bits sintetizados en el navegador (lib/ui/sfx: moneda, golpe, cofre, victoria…), sin archivos ni licencias, y el interruptor que los silencia en toda la web y lo recuerda. Para interfaces con juego, promociones y webs de videojuegos.
+
+| prop | tipo | default |
+|---|---|---|
+| `onLabel` | text | "Sonido" |
+| `offLabel` | text | "Silencio" |
+
+- En el código: import { playSfx } from "@/lib/ui/sfx" y playSfx("coin"). useSfx() devuelve play, muted y setMuted.
+- El audio arranca con el primer sonido, que siempre llega tras un gesto: los navegadores no dejan sonar antes.
+- Pulsa los efectos de abajo para oírlos.
+
 ### Enlace que rueda — `RollLink`
 
 Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.
@@ -2904,4 +2917,4 @@ Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de tí
 
 Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nivel 1 · La cámara · Nivel 2 · El trono · Victoria · prensa
 
-`Traveler` ×3 · `SkillCheck` · `PageTransition` · `MetaTable`
+`Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `MetaTable`

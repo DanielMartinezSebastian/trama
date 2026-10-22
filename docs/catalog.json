@@ -86,6 +86,7 @@
         "scroll-area",
         "scratch-reveal",
         "skill-check",
+        "sound-toggle",
         "roll-link",
         "custom-cursor",
         "smooth-scroll",
@@ -3570,6 +3571,46 @@
       ],
       "example": "import SkillCheck from \"@/components/ui/SkillCheck\";\n\n<SkillCheck />",
       "preview": "/componentes#skill-check"
+    },
+    {
+      "id": "sound-toggle",
+      "name": "Sonido de 8 bits (interruptor y efectos)",
+      "component": "SoundToggle",
+      "import": "import SoundToggle from \"@/components/ui/SoundToggle\";",
+      "category": "interaccion",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Efectos de sonido de 8 bits sintetizados en el navegador (lib/ui/sfx: moneda, golpe, cofre, victoria…), sin archivos ni licencias, y el interruptor que los silencia en toda la web y lo recuerda. Para interfaces con juego, promociones y webs de videojuegos.",
+      "props": [
+        {
+          "key": "onLabel",
+          "type": "text",
+          "default": "Sonido",
+          "label": "Texto con sonido"
+        },
+        {
+          "key": "offLabel",
+          "type": "text",
+          "default": "Silencio",
+          "label": "Texto en silencio"
+        }
+      ],
+      "notes": [
+        "En el código: import { playSfx } from \"@/lib/ui/sfx\" y playSfx(\"coin\"). useSfx() devuelve play, muted y setMuted.",
+        "El audio arranca con el primer sonido, que siempre llega tras un gesto: los navegadores no dejan sonar antes.",
+        "Pulsa los efectos de abajo para oírlos."
+      ],
+      "example": "import SoundToggle from \"@/components/ui/SoundToggle\";\n\n<SoundToggle />",
+      "preview": "/componentes#sound-toggle"
     },
     {
       "id": "scene-flash",
@@ -17946,6 +17987,11 @@
         {
           "component": "SkillCheck",
           "id": "skill-check",
+          "uses": 1
+        },
+        {
+          "component": "SoundToggle",
+          "id": "sound-toggle",
           "uses": 1
         },
         {

@@ -45,6 +45,8 @@ export type Hero = {
   src: string;
   /** cuánto pesa su golpe contra el jefe (puntos de vida por acierto) */
   hit: number;
+  /** mallas del modelo que no se pintan */
+  hide?: string[];
   model: ModelCredit;
 };
 
@@ -77,6 +79,8 @@ export const HEROES: Hero[] = [
     stats: [2, 2, 5],
     src: "/models/exploradora/exploradora-transformed.glb",
     hit: 20,
+    // trae una peana verde chillón que no casa con la mazmorra
+    hide: ["Cylinder001_Material001_0"],
     model: { title: "Explorer", author: "Bento", license: "CC BY 4.0", page: "https://sketchfab.com/3d-models/explorer-0c702359f0594f08b2a1e7b8d1f01d67" },
   },
 ];

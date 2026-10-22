@@ -156,3 +156,11 @@
 .ui-skill.is-done .ui-skill__needle { opacity: 0.25; }
 @keyframes ui-skill-shake { 0%, 100% { translate: 0 0; } 20% { translate: -6px 0; } 40% { translate: 5px 0; } 60% { translate: -4px 0; } 80% { translate: 3px 0; } }
 @media (prefers-reduced-motion: reduce) { .ui-skill.is-miss .ui-skill__track { animation: none; } }
+
+/* ---------- SoundToggle ---------- */
+.ui-sound {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; cursor: pointer; font: inherit; font-size: 13px;
+  border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--mut);
+}
+.ui-sound.is-on { color: var(--fg); border-color: var(--acc); }
+.ui-sound:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }

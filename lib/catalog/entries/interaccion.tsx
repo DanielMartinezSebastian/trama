@@ -8,6 +8,8 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import ScratchReveal, { SCRATCH_COVERS } from "@/components/ui/ScratchReveal";
 import ScrollArea from "@/components/ui/ScrollArea";
 import SkillCheck, { SKILLCHECK_SHAPES } from "@/components/ui/SkillCheck";
+import SoundToggle from "@/components/ui/SoundToggle";
+import { SFX_PRESETS, playSfx } from "@/lib/ui/sfx";
 import Spotlight from "@/components/ui/Spotlight";
 import { vcls } from "@/components/ui/variants";
 import type { CatalogEntry } from "../schema";
@@ -291,6 +293,38 @@ export const interaccion: CatalogEntry[] = [
     ],
     render: (p) => (
       <SkillCheck shape={p.shape as never} rounds={p.rounds as number} speed={p.speed as number} zone={p.zone as number} resetOnMiss={p.resetOnMiss as boolean} actionLabel={p.actionLabel as string} />
+    ),
+  },
+  {
+    id: "sound-toggle",
+    component: "SoundToggle",
+    path: "@/components/ui/SoundToggle",
+    name: "Sonido de 8 bits (interruptor y efectos)",
+    category: "interaccion",
+    styles: ALL_STYLES,
+    description:
+      "Efectos de sonido de 8 bits sintetizados en el navegador (lib/ui/sfx: moneda, golpe, cofre, victoria…), sin archivos ni licencias, y el interruptor que los silencia en toda la web y lo recuerda. Para interfaces con juego, promociones y webs de videojuegos.",
+    stageHeight: 300,
+    notes: [
+      "En el código: import { playSfx } from \"@/lib/ui/sfx\" y playSfx(\"coin\"). useSfx() devuelve play, muted y setMuted.",
+      "El audio arranca con el primer sonido, que siempre llega tras un gesto: los navegadores no dejan sonar antes.",
+      "Pulsa los efectos de abajo para oírlos.",
+    ],
+    props: [
+      { key: "onLabel", label: "Texto con sonido", type: "text", default: "Sonido" },
+      { key: "offLabel", label: "Texto en silencio", type: "text", default: "Silencio" },
+    ],
+    render: (p) => (
+      <div style={{ display: "grid", gap: 18, justifyItems: "center", padding: 16 }}>
+        <SoundToggle onLabel={p.onLabel as string} offLabel={p.offLabel as string} />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", maxWidth: 460 }}>
+          {SFX_PRESETS.map((n) => (
+            <button key={n} type="button" onClick={() => playSfx(n)} style={{ font: "inherit", fontSize: 13, padding: "6px 10px", borderRadius: "var(--r)", border: "1px solid var(--ln)", background: "var(--card)", color: "var(--fg)", cursor: "pointer" }}>
+              {n}
+            </button>
+          ))}
+        </div>
+      </div>
     ),
   },
 ];

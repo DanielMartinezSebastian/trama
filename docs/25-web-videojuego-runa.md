@@ -44,6 +44,22 @@ temblores, destellos y en la barra de vida.
 - **Temblor sin mover el HUD**: el temblor va en el contenido (`.rn-main`), no en el marco. Un `transform` en un antecesor
   convierte a los `position: fixed` en relativos a él: el HUD saltaría.
 
+## 4b. Segunda vuelta: sonido, capturas e imágenes fijas
+
+- **Sonido de 8 bits, pieza del kit** (`lib/ui/sfx.ts` + `SoundToggle`): once efectos sintetizados con Web Audio (ondas
+  cuadrada, triangular, de sierra y ruido, con envolvente y deslizamiento de tono). Sin archivos, sin peso y sin licencias.
+  El silencio es global y se recuerda (`localStorage`); el `AudioContext` es el que ya compartía `AudioPlayer`
+  (`lib/ui/audio.ts`). En Runa: «start» al empezar, «select» y «confirm» en la selección, una moneda que **sube de tono con
+  cada perno**, el cofre al abrirse, «powerup» al coger la runa, golpes y daño en el combate, «win» al derribar al jefe y
+  «lose» al perder el último corazón. El interruptor está en el HUD.
+- **Capturas de prensa reales**, sacadas de la propia demo con Playwright a 1920 × 1080 (título, selección, cofre, combate y
+  victoria): `public/img/runa/prensa/` en JPG (~200 KB) con miniatura de 640 px (~23 KB). En el kit de prensa, galería con
+  enlace a la descarga a tamaño completo. Es lo que piden las guías: capturas grandes, sin marca de agua.
+- **Imágenes fijas de cada modelo** (`public/img/runa/*.webp`, 4–28 KB): capturadas del propio lienzo con fondo
+  transparente (`omitBackground`) y el resto de la página oculto. Se ven **mientras carga el 3D**, con **movimiento
+  reducido** y **sin WebGL**: la web ya no se queda sin personajes.
+- La exploradora traía una **peana verde chillón** (una malla aparte): `ActorScene` acepta `hide` con nombres de malla.
+
 ## 5. Trampas que salieron
 
 1. **Un clip con tres animaciones seguidas.** El del jefe trae pose en T (0–0,07 s), reposo (0,07–3 s) y andar
@@ -66,7 +82,7 @@ victoria. También en producción (`next start`, con la CSP), sin errores.
 
 ## 7. Pendiente
 
-- **Sonido** (8 bits) con botón de silencio: es lo que más falta en una web de juego.
-- **Tráiler** en la portada y **capturas** descargables en el kit de prensa (es lo que piden los periodistas).
+- ~~Sonido~~, ~~capturas de prensa~~ y ~~modo sin 3D~~: hechos (§4b).
+- **Tráiler** en la portada: un vídeo corto grabado de la propia demo (Playwright graba vídeo) en lugar de una imagen.
 - Más de un jefe o una planta aleatoria, para que la demo se pueda repetir.
-- Un **modo sin 3D** más rico (ahora, sin WebGL o con movimiento reducido, las pantallas quedan sin modelos).
+- Música de fondo opcional (el `SynthEngine` de `AudioPlayer` ya genera música; faltaría un estilo chiptune).

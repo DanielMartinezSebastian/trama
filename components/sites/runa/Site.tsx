@@ -5,8 +5,10 @@ import { usePathname, useRouter } from "next/navigation";
 import MetaTable from "@/components/ui/MetaTable";
 import PageTransition, { PageTransitionPersist } from "@/components/ui/PageTransition";
 import SkillCheck from "@/components/ui/SkillCheck";
+import SoundToggle from "@/components/ui/SoundToggle";
 import Traveler, { TravelSlot, TravelStage, useTraveler } from "@/components/ui/Traveler";
 import { GLBoundary } from "@/lib/ui/gl";
+import { playSfx } from "@/lib/ui/sfx";
 import { tokensToStyle, type TokenSet } from "@/lib/ui/tokens";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { SiteFrame, siteHref } from "../shared";
@@ -40,6 +42,13 @@ const THEME: TokenSet = {
 const TOKENS = { ...tokensToStyle(THEME), "--sel-bg": THEME.acc, "--sel-fg": THEME.bg, "--gold": "#ffe600" } as CSSProperties;
 
 const href = (p = "") => siteHref(SLUG, p);
+/** La imagen fija de cada modelo (capturada de su propio lienzo, fondo transparente): se ve mientras carga el 3D, con
+ * movimiento reducido y sin WebGL. */
+const sprite = (name: string) => `/img/runa/${name}.webp`;
+const Sprite = ({ name }: { name: string }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img className="rn-sprite" src={sprite(name)} alt="" decoding="async" />
+);
 const ActorScene = lazy(() => import("./actorScene"));
 const RuneScene = lazy(() => import("./runeScene"));
 
@@ -189,6 +198,7 @@ function Hud() {
             ))}
           </span>
           <span className="rn-hud__time" ref={clock} aria-hidden>00:00</span>
+          <SoundToggle className="rn-sound" onLabel="" offLabel="" label="Sonido de 8 bits" />
         </p>
       </header>
       {/* abajo a la izquierda: el retrato del héroe y el inventario (los dos son huecos de viajeros) */}
@@ -232,9 +242,10 @@ function HeroTraveler() {
   const yaw = at === "arena" ? 0.85 : at === "hud" ? 0.35 : 0.25;
   return (
     <div className={`rn-actor ${ready === hero.src ? "is-ready" : ""}`} data-at={at ?? ""} aria-hidden>
+      {at && <Sprite name={hero.id} />}
       {at && (
         <Lazy3D>
-          <ActorScene key={hero.src} src={hero.src} yaw={yaw} spin={at === "seleccion" ? 0.35 : 0} follow={at === "hud" ? 0.05 : 0.18} active rim={["#ff2e63", "#08f7fe"]} onReady={() => setReady(hero.src)} />
+          <ActorScene key={hero.src} src={hero.src} hide={hero.hide} yaw={yaw} spin={at === "seleccion" ? 0.35 : 0} follow={at === "hud" ? 0.05 : 0.18} active rim={["#ff2e63", "#08f7fe"]} onReady={() => setReady(hero.src)} />
         </Lazy3D>
       )}
     </div>
@@ -246,7 +257,8 @@ function BossTraveler() {
   const at = useTraveler("jefe");
   const [ready, setReady] = useState(false);
   return (
-    <div className={`rn-actor rn-actor--boss ${ready ? "is-ready" : ""}`} data-at={at ?? ""} aria-hidden>
+    <div className={`rn-actor rn-actor--boss ${ready ? "is-ready" : ""} ${g.bossHp <= 0 ? "is-down" : ""}`} data-at={at ?? ""} aria-hidden>
+      {at && <Sprite name="jefe" />}
       {at && (
         <Lazy3D>
           <ActorScene src={BOSS.src} loop={BOSS_IDLE} yaw={at === "arena" ? -0.55 : 0} follow={0.12} hit={g.bossHits} down={g.bossHp <= 0} active screen={g.bossBox} rim={["#08f7fe", "#ff2e63"]} onReady={() => setReady(true)} />
@@ -258,8 +270,10 @@ function BossTraveler() {
 
 function RuneTraveler() {
   const at = useTraveler("runa");
+  const reduced = useReducedMotion();
   return (
     <div className="rn-rune" data-at={at ?? ""} aria-hidden>
+      {at && reduced && <Sprite name="runa" />}
       {at && (
         <Lazy3D>
           <RuneScene active glow={at === "inventario" ? 0.7 : 1} />
@@ -292,6 +306,7 @@ function usePressStart(to: string, enabled = true) {
       const t = e.target as HTMLElement | null;
       if (t && /^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(t.tagName)) return;
       e.preventDefault();
+      playSfx("start");
       router.push(to, { transitionTypes: [T.start] });
     };
     addEventListener("keydown", key);
@@ -334,7 +349,7 @@ function Title() {
           {g.bossHp > 0 && <TravelSlot id="jefe" at="titulo" className="rn-title__boss" />}
         </div>
         <p className="rn-title__sub">Un roguelite de mazmorras que cambian, runas que se engarzan y jefes con puntos débiles.</p>
-        <a className="rn-start" href={next} data-transition={T.start}>
+        <a className="rn-start" href={next} data-transition={T.start} onClick={() => playSfx("start")}>
           {g.hero ? "Continuar" : "Pulsa start"}
         </a>
         <p className="rn-mut rn-title__hint">Enter o Espacio · la web es la demo: juégala</p>
@@ -355,18 +370,24 @@ function Select() {
   const router = useRouter();
   const hero = getHero(g.candidate)!;
   const i = HEROES.indexOf(hero);
+  const pick = (id: HeroId) => {
+    if (id !== g.candidate) playSfx("select");
+    g.setCandidate(id);
+  };
   const go = () => {
+    playSfx("confirm");
     g.update((s) => ({ ...s, hero: hero.id, started: s.started ?? Date.now() }));
     router.push(href("nivel-1"), { transitionTypes: [T.start] });
   };
   useEffect(() => {
     router.prefetch(href("nivel-1"));
     const key = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") g.setCandidate(HEROES[(i + 1) % HEROES.length].id);
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") g.setCandidate(HEROES[(i + HEROES.length - 1) % HEROES.length].id);
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") pick(HEROES[(i + 1) % HEROES.length].id);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") pick(HEROES[(i + HEROES.length - 1) % HEROES.length].id);
     };
     addEventListener("keydown", key);
     return () => removeEventListener("keydown", key);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, g, i]);
   return (
     <section className="rn-select" aria-labelledby="rn-select-t">
@@ -381,7 +402,7 @@ function Select() {
         <ol className="rn-roster" role="listbox" aria-label="Héroes">
           {HEROES.map((h, k) => (
             <li key={h.id} role="option" aria-selected={h.id === hero.id}>
-              <button type="button" className={`rn-roster__item ${h.id === hero.id ? "is-on" : ""}`} onClick={() => g.setCandidate(h.id)} onFocus={() => g.setCandidate(h.id)} onDoubleClick={go}>
+              <button type="button" className={`rn-roster__item ${h.id === hero.id ? "is-on" : ""}`} onClick={() => pick(h.id)} onFocus={() => pick(h.id)} onDoubleClick={go}>
                 <span className="rn-roster__k">P{k + 1}</span>
                 <span className="rn-roster__name">{h.name}</span>
                 <span className="rn-roster__role">{h.role}</span>
@@ -444,6 +465,7 @@ function Level1() {
       <div className="rn-level__grid">
         <div className="rn-chest">
           <div className={`rn-actor ${ready ? "is-ready" : ""}`}>
+            <Sprite name="cofre" />
             <Lazy3D>
               <ActorScene src={CHEST.src} once="Armature|A_Open" rest="Armature|A_Close" play={g.chest} yaw={-0.45} follow={0.12} active rim={["#ffe600", "#ff2e63"]} onReady={() => setReady(true)} />
             </Lazy3D>
@@ -463,16 +485,19 @@ function Level1() {
                 actionLabel="Forzar"
                 globalKey
                 label="Forzar la cerradura"
-                onHit={() => {
+                onHit={(n) => {
+                  playSfx("coin", { pitch: 1 + n * 0.12 });
                   g.update((s) => ({ ...s, score: s.score + SCORE.pin }));
                   g.jolt("hit");
                 }}
                 onMiss={() => {
+                  playSfx("hurt", { volume: 0.14 });
                   setTries((t) => t + 1);
                   setMsg(["El perno se resiste.", "Clic. Nada.", "Casi. Otra vez."][tries % 3]);
                   g.jolt("hurt");
                 }}
                 onComplete={() => {
+                  playSfx("open");
                   setMsg("");
                   g.update((s) => ({ ...s, chest: true, score: s.score + SCORE.chest }));
                 }}
@@ -482,14 +507,17 @@ function Level1() {
           ) : !g.rune ? (
             <>
               <p className="rn-lead">Dentro, una runa que late. Dicen que es lo único que hiere al Señor de los Huesos.</p>
-              <button type="button" className="rn-start rn-start--btn" onClick={() => startTransition(() => g.update((s) => ({ ...s, rune: true })))}>
+              <button type="button" className="rn-start rn-start--btn" onClick={() => {
+                playSfx("powerup");
+                startTransition(() => g.update((s) => ({ ...s, rune: true })));
+              }}>
                 Coger la runa
               </button>
             </>
           ) : (
             <>
               <p className="rn-lead">La runa está en tu inventario. Abajo, en el trono, alguien te espera.</p>
-              <a className="rn-start rn-start--danger" href={href("nivel-2")} data-transition={T.boss}>
+              <a className="rn-start rn-start--danger" href={href("nivel-2")} data-transition={T.boss} onClick={() => playSfx("hurt", { pitch: 0.6, volume: 0.18 })}>
                 Bajar al trono
               </a>
             </>
@@ -530,6 +558,7 @@ function Level2() {
     }
     const t = window.setTimeout(() => {
       setTarget(null);
+      playSfx(g2.current.hearts <= 1 ? "lose" : "hurt");
       g2.current.jolt("hurt");
       g2.current.update((s) => ({ ...s, hearts: s.hearts - 1 }));
       setMsg("¡Te alcanza!");
@@ -540,6 +569,7 @@ function Level2() {
     if (!target || !hero) return;
     setTarget(null);
     if (!g.rune) {
+      playSfx(g.hearts <= 1 ? "lose" : "hurt");
       setMsg("El golpe le atraviesa. Sin la runa no le haces nada.");
       g.jolt("hurt");
       g.update((s) => ({ ...s, hearts: s.hearts - 1 }));
@@ -547,6 +577,9 @@ function Level2() {
     }
     g.bossHit();
     g.jolt("hit");
+    const last = g.bossHp - hero.hit <= 0;
+    playSfx("hit", { pitch: 0.9 + Math.random() * 0.2 });
+    if (last) window.setTimeout(() => playSfx("win"), 380);
     setMsg(["¡Crac!", "¡En el hueso!", "¡Se tambalea!"][Math.floor(Math.random() * 3)]);
     g.update((s) => {
       const hp = Math.max(0, s.bossHp - hero.hit);
@@ -589,7 +622,10 @@ function Level2() {
         {!fighting && !down && !over && (
           <div className="rn-arena__start">
             {!g.rune && <p className="rn-warn">No llevas la runa. <a href={href("nivel-1")} data-transition={T.start}>Volver a la cámara</a></p>}
-            <button type="button" className="rn-start rn-start--btn rn-start--danger" onClick={() => setFighting(true)}>¡A luchar!</button>
+            <button type="button" className="rn-start rn-start--btn rn-start--danger" onClick={() => {
+              playSfx("start");
+              setFighting(true);
+            }}>¡A luchar!</button>
             <p className="rn-mut">Golpea los puntos débiles antes de que se apaguen.</p>
           </div>
         )}
@@ -648,6 +684,15 @@ function Victory() {
   );
 }
 
+/** capturas de prensa: sacadas de la propia demo a 1920 × 1080 (docs/25 §6) */
+const SHOTS = [
+  { f: "01-titulo", t: "Título", alt: "Pantalla de título: RUNA en rosa y cian con el jefe entre las sílabas" },
+  { f: "02-heroes", t: "Elige héroe", alt: "Selección de héroe con la exploradora y sus barras de fuerza, magia y agilidad" },
+  { f: "03-cofre", t: "La cámara", alt: "El cofre abierto con la runa rosa flotando encima" },
+  { f: "04-jefe", t: "El trono", alt: "Combate contra el Señor de los Huesos con un punto débil marcado en el pecho" },
+  { f: "05-victoria", t: "Victoria", alt: "Pantalla de victoria con la puntuación, la heroína y la runa" },
+];
+
 function PressKit() {
   const credits = useMemo(() => [...HEROES.map((h) => h.model), CHEST.model, BOSS.model], []);
   return (
@@ -669,6 +714,20 @@ function PressKit() {
           <Wishlist />
         </div>
       </div>
+      <h3 className="rn-h3">Capturas</h3>
+      <ul className="rn-shots">
+        {SHOTS.map((c) => (
+          <li key={c.f}>
+            <a href={`/img/runa/prensa/${c.f}.jpg`} target="_blank" rel="noopener noreferrer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/img/runa/prensa/${c.f}-640.jpg`} alt={c.alt} width={640} height={360} loading="lazy" decoding="async" />
+            </a>
+            <p>
+              {c.t} · <a href={`/img/runa/prensa/${c.f}.jpg`} download>1920 × 1080</a>
+            </p>
+          </li>
+        ))}
+      </ul>
       <footer className="rn-foot">
         <p>{BRAND.legal}. Runa no existe; los modelos 3D sí, con licencia CC BY 4.0:</p>
         <ul>
