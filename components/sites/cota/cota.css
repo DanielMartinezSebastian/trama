@@ -1,0 +1,65 @@
+/* =====================================================================
+   Cota — topografía con dron (docs/23). Pizarra casi negra, cian para el valle y ámbar para la cumbre (los dos colores de
+   la nube por cota), titulares en Space Grotesk y datos en mono.
+   ===================================================================== */
+.ct { --st-gutter: clamp(16px, 3.6vw, 56px); background: var(--bg); color: var(--fg); }
+.ct a { color: inherit; }
+.ct-wrap { width: min(100%, 1280px); margin-inline: auto; padding-inline: var(--st-gutter); }
+.ct-mut { color: var(--mut); }
+.ct-kicker { margin: 0 0 10px; font: 500 12px/1.2 var(--font-accent, monospace); letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc2); }
+.ct-h2 { margin: 0 0 clamp(20px, 3vw, 36px); font-family: var(--display); font-weight: 600; font-size: clamp(30px, 4vw, 54px); line-height: 1.02; letter-spacing: -0.02em; }
+.ct-sec { padding-block: clamp(56px, 9vw, 120px); }
+
+/* cabecera fija mínima */
+.ct-head { position: fixed; inset: 0 0 auto 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 16px var(--st-gutter); pointer-events: none; }
+.ct-head > * { pointer-events: auto; }
+.ct-brand { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; text-decoration: none; }
+.ct-brand span { color: var(--acc); }
+.ct-head__cta { font: 500 13px var(--font-accent, monospace); letter-spacing: 0.06em; text-decoration: none; padding: 9px 14px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--acc) 60%, transparent); color: var(--acc) !important; background: color-mix(in srgb, var(--bg) 60%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.ct-head__cta:hover, .ct-head__cta:focus-visible { background: var(--acc); color: var(--bg) !important; }
+
+/* el recorrido: escenario fijo con la nube y los pasos que pasan */
+.ct-story { position: relative; }
+.ct-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; z-index: 0;
+  background: radial-gradient(70% 60% at 50% 55%, color-mix(in srgb, var(--acc2) 8%, transparent), transparent 70%); }
+.ct-steps { position: relative; z-index: 1; list-style: none; margin: -100svh 0 0; padding: 0; pointer-events: none; }
+.ct-step { min-height: 130svh; }
+.ct-step--hero { display: grid; min-height: 100svh; align-items: end; padding: 0 var(--st-gutter) clamp(40px, 9vh, 96px); }
+.ct-hero { max-width: 760px; pointer-events: auto; }
+.ct-hero__title { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(44px, 7.4vw, 112px); line-height: 0.95; letter-spacing: -0.035em; text-wrap: balance; }
+.ct-hero__sub { margin: 18px 0 0; max-width: 46ch; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.5; color: var(--mut); }
+.ct-hint { margin: 22px 0 0; font: 500 11px var(--font-accent, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
+
+/* los cuadros (los mueve useScrollStory: llegan desde abajo desenfocados) */
+.ct-cards { position: absolute; inset: 0; pointer-events: none; }
+.ct-card { position: absolute; inset: 0; display: grid; align-items: center; padding: 10vh var(--st-gutter); will-change: transform, filter, opacity; }
+.ct-card[data-side="left"] { justify-items: start; }
+.ct-card[data-side="right"] { justify-items: end; }
+.ct-card__box { width: min(400px, 100%); display: grid; gap: 14px; padding: clamp(22px, 2.4vw, 30px); pointer-events: auto; border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 40%, transparent); border: 1px solid color-mix(in srgb, var(--fg) 10%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.ct-card__k { margin: 0; font: 500 12px var(--font-accent, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc2); }
+.ct-card__k span { color: var(--acc); margin-right: 6px; }
+.ct-card__thesis { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -0.02em; }
+.ct-card__what { margin: 0; line-height: 1.55; color: color-mix(in srgb, var(--fg) 85%, transparent); }
+.ct-card__stat { margin: 0; padding-top: 12px; border-top: 1px solid color-mix(in srgb, var(--fg) 10%, transparent); font: 500 14px var(--font-accent, monospace); color: var(--acc); }
+
+/* índice y barra */
+.ct-rail { position: absolute; left: var(--st-gutter); top: 50%; transform: translateY(-50%); display: grid; gap: 12px; z-index: 2; }
+.ct-rail a { pointer-events: auto; font: 500 11px var(--font-accent, monospace); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--mut); opacity: 0.5; transition: opacity 0.3s, color 0.3s; }
+.ct-rail a span { color: var(--acc2); margin-right: 6px; }
+.ct-rail a[aria-current="step"] { opacity: 1; color: var(--fg); }
+.ct-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, var(--acc2), var(--acc)); transform-origin: left; transform: scaleX(var(--story-p, 0)); }
+
+.ct-contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
+.ct-foot { padding: 40px var(--st-gutter) 56px; border-top: 1px solid var(--ln); font-size: 13px; color: var(--mut); display: grid; gap: 6px; }
+
+@media (max-width: 760px) {
+  .ct-rail { display: none; }
+  .ct-step { min-height: 110svh; }
+  .ct-card { align-items: end; justify-items: stretch !important; padding: 0 var(--st-gutter) 6vh; }
+  .ct-card__box { width: 100%; gap: 10px; padding: 18px; background: color-mix(in srgb, var(--bg) 62%, transparent); }
+  .ct-card__thesis { font-size: 22px; }
+  .ct-card__what { font-size: 14px; }
+  .ct-step--hero { align-items: end; padding-bottom: 7vh; }
+  .ct-contact { grid-template-columns: minmax(0, 1fr); }
+}

@@ -20,6 +20,8 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [19-joyeria.md](./19-joyeria.md) | Ronda 9: **joyería** — 12 joyerías españolas y 15 internacionales medidas (Cartier, Blue Nile, Jenn Zeiss…), relato contado solo con servicios (Sinek, StoryBrand, service blueprint), **luz por finalidad** con datos de GIA (`LightScroll`, `LIGHT_PRESETS`), `BeforeAfter`, y la web Quilate con configurador de alianza y de solitario en 3D. |
 | [20-halloween.md](./20-halloween.md) | Ronda 10: **evento de Halloween** — la web Ánima, la noche contada en seis actos con una **calavera 3D modelada con una función de distancia** (MarchingCubes de three, oclusión por vértice con la propia SDF, mandíbula, trío, ojos que pasan a rojo), entradas y programa, y la pieza nueva **`Countdown`**. |
 | [21-simulacion-fluidos-threejs.md](./21-simulacion-fluidos-threejs.md) | Tutorial: **simulación de fluido/humo con shaders en Three.js** (vídeo de Bandinopla, port del WebGL-Fluid-Simulation de Pavel Dobryakov) — texturas como rejilla, ping-pong, splat, curl, vorticidad, divergencia, presión (Jacobi), resta de gradiente, advección, parámetros y versiones WebGL/WebGPU (TSL). |
+| [22-webs-3d-patron-y-briefing.md](./22-webs-3d-patron-y-briefing.md) | **Webs 3D e interactivas**: qué sabemos hacer, qué falta para alto impacto, el patrón de diseño y código, **qué preguntar al cliente antes de construir** (¿hace falta un relato?) y las cuatro vías para conseguir modelos (descargar, gltfjsx, partir a mano, generar, Blender MCP), con las trampas aprendidas. |
+| [23-demo-escaner.md](./23-demo-escaner.md) | Ronda 11: evaluación de mercado para la siguiente demo 3D y la web **Cota** (topografía con dron) con la pieza nueva **`PointCloud`**. |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
@@ -33,7 +35,7 @@ se quedan atrás o si un componente no aparece en la tabla de abajo.
 | **Kit** — CSS (un solo punto de entrada) | `components/ui/styles/kit.css` (importa `ui-kit.css`, `ui-carousel.css`, `ui-video.css`, `ui-view-transitions.css`) | Sí |
 | **Kit** — tokens, fuentes, iconos, utilidades | `lib/ui/` | Sí |
 | **Kit** — motores de fondos | `lib/asciify/`, `lib/sketches/`, `lib/scroll/`, `lib/text/` | Sí, solo lo que usen los componentes elegidos |
-| **Kit** — motores 3D y de relato | `lib/gems/` (gemas con trazado de rayos, HDR y tallas), `lib/story/` (`useScrollStory`, el motor de los recorridos por pasos), `lib/modelnav/` (la escena de `ModelNav`), `lib/object3d/` (la de `ObjectStage`) | Sí, solo lo que usen los componentes elegidos |
+| **Kit** — motores 3D y de relato | `lib/gems/` (gemas con trazado de rayos, HDR y tallas), `lib/story/` (`useScrollStory`, el motor de los recorridos por pasos), `lib/modelnav/` (la escena de `ModelNav`), `lib/object3d/` (la de `ObjectStage`), `lib/pointcloud/` (la de `PointCloud`) | Sí, solo lo que usen los componentes elegidos |
 | Catálogo `/componentes` | `lib/catalog/` (esquema, entradas, escenas, presets), `components/playground/` | No |
 | Web de la librería (portada, docs, demos) | `components/site/`, `lib/docs.ts`, `lib/site-data.ts` | No |
 | Demos | `app/`, `components/*.tsx`, `lib/demos*.ts`, `lib/themes/` | No |
@@ -120,7 +122,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `ModelNav` · `EdgeTab` · `ActionBar` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` · `DatePicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
-| Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `PointCloud` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
 | Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` · `GuideFrame` (guías de estilo, ver `/guias` y [16](./16-guias-de-estilo-plan.md)) |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` · `MenuList` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` · `CartDrawer` · `CookieBanner` |

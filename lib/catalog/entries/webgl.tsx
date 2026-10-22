@@ -2,6 +2,7 @@
 
 import DistortImage, { DISTORT_EFFECTS } from "@/components/ui/DistortImage";
 import DragGrid from "@/components/ui/DragGrid";
+import PointCloud from "@/components/ui/PointCloud";
 import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/components/ui/ObjectStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -86,6 +87,30 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <ObjectStage shape={p.shape as never} material={p.material as never} tone={p.tone as never} motion={p.motion as never} speed={p.speed as number} height={p.height as number} src={(p.src as string) || undefined} follow={p.follow as number} glow={p.glow as never} env={p.env as never} />
+      </div>
+    ),
+  },
+  {
+    id: "point-cloud",
+    component: "PointCloud",
+    path: "@/components/ui/PointCloud",
+    name: "Nube de puntos de un terreno escaneado",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.",
+    stageHeight: 460,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/PointCloud.", "Pasa el ratón por el terreno y haz clic."],
+    props: [
+      { key: "motion", label: "Movimiento", type: "select", default: "scan", options: ["scan", "orbit", "none"], labels: { scan: "barrido en bucle", orbit: "órbita lenta", none: "quieta" } },
+      { key: "density", label: "Puntos por lado", type: "number", default: 180, min: 80, max: 260, step: 10 },
+      { key: "seed", label: "Semilla del terreno", type: "number", default: 7, min: 1, max: 99, step: 1 },
+      { key: "lens", label: "Radio de la lupa", type: "number", default: 0.16, min: 0, max: 0.4, step: 0.02 },
+      { key: "readout", label: "Lectura X/Y/Z", type: "boolean", default: true },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <PointCloud motion={p.motion as never} density={p.density as number} seed={p.seed as number} lens={p.lens as number} readout={p.readout as boolean} height="440px" />
       </div>
     ),
   },

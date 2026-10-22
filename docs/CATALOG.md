@@ -1980,6 +1980,21 @@ Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
 - Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
 
+### Nube de puntos de un terreno escaneado — `PointCloud`
+
+Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.
+
+| prop | tipo | default |
+|---|---|---|
+| `motion` | `scan` · `orbit` · `none` | "scan" |
+| `density` | number 80–260 | 180 |
+| `seed` | number 1–99 | 7 |
+| `lens` | number 0–0.4 | 0.16 |
+| `readout` | boolean | true |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/PointCloud.
+- Pasa el ratón por el terreno y haz clic.
+
 ### Galería de producto — `ProductGallery`
 
 Imagen principal con zoom que sigue al puntero y miniaturas que son botones reales (aria-pressed). En táctil no hay zoom: la imagen se ve entera.
@@ -2834,3 +2849,11 @@ Fiesta de Halloween contada como una noche en seis actos (la puerta, el pasaje d
 Carpeta: `components/sites/anima/` · 5 páginas: Inicio · Programa · Entradas · Info · Laboratorio
 
 `Traveler` ×2 · `Timeline` ×2 · `Countdown` ×2 · `FAQSection` ×2 · `ObjectStage` ×2 · `Marquee` · `TextField` · `SmoothScroll` · `FullscreenMenu` · `QuantityStepper` · `OptionPicker` · `ModelNav` · `CookieBanner` · `ActionBar` · `QRCode`
+
+### Cota · topografía con dron y gemelos digitales — `/sitios/cota`
+
+Topografía con dron contada con una nube de puntos 3D procedural (PointCloud del kit): un barrido que revela el terreno con una estela de luz, color por cota, línea de medida con su cifra, edificios que se levantan como gemelo digital y una lupa que lee la X/Y/Z bajo el ratón (un clic lanza un pulso de escaneo). Recorrido en cinco pasos con useScrollStory, servicios, cifras y contacto.
+
+Carpeta: `components/sites/cota/` · 1 páginas: Inicio
+
+`ContactForm` · `StatsSection` · `SmoothScroll` · `BentoGrid` · `PointCloud`

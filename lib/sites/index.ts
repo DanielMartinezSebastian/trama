@@ -26,6 +26,7 @@ import * as almibarTaller from "@/components/sites/almibar-taller/data";
 import * as almibarBarrio from "@/components/sites/almibar-barrio/data";
 import * as quilate from "@/components/sites/quilate/data";
 import * as anima from "@/components/sites/anima/data";
+import * as cota from "@/components/sites/cota/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -55,6 +56,7 @@ export const sites: SiteMeta[] = [
   { ...almibarBarrio.meta, routes: almibarBarrio.ROUTES, dir: "components/sites/almibar-barrio" },
   { ...quilate.meta, routes: quilate.ROUTES, dir: "components/sites/quilate" },
   { ...anima.meta, routes: anima.ROUTES, dir: "components/sites/anima" },
+  { ...cota.meta, routes: cota.ROUTES, dir: "components/sites/cota" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

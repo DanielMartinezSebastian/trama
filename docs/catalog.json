@@ -209,6 +209,7 @@
         "distort-image",
         "drag-grid",
         "object-stage",
+        "point-cloud",
         "product-gallery",
         "expanding-panels",
         "explorable-canvas"
@@ -11626,6 +11627,67 @@
       "preview": "/componentes#object-stage"
     },
     {
+      "id": "point-cloud",
+      "name": "Nube de puntos de un terreno escaneado",
+      "component": "PointCloud",
+      "import": "import PointCloud from \"@/components/ui/PointCloud\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.",
+      "props": [
+        {
+          "key": "motion",
+          "type": "select",
+          "default": "scan",
+          "label": "Movimiento",
+          "options": [
+            "scan",
+            "orbit",
+            "none"
+          ]
+        },
+        {
+          "key": "density",
+          "type": "number",
+          "default": 180,
+          "label": "Puntos por lado",
+          "min": 80,
+          "max": 260
+        },
+        {
+          "key": "seed",
+          "type": "number",
+          "default": 7,
+          "label": "Semilla del terreno",
+          "min": 1,
+          "max": 99
+        },
+        {
+          "key": "lens",
+          "type": "number",
+          "default": 0.16,
+          "label": "Radio de la lupa",
+          "min": 0,
+          "max": 0.4
+        },
+        {
+          "key": "readout",
+          "type": "boolean",
+          "default": true,
+          "label": "Lectura X/Y/Z"
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/PointCloud.",
+        "Pasa el ratón por el terreno y haz clic."
+      ],
+      "example": "import PointCloud from \"@/components/ui/PointCloud\";\n\n<PointCloud />",
+      "preview": "/componentes#point-cloud"
+    },
+    {
       "id": "kbd",
       "name": "Tecla (atajo)",
       "component": "Kbd",
@@ -17601,6 +17663,46 @@
         {
           "component": "QRCode",
           "id": "qr-code",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "cota",
+      "title": "Cota · topografía con dron y gemelos digitales",
+      "url": "/sitios/cota",
+      "dir": "components/sites/cota",
+      "description": "Topografía con dron contada con una nube de puntos 3D procedural (PointCloud del kit): un barrido que revela el terreno con una estela de luz, color por cota, línea de medida con su cifra, edificios que se levantan como gemelo digital y una lupa que lee la X/Y/Z bajo el ratón (un clic lanza un pulso de escaneo). Recorrido en cinco pasos con useScrollStory, servicios, cifras y contacto.",
+      "pages": [
+        {
+          "path": "/sitios/cota",
+          "title": "Inicio"
+        }
+      ],
+      "components": [
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "StatsSection",
+          "id": "stats-section",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "BentoGrid",
+          "id": "bento-grid",
+          "uses": 1
+        },
+        {
+          "component": "PointCloud",
+          "id": "point-cloud",
           "uses": 1
         }
       ]

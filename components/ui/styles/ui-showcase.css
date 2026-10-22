@@ -93,3 +93,23 @@
 .ui-cook__acts { display: flex; flex-wrap: wrap; gap: 8px; }
 .ui-cook__acts > * { flex: 1 1 0; }
 @media (prefers-reduced-motion: reduce) { .ui-cook { animation: none; } }
+
+/* ---------- PointCloud ---------- */
+.ui-pcloud { position: relative; width: 100%; overflow: hidden; }
+.ui-pcloud--fill { position: absolute; inset: 0; }
+.ui-pcloud__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s var(--ease-io, ease); }
+.ui-pcloud__gl.is-on { opacity: 1; }
+/* respaldo sin WebGL: una rejilla de puntos con el color por cota en degradado */
+.ui-pcloud__flat {
+  position: absolute; inset: 8% 10%; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--acc2) 70%, transparent) 1px, transparent 1.6px) 0 0 / 9px 9px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent); mask-image: radial-gradient(closest-side, #000 55%, transparent);
+  transform: perspective(600px) rotateX(58deg);
+}
+.ui-pcloud__tip, .ui-pcloud__tag {
+  position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity 0.2s;
+  font: 500 11px/1 var(--font-geist-mono, ui-monospace, monospace); letter-spacing: 0.06em; color: var(--fg);
+  padding: 6px 8px; border-radius: 6px; background: color-mix(in srgb, var(--bg) 70%, transparent); border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent);
+  margin: 14px 0 0 14px;
+}
+.ui-pcloud__tag { margin: -12px 0 0 0; translate: -50% -100%; color: var(--acc); border-color: color-mix(in srgb, var(--acc) 45%, transparent); font-size: 13px; }
