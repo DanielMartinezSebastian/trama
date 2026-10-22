@@ -71,18 +71,41 @@ function pivotHand(root: THREE.Object3D, hand: THREE.Object3D, pin: THREE.Object
   };
 }
 
-function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: MutableRefObject<PiecePose>; mode: PieceMode; pointer: MutableRefObject<{ x: number; y: number }>; onReady?: () => void }) {
+type Anchor = MutableRefObject<{ x: number; y: number }>;
+
+/** Aparta la cámara lo justo para que la esfera de la pieza quepa en el lado más estrecho del lienzo. */
+function FitCamera({ radius }: { radius: number }) {
+  const { camera, size } = useThree();
+  useLayoutEffect(() => {
+    const cam = camera as THREE.PerspectiveCamera;
+    const v = (cam.fov * Math.PI) / 180;
+    const h = 2 * Math.atan(Math.tan(v / 2) * (size.width / Math.max(1, size.height)));
+    // + el vaivén vertical (0,03) y un margen
+    cam.position.set(0, 0, ((radius + 0.03) * 1.04) / Math.sin(Math.min(v, h) / 2));
+    cam.near = 0.05;
+    cam.far = cam.position.z + radius * 4;
+    cam.updateProjectionMatrix();
+  }, [camera, size, radius]);
+  return null;
+}
+
+function Piece({ room, pose, mode, pointer, anchor, onReady }: { room: RoomSlug; pose: MutableRefObject<PiecePose>; mode: PieceMode; pointer: MutableRefObject<{ x: number; y: number }>; anchor?: Anchor; onReady?: () => void }) {
   const fit = FIT[room];
   const { scene, animations } = useGLTF(fit.src, false, false);
   const outer = useRef<THREE.Group>(null);
   /** las agujas, cada una dentro de un pivote en el eje de la esfera, y el ángulo al que apuntan de origen */
   const hands = useRef<{ long?: Hand; little?: Hand }>({});
   const alidade = useRef<THREE.Mesh>(null);
+  const axis = useRef<THREE.Group>(null);
+  const pinRef = useRef<THREE.Object3D | null>(null);
+  const tmp = useMemo(() => new THREE.Vector3(), []);
   const cur = useRef({ yaw: pose.current.yaw, pitch: pose.current.pitch, roll: pose.current.roll, minute: pose.current.minute, alidade: pose.current.alidade, spin: 0 });
 
-  // orientar, centrar y escalar una vez. Se mide sobre un clon (comparte geometrías): el `scene` de la caché no se toca
-  // aquí, porque en desarrollo React ejecuta este cálculo dos veces y un `add` le quitaría el modelo al primer contenedor
-  const { quat, scale, offset, depth } = useMemo(() => {
+  // orientar, centrar y escalar una vez, y medir la ESFERA que envuelve la pieza (el vértice más lejano del centro): la
+  // cámara se aparta lo justo para que quepa entera gire como gire y sea cual sea la proporción del lienzo (`FitCamera`).
+  // Se mide sobre un clon (comparte geometrías): el `scene` de la caché no se toca aquí, porque en desarrollo React
+  // ejecuta este cálculo dos veces y un `add` le quitaría el modelo al primer contenedor. El reloj, con la tapa abierta.
+  const { quat, scale, offset, depth, radius } = useMemo(() => {
     const n = new THREE.Vector3(...fit.normal).normalize();
     const up = new THREE.Vector3(...fit.up);
     up.sub(n.clone().multiplyScalar(up.dot(n))).normalize();
@@ -92,15 +115,32 @@ function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: M
     probe.quaternion.copy(q);
     const inner = new THREE.Group();
     if (fit.mirror) inner.scale.x = -1;
-    inner.add(scene.clone(true));
+    const clone = scene.clone(true);
+    inner.add(clone);
     probe.add(inner);
+    if (room === "tiempo" && animations.length) {
+      const mixer = new THREE.AnimationMixer(clone);
+      const a = mixer.clipAction(animations[0]);
+      a.play();
+      a.time = LID_OPEN;
+      mixer.update(0);
+    }
     probe.updateMatrixWorld(true);
-    const box = new THREE.Box3().setFromObject(probe);
+    const pts: THREE.Vector3[] = [];
+    clone.traverse((o) => {
+      const pos = (o as THREE.Mesh).geometry?.getAttribute("position");
+      if (!pos) return;
+      const step = Math.max(1, Math.floor(pos.count / 6000));
+      for (let i = 0; i < pos.count; i += step) pts.push(new THREE.Vector3().fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld));
+    });
+    const box = new THREE.Box3().setFromPoints(pts);
     const size = box.getSize(new THREE.Vector3());
-    const s = fit.size / Math.max(size.x, size.y);
     const c = box.getCenter(new THREE.Vector3());
-    return { quat: q, scale: s, offset: c.multiplyScalar(-s), depth: size.z * s };
-  }, [scene, fit]);
+    const s = fit.size / Math.max(size.x, size.y);
+    let r = 0;
+    for (const p of pts) r = Math.max(r, p.distanceTo(c));
+    return { quat: q, scale: s, offset: c.multiplyScalar(-s), depth: size.z * s, radius: r * s };
+  }, [scene, animations, fit, room]);
   useEffect(() => {
     scene.traverse((o) => {
       const m = o as THREE.Mesh;
@@ -130,6 +170,7 @@ function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: M
 
   useLayoutEffect(() => {
     const pin = scene.getObjectByName("Cylinder006_decor_0");
+    pinRef.current = pin ?? null;
     const made = (["long", "little"] as const).map((k) => {
       const hand = scene.getObjectByName(`arrow_${k}_decor_0`);
       return hand && pin ? ([k, pivotHand(scene, hand, pin)] as const) : null;
@@ -145,6 +186,13 @@ function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: M
   }, [scene]);
 
   useFrame((state, dt) => {
+    // el eje del juego (pasador del reloj, eje de la alidada) en fracciones del lienzo: la página mide ahí los ángulos
+    const target = room === "tiempo" ? pinRef.current : room === "cielo" ? axis.current : null;
+    if (anchor && target) {
+      target.getWorldPosition(tmp).project(state.camera);
+      anchor.current.x = (tmp.x + 1) / 2;
+      anchor.current.y = (1 - tmp.y) / 2;
+    }
     const g = outer.current;
     if (!g) return;
     const p = pose.current, c = cur.current, k = 1 - Math.exp(-dt * 7);
@@ -177,6 +225,7 @@ function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: M
 
   return (
     <group ref={outer}>
+      <FitCamera radius={radius} />
       <group position={offset} scale={scale}>
         <group quaternion={quat}>
           <group scale={fit.mirror ? [-1, 1, 1] : 1}>
@@ -185,7 +234,7 @@ function Piece({ room, pose, mode, pointer, onReady }: { room: RoomSlug; pose: M
         </group>
       </group>
       {room === "cielo" && (
-        <group position={[ALIDADE_AT.x, ALIDADE_AT.y, depth / 2 + 0.03]}>
+        <group ref={axis} position={[ALIDADE_AT.x, ALIDADE_AT.y, depth / 2 + 0.03]}>
           <mesh ref={alidade}>
             <boxGeometry args={[1.5, 0.05, 0.02]} />
             <meshStandardMaterial color="#a8823a" metalness={0.9} roughness={0.38} />
@@ -211,10 +260,12 @@ export type PieceSceneProps = {
   mode: PieceMode;
   active: boolean;
   pointer: MutableRefObject<{ x: number; y: number }>;
+  /** dónde cae el eje del juego en el lienzo (lo escribe la escena; cambia con el encuadre de cada pantalla) */
+  anchor?: Anchor;
   onReady?: () => void;
 };
 
-export default function PieceScene({ room, pose, mode, active, pointer, onReady }: PieceSceneProps) {
+export default function PieceScene({ room, pose, mode, active, pointer, anchor, onReady }: PieceSceneProps) {
   return (
     <Canvas
       frameloop={active ? "always" : "never"}
@@ -227,7 +278,7 @@ export default function PieceScene({ room, pose, mode, active, pointer, onReady 
       <ambientLight intensity={0.35} />
       <directionalLight position={[2.5, 3, 4]} intensity={2.2} color="#fff3e2" />
       <directionalLight position={[-3, -1.5, 2]} intensity={0.6} color="#b9d4ff" />
-      <Piece room={room} pose={pose} mode={mode} pointer={pointer} onReady={onReady} />
+      <Piece room={room} pose={pose} mode={mode} pointer={pointer} anchor={anchor} onReady={onReady} />
     </Canvas>
   );
 }

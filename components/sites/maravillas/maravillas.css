@@ -190,21 +190,89 @@
 .mv-case__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(52px, 8.4vw, 150px); line-height: 0.86; letter-spacing: -0.045em; }
 .mv-case__t em { color: var(--acc); }
 .mv-case .mv-lede { font-size: clamp(20px, 1.8vw, 28px); }
-.mv-case__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 28px); list-style: none; margin: clamp(24px, 3vw, 44px) 0 24px; padding: 0; }
-.mv-case__cell {
-  position: relative; aspect-ratio: 4 / 5; border: 1px solid var(--ln);
-  background: linear-gradient(180deg, color-mix(in srgb, #fff 30%, transparent), transparent 40%), color-mix(in srgb, var(--card) 70%, transparent);
+.mv-case__reset { margin: 24px 0 0; }
+/* el armario: marco de nogal con veta, fondo de terciopelo verde (el acc2), dos baldas y un foco por hueco */
+.mv-cabinet {
+  --wood: #5b3920; --wood-d: #3a2213; --wood-l: #8a5a33;
+  position: relative; margin: clamp(24px, 3vw, 44px) 0 24px; padding: clamp(10px, 1.4vw, 18px);
+  border-radius: 6px 6px 3px 3px;
+  background:
+    repeating-linear-gradient(92deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(88deg, rgba(0, 0, 0, 0.08) 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, var(--wood-l), var(--wood) 18%, var(--wood-d));
 }
-.mv-case__cell::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: 10%; height: 1px; background: var(--ln); }
-.mv-case__grid li.is-won .mv-case__cell { border-color: color-mix(in srgb, var(--acc) 45%, transparent); }
-.mv-case__empty { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; text-decoration: none; }
-.mv-case__empty span { font-family: var(--display); font-style: italic; font-size: clamp(48px, 6vw, 96px); color: color-mix(in srgb, var(--fg) 22%, transparent); }
-.mv-case__empty small { font: 500 10px/1 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); }
-.mv-case__empty:hover span { color: var(--acc); }
-.mv-case__cap { display: flex; gap: 8px; align-items: baseline; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--fg); font-size: 14px; }
-.mv-case__cap span { font-family: var(--display); font-style: italic; color: var(--acc); }
-.mv-case__cap em { margin-left: auto; font-family: var(--display); color: var(--mut); }
-.mv-case__reset { margin: 12px 0 0; }
+.mv-cabinet::after { /* el zócalo */
+  content: ""; position: absolute; left: -10px; right: -10px; bottom: -14px; height: 14px; border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, var(--wood-d), #26160c);
+}
+.mv-cabinet__crest {
+  display: flex; justify-content: space-between; gap: 16px; margin: 0 0 clamp(8px, 1vw, 14px); padding: 0 6px;
+  font: 500 clamp(9px, 0.9vw, 12px)/1 var(--font-accent); letter-spacing: 0.32em; text-transform: uppercase;
+  color: #e3c77d;
+}
+.mv-cabinet__body {
+  position: relative; display: grid; gap: 0; border-radius: 2px; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #2e4a46, #182826 70%);
+  border: 1px solid rgba(0, 0, 0, 0.45);
+}
+/* el cristal: un reflejo en diagonal (por debajo de las piezas, que flotan delante) */
+.mv-cabinet__body::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.07) 38%, transparent 46%, transparent 62%, rgba(255, 255, 255, 0.05) 68%, transparent 74%);
+}
+.mv-cabinet__row {
+  position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0 clamp(10px, 2vw, 32px);
+}
+/* la balda: canto de madera con luz arriba y su sombra sobre el terciopelo */
+.mv-cabinet__row::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(12px, 1.4vw, 20px);
+  background: linear-gradient(180deg, #a87545 0, var(--wood-l) 2px, var(--wood) 55%, var(--wood-d));
+}
+.mv-cabinet__row::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: clamp(12px, 1.4vw, 20px); height: 26px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.32), transparent);
+}
+.mv-niche { position: relative; display: grid; justify-items: center; padding: clamp(14px, 2vw, 28px) clamp(6px, 1vw, 16px) clamp(20px, 2.2vw, 30px); }
+/* el foco de cada hueco */
+.mv-niche::before {
+  content: ""; position: absolute; left: 8%; right: 8%; top: 0; bottom: 0; pointer-events: none;
+  background: radial-gradient(60% 70% at 50% 0%, rgba(255, 236, 196, 0.22), transparent 70%);
+  opacity: 0.35; transition: opacity 0.8s;
+}
+.mv-niche.is-won::before { opacity: 1; }
+.mv-niche__stage { position: relative; width: min(100%, 290px); aspect-ratio: 1; }
+/* la sombra de la pieza sobre la balda */
+.mv-niche.is-won .mv-niche__stage::after {
+  content: ""; position: absolute; left: 22%; right: 22%; bottom: -4%; height: 8%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.45), transparent);
+}
+.mv-niche__empty {
+  position: absolute; inset: 10%; display: grid; place-content: center; justify-items: center; gap: 8px; text-decoration: none;
+  border: 1px dashed rgba(227, 199, 125, 0.35); border-radius: 50%;
+}
+.mv-niche__empty span { font-family: var(--display); font-style: italic; font-size: clamp(40px, 5vw, 84px); line-height: 1; color: rgba(227, 199, 125, 0.45); }
+.mv-niche__empty small { font: 500 10px/1 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(236, 230, 218, 0.6); }
+.mv-niche__empty:hover span, .mv-niche__empty:focus-visible span { color: #e3c77d; }
+/* la cartela de museo, con su chincheta de latón */
+.mv-tag {
+  position: relative; z-index: 2; width: min(100%, 250px); margin-top: clamp(4px, 0.8vw, 10px); padding: 10px 12px 9px;
+  background: #f1e8d6; color: #2a241c; border-radius: 1px; rotate: -0.6deg;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 40%);
+}
+.mv-niche:nth-child(2) .mv-tag { rotate: 0.5deg; }
+.mv-tag::before { content: ""; position: absolute; top: 5px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f3d98c, #8a6a1e); }
+.mv-tag p { margin: 0; }
+.mv-tag__n { font: 500 9px/1 var(--font-accent); letter-spacing: 0.16em; text-transform: uppercase; color: #9a3a26; padding-top: 6px; }
+.mv-tag__t { font-family: var(--display); font-style: italic; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.1; margin: 4px 0 3px !important; }
+.mv-tag__c { font-size: 10px; color: #6d655a; }
+.mv-niche:not(.is-won) .mv-tag { opacity: 0.55; }
+@media (max-width: 760px) {
+  .mv-cabinet__row { padding: 0 6px; }
+  .mv-niche { padding: 12px 4px 18px; }
+  .mv-tag { padding: 8px 8px 7px; }
+  .mv-tag__c { display: none; }
+}
+
 
 /* ---------- colofón ---------- */
 .mv-colophon { margin-top: clamp(40px, 6vw, 100px); padding: 0 var(--pad) 40px; border-top: 1px solid var(--fg); }
@@ -244,7 +312,6 @@
   .mv-room__text { grid-template-columns: minmax(0, 1fr); }
   .mv-room__cols { columns: 1; }
   .mv-next__w { font-size: 22vw; }
-  .mv-case__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mv-case__head { grid-template-columns: minmax(0, 1fr); }
   .mv-colophon__cols { grid-template-columns: minmax(0, 1fr); }
 }

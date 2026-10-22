@@ -27,7 +27,7 @@ se gana en una sala resuelve la siguiente:
 | `/sala/tierra` | Amonites | **La excavación**: rascar el sedimento (`ScratchReveal`) | Grabado en la roca: **VEGA** |
 | `/sala/cielo` | Astrolabio | **La altura**: girar la alidada hasta una estrella y soltar; solo vale la que dice la piedra | «Vega, a su altura de las **3:40**» |
 | `/sala/tiempo` | Reloj | **La hora**: arrastrar alrededor de la esfera; la minutera sigue al puntero y la horaria avanza con cada vuelta | El reloj vuelve a andar |
-| `/vitrina` | Las cuatro | Las piezas recuperadas vuelan del estante a su sitio | Tiempo total de la partida |
+| `/vitrina` | Las cuatro | Las piezas recuperadas vuelan del estante a su hueco en un **armario de gabinete** (nogal, fondo de terciopelo, dos baldas con foco y cartela de museo) | Tiempo total de la partida |
 
 Se puede ir en cualquier orden: si falta una pista, la sala lo dice y enlaza con la que la tiene. Todo se juega también con
 teclado (flechas y Enter) y el sedimento tiene un botón para revelar sin rascar.
@@ -71,6 +71,13 @@ cada pieza con el crédito del modelo. En móvil la palabra va arriba y la pieza
 5. **gltfjsx con una malla y unas líneas que comparten material** declara el material dos veces, y si el modelo no tiene
    animaciones el componente se quedaba sin importar `ThreeElements`. Lo segundo está arreglado en `models:fetch`; lo
    primero se corrigió a mano en `components/models/Astrolabio.tsx`.
+
+6. **El modelo se cortaba en móvil.** La cámara estaba a una distancia fija pensada para un lienzo cuadrado y la pieza de
+   frente: en lienzos verticales (la vitrina en móvil), al girar o con la tapa del reloj abierta se salía del cuadro. Ahora
+   cada pieza mide la **esfera que la envuelve** (el vértice más lejano del centro, el reloj con la tapa abierta) y
+   `FitCamera` aparta la cámara para que esa esfera quepa en el lado más estrecho del lienzo. Como el encuadre cambia con
+   la pantalla, el eje de los juegos (el pasador del reloj, el de la alidada) ya no es una constante: la escena lo proyecta
+   en cada fotograma y la página mide los ángulos desde ahí.
 
 ## 6. Comprobado
 

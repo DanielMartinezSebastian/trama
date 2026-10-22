@@ -56,6 +56,8 @@ type Game = Saved & {
   start: () => void;
   reset: () => void;
   poses: Record<RoomSlug, MutableRefObject<PiecePose>>;
+  /** el eje de cada juego en su panel (fracciones), medido por la escena: cambia con el encuadre de cada pantalla */
+  anchors: Record<RoomSlug, MutableRefObject<{ x: number; y: number }>>;
   /** cuánto sedimento se ha rascado en la sala II (lo escribe la capa, lo lee la página) */
   dug: MutableRefObject<number>;
   /** la pieza que ya se ha guardado en el estante sin salir de su sala */
@@ -74,6 +76,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [saved, setSaved] = useState<Saved>(NONE);
   const [stowed, stow] = useState<RoomSlug | null>(null);
   const poses = useMemo(() => Object.fromEntries(ROOMS.map((r) => [r.slug, { current: { ...POSE_START[r.slug] } }])) as Game["poses"], []);
+  const anchors = useMemo(() => Object.fromEntries(ROOMS.map((r) => [r.slug, { current: { x: 0.5, y: 0.5 } }])) as Game["anchors"], []);
   const dug = useRef(0);
   useEffect(() => {
     try {
@@ -116,6 +119,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const game: Game = {
     ...saved,
     poses,
+    anchors,
     dug,
     stowed,
     stow,
@@ -205,7 +209,7 @@ function PieceTraveler({ room }: { room: Room }) {
       {seen && !reduced && !fail && (
         <GLBoundary onError={() => setFail(true)}>
           <Suspense fallback={null}>
-            <PieceScene room={room.slug} pose={g.poses[room.slug]} mode={mode} active={at !== null} pointer={pointer} onReady={() => setReady(true)} />
+            <PieceScene room={room.slug} pose={g.poses[room.slug]} anchor={g.anchors[room.slug]} mode={mode} active={at !== null} pointer={pointer} onReady={() => setReady(true)} />
           </Suspense>
         </GLBoundary>
       )}
@@ -445,15 +449,19 @@ function DigGame({ won }: GameProps) {
 
 /** III · La altura: girar la alidada hasta una estrella y soltar. La alidada es simétrica: vale cualquiera de sus dos puntas. */
 // el eje: el pasador del astrolabio escaneado (en fracciones del panel; la escena pone ahí la alidada)
-const SKY = { cx: 0.5, cy: 0.53, r: 0.47 };
+// las estrellas, en un arco alrededor del eje de la alidada (lo mide la escena: `anchors.cielo`)
+const SKY = { r: 0.47 };
 function SkyGame({ won, onWin, say }: GameProps) {
-  const pose = useGame().poses.cielo;
+  const { poses, anchors } = useGame();
+  const pose = poses.cielo, anchor = anchors.cielo;
+  const sky = useRef<SVGGElement>(null);
   const line = useRef<SVGLineElement>(null);
   const [lit, setLit] = useState<string | null>(won ? STAR : null);
   useLoop(() => {
     const a = pose.current.alidade;
     line.current?.setAttribute("x2", String(Math.cos(a) * 150));
     line.current?.setAttribute("y2", String(-Math.sin(a) * 150));
+    sky.current?.setAttribute("transform", `translate(${((anchor.current.x - 0.5) * 200).toFixed(1)} ${((anchor.current.y - 0.5) * 200).toFixed(1)})`);
   });
   const aim = (a: number) => {
     let x = wrapPi(a);
@@ -478,12 +486,12 @@ function SkyGame({ won, onWin, say }: GameProps) {
       aria-label="El astrolabio: gira la alidada con el puntero o con las flechas y suelta (o pulsa Enter) sobre una estrella"
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
-        const { dx, dy } = angleIn(e, SKY.cx, SKY.cy);
+        const { dx, dy } = angleIn(e, anchor.current.x, anchor.current.y);
         if (!won) aim(Math.atan2(-dy, dx));
       }}
       onPointerMove={(e) => {
         if (won || !e.currentTarget.hasPointerCapture(e.pointerId)) return;
-        const { dx, dy } = angleIn(e, SKY.cx, SKY.cy);
+        const { dx, dy } = angleIn(e, anchor.current.x, anchor.current.y);
         aim(Math.atan2(-dy, dx));
       }}
       onPointerUp={sight}
@@ -498,8 +506,8 @@ function SkyGame({ won, onWin, say }: GameProps) {
         }
       }}
     >
-      <svg className="mv-sky" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet" style={{ "--cy": `${(SKY.cy - 0.5) * 200}px` } as CSSProperties} aria-hidden>
-        <g transform={`translate(0 ${(SKY.cy - 0.5) * 200})`}>
+      <svg className="mv-sky" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet" aria-hidden>
+        <g ref={sky} transform="translate(0 6)">
           <line x1="-150" y1="0" x2="150" y2="0" className="mv-sky__horizon" />
           <line ref={line} x1="0" y1="0" x2="150" y2="0" className="mv-sky__sight" />
           {STARS.map((s) => {
@@ -519,21 +527,21 @@ function SkyGame({ won, onWin, say }: GameProps) {
 }
 
 /** IV · La hora: arrastrar alrededor de la esfera; la minutera sigue al puntero y la horaria avanza con cada vuelta. */
-const DIAL = { cx: 0.5, cy: 0.545 };
 const clockOf = (min: number) => {
   const m = ((Math.round(min) % 720) + 720) % 720;
   const h = Math.floor(m / 60) || 12;
   return `${h}:${String(m % 60).padStart(2, "0")}`;
 };
 function ClockGame({ won, onWin, say }: GameProps) {
-  const pose = useGame().poses.tiempo;
+  const { poses, anchors } = useGame();
+  const pose = poses.tiempo, anchor = anchors.tiempo;
   const read = useRef<HTMLSpanElement>(null);
   const prev = useRef<number | null>(null);
   useLoop(() => {
     if (read.current) read.current.textContent = clockOf(pose.current.minute);
   });
   const angle = (e: PointerEvent<HTMLElement>) => {
-    const { dx, dy } = angleIn(e, DIAL.cx, DIAL.cy);
+    const { dx, dy } = angleIn(e, anchor.current.x, anchor.current.y);
     return Math.atan2(dx, -dy); // 0 arriba, crece en el sentido del reloj
   };
   const check = () => {
@@ -719,26 +727,38 @@ function Showcase() {
           <p className="mv-lede">Cada pieza que recuperes vuela del estante a su sitio en la vitrina. Las que faltan esperan en su sala.</p>
         )}
       </div>
-      <ol className="mv-case__grid">
-        {ROOMS.map((r) => (
-          <li key={r.slug} className={g.won[r.slug] ? "is-won" : ""}>
-            <div className="mv-case__cell">
-              {g.won[r.slug] ? (
-                <TravelSlot id={`pieza-${r.slug}`} at="vitrina" priority={1} className="mv-fill" />
-              ) : (
-                <a className="mv-case__empty" href={roomHref(r.slug)} data-transition={NAV_FORWARD}>
-                  <span>{r.n}</span>
-                  <small>Ir a la sala</small>
-                </a>
-              )}
-            </div>
-            <p className="mv-case__cap">
-              <span>{r.n}</span> <b>{r.piece}</b> <em>{r.word}</em>
-            </p>
-            <p className="mv-credit">{r.model.author} · {r.model.license}</p>
-          </li>
-        ))}
-      </ol>
+      {/* el armario del gabinete: nogal, fondo de terciopelo, dos baldas con un foco por hueco y la cartela de cada pieza */}
+      <div className="mv-cabinet">
+        <p className="mv-cabinet__crest" aria-hidden>
+          <span>{BRAND.long}</span>
+          <span>MDCCCLXXI</span>
+        </p>
+        <div className="mv-cabinet__body">
+          {[ROOMS.slice(0, 2), ROOMS.slice(2)].map((row, k) => (
+            <ol key={k} className="mv-cabinet__row" aria-label={`Balda ${k + 1}`}>
+              {row.map((r) => (
+                <li key={r.slug} className={`mv-niche ${g.won[r.slug] ? "is-won" : ""}`}>
+                  <div className="mv-niche__stage">
+                    {g.won[r.slug] ? (
+                      <TravelSlot id={`pieza-${r.slug}`} at="vitrina" priority={1} className="mv-fill" />
+                    ) : (
+                      <a className="mv-niche__empty" href={roomHref(r.slug)} data-transition={NAV_FORWARD}>
+                        <span>{r.n}</span>
+                        <small>Ir a la sala</small>
+                      </a>
+                    )}
+                  </div>
+                  <div className="mv-tag">
+                    <p className="mv-tag__n">{r.n} · {r.word}</p>
+                    <p className="mv-tag__t">{r.piece}</p>
+                    <p className="mv-tag__c">{r.model.author} · {r.model.license}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          ))}
+        </div>
+      </div>
       {n > 0 && (
         <button type="button" className="mv-link mv-case__reset" onClick={() => startTransition(() => g.reset())}>
           Devolverlo todo y empezar de nuevo
