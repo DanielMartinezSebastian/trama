@@ -72,6 +72,9 @@ Por orden de valor:
 3. **Posprocesado en el kit**: bloom (luz que desborda), profundidad de campo, grano y aberración. Hoy solo existe la pasada
    propia de Quilate. Un `lib/postfx` con un compositor ligero (sin `postprocessing`, que trae WebAssembly opcional) daría
    el «acabado cine» que se ve en los SOTD.
+   **En marcha (23-10-2026, docs/26):** el banco `/lab/cine` monta la pila en TSL con `RenderPipeline` (bloom, dof,
+   aberración, grano, viñeta, FXAA, SMAA) sobre `WebGPURenderer`, sin dependencias; se extraerá a `lib/postfx` cuando
+   un estudio la valide.
 4. **Presupuesto de rendimiento por dispositivo**: `useGLGate` decide sí o no. Falta el término medio (menos resolución
    del fluido, sin dispersión en las gemas, `dpr` 1) según `navigator.hardwareConcurrency`, la memoria y una medida de
    FPS de los primeros 2 s.
@@ -80,7 +83,8 @@ Por orden de valor:
 6. **Accesibilidad del relato**: el texto está en el DOM, pero falta un «saltar la introducción» y un índice de capítulos
    que funcione con teclado en todas las demos (Quilate lo tiene; Ánima, a medias).
 7. **WebGPU**: three ya lo trae con WebGL de reserva y TSL para los *shaders*. Pendiente desde la ronda 4; no es urgente
-   mientras WebGL baste.
+   mientras WebGL baste. **Probado (23-10-2026, docs/26):** R3F 9 con `WebGPURenderer` asíncrono (`gl` como función) y
+   posprocesado TSL funciona en el Next 16 del repo; el banco recrea `webgpu_postprocessing_bloom` con SSIM 0,996.
 8. **Texturas comprimidas (KTX2/Basis)**: ahorrarían memoria de GPU, pero el transcodificador es WebAssembly y choca con
    la CSP (§8). Si se activa, añadir `'wasm-unsafe-eval'` a `script-src` a conciencia, documentándolo.
 

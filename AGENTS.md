@@ -47,5 +47,8 @@ más un sitio que la enseña. Dos tipos de tarea:
 - Antes de terminar: `npm run typecheck`, `npm run catalog:check`, `npm run check:shadows` (sin sombras de texto negras ni brillos sin `--glow`: guía §8.0) y, si tocaste rutas o CSS, `npm run build`
   (**nunca** con el `next dev` del usuario en marcha: comparten `.next/` y lo deja roto).
 - Paquete npm: `npm run pkg:build` (y `pkg:pack` para probar el `.tgz`); ver «Publicar en npm» en `docs/README.md`.
+- Estudiar una web 3D de referencia (cámara, luz, posprocesado, movimiento) o depurar una recreación: `npm run
+  cine:capture -- <url>`, `cine:analyze` y `cine:compare` (`scripts/cine/`, ficha en `lib/cine/`, banco en `/lab/cine/[estudio]`);
+  método, vocabulario y trampas en `docs/26-cine-3d-metodo-y-vocabulario.md`.
 - Hay trampas documentadas (legibilidad sobre fondos, `min-width: 0` en grids anidados, glifos bitmap sin acentos…):
   `docs/02-guia-de-componentes.md` §10 y §16.

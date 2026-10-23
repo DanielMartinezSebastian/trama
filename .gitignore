@@ -9,3 +9,7 @@ dist-npm
 # secretos locales (tokens y claves de los scripts, p. ej. .env.scripts): nunca al repo; la plantilla sí
 .env*
 !.env.example
+
+# capturas de cine:capture (docs/26) y recursos de referencia para el banco: solo estudio local, nunca al repo
+.refs3d/
+public/lab-assets/

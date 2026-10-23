@@ -28,7 +28,10 @@
     "kit:pull": "tsx scripts/kit-pull.mts",
     "pkg:build": "tsx scripts/build-package.mts",
     "pkg:pack": "tsx scripts/build-package.mts && cd dist-npm && npm pack",
-    "refs:probe": "tsx scripts/probe-refs.mts"
+    "refs:probe": "tsx scripts/probe-refs.mts",
+    "cine:capture": "tsx scripts/cine/capture.mts",
+    "cine:analyze": "tsx scripts/cine/analyze.mts",
+    "cine:compare": "tsx scripts/cine/compare.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

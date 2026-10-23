@@ -153,6 +153,15 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [ ] **Imágenes ASCII sin JS.** Los componentes con lienzo no tienen alternativa estática cuando falla WebGL o está
       activo `prefers-reduced-motion`; revisar `RetroCanvas`, `AsciiBackground` y `TextmodeBackground`.
 
+## 4b. Cine 3D: capturar y recrear webs WebGL/WebGPU (docs/26, 23-10-2026)
+
+- [ ] **Camera-scroll, cuarta vuelta**: el banco sale más claro y contrastado que la referencia (luminancia +0,07,
+      contraste +0,39) con las mismas luces y materiales medidos.
+- [ ] **Primer estudio real** de una pieza de la portada de threejs.org y después webs premiadas cerradas.
+- [ ] **Motores sin three**: flujo óptico para la cámara, WebGPU Inspector y Spector.js para las pasadas.
+- [ ] **Extraer al kit** la pila TSL del banco (`lib/postfx`, componente `PostFX`) y añadir el campo `cine` a las guías.
+- [ ] **Más pases en el banco**: GTAO, SSR, LUT, desenfoque de movimiento, niebla por altura, partículas.
+
 ## 5. Auditoría de calidad de las demos nuevas (19-10-2026)
 
 Webs revisadas: `/sitios/estudio`, `/sitios/pulso` y `/sitios/barro` (todas sus páginas, a 1280 y a 390 px reales) con
