@@ -12,6 +12,8 @@
  *   - dinámica de una pieza (docs/29 §2, `--pieza nombre`): velocidad, guiñada, cabeceo y altura fotograma a fotograma,
  *     sin depender de dónde está (un coche con física, un objeto que se lanza); `--ventanas 5.9-6.75,11.9-13.7` la
  *     limita a esos segundos (fuera quedan sucesos que la recreación no tiene: una explosión, un choque con el decorado);
+ *   - texto (docs/30 §1): el relato escrito de las dos (relato.json de cine:analyze) emparejado por texto: cuándo entra
+ *     cada uno (en fracción del recorrido de scroll o del tiempo), cuánto tarda y si entra igual (fundido, sube…);
  *   - acabado (docs/29 §1): detalle fino, bordes, contraste local, brillos y grano en doce pares de fotogramas;
  *   - SSIM fotograma a fotograma con ffmpeg (solo tiene sentido si la escena es la misma: calibración);
  *   - coste: llamadas de dibujo, triángulos y pasadas.
@@ -203,6 +205,34 @@ const dinamica = (() => {
   return { pieza: elegida, errores: Object.fromEntries(Object.entries(e).map(([k, v]) => [k, +v.toFixed(3)])), total: 0.4 * e.velocidad + 0.3 * e.guinada + 0.15 * e.cabeceo + 0.15 * e.altura, maximos: { velocidad: [max(a, "v"), max(b, "v")], guinada: [max(a, "guinada"), max(b, "guinada")], cabeceo: [max(a, "cabeceo"), max(b, "cabeceo")], altura: [max(a, "altura"), max(b, "altura")] } };
 })();
 
+/*
+ * Texto: las apariciones de la referencia emparejadas con las del banco por su texto (sin mayúsculas ni espacios). El
+ * momento se compara en fracción del recorrido (scroll máximo o duración), para que dos páginas de largo distinto se
+ * puedan comparar; faltar un texto cuenta como error completo.
+ */
+const texto = (() => {
+  type Ap = { texto: string; entra: number; scrollEntra: number | null; como: string[]; dura: number; curva: string | null };
+  const leer = (d: string): Ap[] => (existsSync(join(d, "relato.json")) ? JSON.parse(readFileSync(join(d, "relato.json"), "utf8")) : []);
+  const ra = leer(REF), rb = leer(BAN);
+  if (!ra.length) return null;
+  const norm = (t: string) => t.toLowerCase().replace(/\s+/g, "");
+  const frac = (c: Cap, a: Ap) => {
+    const maxScroll = Math.max(...c.ms.map((m) => m.scroll?.max ?? 0));
+    return maxScroll > 0 && a.scrollEntra != null ? a.scrollEntra / maxScroll : a.entra / Math.max(1e-6, c.ms[c.ms.length - 1]?.t ?? 1);
+  };
+  const filas = ra.map((a) => {
+    const b = rb.find((x) => norm(x.texto) === norm(a.texto));
+    if (!b) return { texto: a.texto, falta: true, dMomento: 1, dDura: 1, como: false };
+    return { texto: a.texto, falta: false, dMomento: Math.abs(frac(ref, a) - frac(ban, b)), dDura: Math.abs(a.dura - b.dura) / Math.max(0.2, a.dura, b.dura), como: a.como.join("+") === b.como.join("+") };
+  });
+  const n = filas.length;
+  const faltan = filas.filter((f) => f.falta).length;
+  const momento = rms(filas.filter((f) => !f.falta).map((f) => f.dMomento));
+  const dura = rms(filas.filter((f) => !f.falta).map((f) => f.dDura));
+  const comoMal = filas.filter((f) => !f.falta && !f.como).length / Math.max(1, n - faltan);
+  return { apariciones: n, faltan, errorMomento: +momento.toFixed(3), errorDuracion: +dura.toFixed(3), comoDistinto: +comoMal.toFixed(3), total: Math.min(1, faltan / n + momento * 4 + dura * 0.5 + comoMal * 0.3), filas };
+})();
+
 /* ---------------------------------------------------------------- planos */
 
 const tramos = (c: Cap) => c.medidas.tramos.map((t) => ({ mov: t.movimientos.join("+"), curva: t.curvas[0]?.curva ?? "—", desde: t.desde, hasta: t.hasta }));
@@ -309,7 +339,7 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica" | "texto", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
@@ -366,9 +396,10 @@ const acabado = (() => {
 })();
 if (acabado) alejamiento.acabado = clamp01(acabado.total);
 if (dinamica) alejamiento.dinamica = clamp01(dinamica.total);
+if (texto) alejamiento.texto = clamp01(texto.total);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "texto" ? "Texto (relato escrito)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
@@ -377,6 +408,7 @@ const resultado = {
   imagen,
   acabado,
   dinamica,
+  texto,
   piezas,
   coreografia,
   ssim,
@@ -418,6 +450,9 @@ const md = [
   ...(difs.length ? difs.map((d) => `- ${d}`) : ["- ninguna en render, luz, atmósfera ni posprocesado"]),
   ``,
   imagen ? `## Imagen\n\n- Luminancia ${imagen.dLuma >= 0 ? "+" : ""}${imagen.dLuma.toFixed(3)} · recorte ${(imagen.dRecorte * 100).toFixed(2)} pt · contraste ${imagen.dContraste.toFixed(3)} · saturación ${imagen.dSaturacion.toFixed(3)} · viñeta ${imagen.dVineta.toFixed(3)} · ΔE de la paleta ${imagen.deltaE.toFixed(1)}\n` : `## Imagen\n\n- Sin datos: ejecuta \`cine:analyze\` en las dos capturas.\n`,
+  texto
+    ? `## Texto\n\n- ${texto.apariciones} apariciones en la referencia · faltan ${texto.faltan} · momento ${Math.round(texto.errorMomento * 100)} % del recorrido · duración ${Math.round(texto.errorDuracion * 100)} % · entran distinto ${Math.round(texto.comoDistinto * 100)} %\n\n| Texto | Momento | Duración | Cómo |\n|---|---|---|---|\n${texto.filas.map((f) => `| ${f.texto.slice(0, 36)} | ${f.falta ? "falta" : Math.round(f.dMomento * 100) + " %"} | ${f.falta ? "—" : Math.round(f.dDura * 100) + " %"} | ${f.falta ? "—" : f.como ? "igual" : "distinto"} |`).join("\n")}\n`
+    : "",
   dinamica
     ? `## Dinámica de ${dinamica.pieza}\n\n| Serie | Error | Máximo ref | Máximo banco |\n|---|---|---|---|\n${(["velocidad", "guinada", "cabeceo", "altura"] as const).map((k) => `| ${k} | ${Math.round((dinamica.errores as Record<string, number>)[k] * 100)} % | ${dinamica.maximos[k][0].toFixed(2)} | ${dinamica.maximos[k][1].toFixed(2)} |`).join("\n")}\n`
     : "",

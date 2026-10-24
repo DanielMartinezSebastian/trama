@@ -16,9 +16,12 @@
  *                                 de inicio y duración; varias con «;» (juegos y webs que se conducen con el teclado)
  *   --every 1                     un fotograma de vídeo cada n (1 = 60 fps)
  *   --size 1440x900               tamaño de la ventana
+ *   --sin-dom                     sin la muestra de los textos visibles por fotograma (va por defecto)
  *   --solo-lienzo                 oculta todo menos el lienzo mayor (créditos, paneles, indicador de Next)
  *   --real                        sin reloj virtual: tiempo real (el vídeo sale a la velocidad que dé la máquina)
  *   --clock-later                 el reloj virtual toma el control tras cargar (no desde el arranque): para saltarse la intro
+ *   --espera 8                    segundos de tiempo real antes de empezar (con --clock-later): pantallas de carga y
+ *                                 cargadores que cuentan con el reloj y se atascan con el virtual
  *   --assets                      descarga los recursos 3D (GLB, HDR, KTX2…) a la carpeta de la captura, solo para estudio
  *   --slug nombre --out carpeta   salida (por defecto .refs3d/<slug>/<fecha>)
  *
@@ -115,6 +118,7 @@ if (EXACT && FROM_START) await page.addInitScript("window.__cineClockAuto = true
 if (EXACT) await page.addInitScript({ path: join(HOOKS, "clock.js") });
 await page.addInitScript({ path: join(HOOKS, "three.js") });
 await page.addInitScript({ path: join(HOOKS, "shaders.js") });
+if (!flag("--sin-dom")) await page.addInitScript({ path: join(HOOKS, "dom.js") });
 
 console.log(`→ ${url}\n  ${DRIVE} · ${EXACT ? "reloj virtual" + (FROM_START ? " desde el arranque" : " tras cargar") : "tiempo real"} · ${W}×${H} · ${OUT}`);
 await page.goto(url, { waitUntil: "load", timeout: 120_000 });
@@ -153,6 +157,7 @@ if (flag("--solo-lienzo")) {
     content: `html,body{background:#000!important} *:not(html):not(body):not(canvas),*::before,*::after{${hide}} img,svg,video,picture,iframe,canvas:not([data-cine-lienzo]){opacity:0!important} nextjs-portal{display:none!important}`,
   });
 }
+if (Number(opt("--espera", "0")) > 0) await page.waitForTimeout(Number(opt("--espera", "0")) * 1000);
 if (EXACT && !FROM_START) await page.evaluate(() => (window as unknown as { __cineClock: { control(): void } }).__cineClock.control());
 
 type Win = { __cineClock: { step(n: number): Promise<unknown> }; __cine: { snapshot(): unknown; inventory(): unknown }; __cineShaders: { list: unknown[] } };
@@ -211,6 +216,8 @@ async function sample(input: Muestra["input"]) {
   frame++;
   const s = (await snapshot()) as Omit<Muestra, "t" | "i" | "input" | "shot">;
   const m: Muestra = { i: frame, t: +(frame / FPS).toFixed(4), input, shot: null, ...s };
+  // los textos visibles (docs/30 §1): cómo entra y sale el relato escrito
+  if (!flag("--sin-dom")) m.dom = (await page.evaluate(() => (window as unknown as { __cineDom?: { sample(): unknown } }).__cineDom?.sample() ?? [])) as Muestra["dom"];
   if (frame % EVERY === 0) {
     shot++;
     m.shot = shot;

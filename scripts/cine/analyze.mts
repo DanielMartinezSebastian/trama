@@ -19,6 +19,7 @@ import { ANCLAS, EJE_NOMBRE } from "../../lib/cine/rubric";
 import { EJES, type Ficha, type Nota, type Rubrica } from "../../lib/cine/schema";
 import { centro, fichaDesdeCaptura, type Inventario, type Muestra, type Tramo } from "./lib.mts";
 import { respuestaPuntero } from "./puntero.mts";
+import { relatoDom } from "./dom.mts";
 
 const dir = process.argv.slice(2).find((a) => !a.startsWith("--"));
 if (!dir || !existsSync(join(dir, "timeline.jsonl"))) {
@@ -41,6 +42,13 @@ const shaders = shaderIndex.map((s) => ({ lang: s.lang, label: s.label, code: re
 const rehecha = fichaDesdeCaptura(meta, timeline, invs, shaders);
 const auto = { ficha: rehecha.ficha, medidas: { ...rehecha.medidas, firmasCodigo: previa.medidas.firmasCodigo ?? {}, // la respuesta al puntero solo tiene sentido con el barrido del puntero (con arrastres, el puntero solo existe en ellos)
     puntero: meta.drive === "pointer" ? respuestaPuntero(timeline, meta.size as [number, number]) : [] } } as unknown as { ficha: Ficha; medidas: Record<string, unknown> & { tramos: Tramo[]; centroEscena: number[] } };
+// el relato escrito (docs/30 §1): qué textos entran, cuándo, cómo y con qué curva, visto en los píxeles
+const relato = relatoDom(OUT, timeline, meta.size as [number, number]);
+if (relato.length) {
+  (auto.medidas as Record<string, unknown>).relato = relato;
+  writeFileSync(join(OUT, "relato.json"), JSON.stringify(relato, null, 1));
+  console.log(`  relato: ${relato.length} apariciones de texto`);
+}
 writeFileSync(join(OUT, "ficha.auto.json"), JSON.stringify(auto, null, 1));
 const fps = meta.fps;
 const VIDEO = join(OUT, "video.mp4");

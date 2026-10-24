@@ -19,6 +19,8 @@ export type Muestra = {
   passes: Pasada[];
   rendersPerFrame: number;
   scroll: { y: number; max: number };
+  /** textos visibles (gancho dom.js): bloque, texto, caja, opacidad efectiva, desplazamiento de sus trozos, recorte, desenfoque, color y cuerpo */
+  dom?: { k: number; txt: string; vis: number; r: [number, number, number, number]; op: number; dy: number; clip: number; blur: number; col: string; fs: number }[];
   acciones?: { clip: string; t: number; dur: number | null; paused: boolean; peso: number }[];
   /** pose de cada pieza: origen (p), cuaternión del mundo (q) y centro de su caja en el mundo (c, dónde se ve) */
   piezas?: { n: string; p: Vec3; q: number[]; c?: Vec3 | null }[];
