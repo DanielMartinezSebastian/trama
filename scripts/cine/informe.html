@@ -7,7 +7,9 @@
 <!--
   Visor de `cine:analyze` (docs/26 §2): el vídeo de la captura con sus gráficas sincronizadas (cámara, imagen, movimiento,
   coste) y notas por momento. Se abre como archivo local junto a video.mp4. Las notas se guardan en este navegador y se
-  exportan como notas.json, que `cine:analyze` mezcla en ficha.json la próxima vez que se ejecute.
+  exportan como notas.json, que `cine:analyze` mezcla en ficha.json la próxima vez que se ejecute. Publicado como
+  artifact de claude.ai con la capacidad `db`, las notas y la rúbrica se guardan además en el documento notas/<id> del
+  artifact (las comparten quienes lo abren y Claude las lee), y la exportación pasa por la capacidad `downloads`.
 -->
 <style>
   :root { --bg: #0b0c10; --card: #14161c; --fg: #e8e8ea; --mut: #8a8f9c; --ln: #262a33; --acc: #7aa2ff; --acc2: #ffb86b; --ok: #6bd49a; color-scheme: dark; }
@@ -186,7 +188,13 @@ let notas = [];
 let rubrica = {};
 try { const s = JSON.parse(localStorage.getItem(key) || "null"); if (s) ({ notas = [], rubrica = {} } = s); } catch {}
 if (!notas.length && DATA.notas) ({ notas = [], rubrica = {} } = DATA.notas);
-const save = () => { try { localStorage.setItem(key, JSON.stringify({ notas, rubrica })); } catch {} };
+// en claude.ai (capacidad db), las notas viven en el documento notas/<id> del artifact; en local, en este navegador
+let db = null;
+const docNotas = "notas/" + String(DATA.id).replace(/[^w-]/g, "_");
+const save = () => {
+  try { localStorage.setItem(key, JSON.stringify({ notas, rubrica })); } catch {}
+  if (db) db.doc(docNotas).set({ notas, rubrica, actualizado: new Date().toISOString() }).catch(() => {});
+};
 for (const e of DATA.ejes) $("#eje").insertAdjacentHTML("beforeend", `<option value="${e.id}">${e.nombre}</option>`);
 function renderNotas() {
   $("#notes").innerHTML = "";
@@ -207,7 +215,10 @@ $("#addNote").onclick = () => {
   $("#nota").value = "";
   save(); renderNotas();
 };
-$("#export").onclick = () => {
+$("#export").onclick = async () => {
+  const datos = JSON.stringify({ notas, rubrica }, null, 1);
+  const downloads = await window.claude?.use?.("downloads").catch(() => null);
+  if (downloads) return downloads.save({ filename: "notas.json", data: datos }).catch(() => {});
   const blob = new Blob([JSON.stringify({ notas, rubrica }, null, 1)], { type: "application/json" });
   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "notas.json" });
   a.click();
@@ -224,6 +235,23 @@ for (const e of DATA.ejes) {
   rb.appendChild(row);
 }
 DATA.relojDe = new Function("vt", DATA.relojFn);
+(async () => {
+  try { db = (await window.claude?.use?.("db")) ?? null; } catch { db = null; }
+  if (!db) return;
+  const snap = await db.doc(docNotas).get().catch(() => null);
+  const d = snap?.exists ? snap.data() : null;
+  if (d) {
+    notas = Array.isArray(d.notas) ? [...d.notas] : [];
+    rubrica = d.rubrica && typeof d.rubrica === "object" ? { ...d.rubrica } : {};
+    renderNotas();
+    DATA.ejes.forEach((e, i) => {
+      const sel = rb.querySelectorAll("select")[i];
+      sel.value = rubrica[e.id] ? String(rubrica[e.id].nota) : "";
+      sel.dispatchEvent(new Event("input"));
+      sel.nextElementSibling.textContent = sel.value ? e.anclas[sel.value - 1] : "";
+    });
+  } else if (notas.length || Object.keys(rubrica).length) save();
+})();
 
 // ---------------------------------------------------------------- imagen, técnica e indicios
 const im = DATA.imagen;
