@@ -11,7 +11,7 @@ export type Muestra = {
   i: number;
   t: number;
   shot: number | null;
-  input: { wheel?: number; step?: number; pointer?: [number, number] };
+  input: { wheel?: number; step?: number; pointer?: [number, number]; clic?: [number, number]; arrastre?: "abajo" | "mueve" | "arriba" };
   frame: number;
   revision: string | null;
   renderer: null | { type: string; backend: string | null; toneMapping: string; exposure: number; outputColorSpace: string; pixelRatio: number; canvas: number[]; shadows: { enabled: boolean; type: string } | null; calls: number | null; triangles: number | null; textures: number | null; geometries: number | null; programs: number | null };
@@ -30,6 +30,8 @@ export type Muestra = {
 type Inv = {
   counts: Record<string, number>;
   bounds: { min: Vec3; max: Vec3 } | null;
+  /** centro de las mallas ponderado por triángulos (capturas desde la ronda 17) */
+  nucleo?: Vec3 | null;
   background: { kind: string; value?: string } | null;
   environment: { kind: string } | null;
   environmentIntensity: number;
@@ -53,7 +55,9 @@ const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.le
 const r3 = (v: number[]) => v.map((x) => Math.round(x * 1000) / 1000) as Vec3;
 
 /** centro de la escena (caja de las mallas) o el origen */
-export const centro = (inv: Inv | null): Vec3 => (inv?.bounds ? (inv.bounds.min.map((m, i) => (m + inv.bounds!.max[i]) / 2) as Vec3) : [0, 0, 0]);
+// el núcleo, si lo hay: con objetos a kilómetros (nubes, tarjetas del cielo) el centro de la caja no dice dónde está la
+// escena y desajusta la escala con la que se clasifican los movimientos (docs/28, trampa)
+export const centro = (inv: Inv | null): Vec3 => (inv?.nucleo ? inv.nucleo : inv?.bounds ? (inv.bounds.min.map((m, i) => (m + inv.bounds!.max[i]) / 2) as Vec3) : [0, 0, 0]);
 
 /** punto mirado: el del rayo de la cámara más cercano al centro de la escena */
 /**
@@ -214,8 +218,13 @@ export function tramos(ms: Muestra[], c0: Vec3, reloj: (m: Muestra) => number): 
     const eps = size * 0.01;
     const mov: Movimiento[] = [];
     const moved = recorrido > eps;
-    if (moved && Math.abs(dDist) > Math.max(eps, recorrido * 0.5)) mov.push("dolly");
-    if (moved && Math.abs(dDist) < recorrido * 0.3 && giro > 5) {
+    // dolly: acercarse al centro de la escena o avanzar por el eje de la cámara (Hublot cruza la ventanilla mirando a un
+    // lado del núcleo: la distancia al centro apenas cambia y sin el eje salía «fijo», docs/28)
+    const avance = Math.abs(dot(delta, A.dir));
+    // (sin apenas desplazamiento lateral: una órbita que se acerca también avanza por el eje)
+    const porEje = avance > Math.max(eps, recorrido * 0.6) && lateral < recorrido * 0.4;
+    if (moved && (Math.abs(dDist) > Math.max(eps, recorrido * 0.5) || porEje)) mov.push("dolly");
+    if (moved && !porEje && Math.abs(dDist) < recorrido * 0.3 && giro > 5) {
       mov.push("orbita");
       // órbita con acercamiento o alejamiento: la distancia cambia más de un 10 %
       if (Math.abs(dDist) > dist(A) * 0.1) mov.push("dolly");
@@ -225,6 +234,8 @@ export function tramos(ms: Muestra[], c0: Vec3, reloj: (m: Muestra) => number): 
       if (moved && vertical > Math.max(eps, recorrido * 0.5) && !mov.includes("dolly")) mov.push("pedestal");
     }
     if (Math.abs(dFov) > 0.5) mov.push(mov.includes("dolly") && Math.sign(dFov) === Math.sign(dDist) ? "dolly-zoom" : "zoom");
+    // giro durante un desplazamiento que no es órbita: panorámica a la vez (dolly + panorámica)
+    if (moved && giro > 5 && !mov.includes("orbita")) mov.push("panoramica");
     if (!moved && giro > 2) mov.push(Math.abs(B.dir[1] - A.dir[1]) > Math.abs(B.dir[0] - A.dir[0]) ? "inclinacion" : "panoramica");
     if (!mov.length) mov.push("fijo");
 

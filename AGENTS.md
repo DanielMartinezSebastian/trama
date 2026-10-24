@@ -38,7 +38,7 @@ más un sitio que la enseña. Dos tipos de tarea:
 ## 2. Cambiar o ampliar la librería
 
 - Kit = `components/ui/` + `components/ui/styles/` + `lib/ui/` + motores (`lib/asciify`, `lib/sketches`, `lib/scroll`,
-  `lib/text`, `lib/gems`, `lib/story`, `lib/modelnav`, `lib/object3d`, `lib/typefield`, `lib/postfx`, `lib/cine`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Web de la librería (`/`, `/docs`, `/demos`) = `components/site/` + `lib/docs.ts`
+  `lib/text`, `lib/gems`, `lib/story`, `lib/modelnav`, `lib/object3d`, `lib/typefield`, `lib/porthole`, `lib/postfx`, `lib/cine`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Web de la librería (`/`, `/docs`, `/demos`) = `components/site/` + `lib/docs.ts`
   (las páginas de `/docs` son los `.md` de `docs/`). Demos y landings = el resto.
   El kit **no** puede importar del catálogo, de las landings ni de `lib/themes`/`lib/demos`.
 - Componente nuevo o cambio de props: sigue `docs/02-guia-de-componentes.md` §3 y §9, regístralo en
@@ -48,7 +48,7 @@ más un sitio que la enseña. Dos tipos de tarea:
   (**nunca** con el `next dev` del usuario en marcha: comparten `.next/` y lo deja roto).
 - Paquete npm: `npm run pkg:build` (y `pkg:pack` para probar el `.tgz`); ver «Publicar en npm» en `docs/README.md`.
 - Estudiar una web 3D de referencia (cámara, luz, posprocesado, movimiento) o depurar una recreación: `npm run
-  cine:capture -- <url>`, `cine:analyze` y `cine:compare` (`scripts/cine/`, ficha en `lib/cine/`, banco en `/lab/cine/[estudio]`);
+  cine:capture -- <url>`, `cine:analyze`, `cine:compare` y `cine:rampa` (`scripts/cine/`, ficha en `lib/cine/`, banco en `/lab/cine/[estudio]`);
   método, vocabulario y trampas en `docs/26-cine-3d-metodo-y-vocabulario.md`.
 - Hay trampas documentadas (legibilidad sobre fondos, `min-width: 0` en grids anidados, glifos bitmap sin acentos…):
   `docs/02-guia-de-componentes.md` §10 y §16.

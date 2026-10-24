@@ -337,3 +337,23 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
 .ui-tf__gl.is-on { opacity: 1; }
 .ui-tf__gl canvas { display: block; width: 100% !important; height: 100% !important; }
 @media (prefers-reduced-motion: reduce) { .ui-dimg__gl, .ui-obj__gl { transition: none; } }
+
+/* Porthole: la vista desde la ventanilla de un avión al alba (docs/28). La escena es fotográfica: el fondo plano imita su
+   cielo (rampa medida en Hublot) dentro de la ventanilla, sobre la cabina en penumbra */
+.ui-ph { position: relative; width: 100%; overflow: hidden; background: #010205; isolation: isolate; touch-action: pan-y; user-select: none; }
+.ui-ph__flat { position: absolute; inset: 0; display: grid; place-items: center;
+  background: radial-gradient(60% 80% at 38% 50%, #0b1b33 0%, #030812 55%, #010205 100%); }
+.ui-ph__window { width: min(36%, 300px); aspect-ratio: 3 / 4; border-radius: 34% / 26%;
+  box-shadow: 0 0 0 clamp(10px, 2.2vw, 22px) #06142a, 0 0 60px 20px rgba(4, 16, 36, 0.8);
+  background: linear-gradient(to bottom, #010409 0%, #020c1f 30%, #0e2542 46%, #3f5b89 56%, #9ec3f5 64%, #d8f0e6 68%, #ca8844 71%, #2a1c10 73%, #050707 80%, #010202 100%); }
+.ui-ph__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; cursor: grab; }
+.ui-ph__gl:active { cursor: grabbing; }
+.ui-ph__gl.is-on { opacity: 1; }
+.ui-ph__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-ph__content { position: relative; z-index: 1; height: 100%; pointer-events: none; }
+.ui-ph__content > * { pointer-events: auto; }
+.ui-ph__hint { position: absolute; z-index: 1; left: 50%; bottom: 1rem; transform: translateX(-50%); margin: 0; padding: 0.35rem 0.75rem;
+  border-radius: 999px; font: 500 0.75rem/1.2 var(--font-mono, ui-monospace, monospace); letter-spacing: 0.04em; color: #c9d6e6;
+  background: rgba(2, 6, 14, 0.55); backdrop-filter: blur(6px); transition: opacity 0.4s; pointer-events: none; }
+.ui-ph.is-out .ui-ph__hint { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .ui-ph__gl { transition: none; } }

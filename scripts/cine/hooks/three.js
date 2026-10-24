@@ -204,6 +204,7 @@
     let skinned = 0;
     let animated = 0;
     const box = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+    const nucleo = { w: 0, c: [0, 0, 0] };
     const piezas = [];
     const instanciadas = [];
     scene.traverse((o) => {
@@ -271,6 +272,15 @@
         if (!g.boundingBox && g.computeBoundingBox && g.attributes && g.attributes.position) g.computeBoundingBox();
         if (g.boundingBox && o.matrixWorld) {
           const b = g.boundingBox.clone().applyMatrix4(o.matrixWorld);
+          // núcleo de la escena: centros de las cajas ponderados por triángulos (las tarjetas lejanas de dos triángulos,
+          // el cielo o las nubes a kilómetros, no lo desplazan)
+          const tris = (g.index ? g.index.count : g.attributes.position.count) / 3;
+          if (isFinite(b.min.x) && isFinite(b.max.x)) {
+            nucleo.w += tris;
+            nucleo.c[0] += ((b.min.x + b.max.x) / 2) * tris;
+            nucleo.c[1] += ((b.min.y + b.max.y) / 2) * tris;
+            nucleo.c[2] += ((b.min.z + b.max.z) / 2) * tris;
+          }
           for (let i = 0; i < 3; i++) {
             const k = "xyz"[i];
             if (isFinite(b.min[k])) box.min[i] = Math.min(box.min[i], b.min[k]);
@@ -288,6 +298,7 @@
       piezas,
       instanciadas,
       bounds: isFinite(box.min[0]) ? { min: box.min.map((n) => round(n, 3)), max: box.max.map((n) => round(n, 3)) } : null,
+      nucleo: nucleo.w ? nucleo.c.map((n) => round(n / nucleo.w, 3)) : null,
       background: textureInfo(scene.background) || (scene.backgroundNode ? { kind: "node" } : null),
       backgroundBlurriness: round(scene.backgroundBlurriness, 3),
       backgroundIntensity: round(scene.backgroundIntensity, 3),

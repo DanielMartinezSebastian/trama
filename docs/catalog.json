@@ -213,6 +213,7 @@
         "drag-grid",
         "object-stage",
         "type-field",
+        "porthole",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -11860,6 +11861,67 @@
       ],
       "example": "import TypeField from \"@/components/ui/TypeField\";\n\n<TypeField />",
       "preview": "/componentes#type-field"
+    },
+    {
+      "id": "porthole",
+      "name": "Ventanilla de avión al alba (WebGPU)",
+      "component": "Porthole",
+      "import": "import Porthole from \"@/components/ui/Porthole\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "La vista desde la ventanilla de un avión al alba, como fondo de portada: cielo con su resplandor bajo el horizonte, estrellas que titilan, ciudades y ríos en el suelo y el ala con su librea, todo procedural (sin modelos ni texturas). La cámara se asoma hacia el puntero como una cabeza y, al arrastrar, sale por la ventanilla (otro arrastre la devuelve). Concepto, cámara (ganancias y seguimiento) y la rampa del cielo medidos en Hublot (darkroom.engineering) con cine:capture (docs/28). WebGPU con reserva WebGL2, materiales de nodos sin luces. El tema pone la librea; los colores del cielo son los medidos. Sin WebGL o con movimiento reducido, el cielo plano enmarcado por la ventanilla.",
+      "props": [
+        {
+          "key": "livery",
+          "type": "select",
+          "default": "acc",
+          "label": "Librea (token)",
+          "options": [
+            "acc",
+            "acc2",
+            "fg",
+            "mut"
+          ]
+        },
+        {
+          "key": "cities",
+          "type": "number",
+          "default": 0.35,
+          "label": "Ciudades",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "interactive",
+          "type": "boolean",
+          "default": true,
+          "label": "Arrastrar para salir"
+        },
+        {
+          "key": "hint",
+          "type": "text",
+          "default": "Arrastra para salir por la ventanilla",
+          "label": "Pista"
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/Porthole.",
+        "Mueve el puntero para asomarte; arrastra para salir por la ventanilla.",
+        "children va encima de la escena (titular, botones)."
+      ],
+      "example": "import Porthole from \"@/components/ui/Porthole\";\n\n<Porthole />",
+      "preview": "/componentes#porthole"
     },
     {
       "id": "point-cloud",

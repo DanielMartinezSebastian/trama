@@ -106,7 +106,7 @@ function Rig({ ficha }: { ficha: Ficha }) {
   }, [camera, ficha]);
   useFrame(() => {
     // cámara de autor: la pone el modelo (Gltf), aquí solo el fov de la ficha
-    if (ficha.camara.deModelo) return;
+    if (ficha.camara.deModelo || ficha.camara.dePieza) return;
     const pose = poseAt(ficha.camara.planos, t.current);
     camera.position.set(...pose.pos);
     camera.fov = pose.fov;

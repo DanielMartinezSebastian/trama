@@ -2040,6 +2040,22 @@ Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/TypeField.
 - Una palabra por línea, «TEXTO|tono» (acc, acc2, fg, mut); hasta cuatro.
 
+### Ventanilla de avión al alba (WebGPU) — `Porthole`
+
+La vista desde la ventanilla de un avión al alba, como fondo de portada: cielo con su resplandor bajo el horizonte, estrellas que titilan, ciudades y ríos en el suelo y el ala con su librea, todo procedural (sin modelos ni texturas). La cámara se asoma hacia el puntero como una cabeza y, al arrastrar, sale por la ventanilla (otro arrastre la devuelve). Concepto, cámara (ganancias y seguimiento) y la rampa del cielo medidos en Hublot (darkroom.engineering) con cine:capture (docs/28). WebGPU con reserva WebGL2, materiales de nodos sin luces. El tema pone la librea; los colores del cielo son los medidos. Sin WebGL o con movimiento reducido, el cielo plano enmarcado por la ventanilla.
+
+| prop | tipo | default |
+|---|---|---|
+| `livery` | `acc` · `acc2` · `fg` · `mut` | "acc" |
+| `cities` | number 0–1 | 0.35 |
+| `interactive` | boolean | true |
+| `hint` | text | "Arrastra para salir por la ventanilla" |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/Porthole.
+- Mueve el puntero para asomarte; arrastra para salir por la ventanilla.
+- children va encima de la escena (titular, botones).
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

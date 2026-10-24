@@ -159,7 +159,8 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
       ningún eje por encima del 18 % (docs/26 §6).
 - [x] **Primer estudio real** (24-10-2026): Plain Sight → `TypeField` y `lib/postfx` (docs/27).
 - [x] `TypeField` en tema oscuro y la coreografía letra a letra (docs/27 §3b, ronda 16).
-- [ ] Segundo estudio: Hublot (WebGPU + TSL) o una web premiada cerrada.
+- [x] **Segundo estudio** (24-10-2026): Hublot → `Porthole` y `lib/porthole`; cámara 3 %, imagen 10 %; coste del método (docs/28).
+- [ ] Lo pendiente de Hublot: pueblos más cálidos, puntos muy brillantes, bisel, destello de lente con sol (docs/28 §8).
 - [ ] **Motores sin three**: flujo óptico para la cámara, WebGPU Inspector y Spector.js para las pasadas.
 - [ ] **Extraer al kit** la pila TSL del banco (`lib/postfx`, componente `PostFX`) y añadir el campo `cine` a las guías.
 - [ ] **Más pases en el banco**: GTAO, SSR, LUT, desenfoque de movimiento, niebla por altura, partículas.

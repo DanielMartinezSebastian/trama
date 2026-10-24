@@ -31,7 +31,8 @@
     "refs:probe": "tsx scripts/probe-refs.mts",
     "cine:capture": "tsx scripts/cine/capture.mts",
     "cine:analyze": "tsx scripts/cine/analyze.mts",
-    "cine:compare": "tsx scripts/cine/compare.mts"
+    "cine:compare": "tsx scripts/cine/compare.mts",
+    "cine:rampa": "tsx scripts/cine/rampa.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

@@ -5,6 +5,7 @@ import DragGrid from "@/components/ui/DragGrid";
 import PointCloud from "@/components/ui/PointCloud";
 import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/components/ui/ObjectStage";
 import TypeField from "@/components/ui/TypeField";
+import Porthole from "@/components/ui/Porthole";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -111,6 +112,30 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <TypeField words={p.words as string} trigger={p.trigger as never} duration={p.duration as number} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "porthole",
+    component: "Porthole",
+    path: "@/components/ui/Porthole",
+    name: "Ventanilla de avión al alba (WebGPU)",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "La vista desde la ventanilla de un avión al alba, como fondo de portada: cielo con su resplandor bajo el horizonte, estrellas que titilan, ciudades y ríos en el suelo y el ala con su librea, todo procedural (sin modelos ni texturas). La cámara se asoma hacia el puntero como una cabeza y, al arrastrar, sale por la ventanilla (otro arrastre la devuelve). Concepto, cámara (ganancias y seguimiento) y la rampa del cielo medidos en Hublot (darkroom.engineering) con cine:capture (docs/28). WebGPU con reserva WebGL2, materiales de nodos sin luces. El tema pone la librea; los colores del cielo son los medidos. Sin WebGL o con movimiento reducido, el cielo plano enmarcado por la ventanilla.",
+    stageHeight: 520,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/Porthole.", "Mueve el puntero para asomarte; arrastra para salir por la ventanilla.", "children va encima de la escena (titular, botones)."],
+    props: [
+      { key: "livery", label: "Librea (token)", type: "select", default: "acc", options: ["acc", "acc2", "fg", "mut"] },
+      { key: "cities", label: "Ciudades", type: "number", default: 0.35, min: 0, max: 1, step: 0.05 },
+      { key: "interactive", label: "Arrastrar para salir", type: "boolean", default: true },
+      { key: "hint", label: "Pista", type: "text", default: "Arrastra para salir por la ventanilla" },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <Porthole livery={p.livery as never} cities={p.cities as number} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
       </div>
     ),
   },

@@ -93,6 +93,11 @@ export type Camara = {
    * la cámara y `clip` el clip que lo mueve; el banco la usa tal cual y los planos quedan como descripción.
    */
   deModelo?: { nodo: string; clip: string };
+  /**
+   * Cámara de pieza: la mueve una pieza propia (componente) que responde al puntero o a gestos (cabeza que se asoma,
+   * transición al arrastrar); el banco solo pone near, far y el fov del primer plano, y los planos quedan como descripción
+   */
+  dePieza?: boolean;
   /** temblor de cámara (camera shake): amplitud en unidades de escena y frecuencia en Hz */
   temblor?: { amplitud: number; frecuencia: number };
   /** respuesta al puntero: desplazamiento (parallax, unidades) e inclinación (grados), con su curva de seguimiento */

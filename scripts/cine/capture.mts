@@ -7,7 +7,11 @@
  *   --seconds 4                   duración con --drive time o pointer
  *   --steps 40 --wheel 120        con --drive scroll: pasos de rueda y píxeles por paso
  *   --frames-per-step 6           fotogramas entre pasos de rueda (deja ver la inercia)
- *   --cola 1.5                    segundos sin tocar nada tras el último paso (cómo se asienta; da el amortiguado)
+ *   --cola 1.5                    segundos sin tocar nada tras el último paso (cómo se asienta; da el amortiguado); con
+ *                                 time o pointer, solo si se pasa
+ *   --clic 0.5,0.5@4              clics en el lienzo: posición relativa (0–1) y segundo; varios separados por «;» (webs
+ *                                 que cambian de escena al hacer clic: la transición queda en la serie y en el vídeo)
+ *   --arrastre 0.4,0.5>0.6,0.5@6+0.4   arrastres: desde>hasta (relativos), segundo de inicio y duración; varios con «;»
  *   --every 1                     un fotograma de vídeo cada n (1 = 60 fps)
  *   --size 1440x900               tamaño de la ventana
  *   --solo-lienzo                 oculta todo menos el lienzo mayor (créditos, paneles, indicador de Next)
@@ -44,7 +48,15 @@ const SECONDS = Number(opt("--seconds", "4"));
 const STEPS = Number(opt("--steps", "40"));
 const WHEEL = Number(opt("--wheel", "120"));
 const PER_STEP = Number(opt("--frames-per-step", "6"));
-const TAIL = Number(opt("--cola", "1.5"));
+const TAIL = DRIVE === "scroll" || flag("--cola") ? Number(opt("--cola", "1.5")) : 0;
+const CLICS = opt("--clic", "")
+  .split(";")
+  .filter(Boolean)
+  .map((c) => {
+    const [pos, seg] = c.split("@");
+    const [x, y] = pos.split(",").map(Number);
+    return { x, y, seg: Number(seg) };
+  });
 const EVERY = Math.max(1, Number(opt("--every", "1")));
 const [W, H] = opt("--size", "1440x900").split("x").map(Number);
 const EXACT = !flag("--real");
@@ -151,7 +163,33 @@ const inventarios: Inventario[] = [];
 let frame = 0;
 let shot = 0;
 
+const ARRASTRES = opt("--arrastre", "")
+  .split(";")
+  .filter(Boolean)
+  .map((c) => {
+    const [tramo, cuando] = c.split("@");
+    const [a, b] = tramo.split(">").map((p) => p.split(",").map(Number));
+    const [seg, dur] = cuando.split("+").map(Number);
+    return { a, b, f0: Math.round(seg * FPS), f1: Math.round((seg + (dur || 0.3)) * FPS) };
+  });
+
 async function sample(input: Muestra["input"]) {
+  // arrastres: botón abajo en su primer fotograma, movimiento lineal y botón arriba en el último
+  for (const d of ARRASTRES) {
+    if (frame < d.f0 || frame > d.f1) continue;
+    const k = (frame - d.f0) / Math.max(1, d.f1 - d.f0);
+    const x = Math.round((d.a[0] + (d.b[0] - d.a[0]) * k) * W), y = Math.round((d.a[1] + (d.b[1] - d.a[1]) * k) * H);
+    await page.mouse.move(x, y);
+    if (frame === d.f0) await page.mouse.down();
+    if (frame === d.f1) await page.mouse.up();
+    input = { ...input, pointer: [x, y], arrastre: frame === d.f0 ? "abajo" : frame === d.f1 ? "arriba" : "mueve" };
+  }
+  // los clics caen en su fotograma, antes de avanzar el reloj
+  for (const c of CLICS)
+    if (Math.round(c.seg * FPS) === frame) {
+      await page.mouse.click(Math.round(c.x * W), Math.round(c.y * H));
+      input = { ...input, clic: [Math.round(c.x * W), Math.round(c.y * H)] };
+    }
   await step(1);
   frame++;
   const s = (await snapshot()) as Omit<Muestra, "t" | "i" | "input" | "shot">;
@@ -196,6 +234,7 @@ if (DRIVE === "time") {
     if (i === Math.floor(total / 2)) await keyInventory();
   }
 }
+if (DRIVE !== "scroll") for (let k = 0; k < Math.round(TAIL * FPS); k++) await sample({});
 await keyInventory();
 
 const shaders = (await page.evaluate(() => (window as unknown as Win).__cineShaders.list)) as { id: string; lang: string; stage: string; label: string | null; length: number; code: string }[];
