@@ -2,7 +2,7 @@
 
 > Ronda 15 (24-10-2026), fase 4 del método de cine 3D (docs/26). Tres webs de la portada de threejs.org capturadas, una
 > estudiada a fondo, recreada y llevada al kit como **`TypeField`**, y la verificación de si el proceso dio lo que se
-> esperaba de él.
+> esperaba de él. Ronda 16 (24-10-2026): vueltas 8–11 (la coreografía letra a letra, §3b) y `TypeField` en tema oscuro.
 
 ## 0. Conclusiones
 
@@ -10,15 +10,19 @@
    (motion-pieces) salieron, medidos, el render, la luz y la sombra, la niebla, la cámara (con su alabeo), la rejilla de
    letras, las palabras escondidas con su color y su celda, la coreografía del scroll (rampas, rebote, onda de vuelta) y la
    interacción del puntero. La recreación quedó con la cámara a 0,4°, render, luz y niebla idénticos, la imagen a
-   luminancia 0,000 y ΔE 0,9, y la coreografía con el pico en el fotograma 52 (referencia, 48).
-2. **Lo que el concepto tiene de verdad no está en ningún fotograma fijo.** Que el suelo se hunda mientras las palabras
-   suben, que la subida rebote un 31 %, que la vuelta sea una onda radial sin rebote y que el puntero deje huella solo
-   salió comparando, fotograma a fotograma, el movimiento de las 1 288 instancias. El vídeo y la serie hicieron falta.
-3. **El método tenía puntos ciegos y el estudio los encontró**: instancias (nada se movía en el origen de las mallas),
+   luminancia +0,003 y ΔE 1,2, y la coreografía al 12 % (de 80 %), con cada letra a 1–3 fotogramas de la referencia.
+2. **Lo que el concepto tiene de verdad no está en ningún fotograma fijo.** Que el suelo se hunda en onda desde el centro
+   mientras las palabras suben letra a letra en orden de lectura, que cada palabra rebote más al final, que bajen desde la
+   última letra y que el puntero hunda con un anillo que se levanta alrededor solo salió comparando, fotograma a fotograma
+   y copia a copia, el movimiento de las 1 288 instancias. El vídeo y la serie hicieron falta.
+3. **Medir la envolvente engaña** (§3b): el máximo de todas las copias por fotograma mezcla letras que arrancan en
+   momentos distintos y parece un muelle lento, sin escalonado y sin rebote a la vuelta. Las vueltas 1–7 lo dieron por
+   bueno; ajustar copia a copia (vueltas 8–11) encontró los tres errores.
+4. **El método tenía puntos ciegos y el estudio los encontró**: instancias (nada se movía en el origen de las mallas),
    materiales que se animan, shaders retocados con `onBeforeCompile`, colores lineales, sombras con caja propia, luz de
    cielo con su «arriba», webs sin escena visible y el reloj virtual con WebGPU asíncrono. Todos tienen ya respuesta en la
    herramienta (§5).
-4. **El concepto ya es del kit**: `TypeField` (subruta `trama-ui/TypeField`), con fuente propia (Anton, OFL) y los
+5. **El concepto ya es del kit**: `TypeField` (subruta `trama-ui/TypeField`), con fuente propia (Anton, OFL) y los
    colores del tema; y la pila de posprocesado TSL del banco pasa a `lib/postfx`. La pieza del banco usa el mismo motor del
    kit (`lib/typefield`), así que la calibración prueba el código que se publica.
 
@@ -44,12 +48,17 @@
   el 70 % (`vFace = objectNormal.z`).
 - **Palabras**: ABOUT (azul, fila 4), CONTACT (verde, fila −2), WORKS (rojo, vertical) y NEWS (amarillo, vertical);
   **blancas en reposo**: escondidas a la vista.
-- **Coreografía** (scroll, 150 px por golpe):
-  - subida en rampa (progreso 0,07–0,10), simultánea: palabras +1,4 y suelo −0,7 con muelle con rebote (pico 1,83, un
-    31 %; ζ ≈ 0,35);
+- **Coreografía** (scroll, 150 px por golpe; medida copia a copia en la ronda 16, §3b):
+  - el suelo baja −0,7 en **onda radial desde el centro** (arranca en el fotograma 18, más 1,7 fotogramas por unidad de
+    distancia) con muelle con rebote (k 0,034, c 0,14 por fotograma; ζ 0,38);
+  - las palabras suben +1,4 **letra a letra en orden de lectura** (3,75 fotogramas por letra; ABOUT de izquierda a
+    derecha, WORKS y NEWS de arriba abajo), las cuatro a la vez, con un muelle más vivo (k 0,052) que **rebota más al
+    final de cada palabra** (ζ 0,52 en la primera letra, 0,34 en la última: picos de 1,57 a 1,83);
   - meseta;
-  - vuelta en **onda radial desde el centro** (1,27 fotogramas por unidad de distancia, r² 0,90), **sin rebote**;
-  - el puntero hunde 0,27 y tiñe de lavanda un radio de ~4 celdas, y deja huella (127 copias).
+  - vuelta: el suelo, en la misma onda y con el mismo muelle, **con rebote** (+0,18); las palabras, **desde la última
+    letra** (unos 3 fotogramas por letra);
+  - el puntero hunde 0,27 en el centro con caída (1 − d/2,5)^1,4, levanta un anillo de 2,5 a 4,75 (≈ 0,005, como el
+    material que se aparta) y tiñe de lavanda; deja huella (24 copias por encima de 0,05; 116 movidas).
 - **Rúbrica** (a ojo, anclas de lib/cine/rubric.ts): cámara 4, luz 4, atmósfera 3, posprocesado 3, movimiento 4,
   interacción 4, interfaz 4, presupuesto 4.
 
@@ -65,8 +74,23 @@
 | 6 | Rampa ajustada (0,068–0,10) | 44 % | 38 % |
 | 7 | Fuente Anton (OFL) y motor del kit | 44 % | **8 %** (luminancia 0,000, ΔE 0,9) |
 
-La coreografía que queda (44 %) es sobre todo el arranque: la referencia mueve primero la zona del puntero y después el
-resto; la nuestra, todo a la vez.
+| 8 | El suelo baja en onda radial (también a la ida) | 34 % | 38 % |
+| 9 | Las palabras, letra a letra y con su muelle (ajustado letra a letra, no con la envolvente) | 23 % | 38 % |
+| 10 | Vuelta con rebote (el mismo muelle) y la huella del puntero con su caída y su anillo | 17 % | 38 % |
+| 11 | Las palabras bajan desde la última letra | **12 %** | 10 % (luminancia +0,003, ΔE 1,2) |
+
+La imagen de la vuelta 11 es la del banco con el mismo material de la vuelta 7; el 8 % → 10 % sale del contraste (las
+palabras a medio subir en otros fotogramas). El 12 % que queda es sobre todo la fracción de copias movidas (5 %): la cola
+de los muelles por debajo de 0,001.
+
+### 3b. Ajustar copia a copia (ronda 16)
+
+La «zona del puntero que arranca primero» de la vuelta 7 resultó ser solo la huella del puntero (unas 45 copias en los
+fotogramas 3–20). Lo demás salió de medir, por copia, el fotograma en que arranca y en que vuelve, y de ajustar el
+muelle de cada letra por separado (simulando el mismo integrador del motor): `.refs3d/exp/arranque*.cjs`,
+`ajuste-letras.cjs`, `ajuste-letra1.cjs`, `ajuste-suelo.cjs`, `ajuste-vuelta.cjs` y `vuelta-palabras.cjs`. El motor
+ganó `onda.retrasoSubida`, `muellePalabras` (con amortiguación de la última letra), `escalonado`, `escalonadoVuelta` y
+la `curva` y el `borde` del puntero; `TypeField` los usa con los mismos valores.
 
 ## 4. Verificación: lo esperado frente a lo obtenido
 
@@ -75,7 +99,7 @@ resto; la nuestra, todo a la vez.
 | Medir la técnica de una web real sin su código | **Sí** con three a la vista (Plain Sight, Hublot); **en parte** sin ella (Tidewater: shaders, etiquetas, red y vídeo en tiempo real, pero no la escena) |
 | Un vídeo a fotograma exacto | **Sí**, salvo páginas que leen la GPU a destiempo (Tidewater con WebGPU: se apaga con el reloj virtual; con `--real` va bien). Ahora el análisis lo detecta y lo dice |
 | Describir con un vocabulario cerrado | **Sí**, y el estudio lo amplió: instancias y su coreografía, transición de material, alabeo, sombra con caja, cielo con «arriba» |
-| Recrear desde la ficha y acercarse midiendo | **Sí**: siete vueltas guiadas por el comparador, de 80 % a 44 % en coreografía y de 38 % a 8 % en imagen |
+| Recrear desde la ficha y acercarse midiendo | **Sí**: once vueltas guiadas por el comparador, de 80 % a 12 % en coreografía y de 38 % a 10 % en imagen (las cuatro últimas, ajustando copia a copia, §3b) |
 | Que el comparador diga qué depurar | **Sí**: cada vuelta atacó el eje que encabezaba la tabla |
 | Llevar al kit lo que funcione | **Sí**: `TypeField` + `lib/typefield` (el concepto) y `lib/postfx` (la pila TSL, que repite SSIM 0,996 tras la extracción) |
 | El campo `cine` de las guías de estilo | **Aplazado**: ninguna guía tiene aún una referencia 3D medida; sería un campo vacío |
@@ -90,6 +114,9 @@ resto; la nuestra, todo a la vez.
 - **Luz de cielo** con su posición (su «arriba»).
 - **Sin escena**: aviso en la captura; las **etiquetas de los shaders** pasan a la ficha (en WebGPU suelen nombrar la
   técnica); el análisis avisa si la imagen se apaga sola con la cámara quieta y propone `--real`.
+- **Tema oscuro en `TypeField`**: material blanco y el color de las letras en las instancias (`reposo`); con el material
+  del color del fondo, las palabras se multiplicaban por un color oscuro y se apagaban. Relleno de más a los lados
+  (`margen`) para lienzos más anchos que el de la referencia.
 - **Reloj de la ficha para piezas propias** (`useRelojFicha`) y piezas registradas en `components/lab/cine/componentes.ts`.
 - **Fuentes para texto 3D**: `scripts/font-typeface.mts` (TTF/OTF → typeface de three, solo los caracteres que hagan
   falta, con acentos y Ñ).
@@ -104,12 +131,13 @@ resto; la nuestra, todo a la vez.
    real, o la captura lo toma por posición inicial.
 6. **Editar un archivo con la captura en marcha**: el `next dev` recompila y la captura falla sin avisar; esperar unos
    segundos o reintentar.
+7. **La envolvente no es el movimiento**: el máximo por fotograma de muchas copias que arrancan escalonadas parece un
+   muelle lento y sin rebote. Ajustar copia a copia (o letra a letra) antes de dar un muelle por medido.
+8. **Material por color de instancia**: el color de instancia multiplica el del material. Con un material oscuro (tema
+   oscuro), cualquier color de instancia se apaga: el material, blanco, y el tono en la instancia.
 
 ## 7. Pendiente
 
-- `TypeField` en tema oscuro: la luz medida es para fondo crema; con fondo oscuro las palabras quedan apagadas (luz por
-  tema).
-- El arranque de la coreografía: primero el puntero, luego el suelo (§3).
 - Hublot como segundo estudio (WebGPU + TSL): pide modelos propios.
 - Tidewater: medir sin escena (flujo óptico para la cámara, WebGPU Inspector para las pasadas).
 - Un componente `PostFX` del kit cuando haya un lienzo WebGPU del kit que lo use; hoy `lib/postfx` es el motor.

@@ -40,10 +40,11 @@ const HUECOS: [number, number, boolean][] = [
 
 /**
  * Un suelo de letras en 3D con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el
- * scroll (o el puntero, o solas) suben, toman su color y proyectan sombra mientras el resto del campo se hunde con
- * rebote, y vuelven en una onda que sale del centro. El puntero hunde y tiñe las letras de alrededor. Concepto, medidas y
- * coreografía de Plain Sight (motion-pieces), estudiado con cine:capture (docs/27). Los colores salen del tema: letras y
- * niebla del fondo, palabras de sus tokens. Sin WebGL o con movimiento reducido, las palabras en plano.
+ * scroll (o el puntero, o solas) suben letra a letra con rebote, toman su color y proyectan sombra mientras el resto del
+ * campo se hunde en una onda que sale del centro; vuelven desde la última letra. El puntero hunde y tiñe las letras de
+ * alrededor. Concepto, medidas y coreografía de Plain Sight (motion-pieces), ajustados copia a copia con cine:capture
+ * (docs/27). Los colores salen del tema, claro u oscuro: letras y niebla del fondo, palabras de sus tokens. Sin WebGL o con
+ * movimiento reducido, las palabras en plano.
  *
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/TypeField`.
  */
@@ -131,7 +132,6 @@ export default function TypeField({ words = "ABOUT\nCONTACT\nWORKS\nNEWS", trigg
                 progreso={progreso}
                 palabras={palabras}
                 fondo={tokens?.["--bg"] || "#e4ddd3"}
-                texto={tokens?.["--fg"] || "#2b2622"}
                 acento={tokens?.["--acc2"] || tokens?.["--acc"] || "#7c83ff"}
                 active={near}
                 puntero={!reduced}

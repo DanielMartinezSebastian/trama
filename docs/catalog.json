@@ -11818,7 +11818,7 @@
         "editorial",
         "minimal"
       ],
-      "description": "Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben con rebote, toman su color y dan sombra mientras el resto se hunde, y vuelven en una onda que sale del centro. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo, palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.",
+      "description": "Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben letra a letra con rebote, toman su color y dan sombra mientras el resto se hunde en una onda que sale del centro, y vuelven desde la última letra. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos copia a copia en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo (tema claro u oscuro), palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.",
       "props": [
         {
           "key": "words",

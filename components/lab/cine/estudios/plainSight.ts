@@ -147,29 +147,39 @@ export const plainSight: Ficha = {
         "subida": 1.4,
         "hundimiento": 0.7,
         "tramo": [
-          0.068,
-          0.1,
-          0.33,
-          0.35
+          0.055,
+          0.065,
+          0.302,
+          0.312
         ],
         "muelle": [
-          0.018,
-          0.075
+          0.034,
+          0.14
         ],
+        "muellePalabras": [
+          0.052,
+          0.22,
+          0.16
+        ],
+        "escalonado": 0.0104,
+        "escalonadoVuelta": 0.0083,
         "muelleVuelta": [
-          0.018,
-          0.27
+          0.034,
+          0.14
         ],
         "onda": {
           "origen": [
             0,
             0
           ],
-          "retraso": 0.0035
+          "retraso": 0.0047,
+          "retrasoSubida": 0.0047
         },
         "puntero": {
-          "radio": 4.2,
-          "hundir": 0.27,
+          "radio": 2.5,
+          "hundir": 0.3,
+          "curva": 1.4,
+          "borde": 0.025,
           "tinte": "#d4d7ff"
         },
         "palabras": [

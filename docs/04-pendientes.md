@@ -158,7 +158,7 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [x] **Camera-scroll, quinta vuelta** (24-10-2026): flotación, transición de material y cámara de autor; SSIM 0,921,
       ningún eje por encima del 18 % (docs/26 §6).
 - [x] **Primer estudio real** (24-10-2026): Plain Sight → `TypeField` y `lib/postfx` (docs/27).
-- [ ] `TypeField` en tema oscuro (luz por tema) y el arranque de su coreografía (docs/27 §7).
+- [x] `TypeField` en tema oscuro y la coreografía letra a letra (docs/27 §3b, ronda 16).
 - [ ] Segundo estudio: Hublot (WebGPU + TSL) o una web premiada cerrada.
 - [ ] **Motores sin three**: flujo óptico para la cámara, WebGPU Inspector y Spector.js para las pasadas.
 - [ ] **Extraer al kit** la pila TSL del banco (`lib/postfx`, componente `PostFX`) y añadir el campo `cine` a las guías.

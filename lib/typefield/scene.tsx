@@ -17,9 +17,8 @@ export type TypeFieldSceneProps = {
   /** progreso 0–1 del relato (lo escribe el componente) */
   progreso: RefObject<number>;
   palabras: PalabraCampo[];
-  /** colores CSS ya resueltos desde los tokens: fondo (letras y niebla), texto (el suelo del cielo) y acento (el puntero) */
+  /** colores CSS ya resueltos desde los tokens: fondo (letras, niebla y suelo del cielo) y acento (el puntero) */
   fondo: string;
-  texto: string;
   acento: string;
   /** false = fuera de pantalla: el lienzo no dibuja */
   active: boolean;
@@ -40,14 +39,15 @@ function Camara() {
   return null;
 }
 
-export default function TypeFieldScene({ fuente, progreso, palabras, fondo, texto, acento, active, puntero, onReady }: TypeFieldSceneProps) {
+export default function TypeFieldScene({ fuente, progreso, palabras, fondo, acento, active, puntero, onReady }: TypeFieldSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   // las letras, un pelo más claras que el fondo (como en la referencia: #e9e2d8 sobre #e4ddd3)
   const letra = useMemo(() => "#" + new Color(fondo).lerp(new Color("#ffffff"), 0.06).getHexString(), [fondo]);
-  // el «suelo» de la luz de cielo: el fondo hacia el texto (#8c8177 sobre crema en la referencia)
-  const sombra = useMemo(() => "#" + new Color(fondo).lerp(new Color(texto), 0.45).getHexString(), [fondo, texto]);
-  // el tinte del puntero: un velo del acento sobre el fondo (lavanda en la referencia)
-  const tinte = useMemo(() => "#" + new Color(fondo).lerp(new Color(acento), 0.22).getHexString(), [fondo, acento]);
+  // el «suelo» de la luz de cielo: el fondo al 60 % (#8c8177 sobre crema en la referencia); hacia el texto aclararía el
+  // suelo con temas oscuros
+  const sombra = useMemo(() => "#" + new Color(fondo).multiplyScalar(0.6).getHexString(), [fondo]);
+  // el tinte del puntero: un velo del acento sobre las letras (lavanda en la referencia)
+  const tinte = useMemo(() => "#" + new Color(letra).lerp(new Color(acento), 0.22).getHexString(), [letra, acento]);
   return (
     <Canvas
       frameloop={active ? "always" : "never"}
@@ -81,12 +81,23 @@ export default function TypeFieldScene({ fuente, progreso, palabras, fondo, text
         fuente={fuente}
         progreso={progreso}
         palabras={palabras}
-        color={letra}
-        tramo={[0.12, 0.3, 0.7, 0.88]}
-        muelle={[0.018, 0.075]}
-        muelleVuelta={[0.018, 0.27]}
-        onda={{ origen: [0, 0], retraso: 0.0035 }}
-        puntero={puntero ? { radio: 4.2, hundir: 0.27, tinte } : null}
+        // material blanco y el color de las letras en las instancias: con un material oscuro (tema oscuro), las palabras
+        // se multiplicarían por él y quedarían apagadas
+        color="#ffffff"
+        reposo={letra}
+        // lienzos más anchos que el de la referencia: relleno de más para no ver el borde del campo (con fondo oscuro se nota)
+        margen={[12, 5]}
+        // la coreografía medida (docs/27 §3b), en progreso: con trigger="loop" de 6 s avanza 1/360 por fotograma, como el
+        // reloj del banco, así que los valores pasan tal cual. El suelo baja y vuelve en onda desde el centro, con rebote;
+        // las palabras suben letra a letra y bajan desde la última
+        tramo={[0.15, 0.16, 0.62, 0.63]}
+        muelle={[0.034, 0.14]}
+        muelleVuelta={[0.034, 0.14]}
+        muellePalabras={[0.052, 0.22, 0.16]}
+        escalonado={0.0104}
+        escalonadoVuelta={0.0083}
+        onda={{ origen: [0, 0], retraso: 0.0047, retrasoSubida: 0.0047 }}
+        puntero={puntero ? { radio: 2.5, hundir: 0.3, tinte, curva: 1.4, borde: 0.025 } : null}
         onReady={onReady}
       />
     </Canvas>
