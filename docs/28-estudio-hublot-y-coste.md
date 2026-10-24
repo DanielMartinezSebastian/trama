@@ -21,7 +21,7 @@
    capturas de calibración: camera-scroll sigue saliendo «órbita + dolly».
 5. **El kit gana `Porthole`** (WebGPU con reserva WebGL2, versión plana sin WebGL) y el método, tres utilidades:
    `cine:rampa`, la respuesta al puntero en `cine:analyze` y las entradas `--clic` y `--arrastre` en `cine:capture`.
-6. **El coste baja con cada estudio** (§7): Plain Sight, unas 5 h; Hublot, más difícil, menos de 2 h. Una web de este
+6. **El coste baja con cada estudio** (§7): Plain Sight, unas 5 h; Hublot, más difícil, 1 h 08. Una web de este
    nivel cuesta ya entre 2 y 5 h hasta tener la pieza en el kit, más 1–3 h si destapa algo que la herramienta aún no mide.
 
 ## 1. Qué es Hublot y cómo se exploró
@@ -149,7 +149,7 @@ la GPU de la máquina (RTX 5060):
 | Vueltas 4–5 de camera-scroll | scroll real, clips, flotación, materiales que cambian, cámara de autor | 4 h 00 |
 | Plain Sight (fase 4) | 3 candidatas, instancias y sombras en la herramienta, 7 vueltas, `TypeField`, `lib/postfx` | 4 h 17 |
 | Plain Sight (ronda 16) | ajuste copia a copia, tema oscuro | 0 h 57 |
-| Hublot (esta ronda) | exploración, 2 entradas nuevas, 7 vueltas, 3 utilidades, `Porthole`, este documento | ≈ 1 h 45 |
+| Hublot (esta ronda) | exploración, 2 entradas nuevas, 7 vueltas, 3 utilidades, `Porthole`, este documento | 1 h 08 |
 
 Tiempo de máquina por paso (ya no es lo que pesa): una captura de 16 s a 1280 × 720 tarda de 4 a 6,5 min (960
 fotogramas); el análisis, 15 s; la comparación, 30 s. Una vuelta completa (cambiar, capturar, comparar, mirar el lado a
