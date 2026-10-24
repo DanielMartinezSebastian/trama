@@ -124,7 +124,9 @@ export type Luz = {
   /** foco: ángulo de apertura (rad) y penumbra (0–1) */
   angulo?: number;
   penumbra?: number;
-  sombra?: { mapa: number; sesgo?: number; radio?: number };
+  /** sombra: resolución del mapa, sesgo (bias), sesgo por normal, suavizado (radio) y caja de la cámara de sombras de una
+   * direccional [izquierda, derecha, arriba, abajo, cerca, lejos] */
+  sombra?: { mapa: number; sesgo?: number; sesgoNormal?: number; radio?: number; caja?: [number, number, number, number, number, number] };
   /** va pegada a la cámara (la sigue): `pos` es relativa a ella */
   deCamara?: boolean;
   /** papel en el esquema de iluminación de tres puntos */

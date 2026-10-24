@@ -212,6 +212,7 @@
         "distort-image",
         "drag-grid",
         "object-stage",
+        "type-field",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -11806,6 +11807,59 @@
       ],
       "example": "import ObjectStage from \"@/components/ui/ObjectStage\";\n\n<ObjectStage />",
       "preview": "/componentes#object-stage"
+    },
+    {
+      "id": "type-field",
+      "name": "Campo de letras con palabras escondidas",
+      "component": "TypeField",
+      "import": "import TypeField from \"@/components/ui/TypeField\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben con rebote, toman su color y dan sombra mientras el resto se hunde, y vuelven en una onda que sale del centro. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo, palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.",
+      "props": [
+        {
+          "key": "words",
+          "type": "text",
+          "default": "ABOUT\nCONTACT|acc2\nWORKS|acc\nNEWS|acc2",
+          "label": "Palabras (una por línea)"
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "loop",
+          "label": "Las mueve",
+          "options": [
+            "loop",
+            "hover",
+            "scroll"
+          ]
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "default": 6,
+          "label": "Ciclo (s, en bucle)",
+          "min": 3,
+          "max": 16
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/TypeField.",
+        "Una palabra por línea, «TEXTO|tono» (acc, acc2, fg, mut); hasta cuatro."
+      ],
+      "example": "import TypeField from \"@/components/ui/TypeField\";\n\n<TypeField />",
+      "preview": "/componentes#type-field"
     },
     {
       "id": "point-cloud",

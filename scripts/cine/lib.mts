@@ -24,6 +24,8 @@ export type Muestra = {
   piezas?: { n: string; p: Vec3; q: number[]; c?: Vec3 | null }[];
   /** color, emisivo y opacidad de cada material con nombre */
   mats?: { n: string; c: string | null; e: string | null; o: number }[];
+  /** movimiento de las instancias de cada InstancedMesh respecto a su posición inicial */
+  inst?: { i: number; movidas: number; max: number; dir: number[] | null }[];
 };
 type Inv = {
   counts: Record<string, number>;
@@ -32,7 +34,7 @@ type Inv = {
   environment: { kind: string } | null;
   environmentIntensity: number;
   fog: null | { type: string; color: string; near: number; far: number; density: number };
-  lights: { type: string; color: string; groundColor: string | null; intensity: number; pos: Vec3; distance?: number; decay?: number; angle?: number; penumbra?: number; castShadow: boolean; shadowMap?: number[]; onCamera?: boolean; local?: Vec3 }[];
+  lights: { type: string; color: string; groundColor: string | null; intensity: number; pos: Vec3; distance?: number; decay?: number; angle?: number; penumbra?: number; castShadow: boolean; shadowMap?: number[]; onCamera?: boolean; local?: Vec3; shadowCam?: number[]; shadowBias?: number[] }[];
   materials: Record<string, unknown> & { type: string; id: string }[];
   post: { pass: string; material: string; params: { name: string; value: unknown }[] }[];
   camaraCadena?: string[];
@@ -468,7 +470,7 @@ export function firmasJs(code: string): Record<string, number> {
  * Ficha a partir de lo medido. Todo lo que rellena lleva `origen: "medido"`; lo que no se puede medir (el contenido de la
  * escena, la rúbrica, los principios del movimiento) queda vacío para completarlo mirando el vídeo (`cine:analyze`).
  */
-export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: string; drive: string; size: number[] }, ms: Muestra[], invs: Inventario[], shaders: { code: string; lang?: string }[] = [], js = "") {
+export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: string; drive: string; size: number[] }, ms: Muestra[], invs: Inventario[], shaders: { code: string; lang?: string; label?: string | null }[] = [], js = "") {
   const first = ms.find((m) => m.renderer) ?? ms[0];
   const inv = invs.find((x) => x.inv)?.inv ?? null;
   // estado asentado: el último inventario (los materiales pueden cambiar al empezar: resaltados, fundidos)
@@ -552,7 +554,7 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
     camara: { near: first.camera?.near ?? 0.1, far: first.camera?.far ?? 100, planos, deModelo: camaraDeModelo(inv) },
     luz: {
       entorno: !inv?.environment ? { tipo: "ninguno" } : { tipo: "hdri", src: "?", intensidad: inv.environmentIntensity ?? 1, fondo: inv.background?.kind === inv.environment.kind },
-      luces: (inv?.lights ?? []).map((l) => ({ tipo: LUZ[l.type] ?? "puntual", color: l.color, suelo: l.groundColor ?? undefined, intensidad: l.intensity, pos: l.onCamera ? l.local : l.pos, deCamara: l.onCamera || undefined, distancia: l.distance || undefined, decaimiento: l.decay, angulo: l.angle, penumbra: l.penumbra, sombra: l.castShadow && l.shadowMap ? { mapa: l.shadowMap[0] } : undefined })),
+      luces: (inv?.lights ?? []).map((l) => ({ tipo: LUZ[l.type] ?? "puntual", color: l.color, suelo: l.groundColor ?? undefined, intensidad: l.intensity, pos: l.onCamera ? l.local : l.pos, deCamara: l.onCamera || undefined, distancia: l.distance || undefined, decaimiento: l.decay, angulo: l.angle, penumbra: l.penumbra, sombra: l.castShadow && l.shadowMap ? { mapa: l.shadowMap[0], sesgo: l.shadowBias?.[0] || undefined, sesgoNormal: l.shadowBias?.[1] || undefined, radio: l.shadowBias?.[2] !== 1 ? l.shadowBias?.[2] : undefined, caja: l.shadowCam?.length === 6 ? (l.shadowCam as [number, number, number, number, number, number]) : undefined } : undefined })),
     },
     materiales: ((invFinal?.materials ?? []) as unknown as Record<string, unknown>[]).slice(0, 16).map((m) => ({
       id: String(m.name ?? m.id),
@@ -596,6 +598,9 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       pasesAuxiliares: auxiliares,
       entornoGenerado,
       firmasShaders: firmas(shaders),
+      // las etiquetas que la página pone a sus shaders (WebGPU: createShaderModule({ label })): a menudo dicen la técnica
+      etiquetasShaders: [...new Set(shaders.map((s) => s.label).filter((x): x is string => !!x).map((x) => x.replace(/^(vertex|fragment|compute)_/, "")))].slice(0, 60),
+      sinEscena: !ms.some((m) => m.renderer),
       firmasCodigo: firmasJs(js),
       relojScroll: scroll ? (windowScrolls ? "ventana" : "rueda") : null,
       animaciones: animaciones(ms, reloj),

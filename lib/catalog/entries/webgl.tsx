@@ -4,6 +4,7 @@ import DistortImage, { DISTORT_EFFECTS } from "@/components/ui/DistortImage";
 import DragGrid from "@/components/ui/DragGrid";
 import PointCloud from "@/components/ui/PointCloud";
 import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/components/ui/ObjectStage";
+import TypeField from "@/components/ui/TypeField";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -87,6 +88,29 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <ObjectStage shape={p.shape as never} material={p.material as never} tone={p.tone as never} motion={p.motion as never} speed={p.speed as number} height={p.height as number} src={(p.src as string) || undefined} follow={p.follow as number} glow={p.glow as never} env={p.env as never} />
+      </div>
+    ),
+  },
+  {
+    id: "type-field",
+    component: "TypeField",
+    path: "@/components/ui/TypeField",
+    name: "Campo de letras con palabras escondidas",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben con rebote, toman su color y dan sombra mientras el resto se hunde, y vuelven en una onda que sale del centro. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo, palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.",
+    stageHeight: 520,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/TypeField.", "Una palabra por línea, «TEXTO|tono» (acc, acc2, fg, mut); hasta cuatro."],
+    props: [
+      { key: "words", label: "Palabras (una por línea)", type: "text", default: "ABOUT\nCONTACT|acc2\nWORKS|acc\nNEWS|acc2" },
+      { key: "trigger", label: "Las mueve", type: "select", default: "loop", options: ["loop", "hover", "scroll"], labels: { loop: "solas, en bucle", hover: "el puntero encima", scroll: "el scroll" } },
+      { key: "duration", label: "Ciclo (s, en bucle)", type: "number", default: 6, min: 3, max: 16, step: 1 },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <TypeField words={p.words as string} trigger={p.trigger as never} duration={p.duration as number} height={p.height as number} />
       </div>
     ),
   },

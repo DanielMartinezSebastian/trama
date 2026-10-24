@@ -256,18 +256,45 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
   post: clamp01(post + render * 0.5),
   presupuesto,
 };
+/*
+ * Coreografía de las instancias (un campo de piezas que se levanta, se hunde o se dispersa): por fotograma, el
+ * desplazamiento máximo, el desplazamiento medio por eje (ponderado por las copias movidas) y la fracción de copias
+ * movidas. Solo con la misma entrada. Los errores van normalizados por el máximo de la referencia.
+ */
+const coreografia = (() => {
+  if (!mismaEntrada) return null;
+  const serie = (c: Cap) =>
+    c.ms.map((m) => {
+      const xs = m.inst ?? [];
+      const total = xs.reduce((a, x) => a + x.movidas, 0);
+      const media = [0, 1, 2].map((k) => (total ? xs.reduce((a, x) => a + (x.dir?.[k] ?? 0) * x.movidas, 0) / total : 0));
+      return { max: Math.max(0, ...xs.map((x) => x.max)), media, total };
+    });
+  const a = serie(ref), b = serie(ban);
+  if (!a.some((x) => x.total) || !b.some((x) => x.total)) return null;
+  const nA = Math.max(...a.map((x) => x.total)) || 1, nB = Math.max(...b.map((x) => x.total)) || 1;
+  const escala = Math.max(1e-6, ...a.map((x) => x.max));
+  const eMax = rms(a.map((x, i) => x.max - b[i].max)) / escala;
+  const eMedia = rms(a.map((x, i) => len(sub(x.media, b[i].media)))) / escala;
+  const eFrac = rms(a.map((x, i) => x.total / nA - b[i].total / nB));
+  // dónde está el pico en cada una (fotograma) y cuánto sobrepasa el valor asentado del final de la meseta
+  const pico = (s: typeof a) => s.reduce((best, x, i) => (x.max > s[best].max ? i : best), 0);
+  return { errorMax: +eMax.toFixed(4), errorMedia: +eMedia.toFixed(4), errorFraccion: +eFrac.toFixed(4), picoRef: pico(a), picoBanco: pico(b), maxRef: +escala.toFixed(3), maxBanco: +Math.max(...b.map((x) => x.max)).toFixed(3) };
+})();
+
 // piezas: la pose medida contra la de la referencia, solo cuando las dos tienen piezas con nombre
+if (coreografia) alejamiento.coreografia = clamp01(coreografia.errorMax * 2 + coreografia.errorMedia * 2 + coreografia.errorFraccion);
 if (piezas) alejamiento.piezas = clamp01((piezas.posicionPct / 100) * 5 + piezas.giroGrados / 20);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "piezas" ? "Piezas (posición y giro)" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
@@ -275,6 +302,7 @@ const resultado = {
   camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAlabeoGrados: +errRoll.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
   imagen,
   piezas,
+  coreografia,
   ssim,
   presupuesto: { referencia: pr, banco: pb },
   diferencias: difs,
@@ -307,6 +335,7 @@ const md = [
   `- Planos: ${planosIguales ? "los mismos movimientos" : "distintos"}`,
   ...tr.map((t, i) => `  - ${i + 1}. ref ${t.mov} (${t.curva}) · banco ${tb[i] ? `${tb[i].mov} (${tb[i].curva})` : "—"}`),
   ``,
+  ...(coreografia ? [`## Coreografía de instancias`, ``, `- Desplazamiento máximo: ref ${coreografia.maxRef} · banco ${coreografia.maxBanco} · error ${Math.round(coreografia.errorMax * 100)} % · medio ${Math.round(coreografia.errorMedia * 100)} % · copias movidas ${Math.round(coreografia.errorFraccion * 100)} %`, `- Pico: fotograma ${coreografia.picoRef} en la referencia, ${coreografia.picoBanco} en el banco`, ``] : []),
   ...(piezas ? [`## Piezas`, ``, `- Posición: ${piezas.posicionPct} % del tamaño de la escena · giro: ${piezas.giroGrados}°`, ...piezas.porPieza.map((p) => `  - ${p.pieza}: ${p.posicionPct} % · ${p.giroGrados}°`), ``] : []),
   `## Diferencias`,
   ``,

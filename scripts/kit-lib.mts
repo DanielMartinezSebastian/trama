@@ -28,6 +28,7 @@ export const ALWAYS = ["components/ui/styles/kit.css", "components/ui/styles/ui-
 export const PUBLIC_ASSETS: Record<string, string[]> = {
   "components/ui/PixelFrame.tsx": ["public/pixel/kenney-pixel-ui"],
   "components/ui/Sprite.tsx": ["public/pixel/kenney-pixel-ui"],
+  "components/ui/TypeField.tsx": ["public/fonts/anton"],
 };
 
 /** Imports internos (`@/…` y relativos) de un archivo, resueltos a rutas relativas a la raíz. */

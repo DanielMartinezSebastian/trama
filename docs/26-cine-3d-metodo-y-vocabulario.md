@@ -217,8 +217,7 @@ cine:compare <ref> <banco>  ←  cine:capture /lab/cine/<estudio>  ←  banco mo
 
 - **Camera-scroll**: el giro de la flotación con el modelo exacto de drei (coseno en x, seno en y y z con amplitudes 1/8 y
   1/20) en vez de una senoide por eje, y el resaltado al pasar el ratón como interacción de la ficha.
-- **Primer estudio real** (fase 4 del plan): una pieza con carácter de la portada de threejs.org (Tidewater, Plain Sight,
-  Hublot) y después webs premiadas cerradas (Oryzo, IVRESS, Hubtown).
+- **Primer estudio real**: hecho con Plain Sight (docs/27); siguen webs premiadas cerradas (Oryzo, IVRESS, Hubtown).
 - **Motores sin three** (Hydra de Active Theory): flujo óptico sobre el vídeo para la cámara, WebGPU Inspector para las
   pasadas; Spector.js para un fotograma WebGL (aplazado: el gancho ya da lo que daba).
 - **Extraer al kit** lo que demuestre su valor: `lib/postfx` (la pila TSL del banco como componente `PostFX`) y el campo

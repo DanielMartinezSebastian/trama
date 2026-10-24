@@ -2026,6 +2026,20 @@ Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
 - Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
 
+### Campo de letras con palabras escondidas — `TypeField`
+
+Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben con rebote, toman su color y dan sombra mientras el resto se hunde, y vuelven en una onda que sale del centro. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo, palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.
+
+| prop | tipo | default |
+|---|---|---|
+| `words` | text | "ABOUT\nCONTACT\|acc2\nWORKS\|acc\nNEWS\|acc2" |
+| `trigger` | `loop` · `hover` · `scroll` | "loop" |
+| `duration` | number 3–16 | 6 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/TypeField.
+- Una palabra por línea, «TEXTO|tono» (acc, acc2, fg, mut); hasta cuatro.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

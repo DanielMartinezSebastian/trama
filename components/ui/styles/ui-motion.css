@@ -329,4 +329,11 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
 .ui-obj__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
 .ui-obj__gl.is-on { opacity: 1; }
 .ui-obj__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+/* TypeField: campo de letras 3D con palabras escondidas (lib/typefield). Sin WebGL, las palabras en plano sobre el fondo */
+.ui-tf { position: relative; width: 100%; overflow: hidden; background: var(--bg); }
+.ui-tf__flat { position: absolute; inset: 0; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0.15em 0.5em; padding: 1rem;
+  font: 400 clamp(36px, 8vw, 96px) / 0.9 var(--display, var(--font)); text-transform: uppercase; letter-spacing: -0.01em; }
+.ui-tf__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
+.ui-tf__gl.is-on { opacity: 1; }
+.ui-tf__gl canvas { display: block; width: 100% !important; height: 100% !important; }
 @media (prefers-reduced-motion: reduce) { .ui-dimg__gl, .ui-obj__gl { transition: none; } }

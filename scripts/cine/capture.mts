@@ -219,4 +219,6 @@ if (shot > 1) {
   ff(["-i", join(OUT, "frames", "%05d.png"), "-vf", `select='not(mod(n\\,${stepN}))',scale=480:-2,tile=4x3`, "-frames:v", "1", "-q:v", "3", join(OUT, "hoja.jpg")]);
 }
 console.log(`  ${frame} fotogramas, ${shot} imágenes, ${shaders.length} shaders, ${red.length} respuestas${errores.length ? `, ${errores.length} errores de la página` : ""}`);
+// sin renderer de three a la vista: three empaquetado sin sus efectos globales, otro motor o three en un worker (docs/26 §7)
+if (!timeline.some((m) => m.renderer)) console.log("  ⚠ sin escena: three no avisó a __THREE_DEVTOOLS__. Quedan shaders (con sus etiquetas), red, firmas y vídeo. Si el vídeo se oscurece o se congela, repite con --real (lecturas asíncronas de la GPU que el reloj virtual no deja avanzar).");
 console.log(`  ${OUT}`);

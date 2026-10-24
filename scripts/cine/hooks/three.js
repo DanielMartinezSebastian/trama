@@ -205,10 +205,26 @@
     let animated = 0;
     const box = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
     const piezas = [];
+    const instanciadas = [];
     scene.traverse((o) => {
       if (o.visible === false) return;
       counts[o.type] = (counts[o.type] || 0) + 1;
-      if (o.isInstancedMesh) instances += o.count;
+      if (o.isInstancedMesh) {
+        instances += o.count;
+        if (instanciadas.length < 40) {
+          const g = o.geometry;
+          if (g && !g.boundingBox && g.computeBoundingBox) g.computeBoundingBox();
+          const size = g && g.boundingBox ? g.boundingBox.getSize(o.position.clone()) : null;
+          // paleta de instanceColor: colores distintos (redondeados) y cuántas copias llevan cada uno
+          const pal = new Map();
+          const ic = o.instanceColor && o.instanceColor.array;
+          if (ic) for (let k = 0; k < o.count; k++) {
+            const key = "#" + [0, 1, 2].map((j) => Math.round(Math.min(1, Math.max(0, ic[k * 3 + j])) * 255).toString(16).padStart(2, "0")).join("");
+            pal.set(key, (pal.get(key) || 0) + 1);
+          }
+          instanciadas.push({ id: instIndex(o), name: o.name || null, count: o.count, size: size ? v3(size) : null, colores: [...pal].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([c, n]) => ({ c, n })) });
+        }
+      }
       if (o.isSkinnedMesh) skinned++;
       if (o.morphTargetInfluences && o.morphTargetInfluences.length) animated++;
       if (o.isLight) {
@@ -232,6 +248,9 @@
           targetOnCamera: o.target ? !!(o.target.parent && o.target.parent.isCamera) : undefined,
           targetLocal: o.target && o.target.parent && o.target.parent.isCamera ? v3(o.target.position) : undefined,
           shadowMap: o.castShadow && o.shadow ? (o.shadow.mapSize ? [o.shadow.mapSize.x, o.shadow.mapSize.y] : null) : undefined,
+          // la caja de la cámara de sombras (direccional) y el sesgo: con la caja por defecto (±5) las sombras se cortan
+          shadowCam: o.castShadow && o.shadow && o.shadow.camera && o.shadow.camera.isOrthographicCamera ? [o.shadow.camera.left, o.shadow.camera.right, o.shadow.camera.top, o.shadow.camera.bottom, o.shadow.camera.near, o.shadow.camera.far].map((n) => round(n, 3)) : undefined,
+          shadowBias: o.castShadow && o.shadow ? [round(o.shadow.bias, 6), round(o.shadow.normalBias, 6), round(o.shadow.radius, 3)] : undefined,
         });
       }
       const list = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : [];
@@ -267,6 +286,7 @@
       skinned,
       morphs: animated,
       piezas,
+      instanciadas,
       bounds: isFinite(box.min[0]) ? { min: box.min.map((n) => round(n, 3)), max: box.max.map((n) => round(n, 3)) } : null,
       background: textureInfo(scene.background) || (scene.backgroundNode ? { kind: "node" } : null),
       backgroundBlurriness: round(scene.backgroundBlurriness, 3),
@@ -384,6 +404,43 @@
     return matsCache.map((m) => ({ n: m.name, c: hex(m.color), e: hex(m.emissive), o: round(m.opacity, 3) }));
   };
 
+  /*
+   * Movimiento de las instancias, en cada muestra: cuántas copias se han desplazado respecto a su posición inicial (la
+   * primera vez que se ven), cuánto como mucho y en qué dirección media. Así se ve un campo de piezas que se levanta, se
+   * dispersa o se recoloca, sin saber qué eje es «arriba».
+   */
+  const instBase = new WeakMap();
+  const instIds = new WeakMap();
+  let instNext = 0;
+  function instIndex(o) {
+    if (!instIds.has(o)) instIds.set(o, instNext++);
+    return instIds.get(o);
+  }
+  let instCache = [];
+  let instFrame = -1;
+  const instancias = () => {
+    const scene = state.lastScene;
+    if (!scene) return [];
+    if (state.frame - instFrame > 60 || !instCache.length) {
+      instCache = [];
+      scene.traverse((o) => o.isInstancedMesh && instCache.length < 40 && instCache.push(o));
+      instFrame = state.frame;
+    }
+    return instCache.map((o) => {
+      const a = o.instanceMatrix.array;
+      if (!instBase.has(o)) instBase.set(o, Float32Array.from(a));
+      const b = instBase.get(o);
+      let movidas = 0, max = 0, dx = 0, dy = 0, dz = 0;
+      for (let k = 0; k < o.count; k++) {
+        const x = a[k * 16 + 12] - b[k * 16 + 12], y = a[k * 16 + 13] - b[k * 16 + 13], z = a[k * 16 + 14] - b[k * 16 + 14];
+        const d = Math.hypot(x, y, z);
+        if (d > 1e-3) (movidas++, (dx += x), (dy += y), (dz += z));
+        if (d > max) max = d;
+      }
+      return { i: instIndex(o), movidas, max: round(max, 4), dir: movidas ? [round(dx / movidas, 4), round(dy / movidas, 4), round(dz / movidas, 4)] : null };
+    });
+  };
+
   /** Estado ligero de este momento: cámara, renderer y las pasadas desde la muestra anterior. */
   const snapshot = () => {
     const r = state.renderers[state.renderers.length - 1];
@@ -408,6 +465,7 @@
       // acciones de animación (clips de un GLB): su tiempo dice si las mueve el reloj, el scroll o nada
       piezas: poses(),
       mats: matColors(),
+      inst: instancias(),
       acciones: state.mixers.flatMap((mx) => (mx._actions || []).map((a) => ({ clip: a._clip && a._clip.name, t: round(a.time, 4), dur: a._clip ? round(a._clip.duration, 3) : null, paused: !!a.paused, peso: round(a.getEffectiveWeight ? a.getEffectiveWeight() : a.weight, 3) }))).slice(0, 12),
     };
   };

@@ -35,8 +35,8 @@ const invs = read<Inventario[]>("inventario.json");
  * rehacer (el bundle no se guarda): se conservan las de la captura.
  */
 const previa = read<{ medidas: Record<string, unknown> }>("ficha.auto.json");
-const shaderIndex = existsSync(join(OUT, "shaders", "index.json")) ? read<{ id: string; lang: string }[]>("shaders/index.json") : [];
-const shaders = shaderIndex.map((s) => ({ lang: s.lang, code: readFileSync(join(OUT, "shaders", `${s.id}.${s.lang}`), "utf8") }));
+const shaderIndex = existsSync(join(OUT, "shaders", "index.json")) ? read<{ id: string; lang: string; label?: string | null }[]>("shaders/index.json") : [];
+const shaders = shaderIndex.map((s) => ({ lang: s.lang, label: s.label, code: readFileSync(join(OUT, "shaders", `${s.id}.${s.lang}`), "utf8") }));
 const rehecha = fichaDesdeCaptura(meta, timeline, invs, shaders);
 const auto = { ficha: rehecha.ficha, medidas: { ...rehecha.medidas, firmasCodigo: previa.medidas.firmasCodigo ?? {} } } as unknown as { ficha: Ficha; medidas: Record<string, unknown> & { tramos: Tramo[]; centroEscena: number[] } };
 writeFileSync(join(OUT, "ficha.auto.json"), JSON.stringify(auto, null, 1));
@@ -228,4 +228,12 @@ for (const f of ["_meta.txt", "_cortes.txt"]) rmSync(join(OUT, f), { force: true
 
 console.log(`  ${tramos.length} tramos de cámara, ${cortes.length} cortes, luminancia ${imagen.luma.toFixed(3)}, recorte ${(imagen.recorte * 100).toFixed(2)} %, viñeta ${imagen.vineta.toFixed(3)}`);
 console.log(`  paleta: ${paleta.map((p) => `${p.hex} ${Math.round(p.peso * 100)}%`).join(" · ")}`);
+// deriva sospechosa: la imagen se apaga sola con la cámara quieta (exposición automática o lecturas asíncronas de la GPU
+// que el reloj virtual no deja avanzar): mejor repetir con --real
+{
+  const n10 = Math.max(1, Math.floor(lumaAll.length / 10));
+  const ini = avg(lumaAll.slice(0, n10)), fin = avg(lumaAll.slice(-n10));
+  const quieta = auto.medidas.tramos.every((t) => t.movimientos[0] === "fijo");
+  if (meta.drive === "time" && quieta && ini > 0.05 && fin < ini * 0.4) console.log(`  ⚠ la imagen se apaga sola (${ini.toFixed(3)} → ${fin.toFixed(3)}) con la cámara quieta: repite la captura con --real`);
+}
 console.log(`  ${join(OUT, "informe.html")}`);

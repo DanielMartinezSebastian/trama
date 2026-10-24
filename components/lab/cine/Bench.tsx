@@ -5,18 +5,13 @@ import { useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { PMREMGenerator as PMREMClasico, WebGLRenderer } from "three";
 import * as THREE from "three/webgpu";
-import { float, pass, smoothstep, uniform, uv } from "three/tsl";
-import { bloom } from "three/addons/tsl/display/BloomNode.js";
-import { dof } from "three/addons/tsl/display/DepthOfFieldNode.js";
-import { chromaticAberration } from "three/addons/tsl/display/ChromaticAberrationNode.js";
-import { film } from "three/addons/tsl/display/FilmNode.js";
-import { fxaa } from "three/addons/tsl/display/FXAANode.js";
-import { smaa } from "three/addons/tsl/display/SMAANode.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { ease, lerp3 } from "@/lib/cine/curves";
+import { pilaTSL } from "@/lib/postfx";
 import type { Ficha, Flotacion, Luz, Material, Pase, Pieza, Plano, ToneMapping } from "@/lib/cine/schema";
 import { COMPONENTES } from "./componentes";
+import { RelojContext } from "./reloj";
 
 /*
  * Banco de pruebas de /lab/cine (docs/26 §5): monta una ficha de escena tal cual, con WebGPURenderer (WebGL2 de reserva
@@ -123,9 +118,20 @@ function Rig({ ficha }: { ficha: Ficha }) {
 }
 
 function luz(l: Luz, i: number) {
-  const shadow = l.sombra ? { castShadow: true, "shadow-mapSize": [l.sombra.mapa, l.sombra.mapa] as [number, number] } : {};
+  const sb = l.sombra;
+  const shadow = sb
+    ? {
+        castShadow: true,
+        "shadow-mapSize": [sb.mapa, sb.mapa] as [number, number],
+        ...(sb.sesgo !== undefined ? { "shadow-bias": sb.sesgo } : {}),
+        ...(sb.sesgoNormal !== undefined ? { "shadow-normalBias": sb.sesgoNormal } : {}),
+        ...(sb.radio !== undefined ? { "shadow-radius": sb.radio } : {}),
+        ...(sb.caja ? { "shadow-camera-left": sb.caja[0], "shadow-camera-right": sb.caja[1], "shadow-camera-top": sb.caja[2], "shadow-camera-bottom": sb.caja[3], "shadow-camera-near": sb.caja[4], "shadow-camera-far": sb.caja[5] } : {}),
+      }
+    : {};
   if (l.tipo === "ambiente") return <ambientLight key={i} color={l.color} intensity={l.intensidad} />;
-  if (l.tipo === "hemisferio") return <hemisphereLight key={i} args={[l.color, l.suelo ?? "#000000", l.intensidad]} />;
+  // la posición de una hemisférica es su «arriba» (el cielo): en escenas con z arriba no es la de por defecto
+  if (l.tipo === "hemisferio") return <hemisphereLight key={i} args={[l.color, l.suelo ?? "#000000", l.intensidad]} position={l.pos} />;
   if (l.tipo === "direccional") return <directionalLight key={i} color={l.color} intensity={l.intensidad} position={l.pos} {...shadow} />;
   if (l.tipo === "foco") return <spotLight key={i} color={l.color} intensity={l.intensidad} position={l.pos} angle={l.angulo} penumbra={l.penumbra} distance={l.distancia} decay={l.decaimiento} {...shadow} />;
   return <pointLight key={i} color={l.color} intensity={l.intensidad} position={l.pos} distance={l.distancia} decay={l.decaimiento} {...shadow} />;
@@ -348,8 +354,10 @@ function Primitiva({ p, mats }: { p: Extract<Pieza, { tipo: "primitiva" }>; mats
 }
 
 function Escena({ ficha }: { ficha: Ficha }) {
+  // el reloj de la ficha para las piezas propias (componentes.ts): las del estudio lo leen con useRelojFicha
+  const reloj = useReloj(ficha);
   return (
-    <>
+    <RelojContext.Provider value={reloj}>
       {ficha.escena.map((p, i) => {
         if (p.tipo === "gltf") return <Gltf key={i} p={p} ficha={ficha} mats={ficha.materiales} sombras={!!ficha.render.sombras && ficha.render.sombras !== "ninguna"} />;
         if (p.tipo === "primitiva") return <Primitiva key={i} p={p} mats={ficha.materiales} />;
@@ -360,35 +368,15 @@ function Escena({ ficha }: { ficha: Ficha }) {
         }
         return <C key={i} {...(p.props ?? {})} />;
       })}
-    </>
+    </RelojContext.Provider>
   );
 }
 
 /** pila de posprocesado de la ficha en TSL, en su orden; lo que el banco aún no sabe pintar se avisa y se salta */
 function Post({ pases }: { pases: Pase[] }) {
   const { gl, scene, camera } = useThree();
-  const pipeline = useMemo(() => {
-    const renderer = gl as unknown as THREE.WebGPURenderer;
-    const p = new THREE.RenderPipeline(renderer);
-    const scenePass = pass(scene, camera);
-    const color = scenePass.getTextureNode("output");
-    // cualquier nodo de TSL vale como salida; el tipado de cada paso cambia, así que se lleva como el de `color`
-    let out = color as typeof color;
-    for (const x of pases) {
-      if (x.tipo === "bloom") out = out.add(bloom(color, x.fuerza, x.radio, x.umbral)) as typeof color;
-      else if (x.tipo === "dof") out = dof(out, scenePass.getViewZNode(), uniform(x.foco), uniform(x.focal), uniform(x.bokeh)) as unknown as typeof color;
-      else if (x.tipo === "aberracion") out = chromaticAberration(out, uniform(x.fuerza)) as unknown as typeof color;
-      else if (x.tipo === "grano") out = film(out, float(x.intensidad)) as unknown as typeof color;
-      else if (x.tipo === "vineta") {
-        const d = uv().sub(0.5).length();
-        out = out.mul(float(1).sub(smoothstep(float(0.5 - x.suavidad * 0.5), float(0.5 + x.suavidad * 0.5), d.mul(x.fuerza * 2)))) as typeof color;
-      } else if (x.tipo === "aa" && x.metodo === "fxaa") out = fxaa(out) as unknown as typeof color;
-      else if (x.tipo === "aa" && x.metodo === "smaa") out = smaa(out) as unknown as typeof color;
-      else console.warn(`[cine] pase aún no soportado en el banco: ${x.tipo}`);
-    }
-    p.outputNode = out;
-    return p;
-  }, [gl, scene, camera, pases]);
+  // la pila del kit (lib/postfx): el banco la usa tal cual, así la calibración la valida
+  const pipeline = useMemo(() => pilaTSL(gl as unknown as THREE.WebGPURenderer, scene, camera, pases), [gl, scene, camera, pases]);
   useEffect(() => () => pipeline.dispose(), [pipeline]);
   // prioridad 1: R3F deja de pintar por su cuenta y pinta la pila
   useFrame(() => pipeline.render(), 1);
