@@ -9,6 +9,7 @@
  *   - render y posprocesado: renderer, tone mapping, exposición, pila de pases y sus parámetros;
  *   - luz: luces por tipo e intensidad, entorno; atmósfera: niebla;
  *   - imagen (si las dos están analizadas): luminancia, recorte, contraste, saturación, viñeteado y paleta (ΔE);
+ *   - acabado (docs/29 §1): detalle fino, bordes, contraste local, brillos y grano en doce pares de fotogramas;
  *   - SSIM fotograma a fotograma con ffmpeg (solo tiene sentido si la escena es la misma: calibración);
  *   - coste: llamadas de dibujo, triángulos y pasadas.
  * Cada eje da un «alejamiento» de 0 (igual) a 1 (nada que ver), y el informe ordena los ejes de más a menos alejado: el
@@ -20,6 +21,8 @@ import { basename, join, resolve } from "node:path";
 import { EJE_NOMBRE } from "../../lib/cine/rubric";
 import type { Eje, Ficha, Pase } from "../../lib/cine/schema";
 import { alabeo, centro, type Inventario, type Muestra, type Tramo } from "./lib.mts";
+import { acabadoDe, compararAcabado, media, type Acabado } from "./acabado.mts";
+import { readdirSync } from "node:fs";
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const opt = (n: string, d: string) => {
@@ -256,7 +259,7 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
@@ -292,15 +295,36 @@ const coreografia = (() => {
 // piezas: la pose medida contra la de la referencia, solo cuando las dos tienen piezas con nombre
 if (coreografia) alejamiento.coreografia = clamp01(coreografia.errorMax * 2 + coreografia.errorMedia * 2 + coreografia.errorFraccion);
 if (piezas) alejamiento.piezas = clamp01((piezas.posicionPct / 100) * 5 + piezas.giroGrados / 20);
+/*
+ * Acabado: doce pares de fotogramas repartidos por la captura (el mismo número con la misma entrada; si no, la misma
+ * fracción del recorrido), medidos a resolución completa.
+ */
+const acabado = (() => {
+  const lista = (dir: string) => (existsSync(join(dir, "frames")) ? readdirSync(join(dir, "frames")).filter((x) => x.endsWith(".png")).sort() : []);
+  const fa = lista(REF), fbs = lista(BAN);
+  if (fa.length < 4 || fbs.length < 4) return null;
+  const K = 12;
+  const ra: Acabado[] = [], rb: Acabado[] = [];
+  for (let k = 0; k < K; k++) {
+    const t = (k + 0.5) / K;
+    const a = acabadoDe(join(REF, "frames", fa[Math.floor(t * fa.length)]));
+    const b = acabadoDe(join(BAN, "frames", fbs[Math.floor(t * fbs.length)]));
+    if (a && b) (ra.push(a), rb.push(b));
+  }
+  if (!ra.length) return null;
+  return compararAcabado(media(ra), media(rb));
+})();
+if (acabado) alejamiento.acabado = clamp01(acabado.total);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
   banco: { dir: BAN, url: ban.meta.url },
   camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAlabeoGrados: +errRoll.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
   imagen,
+  acabado,
   piezas,
   coreografia,
   ssim,
@@ -342,6 +366,9 @@ const md = [
   ...(difs.length ? difs.map((d) => `- ${d}`) : ["- ninguna en render, luz, atmósfera ni posprocesado"]),
   ``,
   imagen ? `## Imagen\n\n- Luminancia ${imagen.dLuma >= 0 ? "+" : ""}${imagen.dLuma.toFixed(3)} · recorte ${(imagen.dRecorte * 100).toFixed(2)} pt · contraste ${imagen.dContraste.toFixed(3)} · saturación ${imagen.dSaturacion.toFixed(3)} · viñeta ${imagen.dVineta.toFixed(3)} · ΔE de la paleta ${imagen.deltaE.toFixed(1)}\n` : `## Imagen\n\n- Sin datos: ejecuta \`cine:analyze\` en las dos capturas.\n`,
+  acabado
+    ? `## Acabado\n\n| Medida | Referencia | Banco | Error | El banco va |\n|---|---|---|---|---|\n${acabado.filas.map((r) => `| ${r.medida} | ${r.ref.toExponential(2)} | ${r.banco.toExponential(2)} | ${Math.round(r.error * 100)} % | ${r.sentido} |`).join("\n")}\n`
+    : "",
   `## SSIM`,
   ``,
   `- ${ssim === null ? "sin vídeo" : ssim.toFixed(4)} (solo significativo si la escena es la misma)`,

@@ -42,7 +42,7 @@ export const hublot: Ficha = {
   luz: { entorno: { tipo: "ninguno" }, luces: [] },
   materiales: [],
   atmosfera: {},
-  post: [{ tipo: "bloom", fuerza: 0.35, radio: 0.05, umbral: 0.85 }, { tipo: "aa", metodo: "smaa" }],
+  post: [{ tipo: "bloom", fuerza: 0.35, radio: 0.05, umbral: 0.85 }, { tipo: "grano", intensidad: 0.12 }, { tipo: "aa", metodo: "smaa" }],
   escena: [{ tipo: "componente", id: "ventanilla" }],
   presupuesto: { drawCalls: 68, pasadasPorFotograma: 36 },
   origen: { render: "medido", camara: "medido", luz: "medido", post: "medido", escena: "codigo", presupuesto: "medido" },
