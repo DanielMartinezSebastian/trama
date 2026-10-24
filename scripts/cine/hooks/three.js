@@ -15,7 +15,7 @@
   const SIDE = ["front", "back", "double"];
   const BLEND = ["none", "normal", "additive", "subtractive", "multiply", "custom"];
 
-  const state = { revision: null, renderers: [], scenes: [], mixers: 0, loaders: [], log: [], frame: 0, lastScene: null, lastCamera: null, acc: new Map() };
+  const state = { revision: null, renderers: [], scenes: [], mixers: [], loaders: [], log: [], frame: 0, lastScene: null, lastCamera: null, acc: new Map() };
   const round = (n, d = 4) => (typeof n === "number" && isFinite(n) ? Math.round(n * 10 ** d) / 10 ** d : n);
   const v3 = (v) => (v ? [round(v.x), round(v.y), round(v.z)] : null);
   const hex = (c) => (c && c.isColor ? "#" + c.getHexString() : null);
@@ -88,7 +88,7 @@
       state.renderers.push(o);
       wrap(o);
     } else if (o.isScene) state.scenes.push(o);
-    else if (o.isAnimationMixer || (o._actions && o.clipAction)) state.mixers++;
+    else if (o.isAnimationMixer || (o._actions && o.clipAction)) state.mixers.push(o);
     else if (o.manager !== undefined && o.load) state.loaders.push(o.constructor && o.constructor.name);
   });
   Object.defineProperty(window, "__THREE_DEVTOOLS__", { value: devtools, configurable: true });
@@ -129,8 +129,11 @@
     c.updateMatrixWorld && c.updateMatrixWorld();
     const e = c.matrixWorld.elements;
     const pos = [round(e[12]), round(e[13]), round(e[14])];
-    const dir = [round(-e[8]), round(-e[9]), round(-e[10])];
-    const q = c.quaternion;
+    // dirección y orientación del mundo: la cámara puede colgar de un nodo animado (la cámara de un GLB de Blender lleva
+    // −90° en X en local y lo que gira es el padre), así que nada de quaternion local
+    const zl = Math.hypot(e[8], e[9], e[10]) || 1;
+    const dir = [round(-e[8] / zl), round(-e[9] / zl), round(-e[10] / zl)];
+    const q = c.getWorldQuaternion ? c.getWorldQuaternion(c.quaternion.clone()) : c.quaternion;
     return {
       type: c.type,
       fov: round(c.fov, 3),
@@ -173,6 +176,8 @@
       blending: BLEND[m.blending],
       ...pick(m, MAT_KEYS),
       maps: maps.length ? maps : undefined,
+      // el mapa de entorno propio del material manda sobre el de la escena: hay que saber cuál es
+      envMapInfo: m.envMap ? textureInfo(m.envMap) : undefined,
       nodes: nodes.length ? nodes : undefined,
       uniforms: m.uniforms ? Object.keys(m.uniforms).length : undefined,
       users: 0,
@@ -185,7 +190,7 @@
     if (!t.isTexture) return { kind: typeof t };
     const img = t.image || (t.source && t.source.data);
     const size = img ? (Array.isArray(img) ? [img[0] && img[0].width, img[0] && img[0].height] : [img.width, img.height]) : null;
-    return { kind: t.isCubeTexture ? "cube" : t.isDataTexture ? "data" : t.isVideoTexture ? "video" : t.isRenderTargetTexture ? "render-target" : "texture", mapping: t.mapping, colorSpace: t.colorSpace, size };
+    return { kind: t.isCubeTexture ? "cube" : t.isDataTexture ? "data" : t.isVideoTexture ? "video" : t.isRenderTargetTexture ? "render-target" : "texture", mapping: t.mapping, colorSpace: t.colorSpace, size, name: t.name || undefined, id: uuid(t) };
   };
 
   /** Inventario completo de la escena (más caro: se pide en los momentos clave, no en cada fotograma). */
@@ -199,6 +204,7 @@
     let skinned = 0;
     let animated = 0;
     const box = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+    const piezas = [];
     scene.traverse((o) => {
       if (o.visible === false) return;
       counts[o.type] = (counts[o.type] || 0) + 1;
@@ -220,6 +226,11 @@
           // colgada de la cámara (camera.add(light)): la sigue
           onCamera: !!(o.parent && o.parent.isCamera),
           local: o.parent && o.parent.isCamera ? v3(o.position) : undefined,
+          // direccionales y focos apuntan a su objetivo: dónde está (y si también va con la cámara) decide la dirección
+          target: o.target ? v3(o.target.getWorldPosition(o.position.clone())) : undefined,
+          targetEnEscena: o.target ? !!o.target.parent : undefined,
+          targetOnCamera: o.target ? !!(o.target.parent && o.target.parent.isCamera) : undefined,
+          targetLocal: o.target && o.target.parent && o.target.parent.isCamera ? v3(o.target.position) : undefined,
           shadowMap: o.castShadow && o.shadow ? (o.shadow.mapSize ? [o.shadow.mapSize.x, o.shadow.mapSize.y] : null) : undefined,
         });
       }
@@ -229,6 +240,14 @@
         mats.get(m.uuid).users++;
       }
       if ((o.isMesh || o.isPoints) && o.geometry) {
+        // pose de cada pieza en el mundo: si la página la mueve (flotación, animación propia) aquí se ve
+        if (piezas.length < 40) {
+          o.updateWorldMatrix(true, false);
+          const me = o.matrixWorld.elements;
+          const wq = o.getWorldQuaternion(o.quaternion.clone());
+          const sx = Math.hypot(me[0], me[1], me[2]);
+          piezas.push({ name: o.name || null, pos: [round(me[12], 3), round(me[13], 3), round(me[14], 3)], quat: [round(wq.x), round(wq.y), round(wq.z), round(wq.w)], escala: round(sx, 3), castShadow: !!o.castShadow, receiveShadow: !!o.receiveShadow });
+        }
         const g = o.geometry;
         if (!g.boundingBox && g.computeBoundingBox && g.attributes && g.attributes.position) g.computeBoundingBox();
         if (g.boundingBox && o.matrixWorld) {
@@ -247,6 +266,7 @@
       instances,
       skinned,
       morphs: animated,
+      piezas,
       bounds: isFinite(box.min[0]) ? { min: box.min.map((n) => round(n, 3)), max: box.max.map((n) => round(n, 3)) } : null,
       background: textureInfo(scene.background) || (scene.backgroundNode ? { kind: "node" } : null),
       backgroundBlurriness: round(scene.backgroundBlurriness, 3),
@@ -258,7 +278,7 @@
       materials: [...mats.values()].sort((a, b) => b.users - a.users).slice(0, 60),
       materialCount: mats.size,
       post: passParams(),
-      mixers: state.mixers,
+      mixers: state.mixers.length,
       loaders: [...new Set(state.loaders)],
     };
   };
@@ -329,6 +349,8 @@
       passes: typical.map((l) => ({ kind: l.kind, cam: l.cam, target: l.target, size: l.size, name: l.name, mat: l.mat, scale: l.size && r && r.domElement ? Math.round((l.size[0] / r.domElement.width) * 100) / 100 : null })),
       rendersPerFrame: round(since.length / frames, 2),
       scroll: { y: Math.round(scrollY), max: Math.max(0, document.documentElement.scrollHeight - innerHeight) },
+      // acciones de animación (clips de un GLB): su tiempo dice si las mueve el reloj, el scroll o nada
+      acciones: state.mixers.flatMap((mx) => (mx._actions || []).map((a) => ({ clip: a._clip && a._clip.name, t: round(a.time, 4), dur: a._clip ? round(a._clip.duration, 3) : null, paused: !!a.paused, peso: round(a.getEffectiveWeight ? a.getEffectiveWeight() : a.weight, 3) }))).slice(0, 12),
     };
   };
 

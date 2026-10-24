@@ -144,7 +144,29 @@ cine:compare <ref> <banco>  ←  cine:capture /lab/cine/<estudio>  ←  banco mo
   2. SSIM 0,74: la cámara ya se mueve (error 3,9 %), pero a saltos («5 cortes»): la referencia amortigua el scroll. De
      ahí salió la medida del amortiguado. Imagen quemada: faltaba `envMapIntensity` (0,2) en los materiales y las sombras.
   3. SSIM 0,90, error de cámara 4,9 %. Queda la imagen más clara y contrastada que la referencia (luminancia +0,07,
-     contraste +0,39): siguiente vuelta.
+     contraste +0,39).
+  4. **Cuarta vuelta (24-10-2026): de la imagen a la escena.** Con variantes por URL (`?ajuste=`) sobre un fotograma
+     fijo se descartó la luz: ni sin ambiente, ni sin direccional, ni sin entorno, ni sin sombras, ni con el
+     `WebGLRenderer` clásico (que con los mismos valores da exactamente lo mismo que el motor de nodos) se acerca el tono.
+     Lo que destapó la vuelta, en orden:
+     - **El reloj de rueda estaba mal escalado**: drei ScrollControls tiene menos recorrido que la rueda mandada. Se mide
+       la **saturación** (el último golpe que aún mueve algo) y el progreso es la rueda hasta ahí: 2 250 px, 3,1 pantallas.
+     - **El GLB tiene un clip atado al scroll** (`CameraAction.005`): su tiempo sigue al scroll suavizado con r² 0,9998,
+       de 0 a 1,175 s. Ahora la captura registra las acciones de animación y el banco las ata al reloj
+       (`animacionReloj`).
+     - **El scroll de la ventana añade su propio suavizado** (el desplazamiento suave de Chrome): el banco lee la rueda
+       con un scroll virtual, como ScrollControls.
+     - **Comparar por el reloj estimado de cada captura mete error**: con la misma entrada, se alinea fotograma a
+       fotograma (la cámara pasó de 16 % a 4,4 % de error sin tocar el banco).
+     - **El cuaternión local engaña**: la cámara de un GLB de Blender cuelga de un nodo animado; el gancho guarda el del
+       mundo y la ficha gana el **alabeo** (0,01° de error).
+     - **La causa del tono**: el inventario de piezas (pose de cada malla en el mundo) muestra que la referencia hace
+       **flotar cada pieza** (pequeños giros que cambian con el tiempo: `Float` de drei) y las monta bajo un grupo a
+       escala 0,25; el zepelín no da ni recibe sombra. Las caras que la referencia deja en negro son las de piezas giradas
+       respecto a la luz. Siguiente vuelta: la flotación de piezas en la ficha y el banco.
+
+     Resultado: cámara al 4,4 % y alabeo 0,01°, clip del GLB al mismo tiempo, SSIM 0,90; la imagen sigue +0,07 de
+     luminancia hasta reproducir la flotación.
 
 ## 7. Trampas (para no repetirlas)
 
@@ -161,11 +183,17 @@ cine:compare <ref> <banco>  ←  cine:capture /lab/cine/<estudio>  ←  banco mo
 9. **R3F pisa el tone mapping** después de crear el renderer: los valores de la ficha van en `onCreated`.
 10. **Las unidades del reloj de scroll pueden ser diminutas**: las duraciones mínimas, en fotogramas, no en progreso.
 11. **Una captura sin cola** no deja ver cómo se asienta la página: `--cola` (1,5 s por defecto).
+12. **El recorrido de scroll de la página no es la rueda que se manda**: hay que medir dónde satura.
+13. **El cuaternión local de la cámara no sirve** si cuelga de un nodo animado (cámaras de Blender): siempre el del mundo.
+14. **Con la misma entrada, se compara fotograma a fotograma**: alinear por relojes estimados mete el error de la estimación.
+15. **El scroll de la ventana de Chrome se suaviza solo**: un banco con reloj de scroll lee la rueda en virtual.
+16. **Para descartar causas, variantes por URL** (`/lab/cine/<estudio>?ajuste=<json>`) sobre un fotograma fijo: es más
+    rápido que editar la ficha y deja el experimento escrito.
 
 ## 8. Pendiente
 
-- **Camera-scroll, cuarta vuelta**: la diferencia de luminancia y contraste (¿intensidad efectiva de las luces en
-  WebGPURenderer con backend WebGL frente a WebGLRenderer?, ¿mapa de entorno por material?).
+- **Camera-scroll, quinta vuelta**: la flotación de las piezas (`Float` de drei) en la ficha y en el banco, y su
+  jerarquía (grupo a escala 0,25, sombras por pieza); el comparador debería comparar también las poses de las piezas.
 - **Primer estudio real** (fase 4 del plan): una pieza con carácter de la portada de threejs.org (Tidewater, Plain Sight,
   Hublot) y después webs premiadas cerradas (Oryzo, IVRESS, Hubtown).
 - **Motores sin three** (Hydra de Active Theory): flujo óptico sobre el vídeo para la cámara, WebGPU Inspector para las

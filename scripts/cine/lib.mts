@@ -19,6 +19,7 @@ export type Muestra = {
   passes: Pasada[];
   rendersPerFrame: number;
   scroll: { y: number; max: number };
+  acciones?: { clip: string; t: number; dur: number | null; paused: boolean; peso: number }[];
 };
 type Inv = {
   counts: Record<string, number>;
@@ -47,6 +48,38 @@ const r3 = (v: number[]) => v.map((x) => Math.round(x * 1000) / 1000) as Vec3;
 export const centro = (inv: Inv | null): Vec3 => (inv?.bounds ? (inv.bounds.min.map((m, i) => (m + inv.bounds!.max[i]) / 2) as Vec3) : [0, 0, 0]);
 
 /** punto mirado: el del rayo de la cámara más cercano al centro de la escena */
+/**
+ * Alabeo de la cámara en grados: el ángulo que hay que girar sobre el eje de mirada, después de un lookAt con el arriba del
+ * mundo (0, 1, 0), para dejar la cámara como estaba (rotateZ de three). Sale del cuaternión capturado.
+ */
+export function alabeo(c: Camara): number {
+  if (!c.quat) return 0;
+  const [x, y, z, w] = c.quat;
+  // arriba de la cámara en el mundo: el cuaternión aplicado a (0, 1, 0)
+  const up = [2 * (x * y - w * z), 1 - 2 * (x * x + z * z), 2 * (y * z + w * x)];
+  const f = c.dir;
+  let right = [f[1] * 0 - f[2] * 1, f[2] * 0 - f[0] * 0, f[0] * 1 - f[1] * 0];
+  const rl = len(right);
+  if (rl < 1e-6) return 0;
+  right = right.map((v) => v / rl);
+  const upNoRoll = [right[1] * f[2] - right[2] * f[1], right[2] * f[0] - right[0] * f[2], right[0] * f[1] - right[1] * f[0]];
+  return Math.round(((Math.atan2(-dot(up, right), dot(up, upNoRoll)) * 180) / Math.PI) * 100) / 100;
+}
+
+/** alabeo de cada muestra, desenrollado: cada valor a menos de 180° del anterior (un giro continuo no salta de 179 a −179) */
+export function alabeos(ms: Muestra[]): Map<number, number> {
+  const out = new Map<number, number>();
+  let prev: number | null = null;
+  for (const m of ms) {
+    if (!m.camera) continue;
+    let a = alabeo(m.camera);
+    if (prev !== null) a += 360 * Math.round((prev - a) / 360);
+    out.set(m.i, Math.round(a * 100) / 100);
+    prev = a;
+  }
+  return out;
+}
+
 export function mira(c: Camara, centroEscena: Vec3): Vec3 {
   const d = Math.max(0.01, dot(sub(centroEscena, c.pos), c.dir));
   return r3(c.pos.map((p, i) => p + c.dir[i] * d));
@@ -436,17 +469,18 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
   const scroll = meta.drive === "scroll";
   /*
    * Reloj del scroll: el de la ventana si se desplaza; si no (drei ScrollControls, Lenis sobre un contenedor, scroll
-   * virtual), la rueda acumulada sobre el total: es lo que el visitante ha pedido, aunque la página lo suavice.
+   * virtual), la rueda acumulada hasta la saturación (el último golpe que aún movía algo: la página tiene su propio
+   * recorrido y a partir de ahí no responde), de 0 a 1. Es lo que el visitante ha pedido, aunque la página lo suavice.
    */
   const windowScrolls = ms.some((m) => m.scroll.max > 0 && m.scroll.y > 0);
-  const totalWheel = ms.reduce((acc, m) => acc + (m.input.wheel ?? 0), 0) || 1;
+  const totalWheel = (scroll && !windowScrolls ? saturacionRueda(ms) : 0) || ms.reduce((acc, m) => acc + (m.input.wheel ?? 0), 0) || 1;
   const wheelAt = new Map<number, number>();
   let rueda = 0;
   for (const m of ms) {
     rueda += m.input.wheel ?? 0;
     wheelAt.set(m.i, rueda);
   }
-  const crudo = (m: Muestra) => (!scroll ? m.t : windowScrolls ? (m.scroll.max > 0 ? m.scroll.y / m.scroll.max : 0) : (wheelAt.get(m.i) ?? 0) / totalWheel);
+  const crudo = (m: Muestra) => (!scroll ? m.t : windowScrolls ? (m.scroll.max > 0 ? m.scroll.y / m.scroll.max : 0) : Math.min(1, (wheelAt.get(m.i) ?? 0) / totalWheel));
   const suavizado = scroll ? amortiguado(ms) : null;
   // con amortiguado, el reloj es el scroll suavizado igual que lo suaviza la página: s += (objetivo − s)·(1 − r)
   const suave = new Map<number, number>();
@@ -460,6 +494,8 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
   const reloj = (m: Muestra) => (suavizado ? (suave.get(m.i) ?? 0) : crudo(m));
   const tr = tramos(ms, c0, reloj);
   const camOf = (i: number) => ms.find((m) => m.i === i)?.camera ?? first.camera;
+  const rolls = alabeos(ms);
+  const rollDe = (c: Camara) => rolls.get(ms.find((m) => m.camera === c)?.i ?? -1) ?? alabeo(c);
   /** puntos de paso de un tramo: 6 por dentro, a distancias recorridas iguales (lo que el banco recorre con getPointAt) */
   const ruta = (i0: number, i1: number) => {
     const cams = ms.filter((m) => m.i >= i0 && m.i <= i1 && m.camera).map((m) => m.camera!);
@@ -469,7 +505,7 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
     if (cams.length < 8 || tot < 1e-4) return null;
     const pick = (f: number) => cams[Math.max(0, acc.findIndex((x) => x >= f * tot))];
     const puntos = [1, 2, 3, 4, 5, 6].map((j) => pick(j / 7));
-    return { ruta: puntos.map((c) => r3(c.pos)), rutaMira: puntos.map((c) => mira(c, c0)) };
+    return { ruta: puntos.map((c) => r3(c.pos)), rutaMira: puntos.map((c) => mira(c, c0)), rutaAlabeo: puntos.map(rollDe) };
   };
   const planos: Plano[] = tr.map((x, k) => {
     const a = camOf(x.i0)!;
@@ -480,7 +516,7 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       desde: +x.desde.toFixed(4),
       hasta: +x.hasta.toFixed(4),
       movimientos: x.movimientos,
-      camara: { desde: { pos: a.pos, mira: mira(a, c0), fov: a.fov }, hasta: { pos: b.pos, mira: mira(b, c0), fov: b.fov }, curva: x.curvas[0]?.curva ?? "linear", meseta: x.meseta || undefined, ...(camino ?? {}) },
+      camara: { desde: { pos: a.pos, mira: mira(a, c0), fov: a.fov, alabeo: rollDe(a) || undefined }, hasta: { pos: b.pos, mira: mira(b, c0), fov: b.fov, alabeo: rollDe(b) || undefined }, curva: x.curvas[0]?.curva ?? "linear", meseta: x.meseta || undefined, ...(camino ?? {}) },
     };
   });
   const r = first.renderer;
@@ -552,7 +588,10 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       firmasShaders: firmas(shaders),
       firmasCodigo: firmasJs(js),
       relojScroll: scroll ? (windowScrolls ? "ventana" : "rueda") : null,
+      animaciones: animaciones(ms, reloj),
       suavizado,
+      // el reloj de la ficha en cada muestra (con saturación y amortiguado ya aplicados): lo usa cine:compare
+      reloj: ms.map((m) => +reloj(m).toFixed(5)),
       pasadasEscena: first.passes.filter((p) => p.kind === "scene").map((p) => ({ escala: p.scale ?? null, size: p.size })),
       paramsPost: inv?.post ?? [],
       fovRango: [Math.min(...ms.map((m) => m.camera?.fov ?? Infinity)), Math.max(...ms.map((m) => m.camera?.fov ?? -Infinity))],
@@ -579,15 +618,81 @@ function volumetrico(inv: Inv | null, passes: Pasada[]): NonNullable<Ficha["atmo
  * frenada clara (la cámara se para en seco), null.
  */
 export function amortiguado(ms: Muestra[]): number | null {
-  let last = -1;
-  ms.forEach((m, k) => (m.input.wheel ? (last = k) : 0));
-  if (last < 0) return null;
+  if (!ms.some((m) => m.input.wheel)) return null;
   const sp = ms.map((m, k) => (k && m.camera && ms[k - 1].camera ? len(sub(m.camera.pos, ms[k - 1].camera!.pos)) : 0));
   const vmax = Math.max(...sp);
   if (vmax <= 0) return null;
+  // la frenada empieza tras la última subida de velocidad (el último golpe que surtió efecto, sea de ventana o de rueda)
+  let last = -1;
+  for (let k = 1; k < sp.length; k++) if (sp[k] > sp[k - 1] * 1.02 && sp[k] > vmax * 0.02) last = k;
+  if (last < 0) return null;
   const ratios: number[] = [];
-  for (let k = last + 2; k < ms.length - 1; k++) if (sp[k] > vmax * 0.02 && sp[k + 1] > 0) ratios.push(sp[k + 1] / sp[k]);
+  for (let k = last + 1; k < ms.length - 1; k++) if (sp[k] > vmax * 0.02 && sp[k + 1] > 0) ratios.push(sp[k + 1] / sp[k]);
   if (ratios.length < 5) return null;
   const r = median(ratios);
   return r > 0.3 && r < 0.995 ? Math.round(r * 1000) / 1000 : null;
+}
+
+/**
+ * Animaciones de la escena (clips de un GLB): para cada una, si su tiempo sigue al reloj de la ficha (segundos o scroll)
+ * y con qué rango. Una recta t = a·reloj + b ajustada a sus muestras; r² > 0,98 = la mueve el reloj. Con scroll, el
+ * tiempo del clip en el progreso 0 y en el 1 es lo que necesita el banco (`animacionReloj`).
+ */
+export function animaciones(ms: Muestra[], reloj: (m: Muestra) => number) {
+  const clips = new Map<string, { x: number; y: number }[]>();
+  for (const m of ms)
+    for (const a of m.acciones ?? []) {
+      if (!a.clip || a.peso <= 0) continue;
+      if (!clips.has(a.clip)) clips.set(a.clip, []);
+      clips.get(a.clip)!.push({ x: reloj(m), y: a.t });
+    }
+  return [...clips].map(([clip, pts]) => {
+    const n = pts.length;
+    const mx = avg(pts.map((p) => p.x)), my = avg(pts.map((p) => p.y));
+    const sxx = pts.reduce((s, p) => s + (p.x - mx) ** 2, 0), sxy = pts.reduce((s, p) => s + (p.x - mx) * (p.y - my), 0), syy = pts.reduce((s, p) => s + (p.y - my) ** 2, 0);
+    const a = sxx > 1e-12 ? sxy / sxx : 0;
+    const b = my - a * mx;
+    const r2 = sxx > 1e-12 && syy > 1e-12 ? (sxy * sxy) / (sxx * syy) : 0;
+    const rango = Math.max(...pts.map((p) => p.y)) - Math.min(...pts.map((p) => p.y));
+    const mueve = rango < 1e-3 ? "quieta" : r2 > 0.98 ? "reloj" : "otra";
+    return { clip, muestras: n, mueve, r2: +r2.toFixed(4), desde: +(b).toFixed(4), hasta: +(a + b).toFixed(4), rango: +rango.toFixed(4) };
+  });
+}
+
+/**
+ * Saturación de la rueda: la rueda acumulada hasta el último golpe que todavía acelera algo (la cámara o una animación).
+ * Después de ese golpe la página ya no responde: su recorrido de scroll ha terminado. 0 si no se puede saber.
+ */
+export function saturacionRueda(ms: Muestra[]): number {
+  const act = ms.map((m, k) => {
+    if (!k) return 0;
+    const p = ms[k - 1];
+    const cam = m.camera && p.camera ? len(sub(m.camera.pos, p.camera.pos)) + Math.acos(Math.max(-1, Math.min(1, dot(m.camera.dir, p.camera.dir)))) : 0;
+    const clip = (m.acciones ?? []).reduce((s, a, j) => s + Math.abs(a.t - (p.acciones?.[j]?.t ?? a.t)), 0);
+    return cam + clip;
+  });
+  const max = Math.max(...act) || 1;
+  const golpes = ms.map((m, k) => (m.input.wheel ? k : -1)).filter((k) => k >= 0);
+  /*
+   * Mientras la página responde, la actividad media tras cada golpe se mantiene (o sube) respecto a la de antes; saturada,
+   * solo frena (con amortiguado 0,95 y 6 fotogramas entre golpes, el cociente cae a ≈ 0,74). La saturación es el último
+   * golpe activo antes de tres inactivos seguidos.
+   */
+  const ventana = (a: number, b: number) => avg(act.slice(Math.max(0, a), Math.max(a + 1, b)));
+  const acum: number[] = [];
+  const activo: boolean[] = [];
+  let acc = 0;
+  golpes.forEach((k, g) => {
+    acc += ms[k].input.wheel ?? 0;
+    acum.push(acc);
+    const paso = (g + 1 < golpes.length ? golpes[g + 1] : k + 6) - k;
+    const antes = ventana(k - paso, k);
+    const despues = ventana(k + 1, k + 1 + paso);
+    activo.push(despues > max * 0.02 && despues >= antes * 0.9);
+  });
+  for (let g = 0; g < golpes.length; g++) {
+    if (!activo[g]) continue;
+    if (activo.slice(g + 1, g + 4).length === 3 && activo.slice(g + 1, g + 4).every((x) => !x)) return acum[g];
+  }
+  return 0;
 }

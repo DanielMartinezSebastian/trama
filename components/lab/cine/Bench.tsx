@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { PMREMGenerator as PMREMClasico, WebGLRenderer } from "three";
 import * as THREE from "three/webgpu";
 import { float, pass, smoothstep, uniform, uv } from "three/tsl";
 import { bloom } from "three/addons/tsl/display/BloomNode.js";
@@ -59,16 +60,39 @@ export function poseAt(planos: Plano[], t: number) {
   const c = camino(p);
   const pos = c.pos ? (c.pos.getPointAt(k).toArray() as [number, number, number]) : lerp3(a.pos, b.pos, k);
   const mira = c.mira ? (c.mira.getPointAt(k).toArray() as [number, number, number]) : lerp3(a.mira, b.mira, k);
-  return { plano: p, pos, mira, fov: a.fov + (b.fov - a.fov) * k };
+  // alabeo: tramos lineales entre desde, los puntos de paso (a fracciones iguales del recorrido) y hasta
+  const rolls = [a.alabeo ?? 0, ...(p.camara.rutaAlabeo ?? []), b.alabeo ?? 0];
+  const f = k * (rolls.length - 1);
+  const j = Math.min(rolls.length - 2, Math.floor(f));
+  const alabeo = rolls[j] + (rolls[j + 1] - rolls[j]) * (f - j);
+  return { plano: p, pos, mira, fov: a.fov + (b.fov - a.fov) * k, alabeo };
 }
 
-/** progreso del reloj de la ficha: segundos (tiempo, en bucle) o 0–1 (scroll) */
+/*
+ * Scroll virtual, como drei ScrollControls: la rueda se acumula en un objetivo de 0 a 1 sobre un recorrido de `duracion`
+ * pantallas. Sin el scroll de la ventana, Chrome no añade su desplazamiento suave a cada golpe (una segunda capa de
+ * suavizado que no está en la ficha), y la captura mide el banco igual que una referencia con scroll virtual.
+ */
+const rueda = { objetivo: 0 };
+function RuedaVirtual({ ficha }: { ficha: Ficha }) {
+  useEffect(() => {
+    if (ficha.reloj !== "scroll") return;
+    rueda.objetivo = 0;
+    const onWheel = (e: WheelEvent) => {
+      rueda.objetivo = Math.min(1, Math.max(0, rueda.objetivo + e.deltaY / (ficha.duracion * innerHeight)));
+    };
+    addEventListener("wheel", onWheel, { passive: true });
+    return () => removeEventListener("wheel", onWheel);
+  }, [ficha]);
+  return null;
+}
+
+/** progreso del reloj de la ficha: segundos (tiempo, en bucle) o 0–1 (scroll virtual) */
 function useReloj(ficha: Ficha) {
   const t = useRef(0);
   useFrame(({ clock }, delta) => {
     if (ficha.reloj === "scroll") {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      const target = max > 0 ? scrollY / max : 0;
+      const target = rueda.objetivo;
       // amortiguado de la ficha (fracción que queda por fotograma a 60 Hz), independiente de la frecuencia real
       const r = ficha.suavizado ?? 0;
       t.current = r > 0 ? t.current + (target - t.current) * (1 - r ** (delta * 60)) : target;
@@ -90,6 +114,7 @@ function Rig({ ficha }: { ficha: Ficha }) {
     camera.position.set(...pose.pos);
     camera.fov = pose.fov;
     camera.lookAt(mira.set(...pose.mira));
+    if (pose.alabeo) camera.rotateZ((pose.alabeo * Math.PI) / 180);
     camera.updateProjectionMatrix();
   }, -1);
   return null;
@@ -149,7 +174,8 @@ function Entorno({ ficha }: { ficha: Ficha }) {
       }
     };
     if (e.tipo === "estudio") {
-      const pmrem = new THREE.PMREMGenerator(gl as unknown as THREE.WebGPURenderer);
+      // cada motor tiene su generador de PMREM
+      const pmrem = (gl as unknown as { isWebGLRenderer?: boolean }).isWebGLRenderer ? new PMREMClasico(gl as unknown as WebGLRenderer) : new THREE.PMREMGenerator(gl as unknown as THREE.WebGPURenderer);
       apply(pmrem.fromScene(new RoomEnvironment(), 0.04).texture);
       pmrem.dispose();
     } else {
@@ -193,7 +219,7 @@ const FORMAS: Record<string, () => THREE.BufferGeometry> = {
  * (la captura los mide por nombre: color, rugosidad, envMapIntensity…), y con sombras en el render las piezas las dan y
  * las reciben.
  */
-function Gltf({ p, mats, sombras }: { p: Extract<Pieza, { tipo: "gltf" }>; mats: Material[]; sombras: boolean }) {
+function Gltf({ p, mats, sombras, ficha }: { p: Extract<Pieza, { tipo: "gltf" }>; mats: Material[]; sombras: boolean; ficha: Ficha }) {
   const { scene, animations } = useGLTF(p.src, false, false) as unknown as { scene: THREE.Object3D; animations: THREE.AnimationClip[] };
   const mixer = useMemo(() => new THREE.AnimationMixer(scene), [scene]);
   useLayoutEffect(() => {
@@ -215,12 +241,27 @@ function Gltf({ p, mats, sombras }: { p: Extract<Pieza, { tipo: "gltf" }>; mats:
       }
     });
   }, [scene, mats, sombras]);
+  const actions = useRef<THREE.AnimationAction[]>([]);
   useEffect(() => {
     const clips = p.animacion === "*" ? animations.slice(0, 1) : animations.filter((a) => a.name === p.animacion);
-    const actions = clips.map((c) => mixer.clipAction(c.optimize()).play());
-    return () => actions.forEach((a) => a.stop());
-  }, [animations, mixer, p.animacion]);
-  useFrame((_, delta) => mixer.update(delta));
+    actions.current = clips.map((c) => {
+      const a = mixer.clipAction(c.optimize()).play();
+      // atada al reloj: pausada, y el tiempo lo pone cada fotograma
+      a.paused = !!p.animacionReloj;
+      return a;
+    });
+    return () => actions.current.forEach((a) => a.stop());
+  }, [animations, mixer, p.animacion, p.animacionReloj]);
+  const reloj = useReloj(ficha);
+  useFrame((_, delta) => {
+    const ar = p.animacionReloj;
+    if (ar) {
+      // reloj de tiempo en segundos: se normaliza con la duración de la ficha
+      const k = ficha.reloj === "scroll" ? reloj.current : reloj.current / ficha.duracion;
+      for (const a of actions.current) a.time = ar.desde + (ar.hasta - ar.desde) * k;
+      mixer.update(0);
+    } else mixer.update(delta);
+  });
   return <primitive object={scene} scale={p.escala ?? 1} position={p.pos} rotation={p.rot} />;
 }
 
@@ -243,7 +284,7 @@ function Escena({ ficha }: { ficha: Ficha }) {
   return (
     <>
       {ficha.escena.map((p, i) => {
-        if (p.tipo === "gltf") return <Gltf key={i} p={p} mats={ficha.materiales} sombras={!!ficha.render.sombras && ficha.render.sombras !== "ninguna"} />;
+        if (p.tipo === "gltf") return <Gltf key={i} p={p} ficha={ficha} mats={ficha.materiales} sombras={!!ficha.render.sombras && ficha.render.sombras !== "ninguna"} />;
         if (p.tipo === "primitiva") return <Primitiva key={i} p={p} mats={ficha.materiales} />;
         const C = COMPONENTES[p.id];
         if (!C) {
@@ -297,6 +338,8 @@ export default function Bench({ ficha }: { ficha: Ficha }) {
       // R3F: "percentage" = PCFShadowMap, "soft" = PCFSoftShadowMap, "variance" = VSMShadowMap
       shadows={r.sombras && r.sombras !== "ninguna" ? (r.sombras === "vsm" ? "variance" : r.sombras === "pcf" ? "percentage" : "soft") : false}
       gl={async (props) => {
+        // motor clásico: el WebGLRenderer de siempre (materiales y luces de la ruta clásica de three, sin TSL)
+        if (r.motor === "clasico") return new WebGLRenderer({ ...(props as object), antialias: true }) as unknown as THREE.WebGPURenderer & { render: () => void };
         const renderer = new THREE.WebGPURenderer({ ...(props as object), antialias: true, forceWebGL: r.renderer === "webgl2" });
         await renderer.init();
         return renderer as unknown as THREE.WebGPURenderer & { render: () => void };
@@ -310,6 +353,7 @@ export default function Bench({ ficha }: { ficha: Ficha }) {
       style={{ position: "fixed", inset: 0 }}
     >
       {ficha.atmosfera.fondo && <color attach="background" args={[ficha.atmosfera.fondo]} />}
+      <RuedaVirtual ficha={ficha} />
       <Rig ficha={ficha} />
       <Niebla ficha={ficha} />
       <Luces luces={ficha.luz.luces} />
@@ -317,7 +361,7 @@ export default function Bench({ ficha }: { ficha: Ficha }) {
       <Suspense fallback={null}>
         <Escena ficha={ficha} />
       </Suspense>
-      {ficha.post.length > 0 && <Post pases={ficha.post} />}
+      {ficha.post.length > 0 && r.motor !== "clasico" && <Post pases={ficha.post} />}
     </Canvas>
   );
 }

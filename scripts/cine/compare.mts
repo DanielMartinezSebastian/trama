@@ -19,7 +19,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { EJE_NOMBRE } from "../../lib/cine/rubric";
 import type { Eje, Ficha, Pase } from "../../lib/cine/schema";
-import { centro, type Inventario, type Muestra, type Tramo } from "./lib.mts";
+import { alabeo, centro, type Inventario, type Muestra, type Tramo } from "./lib.mts";
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const opt = (n: string, d: string) => {
@@ -35,7 +35,7 @@ const OUT = resolve(opt("--out", join(REF, "..", `comparacion-${basename(BAN)}`)
 mkdirSync(OUT, { recursive: true });
 
 type Imagen = { luma: number; recorte: number; contraste: number; saturacion: number; vineta: number; paleta: { hex: string; peso: number }[] };
-type Cap = { dir: string; meta: { drive: string; fps: number; size: number[]; imagenes: number; url: string }; ms: Muestra[]; ficha: Ficha; medidas: { tramos: Tramo[]; relojScroll?: string | null; imagen?: Imagen }; inv: Inventario["inv"] };
+type Cap = { dir: string; meta: { drive: string; fps: number; size: number[]; imagenes: number; url: string }; ms: Muestra[]; ficha: Ficha; medidas: { tramos: Tramo[]; relojScroll?: string | null; imagen?: Imagen; reloj?: number[] }; inv: Inventario["inv"] };
 
 function load(dir: string): Cap {
   const j = (f: string) => JSON.parse(readFileSync(join(dir, f), "utf8"));
@@ -55,8 +55,23 @@ const ban = load(BAN);
 
 /* ---------------------------------------------------------------- reloj normalizado y cámara interpolada */
 
-/** progreso 0–1 de cada muestra: tiempo sobre la duración, o scroll (ventana o rueda acumulada) */
+const entrada = (c: Cap) => JSON.stringify(c.ms.map((m) => m.input));
+const mismaEntrada = ref.meta.drive === ban.meta.drive && ref.ms.length === ban.ms.length && entrada(ref) === entrada(ban);
+
+/**
+ * Progreso 0–1 de cada muestra: el reloj que guardó la ficha (scroll con saturación y amortiguado, como lo mide el
+ * análisis) o, en capturas antiguas, tiempo sobre la duración o scroll crudo.
+ */
 function progreso(c: Cap): number[] {
+  // misma entrada en las dos capturas (mismo recorrido, mismos golpes de rueda o puntero): cada fotograma es el mismo
+  // instante, y alinear por él no depende de lo bien que se estime el reloj de cada una
+  if (mismaEntrada) return c.ms.map((_, i) => i / Math.max(1, c.ms.length - 1));
+  const r = c.medidas.reloj;
+  if (r && r.length === c.ms.length) {
+    if (c.meta.drive === "scroll") return r;
+    const t0 = r[0], t1 = r[r.length - 1];
+    return r.map((x) => (x - t0) / Math.max(1e-6, t1 - t0));
+  }
   if (c.meta.drive !== "scroll") {
     const t0 = c.ms[0].t, t1 = c.ms[c.ms.length - 1].t;
     return c.ms.map((m) => (m.t - t0) / Math.max(1e-6, t1 - t0));
@@ -91,6 +106,9 @@ const tam = caja ? Math.max(1e-3, len(sub(caja.max, caja.min))) : Math.max(1, le
 const pares = cr.map((a, k) => [a, cb[k]] as const).filter(([a, b]) => a && b);
 const errPos = rms(pares.map(([a, b]) => len(sub(a!.pos, b!.pos)))) / tam;
 const errFov = rms(pares.map(([a, b]) => a!.fov - b!.fov));
+// alabeo: diferencia angular más corta (en grados) entre el giro sobre el eje de mirada de cada una
+const dRoll = (a: number, b: number) => Math.abs(((((a - b) % 360) + 540) % 360) - 180);
+const errRoll = rms(pares.map(([a, b]) => dRoll(alabeo(a!), alabeo(b!))));
 const errDir = rms(pares.map(([a, b]) => (Math.acos(Math.max(-1, Math.min(1, dot(a!.dir, b!.dir)))) * 180) / Math.PI));
 // forma del avance: recorrido acumulado normalizado de cada una, comparado punto a punto
 const avance = (cs: typeof cr) => {
@@ -208,7 +226,7 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
 const alejamiento: Partial<Record<Eje | "imagen", number>> = {
-  camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
+  camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
   post: clamp01(post + render * 0.5),
@@ -221,7 +239,7 @@ const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : EJE_NO
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
   banco: { dir: BAN, url: ban.meta.url },
-  camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
+  camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAlabeoGrados: +errRoll.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
   imagen,
   ssim,
   presupuesto: { referencia: pr, banco: pb },
@@ -250,7 +268,8 @@ const md = [
   ``,
   sinCamara
     ? `- **Sin cámara que comparar** (${pares.length} de ${N + 1} instantes): una de las dos capturas no llegó a pintar la escena; mira los errores de su meta.json.`
-    : `- Error de posición: ${resultado.camara.errorPosicionPct} % del tamaño de la escena · fov: ${resultado.camara.errorFovGrados}° · dirección: ${resultado.camara.errorDireccionGrados}° · forma del avance: ${resultado.camara.errorAvance}`,
+    : `- Error de posición: ${resultado.camara.errorPosicionPct} % del tamaño de la escena · fov: ${resultado.camara.errorFovGrados}° · dirección: ${resultado.camara.errorDireccionGrados}° · alabeo: ${resultado.camara.errorAlabeoGrados}° · forma del avance: ${resultado.camara.errorAvance}`,
+  `- Alineación: ${mismaEntrada ? "fotograma a fotograma (las dos capturas tuvieron la misma entrada)" : "por el reloj estimado de cada captura (entradas distintas)"}`,
   `- Planos: ${planosIguales ? "los mismos movimientos" : "distintos"}`,
   ...tr.map((t, i) => `  - ${i + 1}. ref ${t.mov} (${t.curva}) · banco ${tb[i] ? `${tb[i].mov} (${tb[i].curva})` : "—"}`),
   ``,

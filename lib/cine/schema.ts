@@ -51,6 +51,8 @@ export type PoseCamara = {
   mira: Vec3;
   /** campo de visión vertical en grados (35 mm equivalente: `focalMM`) */
   fov: number;
+  /** alabeo · roll: giro sobre el eje de mirada en grados (positivo = el horizonte baja por la derecha); sin él, horizonte recto */
+  alabeo?: number;
 };
 
 export type Plano = {
@@ -74,6 +76,8 @@ export type Plano = {
     ruta?: Vec3[];
     /** puntos de paso del punto mirado, en los mismos instantes que `ruta` */
     rutaMira?: Vec3[];
+    /** alabeo en los mismos puntos de paso que `ruta` */
+    rutaAlabeo?: number[];
   };
   /** profundidad de campo: distancia de enfoque y apertura; `hasta` para un cambio de foco (rack focus) */
   foco?: { distancia: number; apertura: number; hasta?: number };
@@ -218,7 +222,18 @@ export type Presupuesto = {
  * una simulación) es un `componente` registrado en el banco por su id.
  */
 export type Pieza =
-  | { tipo: "gltf"; src: string; escala?: number; pos?: Vec3; rot?: Vec3; animacion?: string; material?: string }
+  | {
+      tipo: "gltf";
+      src: string;
+      escala?: number;
+      pos?: Vec3;
+      rot?: Vec3;
+      /** clip que se reproduce («*» = el primero) */
+      animacion?: string;
+      /** el clip no corre solo: su tiempo sigue al reloj de la ficha, de `desde` (reloj 0) a `hasta` (reloj 1) */
+      animacionReloj?: { desde: number; hasta: number };
+      material?: string;
+    }
   | { tipo: "primitiva"; forma: "esfera" | "caja" | "toro" | "nudo" | "plano" | "cilindro"; material: string; escala?: number | Vec3; pos?: Vec3; rot?: Vec3; giro?: Vec3 }
   | { tipo: "componente"; id: string; props?: Record<string, unknown> };
 
@@ -257,6 +272,12 @@ export type Ficha = {
     colorSpace: "srgb" | "display-p3" | "linear";
     dprMax: number;
     sombras?: "pcf" | "pcf-soft" | "vsm" | "ninguna";
+    /**
+     * Solo para el banco: «nodos» (por defecto) = WebGPURenderer con materiales de nodos y posprocesado TSL; «clasico» =
+     * WebGLRenderer de siempre, sin posprocesado. Con los mismos valores no iluminan igual (docs/26 §6): para calibrar
+     * contra una referencia WebGL, primero con «clasico».
+     */
+    motor?: "nodos" | "clasico";
   };
   camara: Camara;
   luz: { entorno: Entorno; luces: Luz[] };
