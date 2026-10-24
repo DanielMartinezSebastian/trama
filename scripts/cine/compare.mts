@@ -13,7 +13,7 @@
  *     sin depender de dónde está (un coche con física, un objeto que se lanza); `--ventanas 5.9-6.75,11.9-13.7` la
  *     limita a esos segundos (fuera quedan sucesos que la recreación no tiene: una explosión, un choque con el decorado);
  *   - texto (docs/30 §1): el relato escrito de las dos (relato.json de cine:analyze) emparejado por texto: cuándo entra
- *     cada uno (en fracción del recorrido de scroll o del tiempo), cuánto tarda y si entra igual (fundido, sube…);
+ *     cada uno (píxeles de scroll sobre el recorrido de la referencia, o tiempo), cuánto tarda y si entra igual;
  *   - acabado (docs/29 §1): detalle fino, bordes, contraste local, brillos y grano en doce pares de fotogramas;
  *   - SSIM fotograma a fotograma con ffmpeg (solo tiene sentido si la escena es la misma: calibración);
  *   - coste: llamadas de dibujo, triángulos y pasadas.
@@ -213,17 +213,21 @@ const dinamica = (() => {
 const texto = (() => {
   type Ap = { texto: string; entra: number; scrollEntra: number | null; como: string[]; dura: number; curva: string | null };
   const leer = (d: string): Ap[] => (existsSync(join(d, "relato.json")) ? JSON.parse(readFileSync(join(d, "relato.json"), "utf8")) : []);
-  const ra = leer(REF), rb = leer(BAN);
+  // --tramo-scroll a-b: solo las apariciones de la referencia que entran en ese tramo de scroll (la sección estudiada; el
+  // resto de la página no está en el banco)
+  const tramo = opt("--tramo-scroll", "").split("-").map(Number);
+  const enTramo = (a: Ap) => tramo.length < 2 || isNaN(tramo[1]) || a.scrollEntra == null || (a.scrollEntra >= tramo[0] && a.scrollEntra <= tramo[1]);
+  const ra = leer(REF).filter(enTramo), rb = leer(BAN);
   if (!ra.length) return null;
   const norm = (t: string) => t.toLowerCase().replace(/\s+/g, "");
-  const frac = (c: Cap, a: Ap) => {
-    const maxScroll = Math.max(...c.ms.map((m) => m.scroll?.max ?? 0));
-    return maxScroll > 0 && a.scrollEntra != null ? a.scrollEntra / maxScroll : a.entra / Math.max(1e-6, c.ms[c.ms.length - 1]?.t ?? 1);
-  };
+  // el scroll en píxeles es comparable entre las dos con la misma ventana: se normaliza por el máximo de la referencia
+  // para las dos (las páginas pueden tener largos distintos)
+  const maxRef = Math.max(...ref.ms.map((m) => m.scroll?.max ?? 0));
+  const frac = (c: Cap, a: Ap) => (maxRef > 0 && a.scrollEntra != null ? a.scrollEntra / maxRef : a.entra / Math.max(1e-6, c.ms[c.ms.length - 1]?.t ?? 1));
   const filas = ra.map((a) => {
     const b = rb.find((x) => norm(x.texto) === norm(a.texto));
     if (!b) return { texto: a.texto, falta: true, dMomento: 1, dDura: 1, como: false };
-    return { texto: a.texto, falta: false, dMomento: Math.abs(frac(ref, a) - frac(ban, b)), dDura: Math.abs(a.dura - b.dura) / Math.max(0.2, a.dura, b.dura), como: a.como.join("+") === b.como.join("+") };
+    return { texto: a.texto, falta: false, dMomento: Math.abs(frac(ref, a) - frac(ban, b)), dDura: Math.abs(a.dura - b.dura) / Math.max(0.5, a.dura, b.dura), como: a.como.join("+") === b.como.join("+") };
   });
   const n = filas.length;
   const faltan = filas.filter((f) => f.falta).length;

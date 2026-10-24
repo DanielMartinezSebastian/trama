@@ -161,6 +161,7 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [x] `TypeField` en tema oscuro y la coreografía letra a letra (docs/27 §3b, ronda 16).
 - [x] **Segundo estudio** (24-10-2026): Hublot → `Porthole` y `lib/porthole`; cámara 3 %, imagen 10 %; coste del método (docs/28).
 - [x] **Tercer estudio** (24-10-2026): Bruno Simon → `ToyDrive` y `lib/physics`; dinámica 12 %; eje de acabado (docs/29).
+- [x] **Relato con scroll y medida del DOM** (24-10-2026): Meer Mohsin → `ChapterStage`; eje de texto 21 % (docs/30).
 - [ ] Decorado de `ToyDrive` para subir el acabado y eje de cámara por ventanas (docs/29 §8).
 - [ ] Lo pendiente de Hublot: pueblos más cálidos, puntos muy brillantes, bisel, destello de lente con sol (docs/28 §8).
 - [ ] **Candidatas para próximos estudios**: Bruno Simon (bruno-simon.com: WebGPU + TSL, físicas con Rapier, conducción con teclado; ronda 18) y Chartogne-Taillet (chartogne-taillet.com/en, propuesta del usuario 24-10-2026: three r122, mapa ilustrado de viñedos con 145 mallas, puntos y líneas, GSAP + ScrollTrigger, sonido; aviso de edad «Enter»: capturar con `--clic`).

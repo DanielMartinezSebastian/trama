@@ -7,6 +7,7 @@ import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/componen
 import TypeField from "@/components/ui/TypeField";
 import Porthole from "@/components/ui/Porthole";
 import ToyDrive from "@/components/ui/ToyDrive";
+import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -160,6 +161,35 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <ToyDrive word={p.word as string} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "chapter-stage",
+    component: "ChapterStage",
+    path: "@/components/ui/ChapterStage",
+    name: "Escenario por capítulos con fallo de señal",
+    category: "transiciones",
+    styles: EDITORIAL,
+    description:
+      "Escenario fijado al scroll para contar algo por capítulos: una palabra gigante por capítulo que se releva dentro de una máscara (la que sale sube con curva en S, la que entra llega desde abajo frenando), una tarjeta central con la imagen del capítulo que sufre un fallo de señal (separación de color, desgarros, líneas) en cada relevo, una sala en perspectiva dibujada con líneas, la lista del capítulo y la barra de capítulos. Coreografía medida en meermohsin.me con la medida del DOM de cine:capture (docs/30). Fijado al scroll de la página o controlado con progress (0–1). Colores del tema; sin WebGL, imagen y líneas en SVG.",
+    stageHeight: 540,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ChapterStage.", "Sin progress se fija al scroll: ocupa (suma de perChapter + 1) pantallas.", "perChapter admite una duración por capítulo, en pantallas."],
+    props: [
+      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.1, min: 0, max: 1, step: 0.01 },
+      { key: "height", label: "Alto (px)", type: "number", default: 520, min: 320, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <ChapterStage
+          progress={p.progress as number}
+          height={p.height as number}
+          chapters={[
+            { word: "Legacy", label: "Tension", image: ART[0].src, items: ["Brand systems", "Art direction", "Motion"] },
+            { word: "Craft", label: "Immersion", image: ART[3].src, items: ["Interfaces", "Prototyping", "Research"] },
+            { word: "Impact", label: "Impact", image: ART[5].src, items: ["Launch", "Performance", "Growth"] },
+          ]}
+        />
       </div>
     ),
   },

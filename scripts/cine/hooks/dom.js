@@ -41,7 +41,8 @@
       const p = b.parentElement;
       if (!p || p === document.body) break;
       const corto = (b.textContent || "").trim().length <= 14;
-      const enLinea = getComputedStyle(b).display.startsWith("inline") || b.tagName === "SPAN";
+      // solo los trozos en línea (inline, inline-block): un span con display: block es una línea propia
+      const enLinea = getComputedStyle(b).display.startsWith("inline");
       if (corto && enLinea) b = p;
       else break;
     }
@@ -77,7 +78,8 @@
       const t = e.tagName;
       const fondo = getComputedStyle(e).backgroundColor;
       const alfa = /rgba([^)]*,s*([d.]+))/.exec(fondo);
-      const opaco = t === "CANVAS" || t === "IMG" || t === "VIDEO" || (fondo !== "transparent" && (!alfa || parseFloat(alfa[1]) > 0.5) && fondo !== "rgba(0, 0, 0, 0)");
+      // un lienzo no cuenta: puede ser transparente donde no pinta (lo decide el análisis con los píxeles)
+      const opaco = t === "IMG" || t === "VIDEO" || (fondo !== "transparent" && (!alfa || parseFloat(alfa[1]) > 0.5) && fondo !== "rgba(0, 0, 0, 0)");
       if (opaco && parseFloat(getComputedStyle(e).opacity) > 0.3) {
         encima = 0;
         break;
@@ -120,8 +122,16 @@
         }
         if (cs.overflow === "hidden" || cs.overflowY === "hidden") clip = clip || 0.5;
         const txt = (b.textContent || "").replace(/\s+/g, " ").trim().slice(0, 48);
-        const vis = visible(b, rb);
-        out.push({ k: clave(b), txt, vis, r: [Math.round(rb.left), Math.round(rb.top), Math.round(rb.width), Math.round(rb.height)], op: Math.round((op / trozos.length) * 1000) / 1000, dy: Math.round((dy / trozos.length) * 10) / 10, clip, blur, col: cs.color, fs: Math.round(fs) });
+        // la caja real de las letras (se mueven con su transform): un bloque cuyas letras están fuera de su máscara no se
+        // ve aunque la caja del bloque siga en su sitio (palabras apiladas en el mismo hueco, docs/30 trampa)
+        let l = Infinity, t = Infinity, rr = -Infinity, bb = -Infinity;
+        for (const { r } of trozos) {
+          l = Math.min(l, r.left); t = Math.min(t, r.top); rr = Math.max(rr, r.right); bb = Math.max(bb, r.bottom);
+        }
+        const rl = { left: l, top: t, right: rr, bottom: bb, width: rr - l, height: bb - t };
+        const vis = visible(b, rl);
+        const rd = rl;
+        out.push({ k: clave(b), txt, vis, r: [Math.round(rd.left), Math.round(rd.top), Math.round(rd.width), Math.round(rd.height)], op: Math.round((op / trozos.length) * 1000) / 1000, dy: Math.round((dy / trozos.length) * 10) / 10, clip, blur, col: cs.color, fs: Math.round(fs) });
       }
       // los 40 más grandes: titulares y textos de primer plano antes que la letra pequeña
       return out.sort((a, b) => b.fs * b.r[2] - a.fs * a.r[2]).slice(0, 40);

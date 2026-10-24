@@ -125,7 +125,11 @@ export function relatoDom(dir: string, ms: Muestra[], size: [number, number]): A
       let b = k;
       while (b < s.length - 1 && s[b + 1].tinta >= s[b].tinta && s[b + 1].tinta > umbral) b++;
       const tramo = s.slice(a, b + 1);
-      const dura = tramo[tramo.length - 1].t - tramo[0].t;
+      // duración del 10 % al 90 % de la subida: no depende de dónde empieza la rampa (un bloque que entra en pantalla
+      // poco a poco tiene una cola larga de tinta baja)
+      const t0v = tramo[0].tinta, t1v = tramo[tramo.length - 1].tinta;
+      const cruza = (f: number) => tramo.find((x) => x.tinta >= t0v + (t1v - t0v) * f)?.t ?? tramo[0].t;
+      const dura = Math.max(0, cruza(0.9) - cruza(0.1));
       const como: Aparicion["como"] = [];
       if (tramo[tramo.length - 1].op - tramo[0].op > 0.2) como.push("fundido");
       if (tramo[0].dy - tramo[tramo.length - 1].dy > 6 || tramo[0].y - tramo[tramo.length - 1].y > 20) como.push("sube");

@@ -370,3 +370,28 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
   border-radius: 999px; font: 500 0.72rem/1.3 var(--font-mono, ui-monospace, monospace); text-align: center; color: var(--fg);
   background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(6px); pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .ui-td__gl { transition: none; } }
+
+/* ChapterStage: escenario por capítulos fijado al scroll (docs/30). La palabra gigante se releva dentro de .ui-chs__words
+   (máscara de una línea); la tarjeta va encima, centrada, como en la referencia */
+.ui-chs .ui-pin__in { background: var(--bg); color: var(--fg); }
+.ui-chs__stage { position: relative; height: 100%; overflow: hidden; display: grid; place-items: center; }
+.ui-chs__room { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--acc); stroke-width: 0.15; opacity: 0.35; vector-effect: non-scaling-stroke; }
+.ui-chs__words { position: relative; display: grid; overflow: hidden; height: 1.15em; line-height: 1.1; font-size: clamp(64px, 15vw, 230px);
+  font-family: var(--chs-font, var(--font-instrument-serif, "Instrument Serif", Georgia, serif)); font-style: italic; color: var(--acc); }
+.ui-chs__word { grid-area: 1 / 1; display: block; text-align: center; white-space: nowrap; will-change: transform; }
+.ui-chs__card { position: absolute; left: 50%; top: 50%; width: clamp(120px, 15vw, 220px); aspect-ratio: 3 / 4; object-fit: cover; transform: translate(-50%, -50%);
+  filter: grayscale(1) contrast(1.2); mix-blend-mode: luminosity; outline: 1px solid var(--acc); }
+.ui-chs__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; pointer-events: none; }
+.ui-chs__gl.is-on { opacity: 1; }
+.ui-chs__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-chs__lists { position: absolute; right: clamp(16px, 5vw, 64px); top: 50%; transform: translateY(-50%); display: grid; text-align: right; }
+.ui-chs__lists ul { grid-area: 1 / 1; margin: 0; padding: 0; list-style: none; font: 500 clamp(11px, 1vw, 14px)/1.6 var(--font-mono, ui-monospace, monospace); color: var(--acc); }
+.ui-chs__bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-around; padding: 14px max(16px, 4vw) 18px;
+  font: 600 11px/1 var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); border-top: 1px solid color-mix(in srgb, var(--acc) 30%, transparent); }
+.ui-chs__bar span { transition: color 0.3s; }
+.ui-chs__bar span.is-on { color: var(--fg); }
+.ui-chs__bar i { position: absolute; left: 0; top: -1px; height: 1px; width: calc(var(--ch-p, 0) * 100%); background: var(--acc); }
+@media (max-width: 640px) { .ui-chs__lists { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ui-chs__gl { transition: none; } }
+.ui-chs--libre { position: relative; overflow: hidden; }
+.ui-chs--libre .ui-pin__in { position: relative; height: 100%; display: grid; background: var(--bg); color: var(--fg); }

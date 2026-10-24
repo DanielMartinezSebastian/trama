@@ -966,6 +966,19 @@ Envuelve contenido (`children`), p. ej.: `<img src="…" alt="" />`
 |---|---|---|
 | `speed` | number -0.5–0.5 | 0.15 |
 
+### Escenario por capítulos con fallo de señal — `ChapterStage`
+
+Escenario fijado al scroll para contar algo por capítulos: una palabra gigante por capítulo que se releva dentro de una máscara (la que sale sube con curva en S, la que entra llega desde abajo frenando), una tarjeta central con la imagen del capítulo que sufre un fallo de señal (separación de color, desgarros, líneas) en cada relevo, una sala en perspectiva dibujada con líneas, la lista del capítulo y la barra de capítulos. Coreografía medida en meermohsin.me con la medida del DOM de cine:capture (docs/30). Fijado al scroll de la página o controlado con progress (0–1). Colores del tema; sin WebGL, imagen y líneas en SVG.
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.1 |
+| `height` | number 320–800 | 520 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ChapterStage.
+- Sin progress se fija al scroll: ocupa (suma de perChapter + 1) pantallas.
+- perChapter admite una duración por capítulo, en pantallas.
+
 ### Trazo que se dibuja (firma, subrayado, círculo) — `LineDraw`
 
 Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el scroll: firma, subrayado, círculo o flecha a mano alzada, o cualquier trazado propio (`d` + `viewBox`). La firma sobre la foto de Lando Norris. Decorativo (aria-hidden): el texto va aparte.
