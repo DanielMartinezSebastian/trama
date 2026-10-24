@@ -3,7 +3,7 @@
  * captura a ficha (`fichaDesdeCaptura`) y la segmentación de la cámara en planos con su movimiento y su curva.
  */
 import { fitCurve } from "../../lib/cine/curves";
-import type { Ficha, Luz, Material, Movimiento, Pase, Plano, ToneMapping, Vec3 } from "../../lib/cine/schema";
+import type { Ficha, Flotacion, Luz, Material, Movimiento, Oscilacion, Pase, Plano, ToneMapping, Vec3 } from "../../lib/cine/schema";
 
 export type Camara = { type: string; fov: number; focalMM: number | null; zoom: number; near: number; far: number; aspect: number; pos: Vec3; dir: Vec3; quat: number[] | null; up: Vec3 | null };
 export type Pasada = { kind: string; cam: string | null; target: string | null; size: number[] | null; name: string | null; mat: string | null; scale?: number | null };
@@ -20,6 +20,10 @@ export type Muestra = {
   rendersPerFrame: number;
   scroll: { y: number; max: number };
   acciones?: { clip: string; t: number; dur: number | null; paused: boolean; peso: number }[];
+  /** pose de cada pieza: origen (p), cuaternión del mundo (q) y centro de su caja en el mundo (c, dónde se ve) */
+  piezas?: { n: string; p: Vec3; q: number[]; c?: Vec3 | null }[];
+  /** color, emisivo y opacidad de cada material con nombre */
+  mats?: { n: string; c: string | null; e: string | null; o: number }[];
 };
 type Inv = {
   counts: Record<string, number>;
@@ -31,6 +35,8 @@ type Inv = {
   lights: { type: string; color: string; groundColor: string | null; intensity: number; pos: Vec3; distance?: number; decay?: number; angle?: number; penumbra?: number; castShadow: boolean; shadowMap?: number[]; onCamera?: boolean; local?: Vec3 }[];
   materials: Record<string, unknown> & { type: string; id: string }[];
   post: { pass: string; material: string; params: { name: string; value: unknown }[] }[];
+  camaraCadena?: string[];
+  clips?: { clip: string; nodos: string[] }[];
 };
 export type Inventario = { frame: number; t: number; inv: Inv | null };
 
@@ -465,6 +471,9 @@ export function firmasJs(code: string): Record<string, number> {
 export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: string; drive: string; size: number[] }, ms: Muestra[], invs: Inventario[], shaders: { code: string; lang?: string }[] = [], js = "") {
   const first = ms.find((m) => m.renderer) ?? ms[0];
   const inv = invs.find((x) => x.inv)?.inv ?? null;
+  // estado asentado: el último inventario (los materiales pueden cambiar al empezar: resaltados, fundidos)
+  const invFinal = [...invs].reverse().find((x) => x.inv)?.inv ?? inv;
+  const transiciones = transicionesMateriales(ms);
   const c0 = centro(inv);
   const scroll = meta.drive === "scroll";
   /*
@@ -540,12 +549,12 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       dprMax: r?.pixelRatio ?? 1,
       sombras: !r?.shadows?.enabled ? "ninguna" : r.shadows.type === "vsm" ? "vsm" : r.shadows.type === "pcf-soft" ? "pcf-soft" : "pcf",
     },
-    camara: { near: first.camera?.near ?? 0.1, far: first.camera?.far ?? 100, planos },
+    camara: { near: first.camera?.near ?? 0.1, far: first.camera?.far ?? 100, planos, deModelo: camaraDeModelo(inv) },
     luz: {
       entorno: !inv?.environment ? { tipo: "ninguno" } : { tipo: "hdri", src: "?", intensidad: inv.environmentIntensity ?? 1, fondo: inv.background?.kind === inv.environment.kind },
       luces: (inv?.lights ?? []).map((l) => ({ tipo: LUZ[l.type] ?? "puntual", color: l.color, suelo: l.groundColor ?? undefined, intensidad: l.intensity, pos: l.onCamera ? l.local : l.pos, deCamara: l.onCamera || undefined, distancia: l.distance || undefined, decaimiento: l.decay, angulo: l.angle, penumbra: l.penumbra, sombra: l.castShadow && l.shadowMap ? { mapa: l.shadowMap[0] } : undefined })),
     },
-    materiales: ((inv?.materials ?? []) as unknown as Record<string, unknown>[]).slice(0, 16).map((m) => ({
+    materiales: ((invFinal?.materials ?? []) as unknown as Record<string, unknown>[]).slice(0, 16).map((m) => ({
       id: String(m.name ?? m.id),
       modelo: MODELO(String(m.type)),
       color: m.color as string | undefined,
@@ -562,6 +571,7 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       iridiscencia: m.iridescence as number | undefined,
       opacidad: m.opacity as number | undefined,
       intensidadEntorno: m.envMapIntensity as number | undefined,
+      transicion: transiciones.get(String(m.name)),
     })),
     atmosfera: {
       niebla: inv?.fog ? (inv.fog.type === "exp2" ? { tipo: "exp2", color: inv.fog.color, densidad: inv.fog.density } : { tipo: "lineal", color: inv.fog.color, near: inv.fog.near, far: inv.fog.far }) : undefined,
@@ -589,6 +599,7 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
       firmasCodigo: firmasJs(js),
       relojScroll: scroll ? (windowScrolls ? "ventana" : "rueda") : null,
       animaciones: animaciones(ms, reloj),
+      flotacion: flotaciones(ms),
       suavizado,
       // el reloj de la ficha en cada muestra (con saturación y amortiguado ya aplicados): lo usa cine:compare
       reloj: ms.map((m) => +reloj(m).toFixed(5)),
@@ -695,4 +706,109 @@ export function saturacionRueda(ms: Muestra[]): number {
     if (activo.slice(g + 1, g + 4).length === 3 && activo.slice(g + 1, g + 4).every((x) => !x)) return acum[g];
   }
   return 0;
+}
+
+/** ajuste c + a·sen(ωt) + b·cos(ωt) por mínimos cuadrados; devuelve amplitud, fase y r² */
+function senoide(ts: number[], ys: number[], w: number) {
+  // ecuaciones normales 3×3 (resueltas con Cramer: es pequeño)
+  let n = 0, s = 0, c = 0, ss = 0, cc = 0, sc = 0, y = 0, ys_ = 0, yc = 0;
+  ts.forEach((t, i) => {
+    const si = Math.sin(w * t), ci = Math.cos(w * t), yi = ys[i];
+    n++; s += si; c += ci; ss += si * si; cc += ci * ci; sc += si * ci; y += yi; ys_ += yi * si; yc += yi * ci;
+  });
+  const M = [[n, s, c], [s, ss, sc], [c, sc, cc]];
+  const v = [y, ys_, yc];
+  const det = (m: number[][]) => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+  const D = det(M);
+  if (Math.abs(D) < 1e-12) return { c0: avg(ys), amp: 0, fase: 0, r2: 0 };
+  const col = (k: number) => M.map((row, i) => row.map((x, j) => (j === k ? v[i] : x)));
+  const [c0, a, b] = [0, 1, 2].map((k) => det(col(k)) / D);
+  const mean = avg(ys);
+  const sst = ys.reduce((acc, yi) => acc + (yi - mean) ** 2, 0);
+  const sse = ts.reduce((acc, t, i) => acc + (ys[i] - (c0 + a * Math.sin(w * t) + b * Math.cos(w * t))) ** 2, 0);
+  // a·sen + b·cos = amp·sen(ωt + fase)
+  return { c0, amp: Math.hypot(a, b), fase: Math.atan2(b, a), r2: sst > 1e-12 ? 1 - sse / sst : 0 };
+}
+
+/**
+ * Flotación de las piezas (docs/26 §4): la pose de cada malla con nombre, por fotograma, se ajusta a una senoide con un
+ * periodo común (de 1 s a 1,5 veces lo capturado; gana el que mejor explica la altura de todas las piezas). Una pieza flota si su
+ * altura oscila con r² > 0,9 y amplitud clara. El pivote es la posición media de la pieza (el origen de la malla). El giro
+ * sale del cuaternión del mundo como vector de ángulo pequeño (2·q.xyz). Con piezas que también mueve una animación, el
+ * ajuste lo pierde: entonces no se declara flotación.
+ */
+export function flotaciones(ms: Muestra[]): Flotacion[] {
+  const series = new Map<string, { t: number[]; p: Vec3[]; r: number[][] }>();
+  for (const m of ms)
+    for (const pz of m.piezas ?? []) {
+      if (!series.has(pz.n)) series.set(pz.n, { t: [], p: [], r: [] });
+      const s = series.get(pz.n)!;
+      const sg = pz.q[3] < 0 ? -1 : 1;
+      s.t.push(m.t);
+      s.p.push(pz.p);
+      s.r.push([2 * sg * pz.q[0], 2 * sg * pz.q[1], 2 * sg * pz.q[2]]);
+    }
+  const piezas = [...series].filter(([, s]) => s.t.length > 60);
+  if (!piezas.length) return [];
+  const dur = ms[ms.length - 1].t - ms[0].t;
+  // periodo común: el que mejor explica la altura de todas (suma de r²), sin pasar de 1,5 veces lo capturado (con menos de
+  // dos tercios de ciclo, un periodo larguísimo encaja cualquier trozo de curva)
+  let mejor = { periodo: 0, score: -Infinity };
+  for (let periodo = 1; periodo <= Math.min(40, dur * 1.5); periodo += 0.05) {
+    const w = (2 * Math.PI) / periodo;
+    let score = 0;
+    for (const [, s] of piezas) {
+      const ys = s.p.map((p) => p[1]);
+      const f = senoide(s.t, ys, w);
+      score += f.r2;
+    }
+    if (score > mejor.score) mejor = { periodo, score };
+  }
+  const w = (2 * Math.PI) / mejor.periodo;
+  const out: Flotacion[] = [];
+  for (const [n, s] of piezas) {
+    const fy = senoide(s.t, s.p.map((p) => p[1]), w);
+    if (fy.r2 < 0.9 || fy.amp < 1e-3) continue;
+    const giro = [0, 1, 2].map((k) => {
+      const f = senoide(s.t, s.r.map((r) => r[k]), w);
+      return { amp: +f.amp.toFixed(5), fase: +f.fase.toFixed(4) };
+    }) as [Oscilacion, Oscilacion, Oscilacion];
+    const pm = [0, 1, 2].map((k) => avg(s.p.map((p) => p[k])));
+    out.push({ pieza: n, pivote: [+pm[0].toFixed(4), +fy.c0.toFixed(4), +pm[2].toFixed(4)], periodo: +mejor.periodo.toFixed(2), y: { amp: +fy.amp.toFixed(5), fase: +fy.fase.toFixed(4) }, giro });
+  }
+  return out;
+}
+
+/** hex sRGB → lineal (como trabaja three los colores) */
+const lineal = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c > 0.04045 ? ((c + 0.055) / 1.055) ** 2.4 : c / 12.92));
+
+/**
+ * Transiciones de color de los materiales: el que empieza con un color y acaba con otro. El amortiguado sale como el del
+ * scroll: la mediana de d[k+1]/d[k], con d la distancia (en lineal) al color final, mientras la distancia es clara.
+ */
+export function transicionesMateriales(ms: Muestra[]): Map<string, { desde: string; suavizado: number }> {
+  const series = new Map<string, string[]>();
+  for (const m of ms) for (const x of m.mats ?? []) if (x.c) (series.get(x.n) ?? series.set(x.n, []).get(x.n)!).push(x.c);
+  const out = new Map<string, { desde: string; suavizado: number }>();
+  for (const [n, cs] of series) {
+    if (cs.length < 10 || cs[0] === cs[cs.length - 1]) continue;
+    const fin = lineal(cs[cs.length - 1]);
+    const d = cs.map((c) => len(sub(lineal(c), fin)));
+    const d0 = d[0] || 1;
+    const ratios: number[] = [];
+    for (let k = 0; k < d.length - 1; k++) if (d[k] > d0 * 0.02 && d[k + 1] > 0) ratios.push(d[k + 1] / d[k]);
+    const r = ratios.length >= 3 ? median(ratios) : 0;
+    out.set(n, { desde: cs[0], suavizado: Math.round(Math.min(0.999, Math.max(0, r)) * 1000) / 1000 });
+  }
+  return out;
+}
+
+/** cámara de autor: un clip anima un nodo de la cadena de padres de la cámara (la cámara de un GLB de Blender) */
+export function camaraDeModelo(inv: Inv | null): { nodo: string; clip: string } | undefined {
+  const cadena = (inv?.camaraCadena ?? []).filter(Boolean);
+  for (const c of inv?.clips ?? []) {
+    const nodo = c.nodos.find((n) => cadena.includes(n));
+    if (nodo) return { nodo, clip: c.clip };
+  }
+  return undefined;
 }

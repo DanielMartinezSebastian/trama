@@ -155,8 +155,8 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 
 ## 4b. Cine 3D: capturar y recrear webs WebGL/WebGPU (docs/26, 23-10-2026)
 
-- [ ] **Camera-scroll, quinta vuelta**: la cuarta (docs/26 §6) dejó la cámara al 4,4 % y el clip del GLB en su sitio;
-      falta la flotación de las piezas (`Float` de drei) y su jerarquía, que es lo que aún aclara la imagen (+0,07).
+- [x] **Camera-scroll, quinta vuelta** (24-10-2026): flotación, transición de material y cámara de autor; SSIM 0,921,
+      ningún eje por encima del 18 % (docs/26 §6).
 - [ ] **Primer estudio real** de una pieza de la portada de threejs.org y después webs premiadas cerradas.
 - [ ] **Motores sin three**: flujo óptico para la cámara, WebGPU Inspector y Spector.js para las pasadas.
 - [ ] **Extraer al kit** la pila TSL del banco (`lib/postfx`, componente `PostFX`) y añadir el campo `cine` a las guías.

@@ -15,7 +15,7 @@ import { smaa } from "three/addons/tsl/display/SMAANode.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { ease, lerp3 } from "@/lib/cine/curves";
-import type { Ficha, Luz, Material, Pase, Pieza, Plano, ToneMapping } from "@/lib/cine/schema";
+import type { Ficha, Flotacion, Luz, Material, Pase, Pieza, Plano, ToneMapping } from "@/lib/cine/schema";
 import { COMPONENTES } from "./componentes";
 
 /*
@@ -110,6 +110,8 @@ function Rig({ ficha }: { ficha: Ficha }) {
     camera.far = ficha.camara.far;
   }, [camera, ficha]);
   useFrame(() => {
+    // cámara de autor: la pone el modelo (Gltf), aquí solo el fov de la ficha
+    if (ficha.camara.deModelo) return;
     const pose = poseAt(ficha.camara.planos, t.current);
     camera.position.set(...pose.pos);
     camera.fov = pose.fov;
@@ -222,15 +224,19 @@ const FORMAS: Record<string, () => THREE.BufferGeometry> = {
 function Gltf({ p, mats, sombras, ficha }: { p: Extract<Pieza, { tipo: "gltf" }>; mats: Material[]; sombras: boolean; ficha: Ficha }) {
   const { scene, animations } = useGLTF(p.src, false, false) as unknown as { scene: THREE.Object3D; animations: THREE.AnimationClip[] };
   const mixer = useMemo(() => new THREE.AnimationMixer(scene), [scene]);
+  // materiales con transición de entrada: su color se acerca al de la ficha en cada fotograma
+  const fundidos = useRef<{ mat: THREE.MeshStandardMaterial; hacia: THREE.Color; r: number }[]>([]);
   useLayoutEffect(() => {
+    fundidos.current = [];
     scene.traverse((o) => {
       const mesh = o as THREE.Mesh;
       if (!mesh.isMesh) return;
-      mesh.castShadow = mesh.receiveShadow = sombras;
+      mesh.castShadow = mesh.receiveShadow = sombras && !p.sinSombra?.includes(mesh.name);
       for (const mat of (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.MeshStandardMaterial[]) {
         const m = mats.find((x) => x.id === mat.name);
         if (!m) continue;
-        if (m.color) mat.color?.set(m.color);
+        if (m.color) mat.color?.set(m.transicion?.desde ?? m.color);
+        if (m.color && m.transicion && mat.color) fundidos.current.push({ mat, hacia: new THREE.Color(m.color), r: m.transicion.suavizado });
         if (m.rugosidad !== undefined) mat.roughness = m.rugosidad;
         if (m.metalico !== undefined) mat.metalness = m.metalico;
         if (m.intensidadEntorno !== undefined) mat.envMapIntensity = m.intensidadEntorno;
@@ -240,7 +246,7 @@ function Gltf({ p, mats, sombras, ficha }: { p: Extract<Pieza, { tipo: "gltf" }>
         mat.needsUpdate = true;
       }
     });
-  }, [scene, mats, sombras]);
+  }, [scene, mats, sombras, p.sinSombra]);
   const actions = useRef<THREE.AnimationAction[]>([]);
   useEffect(() => {
     const clips = p.animacion === "*" ? animations.slice(0, 1) : animations.filter((a) => a.name === p.animacion);
@@ -253,7 +259,44 @@ function Gltf({ p, mats, sombras, ficha }: { p: Extract<Pieza, { tipo: "gltf" }>
     return () => actions.current.forEach((a) => a.stop());
   }, [animations, mixer, p.animacion, p.animacionReloj]);
   const reloj = useReloj(ficha);
-  useFrame((_, delta) => {
+  const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
+  const escalaTmp = useMemo(() => new THREE.Vector3(), []);
+  /*
+   * Flotación: cada pieza entra en un grupo colgado de la raíz del GLB en su pivote (attach conserva su posición en el
+   * mundo) y el grupo sube, baja y se balancea. Es el mismo movimiento rígido que en la referencia aunque la jerarquía
+   * del modelo sea otra.
+   */
+  // en un efecto con limpieza (no en useMemo: StrictMode lo ejecuta dos veces y dejaba las piezas en grupos quietos)
+  const flotantes = useRef<{ g: THREE.Group; f: Flotacion }[]>([]);
+  useLayoutEffect(() => {
+    const out: { g: THREE.Group; f: Flotacion; mesh: THREE.Object3D; padre: THREE.Object3D }[] = [];
+    scene.updateMatrixWorld(true);
+    for (const f of p.flotacion ?? []) {
+      const mesh = scene.getObjectByName(f.pieza);
+      if (!mesh?.parent) continue;
+      const g = new THREE.Group();
+      g.name = `flotacion:${f.pieza}`;
+      g.position.set(...f.pivote);
+      scene.add(g);
+      g.updateMatrixWorld(true);
+      const padre = mesh.parent;
+      g.attach(mesh);
+      out.push({ g, f, mesh, padre });
+    }
+    flotantes.current = out;
+    return () => {
+      // cada pieza vuelve a su padre en su pose de reposo, y los grupos se van
+      for (const { g, f, mesh, padre } of out) {
+        g.rotation.set(0, 0, 0);
+        g.position.set(...f.pivote);
+        g.updateMatrixWorld(true);
+        padre.attach(mesh);
+        scene.remove(g);
+      }
+      flotantes.current = [];
+    };
+  }, [scene, p.flotacion]);
+  useFrame(({ clock }, delta) => {
     const ar = p.animacionReloj;
     if (ar) {
       // reloj de tiempo en segundos: se normaliza con la duración de la ficha
@@ -261,6 +304,30 @@ function Gltf({ p, mats, sombras, ficha }: { p: Extract<Pieza, { tipo: "gltf" }>
       for (const a of actions.current) a.time = ar.desde + (ar.hasta - ar.desde) * k;
       mixer.update(0);
     } else mixer.update(delta);
+    // como Color.lerp de three, en espacio lineal, con el amortiguado medido (independiente de la frecuencia real)
+    for (const { mat, hacia, r } of fundidos.current) mat.color.lerp(hacia, 1 - r ** (delta * 60));
+    const t = clock.elapsedTime;
+    for (const { g, f } of flotantes.current) {
+      const w = (2 * Math.PI) / f.periodo;
+      const osc = (o: { amp: number; fase: number }) => o.amp * Math.sin(w * t + o.fase);
+      g.position.set(f.pivote[0], f.pivote[1] + osc(f.y), f.pivote[2]);
+      g.rotation.set(osc(f.giro[0]), osc(f.giro[1]), osc(f.giro[2]));
+    }
+    // cámara de autor: la del modelo, ya animada por su clip, pasa su pose del mundo a la cámara que pinta
+    const dm = ficha.camara.deModelo;
+    if (dm) {
+      const nodo = scene.getObjectByName(dm.nodo);
+      if (nodo) {
+        let fuente: THREE.Object3D = nodo;
+        nodo.traverse((o) => {
+          if ((o as THREE.Camera).isCamera && fuente === nodo) fuente = o;
+        });
+        fuente.updateWorldMatrix(true, false);
+        fuente.matrixWorld.decompose(camera.position, camera.quaternion, escalaTmp);
+        camera.fov = ficha.camara.planos[0]?.camara.desde.fov ?? camera.fov;
+        camera.updateProjectionMatrix();
+      }
+    }
   });
   return <primitive object={scene} scale={p.escala ?? 1} position={p.pos} rotation={p.rot} />;
 }

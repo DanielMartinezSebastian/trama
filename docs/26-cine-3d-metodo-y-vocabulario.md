@@ -98,6 +98,11 @@ Cada valor lleva su origen en `origen`: **medido** (gancho), **vídeo** (anális
 | 7. Interfaz | Texto DOM sobre el lienzo, DOM proyectado, texto en WebGL (SDF/MSDF) | A ojo (y firma «SDF / MSDF») |
 | 8. Presupuesto | Renderer, llamadas de dibujo, triángulos, pasadas por fotograma, ms de GPU, tope de DPR, MB de carga, respaldo | Medido |
 
+**Movimiento propio de la escena** (ejes 1, 2 y 5): **cámara de autor** (`camara.deModelo`: la anima un clip del modelo),
+**animación atada al reloj** (`animacionReloj`: el tiempo de un clip sigue al scroll), **flotación · float/bob** (`flotacion`:
+pivote, periodo, subida y balanceo por pieza) y **transición de material** (`transicion`: color de partida y amortiguado).
+Todo sale de la captura: acciones de los mezcladores, pose de cada pieza y color de cada material por fotograma.
+
 **Contenido** (`escena`): lo que se puede describir como datos (un GLB, una primitiva) va como pieza; lo que no (un
 shader propio, una simulación) es un `componente` registrado en `components/lab/cine/componentes.ts`.
 
@@ -167,6 +172,20 @@ cine:compare <ref> <banco>  ←  cine:capture /lab/cine/<estudio>  ←  banco mo
 
      Resultado: cámara al 4,4 % y alabeo 0,01°, clip del GLB al mismo tiempo, SSIM 0,90; la imagen sigue +0,07 de
      luminancia hasta reproducir la flotación.
+  5. **Quinta vuelta (24-10-2026): la escena se mueve sola.** Con una captura en reposo de 10 s y la pose de cada pieza
+     por fotograma salieron tres cosas que la ficha no tenía:
+     - **Flotación** (`Float` de drei): cada pieza sube y baja ±0,25 y se balancea 3–6° con un periodo común de 12,55 s
+       (speed 2) y su propia fase, alrededor de un pivote común. Se ajusta a senoides y el banco la reproduce con un grupo
+       por pieza en el pivote. Piezas al 1,2 % y 2,5°.
+     - **Transición de material**: los materiales empiezan con el color del GLB (`#f9f9f9`) y se funden a `#202020`
+       con un amortiguado de 0,95 por fotograma (el resaltado al pasar el ratón del ejemplo). La ficha tomaba el primer
+       instante: era la causa de toda la diferencia de tono. Ahora toma el estado asentado y la transición.
+     - **Cámara de autor**: el clip atado al scroll anima el nodo del que cuelga la cámara (`Camera`, de Blender). La
+       captura lo detecta (cadena de padres de la cámara y pistas de cada clip) y el banco usa esa cámara tal cual.
+
+     Resultado: cámara al 0,51 % y 0,6°, los mismos planos, luminancia −0,000, ΔE de la paleta 0,5 y **SSIM 0,921**;
+     ningún eje por encima del 18 %. Lo que queda: el giro de la flotación (una senoide por eje aproxima la de drei) y el
+     contraste (−0,07).
 
 ## 7. Trampas (para no repetirlas)
 
@@ -189,11 +208,15 @@ cine:compare <ref> <banco>  ←  cine:capture /lab/cine/<estudio>  ←  banco mo
 15. **El scroll de la ventana de Chrome se suaviza solo**: un banco con reloj de scroll lee la rueda en virtual.
 16. **Para descartar causas, variantes por URL** (`/lab/cine/<estudio>?ajuste=<json>`) sobre un fotograma fijo: es más
     rápido que editar la ficha y deja el experimento escrito.
+17. **Los materiales también se animan** (resaltados, fundidos): la ficha toma el estado asentado, no el primer instante.
+18. **Una cámara puede venir del modelo**: antes de ajustar curvas, mirar si un clip anima un padre de la cámara.
+19. **Nada con efectos en un `useMemo`**: React (StrictMode) lo ejecuta dos veces; en el banco dejaba las piezas en grupos
+    quietos.
 
 ## 8. Pendiente
 
-- **Camera-scroll, quinta vuelta**: la flotación de las piezas (`Float` de drei) en la ficha y en el banco, y su
-  jerarquía (grupo a escala 0,25, sombras por pieza); el comparador debería comparar también las poses de las piezas.
+- **Camera-scroll**: el giro de la flotación con el modelo exacto de drei (coseno en x, seno en y y z con amplitudes 1/8 y
+  1/20) en vez de una senoide por eje, y el resaltado al pasar el ratón como interacción de la ficha.
 - **Primer estudio real** (fase 4 del plan): una pieza con carácter de la portada de threejs.org (Tidewater, Plain Sight,
   Hublot) y después webs premiadas cerradas (Oryzo, IVRESS, Hubtown).
 - **Motores sin three** (Hydra de Active Theory): flujo óptico sobre el vídeo para la cámara, WebGPU Inspector para las

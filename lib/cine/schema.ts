@@ -88,6 +88,11 @@ export type Camara = {
   near: number;
   far: number;
   planos: Plano[];
+  /**
+   * Cámara de autor: la anima un clip del propio modelo (una cámara de Blender). `nodo` es el nodo animado del que cuelga
+   * la cámara y `clip` el clip que lo mueve; el banco la usa tal cual y los planos quedan como descripción.
+   */
+  deModelo?: { nodo: string; clip: string };
   /** temblor de cámara (camera shake): amplitud en unidades de escena y frecuencia en Hz */
   temblor?: { amplitud: number; frecuencia: number };
   /** respuesta al puntero: desplazamiento (parallax, unidades) e inclinación (grados), con su curva de seguimiento */
@@ -134,6 +139,11 @@ export type Material = {
   rugosidad?: number;
   /** cuánto refleja el entorno (envMapIntensity): bajarlo apaga los brillos del HDRI sin tocar las luces */
   intensidadEntorno?: number;
+  /**
+   * Transición de entrada: el material empieza con este color y se acerca al suyo (`color`) con un amortiguado por
+   * fotograma a 60 Hz (la fracción de la distancia que queda), como un resaltado que se apaga o un fundido.
+   */
+  transicion?: { desde: string; suavizado: number };
   metalico?: number;
   emisivo?: string;
   intensidadEmisiva?: number;
@@ -221,6 +231,26 @@ export type Presupuesto = {
  * Qué hay en la escena. Lo que se puede describir como datos (un GLB, una primitiva) va aquí; lo que no (un shader propio,
  * una simulación) es un `componente` registrado en el banco por su id.
  */
+/** oscilación senoidal: valor = amp · sen(2π·t / periodo + fase), con t en segundos de reloj real */
+export type Oscilacion = { amp: number; fase: number };
+
+/**
+ * Flotación · float/bob (el `Float` de drei y sus parecidos): la pieza sube y baja y se balancea alrededor de un pivote,
+ * con un periodo común y su propia fase. Sale de la pose de cada pieza por fotograma (`cine:analyze`).
+ */
+export type Flotacion = {
+  /** nombre de la malla */
+  pieza: string;
+  /** punto alrededor del que gira, en el mundo */
+  pivote: Vec3;
+  /** segundos por ciclo */
+  periodo: number;
+  /** subida y bajada (unidades de escena) */
+  y: Oscilacion;
+  /** balanceo en radianes sobre los ejes x, y, z del mundo */
+  giro: [Oscilacion, Oscilacion, Oscilacion];
+};
+
 export type Pieza =
   | {
       tipo: "gltf";
@@ -232,6 +262,10 @@ export type Pieza =
       animacion?: string;
       /** el clip no corre solo: su tiempo sigue al reloj de la ficha, de `desde` (reloj 0) a `hasta` (reloj 1) */
       animacionReloj?: { desde: number; hasta: number };
+      /** piezas que flotan por su cuenta (flotación · float/bob), por nombre de malla */
+      flotacion?: Flotacion[];
+      /** mallas que ni dan ni reciben sombra (por nombre), aunque el render tenga sombras */
+      sinSombra?: string[];
       material?: string;
     }
   | { tipo: "primitiva"; forma: "esfera" | "caja" | "toro" | "nudo" | "plano" | "cilindro"; material: string; escala?: number | Vec3; pos?: Vec3; rot?: Vec3; giro?: Vec3 }

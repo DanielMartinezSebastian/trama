@@ -119,6 +119,37 @@ const avance = (cs: typeof cr) => {
 };
 const errAvance = rms(avance(cr).map((x, k) => x - avance(cb)[k]));
 
+/*
+ * Piezas: la pose de cada malla con nombre en el mundo, comparada por nombre en los mismos instantes (solo con la misma
+ * entrada: es lo que delata una flotación o una animación que falta). Posición: el centro de la caja de cada pieza (dónde
+ * se ve; el origen depende de cómo se montó el modelo), en % del tamaño de la escena. Giro: cuánto ha girado desde el
+ * primer fotograma, en grados (la orientación absoluta también depende de la jerarquía).
+ */
+const piezas = (() => {
+  if (!mismaEntrada) return null;
+  const errP: Record<string, number[]> = {}, errG: Record<string, number[]> = {};
+  // giro relativo al primer fotograma: q · q0⁻¹ (el conjugado de un cuaternión unitario es su inverso)
+  const mul = (a: number[], b: number[]) => [a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1], a[3] * b[1] - a[0] * b[2] + a[1] * b[3] + a[2] * b[0], a[3] * b[2] + a[0] * b[1] - a[1] * b[0] + a[2] * b[3], a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
+  const inv = (a: number[]) => [-a[0], -a[1], -a[2], a[3]];
+  const q0r = new Map((ref.ms[0].piezas ?? []).map((p) => [p.n, p.q]));
+  const q0b = new Map((ban.ms[0].piezas ?? []).map((p) => [p.n, p.q]));
+  ref.ms.forEach((m, i) => {
+    const b = ban.ms[i];
+    for (const p of m.piezas ?? []) {
+      const q = b?.piezas?.find((x) => x.n === p.n);
+      if (!q || !q0r.has(p.n) || !q0b.has(p.n)) continue;
+      (errP[p.n] ??= []).push(len(sub(p.c ?? p.p, q.c ?? q.p)) / tam);
+      const dr = mul(p.q, inv(q0r.get(p.n)!)), db = mul(q.q, inv(q0b.get(p.n)!));
+      const d = Math.min(1, Math.abs(dot(dr, db)));
+      (errG[p.n] ??= []).push((2 * Math.acos(d) * 180) / Math.PI);
+    }
+  });
+  const nombres = Object.keys(errP);
+  if (!nombres.length) return null;
+  const porPieza = nombres.map((n) => ({ pieza: n, posicionPct: +(rms(errP[n]) * 100).toFixed(2), giroGrados: +rms(errG[n]).toFixed(2) }));
+  return { porPieza, posicionPct: +(rms(nombres.flatMap((n) => errP[n])) * 100).toFixed(2), giroGrados: +rms(nombres.flatMap((n) => errG[n])).toFixed(2) };
+})();
+
 /* ---------------------------------------------------------------- planos */
 
 const tramos = (c: Cap) => c.medidas.tramos.map((t) => ({ mov: t.movimientos.join("+"), curva: t.curvas[0]?.curva ?? "—", desde: t.desde, hasta: t.hasta }));
@@ -225,22 +256,25 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
   post: clamp01(post + render * 0.5),
   presupuesto,
 };
+// piezas: la pose medida contra la de la referencia, solo cuando las dos tienen piezas con nombre
+if (piezas) alejamiento.piezas = clamp01((piezas.posicionPct / 100) * 5 + piezas.giroGrados / 20);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "piezas" ? "Piezas (posición y giro)" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
   banco: { dir: BAN, url: ban.meta.url },
   camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAlabeoGrados: +errRoll.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
   imagen,
+  piezas,
   ssim,
   presupuesto: { referencia: pr, banco: pb },
   diferencias: difs,
@@ -273,6 +307,7 @@ const md = [
   `- Planos: ${planosIguales ? "los mismos movimientos" : "distintos"}`,
   ...tr.map((t, i) => `  - ${i + 1}. ref ${t.mov} (${t.curva}) · banco ${tb[i] ? `${tb[i].mov} (${tb[i].curva})` : "—"}`),
   ``,
+  ...(piezas ? [`## Piezas`, ``, `- Posición: ${piezas.posicionPct} % del tamaño de la escena · giro: ${piezas.giroGrados}°`, ...piezas.porPieza.map((p) => `  - ${p.pieza}: ${p.posicionPct} % · ${p.giroGrados}°`), ``] : []),
   `## Diferencias`,
   ``,
   ...(difs.length ? difs.map((d) => `- ${d}`) : ["- ninguna en render, luz, atmósfera ni posprocesado"]),

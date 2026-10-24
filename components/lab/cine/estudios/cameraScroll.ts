@@ -1,11 +1,11 @@
 import type { Ficha } from "@/lib/cine/schema";
 
 /**
- * Calibración de cámara (docs/26 §6): el ejemplo camera-scroll de React Three Fiber, montado desde la ficha que sacó
- * `cine:capture` (planos, rutas, curvas, amortiguado y recorrido del scroll, render, luces, materiales y la animación del
- * GLB atada al scroll, todo medido). A mano solo el contenido (su GLB, sin Draco) y el entorno (el HDR que se vio en la
- * red: el preset «city» de drei), descargados a public/lab-assets/ solo para estudio local. Falta la flotación de las
- * piezas (drei Float): docs/26 §6.
+ * Calibración de cámara (docs/26 §6): el ejemplo camera-scroll de React Three Fiber, montado desde dos capturas: con
+ * scroll (cámara de autor animada por el clip del GLB, que va atado al scroll suavizado; planos y curvas como
+ * descripción; render y luces) y en reposo (materiales asentados con su transición de entrada, flotación de cada pieza y
+ * qué piezas no dan sombra). Todo medido. A mano solo el contenido (su GLB, sin Draco) y el entorno (el HDR que se vio en
+ * la red: el preset «city» de drei), descargados a public/lab-assets/ solo para estudio local.
  */
 export const cameraScroll: Ficha = {
   "id": "camera-scroll",
@@ -17,7 +17,7 @@ export const cameraScroll: Ficha = {
     "licencia": "Ejemplo MIT; modelo y HDR de pmndrs, solo estudio local"
   },
   "reloj": "scroll",
-  "suavizado": 0.95,
+  "suavizado": 0.949,
   "duracion": 3.1,
   "aspecto": 1.7778,
   "render": {
@@ -35,7 +35,7 @@ export const cameraScroll: Ficha = {
       {
         "id": "p1",
         "desde": 0,
-        "hasta": 0.632,
+        "hasta": 0.6359,
         "movimientos": [
           "orbita",
           "dolly"
@@ -56,14 +56,14 @@ export const cameraScroll: Ficha = {
           },
           "hasta": {
             "pos": [
-              -5.6616,
-              0.2653,
-              19.3145
+              -5.6586,
+              0.267,
+              19.3167
             ],
             "mira": [
-              5.804,
+              5.798,
               3.063,
-              0.895
+              0.892
             ],
             "fov": 28,
             "alabeo": 0.02
@@ -71,81 +71,81 @@ export const cameraScroll: Ficha = {
           "curva": "sine.in",
           "ruta": [
             [
-              -10.602,
-              -5.236,
-              5.121
+              -10.601,
+              -5.229,
+              5.148
             ],
             [
-              -10.348,
-              -4.473,
-              7.797
+              -10.345,
+              -4.466,
+              7.821
             ],
             [
-              -9.92,
-              -3.617,
-              10.568
+              -9.916,
+              -3.611,
+              10.585
             ],
             [
-              -9.34,
-              -2.762,
-              13.079
+              -9.336,
+              -2.758,
+              13.092
             ],
             [
-              -8.509,
-              -1.832,
-              15.488
+              -8.505,
+              -1.828,
+              15.496
             ],
             [
-              -7.384,
-              -0.86,
-              17.579
+              -7.38,
+              -0.858,
+              17.584
             ]
           ],
           "rutaMira": [
             [
-              3.045,
-              2.982,
-              7.485
+              3.051,
+              2.979,
+              7.492
             ],
             [
-              3.845,
-              2.85,
-              8.063
+              3.852,
+              2.849,
+              8.066
             ],
             [
-              4.947,
-              2.937,
-              8.22
+              4.956,
+              2.938,
+              8.217
             ],
             [
-              6.104,
+              6.111,
               3.14,
-              7.69
+              7.685
             ],
             [
-              7.065,
-              3.326,
-              6.234
+              7.067,
+              3.325,
+              6.226
             ],
             [
-              7.227,
-              3.344,
-              3.902
+              7.225,
+              3.343,
+              3.897
             ]
           ],
           "rutaAlabeo": [
             0,
-            0,
-            0,
+            0.01,
+            0.01,
             0.01,
             0.02,
-            0.04
+            0.03
           ]
         }
       },
       {
         "id": "p2",
-        "desde": 0.6437,
+        "desde": 0.6477,
         "hasta": 1,
         "movimientos": [
           "orbita",
@@ -154,103 +154,103 @@ export const cameraScroll: Ficha = {
         "camara": {
           "desde": {
             "pos": [
-              -5.3173,
-              0.4538,
-              19.5136
+              -5.4093,
+              0.4072,
+              19.4755
             ],
             "mira": [
-              5.386,
-              2.99,
-              0.439
+              5.495,
+              3.009,
+              0.554
             ],
             "fov": 28,
             "alabeo": 0.01
           },
           "hasta": {
             "pos": [
-              8.7689,
-              4.3838,
-              16.0372
+              8.6966,
+              4.3714,
+              16.0766
             ],
             "mira": [
-              -1.999,
-              2.364,
-              1.013
+              -2.008,
+              2.361,
+              0.999
             ],
             "fov": 28,
-            "alabeo": 0.01
+            "alabeo": -0.01
           },
           "curva": "power1.in",
           "ruta": [
             [
-              -2.489,
-              1.688,
-              19.937
+              -2.986,
+              1.503,
+              19.967
             ],
             [
-              0.008,
-              2.475,
-              19.505
+              -0.065,
+              2.454,
+              19.523
             ],
             [
-              2.578,
-              3.134,
-              18.746
+              2.237,
+              3.056,
+              18.867
             ],
             [
-              4.88,
-              3.641,
-              17.865
+              4.69,
+              3.601,
+              17.943
             ],
             [
-              7.306,
-              4.118,
-              16.773
+              7.142,
+              4.089,
+              16.855
             ],
             [
-              9.104,
-              4.441,
-              15.855
+              9.087,
+              4.438,
+              15.863
             ]
           ],
           "rutaMira": [
             [
-              1.833,
-              2.455,
-              -1.479
+              2.407,
+              2.53,
+              -1.342
             ],
             [
-              -0.365,
-              2.223,
-              -1.445
+              -0.315,
+              2.227,
+              -1.458
             ],
             [
-              -1.63,
-              2.165,
-              -0.774
+              -1.523,
+              2.163,
+              -0.874
             ],
             [
-              -2.099,
-              2.205,
-              -0.047
+              -2.077,
+              2.2,
+              -0.107
             ],
             [
-              -2.131,
-              2.298,
-              0.654
+              -2.145,
+              2.292,
+              0.612
             ],
             [
-              -1.953,
-              2.38,
-              1.081
+              -1.955,
+              2.381,
+              1.078
             ]
           ],
           "rutaAlabeo": [
+            0.03,
             0.02,
-            0.02,
-            0.02,
+            0,
             0.01,
-            0.01,
+            0,
             0.01
           ]
         }
@@ -265,35 +265,39 @@ export const cameraScroll: Ficha = {
         "camara": {
           "desde": {
             "pos": [
-              8.7648,
-              4.3831,
-              16.0394
+              8.6961,
+              4.3714,
+              16.0769
             ],
             "mira": [
-              -2,
-              2.364,
-              1.011
-            ],
-            "fov": 28
-          },
-          "hasta": {
-            "pos": [
-              8.6917,
-              4.3706,
-              16.0793
-            ],
-            "mira": [
-              -2.01,
-              2.36,
-              0.997
+              -2.008,
+              2.361,
+              0.999
             ],
             "fov": 28,
             "alabeo": -0.01
           },
+          "hasta": {
+            "pos": [
+              8.691,
+              4.3705,
+              16.0797
+            ],
+            "mira": [
+              -2.008,
+              2.362,
+              0.998
+            ],
+            "fov": 28
+          },
           "curva": "linear"
         }
       }
-    ]
+    ],
+    "deModelo": {
+      "nodo": "Camera",
+      "clip": "CameraAction.005"
+    }
   },
   "luz": {
     "entorno": {
@@ -332,79 +336,107 @@ export const cameraScroll: Ficha = {
     {
       "id": "M_Headphone",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Notebook",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Rocket",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Roundcube",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Table",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Headset",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 0.2
+      "intensidadEntorno": 0.2,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     },
     {
       "id": "M_Zeppelin",
       "modelo": "estandar",
-      "color": "#f9f9f9",
+      "color": "#202020",
       "rugosidad": 0.5,
       "metalico": 0,
       "emisivo": "#000000",
       "intensidadEmisiva": 1,
       "opacidad": 1,
-      "intensidadEntorno": 1
+      "intensidadEntorno": 1,
+      "transicion": {
+        "desde": "#f9f9f9",
+        "suavizado": 0.95
+      }
     }
   ],
   "atmosfera": {},
@@ -415,9 +447,203 @@ export const cameraScroll: Ficha = {
       "src": "/lab-assets/r3f/camera-scroll.glb",
       "animacion": "CameraAction.005",
       "animacionReloj": {
-        "desde": 0.0008,
-        "hasta": 1.1766
-      }
+        "desde": -0.0013,
+        "hasta": 1.1753
+      },
+      "flotacion": [
+        {
+          "pieza": "Headphones",
+          "pivote": [
+            0.06,
+            4.0403,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.24992,
+            "fase": -0.0025
+          },
+          "giro": [
+            {
+              "amp": 0.05515,
+              "fase": -0.7444
+            },
+            {
+              "amp": 0.10194,
+              "fase": 1.5869
+            },
+            {
+              "amp": 0.05515,
+              "fase": -0.7444
+            }
+          ]
+        },
+        {
+          "pieza": "Notebook",
+          "pivote": [
+            0.06,
+            4.0399,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.25002,
+            "fase": 0.9698
+          },
+          "giro": [
+            {
+              "amp": 0.07372,
+              "fase": 0.0577
+            },
+            {
+              "amp": 0.10061,
+              "fase": 2.5595
+            },
+            {
+              "amp": 0.07372,
+              "fase": 0.0577
+            }
+          ]
+        },
+        {
+          "pieza": "Rocket003",
+          "pivote": [
+            0.06,
+            4.0396,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.24968,
+            "fase": 1.9434
+          },
+          "giro": [
+            {
+              "amp": 0.09058,
+              "fase": 0.5022
+            },
+            {
+              "amp": 0.09979,
+              "fase": -2.739
+            },
+            {
+              "amp": 0.09058,
+              "fase": 0.5022
+            }
+          ]
+        },
+        {
+          "pieza": "Roundcube001",
+          "pivote": [
+            0.06,
+            4.0397,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.24983,
+            "fase": 2.9182
+          },
+          "giro": [
+            {
+              "amp": 0.08601,
+              "fase": 0.9348
+            },
+            {
+              "amp": 0.09971,
+              "fase": -1.7715
+            },
+            {
+              "amp": 0.08601,
+              "fase": 0.9348
+            }
+          ]
+        },
+        {
+          "pieza": "Table",
+          "pivote": [
+            0.06,
+            4.04,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.25006,
+            "fase": -2.3925
+          },
+          "giro": [
+            {
+              "amp": 0.06702,
+              "fase": 1.5798
+            },
+            {
+              "amp": 0.09802,
+              "fase": -0.8029
+            },
+            {
+              "amp": 0.06702,
+              "fase": 1.5798
+            }
+          ]
+        },
+        {
+          "pieza": "VR_Headset",
+          "pivote": [
+            0.06,
+            4.0404,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.24974,
+            "fase": -1.4194
+          },
+          "giro": [
+            {
+              "amp": 0.06048,
+              "fase": 2.5511
+            },
+            {
+              "amp": 0.09789,
+              "fase": 0.1744
+            },
+            {
+              "amp": 0.06048,
+              "fase": 2.5511
+            }
+          ]
+        },
+        {
+          "pieza": "Zeppelin",
+          "pivote": [
+            0.06,
+            4.0404,
+            0.35
+          ],
+          "periodo": 12.55,
+          "y": {
+            "amp": 0.24975,
+            "fase": -0.4446
+          },
+          "giro": [
+            {
+              "amp": 0.0787,
+              "fase": -2.9709
+            },
+            {
+              "amp": 0.09789,
+              "fase": 1.1309
+            },
+            {
+              "amp": 0.0787,
+              "fase": -2.9709
+            }
+          ]
+        }
+      ],
+      "sinSombra": [
+        "Zeppelin"
+      ]
     }
   ],
   "presupuesto": {
@@ -437,6 +663,9 @@ export const cameraScroll: Ficha = {
     "presupuesto": "medido",
     "escena": "codigo",
     "escena.0.animacionReloj": "medido",
+    "escena.0.flotacion": "medido",
+    "escena.0.sinSombra": "medido",
+    "camara.deModelo": "medido",
     "luz.entorno": "codigo"
   }
 };

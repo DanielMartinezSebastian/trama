@@ -278,6 +278,13 @@
       materials: [...mats.values()].sort((a, b) => b.users - a.users).slice(0, 60),
       materialCount: mats.size,
       post: passParams(),
+      // de quién cuelga la cámara y qué nodos animan los clips: si un clip mueve un padre de la cámara, es cámara de autor
+      camaraCadena: (() => {
+        const out = [];
+        for (let o = state.lastCamera; o && out.length < 8; o = o.parent) out.push(o.name || "");
+        return out;
+      })(),
+      clips: state.mixers.flatMap((mx) => (mx._actions || []).map((a) => ({ clip: a._clip && a._clip.name, nodos: [...new Set((a._clip ? a._clip.tracks : []).map((t) => t.name.split(".")[0]))] }))).slice(0, 12),
       mixers: state.mixers.length,
       loaders: [...new Set(state.loaders)],
     };
@@ -328,6 +335,55 @@
   };
 
   let lastFrame = 0;
+  /*
+   * Pose en el mundo de las piezas con nombre (hasta 16 mallas), en cada muestra: con ella se ve si la página mueve las
+   * piezas por su cuenta (flotación, giros, animaciones propias) y con qué ritmo. La lista se rehace cada 60 fotogramas.
+   */
+  let piezasCache = [];
+  let piezasFrame = -1;
+  const poses = () => {
+    const scene = state.lastScene;
+    if (!scene) return [];
+    if (state.frame - piezasFrame > 60 || !piezasCache.length) {
+      piezasCache = [];
+      scene.traverse((o) => {
+        if (o.isMesh && o.name && o.visible !== false && piezasCache.length < 16) piezasCache.push(o);
+      });
+      piezasFrame = state.frame;
+    }
+    return piezasCache.map((o) => {
+      o.updateWorldMatrix(true, false);
+      const e = o.matrixWorld.elements;
+      const q = o.getWorldQuaternion(o.quaternion.clone());
+      // centro de la caja de la geometría en el mundo: dónde se ve la pieza (el origen depende de cómo se montó)
+      const g = o.geometry;
+      if (g && !g.boundingBox && g.computeBoundingBox) g.computeBoundingBox();
+      const c = g && g.boundingBox ? g.boundingBox.getCenter(o.position.clone()).applyMatrix4(o.matrixWorld) : null;
+      return { n: o.name, p: [round(e[12], 4), round(e[13], 4), round(e[14], 4)], q: [round(q.x, 5), round(q.y, 5), round(q.z, 5), round(q.w, 5)], c: c ? [round(c.x, 4), round(c.y, 4), round(c.z, 4)] : null };
+    });
+  };
+
+  /*
+   * Color, emisivo y opacidad de los materiales con nombre (hasta 16), en cada muestra: las páginas también los animan
+   * (un resaltado al pasar el ratón, un fundido de entrada). La lista se rehace cada 60 fotogramas.
+   */
+  let matsCache = [];
+  let matsFrame = -1;
+  const matColors = () => {
+    const scene = state.lastScene;
+    if (!scene) return [];
+    if (state.frame - matsFrame > 60 || !matsCache.length) {
+      const seen = new Set();
+      matsCache = [];
+      scene.traverse((o) => {
+        const list = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : [];
+        for (const m of list) if (m.name && !seen.has(m) && matsCache.length < 16) (seen.add(m), matsCache.push(m));
+      });
+      matsFrame = state.frame;
+    }
+    return matsCache.map((m) => ({ n: m.name, c: hex(m.color), e: hex(m.emissive), o: round(m.opacity, 3) }));
+  };
+
   /** Estado ligero de este momento: cámara, renderer y las pasadas desde la muestra anterior. */
   const snapshot = () => {
     const r = state.renderers[state.renderers.length - 1];
@@ -350,6 +406,8 @@
       rendersPerFrame: round(since.length / frames, 2),
       scroll: { y: Math.round(scrollY), max: Math.max(0, document.documentElement.scrollHeight - innerHeight) },
       // acciones de animación (clips de un GLB): su tiempo dice si las mueve el reloj, el scroll o nada
+      piezas: poses(),
+      mats: matColors(),
       acciones: state.mixers.flatMap((mx) => (mx._actions || []).map((a) => ({ clip: a._clip && a._clip.name, t: round(a.time, 4), dur: a._clip ? round(a._clip.duration, 3) : null, paused: !!a.paused, peso: round(a.getEffectiveWeight ? a.getEffectiveWeight() : a.weight, 3) }))).slice(0, 12),
     };
   };
