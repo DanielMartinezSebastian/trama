@@ -32,6 +32,7 @@
     "cine:capture": "tsx scripts/cine/capture.mts",
     "cine:analyze": "tsx scripts/cine/analyze.mts",
     "cine:compare": "tsx scripts/cine/compare.mts",
+    "cine:conjunto": "tsx scripts/cine/conjunto.mts",
     "cine:rampa": "tsx scripts/cine/rampa.mts"
   },
   "dependencies": {

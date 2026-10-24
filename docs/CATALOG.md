@@ -2084,6 +2084,23 @@ Un coche de juguete que se conduce y derriba las letras de una palabra y una pil
 - Haz clic en la escena y conduce con las flechas; o mantén pulsado sobre el suelo.
 - La palabra admite hasta 8 letras.
 
+### Racimo de cruces que sigue al puntero — `CrossCluster`
+
+Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al puntero, para portadas con un objeto 3D vivo detrás del titular. Sin luces ni mapa de entorno: cada píxel calcula de forma analítica la oclusión, la sombra y el reflejo que le dan las demás cruces, sobre un matcap y una sombra propia horneada; las de cristal refractan lo que tienen detrás. Material traducido de los shaders de la portada de Lusion; cámara y dinámica (cuánto sigue al puntero, cuánto tarda en volver, cómo se agita en reposo) medidas con cine:capture y cine:conjunto (docs/31). Física del kit, lib/physics, sin WebAssembly. Colores del tema: fondo de --card, cruces de acento, texto y atenuado, cristal de --acc2.
+
+| prop | tipo | default |
+|---|---|---|
+| `count` | number 8–40 | 24 |
+| `glass` | number 0–4 | 2 |
+| `glossy` | number 0–1 | 0.25 |
+| `follow` | number 0–1 | 0.35 |
+| `interactive` | boolean | true |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/CrossCluster.
+- Usa WebGPU (o su reserva WebGL2): cada píxel recorre todas las cruces, así que con más de 30 el coste sube.
+- El contenido que pases como hijo va encima sin quitarle el puntero a la escena.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

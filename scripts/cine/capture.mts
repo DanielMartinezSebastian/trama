@@ -18,6 +18,8 @@
  *   --size 1440x900               tamaño de la ventana
  *   --sin-dom                     sin la muestra de los textos visibles por fotograma (va por defecto)
  *   --solo-lienzo                 oculta todo menos el lienzo mayor (créditos, paneles, indicador de Next)
+ *   --recorte 64,187,1152,480     solo esa zona de la ventana (x,y,ancho,alto en px): las imágenes y el barrido del
+ *                                 puntero se ciñen a ella (una escena en una tarjeta de la página, como la de Lusion)
  *   --real                        sin reloj virtual: tiempo real (el vídeo sale a la velocidad que dé la máquina)
  *   --clock-later                 el reloj virtual toma el control tras cargar (no desde el arranque): para saltarse la intro
  *   --espera 8                    segundos de tiempo real antes de empezar (con --clock-later): pantallas de carga y
@@ -64,6 +66,8 @@ const CLICS = opt("--clic", "")
   });
 const EVERY = Math.max(1, Number(opt("--every", "1")));
 const [W, H] = opt("--size", "1440x900").split("x").map(Number);
+const [RX, RY, RW, RH] = opt("--recorte", "") ? opt("--recorte", "").split(",").map(Number) : [0, 0, W, H];
+const RECORTE = flag("--recorte") ? { x: RX, y: RY, width: RW, height: RH } : undefined;
 const EXACT = !flag("--real");
 const FROM_START = !flag("--clock-later");
 const FPS = 60;
@@ -221,7 +225,7 @@ async function sample(input: Muestra["input"]) {
   if (frame % EVERY === 0) {
     shot++;
     m.shot = shot;
-    await page.screenshot({ path: join(OUT, "frames", `${String(shot).padStart(5, "0")}.png`) });
+    await page.screenshot({ path: join(OUT, "frames", `${String(shot).padStart(5, "0")}.png`), clip: RECORTE });
   }
   timeline.push(m);
 }
@@ -248,11 +252,11 @@ if (DRIVE === "time") {
   // cola sin tocar nada: cómo se asienta la página (y cómo frena la cámara: de ahí sale el amortiguado del scroll)
   for (let k = 0; k < Math.round(TAIL * FPS); k++) await sample({});
 } else {
-  // barrido del puntero: un ocho tumbado (lemniscata) que recorre el 70 % del lienzo
+  // barrido del puntero: un ocho tumbado (lemniscata) que recorre el 70 % del lienzo (o del recorte)
   for (let i = 0; i < total; i++) {
     const a = (i / total) * Math.PI * 2;
-    const x = W / 2 + Math.sin(a) * W * 0.35;
-    const y = H / 2 + Math.sin(a * 2) * H * 0.25;
+    const x = RX + RW / 2 + Math.sin(a) * RW * 0.35;
+    const y = RY + RH / 2 + Math.sin(a * 2) * RH * 0.25;
     await page.mouse.move(x, y);
     await sample({ pointer: [Math.round(x), Math.round(y)] });
     if (i === Math.floor(total / 2)) await keyInventory();

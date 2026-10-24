@@ -52,7 +52,13 @@ cuatro scripts antes que los de la página (`scripts/cine/hooks/`):
 
 Recorridos (`--drive`): `time` (segundos de intro o bucle), `scroll` (pasos de rueda, `--frames-per-step` fotogramas
 entre pasos y `--cola` segundos sin tocar nada al final) y `pointer` (un ocho tumbado por el lienzo). `--assets`
-descarga GLB, HDR y KTX2 **solo para estudio local**.
+descarga GLB, HDR y KTX2 **solo para estudio local**. `--recorte x,y,ancho,alto` ciñe las imágenes y el barrido del
+puntero a una zona (una escena dentro de una tarjeta de la página, docs/31 §2). Si la página pinta varias escenas en
+perspectiva, el gancho se queda con la más poblada.
+
+**Grupos de cuerpos** (racimos, enjambres, montones): `npm run cine:conjunto -- <url>` mide en tiempo real la velocidad,
+el giro y la dispersión del grupo en reposo, con el puntero barriendo y al soltarlo, y cuánto sigue al puntero y con qué
+retraso; `--comparar ref.json banco.json` da el alejamiento (docs/31 §2).
 
 Salida en `.refs3d/<slug>/<fecha>/` (ignorada por git): `timeline.jsonl`, `inventario.json`, `shaders/`, `red.json`,
 `frames/`, `video.mp4`, `hoja.jpg`, `meta.json` y `ficha.auto.json`.

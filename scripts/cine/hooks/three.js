@@ -38,6 +38,19 @@
   };
   requestAnimationFrame(tick);
 
+  // mallas visibles de una escena, recontadas como mucho cada 60 fotogramas
+  const counts = new WeakMap();
+  const meshCount = (scene) => {
+    const c = counts.get(scene);
+    if (c && c.f > state.frame - 60) return c.n;
+    let n = 0;
+    scene.traverse((o) => {
+      if ((o.isMesh || o.isPoints) && o.visible !== false) n += o.isInstancedMesh ? o.count : 1;
+    });
+    counts.set(scene, { n, f: state.frame });
+    return n;
+  };
+
   const wrap = (r) => {
     if (r.__cineWrapped) return;
     r.__cineWrapped = true;
@@ -45,7 +58,19 @@
     r.render = function (scene, camera) {
       const target = typeof this.getRenderTarget === "function" ? this.getRenderTarget() : null;
       const isScene = !!(scene && scene.isScene);
-      if (isScene && camera && !camera.isOrthographicCamera) {
+      // la escena es la de la cámara en perspectiva; una cámara genérica (Camera, la del cuadrado a pantalla completa de
+      // los motores propios como el de Lusion) solo cuenta si no se ha visto ninguna en perspectiva hace poco
+      if (isScene && camera && camera.isPerspectiveCamera) {
+        // con varias escenas en perspectiva por fotograma (Lusion pinta la de las cruces y la de las tarjetas de la
+        // página), la más poblada
+        const n = meshCount(scene);
+        if (!(state.perspFrame >= state.frame - 2) || n >= state.perspN || scene === state.lastScene) {
+          state.lastScene = scene;
+          state.lastCamera = camera;
+          state.perspN = n;
+        }
+        state.perspFrame = state.frame;
+      } else if (isScene && camera && !camera.isOrthographicCamera && !(state.perspFrame > state.frame - 30)) {
         state.lastScene = scene;
         state.lastCamera = camera;
       } else if (isScene && camera) {

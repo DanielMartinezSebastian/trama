@@ -7,6 +7,7 @@ import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/componen
 import TypeField from "@/components/ui/TypeField";
 import Porthole from "@/components/ui/Porthole";
 import ToyDrive from "@/components/ui/ToyDrive";
+import CrossCluster from "@/components/ui/CrossCluster";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -161,6 +162,31 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <ToyDrive word={p.word as string} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "cross-cluster",
+    component: "CrossCluster",
+    path: "@/components/ui/CrossCluster",
+    name: "Racimo de cruces que sigue al puntero",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al puntero, para portadas con un objeto 3D vivo detrás del titular. Sin luces ni mapa de entorno: cada píxel calcula de forma analítica la oclusión, la sombra y el reflejo que le dan las demás cruces, sobre un matcap y una sombra propia horneada; las de cristal refractan lo que tienen detrás. Material traducido de los shaders de la portada de Lusion; cámara y dinámica (cuánto sigue al puntero, cuánto tarda en volver, cómo se agita en reposo) medidas con cine:capture y cine:conjunto (docs/31). Física del kit, lib/physics, sin WebAssembly. Colores del tema: fondo de --card, cruces de acento, texto y atenuado, cristal de --acc2.",
+    stageHeight: 520,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/CrossCluster.", "Usa WebGPU (o su reserva WebGL2): cada píxel recorre todas las cruces, así que con más de 30 el coste sube.", "El contenido que pases como hijo va encima sin quitarle el puntero a la escena."],
+    props: [
+      { key: "count", label: "Cruces", type: "number", default: 24, min: 8, max: 40, step: 1 },
+      { key: "glass", label: "De cristal", type: "number", default: 2, min: 0, max: 4, step: 1 },
+      { key: "glossy", label: "Fracción pulidas", type: "number", default: 0.25, min: 0, max: 1, step: 0.05 },
+      { key: "follow", label: "Sigue al puntero", type: "number", default: 0.35, min: 0, max: 1, step: 0.05 },
+      { key: "interactive", label: "Con puntero", type: "boolean", default: true },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <CrossCluster count={p.count as number} glass={p.glass as number} glossy={p.glossy as number} follow={p.follow as number} interactive={p.interactive as boolean} height={p.height as number} />
       </div>
     ),
   },

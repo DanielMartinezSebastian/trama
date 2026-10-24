@@ -216,6 +216,7 @@
         "type-field",
         "porthole",
         "toy-drive",
+        "cross-cluster",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -11971,6 +11972,73 @@
       ],
       "example": "import ToyDrive from \"@/components/ui/ToyDrive\";\n\n<ToyDrive />",
       "preview": "/componentes#toy-drive"
+    },
+    {
+      "id": "cross-cluster",
+      "name": "Racimo de cruces que sigue al puntero",
+      "component": "CrossCluster",
+      "import": "import CrossCluster from \"@/components/ui/CrossCluster\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al puntero, para portadas con un objeto 3D vivo detrás del titular. Sin luces ni mapa de entorno: cada píxel calcula de forma analítica la oclusión, la sombra y el reflejo que le dan las demás cruces, sobre un matcap y una sombra propia horneada; las de cristal refractan lo que tienen detrás. Material traducido de los shaders de la portada de Lusion; cámara y dinámica (cuánto sigue al puntero, cuánto tarda en volver, cómo se agita en reposo) medidas con cine:capture y cine:conjunto (docs/31). Física del kit, lib/physics, sin WebAssembly. Colores del tema: fondo de --card, cruces de acento, texto y atenuado, cristal de --acc2.",
+      "props": [
+        {
+          "key": "count",
+          "type": "number",
+          "default": 24,
+          "label": "Cruces",
+          "min": 8,
+          "max": 40
+        },
+        {
+          "key": "glass",
+          "type": "number",
+          "default": 2,
+          "label": "De cristal",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "key": "glossy",
+          "type": "number",
+          "default": 0.25,
+          "label": "Fracción pulidas",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 0.35,
+          "label": "Sigue al puntero",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "interactive",
+          "type": "boolean",
+          "default": true,
+          "label": "Con puntero"
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/CrossCluster.",
+        "Usa WebGPU (o su reserva WebGL2): cada píxel recorre todas las cruces, así que con más de 30 el coste sube.",
+        "El contenido que pases como hijo va encima sin quitarle el puntero a la escena."
+      ],
+      "example": "import CrossCluster from \"@/components/ui/CrossCluster\";\n\n<CrossCluster />",
+      "preview": "/componentes#cross-cluster"
     },
     {
       "id": "chapter-stage",

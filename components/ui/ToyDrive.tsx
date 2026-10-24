@@ -4,33 +4,10 @@ import { Suspense, lazy, useCallback, useRef, useState, type CSSProperties } fro
 import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
+import { sobreFondo } from "@/lib/ui/color";
 
 // three y react-three-fiber solo se descargan cuando la pieza está cerca de la pantalla
 const ToyDriveScene = lazy(() => import("@/lib/toydrive/scene"));
-
-/** un color CSS a [r, g, b, a] (hex de 3 o 6 cifras, rgb() o rgba()); null si no se entiende */
-function rgba(c: string): [number, number, number, number] | null {
-  const h = c.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
-  if (h) {
-    const x = h[1].length === 3 ? h[1].split("").map((d) => d + d).join("") : h[1];
-    return [parseInt(x.slice(0, 2), 16), parseInt(x.slice(2, 4), 16), parseInt(x.slice(4, 6), 16), 1];
-  }
-  const m = c.match(/rgba?\(([^)]+)\)/i);
-  if (!m) return null;
-  const [r, g, b, a = "1"] = m[1].split(/[,\s/]+/).filter(Boolean);
-  return [+r, +g, +b, +a];
-}
-
-/** --card suele ser translúcida (rgba sobre el fondo): three no entiende el alfa, así que se compone aquí */
-function sobreFondo(color: string | undefined, fondo: string | undefined) {
-  const c = color ? rgba(color) : null;
-  const f = fondo ? rgba(fondo) : null;
-  if (!c) return fondo;
-  if (c[3] >= 1 || !f) return `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
-  const k = c[3];
-  const mezcla = (i: number) => Math.round(f[i] + (c[i] - f[i]) * k);
-  return `rgb(${mezcla(0)}, ${mezcla(1)}, ${mezcla(2)})`;
-}
 
 export type ToyDriveProps = {
   /** la palabra que se derriba: sus letras son objetos con física (hasta 8) */
