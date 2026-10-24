@@ -11,7 +11,7 @@ export type Muestra = {
   i: number;
   t: number;
   shot: number | null;
-  input: { wheel?: number; step?: number; pointer?: [number, number]; clic?: [number, number]; arrastre?: "abajo" | "mueve" | "arriba" };
+  input: { wheel?: number; step?: number; pointer?: [number, number]; clic?: [number, number]; arrastre?: "abajo" | "mueve" | "arriba"; teclas?: string[] };
   frame: number;
   revision: string | null;
   renderer: null | { type: string; backend: string | null; toneMapping: string; exposure: number; outputColorSpace: string; pixelRatio: number; canvas: number[]; shadows: { enabled: boolean; type: string } | null; calls: number | null; triangles: number | null; textures: number | null; geometries: number | null; programs: number | null };

@@ -9,6 +9,9 @@
  *   - render y posprocesado: renderer, tone mapping, exposición, pila de pases y sus parámetros;
  *   - luz: luces por tipo e intensidad, entorno; atmósfera: niebla;
  *   - imagen (si las dos están analizadas): luminancia, recorte, contraste, saturación, viñeteado y paleta (ΔE);
+ *   - dinámica de una pieza (docs/29 §2, `--pieza nombre`): velocidad, guiñada, cabeceo y altura fotograma a fotograma,
+ *     sin depender de dónde está (un coche con física, un objeto que se lanza); `--ventanas 5.9-6.75,11.9-13.7` la
+ *     limita a esos segundos (fuera quedan sucesos que la recreación no tiene: una explosión, un choque con el decorado);
  *   - acabado (docs/29 §1): detalle fino, bordes, contraste local, brillos y grano en doce pares de fotogramas;
  *   - SSIM fotograma a fotograma con ffmpeg (solo tiene sentido si la escena es la misma: calibración);
  *   - coste: llamadas de dibujo, triángulos y pasadas.
@@ -153,6 +156,53 @@ const piezas = (() => {
   return { porPieza, posicionPct: +(rms(nombres.flatMap((n) => errP[n])) * 100).toFixed(2), giroGrados: +rms(nombres.flatMap((n) => errG[n])).toFixed(2) };
 })();
 
+/*
+ * Dinámica de una pieza (por defecto, la que más se mueve en la referencia): series de velocidad horizontal, velocidad
+ * de guiñada, cabeceo y altura sobre su arranque, comparadas fotograma a fotograma con la misma entrada. Mide la física
+ * (aceleración, frenada, giro, suspensión, saltos) aunque la pieza acabe en otro sitio.
+ */
+const dinamica = (() => {
+  if (!mismaEntrada) return null;
+  const nombres = new Set((ref.ms.find((m) => m.piezas?.length)?.piezas ?? []).map((p) => p.n));
+  const recorrido = (c: Cap, n: string) => {
+    const ps = c.ms.map((m) => m.piezas?.find((x) => x.n === n)).filter(Boolean) as { c?: number[]; p: number[] }[];
+    return ps.length > 1 ? len(sub(ps[ps.length - 1].c ?? ps[ps.length - 1].p, ps[0].c ?? ps[0].p)) + ps.reduce((a, p, k) => (k ? a + len(sub(p.c ?? p.p, ps[k - 1].c ?? ps[k - 1].p)) : 0), 0) : 0;
+  };
+  const elegida = opt("--pieza", "") || [...nombres].filter((n) => ban.ms.some((m) => m.piezas?.some((x) => x.n === n))).sort((a, b) => recorrido(ref, b) - recorrido(ref, a))[0];
+  if (!elegida) return null;
+  const serie = (c: Cap) => {
+    const pos: (number[] | null)[] = c.ms.map((m) => { const p = m.piezas?.find((x) => x.n === elegida); return p ? p.c ?? p.p : null; });
+    const rot = c.ms.map((m) => m.piezas?.find((x) => x.n === elegida)?.q ?? null);
+    const y0 = pos.find(Boolean)?.[1] ?? 0;
+    const rumbo = (q: number[]) => Math.atan2(2 * (q[0] * q[2] - q[1] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
+    const cabeceo = (q: number[]) => (Math.asin(Math.max(-1, Math.min(1, 2 * (q[0] * q[1] + q[2] * q[3])))) * 180) / Math.PI;
+    return c.ms.map((m, i) => {
+      const a = pos[i - 1], b = pos[i], qa = rot[i - 1], qb = rot[i];
+      const dt = i ? m.t - c.ms[i - 1].t || 1 / 60 : 1 / 60;
+      let dr = qa && qb ? rumbo(qb) - rumbo(qa) : 0;
+      dr = Math.atan2(Math.sin(dr), Math.cos(dr));
+      return { v: a && b ? Math.hypot(b[0] - a[0], b[2] - a[2]) / dt : 0, guinada: ((dr / dt) * 180) / Math.PI, cabeceo: qb ? cabeceo(qb) : 0, altura: b ? b[1] - y0 : 0 };
+    });
+  };
+  const ventanas = opt("--ventanas", "")
+    .split(",")
+    .filter(Boolean)
+    .map((v) => v.split("-").map(Number));
+  const dentro = (i: number) => !ventanas.length || ventanas.some(([a0, a1]) => ref.ms[i].t >= a0 && ref.ms[i].t <= a1);
+  const a = serie(ref).filter((_, i) => dentro(i)), b = serie(ban).filter((_, i) => dentro(i));
+  // la altura, desde el primer fotograma de la comparación (la intro puede tener la pieza en otro sitio)
+  for (const xs of [a, b]) { const y0 = xs[0]?.altura ?? 0; for (const x of xs) x.altura -= y0; }
+  const n = Math.min(a.length, b.length);
+  const err = (k: "v" | "guinada" | "cabeceo" | "altura", suelo: number) => {
+    const xs = a.slice(0, n).map((x) => x[k]);
+    const rango = Math.max(suelo, Math.max(...xs) - Math.min(...xs));
+    return rms(xs.map((x, i) => x - b[i][k])) / rango;
+  };
+  const e = { velocidad: err("v", 1), guinada: err("guinada", 30), cabeceo: err("cabeceo", 5), altura: err("altura", 0.2) };
+  const max = (s: typeof a, k: "v" | "guinada" | "cabeceo" | "altura") => Math.max(...s.slice(0, n).map((x) => Math.abs(x[k])));
+  return { pieza: elegida, errores: Object.fromEntries(Object.entries(e).map(([k, v]) => [k, +v.toFixed(3)])), total: 0.4 * e.velocidad + 0.3 * e.guinada + 0.15 * e.cabeceo + 0.15 * e.altura, maximos: { velocidad: [max(a, "v"), max(b, "v")], guinada: [max(a, "guinada"), max(b, "guinada")], cabeceo: [max(a, "cabeceo"), max(b, "cabeceo")], altura: [max(a, "altura"), max(b, "altura")] } };
+})();
+
 /* ---------------------------------------------------------------- planos */
 
 const tramos = (c: Cap) => c.medidas.tramos.map((t) => ({ mov: t.movimientos.join("+"), curva: t.curvas[0]?.curva ?? "—", desde: t.desde, hasta: t.hasta }));
@@ -259,7 +309,7 @@ const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
@@ -315,9 +365,10 @@ const acabado = (() => {
   return compararAcabado(media(ra), media(rb));
 })();
 if (acabado) alejamiento.acabado = clamp01(acabado.total);
+if (dinamica) alejamiento.dinamica = clamp01(dinamica.total);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
@@ -325,6 +376,7 @@ const resultado = {
   camara: { errorPosicionPct: +(errPos * 100).toFixed(2), errorFovGrados: +errFov.toFixed(3), errorDireccionGrados: +errDir.toFixed(3), errorAlabeoGrados: +errRoll.toFixed(3), errorAvance: +errAvance.toFixed(4), planos: { referencia: tr, banco: tb, iguales: planosIguales } },
   imagen,
   acabado,
+  dinamica,
   piezas,
   coreografia,
   ssim,
@@ -366,6 +418,9 @@ const md = [
   ...(difs.length ? difs.map((d) => `- ${d}`) : ["- ninguna en render, luz, atmósfera ni posprocesado"]),
   ``,
   imagen ? `## Imagen\n\n- Luminancia ${imagen.dLuma >= 0 ? "+" : ""}${imagen.dLuma.toFixed(3)} · recorte ${(imagen.dRecorte * 100).toFixed(2)} pt · contraste ${imagen.dContraste.toFixed(3)} · saturación ${imagen.dSaturacion.toFixed(3)} · viñeta ${imagen.dVineta.toFixed(3)} · ΔE de la paleta ${imagen.deltaE.toFixed(1)}\n` : `## Imagen\n\n- Sin datos: ejecuta \`cine:analyze\` en las dos capturas.\n`,
+  dinamica
+    ? `## Dinámica de ${dinamica.pieza}\n\n| Serie | Error | Máximo ref | Máximo banco |\n|---|---|---|---|\n${(["velocidad", "guinada", "cabeceo", "altura"] as const).map((k) => `| ${k} | ${Math.round((dinamica.errores as Record<string, number>)[k] * 100)} % | ${dinamica.maximos[k][0].toFixed(2)} | ${dinamica.maximos[k][1].toFixed(2)} |`).join("\n")}\n`
+    : "",
   acabado
     ? `## Acabado\n\n| Medida | Referencia | Banco | Error | El banco va |\n|---|---|---|---|---|\n${acabado.filas.map((r) => `| ${r.medida} | ${r.ref.toExponential(2)} | ${r.banco.toExponential(2)} | ${Math.round(r.error * 100)} % | ${r.sentido} |`).join("\n")}\n`
     : "",

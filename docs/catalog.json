@@ -214,6 +214,7 @@
         "object-stage",
         "type-field",
         "porthole",
+        "toy-drive",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -11922,6 +11923,53 @@
       ],
       "example": "import Porthole from \"@/components/ui/Porthole\";\n\n<Porthole />",
       "preview": "/componentes#porthole"
+    },
+    {
+      "id": "toy-drive",
+      "name": "Coche de juguete con física",
+      "component": "ToyDrive",
+      "import": "import ToyDrive from \"@/components/ui/ToyDrive\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un coche de juguete que se conduce y derriba las letras de una palabra y una pila de cajas, todo con física, desde una cámara isométrica que lo persigue: para portadas que quieren que el visitante juegue. Flechas o WASD con la pieza enfocada (espacio frena, R vuelve a la salida); con el ratón o el dedo, mantener pulsado lleva el coche hacia ese punto. Cámara (dirección, distancia, fov 25 y seguimiento) y dinámica (aceleración, punta, frenada, giro) medidas en el portfolio de Bruno Simon con cine:capture (docs/29). La física es la del kit, lib/physics, sin WebAssembly. Colores del tema: suelo del fondo, coche del acento, letras del texto. Sin WebGL o con movimiento reducido, la palabra en plano.",
+      "props": [
+        {
+          "key": "word",
+          "type": "text",
+          "default": "PLAY",
+          "label": "Palabra"
+        },
+        {
+          "key": "interactive",
+          "type": "boolean",
+          "default": true,
+          "label": "Se conduce"
+        },
+        {
+          "key": "hint",
+          "type": "text",
+          "default": "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve",
+          "label": "Pista"
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ToyDrive.",
+        "Haz clic en la escena y conduce con las flechas; o mantén pulsado sobre el suelo.",
+        "La palabra admite hasta 8 letras."
+      ],
+      "example": "import ToyDrive from \"@/components/ui/ToyDrive\";\n\n<ToyDrive />",
+      "preview": "/componentes#toy-drive"
     },
     {
       "id": "point-cloud",

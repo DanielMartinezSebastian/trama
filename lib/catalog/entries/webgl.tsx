@@ -6,6 +6,7 @@ import PointCloud from "@/components/ui/PointCloud";
 import ObjectStage, { OBJECT_MATERIAL_LIST, OBJECT_SHAPE_LIST } from "@/components/ui/ObjectStage";
 import TypeField from "@/components/ui/TypeField";
 import Porthole from "@/components/ui/Porthole";
+import ToyDrive from "@/components/ui/ToyDrive";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -136,6 +137,29 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <Porthole livery={p.livery as never} cities={p.cities as number} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "toy-drive",
+    component: "ToyDrive",
+    path: "@/components/ui/ToyDrive",
+    name: "Coche de juguete con física",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un coche de juguete que se conduce y derriba las letras de una palabra y una pila de cajas, todo con física, desde una cámara isométrica que lo persigue: para portadas que quieren que el visitante juegue. Flechas o WASD con la pieza enfocada (espacio frena, R vuelve a la salida); con el ratón o el dedo, mantener pulsado lleva el coche hacia ese punto. Cámara (dirección, distancia, fov 25 y seguimiento) y dinámica (aceleración, punta, frenada, giro) medidas en el portfolio de Bruno Simon con cine:capture (docs/29). La física es la del kit, lib/physics, sin WebAssembly. Colores del tema: suelo del fondo, coche del acento, letras del texto. Sin WebGL o con movimiento reducido, la palabra en plano.",
+    stageHeight: 520,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ToyDrive.", "Haz clic en la escena y conduce con las flechas; o mantén pulsado sobre el suelo.", "La palabra admite hasta 8 letras."],
+    props: [
+      { key: "word", label: "Palabra", type: "text", default: "PLAY" },
+      { key: "interactive", label: "Se conduce", type: "boolean", default: true },
+      { key: "hint", label: "Pista", type: "text", default: "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve" },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <ToyDrive word={p.word as string} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
       </div>
     ),
   },

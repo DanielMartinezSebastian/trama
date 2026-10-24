@@ -2056,6 +2056,21 @@ La vista desde la ventanilla de un avión al alba, como fondo de portada: cielo 
 - Mueve el puntero para asomarte; arrastra para salir por la ventanilla.
 - children va encima de la escena (titular, botones).
 
+### Coche de juguete con física — `ToyDrive`
+
+Un coche de juguete que se conduce y derriba las letras de una palabra y una pila de cajas, todo con física, desde una cámara isométrica que lo persigue: para portadas que quieren que el visitante juegue. Flechas o WASD con la pieza enfocada (espacio frena, R vuelve a la salida); con el ratón o el dedo, mantener pulsado lleva el coche hacia ese punto. Cámara (dirección, distancia, fov 25 y seguimiento) y dinámica (aceleración, punta, frenada, giro) medidas en el portfolio de Bruno Simon con cine:capture (docs/29). La física es la del kit, lib/physics, sin WebAssembly. Colores del tema: suelo del fondo, coche del acento, letras del texto. Sin WebGL o con movimiento reducido, la palabra en plano.
+
+| prop | tipo | default |
+|---|---|---|
+| `word` | text | "PLAY" |
+| `interactive` | boolean | true |
+| `hint` | text | "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve" |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ToyDrive.
+- Haz clic en la escena y conduce con las flechas; o mantén pulsado sobre el suelo.
+- La palabra admite hasta 8 letras.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

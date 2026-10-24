@@ -12,6 +12,8 @@
  *   --clic 0.5,0.5@4              clics en el lienzo: posición relativa (0–1) y segundo; varios separados por «;» (webs
  *                                 que cambian de escena al hacer clic: la transición queda en la serie y en el vídeo)
  *   --arrastre 0.4,0.5>0.6,0.5@6+0.4   arrastres: desde>hasta (relativos), segundo de inicio y duración; varios con «;»
+ *   --teclas ArrowUp@5+2.5;ArrowLeft@6+1   teclas mantenidas: nombre (los de Playwright: ArrowUp, KeyW, Space…), segundo
+ *                                 de inicio y duración; varias con «;» (juegos y webs que se conducen con el teclado)
  *   --every 1                     un fotograma de vídeo cada n (1 = 60 fps)
  *   --size 1440x900               tamaño de la ventana
  *   --solo-lienzo                 oculta todo menos el lienzo mayor (créditos, paneles, indicador de Next)
@@ -173,7 +175,22 @@ const ARRASTRES = opt("--arrastre", "")
     return { a, b, f0: Math.round(seg * FPS), f1: Math.round((seg + (dur || 0.3)) * FPS) };
   });
 
+const TECLAS = opt("--teclas", "")
+  .split(";")
+  .filter(Boolean)
+  .map((c) => {
+    const [tecla, cuando] = c.split("@");
+    const [seg, dur] = cuando.split("+").map(Number);
+    return { tecla, f0: Math.round(seg * FPS), f1: Math.round((seg + (dur || 0.2)) * FPS) };
+  });
+
 async function sample(input: Muestra["input"]) {
+  // teclas: abajo en su primer fotograma y arriba en el último (varias a la vez se mantienen juntas)
+  for (const t of TECLAS) {
+    if (frame === t.f0) await page.keyboard.down(t.tecla);
+    if (frame === t.f1) await page.keyboard.up(t.tecla);
+    if (frame >= t.f0 && frame <= t.f1) input = { ...input, teclas: [...(input.teclas ?? []), t.tecla] };
+  }
   // arrastres: botón abajo en su primer fotograma, movimiento lineal y botón arriba en el último
   for (const d of ARRASTRES) {
     if (frame < d.f0 || frame > d.f1) continue;

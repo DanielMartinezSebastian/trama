@@ -29,6 +29,7 @@ export const PUBLIC_ASSETS: Record<string, string[]> = {
   "components/ui/PixelFrame.tsx": ["public/pixel/kenney-pixel-ui"],
   "components/ui/Sprite.tsx": ["public/pixel/kenney-pixel-ui"],
   "components/ui/TypeField.tsx": ["public/fonts/anton"],
+  "components/ui/ToyDrive.tsx": ["public/fonts/anton"],
 };
 
 /** Imports internos (`@/…` y relativos) de un archivo, resueltos a rutas relativas a la raíz. */
