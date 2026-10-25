@@ -48,7 +48,7 @@ export const RONDAS: Ronda[] = [
     componentes: [],
     herramientas: ["cine:reestudio", "cine:web", "cine:sintesis", "eje de profundidad (A8)", "objetivos y veredicto (A1)", "tu puntuación (A9)"],
     doc: "35-procedimiento.md",
-    commits: [],
+    commits: ["6dd5205"],
     resultado: [
       { eje: "Reestudio: ejes iguales al cierre", valor: "7 de 7 estudios" },
       { eje: "Ruido de las webs deterministas", valor: "0–2 %" },
