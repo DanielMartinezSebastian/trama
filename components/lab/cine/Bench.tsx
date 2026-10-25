@@ -388,7 +388,7 @@ export default function Bench({ ficha }: { ficha: Ficha }) {
   const p0 = ficha.camara.planos[0].camara.desde;
   return (
     <Canvas
-      dpr={[1, r.dprMax]}
+      dpr={r.dprFijo ?? [1, r.dprMax]}
       camera={{ fov: p0.fov, position: p0.pos, near: ficha.camara.near, far: ficha.camara.far }}
       // R3F: "percentage" = PCFShadowMap, "soft" = PCFSoftShadowMap, "variance" = VSMShadowMap
       shadows={r.sombras && r.sombras !== "ninguna" ? (r.sombras === "vsm" ? "variance" : r.sombras === "pcf" ? "percentage" : "soft") : false}

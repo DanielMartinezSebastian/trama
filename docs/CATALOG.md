@@ -2101,6 +2101,21 @@ Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al punte
 - Usa WebGPU (o su reserva WebGL2): cada píxel recorre todas las cruces, así que con más de 30 el coste sube.
 - El contenido que pases como hijo va encima sin quitarle el puntero a la escena.
 
+### Paisaje grabado a lápiz — `EngravedMap`
+
+Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones distintas y caminos en blanco, casas con tejado a dos aguas y árboles con contorno, con un vuelo de entrada desde el horizonte y un leve paralaje con el puntero. Para bodegas, territorio, turismo o cualquier marca que quiera un 3D que no parezca 3D. Técnica medida en la portada de Chartogne-Taillet (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final pone papel, lápiz y contornos de Sobel. Imagen al 8 %, acabado al 7 % y cámara al 5 % de la referencia. Colores del tema: papel de --card y lápiz de --mut.
+
+| prop | tipo | default |
+|---|---|---|
+| `seed` | number 1–99 | 3 |
+| `intro` | number 0–8 | 3 |
+| `interactive` | boolean | true |
+| `height` | number 280–800 | 520 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/EngravedMap.
+- Pinta siempre a 2× (como la referencia): los contornos y el grano se afinan al reducirse.
+- El motor del grabado (lib/gravure: materialLapiz y pilaGrabado) vale para cualquier escena con WebGPURenderer.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

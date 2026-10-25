@@ -312,6 +312,11 @@ export type Ficha = {
     exposicion: number;
     colorSpace: "srgb" | "display-p3" | "linear";
     dprMax: number;
+    /**
+     * densidad fija aunque la pantalla sea de 1× (Chartogne-Taillet pinta siempre a 2×: el grano y los contornos se
+     * afinan al reducirse, docs/32 §5); sin ella, la de la pantalla hasta `dprMax`
+     */
+    dprFijo?: number;
     sombras?: "pcf" | "pcf-soft" | "vsm" | "ninguna";
     /**
      * Solo para el banco: «nodos» (por defecto) = WebGPURenderer con materiales de nodos y posprocesado TSL; «clasico» =

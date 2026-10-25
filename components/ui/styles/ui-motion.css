@@ -382,6 +382,18 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
 .ui-cc__content > * { pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) { .ui-cc__gl { transition: none; } }
 
+/* EngravedMap: paisaje grabado a lápiz (docs/32). La versión plana es un rayado del color del lápiz sobre el papel */
+.ui-em { position: relative; width: 100%; overflow: hidden; isolation: isolate; background: var(--em-paper); touch-action: pan-y; }
+.ui-em__flat { position: absolute; inset: 0;
+  background: repeating-linear-gradient(-28deg, color-mix(in srgb, var(--em-pencil) 38%, transparent) 0 1px, transparent 1px 7px) var(--em-paper);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, #000 30%, transparent 75%); }
+.ui-em__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
+.ui-em__gl.is-on { opacity: 1; }
+.ui-em__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-em__content { position: relative; z-index: 1; height: 100%; pointer-events: none; }
+.ui-em__content > * { pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .ui-em__gl { transition: none; } }
+
 /* ChapterStage: escenario por capítulos fijado al scroll (docs/30). La palabra gigante se releva dentro de .ui-chs__words
    (máscara de una línea); la tarjeta va encima, centrada, como en la referencia */
 .ui-chs .ui-pin__in { background: var(--bg); color: var(--fg); }

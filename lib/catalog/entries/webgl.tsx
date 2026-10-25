@@ -8,6 +8,7 @@ import TypeField from "@/components/ui/TypeField";
 import Porthole from "@/components/ui/Porthole";
 import ToyDrive from "@/components/ui/ToyDrive";
 import CrossCluster from "@/components/ui/CrossCluster";
+import EngravedMap from "@/components/ui/EngravedMap";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -187,6 +188,29 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <CrossCluster count={p.count as number} glass={p.glass as number} glossy={p.glossy as number} follow={p.follow as number} interactive={p.interactive as boolean} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "engraved-map",
+    component: "EngravedMap",
+    path: "@/components/ui/EngravedMap",
+    name: "Paisaje grabado a lápiz",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones distintas y caminos en blanco, casas con tejado a dos aguas y árboles con contorno, con un vuelo de entrada desde el horizonte y un leve paralaje con el puntero. Para bodegas, territorio, turismo o cualquier marca que quiera un 3D que no parezca 3D. Técnica medida en la portada de Chartogne-Taillet (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final pone papel, lápiz y contornos de Sobel. Imagen al 8 %, acabado al 7 % y cámara al 5 % de la referencia. Colores del tema: papel de --card y lápiz de --mut.",
+    stageHeight: 560,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/EngravedMap.", "Pinta siempre a 2× (como la referencia): los contornos y el grano se afinan al reducirse.", "El motor del grabado (lib/gravure: materialLapiz y pilaGrabado) vale para cualquier escena con WebGPURenderer."],
+    props: [
+      { key: "seed", label: "Semilla del paisaje", type: "number", default: 3, min: 1, max: 99, step: 1 },
+      { key: "intro", label: "Vuelo de entrada (s)", type: "number", default: 3, min: 0, max: 8, step: 0.5 },
+      { key: "interactive", label: "Paralaje con el puntero", type: "boolean", default: true },
+      { key: "height", label: "Alto (px)", type: "number", default: 520, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <EngravedMap seed={p.seed as number} intro={p.intro as number} interactive={p.interactive as boolean} height={p.height as number} />
       </div>
     ),
   },

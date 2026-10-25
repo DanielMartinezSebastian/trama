@@ -60,6 +60,10 @@ perspectiva, el gancho se queda con la más poblada.
 el giro y la dispersión del grupo en reposo, con el puntero barriendo y al soltarlo, y cuánto sigue al puntero y con qué
 retraso; `--comparar ref.json banco.json` da el alejamiento (docs/31 §2).
 
+**Capturas con intro** (aviso de edad, título, texto antes del 3D): `npm run cine:tramo -- <captura> <desde> <hasta>
+<salida>` deja solo ese tramo, como captura de tiempo, lista para analizar y comparar (docs/32 §2). Si la referencia
+pinta a una densidad fija (2× aunque la pantalla sea 1×), la ficha lo dice con `render.dprFijo`.
+
 Salida en `.refs3d/<slug>/<fecha>/` (ignorada por git): `timeline.jsonl`, `inventario.json`, `shaders/`, `red.json`,
 `frames/`, `video.mp4`, `hoja.jpg`, `meta.json` y `ficha.auto.json`.
 
