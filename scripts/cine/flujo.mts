@@ -68,7 +68,8 @@ function semejanza(pts: { x: number; y: number; u: number; v: number }[]) {
   return { escala: s, giro: Math.atan2(b, a), dx: mu - mx, dy: mv - my, mx, my };
 }
 
-const pares: { t: number; dx: number; dy: number; escala: number; giro: number; fiabilidad: number }[] = [];
+// residuo y movimiento (px a 256 de ancho): lo que los bloques se apartan del movimiento rígido es el paralaje (docs/36 A8)
+const pares: { t: number; dx: number; dy: number; escala: number; giro: number; fiabilidad: number; residuo?: number; movimiento?: number }[] = [];
 let prev = await lee(fotos[0]);
 for (let k = CADA; k < fotos.length; k += CADA) {
   const cur = await lee(fotos[k]);
@@ -91,7 +92,9 @@ for (let k = CADA; k < fotos.length; k += CADA) {
     };
     const buenos = pts.filter((p) => err(p) < 2.5);
     if (buenos.length >= 6) m = semejanza(buenos);
-    pares.push({ t: +t.toFixed(3), dx: +(m.dx / w).toFixed(5), dy: +(m.dy / w).toFixed(5), escala: +m.escala.toFixed(5), giro: +((m.giro * 180) / Math.PI).toFixed(3), fiabilidad: +(buenos.length / pts.length).toFixed(2) });
+    const residuo = pts.reduce((s, p) => s + Math.min(8, err(p)), 0) / pts.length;
+    const movimiento = pts.reduce((s, p) => s + Math.hypot(p.u, p.v), 0) / pts.length;
+    pares.push({ t: +t.toFixed(3), dx: +(m.dx / w).toFixed(5), dy: +(m.dy / w).toFixed(5), escala: +m.escala.toFixed(5), giro: +((m.giro * 180) / Math.PI).toFixed(3), fiabilidad: +(buenos.length / pts.length).toFixed(2), residuo: +residuo.toFixed(3), movimiento: +movimiento.toFixed(3) });
   } else pares.push({ t: +t.toFixed(3), dx: 0, dy: 0, escala: 1, giro: 0, fiabilidad: 0 });
   prev = cur;
 }

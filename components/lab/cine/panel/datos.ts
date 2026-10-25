@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
+import { veredictos, type Objetivos } from "@/lib/cine/objetivos";
 import type { Ronda } from "./rondas";
 
 /*
@@ -15,7 +16,8 @@ export type Tipo = "informe" | "video" | "imagen" | "datos" | "texto" | "otro";
 export type Archivo = { nombre: string; titulo: string; href: string; tipo: Tipo; kb: number };
 export type Subcarpeta = { nombre: string; href: string; n: number };
 export type Carpeta = { papel: string; ruta: string; href: string; existe: boolean; archivos: Archivo[]; subcarpetas: Subcarpeta[]; orden?: string };
-export type Vuelta = { n: number; fecha: string; nota: string; commit: string; alejamiento: Record<string, number>; carpeta?: string };
+export type Vuelta = { n: number; fecha: string; nota: string; commit: string; alejamiento: Record<string, number>; veredicto?: { cumple: number; total: number }; carpeta?: string };
+export type Puntuacion = { fecha: string; vuelta: number | null; sensacion: number; profundidad: number; nota: string };
 export type Viva = {
   /** referencia, banco y comparación (de la última vuelta si hay vueltas) */
   capturas: Carpeta[];
@@ -25,6 +27,10 @@ export type Viva = {
   de: string | null;
   vueltas: Vuelta[];
   ruido: Record<string, number> | null;
+  /** objetivo y veredicto de cada eje del último medido (lib/cine/objetivos) */
+  veredicto: ReturnType<typeof veredictos> | null;
+  /** las puntuaciones del usuario (sensación y profundidad), de la más nueva a la más vieja */
+  puntuaciones: Puntuacion[];
   orden: string | null;
 };
 
@@ -117,7 +123,7 @@ function ultimaVuelta(carpeta: string) {
 }
 
 export function datosVivos(r: Ronda): Viva {
-  const recetas = leer<Record<string, { carpeta: string; ref: string }>>(RECETAS) ?? {};
+  const recetas = leer<Record<string, { carpeta: string; ref: string; objetivos?: Objetivos }>>(RECETAS) ?? {};
   const receta = r.receta ? recetas[r.receta] : undefined;
   const carpeta = receta?.carpeta;
   const carpetaRel = carpeta?.replace(/\\/g, "/").replace(/^\.refs3d\//, "");
@@ -145,7 +151,19 @@ export function datosVivos(r: Ronda): Viva {
           })
       : [];
   const ruido = carpeta ? leer<{ alejamiento: Record<string, number> }>(join(process.cwd(), carpeta, "ruido.json"))?.alejamiento ?? null : null;
-  return { capturas, extras, alejamiento: comp?.alejamiento ?? null, de: cmp ?? null, vueltas: historial, ruido, orden: r.receta && r.lab ? `npm run cine:vuelta -- ${r.receta}` : null };
+  // el alejamiento de la última vuelta lleva también el conjunto (va al historial, no a comparacion.json)
+  const alejamiento = historial.length ? historial[historial.length - 1].alejamiento : (comp?.alejamiento ?? null);
+  const veredicto = alejamiento && r.receta ? veredictos(alejamiento, ruido, receta?.objetivos) : null;
+  const puntuaciones =
+    carpeta && existsSync(join(process.cwd(), carpeta, "puntuaciones.jsonl"))
+      ? readFileSync(join(process.cwd(), carpeta, "puntuaciones.jsonl"), "utf8")
+          .trim()
+          .split("\n")
+          .filter(Boolean)
+          .map((l) => JSON.parse(l) as Puntuacion)
+          .reverse()
+      : [];
+  return { capturas, extras, alejamiento, de: cmp ?? null, vueltas: historial, ruido, veredicto, puntuaciones, orden: r.receta && r.lab ? `npm run cine:vuelta -- ${r.receta}` : null };
 }
 
 /** los documentos del método que el panel enseña (docs/26–34) */

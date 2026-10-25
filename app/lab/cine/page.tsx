@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import SiteChrome from "@/components/site/SiteChrome";
 import { RONDAS, type Ronda } from "@/components/lab/cine/panel/rondas";
 import { DOCS_CINE, datosVivos, hrefArchivo, hrefCodigo, type Archivo, type Carpeta, type Viva } from "@/components/lab/cine/panel/datos";
+import Puntuar from "@/components/lab/cine/panel/Puntuar";
 import "@/components/lab/cine/panel/panel.css";
 
 export const metadata: Metadata = { title: "Laboratorio de cine 3D · Trama", robots: { index: false, follow: false } };
@@ -23,6 +24,7 @@ const EJE: Record<string, string> = {
   coreografia: "coreografía",
   conjunto: "conjunto",
   movimiento: "movimiento de imagen",
+  profundidad: "profundidad",
 };
 
 const HERRAMIENTAS: [string, string][] = [
@@ -34,20 +36,26 @@ const HERRAMIENTAS: [string, string][] = [
   ["cine:flujo <captura>", "Movimiento de la imagen en el vídeo: la cámara de las webs sin three"],
   ["cine:compare <ref> <banco>", "Alejamiento por eje, vídeo lado a lado y lo que conviene depurar primero"],
   ["cine:conjunto <url>", "Dinámica de un grupo de cuerpos (racimos, enjambres)"],
-  ["cine:vuelta <estudio>", "Una vuelta completa con receta, historial y ruido (--ruido, --referencia, --lista)"],
+  ["cine:vuelta <estudio>", "Una vuelta completa con receta, historial, ruido y veredicto por objetivos (--ruido, --referencia, --lista)"],
+  ["cine:reestudio", "Vuelve a pasar todos los estudios con el inspector de hoy: referencia, ruido y vuelta"],
+  ["cine:web <url>", "Mapa de la web entera: secciones, 3D detrás, fijadas, scroll virtual, técnica, fuentes y transición"],
+  ["cine:sintesis <url…>", "Matriz de rasgos de varias webs contra el kit: plantilla común y qué estudiar"],
 ];
 
-function Barra({ eje, v, ruido }: { eje: string; v: number; ruido?: number }) {
+/** un eje: su alejamiento, la marca del ruido y, si lo hay, el objetivo (discontinuo) y su veredicto */
+function Barra({ eje, v, ruido, objetivo, cumple }: { eje: string; v: number; ruido?: number; objetivo?: number | null; cumple?: boolean | null }) {
   const enRuido = ruido !== undefined && v <= ruido * 1.1 + 0.02;
+  const estado = cumple === null ? "is-na" : cumple === true ? "is-bien" : cumple === false ? (v <= 0.4 ? "is-medio" : "is-lejos") : v <= 0.15 ? "is-bien" : v <= 0.4 ? "is-medio" : "is-lejos";
   return (
-    <div className={`cpl-barra ${v <= 0.15 ? "is-bien" : v <= 0.4 ? "is-medio" : "is-lejos"}`}>
+    <div className={`cpl-barra ${estado}`}>
       <span className="cpl-barra__eje">{EJE[eje] ?? eje}</span>
       <span className="cpl-barra__pista">
         <span className="cpl-barra__valor" style={{ width: `${Math.min(100, v * 100)}%` }} />
         {ruido !== undefined && <span className="cpl-barra__ruido" style={{ left: `${Math.min(100, ruido * 100)}%` }} title={`ruido ${Math.round(ruido * 100)} %`} />}
+        {typeof objetivo === "number" && <span className="cpl-barra__objetivo" style={{ left: `${Math.min(100, objetivo * 100)}%` }} title={`objetivo ${Math.round(objetivo * 100)} %`} />}
       </span>
       <span className="cpl-barra__num">
-        {Math.round(v * 100)} %{enRuido ? " · en el ruido" : ""}
+        {Math.round(v * 100)} %{cumple === null ? " · no aplica" : cumple === true ? " · cumple" : cumple === false ? ` · falta ${Math.round((v - (objetivo ?? 0)) * 100)}` : enRuido ? " · en el ruido" : ""}
       </span>
     </div>
   );
@@ -265,7 +273,14 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
           <h3>
             {ejes.length ? "Último medido" : viva.ruido ? "Ruido de la referencia" : "Último medido"} {viva.de && ejes.length > 0 && <code className="cpl-ruta">{viva.de}</code>}
           </h3>
-          {ejes.length ? (
+          {viva.veredicto && (
+            <p className="cpl-cumple">
+              Cumple <strong>{viva.veredicto.cumple} de {viva.veredicto.total}</strong> ejes
+            </p>
+          )}
+          {viva.veredicto ? (
+            viva.veredicto.ejes.map((e) => <Barra key={e.eje} eje={e.eje} v={e.valor} ruido={e.ruido} objetivo={e.objetivo} cumple={e.cumple} />)
+          ) : ejes.length ? (
             ejes.map(([k, v]) => <Barra key={k} eje={k} v={v} ruido={viva.ruido?.[k]} />)
           ) : viva.ruido ? (
             Object.entries(viva.ruido)
@@ -274,9 +289,25 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
           ) : (
             <p className="cpl-mut">Sin comparación en disco.</p>
           )}
-          {viva.ruido && <p className="cpl-mut cpl-nota">La marca vertical es el ruido de la propia referencia (cine:vuelta --ruido).</p>}
+          {viva.ruido && <p className="cpl-mut cpl-nota">La marca vertical es el ruido de la propia referencia (cine:vuelta --ruido); la discontinua, el objetivo del eje: máx(ruido · 1,1 + 2, 15 %), o el de la receta.</p>}
         </div>
       </div>
+
+      {r.receta && r.lab && (
+        <div className="cpl-bloque">
+          <h3>Tu puntuación: ¿se siente como la referencia?</h3>
+          {viva.puntuaciones[0] ? (
+            <p className="cpl-mut">
+              Última (vuelta {viva.puntuaciones[0].vuelta ?? "—"}, {viva.puntuaciones[0].fecha.slice(0, 10)}): sensación <strong>{viva.puntuaciones[0].sensacion}/5</strong> · profundidad <strong>{viva.puntuaciones[0].profundidad}/5</strong>
+              {viva.puntuaciones[0].nota ? ` · «${viva.puntuaciones[0].nota}»` : ""}
+              {viva.puntuaciones.length > 1 ? ` · ${viva.puntuaciones.length} en total` : ""}
+            </p>
+          ) : (
+            <p className="cpl-mut">Sin puntuar. Abre la demo y su referencia y puntúa la última vuelta: es la medida que manda (docs/36 A9).</p>
+          )}
+          <Puntuar receta={r.receta} />
+        </div>
+      )}
 
       <div className="cpl-recursos" id={`recursos-${r.n}`}>
         <h3 className="cpl-recursos__titulo">Recursos generados</h3>
@@ -315,7 +346,17 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
                     <br />
                     <code>{v.commit}</code>
                   </td>
-                  <td>{v.nota}</td>
+                  <td>
+                    {v.nota}
+                    {v.veredicto && (
+                      <>
+                        <br />
+                        <strong className="cpl-num">
+                          cumple {v.veredicto.cumple} de {v.veredicto.total}
+                        </strong>
+                      </>
+                    )}
+                  </td>
                   <td className="cpl-ejes">
                     {Object.entries(v.alejamiento)
                       .sort((a, b) => b[1] - a[1])

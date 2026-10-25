@@ -17,8 +17,9 @@ import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
+import { textoVeredicto, veredictos, type Objetivos } from "../../lib/cine/objetivos";
 
-type Receta = { url: string; captura: string; ref: string; referencia?: string; tramoReferencia?: [number, number]; comparar?: string; conjunto?: { ref: string; args: string }; flujo?: boolean; carpeta: string };
+type Receta = { url: string; captura: string; ref: string; referencia?: string; tramoReferencia?: [number, number]; comparar?: string; conjunto?: { ref: string; args: string }; flujo?: boolean; objetivos?: Objetivos; carpeta: string };
 const RECETAS = JSON.parse(readFileSync(resolve("scripts/cine/recetas.json"), "utf8")) as Record<string, Receta>;
 
 const argv = process.argv.slice(2);
@@ -165,19 +166,23 @@ try {
   /* sin git */
 }
 const ant = previas.filter((p) => p.n !== n).pop();
-const filas = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
 const ruido = existsSync(join(CARPETA, "ruido.json")) ? (JSON.parse(readFileSync(join(CARPETA, "ruido.json"), "utf8")) as { alejamiento: Record<string, number> }).alejamiento : null;
-const lineas = [`# ${id} · vuelta ${n}${opt("--nota", "") ? ` · ${opt("--nota", "")}` : ""}`, "", `| Eje | Ahora | Antes | Cambio |${ruido ? " Ruido |" : ""}`, `|---|---|---|---|${ruido ? "---|" : ""}`];
-for (const [k, v] of filas) {
-  const a = ant?.alejamiento?.[k];
-  const d = a === undefined ? "" : Math.round((v - a) * 100);
-  const rr = ruido?.[k];
-  // por debajo del ruido de la propia referencia, el eje ya no se puede mejorar de forma medible
-  const enRuido = rr !== undefined && v <= rr * 1.1 + 0.02;
-  lineas.push(`| ${k} | ${Math.round(v * 100)} % | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} |${ruido ? ` ${rr === undefined ? "—" : Math.round(rr * 100) + " %"}${enRuido ? " · en el ruido" : ""} |` : ""}`);
+const ver = veredictos(alejamiento, ruido, r.objetivos);
+const lineas = [
+  `# ${id} · vuelta ${n}${opt("--nota", "") ? ` · ${opt("--nota", "")}` : ""}`,
+  "",
+  `**Cumple ${ver.cumple} de ${ver.total} ejes**${ver.cumple === ver.total ? " · listo: todos en su objetivo" : ` · el que más falta: ${ver.ejes.filter((e) => e.cumple === false).sort((a, b) => b.falta - a.falta)[0]?.eje}`}`,
+  "",
+  `| Eje | Ahora | Antes | Cambio | Ruido | Objetivo | Veredicto |`,
+  `|---|---|---|---|---|---|---|`,
+];
+for (const e of ver.ejes) {
+  const a = ant?.alejamiento?.[e.eje];
+  const d = a === undefined ? "" : Math.round((e.valor - a) * 100);
+  lineas.push(`| ${e.eje} | ${Math.round(e.valor * 100)} % | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} | ${e.ruido === undefined ? "—" : Math.round(e.ruido * 100) + " %"} | ${e.objetivo === null ? "—" : Math.round(e.objetivo * 100) + " %"} | ${textoVeredicto(e)} |`);
 }
 lineas.push("", `Tonos (claro · medio · oscuro · color): referencia ${Object.values(tr).join(" · ")} · banco ${Object.values(tb).join(" · ")}`, "", `Par de fotogramas: ${join(DIR, "par.png")} · lado a lado: ${join(CMP, "lado.mp4")} · comparación: ${join(CMP, "comparacion.md")}`);
 writeFileSync(join(DIR, "vuelta.md"), lineas.join("\n") + "\n");
-if (!sinCaptura) appendFileSync(join(CARPETA, "historial.jsonl"), JSON.stringify({ n, fecha: new Date().toISOString(), nota: opt("--nota", ""), commit, alejamiento, tonos: { referencia: tr, banco: tb } }) + "\n");
+if (!sinCaptura) appendFileSync(join(CARPETA, "historial.jsonl"), JSON.stringify({ n, fecha: new Date().toISOString(), nota: opt("--nota", ""), commit, alejamiento, veredicto: { cumple: ver.cumple, total: ver.total, ejes: Object.fromEntries(ver.ejes.map((e) => [e.eje, e.cumple])) }, tonos: { referencia: tr, banco: tb } }) + "\n");
 console.log(lineas.join("\n"));
 console.log(`\n  ${((Date.now() - t0) / 1000).toFixed(0)} s`);

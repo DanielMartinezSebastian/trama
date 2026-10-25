@@ -15,6 +15,7 @@
  *   - texto (docs/30 §1): el relato escrito de las dos (relato.json de cine:analyze) emparejado por texto: cuándo entra
  *     cada uno (píxeles de scroll sobre el recorrido de la referencia, o tiempo), cuánto tarda y si entra igual;
  *   - acabado (docs/29 §1): detalle fino, bordes, contraste local, brillos y grano en doce pares de fotogramas;
+ *   - profundidad (docs/36 A8): atmósfera, desenfoque y planos por bloques en los mismos pares, y paralaje del flujo;
  *   - SSIM fotograma a fotograma con ffmpeg (solo tiene sentido si la escena es la misma: calibración);
  *   - coste: llamadas de dibujo, triángulos y pasadas.
  * Cada eje da un «alejamiento» de 0 (igual) a 1 (nada que ver), y el informe ordena los ejes de más a menos alejado: el
@@ -27,6 +28,7 @@ import { EJE_NOMBRE } from "../../lib/cine/rubric";
 import type { Eje, Ficha, Pase } from "../../lib/cine/schema";
 import { alabeo, centro, type Inventario, type Muestra, type Tramo } from "./lib.mts";
 import { acabadoDe, compararAcabado, media, type Acabado } from "./acabado.mts";
+import { compararProfundidad, mediaProfundidad, paralajeDe, profundidadDe, type Profundidad } from "./profundidad.mts";
 import { readdirSync } from "node:fs";
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
@@ -355,7 +357,7 @@ const masBarato = COSTES.filter(([k]) => Number(pb[k] ?? 0) < Number(pr[k] ?? 0)
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica" | "texto" | "movimiento", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica" | "texto" | "movimiento" | "profundidad", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
@@ -446,8 +448,28 @@ if (movimiento) {
   alejamiento.movimiento = clamp01(movimiento.total);
   if (sinCamara) delete alejamiento.camara;
 }
+/*
+ * Profundidad (docs/36 A8): atmósfera, desenfoque y planos en los mismos doce pares que el acabado, y el paralaje del
+ * flujo si las dos lo tienen. Es la «sensación de profundidad» que el tono y el acabado globales no ven.
+ */
+const profundidad = await (async () => {
+  const lista = (dir: string) => (existsSync(join(dir, "frames")) ? readdirSync(join(dir, "frames")).filter((x) => x.endsWith(".png")).sort() : []);
+  const la = lista(REF), lb = lista(BAN);
+  if (la.length < 4 || lb.length < 4) return null;
+  const K = 12;
+  const ra: Profundidad[] = [], rb: Profundidad[] = [];
+  for (let k = 0; k < K; k++) {
+    const t = (k + 0.5) / K;
+    const [a, b] = await Promise.all([profundidadDe(join(REF, "frames", la[Math.floor(t * la.length)])), profundidadDe(join(BAN, "frames", lb[Math.floor(t * lb.length)]))]);
+    if (a && b) (ra.push(a), rb.push(b));
+  }
+  if (!ra.length) return null;
+  type ConPares = Parameters<typeof paralajeDe>[0];
+  return compararProfundidad(mediaProfundidad(ra), mediaProfundidad(rb), paralajeDe(fa as unknown as ConPares), paralajeDe(fbj as unknown as ConPares));
+})();
+if (profundidad) alejamiento.profundidad = clamp01(profundidad.total);
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "movimiento" ? "Movimiento de imagen (flujo del vídeo)" : k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "texto" ? "Texto (relato escrito)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "profundidad" ? "Profundidad (atmósfera, desenfoque, planos, paralaje)" : k === "movimiento" ? "Movimiento de imagen (flujo del vídeo)" : k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "texto" ? "Texto (relato escrito)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
@@ -461,6 +483,7 @@ const resultado = {
   coreografia,
   ssim,
   movimiento,
+  profundidad,
   presupuesto: { referencia: pr, banco: pb },
   diferencias: difs,
   alejamiento,
@@ -514,6 +537,14 @@ const md = [
 |---|---|---|
 ${movimiento.filas.map((f) => `| ${f.componente} | ${Math.round(f.error * 100)} % | ${f.recorridoRef} |`).join("\n")}
 ` : "",
+  profundidad
+    ? `## Profundidad
+
+| Señal | Referencia | Banco | Error | El banco va |
+|---|---|---|---|---|
+${profundidad.filas.map((f) => `| ${f.senal} | ${f.ref} | ${f.banco} | ${Math.round(f.error * 100)} % | ${f.sentido} |`).join("\n")}
+`
+    : "",
   `## Presupuesto (${pr.fuente === "gl" && pb.fuente === "gl" ? "API gráfica" : "renderer.info de three"})`,
   ``,
   `| Medida | Referencia | Banco |`,

@@ -1,5 +1,5 @@
 {
-  "_": "Recetas de cine:vuelta (docs/33 §3): cómo se captura el banco de cada estudio, contra qué referencia se compara y con qué opciones. Las rutas de .refs3d son locales (no van en git): si falta una referencia, se vuelve a capturar con `referencia`.",
+  "_": "Recetas de cine:vuelta (docs/33 §3): cómo se captura el banco de cada estudio, contra qué referencia se compara y con qué opciones. Las rutas de .refs3d son locales (no van en git): si falta una referencia, se vuelve a capturar con `referencia`. Por receta, `objetivos` cambia el umbral de un eje (0–1) o lo marca como \"no aplica\"; sin él, 15 % (presupuesto 10 %), y nunca por debajo del ruido · 1,1 + 0,02 (lib/cine/objetivos.ts, docs/36 A1).",
   "plain-sight": {
     "url": "http://localhost:3005/lab/cine/plain-sight",
     "captura": "--drive scroll --steps 60 --wheel 150 --frames-per-step 6 --cola 2 --size 1280x720 --solo-lienzo",
@@ -19,7 +19,11 @@
     "captura": "--drive time --seconds 16 --clic \"0.59,0.47@5\" --teclas \"ArrowUp@6+3;ArrowDown@10.5+1;ArrowUp@12+2.5;ArrowLeft@12+2.5\" --size 1280x720 --solo-lienzo",
     "ref": ".refs3d/f6/bruno",
     "comparar": "--pieza bodyPainted001 --ventanas 5.9-6.75,11.9-13.7",
-    "carpeta": ".refs3d/vueltas/bruno"
+    "carpeta": ".refs3d/vueltas/bruno",
+    "referencia": "https://bruno-simon.com/ --drive time --seconds 16 --clic \"0.59,0.47@5\" --teclas \"ArrowUp@6+3;ArrowDown@10.5+1;ArrowUp@12+2.5;ArrowLeft@12+2.5\" --size 1280x720 --solo-lienzo",
+    "objetivos": {
+      "piezas": "no aplica"
+    }
   },
   "relato": {
     "url": "http://localhost:3005/lab/cine/relato",
@@ -49,7 +53,10 @@
       4.76,
       11.2
     ],
-    "carpeta": ".refs3d/vueltas/chartogne"
+    "carpeta": ".refs3d/vueltas/chartogne",
+    "objetivos": {
+      "coreografia": "no aplica"
+    }
   },
   "camera-scroll": {
     "url": "http://localhost:3005/lab/cine/camera-scroll",

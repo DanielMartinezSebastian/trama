@@ -38,6 +38,9 @@
     "cine:sonda": "tsx scripts/cine/sonda.mts",
     "cine:vuelta": "tsx scripts/cine/vuelta.mts",
     "cine:flujo": "tsx scripts/cine/flujo.mts",
+    "cine:reestudio": "tsx scripts/cine/reestudio.mts",
+    "cine:web": "tsx scripts/cine/web.mts",
+    "cine:sintesis": "tsx scripts/cine/sintesis.mts",
     "cine:rampa": "tsx scripts/cine/rampa.mts"
   },
   "dependencies": {

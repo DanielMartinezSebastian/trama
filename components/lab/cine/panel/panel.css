@@ -103,3 +103,22 @@
   .cpl-ronda__rejilla { grid-template-columns: minmax(0, 1fr); }
   .cpl-barra { grid-template-columns: 110px minmax(0, 1fr) 90px; }
 }
+
+/* puntuación del usuario (docs/36 A9) y veredicto por objetivos (A1) */
+.cpl-puntuar { display: grid; gap: 8px; }
+.cpl-puntuar__escala { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0; padding: 0; border: 0; }
+.cpl-puntuar__escala legend { float: left; width: 96px; font-size: 13px; color: var(--mut); }
+.cpl-puntuar__escala label { display: inline-grid; place-items: center; width: 30px; height: 30px; font-size: 13px; border: 1px solid var(--ln); border-radius: 999px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.cpl-puntuar__escala label.is-on { border-color: var(--acc); color: var(--acc); }
+.cpl-puntuar__escala input { position: absolute; opacity: 0; pointer-events: none; }
+.cpl-puntuar__escala label:has(input:focus-visible) { outline: 2px solid var(--acc); outline-offset: 2px; }
+.cpl-puntuar textarea { width: 100%; padding: 8px; font: inherit; font-size: 13px; color: var(--fg); background: transparent; border: 1px solid var(--ln); border-radius: 6px; resize: vertical; }
+.cpl-puntuar .cpl-boton { justify-self: start; cursor: pointer; }
+.cpl-puntuar .cpl-boton:disabled { opacity: 0.5; cursor: default; }
+.cpl-cumple { font-size: 14px; }
+.cpl-cumple strong { font-variant-numeric: tabular-nums; }
+.cpl-barra__objetivo { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--acc); }
+.cpl-barra.is-na { opacity: 0.5; }
+@media (max-width: 720px) {
+  .cpl-barra { grid-template-columns: 100px minmax(0, 1fr) 90px; }
+}

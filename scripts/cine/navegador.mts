@@ -12,7 +12,7 @@ export const HOOKS = resolve("scripts/cine/hooks");
 /** iPhone 15 en vertical: lo que mide `--movil` (docs/33 §2) */
 export const MOVIL = { width: 390, height: 844, deviceScaleFactor: 3, isMobile: true, hasTouch: true, userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1" };
 
-export type OpcionesNavegador = { size?: [number, number]; movil?: boolean; dom?: boolean; shaders?: boolean };
+export type OpcionesNavegador = { size?: [number, number]; movil?: boolean; dom?: boolean; shaders?: boolean; gl?: boolean };
 
 export async function abrir(op: OpcionesNavegador = {}): Promise<{ browser: Browser; page: Page; errores: string[] }> {
   const browser = await chromium.launch({ executablePath: chromiumPath(), args: ["--enable-unsafe-webgpu", "--ignore-gpu-blocklist", "--autoplay-policy=no-user-gesture-required"] });
@@ -27,6 +27,7 @@ export async function abrir(op: OpcionesNavegador = {}): Promise<{ browser: Brow
   await page.addInitScript({ path: join(HOOKS, "three.js") });
   if (op.shaders) await page.addInitScript({ path: join(HOOKS, "shaders.js") });
   if (op.dom) await page.addInitScript({ path: join(HOOKS, "dom.js") });
+  if (op.gl) await page.addInitScript({ path: join(HOOKS, "gl.js") });
   return { browser, page, errores };
 }
 

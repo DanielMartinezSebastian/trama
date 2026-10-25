@@ -40,6 +40,34 @@ export type Ronda = {
 
 export const RONDAS: Ronda[] = [
   {
+    n: "24",
+    fecha: "25-10-2026",
+    titulo: "Reestudio, mapa de webs enteras, profundidad y veredicto por objetivos",
+    tipo: "herramientas",
+    fuente: { nombre: "Meer Mohsin, Lusion y Active Theory (síntesis)", url: "https://www.meermohsin.me/", motor: "three, Hydra", gesto: "rueda" },
+    componentes: [],
+    herramientas: ["cine:reestudio", "cine:web", "cine:sintesis", "eje de profundidad (A8)", "objetivos y veredicto (A1)", "tu puntuación (A9)"],
+    doc: "35-procedimiento.md",
+    commits: [],
+    resultado: [
+      { eje: "Reestudio: ejes iguales al cierre", valor: "7 de 7 estudios" },
+      { eje: "Ruido de las webs deterministas", valor: "0–2 %" },
+      { eje: "Más lejos: Meer Mohsin (cámara · luz · imagen)", valor: "100 · 85 · 72 %" },
+      { eje: "Bruno (imagen · acabado)", valor: "100 · 81 %" },
+    ],
+    conclusion:
+      "Con referencias nuevas y el inspector de hoy, todos los estudios dan lo mismo que al cerrarlos: el método es reproducible. Las demos que no se sienten como su referencia son las que recortaron escena o decorado. Las vueltas ahora dicen si cada eje cumple su objetivo, miden la profundidad (atmósfera, desenfoque, planos, paralaje) y el panel recoge tu puntuación. Para encargos de varias webs, cine:web hace el mapa entero y cine:sintesis cruza las webs con el kit (docs/38).",
+    capturas: {},
+    extras: [
+      { papel: "Reestudio de los cinco primeros", ruta: "reestudio/2026-10-25-11-20" },
+      { papel: "Reestudio de Chartogne y Lusion", ruta: "reestudio/2026-10-25-12-22" },
+      { papel: "Mapa de Meer Mohsin (cine:web)", ruta: "webs/meermohsin" },
+      { papel: "Síntesis de tres webs", ruta: "sintesis/prueba" },
+      { papel: "Mapas de webs", ruta: "webs" },
+    ],
+    pendiente: ["D1 GravureCanvas", "B1 Meer Mohsin con emblema y escena roja", "B2 Bruno con decorado", "A2 --muestras", "pestaña de webs mapeadas"],
+  },
+  {
     n: "23",
     fecha: "25-10-2026",
     titulo: "La API gráfica, el flujo del vídeo y el ruido de cada eje",
