@@ -65,6 +65,11 @@ la escena, con la orden de captura recomendada; `npm run cine:sonda -- <url>` vu
 uniforms y pasadas. **Después**, cada vuelta del banco es `npm run cine:vuelta -- <estudio>` (receta en
 `scripts/cine/recetas.json`).
 
+**Coste y webs sin three** (docs/34): el gancho `gl.js` cuenta llamadas, triángulos, instancias y pasadas en la API
+gráfica con cualquier motor, y `cine:analyze` escribe la cadena de render reconocida (`pasadas.md`). Sin cámara de
+three, `npm run cine:flujo -- <captura>` mide el movimiento de la imagen. **Antes de dar un eje por bueno**, medir su
+ruido: `npm run cine:vuelta -- <estudio> --ruido` (la referencia contra sí misma).
+
 **Capturas con intro** (aviso de edad, título, texto antes del 3D): `npm run cine:tramo -- <captura> <desde> <hasta>
 <salida>` deja solo ese tramo, como captura de tiempo, lista para analizar y comparar (docs/32 §2). Si la referencia
 pinta a una densidad fija (2× aunque la pantalla sea 1×), la ficha lo dice con `render.dprFijo`.

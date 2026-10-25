@@ -337,13 +337,25 @@ if (existsSync(vr) && existsSync(vb)) {
 /* ---------------------------------------------------------------- coste */
 
 const pr = fr.presupuesto ?? {}, pb = fb.presupuesto ?? {};
-const presupuesto = clamp01(0.5 * rel(pr.drawCalls ?? 0, pb.drawCalls ?? 0) + 0.3 * rel(pr.triangulos ?? 0, pb.triangulos ?? 0) + 0.2 * rel(pr.pasadasPorFotograma ?? 0, pb.pasadasPorFotograma ?? 0));
+// con las dos medidas desde la API gráfica (docs/34 §1) entra también el coste de relleno (píxeles por fotograma)
+const conRelleno = !!(pr.pixelesPorFotograma && pb.pixelesPorFotograma);
+// unilateral (docs/34 §3): solo cuenta lo que el banco gasta DE MÁS; ser más barato no es un defecto (si falta contenido,
+// lo dicen los ejes de imagen y acabado). Lo que sale más barato se apunta aparte
+const exceso = (a: number, b: number) => (b > a ? (b - a) / Math.max(1e-6, b) : 0);
+const COSTES: [keyof typeof pr, string, number, number][] = [
+  ["drawCalls", "llamadas", conRelleno ? 0.35 : 0.5, 0],
+  ["triangulos", "triángulos", conRelleno ? 0.25 : 0.3, 0],
+  ["pasadasPorFotograma", "pasadas", conRelleno ? 0.15 : 0.2, 0],
+  ["pixelesPorFotograma", "píxeles por fotograma", conRelleno ? 0.25 : 0, 0],
+];
+const presupuesto = clamp01(COSTES.reduce((s, [k, , w]) => s + w * exceso(Number(pr[k] ?? 0), Number(pb[k] ?? 0)), 0));
+const masBarato = COSTES.filter(([k]) => Number(pb[k] ?? 0) < Number(pr[k] ?? 0)).map(([k, n]) => `${n} ${pb[k]} frente a ${pr[k]}`);
 
 /* ---------------------------------------------------------------- alejamiento por eje y resumen */
 
 // sin cámara en una de las dos (la escena no llegó a pintarse) no hay nada que comparar: alejamiento máximo
 const sinCamara = pares.length < N / 2;
-const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica" | "texto", number>> = {
+const alejamiento: Partial<Record<Eje | "imagen" | "piezas" | "coreografia" | "acabado" | "dinamica" | "texto" | "movimiento", number>> = {
   camara: sinCamara ? 1 : clamp01(errPos * 5 + errFov / 10 + errDir / 20 + errRoll / 30 + errAvance * 2 + (planosIguales ? 0 : 0.2)),
   luz: clamp01(luz + render * 0.5),
   atmosfera: clamp01(atmosfera + (imagen ? Math.abs(imagen.dLuma) * 2 : 0)),
@@ -402,8 +414,40 @@ if (acabado) alejamiento.acabado = clamp01(acabado.total);
 if (dinamica) alejamiento.dinamica = clamp01(dinamica.total);
 if (texto) alejamiento.texto = clamp01(texto.total);
 if (imagen) alejamiento.imagen = clamp01(Math.abs(imagen.dLuma) * 3 + Math.abs(imagen.dContraste) * 2 + imagen.deltaE / 40 + Math.abs(imagen.dRecorte) * 5);
+/*
+ * Movimiento de imagen (docs/34 §3): el flujo del vídeo (cine:flujo) de las dos, por progreso normalizado. Desplazamiento
+ * acumulado en x e y, escala en logaritmo y giro, cada uno normalizado por su recorrido en la referencia. Es la cámara de
+ * las webs sin three: si a las dos les falta la cámara del gancho, este eje la sustituye.
+ */
+type Flujo = { acumulado: { t: number; x: number; y: number; escala: number; giro: number }[] };
+const flujoDe = (d: string) => (existsSync(join(d, "flujo.json")) ? (JSON.parse(readFileSync(join(d, "flujo.json"), "utf8")) as Flujo) : null);
+const fa = flujoDe(REF), fbj = flujoDe(BAN);
+const movimiento = (() => {
+  if (!fa || !fbj || fa.acumulado.length < 4 || fbj.acumulado.length < 4) return null;
+  const en = (f: Flujo, u: number) => f.acumulado[Math.min(f.acumulado.length - 1, Math.round(u * (f.acumulado.length - 1)))];
+  const comps = [(p: Flujo["acumulado"][0]) => p.x, (p: Flujo["acumulado"][0]) => p.y, (p: Flujo["acumulado"][0]) => Math.log(p.escala), (p: Flujo["acumulado"][0]) => p.giro];
+  const nombres = ["desplazamiento x", "desplazamiento y", "escala", "giro"];
+  const filas = comps.map((c, k) => {
+    const ra = fa.acumulado.map(c);
+    const rango = Math.max(...ra) - Math.min(...ra);
+    let e = 0;
+    for (let i = 0; i <= 40; i++) e += Math.abs(c(en(fa, i / 40)) - c(en(fbj, i / 40)));
+    e /= 41;
+    // un componente que la referencia casi no tiene pesa poco: su error se mide contra un suelo (5 % del ancho, 10 % de
+    // zoom, 5° de giro), no contra su rango. Un giro de la cámara deja en el flujo un poco de escala y de giro en el
+    // plano por la perspectiva (docs/34 §3): por debajo del suelo no es un zoom ni un alabeo de verdad
+    const suelo = [0.05, 0.05, 0.1, 5][k];
+    return { componente: nombres[k], error: +Math.min(1, e / Math.max(rango, suelo)).toFixed(4), recorridoRef: +rango.toFixed(4), peso: Math.min(1, rango / suelo) };
+  });
+  const peso = filas.reduce((s, f) => s + f.peso, 0) || 1;
+  return { filas, total: filas.reduce((s, f) => s + f.error * f.peso, 0) / peso };
+})();
+if (movimiento) {
+  alejamiento.movimiento = clamp01(movimiento.total);
+  if (sinCamara) delete alejamiento.camara;
+}
 const orden = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const nombre = (k: string) => (k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "texto" ? "Texto (relato escrito)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
+const nombre = (k: string) => (k === "movimiento" ? "Movimiento de imagen (flujo del vídeo)" : k === "imagen" ? "Imagen (tono y color)" : k === "acabado" ? "Acabado (detalle, brillos, grano)" : k === "dinamica" ? "Dinámica (física de una pieza)" : k === "texto" ? "Texto (relato escrito)" : k === "piezas" ? "Piezas (posición y giro)" : k === "coreografia" ? "Coreografía de instancias" : EJE_NOMBRE[k as Eje]);
 
 const resultado = {
   referencia: { dir: REF, url: ref.meta.url },
@@ -416,6 +460,7 @@ const resultado = {
   piezas,
   coreografia,
   ssim,
+  movimiento,
   presupuesto: { referencia: pr, banco: pb },
   diferencias: difs,
   alejamiento,
@@ -463,6 +508,20 @@ const md = [
   acabado
     ? `## Acabado\n\n| Medida | Referencia | Banco | Error | El banco va |\n|---|---|---|---|---|\n${acabado.filas.map((r) => `| ${r.medida} | ${r.ref.toExponential(2)} | ${r.banco.toExponential(2)} | ${Math.round(r.error * 100)} % | ${r.sentido} |`).join("\n")}\n`
     : "",
+  movimiento ? `## Movimiento de imagen (flujo del vídeo)
+
+| Componente | Error | Recorrido en la referencia |
+|---|---|---|
+${movimiento.filas.map((f) => `| ${f.componente} | ${Math.round(f.error * 100)} % | ${f.recorridoRef} |`).join("\n")}
+` : "",
+  `## Presupuesto (${pr.fuente === "gl" && pb.fuente === "gl" ? "API gráfica" : "renderer.info de three"})`,
+  ``,
+  `| Medida | Referencia | Banco |`,
+  `|---|---|---|`,
+  ...(["drawCalls", "triangulos", "instancias", "pasadasPorFotograma", "pixelesPorFotograma"] as const).map((k) => `| ${k} | ${pr[k] ?? "—"} | ${pb[k] ?? "—"} |`),
+  ``,
+  masBarato.length ? `El banco es más barato en: ${masBarato.join(" · ")} (no cuenta en el eje).` : "",
+  ``,
   `## SSIM`,
   ``,
   `- ${ssim === null ? "sin vídeo" : ssim.toFixed(4)} (solo significativo si la escena es la misma)`,

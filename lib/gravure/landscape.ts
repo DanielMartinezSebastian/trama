@@ -70,8 +70,10 @@ export function crearPaisaje(op: OpcionesPaisaje = {}) {
 
   // el árbol: copa de dos bultos y tronco corto
   const copa1 = new THREE.IcosahedronGeometry(0.5, 1).scale(1, 0.85, 1).translate(0, 0.95, 0);
-  const copa2 = new THREE.IcosahedronGeometry(0.34, 1).translate(0.22, 1.25, 0.08);
-  const tronco = new THREE.CylinderGeometry(0.07, 0.09, 0.55, 5).translate(0, 0.27, 0);
+  // la copa pequeña con 20 caras: a la distancia de la vista no se distingue, y deja el paisaje en ~110 triángulos por
+  // árbol, como la referencia (521 000 triángulos con 5084 instancias, medido con el gancho gl.js, docs/34 §2)
+  const copa2 = new THREE.IcosahedronGeometry(0.34, 0).translate(0.22, 1.25, 0.08);
+  const tronco = new THREE.CylinderGeometry(0.07, 0.09, 0.55, 4, 1, true).translate(0, 0.27, 0);
   const arbol = mergeGeometries([copa1, copa2, tronco].map((g) => (g.index ? g.toNonIndexed() : g)))!;
   arbol.computeVertexNormals();
 

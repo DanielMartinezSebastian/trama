@@ -26,6 +26,8 @@ export type Muestra = {
   piezas?: { n: string; p: Vec3; q: number[]; c?: Vec3 | null }[];
   /** color, emisivo y opacidad de cada material con nombre */
   mats?: { n: string; c: string | null; e: string | null; o: number }[];
+  /** lo que se pidió a la GPU en el último fotograma completo (gancho gl.js: cualquier motor) */
+  gl?: { calls: number; tris: number; instancias: number; puntos: number; lineas: number; pasadas: { destino: string; w: number; h: number; calls: number; tris: number }[] } | null;
   /** movimiento de las instancias de cada InstancedMesh respecto a su posición inicial */
   inst?: { i: number; movidas: number; max: number; dir: number[] | null }[];
 };
@@ -544,8 +546,10 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
     };
   });
   const r = first.renderer;
-  const calls = ms.map((m) => m.renderer?.calls ?? 0).filter(Boolean);
-  const tris = ms.map((m) => m.renderer?.triangles ?? 0).filter(Boolean);
+  // la API gráfica manda si está (cuenta todo, con cualquier motor); si no, renderer.info de three
+  const conGl = ms.filter((m) => m.gl && m.gl.calls > 0);
+  const calls = conGl.length ? conGl.map((m) => m.gl!.calls) : ms.map((m) => m.renderer?.calls ?? 0).filter(Boolean);
+  const tris = conGl.length ? conGl.map((m) => m.gl!.tris) : ms.map((m) => m.renderer?.triangles ?? 0).filter(Boolean);
   const { pases, sinIdentificar, auxiliares, entornoGenerado } = pasesDesde(first.passes.length ? first.passes : (ms.find((m) => m.passes.length)?.passes ?? []), inv?.post ?? []);
   const bg = inv?.background;
   const ficha: Ficha = {
@@ -595,7 +599,18 @@ export function fichaDesdeCaptura(meta: { url: string; slug: string; fecha: stri
     },
     post: pases,
     escena: [],
-    presupuesto: { drawCalls: median(calls), triangulos: median(tris), texturas: r?.textures ?? undefined, pasadasPorFotograma: first.passes.length, dprMax: r?.pixelRatio },
+    presupuesto: conGl.length
+      ? {
+          drawCalls: median(calls),
+          triangulos: median(tris),
+          instancias: median(conGl.map((m) => m.gl!.instancias)),
+          pasadasPorFotograma: median(conGl.map((m) => m.gl!.pasadas.length)),
+          pixelesPorFotograma: median(conGl.map((m) => m.gl!.pasadas.reduce((s, p) => s + p.w * p.h, 0))),
+          texturas: r?.textures ?? undefined,
+          dprMax: r?.pixelRatio,
+          fuente: "gl",
+        }
+      : { drawCalls: median(calls), triangulos: median(tris), texturas: r?.textures ?? undefined, pasadasPorFotograma: first.passes.length, dprMax: r?.pixelRatio, fuente: "three" },
     origen: { render: "medido", camara: "medido", luz: "medido", materiales: "medido", atmosfera: "medido", post: "medido", presupuesto: "medido" },
   };
   return {

@@ -28,7 +28,7 @@
 | Cámara | **0 %** (la misma cámara, desplazada como la de la referencia) |
 | Dinámica del conjunto (`cine:conjunto`) | **17,6 %** (dispersión 1–11 %, ganancia 5 %, vuelta al centro 1 %) |
 | Acabado | **27 %** (empezó en 46 %) |
-| Imagen | **42 %** (empezó en 100 %; lo que queda es sobre todo composición: qué cruces quedan delante) |
+| Imagen | **42 %** (empezó en 100 %; lo que queda es sobre todo composición: qué cruces quedan delante). Revisado en la ronda 23 (docs/34): el ruido de la propia referencia es del 48 % en imagen y del 26 % en acabado, así que este estudio necesita comparar varias capturas de cada lado |
 | Presupuesto y posprocesado | no aplican: el presupuesto es el de toda la web (11 escenas) y su motor no deja ver sus pases |
 
 ## 1. Qué hay en la portada

@@ -20,6 +20,7 @@ import { EJES, type Ficha, type Nota, type Rubrica } from "../../lib/cine/schema
 import { centro, fichaDesdeCaptura, type Inventario, type Muestra, type Tramo } from "./lib.mts";
 import { respuestaPuntero } from "./puntero.mts";
 import { relatoDom } from "./dom.mts";
+import { leerPasadas } from "./pasadas.mts";
 
 const dir = process.argv.slice(2).find((a) => !a.startsWith("--"));
 if (!dir || !existsSync(join(dir, "timeline.jsonl"))) {
@@ -48,6 +49,17 @@ if (relato.length) {
   (auto.medidas as Record<string, unknown>).relato = relato;
   writeFileSync(join(OUT, "relato.json"), JSON.stringify(relato, null, 1));
   console.log(`  relato: ${relato.length} apariciones de texto`);
+}
+// la cadena de render leída de la API gráfica (docs/34 §2), en tres momentos: cambia cuando cambia la escena
+const conGl = timeline.filter((m) => m.gl && m.gl.pasadas.length);
+if (conGl.length) {
+  const momentos = [0.2, 0.5, 0.85].map((k) => conGl[Math.min(conGl.length - 1, Math.floor(k * conGl.length))]);
+  const cadena = momentos.map((m) => ({ t: m.t, calls: m.gl!.calls, pasadas: m.gl!.pasadas.length, tecnicas: leerPasadas(m.gl!) }));
+  (auto.medidas as Record<string, unknown>).cadena = cadena;
+  const md = [`# Cadena de render · ${meta.url}`, "", "Leída de la API gráfica (gancho gl.js), sin saber el motor (docs/34 §2).", ""];
+  for (const c of cadena) md.push(`## ${c.t.toFixed(1)} s · ${c.pasadas} pasadas · ${c.calls} llamadas`, "", ...c.tecnicas.map((x) => `- ${x.texto}`), "");
+  writeFileSync(join(OUT, "pasadas.md"), md.join("\n"));
+  console.log(`  cadena de render: ${cadena[1].tecnicas.map((x) => x.tipo).join(", ")} (pasadas.md)`);
 }
 writeFileSync(join(OUT, "ficha.auto.json"), JSON.stringify(auto, null, 1));
 const fps = meta.fps;

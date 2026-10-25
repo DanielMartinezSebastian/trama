@@ -34,7 +34,10 @@
     "captura": "--drive pointer --seconds 6 --cola 2 --clock-later --espera 10 --size 1152x480 --solo-lienzo --sin-dom",
     "ref": ".refs3d/f8/r-lusion-co",
     "referencia": "https://lusion.co/ --drive pointer --seconds 6 --cola 2 --clock-later --espera 8 --size 1280x720 --recorte 64,187,1152,480 --sin-dom",
-    "conjunto": { "ref": ".refs3d/f8/conjunto-lusion.json", "args": "--size 1152x480 --espera 14" },
+    "conjunto": {
+      "ref": ".refs3d/f8/conjunto-lusion.json",
+      "args": "--size 1152x480 --espera 14"
+    },
     "carpeta": ".refs3d/vueltas/lusion"
   },
   "chartogne": {
@@ -42,7 +45,10 @@
     "captura": "--drive time --seconds 6.44 --size 1280x720 --solo-lienzo --sin-dom",
     "ref": ".refs3d/f8/r-chartogne",
     "referencia": "https://chartogne-taillet.com/en --drive scroll --steps 13 --wheel 400 --frames-per-step 24 --cola 6 --clock-later --espera 6 --clic \"0.73,0.936@0.1;0.5,0.743@0.4\" --size 1280x720 --sin-dom",
-    "tramoReferencia": [4.76, 11.2],
+    "tramoReferencia": [
+      4.76,
+      11.2
+    ],
     "carpeta": ".refs3d/vueltas/chartogne"
   },
   "camera-scroll": {
@@ -51,5 +57,14 @@
     "ref": ".refs3d/exp/ref-flota",
     "referencia": "https://pmndrs.github.io/examples/camera-scroll/ --seconds 10 --every 2 --size 1280x720 --solo-lienzo",
     "carpeta": ".refs3d/vueltas/camera-scroll"
+  },
+  "activetheory": {
+    "url": "",
+    "captura": "",
+    "ref": ".refs3d/f9/activetheory",
+    "referencia": "https://activetheory.net/ --size 1280x720 --clock-later --espera 6 --clic \"0.77,0.87@0.1\" --drive scroll --steps 30 --wheel 200 --sin-dom",
+    "flujo": true,
+    "carpeta": ".refs3d/vueltas/activetheory",
+    "_nota": "sin banco todavía: referencia de un motor sin three (Hydra) para medir el ruido y probar gl.js, cine:flujo y la cadena de render (docs/34)"
   }
 }

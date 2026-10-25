@@ -6,6 +6,7 @@
  *
  *   npm run cine:vuelta -- <estudio> [--nota "qué cambié"] [--sin-captura]
  *   npm run cine:vuelta -- <estudio> --referencia      vuelve a capturar la referencia con la receta (y su tramo)
+ *   npm run cine:vuelta -- <estudio> --ruido           el ruido de cada eje: la referencia contra otra captura de sí misma
  *   npm run cine:vuelta -- --lista                     estudios con receta y su última vuelta
  *
  * Salida en `<carpeta>/vuelta-NN/`: banco/, cmp/ (comparacion.md, lado.mp4), par.png (referencia arriba, banco abajo, al
@@ -17,7 +18,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, write
 import { join, resolve } from "node:path";
 import sharp from "sharp";
 
-type Receta = { url: string; captura: string; ref: string; referencia?: string; tramoReferencia?: [number, number]; comparar?: string; conjunto?: { ref: string; args: string }; carpeta: string };
+type Receta = { url: string; captura: string; ref: string; referencia?: string; tramoReferencia?: [number, number]; comparar?: string; conjunto?: { ref: string; args: string }; flujo?: boolean; carpeta: string };
 const RECETAS = JSON.parse(readFileSync(resolve("scripts/cine/recetas.json"), "utf8")) as Record<string, Receta>;
 
 const argv = process.argv.slice(2);
@@ -53,15 +54,37 @@ const r = RECETAS[id];
 const CARPETA = resolve(r.carpeta);
 mkdirSync(CARPETA, { recursive: true });
 
-if (argv.includes("--referencia")) {
+/** captura la referencia con su receta (y su tramo) en `salida` */
+const capturarReferencia = (salida: string) => {
   if (!r.referencia) throw new Error(`la receta de ${id} no dice cómo capturar la referencia`);
   const [url, ...resto] = partir(r.referencia);
-  const destino = r.tramoReferencia ? `${r.ref}-completa` : r.ref;
+  const destino = r.tramoReferencia ? `${salida}-completa` : salida;
   console.log(`→ referencia de ${id}: ${url}`);
   tsx("capture.mts", [url, ...resto, "--out", destino], false);
-  if (r.tramoReferencia) tsx("tramo.mts", [destino, String(r.tramoReferencia[0]), String(r.tramoReferencia[1]), r.ref], false);
-  tsx("analyze.mts", [r.ref]);
+  if (r.tramoReferencia) tsx("tramo.mts", [destino, String(r.tramoReferencia[0]), String(r.tramoReferencia[1]), salida], false);
+  tsx("analyze.mts", [salida]);
+  if (r.flujo) tsx("flujo.mts", [salida]);
+};
+if (argv.includes("--referencia")) {
+  capturarReferencia(r.ref);
   console.log(`  ${resolve(r.ref)}`);
+  process.exit(0);
+}
+/*
+ * El ruido de cada eje (docs/34 §4): la referencia contra otra captura de sí misma con la misma receta. Una web viva
+ * (sucesos al azar, física, partículas) nunca da 0 %: lo que una vuelta del banco mejore por debajo de este ruido no es
+ * una mejora medible.
+ */
+if (argv.includes("--ruido")) {
+  // dos capturas nuevas: comparar con una referencia de otra versión de la herramienta (sin gl.js, por ejemplo) mide la
+  // diferencia de herramienta, no el ruido de la web
+  const a1 = join(CARPETA, "ruido", "a"), a2 = join(CARPETA, "ruido", "b");
+  capturarReferencia(a1);
+  capturarReferencia(a2);
+  tsx("compare.mts", [a1, a2, "--out", join(CARPETA, "ruido", "cmp"), ...partir(r.comparar ?? "")]);
+  const c = JSON.parse(readFileSync(join(CARPETA, "ruido", "cmp", "comparacion.json"), "utf8")) as { alejamiento: Record<string, number> };
+  writeFileSync(join(CARPETA, "ruido.json"), JSON.stringify({ fecha: new Date().toISOString(), alejamiento: c.alejamiento }, null, 1));
+  console.log(`Ruido de ${id} (la referencia contra sí misma):\n${Object.entries(c.alejamiento).map(([k, v]) => `  ${k.padEnd(12)} ${Math.round(v * 100)} %`).join("\n")}`);
   process.exit(0);
 }
 if (!existsSync(join(r.ref, "timeline.jsonl"))) throw new Error(`falta la referencia ${r.ref}: npm run cine:vuelta -- ${id} --referencia`);
@@ -80,6 +103,11 @@ if (!sinCaptura) {
 }
 if (!existsSync(join(r.ref, "imagen.json")) && !existsSync(join(r.ref, "informe.html"))) tsx("analyze.mts", [r.ref]);
 tsx("analyze.mts", [BANCO]);
+// el movimiento de imagen (webs sin three o con la cámara escondida): el flujo de las dos
+if (r.flujo) {
+  if (!existsSync(join(r.ref, "flujo.json"))) tsx("flujo.mts", [r.ref]);
+  tsx("flujo.mts", [BANCO]);
+}
 tsx("compare.mts", [r.ref, BANCO, "--out", CMP, ...partir(r.comparar ?? "")]);
 const cmp = JSON.parse(readFileSync(join(CMP, "comparacion.json"), "utf8")) as { alejamiento: Record<string, number> };
 const alejamiento: Record<string, number> = { ...cmp.alejamiento };
@@ -138,11 +166,15 @@ try {
 }
 const ant = previas.filter((p) => p.n !== n).pop();
 const filas = Object.entries(alejamiento).sort((a, b) => b[1] - a[1]);
-const lineas = [`# ${id} · vuelta ${n}${opt("--nota", "") ? ` · ${opt("--nota", "")}` : ""}`, "", "| Eje | Ahora | Antes | Cambio |", "|---|---|---|---|"];
+const ruido = existsSync(join(CARPETA, "ruido.json")) ? (JSON.parse(readFileSync(join(CARPETA, "ruido.json"), "utf8")) as { alejamiento: Record<string, number> }).alejamiento : null;
+const lineas = [`# ${id} · vuelta ${n}${opt("--nota", "") ? ` · ${opt("--nota", "")}` : ""}`, "", `| Eje | Ahora | Antes | Cambio |${ruido ? " Ruido |" : ""}`, `|---|---|---|---|${ruido ? "---|" : ""}`];
 for (const [k, v] of filas) {
   const a = ant?.alejamiento?.[k];
   const d = a === undefined ? "" : Math.round((v - a) * 100);
-  lineas.push(`| ${k} | ${Math.round(v * 100)} % | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} |`);
+  const rr = ruido?.[k];
+  // por debajo del ruido de la propia referencia, el eje ya no se puede mejorar de forma medible
+  const enRuido = rr !== undefined && v <= rr * 1.1 + 0.02;
+  lineas.push(`| ${k} | ${Math.round(v * 100)} % | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} |${ruido ? ` ${rr === undefined ? "—" : Math.round(rr * 100) + " %"}${enRuido ? " · en el ruido" : ""} |` : ""}`);
 }
 lineas.push("", `Tonos (claro · medio · oscuro · color): referencia ${Object.values(tr).join(" · ")} · banco ${Object.values(tb).join(" · ")}`, "", `Par de fotogramas: ${join(DIR, "par.png")} · lado a lado: ${join(CMP, "lado.mp4")} · comparación: ${join(CMP, "comparacion.md")}`);
 writeFileSync(join(DIR, "vuelta.md"), lineas.join("\n") + "\n");

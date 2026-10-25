@@ -226,6 +226,12 @@ export type Presupuesto = {
   triangulos?: number;
   texturas?: number;
   pasadasPorFotograma?: number;
+  /** instancias dibujadas por fotograma (con InstancedMesh, muchas más que llamadas) */
+  instancias?: number;
+  /** píxeles pintados por fotograma: la suma del área de todas las pasadas (el coste de relleno, docs/34 §1) */
+  pixelesPorFotograma?: number;
+  /** de dónde salen los números: la API gráfica (gancho gl.js, cualquier motor) o `renderer.info` de three */
+  fuente?: "gl" | "three";
   gpuMs?: number;
   dprMax?: number;
   cargaMB?: number;

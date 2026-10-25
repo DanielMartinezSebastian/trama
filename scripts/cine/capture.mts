@@ -128,6 +128,7 @@ if (EXACT && FROM_START) await page.addInitScript("window.__cineClockAuto = true
 if (EXACT) await page.addInitScript({ path: join(HOOKS, "clock.js") });
 await page.addInitScript({ path: join(HOOKS, "three.js") });
 await page.addInitScript({ path: join(HOOKS, "shaders.js") });
+await page.addInitScript({ path: join(HOOKS, "gl.js") });
 if (!flag("--sin-dom")) await page.addInitScript({ path: join(HOOKS, "dom.js") });
 
 console.log(`→ ${url}\n  ${DRIVE} · ${EXACT ? "reloj virtual" + (FROM_START ? " desde el arranque" : " tras cargar") : "tiempo real"} · ${W}×${H} · ${OUT}`);
@@ -141,7 +142,12 @@ const t0 = Date.now();
 let last = -1;
 let stableSince = Date.now();
 while (Date.now() - t0 < 60_000) {
-  const n = await page.evaluate(() => (window as unknown as { __cine?: { meshes(): number } }).__cine?.meshes() ?? 0);
+  // mallas de three o, en un motor sin three, que haya dibujos en la API gráfica (gancho gl.js): sin esto una web sin three
+  // esperaba el plazo entero (75 s en Active Theory, docs/34 §4)
+  const n = await page.evaluate(() => {
+    const w = window as unknown as { __cine?: { meshes(): number }; __cineGL?: { frame(): { calls: number } | null } };
+    return w.__cine?.meshes() || (w.__cineGL?.frame()?.calls ? 1 : 0);
+  });
   if (n !== last) {
     last = n;
     stableSince = Date.now();
@@ -150,7 +156,7 @@ while (Date.now() - t0 < 60_000) {
   await page.waitForTimeout(250);
 }
 await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
-console.log(`  escena lista: ${last} mallas (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
+console.log(`  escena lista: ${last} ${last === 1 ? "(dibujos en la API gráfica)" : "mallas"} (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
 
 if (flag("--solo-lienzo")) {
   /*
@@ -226,6 +232,8 @@ async function sample(input: Muestra["input"]) {
   frame++;
   const s = (await snapshot()) as Omit<Muestra, "t" | "i" | "input" | "shot">;
   const m: Muestra = { i: frame, t: +(frame / FPS).toFixed(4), input, shot: null, ...s };
+  // lo que se pidió a la GPU (cualquier motor, docs/34 §1)
+  m.gl = (await page.evaluate(() => (window as unknown as { __cineGL?: { frame(): unknown } }).__cineGL?.frame() ?? null)) as Muestra["gl"];
   // los textos visibles (docs/30 §1): cómo entra y sale el relato escrito
   if (!flag("--sin-dom")) m.dom = (await page.evaluate(() => (window as unknown as { __cineDom?: { sample(): unknown } }).__cineDom?.sample() ?? [])) as Muestra["dom"];
   if (frame % EVERY === 0) {
