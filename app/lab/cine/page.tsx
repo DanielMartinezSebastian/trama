@@ -244,7 +244,8 @@ export default async function PanelCine() {
   const componentes = new Set(RONDAS.flatMap((r) => r.componentes.filter((c) => c.catalogo).map((c) => c.catalogo)));
   const estudios = RONDAS.filter((r) => r.tipo === "estudio").length;
   return (
-    <SiteChrome app>
+    // sin `app`: el marco de aplicación fija la página (como el catálogo, con paneles propios) y aquí hay que desplazarse
+    <SiteChrome>
       <main className="cpl">
         <aside className="cpl__lado" aria-label="Rondas">
           <p className="tr-label">Rondas</p>

@@ -41,7 +41,8 @@ export default async function DocCine({ params }: Props) {
   const markdown = enlaces(raw.replace(/^\s*# .*\n/, ""));
   const i = DOCS_CINE.indexOf(archivo);
   return (
-    <SiteChrome app>
+    // sin `app`, como /docs: el marco de aplicación fija la página y no deja desplazarse
+    <SiteChrome>
       <main className="tr-docs">
         <aside className="tr-docs__side" aria-label="Documentos del método">
           <div className="tr-docs__group">
