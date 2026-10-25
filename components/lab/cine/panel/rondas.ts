@@ -33,6 +33,8 @@ export type Ronda = {
   conclusion: string;
   /** capturas en `.refs3d` (rutas relativas); si hay receta con vueltas, se usa la última vuelta como banco */
   capturas?: { ref?: string; banco?: string; cmp?: string };
+  /** el resto de lo que generó la ronda en `.refs3d`: exploraciones, sondas, pruebas, capturas previas */
+  extras?: { papel: string; ruta: string }[];
   pendiente: string[];
 };
 
@@ -56,6 +58,7 @@ export const RONDAS: Ronda[] = [
     conclusion:
       "El coste y la cadena de render se leen de WebGL y WebGPU con cualquier motor: Active Theory se describe sola (anamórficos, bloom, simulación de 256², un millón de partículas). Sin three, el flujo del vídeo hace de cámara. Y cada eje tiene su ruido: en webs vivas hay que comparar con el ruido, no con un umbral fijo.",
     capturas: { ref: "f9/activetheory" },
+    extras: [{ papel: "Exploración de Active Theory", ruta: "explora/activetheory" }, { papel: "Referencia de Active Theory (con la cadena de render)", ruta: "f9/activetheory" }, { papel: "Giro por arrastre: referencia recortada", ruta: "f9/ct-arr-ref" }, { papel: "Giro por arrastre: banco recortado", ruta: "f9/ct-arr-banco" }, { papel: "Calibración del flujo (comparación)", ruta: "f9/ct-arr-cmp" }, { papel: "Capturas del panel", ruta: "f9" }],
     pendiente: ["cine:vuelta --muestras N (comparar distribuciones)", "flujo con homografía", "Ficha.relato"],
   },
   {
@@ -74,6 +77,7 @@ export const RONDAS: Ronda[] = [
     ],
     conclusion:
       "En .refs3d había 66 scripts de un uso y el trío captura → análisis → comparación se lanzaba a mano 12–18 veces por estudio. Ahora es una orden por paso, y las herramientas encontraron dos cosas de Chartogne que se habían pasado por alto: los pájaros y el giro al arrastrar.",
+    extras: [{ papel: "Exploración de Chartogne", ruta: "explora/chartogne" }, { papel: "Sonda de Chartogne", ruta: "sonda/chartogne" }, { papel: "Arrastre en la referencia", ruta: "f8/c-chartogne-arrastre" }, { papel: "Arrastre en el banco", ruta: "f8/b-chartogne-arrastre" }],
     pendiente: ["eje de presupuesto con pasadas (hecho en la ronda 23)", "motores sin three (hecho en la ronda 23)"],
   },
   {
@@ -99,6 +103,7 @@ export const RONDAS: Ronda[] = [
     conclusion:
       "La escena no pinta colores: guarda normal, lápiz y cercanía, y una pasada final pinta papel, lápiz y contornos de Sobel. Primer estudio en que coinciden el concepto y el acabado, con un paisaje procedural propio.",
     capturas: { ref: "f8/r-chartogne", banco: "f8/b-chartogne", cmp: "f8/comparacion-chartogne" },
+    extras: [{ papel: "Captura completa (aviso, título y vuelo)", ruta: "f8/c-chartogne" }, { papel: "Tramo cortado por movimiento", ruta: "f8/r-chartogne-mov" }, { papel: "Sondas e imágenes sueltas", ruta: "f8/sonda" }],
     pendiente: ["mapa cenital con la lista de parcelas", "aparición por baldosas para el DOM", "viento de los árboles"],
   },
   {
@@ -124,6 +129,7 @@ export const RONDAS: Ronda[] = [
     conclusion:
       "Cada píxel calcula la oclusión, la sombra y el reflejo de las otras 23 cruces sin luces ni entorno. La dinámica se midió sin el código: el racimo sigue al puntero un 31 % y las cruces chocan como bolas. Revisado en la ronda 23: imagen y acabado estaban dentro del ruido de la propia web.",
     capturas: { ref: "f8/r-lusion-co", banco: "f8/b-lusion", cmp: "f8/comparacion-lusion" },
+    extras: [{ papel: "Primer sondeo con scroll", ruta: "f8/c-lusion-co" }, { papel: "Captura con el puntero (ventana entera)", ruta: "f8/p-lusion-co" }, { papel: "Sondas, dinámica e imágenes sueltas", ruta: "f8/sonda" }, { papel: "Todas las capturas de la ronda", ruta: "f8" }],
     pendiente: ["comparar distribuciones (varias capturas por lado)", "chaflán de la cruz con SDF mallado", "giro en la cola"],
   },
   {
@@ -141,6 +147,7 @@ export const RONDAS: Ronda[] = [
     resultado: [{ eje: "texto (momento · duración)", valor: "21 % (0–3 % · 7–20 %)" }],
     conclusion: "La herramienta ve el relato escrito: qué texto entra, cuándo y cómo. Lo que se ve lo deciden los píxeles, no la pila del DOM.",
     capturas: { ref: "f7/mm3", banco: "f7/banco5", cmp: "f7/cmp5" },
+    extras: [{ papel: "Todas las capturas de la ronda", ruta: "f7" }],
     pendiente: ["umbral del párrafo", "letra caligráfica", "emblema 3D de la sección"],
   },
   {
@@ -164,6 +171,7 @@ export const RONDAS: Ronda[] = [
     ],
     conclusion: "La física se midió desde la pose del chasis y se recreó sin WebAssembly (la CSP de producción no lo deja). El decorado no se recreó: imagen y acabado quedan lejos.",
     capturas: { ref: "f6/bruno", banco: "f6/banco", cmp: "f6/cmp" },
+    extras: [{ papel: "Exploración de Bruno Simon", ruta: "f6/bs-explora" }, { papel: "Pruebas de la física", ruta: "f6/fis" }, { papel: "Todas las capturas de la ronda", ruta: "f6" }],
     pendiente: ["decorado de ToyDrive", "más cuerpos en lib/physics"],
   },
   {
@@ -184,6 +192,7 @@ export const RONDAS: Ronda[] = [
     ],
     conclusion: "Todo procedural, sin modelos ni luces. Cuesta de 2 a 5 h por web llegar a «completado».",
     capturas: { ref: "f5/hublot-salida2", banco: "f5/banco10", cmp: "f5/cmp10" },
+    extras: [{ papel: "Exploración de Hublot", ruta: "f5/hublot-explora" }, { papel: "Captura con el puntero", ruta: "f5/hublot" }, { papel: "Todas las capturas de la ronda (vueltas 8–10, brillos, kit)", ruta: "f5" }],
     pendiente: ["pueblos más cálidos", "destello de lente"],
   },
   {
@@ -204,6 +213,7 @@ export const RONDAS: Ronda[] = [
     resultado: [{ eje: "coreografía", valor: "12 %" }],
     conclusion: "La envolvente de muchas copias no es el movimiento: hay que ajustar copia a copia.",
     capturas: { ref: "f4/plain-sight", banco: "exp/ps-banco-tema", cmp: "exp/cmp-tema" },
+    extras: [{ papel: "Capturas de Plain Sight", ruta: "f4" }, { papel: "Experimentos y vueltas", ruta: "exp" }],
     pendiente: ["componente PostFX del kit"],
   },
   {
@@ -224,6 +234,7 @@ export const RONDAS: Ronda[] = [
     ],
     conclusion: "Captura a fotograma exacto con reloj virtual, ficha de escena con vocabulario y bucle de comparación por ejes, calibrado con ejemplos de código abierto.",
     capturas: { ref: "cal/camera-scroll", banco: "cal/camera-scroll-banco", cmp: "cal/comparacion-camera-scroll-banco" },
+    extras: [{ papel: "Calibración bloom: referencia", ruta: "bloom/ref" }, { papel: "Calibración bloom: banco", ruta: "bloom/banco2" }, { papel: "Calibración bloom: comparación", ruta: "bloom/comparacion-banco2" }, { papel: "Calibraciones", ruta: "cal" }],
     pendiente: ["Tidewater (sin escena)", "componente PostFX"],
   },
 ];

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { connection } from "next/server";
 import SiteChrome from "@/components/site/SiteChrome";
 import { RONDAS, type Ronda } from "@/components/lab/cine/panel/rondas";
-import { DOCS_CINE, datosVivos, type Viva } from "@/components/lab/cine/panel/datos";
+import { DOCS_CINE, datosVivos, hrefArchivo, hrefCodigo, type Archivo, type Carpeta, type Viva } from "@/components/lab/cine/panel/datos";
 import "@/components/lab/cine/panel/panel.css";
 
 export const metadata: Metadata = { title: "Laboratorio de cine 3D · Trama", robots: { index: false, follow: false } };
@@ -53,11 +53,127 @@ function Barra({ eje, v, ruido }: { eje: string; v: number; ruido?: number }) {
   );
 }
 
+const buscar = (cs: Carpeta[], papel: RegExp, nombre: string) => cs.find((c) => papel.test(c.papel))?.archivos.find((a) => a.nombre === nombre);
+
+/** los accesos de una ronda: lo que más se busca, en botones arriba de la ficha */
+function Accesos({ r, viva }: { r: Ronda; viva: Viva }) {
+  const informeRef = buscar(viva.capturas, /^Referencia/, "informe.html");
+  const informeBanco = buscar(viva.capturas, /^Banco/, "informe.html");
+  const lado = buscar(viva.capturas, /^Comparación/, "lado.mp4");
+  const cmp = buscar(viva.capturas, /^Comparación/, "comparacion.md");
+  const botones: { href: string; texto: string; fuera?: boolean; fuerte?: boolean }[] = [
+    ...(r.fuente ? [{ href: r.fuente.url, texto: `Web original: ${r.fuente.nombre.split(" (")[0]} ↗`, fuera: true, fuerte: true }] : []),
+    ...(r.lab ? [{ href: r.lab, texto: "Demo en el laboratorio ↗", fuera: true, fuerte: true }] : []),
+    ...r.componentes.flatMap((c) => [...(c.catalogo ? [{ href: `/componentes#${c.catalogo}`, texto: `${c.nombre.split(" (")[0]} en el catálogo`, fuerte: true }] : []), { href: hrefCodigo(c.ruta.replace(/\/$/, "")), texto: `Código: ${c.ruta}` }]),
+    ...(informeRef ? [{ href: informeRef.href, texto: "Informe de la referencia ↗", fuera: true }] : []),
+    ...(informeBanco ? [{ href: informeBanco.href, texto: "Informe del banco ↗", fuera: true }] : []),
+    ...(lado ? [{ href: lado.href, texto: "Vídeo lado a lado ↗", fuera: true }] : []),
+    ...(cmp ? [{ href: cmp.href, texto: "Comparación por ejes ↗", fuera: true }] : []),
+    { href: `/lab/cine/docs/${r.doc.replace(/\.md$/, "")}`, texto: `Documento docs/${r.doc.slice(0, 2)}` },
+    { href: `#recursos-${r.n}`, texto: "Todos los archivos ↓" },
+  ];
+  return (
+    <nav className="cpl-accesos" aria-label={`Enlaces de la ronda ${r.n}`}>
+      {botones.map((b) =>
+        b.href.startsWith("/") && !b.fuera ? (
+          <Link key={b.href + b.texto} href={b.href} className={`cpl-boton ${b.fuerte ? "is-fuerte" : ""}`}>
+            {b.texto}
+          </Link>
+        ) : (
+          <a key={b.href + b.texto} href={b.href} className={`cpl-boton ${b.fuerte ? "is-fuerte" : ""}`} target={b.fuera ? "_blank" : undefined} rel={b.fuera ? "noopener noreferrer" : undefined}>
+            {b.texto}
+          </a>
+        ),
+      )}
+    </nav>
+  );
+}
+
+/** una carpeta de recursos: vídeos que se reproducen, imágenes en miniatura, informes, datos y subcarpetas */
+function Recursos({ c }: { c: Carpeta }) {
+  const por = (t: Archivo["tipo"]) => c.archivos.filter((a) => a.tipo === t);
+  const imagenes = por("imagen");
+  const poster = imagenes.find((a) => /^(par|hoja)\./.test(a.nombre))?.href;
+  const otros = [...por("datos"), ...por("texto"), ...por("otro")];
+  return (
+    <div className="cpl-recurso">
+      <div className="cpl-recurso__cab">
+        <p className="tr-label">{c.papel}</p>
+        <a href={c.href} target="_blank" rel="noopener" className="cpl-enlace cpl-ruta">
+          .refs3d/{c.ruta} · abrir la carpeta ↗
+        </a>
+      </div>
+      {!c.existe && <p className="cpl-mut">No está en este equipo.</p>}
+      {por("informe").length > 0 && (
+        <ul className="cpl-chips">
+          {por("informe").map((a) => (
+            <li key={a.href}>
+              <a href={a.href} target="_blank" rel="noopener">
+                {a.titulo} ↗
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      {por("video").length > 0 && (
+        <div className="cpl-recurso__videos">
+          {por("video").map((a) => (
+            <figure key={a.href} className="cpl-video">
+              <video src={a.href} poster={poster} controls preload="none" playsInline />
+              <figcaption>
+                <a href={a.href} target="_blank" rel="noopener">
+                  {a.titulo}
+                </a>{" "}
+                · {a.kb > 1024 ? `${(a.kb / 1024).toFixed(1)} MB` : `${a.kb} kB`}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+      {imagenes.length > 0 && (
+        <div className="cpl-recurso__imgs">
+          {imagenes.slice(0, 8).map((a) => (
+            <a key={a.href} href={a.href} target="_blank" rel="noopener" title={a.titulo}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- archivos locales de .refs3d, sin optimizar */}
+              <img src={a.href} alt={a.titulo} loading="lazy" />
+              <span>{a.titulo}</span>
+            </a>
+          ))}
+          {imagenes.length > 8 && (
+            <a href={c.href} target="_blank" rel="noopener" className="cpl-recurso__mas">
+              +{imagenes.length - 8} imágenes más ↗
+            </a>
+          )}
+        </div>
+      )}
+      {(otros.length > 0 || c.subcarpetas.length > 0) && (
+        <ul className="cpl-chips">
+          {c.subcarpetas.map((s) => (
+            <li key={s.href}>
+              <a href={s.href} target="_blank" rel="noopener">
+                carpeta {s.nombre === "frames" ? "fotogramas" : s.nombre} ({s.n}) ↗
+              </a>
+            </li>
+          ))}
+          {otros.map((a) => (
+            <li key={a.href}>
+              <a href={a.href} target="_blank" rel="noopener" title={a.nombre}>
+                {a.titulo}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      {c.orden && (
+        <code className="cpl-orden" title="la orden exacta de la captura">
+          {c.orden}
+        </code>
+      )}
+    </div>
+  );
+}
+
 function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
-  const todos = viva.capturas.flatMap((c) => c.archivos);
-  const video = todos.find((a) => a.nombre === "vídeo lado a lado") ?? todos.find((a) => a.tipo === "video");
-  // el póster: el par de fotogramas (referencia y banco) o la hoja de contacto
-  const poster = todos.find((a) => a.nombre === "par de fotogramas") ?? todos.find((a) => a.nombre === "hoja de contacto");
   const ejes = viva.alejamiento ? Object.entries(viva.alejamiento).sort((a, b) => b[1] - a[1]) : [];
   return (
     <section className="cpl-ronda" id={`ronda-${r.n}`}>
@@ -68,6 +184,8 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
         <h2>{r.titulo}</h2>
         <p className="cpl-ronda__conclusion">{r.conclusion}</p>
       </header>
+
+      <Accesos r={r} viva={viva} />
 
       <div className="cpl-ronda__rejilla">
         <div className="cpl-bloque">
@@ -85,19 +203,17 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
             <p className="cpl-mut">Sin web nueva: herramientas del método.</p>
           )}
         </div>
-
         <div className="cpl-bloque">
-          <h3>Implementación en el laboratorio</h3>
+          <h3>Demo en el laboratorio</h3>
           {r.lab ? (
-            <Link href={r.lab} className="cpl-enlace" target="_blank">
-              Abrir el banco {r.lab} ↗
-            </Link>
+            <a href={r.lab} target="_blank" rel="noopener" className="cpl-enlace">
+              {r.lab} ↗
+            </a>
           ) : (
             <p className="cpl-mut">Sin banco (solo referencia).</p>
           )}
           {viva.orden && <code className="cpl-orden">{viva.orden}</code>}
         </div>
-
         <div className="cpl-bloque">
           <h3>Componentes del kit</h3>
           {r.componentes.length ? (
@@ -106,12 +222,14 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
                 <li key={c.nombre}>
                   {c.catalogo ? (
                     <Link href={`/componentes#${c.catalogo}`} className="cpl-enlace">
-                      {c.nombre}
+                      {c.nombre} · catálogo
                     </Link>
                   ) : (
                     <span>{c.nombre}</span>
                   )}
-                  <code className="cpl-ruta">{c.ruta}</code>
+                  <a href={hrefCodigo(c.ruta.replace(/\/$/, ""))} target="_blank" rel="noopener" className="cpl-ruta cpl-enlace">
+                    {c.ruta} · código ↗
+                  </a>
                 </li>
               ))}
             </ul>
@@ -119,7 +237,6 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
             <p className="cpl-mut">Ninguno.</p>
           )}
         </div>
-
         <div className="cpl-bloque">
           <h3>Herramientas</h3>
           <ul className="cpl-chips">
@@ -151,7 +268,6 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
           {ejes.length ? (
             ejes.map(([k, v]) => <Barra key={k} eje={k} v={v} ruido={viva.ruido?.[k]} />)
           ) : viva.ruido ? (
-            // sin banco: lo que se separa la referencia de sí misma
             Object.entries(viva.ruido)
               .sort((a, b) => b[1] - a[1])
               .map(([k, v]) => <Barra key={k} eje={k} v={v} />)
@@ -162,35 +278,20 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
         </div>
       </div>
 
-      {(video || viva.capturas.some((c) => c.archivos.length)) && (
-        <div className="cpl-ronda__medios">
-          {video && (
-            <figure className="cpl-video">
-              <video src={video.href} poster={poster?.href} controls preload="none" playsInline />
-              <figcaption>{video.nombre === "vídeo lado a lado" ? "Referencia | banco" : video.nombre}</figcaption>
-            </figure>
-          )}
-          <div className="cpl-capturas">
-            {viva.capturas.map((c) => (
-              <div key={c.papel} className="cpl-captura">
-                <p className="tr-label">{c.papel}</p>
-                <code className="cpl-ruta">.refs3d/{c.ruta}</code>
-                {!c.existe && <p className="cpl-mut">No está en este equipo.</p>}
-                <ul className="cpl-lista">
-                  {c.archivos.map((a) => (
-                    <li key={a.href}>
-                      <a href={a.href} target="_blank" rel="noopener" className="cpl-enlace">
-                        {a.nombre}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                {c.orden && <code className="cpl-orden" title="la orden exacta de la captura">{c.orden}</code>}
-              </div>
+      <div className="cpl-recursos" id={`recursos-${r.n}`}>
+        <h3 className="cpl-recursos__titulo">Recursos generados</h3>
+        {viva.capturas.map((c) => (
+          <Recursos key={c.papel + c.ruta} c={c} />
+        ))}
+        {viva.extras.length > 0 && (
+          <details className="cpl-extras">
+            <summary>Más capturas de la ronda ({viva.extras.length}): exploraciones, sondas, pruebas y ruido</summary>
+            {viva.extras.map((c) => (
+              <Recursos key={c.papel + c.ruta} c={c} />
             ))}
-          </div>
-        </div>
-      )}
+          </details>
+        )}
+      </div>
 
       {viva.vueltas.length > 0 && (
         <details className="cpl-vueltas">
@@ -201,24 +302,46 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
                 <th>Vuelta</th>
                 <th>Fecha</th>
                 <th>Nota</th>
-                <th>Commit</th>
                 <th>Ejes</th>
+                <th>Archivos</th>
               </tr>
             </thead>
             <tbody>
               {[...viva.vueltas].reverse().map((v) => (
                 <tr key={`${v.n}-${v.fecha}`}>
                   <td className="cpl-num">{v.n}</td>
-                  <td>{v.fecha.slice(0, 16).replace("T", " ")}</td>
-                  <td>{v.nota}</td>
                   <td>
+                    {v.fecha.slice(0, 16).replace("T", " ")}
+                    <br />
                     <code>{v.commit}</code>
                   </td>
+                  <td>{v.nota}</td>
                   <td className="cpl-ejes">
                     {Object.entries(v.alejamiento)
                       .sort((a, b) => b[1] - a[1])
                       .map(([k, x]) => `${EJE[k] ?? k} ${Math.round(x * 100)} %`)
                       .join(" · ")}
+                  </td>
+                  <td className="cpl-ejes">
+                    {v.carpeta && (
+                      <>
+                        <a href={hrefArchivo(`${v.carpeta}/par.png`)} target="_blank" rel="noopener" className="cpl-enlace">
+                          par
+                        </a>{" "}
+                        ·{" "}
+                        <a href={hrefArchivo(`${v.carpeta}/cmp/lado.mp4`)} target="_blank" rel="noopener" className="cpl-enlace">
+                          vídeo
+                        </a>{" "}
+                        ·{" "}
+                        <a href={hrefArchivo(`${v.carpeta}/cmp/comparacion.md`)} target="_blank" rel="noopener" className="cpl-enlace">
+                          comparación
+                        </a>{" "}
+                        ·{" "}
+                        <a href={hrefArchivo(v.carpeta)} target="_blank" rel="noopener" className="cpl-enlace">
+                          carpeta
+                        </a>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -241,7 +364,8 @@ function Tarjeta({ r, viva }: { r: Ronda; viva: Viva }) {
 export default async function PanelCine() {
   await connection();
   const vivas = RONDAS.map((r) => ({ r, viva: datosVivos(r) }));
-  const componentes = new Set(RONDAS.flatMap((r) => r.componentes.filter((c) => c.catalogo).map((c) => c.catalogo)));
+  const componentes = RONDAS.flatMap((r) => r.componentes.filter((c) => c.catalogo).map((c) => ({ ...c, ronda: r.n })));
+  const demos = RONDAS.filter((r) => r.lab);
   const estudios = RONDAS.filter((r) => r.tipo === "estudio").length;
   return (
     // sin `app`: el marco de aplicación fija la página (como el catálogo, con paneles propios) y aquí hay que desplazarse
@@ -266,6 +390,19 @@ export default async function PanelCine() {
               </li>
             ))}
           </ul>
+          <p className="tr-label">Archivos</p>
+          <ul>
+            <li>
+              <a href={hrefArchivo(".refs3d")} target="_blank" rel="noopener">
+                Todas las capturas (.refs3d) ↗
+              </a>
+            </li>
+            <li>
+              <a href={hrefCodigo("scripts/cine")} target="_blank" rel="noopener">
+                Código del inspector ↗
+              </a>
+            </li>
+          </ul>
         </aside>
 
         <div className="cpl__principal">
@@ -273,8 +410,8 @@ export default async function PanelCine() {
             <p className="tr-label">Laboratorio · solo en local</p>
             <h1>Cine 3D: rondas, estudios y herramientas</h1>
             <p>
-              Cada ronda con su web de origen, su implementación en el banco del laboratorio, los componentes que entraron en el kit, las capturas (informes y vídeos) y lo último medido. Los
-              datos vivos se leen de <code>.refs3d</code> en cada visita.
+              Cada ronda con su web de origen, su demo en el laboratorio, los componentes que entraron en el kit y todo lo que generó: informes, vídeos, imágenes, datos y capturas. Lo vivo se lee de{" "}
+              <code>.refs3d</code> en cada visita.
             </p>
             <dl className="cpl-cifras">
               <div>
@@ -287,7 +424,7 @@ export default async function PanelCine() {
               </div>
               <div>
                 <dt>Componentes nuevos</dt>
-                <dd>{componentes.size}</dd>
+                <dd>{new Set(componentes.map((c) => c.catalogo)).size}</dd>
               </div>
               <div>
                 <dt>Herramientas</dt>
@@ -295,6 +432,54 @@ export default async function PanelCine() {
               </div>
             </dl>
           </header>
+
+          <section className="cpl-ronda cpl-indice" aria-label="Accesos directos">
+            <div className="cpl-indice__col">
+              <h3>Demos del laboratorio</h3>
+              <ul className="cpl-lista">
+                {demos.map((r) => (
+                  <li key={r.n}>
+                    <a href={r.lab} target="_blank" rel="noopener" className="cpl-enlace">
+                      {r.fuente?.nombre.split(" (")[0]} ↗
+                    </a>
+                    <span className="cpl-ruta">
+                      {r.lab} · ronda {r.n}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="cpl-indice__col">
+              <h3>Componentes creados</h3>
+              <ul className="cpl-lista">
+                {componentes.map((c) => (
+                  <li key={c.nombre}>
+                    <Link href={`/componentes#${c.catalogo}`} className="cpl-enlace">
+                      {c.nombre.split(" (")[0]}
+                    </Link>
+                    <a href={hrefCodigo(c.ruta)} target="_blank" rel="noopener" className="cpl-ruta cpl-enlace">
+                      {c.ruta} · ronda {c.ronda}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="cpl-indice__col">
+              <h3>Webs estudiadas</h3>
+              <ul className="cpl-lista">
+                {RONDAS.filter((r) => r.fuente).map((r) => (
+                  <li key={r.n}>
+                    <a href={r.fuente!.url} target="_blank" rel="noopener noreferrer" className="cpl-enlace">
+                      {r.fuente!.nombre} ↗
+                    </a>
+                    <span className="cpl-ruta">
+                      {r.fuente!.motor} · ronda {r.n}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
 
           {vivas.map(({ r, viva }) => (
             <Tarjeta key={r.n} r={r} viva={viva} />
