@@ -114,6 +114,8 @@ Con una S cúbica la dirección se apartaba 47° en el peor momento; con la tabl
 - La aparición por baldosas para el DOM (títulos y bloques que entran a trozos) como pieza propia: en CSS con una
   máscara o en WebGL como la referencia.
 - El viento de los árboles (`uWind*` de la referencia).
+- Hecho en la ronda 22 (docs/33 §4): los pájaros (bandada de 100) y el giro de la vista al arrastrar (128,9° por ancho,
+  inercia 0,24 s), que encontraron `cine:sonda` y `cine:explora`.
 - El presupuesto no se puede comparar: el gancho solo ve parte de las llamadas de la referencia (26 llamadas y 3268
   triángulos con miles de instancias).
 

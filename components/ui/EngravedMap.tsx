@@ -18,7 +18,7 @@ export type EngravedMapProps = {
   seed?: number;
   /** duración del vuelo de entrada en segundos; 0 = sin vuelo */
   intro?: number;
-  /** false = sin paralaje con el puntero */
+  /** false = sin paralaje con el puntero ni giro al arrastrar */
   interactive?: boolean;
   /** auto = 3D si el equipo puede y no pide reducir movimiento · static = solo la versión plana */
   render?: "auto" | "static";
@@ -28,8 +28,9 @@ export type EngravedMapProps = {
 /**
  * Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones
  * distintas y caminos en blanco, casas con tejado a dos aguas y árboles con su contorno, con un vuelo de entrada que baja
- * desde el horizonte y un leve paralaje con el puntero. Para portadas de bodegas, territorio, turismo, editoriales o
- * cualquier marca que quiera un 3D que no parezca 3D. Técnica, parámetros y cámara medidos en la portada de
+ * desde el horizonte, una bandada de pájaros, un leve paralaje con el puntero y la vista que gira al arrastrar (con
+ * inercia). Para portadas de bodegas, territorio, turismo, editoriales o cualquier marca que quiera un 3D que no parezca
+ * 3D. Técnica, parámetros y cámara medidos en la portada de
  * Chartogne-Taillet con cine:capture (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final
  * pone papel, lápiz y contornos de Sobel. Colores del tema: papel de --card (o del fondo) y lápiz de --mut. Sin WebGL o
  * con movimiento reducido, un rayado plano.

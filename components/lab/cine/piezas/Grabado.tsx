@@ -12,7 +12,7 @@ import type { OpcionesGrabado } from "@/lib/gravure/post";
 export default function Grabado({ grabado = {}, entrada = 3, ...props }: EngravedMapContentProps & { grabado?: OpcionesGrabado }) {
   return (
     <>
-      <EngravedMapContent entrada={entrada} objetivo={null} {...props} />
+      <EngravedMapContent entrada={entrada} {...props} />
       <Composicion grabado={grabado} entrada={entrada} />
     </>
   );

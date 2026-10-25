@@ -2103,7 +2103,7 @@ Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al punte
 
 ### Paisaje grabado a lápiz — `EngravedMap`
 
-Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones distintas y caminos en blanco, casas con tejado a dos aguas y árboles con contorno, con un vuelo de entrada desde el horizonte y un leve paralaje con el puntero. Para bodegas, territorio, turismo o cualquier marca que quiera un 3D que no parezca 3D. Técnica medida en la portada de Chartogne-Taillet (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final pone papel, lápiz y contornos de Sobel. Imagen al 8 %, acabado al 7 % y cámara al 5 % de la referencia. Colores del tema: papel de --card y lápiz de --mut.
+Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones distintas y caminos en blanco, casas con tejado a dos aguas y árboles con contorno, con un vuelo de entrada desde el horizonte, una bandada de pájaros, un leve paralaje con el puntero y la vista que gira al arrastrar. Para bodegas, territorio, turismo o cualquier marca que quiera un 3D que no parezca 3D. Técnica medida en la portada de Chartogne-Taillet (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final pone papel, lápiz y contornos de Sobel. Imagen al 8 %, acabado al 7 % y cámara al 5 % de la referencia. Colores del tema: papel de --card y lápiz de --mut.
 
 | prop | tipo | default |
 |---|---|---|

@@ -4,6 +4,11 @@
  * y los fotogramas desde 0.
  *
  *   npm run cine:tramo -- <captura> <desde-s> <hasta-s> <salida>
+ *   npm run cine:tramo -- <captura> movimiento <hasta-s|quieto> <salida>
+ *
+ * `movimiento` empieza en el primer fotograma en que la cámara se mueve de verdad (más de 1 mm o 0,05°: los gestos
+ * tienen fotogramas casi quietos antes del disparo y falsean la curva, docs/28 trampa 5); `quieto` acaba 1 s después
+ * del último fotograma en que se mueve.
  */
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -15,12 +20,24 @@ if (!src || !a || !b || !dst || !existsSync(join(src, "timeline.jsonl"))) {
   console.log("Uso: npm run cine:tramo -- <captura> <desde-s> <hasta-s> <salida>");
   process.exit(1);
 }
-const desde = Number(a), hasta = Number(b);
 const SRC = resolve(src), DST = resolve(dst);
+const todo = readFileSync(join(SRC, "timeline.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l) as Muestra);
+/** ¿se mueve la cámara entre dos muestras? */
+const mueve = (p: Muestra, q: Muestra) => {
+  if (!p.camera || !q.camera) return false;
+  const d = Math.hypot(...p.camera.pos.map((v, i) => v - q.camera!.pos[i]));
+  const g = (Math.acos(Math.min(1, p.camera.dir.reduce((s, v, i) => s + v * q.camera!.dir[i], 0))) * 180) / Math.PI;
+  return d > 0.001 || g > 0.05;
+};
+const primera = todo.findIndex((m, i) => i > 0 && mueve(todo[i - 1], m));
+let ultima = -1;
+for (let i = todo.length - 1; i > 0; i--) if (mueve(todo[i - 1], todo[i])) (ultima = i), (i = 0);
+const desde = a === "movimiento" ? (primera > 0 ? todo[primera - 1].t : 0) : Number(a);
+const hasta = b === "quieto" ? (ultima > 0 ? todo[ultima].t + 1 : todo[todo.length - 1].t) : Number(b);
+if (a === "movimiento" || b === "quieto") console.log(`  la cámara se mueve de ${primera > 0 ? todo[primera].t : "—"} a ${ultima > 0 ? todo[ultima].t : "—"} s`);
 mkdirSync(join(DST, "frames"), { recursive: true });
 
-const timeline = readFileSync(join(SRC, "timeline.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l) as Muestra);
-const dentro = timeline.filter((m) => m.t >= desde && m.t <= hasta);
+const dentro = todo.filter((m) => m.t >= desde && m.t <= hasta);
 if (!dentro.length) {
   console.log(`  no hay fotogramas entre ${desde} y ${hasta} s`);
   process.exit(1);

@@ -34,6 +34,9 @@
     "cine:compare": "tsx scripts/cine/compare.mts",
     "cine:conjunto": "tsx scripts/cine/conjunto.mts",
     "cine:tramo": "tsx scripts/cine/tramo.mts",
+    "cine:explora": "tsx scripts/cine/explora.mts",
+    "cine:sonda": "tsx scripts/cine/sonda.mts",
+    "cine:vuelta": "tsx scripts/cine/vuelta.mts",
     "cine:rampa": "tsx scripts/cine/rampa.mts"
   },
   "dependencies": {

@@ -164,6 +164,7 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [x] **Relato con scroll y medida del DOM** (24-10-2026): Meer Mohsin → `ChapterStage`; eje de texto 21 % (docs/30).
 - [x] **Ronda 20, materiales** (24-10-2026): Lusion → `CrossCluster` (material analítico en TSL) y `cine:conjunto`; dinámica 17,6 %, acabado 27 % (docs/31).
 - [x] **Ronda 21, ilustración en 3D** (25-10-2026): Chartogne-Taillet → `EngravedMap` y `lib/gravure` (grabado a lápiz); imagen 8 %, acabado 7 %, cámara 5 %; `cine:tramo` (docs/32).
+- [x] **Ronda 22, revisión y herramientas** (25-10-2026): `cine:explora`, `cine:sonda`, `cine:vuelta` (recetas de los siete estudios), `cine:tramo movimiento`, `--movil`; pájaros y giro por arrastre en `EngravedMap` (docs/33).
 - [ ] Decorado de `ToyDrive` para subir el acabado y eje de cámara por ventanas (docs/29 §8).
 - [ ] Lo pendiente de Hublot: pueblos más cálidos, puntos muy brillantes, bisel, destello de lente con sol (docs/28 §8).
 - [ ] **Candidatas para próximos estudios**: Bruno Simon (bruno-simon.com: WebGPU + TSL, físicas con Rapier, conducción con teclado; ronda 18) y Chartogne-Taillet (chartogne-taillet.com/en, propuesta del usuario 24-10-2026: three r122, mapa ilustrado de viñedos con 145 mallas, puntos y líneas, GSAP + ScrollTrigger, sonido; aviso de edad «Enter»: capturar con `--clic`).

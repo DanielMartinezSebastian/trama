@@ -16,6 +16,8 @@
  *                                 de inicio y duración; varias con «;» (juegos y webs que se conducen con el teclado)
  *   --every 1                     un fotograma de vídeo cada n (1 = 60 fps)
  *   --size 1440x900               tamaño de la ventana
+ *   --movil                       perfil de móvil (iPhone 15 en vertical: 390 × 844 a 3×, táctil): el coste y la
+ *                                 composición en móvil (docs/33 §2)
  *   --sin-dom                     sin la muestra de los textos visibles por fotograma (va por defecto)
  *   --solo-lienzo                 oculta todo menos el lienzo mayor (créditos, paneles, indicador de Next)
  *   --recorte 64,187,1152,480     solo esa zona de la ventana (x,y,ancho,alto en px): las imágenes y el barrido del
@@ -37,6 +39,7 @@ import { join, resolve } from "node:path";
 import { chromium } from "playwright";
 import { chromiumPath } from "../chromium-path.mts";
 import { fichaDesdeCaptura, type Inventario, type Muestra } from "./lib.mts";
+import { MOVIL } from "./navegador.mts";
 
 const argv = process.argv.slice(2);
 const flag = (n: string) => argv.includes(n);
@@ -65,7 +68,8 @@ const CLICS = opt("--clic", "")
     return { x, y, seg: Number(seg) };
   });
 const EVERY = Math.max(1, Number(opt("--every", "1")));
-const [W, H] = opt("--size", "1440x900").split("x").map(Number);
+const MOVIL_ON = flag("--movil");
+const [W, H] = MOVIL_ON ? [MOVIL.width, MOVIL.height] : opt("--size", "1440x900").split("x").map(Number);
 const [RX, RY, RW, RH] = opt("--recorte", "") ? opt("--recorte", "").split(",").map(Number) : [0, 0, W, H];
 const RECORTE = flag("--recorte") ? { x: RX, y: RY, width: RW, height: RH } : undefined;
 const EXACT = !flag("--real");
@@ -87,7 +91,9 @@ const browser = await chromium.launch({
   executablePath: chromiumPath(),
   args: ["--enable-unsafe-webgpu", "--ignore-gpu-blocklist", "--autoplay-policy=no-user-gesture-required"],
 });
-const context = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, bypassCSP: true });
+const context = await browser.newContext(
+  MOVIL_ON ? { viewport: { width: W, height: H }, deviceScaleFactor: MOVIL.deviceScaleFactor, isMobile: true, hasTouch: true, userAgent: MOVIL.userAgent, bypassCSP: true } : { viewport: { width: W, height: H }, deviceScaleFactor: 1, bypassCSP: true },
+);
 const page = await context.newPage();
 const errores: string[] = [];
 page.on("pageerror", (e) => errores.push(e.message));
@@ -272,7 +278,10 @@ writeFileSync(join(OUT, "shaders", "index.json"), JSON.stringify(shaders.map(({ 
 writeFileSync(join(OUT, "timeline.jsonl"), timeline.map((m) => JSON.stringify(m)).join("\n") + "\n");
 writeFileSync(join(OUT, "inventario.json"), JSON.stringify(inventarios, null, 1));
 writeFileSync(join(OUT, "red.json"), JSON.stringify(red, null, 1));
-const meta = { url, slug, fecha: new Date().toISOString(), drive: DRIVE, exacto: EXACT, desdeArranque: FROM_START, fps: FPS / EVERY, size: [W, H], frames: frame, imagenes: shot, errores: errores.slice(0, 30), chromium: browser.version() };
+const meta = { url, slug, fecha: new Date().toISOString(), drive: DRIVE, exacto: EXACT, desdeArranque: FROM_START, fps: FPS / EVERY, size: [W, H], frames: frame, imagenes: shot, errores: errores.slice(0, 30), chromium: browser.version(),
+  // la orden exacta, para repetir la captura (docs/33 §3: las de las rondas 15–19 hubo que sacarlas del historial)
+  orden: "npm run cine:capture -- " + argv.map((a) => (/[\s;"]/.test(a) ? JSON.stringify(a) : a)).join(" "),
+};
 writeFileSync(join(OUT, "meta.json"), JSON.stringify(meta, null, 1));
 writeFileSync(join(OUT, "ficha.auto.json"), JSON.stringify(fichaDesdeCaptura(meta, timeline, inventarios, shaders, js), null, 1));
 await browser.close();
