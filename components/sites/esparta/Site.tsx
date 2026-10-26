@@ -15,6 +15,7 @@ import { SiteFrame, siteHref } from "../shared";
 import { downloadCalendar, prettyDate, useDemoState } from "../business-demo/state";
 import { SERVICES, TEAM, validAppointments, type Appointment } from "./data";
 import Home from "./Journal";
+import TeamSection from "@/components/ui/TeamSection";
 import "../business-demo/business.css";
 import "./redesign.css";
 
@@ -43,7 +44,7 @@ function Services() {
   </div>;
 }
 
-function Team() { return <div className="ep-section"><Hero kicker="EL EQUIPO / EL OFICIO" title="TRES BARBEROS. EL MISMO OFICIO." subtitle="Personajes y fotografías de demostración. Cada profesional tiene su especialidad; elige con quién te apetece reservar." primaryCta="Elegir profesional" primaryHref={href("reservar")} secondaryCta="" badges="" backdrop="none" align="left"/><div className="biz-team-roster"><img src="/img/esparta/corte.webp" alt="Escena de trabajo en el estudio, imagen de referencia generada"/><div>{TEAM.map(p=><article key={p.name}><span>{p.role}</span><h2>{p.name}</h2><Button label={`Reservar con ${p.name}`} href={`${href("reservar")}?profesional=${p.name}`} variant="minimal" emphasis="outline" glyph="↗"/></article>)}</div></div></div>; }
+function Team() { return <div className="ep-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="LOS BARBEROS." subtitle="Personajes de demostración. Cada uno tiene su especialidad; elige con quién te sientas." titleSize="giant" shape="oval" photoTone="mono" align="left" linkLabel="Reservar con él" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><div className="ep-team-scenes"><figure><img src="/img/esparta/navaja.webp" alt="Afeitado con navaja y toalla caliente en primer plano" loading="lazy"/><figcaption>LA NAVAJA / TOALLA CALIENTE Y PULSO</figcaption></figure><figure><img src="/img/esparta/sillon.webp" alt="Un sillón de barbero vacío con la luz del local" loading="lazy"/><figcaption>EL SILLÓN / TE ESTÁ ESPERANDO</figcaption></figure></div></div>; }
 
 function Booking() {
   const { value: appointments, setValue, ready } = useSalon();

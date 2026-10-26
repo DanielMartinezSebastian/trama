@@ -9,7 +9,12 @@ export const SERVICES = [
   { id: "ritual", name: "El ritual Esparta", description: "Corte de la casa, diseño de barba y toalla caliente. Todo en su sitio.", price: 42, minutes: 90, category: "Ritual" },
   { id: "consulta", name: "Hablemos del corte", description: "Valoramos rostro, crecimiento y mantenimiento antes de decidir.", price: 0, minutes: 20, category: "Ritual" },
 ];
-export const TEAM = [{ name: "Hugo", role: "Tijera y clásicos", initial: "H", services: ["corte", "clasico", "ritual", "consulta"] }, { name: "Bruno", role: "Barba y navaja", initial: "B", services: ["corte", "barba", "afeitado", "ritual", "consulta"] }, { name: "Iván", role: "Degradado y textura", initial: "I", services: ["corte", "clasico", "barba", "ritual", "consulta"] }];
+// photo: retratos generados por Codex (docs/encargo-imagenes-negocios.md)
+export const TEAM: { name: string; role: string; initial: string; services: string[]; bio: string; photo?: string }[] = [
+  { name: "Hugo", role: "Tijera y clásicos", initial: "H", services: ["corte", "clasico", "ritual", "consulta"], bio: "Abrió el local con la tijera de su padre. Si el corte no aguanta tres semanas, no está terminado.", photo: "/img/esparta/equipo/hugo.webp" },
+  { name: "Bruno", role: "Barba y navaja", initial: "B", services: ["corte", "barba", "afeitado", "ritual", "consulta"], bio: "Toalla caliente, navaja y paciencia. Dibuja el contorno pensando en cómo crece, no en cómo sale hoy.", photo: "/img/esparta/equipo/bruno.webp" },
+  { name: "Iván", role: "Degradado y textura", initial: "I", services: ["corte", "clasico", "barba", "ritual", "consulta"], bio: "El degradado más limpio del barrio. Te dice cada cuánto volver y no te lo dice para venderte nada.", photo: "/img/esparta/equipo/ivan.webp" },
+];
 export type Appointment = { id: string; service: string; professional: string; date: string; time: string; name: string };
 export const validAppointments = (v: unknown): v is Appointment[] => Array.isArray(v) && v.every(a => a && typeof a.id === "string" && SERVICES.some(s => s.id === a.service) && TEAM.some(p => p.name === a.professional && p.services.includes(a.service)) && /^\d{4}-\d{2}-\d{2}$/.test(a.date) && /^\d{2}:\d{2}$/.test(a.time) && typeof a.name === "string");
 export const PORTRAIT = "/img/esparta/corte.webp";

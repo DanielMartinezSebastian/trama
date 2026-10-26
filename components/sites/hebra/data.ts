@@ -9,7 +9,19 @@ export const SERVICES = [
   { id: "ritual", name: "Pausa para tu pelo", description: "Limpieza, masaje e hidratación con acabado natural.", price: 35, minutes: 45, category: "Cuidado" },
   { id: "consulta", name: "Primero, hablamos", description: "Diagnóstico de color o gran cambio. Sin compromiso.", price: 0, minutes: 20, category: "Cuidado" },
 ];
-export const TEAM = [{ name: "Alba", role: "Corte y textura", initial: "A", services: ["corte", "rizo", "ritual", "consulta"] }, { name: "Vera", role: "Color y luz", initial: "V", services: ["corte", "color", "luz", "ritual", "consulta"] }, { name: "Leo", role: "Forma y acabado", initial: "L", services: ["corte", "rizo", "ritual", "consulta"] }];
+// photo: retratos generados por Codex (docs/encargo-imagenes-negocios.md)
+export const TEAM: { name: string; role: string; initial: string; services: string[]; bio: string; photo?: string }[] = [
+  { name: "Alba", role: "Corte y textura", initial: "A", services: ["corte", "rizo", "ritual", "consulta"], bio: "Doce años cortando en seco y en mojado. Le interesa más cómo te peinas el martes que cómo sales del salón.", photo: "/img/hebra/equipo/alba.webp" },
+  { name: "Vera", role: "Color y luz", initial: "V", services: ["corte", "color", "luz", "ritual", "consulta"], bio: "Pinta la luz a mano alzada. Antes de abrir un tubo de color, te pregunta cada cuánto quieres volver.", photo: "/img/hebra/equipo/vera.webp" },
+  { name: "Leo", role: "Forma y acabado", initial: "L", services: ["corte", "rizo", "ritual", "consulta"], bio: "Rizos, ondas y melenas que se secan solas. Te enseña a repetir el acabado en casa con lo que ya tienes.", photo: "/img/hebra/equipo/leo.webp" },
+];
+/** La carta como paquetes con nombre (docs/50 §3.1: Il Colorista): lo que incluye y el precio; se reserva por su servicio principal */
+export const PACKAGES = [
+  { id: "hebra-corta", name: "La corta", service: "corte", includes: ["Primero, hablamos", "lavado con masaje", "corte con intención", "acabado"], price: "42 €", season: "Todo el año" },
+  { id: "rizo-libre", name: "Rizo libre", service: "rizo", includes: ["Diagnóstico de textura", "corte en seco", "hidratación", "definición", "tu rutina por escrito"], price: "58 €", season: "Todo el año" },
+  { id: "color-sin-prisa", name: "Color sin prisa", service: "color", includes: ["Diagnóstico de color", "baño de color", "pausa con masaje", "acabado natural"], price: "Desde 98 €", season: "Otoño–invierno" },
+  { id: "luz-de-agosto", name: "Luz de agosto", service: "luz", includes: ["Diagnóstico", "balayage a mano alzada", "matiz", "tratamiento", "acabado"], price: "Desde 125 €", season: "Primavera–verano" },
+];
 export type Appointment = { id: string; service: string; professional: string; date: string; time: string; name: string };
 export const validAppointments = (v: unknown): v is Appointment[] => Array.isArray(v) && v.every((a) => a && typeof a.id === "string" && SERVICES.some(s => s.id === a.service) && TEAM.some(p => p.name === a.professional) && /^\d{4}-\d{2}-\d{2}$/.test(a.date) && /^\d{2}:\d{2}$/.test(a.time) && typeof a.name === "string");
 export const PORTRAIT = "/img/peluqueria/02-wind-through-her-hair-unsplash.jpg";

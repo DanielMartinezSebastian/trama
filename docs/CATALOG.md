@@ -299,7 +299,7 @@ Filas de texto en bucle, en CSS puro y sin JS. Siete estilos y color por token.
 
 ### Cabecera de sección — `SectionHeader`
 
-Sobretítulo, titular, subtítulo y regla decorativa.
+Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.
 
 | prop | tipo | default |
 |---|---|---|
@@ -308,6 +308,8 @@ Sobretítulo, titular, subtítulo y regla decorativa.
 | `subtitle` | text | "Reserva, elige tu horario y nosotros nos ocupamos del resto." |
 | `align` | `left` · `center` | "left" |
 | `rule` | `none` · `line` · `ascii` · `dots` | "line" |
+| `titleSize` | `md` · `giant` | "md" |
+| `backdrop` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Separador — `Divider`
@@ -1253,6 +1255,22 @@ Datos clave-valor en una caja de línea fina (fechas, lugar, superficie, plazo).
 
 - El estado depende de la hora del navegador convertida a la zona del negocio: un visitante de otro país ve si abre según la hora de allí.
 - Para la ficha de Google y la búsqueda con IA: <JsonLd data={{ "@type": "Bakery", openingHoursSpecification: openingHoursSchema(hours, exceptions) }} />.
+
+### Horario de clases — `ClassSchedule`
+
+Clases de gimnasio, estudio o academia en los próximos días: filtro por disciplina y nivel, plazas libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por bookings y salen por onBook. Un día en filas o la semana en columnas.
+
+| prop | tipo | default |
+|---|---|---|
+| `classes` | text | "07:30\|Fuerza base\|50\|Fuerza\|Inicio\|Inés\|Sala 1\|12\|8\|1,3,5\n09:00\|Movilidad\|…" |
+| `layout` | `list` · `week` | "list" |
+| `daysAhead` | number 1–14 | 7 |
+| `filters` | `both` · `category` · `none` | "both" |
+| `bookLabel` | text | "Reservar" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
+
+- Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).
+- Los días se calculan en el navegador para no desajustar la hidratación.
 
 ### Código QR — `QRCode`
 
@@ -2462,16 +2480,22 @@ Cabecera de sección + rejilla de «por qué elegirnos» (glifo + título + text
 
 ### Sección de equipo — `TeamSection`
 
-Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.
+Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avatar de iniciales), biografía y enlace por persona para reservar con ella; en rejilla, carrusel o filas.
 
 | prop | tipo | default |
 |---|---|---|
 | `kicker` | text | "El equipo" |
 | `title` | text | "Quién te va a enseñar" |
-| `people` | text | "Marta Solé\|Directora y monitora\nEnzo Rial\|Monitor de iniciación\nCarla Duque\|Monit…" |
-| `layout` | `grid` · `carousel` | "grid" |
+| `people` | text | "Marta Solé\|Directora y monitora\|/img/retratos/03-pixie-cut-unsplash.jpg\|Doce años e…" |
+| `layout` | `grid` · `carousel` · `rows` | "grid" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
+| `shape` | `portrait` · `square` · `circle` · `oval` | "portrait" |
+| `photoTone` | `color` · `mono` · `mono-hover` | "color" |
+| `align` | `center` · `left` | "center" |
+| `linkLabel` | text | "Reservar" |
+| `titleSize` | `md` · `giant` | "md" |
+| `backdrop` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Tira de marcas — `LogoCloud`
@@ -2948,7 +2972,7 @@ Barbería de barrio con fotografías de corte y barba, navegación lateral, tick
 
 Carpeta: `components/sites/esparta/` · 5 páginas: La barbería · Corte y barba · Los barberos · Reservar sillón · Mis citas
 
-`Button` ×15 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+`Button` ×14 · `Marquee` ×2 · `PricingSection` ×2 · `TeamSection` ×2 · `TextField` ×2 · `Hero` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
 
 ### Forja · entrena tu siguiente nivel — `/sitios/forja`
 
@@ -2964,7 +2988,7 @@ Salón de corte y color con diagnóstico de estilo, servicios con precio y durac
 
 Carpeta: `components/sites/hebra/` · 5 páginas: El salón · Servicios y precios · Las manos · Reservar cita · Mis citas
 
-`Button` ×14 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `ImageReveal` · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+`Button` ×13 · `SectionHeader` ×3 · `TeamSection` ×2 · `TextField` ×2 · `Hero` ×2 · `ImageReveal` · `Stepper` · `PricingSection` · `OpeningHours` · `DatePicker` · `ActionBar`
 
 ### Cadencia · encuentra tu ritmo — `/sitios/cadencia`
 
@@ -2972,7 +2996,7 @@ Club social de movimiento con planificador de frecuencia semanal, clases reserva
 
 Carpeta: `components/sites/cadencia/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
 
-`Button` ×18 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+`Button` ×16 · `Hero` ×2 · `Modal` ×2 · `Marquee` · `SectionHeader` · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ClassSchedule` · `ActionBar` · `QRCode`
 
 ### Kernel Log · blog de tecnología — `/sitios/kernel-log`
 

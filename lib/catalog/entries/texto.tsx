@@ -165,7 +165,7 @@ export const texto: CatalogEntry[] = [
     name: "Cabecera de sección",
     category: "texto",
     styles: ALL_STYLES,
-    description: "Sobretítulo, titular, subtítulo y regla decorativa.",
+    description: "Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.",
     stageHeight: 300,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Cómo funciona" },
@@ -173,11 +173,13 @@ export const texto: CatalogEntry[] = [
       { key: "subtitle", label: "Subtítulo", type: "text", default: "Reserva, elige tu horario y nosotros nos ocupamos del resto." },
       { key: "align", label: "Alineación", type: "select", default: "left", options: ["left", "center"] },
       { key: "rule", label: "Regla", type: "select", default: "line", options: ["none", "line", "ascii", "dots"] },
+      { key: "titleSize", label: "Titular", type: "select", default: "md", options: ["md", "giant"], hint: "giant: a lo ancho y apretado, como los «Locations» de las barberías" },
+      { key: "backdrop", label: "Palabra de fondo", type: "text", default: "", hint: "Enorme y tenue detrás de la cabecera, cortada por el borde («blog», «tienda»)" },
       variantProp("minimal"),
     ],
     render: (p) => (
       <div className="ui-center">
-        <SectionHeader kicker={p.kicker as string} title={p.title as string} subtitle={p.subtitle as string} align={p.align as never} rule={p.rule as never} variant={p.variant as never} />
+        <SectionHeader kicker={p.kicker as string} title={p.title as string} subtitle={p.subtitle as string} align={p.align as never} rule={p.rule as never} titleSize={p.titleSize as never} backdrop={p.backdrop as string} variant={p.variant as never} />
       </div>
     ),
   },
