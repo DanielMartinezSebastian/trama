@@ -38,17 +38,20 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
   - Mapa, estilo y transiciones. Mirar: cómo presenta servicios y precios, el equipo, la reserva y la galería de
     trabajos; el tono (lujo, color, editorial).
   - Salida: guía de estilo «salón editorial» y contraste con Hebra y Esparta.
-- [~] **E2 · Más webs de peluquería, barbería o estética** (búsqueda en Awwwards del 26-10-2026: «hair salon»,
+- [x] **E2 · Más webs de peluquería, barbería o estética** (búsqueda en Awwwards del 26-10-2026: «hair salon»,
   «barber», «beauty salon», «hairdresser»; descartadas las que solo coinciden en el nombre: Le Salon Peugeot,
   Salon 94, Heleen Hülsmann, Cielia):
-  - [ ] E2a · ALICE Hair & Art — https://www.alicehairart.se/ (HM 11-02-2025; peluquería y arte en Estocolmo, Framer)
-  - [ ] E2b · Rendezvous Barbers — https://www.myrendezvous.ca/ (HM 31-07-2024; barberías de Toronto)
-  - [ ] E2c · Hair Me Up — https://hairmeup.pl (nominada 16-04-2024; salón con blog y tienda)
-  - [ ] E2d · Fruits Hair Lab — https://fruitshairlab.com/ (nominada 03-01-2023; «minimal maximalism», Nashville)
-  - [ ] E2e · Marco Ambrosi Salon — https://www.marcoambrosi.salon/ (HM 02-06-2021; color y extensiones, vídeo)
-  - [ ] E2f · Don Barber & Groom — https://don-barber.gr/en (HM 15-03-2021; barbería de lujo asequible)
+  - [x] E2a · ALICE Hair & Art — https://www.alicehairart.se/ (HM 11-02-2025; peluquería y arte en Estocolmo, Framer)
+  - [x] E2b · Rendezvous Barbers — https://www.myrendezvous.ca/ (HM 31-07-2024; barberías de Toronto)
+  - [x] E2c · Hair Me Up — https://hairmeup.pl (nominada 16-04-2024; salón con blog y tienda)
+  - [—] E2d · Fruits Hair Lab — https://fruitshairlab.com/ (nominada 03-01-2023; «minimal maximalism», Nashville).
+    **Descartada**: el dominio sirve hoy una plantilla genérica (Arial y Georgia, ilustraciones de relleno, «Clean visuals
+    without broken images»); la web premiada ya no existe.
+  - [x] E2e · Marco Ambrosi Salon — https://www.marcoambrosi.salon/ (HM 02-06-2021; color y extensiones, vídeo)
+  - [x] E2f · Don Barber & Groom — https://don-barber.gr/en (HM 15-03-2021; barbería de lujo asequible)
   - Reserva por si alguna no carga: Serenity Hair Salon (nominada 2025), Base Coat Nail Salon (HM 2020, Shopify).
-  - [ ] E2z · Síntesis de peluquería (`cine:sintesis` con E1 y E2a–f): plantilla, guía y si `ShapeMosaic` se hace.
+  - [x] E2z · Síntesis de peluquería (`cine:sintesis` con E1 y E2a–f): plantilla, guía y si `ShapeMosaic` se hace.
+    26-10-2026: fichas en §3.2 y síntesis en §3.3 (`.refs3d/sintesis/peluqueria/`). `ShapeMosaic` no se hace.
 
 ### Gimnasio y deporte
 
@@ -169,3 +172,123 @@ de contacto, WhatsApp y teléfono.
 **Para las demos de la otra sesión** (Hebra, Esparta): la carta de servicios como paquetes con nombre y lo que
 incluyen, y la consulta inicial gratuita si se reserva, son buenas ideas de contenido; el mosaico de formas daría a
 Hebra una portada con más carácter.
+
+### 3.2 Peluquerías y barberías (E2a–f)
+
+Método: mapa de `cine:web` a 1440 × 900 y en móvil, y un perfil propio con Playwright (tipos y colores calculados por
+superficie, navegación, enlaces de reserva, precios, titulares y ocho pantallas con rueda real). Todo en
+`.refs3d/webs/<slug>/` (`estudio/montaje.jpg`, `estudio/perfil.json`).
+
+#### E2a · ALICE Hair & Art — https://www.alicehairart.se/ (Framer)
+
+- **Estructura** (una página y `/art`): collage de fotos en B/N y color esparcidas sin rejilla, con la marca «ALICE»,
+  «Hair · & Art» y la dirección en una sola línea a media altura → manifiesto → equipo → «current exhibition» con los
+  cuadros que expone el salón → pie con formulario.
+- **Equipo**: una fila por estilista, en tres columnas: nombre y @ de Instagram, biografía de tres líneas, foto en
+  B/N a la derecha. Cada nombre lleva su enlace de reserva (Bokadirekt).
+- **Reserva**: externa, **una por estilista** (Bokadirekt); no hay precios en la web.
+- **Movimiento**: al bajar, las fotos del collage **se desenfocan y se funden** con el fondo antes de que entre el
+  manifiesto. El conmutador «Hair / & Art» se rellena con una barra negra que avanza. La barra inferior (Info, correo,
+  Instagram, «Up ↑») es fija.
+- **Estilo**: **una sola letra** (Px Grotesk, 14 px, mayúsculas, espaciado 0,1 em) para todo; grises #f5f5f5,
+  #f0f0f0 y #dedede con grano; texto #121212. El color lo ponen las fotos y los cuadros.
+
+#### E2b · Rendezvous Barbers — https://www.myrendezvous.ca/ (GSAP, ScrollTrigger y Lenis)
+
+- **Estructura**: titular centrado en serif con cursiva mezclada («Toronto-based barbershops *specializing in the
+  latest modern short hair styles*») → vídeo que crece desde una miniatura → «It's all about the pleasure to feel
+  yourself» → **«Locations» gigante** y cinco locales en tarjetas de retrato con «+» → frase grande con una palabra en
+  naranja → **«Clients»** con reseñas en B/N y carrusel → **la app** (móvil, tres pasos numerados, QR y tiendas) →
+  blog («/paper», artículos de cuidado masculino).
+- **Reserva**: «Book now» por local y «Download app» fijo arriba a la derecha; la reserva vive en su app.
+- **Movimiento**: las palabras gigantes («Clients», «Our app») entran por el borde inferior de su sección y quedan
+  cortadas, como asomando; el vídeo crece con el scroll.
+- **Estilo**: naranja #ff622b, negro y blanco; GT Super (serif, 40–200 px, cursiva para el énfasis), GT Walsheim para
+  el texto y **GT Alpina Typewriter en mayúsculas** para los datos (horarios, direcciones). Logo de tijeras.
+
+#### E2c · Hair Me Up — https://hairmeup.pl (Cracovia)
+
+- **Estructura** (Poznaj nas, Cennik, Blog, Akademia, Sklep, Kontakt): portada con un **arco melocotón** detrás del
+  nombre y un sello circular «Rozpocznij przygodę» → cuatro servicios numerados 01–04 con filete → reseñas
+  (TrustMate, 5,0, pestaña vertical fija a la derecha) → embajadores de Olaplex → productos de la tienda en carrusel
+  (precio rebajado tachado) → academia con sus cursos → blog → marcas.
+- **Reserva**: **dos píldoras fijas abajo**, una por salón («Umów wizytę na Grodzkiej / Basztowej»: Booksy y
+  Saloner). Precios en página aparte («Cennik»).
+- **Palabras de fondo**: cada sección lleva su nombre gigante en melocotón muy claro detrás («sklep», «akademia»,
+  «blog»), en serif, cortado por los bordes.
+- **Estilo**: #feede4 y #ffd5bf, botones teja #963e13, texto #2c2c2c; DM Serif Display para titulares (cursiva para
+  el énfasis), Lora para el texto. Es la más «comercial»: tienda, academia y salón en una sola web.
+
+#### E2d · Fruits Hair Lab — descartada (la web premiada ya no existe; ver §2)
+
+#### E2e · Marco Ambrosi Concept Salon — https://www.marcoambrosi.salon/
+
+La web de hoy no es la premiada en 2021, pero sirve como modelo de **salón especialista** (extensiones).
+
+- **Estructura** (una página con anclas: Perché noi, Servizi, Prima e dopo, Recensioni, Contatti): portada con foto de
+  melena a sangre, etiqueta «Hair extension specialist · Bussolengo (VR)» y titular con una palabra en cobre cursiva
+  («Capelli più lunghi, più pieni. *Tuoi.*») → **por qué con un profesional**: dos sellos (Great Lengths Platinum,
+  Top Hairstylists 2024) y cuatro razones en tarjetas → **comparación** «el presupuesto más bajo» frente a «el trabajo
+  hecho en salón» (lista con ✗ y con ✓) → cinco servicios numerados con «a partire da» y precio → **antes y después**
+  con tirador sobre la misma foto → trabajos en rejilla → «Il salone in movimento»: cuatro clips verticales que suenan
+  al tocarlos → reseñas → contacto.
+- **Reserva**: «Prenota su WhatsApp» como píldora cobre en la cabecera fija y en la portada.
+- **Estilo**: oscuro (#141618, #1a1d20, tarjetas #202428), texto #9aa0a6 y #f2f0ed, acento cobre #e0b183; Playfair
+  Display para titulares, Outfit 300 para el texto; tarjetas con borde fino y radio 12 px.
+
+#### E2f · Don Barber & Groom — https://don-barber.gr/en (Atenas)
+
+- **Estructura**: portada partida: foto del local a la izquierda con **cuatro servicios en gótica condensada enorme**
+  (Barbering, Detailed pricelist, Grooming & wellness, Manicure & pedicure), producto propio a la derecha y una
+  **cinta «Welcome to Don's world»** que corre abajo → «La familia»: el nombre del dueño gigante sobre su retrato,
+  fondo azul gris → marcas y «Shop in shop» → «Services» gigante con tres servicios (el central en óvalo) → «News» en
+  tres columnas → pie con la cinta otra vez.
+- **Menú**: panel a la derecha sobre fondo topo, con la foto de portada a la izquierda; enlaces en mayúsculas con
+  subenlaces (Profile: timeline, gallery, the team), una tarjeta «Keep it handsome» y «Exit» en un óvalo.
+- **Reserva**: «Book now» lleva al contacto; precios en una página propia.
+- **Estilo**: PF Grand Gothik (ancha para el texto, 12 px; **condensada a 100 px** para los titulares, interlineado
+  0,8); azul gris #7e929c, topo #757171, hueso #eceae0; botones en **óvalo de contorno**.
+
+### 3.3 Síntesis de peluquería (E2z)
+
+`cine:sintesis` con Il Colorista y las cinco (`.refs3d/sintesis/peluqueria/sintesis.md`): ninguna usa 3D; lo que se
+repite es de maquetación y de contenido, no de técnica.
+
+**Qué se repite** (de 6):
+
+| Rasgo | Webs | En el kit | Decisión |
+|---|---|---|---|
+| Equipo **con fotos** (B/N en 4) y su enlace o su biografía | 5 (Colorista, ALICE, Rendezvous en reseñas, Marco, Don) | `TeamSection` solo con iniciales | **Ampliar `TeamSection`** (E12): foto, forma (círculo, recuadro, óvalo), tratamiento B/N, biografía, @ y enlace de reserva por persona; disposición en filas (ALICE) además de rejilla |
+| Reserva **externa** (Bokadirekt, Booksy, Saloner, WhatsApp, app) o por contacto | 6 | `ActionBar`, `Button` | Las demos pueden mantener la reserva propia (Hebra y Esparta lo hacen mejor), pero la plantilla debe admitir un botón por estilista o por local que salga fuera |
+| Botón de reserva **siempre a la vista** (cabecera, píldoras fijas abajo) | 4 | `ActionBar`, `NavBar` | Cubierto; receta: dos píldoras si hay dos locales |
+| **Palabra gigante** como título de sección, cortada por el borde o detrás del contenido | 4 (Rendezvous, Hair Me Up, Don, Colorista «il nostro staff») | `FitText`, `SectionHeader` | **Ampliar `SectionHeader`** con un modo «palabra de fondo» (detrás, en tono claro, cortada) o receta con `FitText`; se decide en E12 |
+| Precios en página propia o como carta | 4 | `MenuList`, `PricingSection` | Cubierto |
+| Blog o noticias de cuidado | 4 | `ArticlesSection`, `BlogCard` | Cubierto |
+| Tienda de producto o marcas | 3 (Hair Me Up, Don, Rendezvous con la app) | `ProductCard`, `LogoCloud` | Cubierto |
+| Titular serif con **una palabra en cursiva o en el acento** | 4 | `SplitText` / marcado | Receta, no pieza |
+| Varios locales con su ficha | 2 (Rendezvous, Hair Me Up) | no hay sección | Receta con tarjetas de retrato y `OpeningHours`; pieza solo si sale en gimnasios (cadenas) |
+| Antes y después | 1 (Marco) | `BeforeAfter` | Cubierto |
+| Cinta de texto que corre | 1 (Don) | `Marquee` | Cubierto |
+| App con QR y tiendas | 1 (Rendezvous) | `QRCode`, `DeviceMockup` | Cubierto |
+
+**`ShapeMosaic`: no se hace.** El mosaico de formas solo está en Il Colorista; ALICE tiene otro collage (fotos sueltas
+que se desenfocan al bajar), que se compone con `StickerCollage` o `ImageTrail` y un desenfoque con el scroll. Queda
+como decorado de demo; se vuelve a mirar si aparece en gimnasios o academias.
+
+**Plantilla de salón** (para E11): portada con titular y foto o collage → manifiesto corto → servicios (carta con
+paquetes o 3–5 servicios numerados con «desde») → equipo con fotos y reserva por persona → trabajos (rejilla o antes y
+después) → reseñas con nota → locales y horario → blog o tienda (opcional) → pie con contacto. Reserva fija.
+
+**Dos guías de estilo** (para E10):
+
+- **Salón editorial claro** (Il Colorista, ALICE, Hair Me Up): fondo claro o pastel cálido (salmón, melocotón, gris
+  con grano), serif fina o una sola grotesca en mayúsculas pequeñas, fotos en B/N, mucho aire, sin sombras, acento
+  terroso para los botones.
+- **Barbería de carácter** (Rendezvous, Don, Marco): un acento saturado o metálico (naranja #ff622b, cobre #e0b183) o
+  una paleta apagada (azul gris y topo) con contraste fuerte; titulares enormes en serif con cursiva o en gótica
+  condensada; datos en máquina de escribir o mayúsculas anchas; botones en óvalo o píldora.
+
+**Para Hebra y Esparta** (la otra sesión): la reserva propia con profesional y agenda ya supera a las seis; les falta
+**fotos en el equipo** (esperan a `TeamSection`), los **títulos de sección gigantes** y, en Esparta, una tipografía
+con más carácter (gótica condensada de Don o la serif cursiva de Rendezvous). Hebra puede tomar el manifiesto con
+foto difuminada de ALICE y la carta con paquetes de Il Colorista.
