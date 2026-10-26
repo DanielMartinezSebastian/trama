@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import DemoPreviewLink from "./DemoPreviewLink";
 import { useEffect, useMemo, useState } from "react";
 
 export type DemoItem = { href: string; title: string; blurb: string; meta: string; accent: string };
@@ -70,12 +70,12 @@ export default function DemosIndex({ groups }: { groups: DemoGroup[] }) {
           <ol className="tr-demos">
             {g.items.map((d, i) => (
               <li key={d.href}>
-                <Link href={d.href} className="tr-demo" style={{ ["--accent" as string]: d.accent }}>
+                <DemoPreviewLink href={d.href} previewTitle={d.title} className="tr-demo" style={{ ["--accent" as string]: d.accent }}>
                   <span className="tr-n">{pad(i + 1)}</span>
                   <span className="tr-demo__title">{d.title}</span>
                   <span className="tr-demo__blurb">{d.blurb}</span>
                   <span className="tr-demo__meta">{d.meta}</span>
-                </Link>
+                </DemoPreviewLink>
               </li>
             ))}
           </ol>
