@@ -2163,6 +2163,19 @@ Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo
 - progress controla la coreografía; sin él, se balancea solo.
 - Sin WebGL o con movimiento reducido, una silueta plana de púas.
 
+### Reel de proyectos fijado al scroll — `ProjectReel`
+
+Reel de proyectos fijado al scroll, como el de meermohsin.me: la imagen del proyecto activo grande en el centro, la anterior pequeña arriba y la siguiente abajo, que suben al avanzar; el nombre a la izquierda, un contador circular a la derecha y, de fondo, la misma imagen desenfocada a pantalla completa que tiñe la sección con su color. Cada proyecto se asienta un rato antes de pasar al siguiente. Para portfolios, estudios, casos y lanzamientos. Sin WebGL; colores del tema.
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.35 |
+| `backdrop` | number 0–1 | 0.55 |
+| `counter` | boolean | true |
+
+- Sin progress se fija al scroll: ocupa ((proyectos − 1) · perProject + 1,4) pantallas.
+- backdrop = 0 quita el fondo desenfocado.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.

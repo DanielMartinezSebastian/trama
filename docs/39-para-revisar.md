@@ -13,6 +13,7 @@
 | **Banco del relato de Meer Mohsin**: emblema, llamas con manos, relato y papel rasgado | http://localhost:3005/lab/cine/relato (baja con la rueda) | ¿Se siente como la portada y el relato de la referencia? Sensación, profundidad, ritmo del scroll | https://www.meermohsin.me/ |
 | `ThornEmblem`: emblema 3D de púas | http://localhost:3005/componentes#thorn-emblem | ¿El emblema de púas te vale como pieza de la librería? Prueba otras semillas | El logotipo 3D de la portada de Meer Mohsin |
 | `FlameHorizon`: llamas con manos | http://localhost:3005/componentes#flame-horizon (mueve «Progreso») y http://localhost:3005/lab/cine/llamas | Las manos y las lenguas de fuego | Meer Mohsin, entre la portada y el relato |
+| `ProjectReel`: reel de proyectos con fondo desenfocado | http://localhost:3005/componentes#project-reel y el final del banco del relato | El paso de un proyecto a otro y el fondo | Meer Mohsin, sección de proyectos |
 | `TornPaper`: franja de papel rasgado | http://localhost:3005/componentes#torn-paper | El corte y el canto blanco | Meer Mohsin, «The fall was always part of the path» |
 | `GravureCanvas`: grabado a lápiz para cualquier escena | http://localhost:3005/componentes#gravure-canvas | ¿Te sirve el grabado fuera del paisaje? | El grabado de Chartogne-Taillet |
 | **Chartogne**: el paisaje más denso | http://localhost:3005/lab/cine/chartogne | Cepas en trazos, árboles sin tronco, casas pequeñas | https://chartogne-taillet.com/en |
@@ -31,7 +32,7 @@ quiero saberlo antes que nada.
 | Decisión | Lo que haré |
 |---|---|
 | Orden del plan | El de docs/36 §7, con lo de Meer Mohsin primero porque era la demo más lejana |
-| Piezas nuevas en el kit (`GravureCanvas`, `ThornEmblem`, `FlameHorizon`, `TornPaper`) | Entran en el catálogo `/componentes`; las quito si no te convencen |
+| Piezas nuevas en el kit (`GravureCanvas`, `ThornEmblem`, `FlameHorizon`, `TornPaper`, `ProjectReel`) | Entran en el catálogo `/componentes`; las quito si no te convencen |
 | Chartogne: la profundidad se queda en el 16 % (objetivo: 15 %) | Lo dejo así. El punto que falta está en el desenfoque y costaría varias vueltas más |
 | La portada de Meer Mohsin lleva la foto de una persona | No la copio: el banco pone un degradado. Si quieres una figura, dime de dónde sacar la imagen |
 | Nada se fusiona en `main` | Todo sigue en `feat/cine-captura` hasta que lo pidas |

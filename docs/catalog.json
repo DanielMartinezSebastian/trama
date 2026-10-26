@@ -221,6 +221,7 @@
         "engraved-map",
         "gravure-canvas",
         "thorn-emblem",
+        "project-reel",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -12330,6 +12331,48 @@
       ],
       "example": "import TornPaper from \"@/components/ui/TornPaper\";\n\n<TornPaper />",
       "preview": "/componentes#torn-paper"
+    },
+    {
+      "id": "project-reel",
+      "name": "Reel de proyectos fijado al scroll",
+      "component": "ProjectReel",
+      "import": "import ProjectReel from \"@/components/ui/ProjectReel\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Reel de proyectos fijado al scroll, como el de meermohsin.me: la imagen del proyecto activo grande en el centro, la anterior pequeña arriba y la siguiente abajo, que suben al avanzar; el nombre a la izquierda, un contador circular a la derecha y, de fondo, la misma imagen desenfocada a pantalla completa que tiñe la sección con su color. Cada proyecto se asienta un rato antes de pasar al siguiente. Para portfolios, estudios, casos y lanzamientos. Sin WebGL; colores del tema.",
+      "props": [
+        {
+          "key": "progress",
+          "type": "number",
+          "default": 0.35,
+          "label": "Progreso (modo controlado)",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "backdrop",
+          "type": "number",
+          "default": 0.55,
+          "label": "Fondo desenfocado",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "counter",
+          "type": "boolean",
+          "default": true,
+          "label": "Contador"
+        }
+      ],
+      "notes": [
+        "Sin progress se fija al scroll: ocupa ((proyectos − 1) · perProject + 1,4) pantallas.",
+        "backdrop = 0 quita el fondo desenfocado."
+      ],
+      "example": "import ProjectReel from \"@/components/ui/ProjectReel\";\n\n<ProjectReel />",
+      "preview": "/componentes#project-reel"
     },
     {
       "id": "chapter-stage",

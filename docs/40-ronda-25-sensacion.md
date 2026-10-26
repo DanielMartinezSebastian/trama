@@ -14,22 +14,25 @@
    - La distancia es real, no ruido. La causa la dicen los tonos: el banco tiene el doble de claros (0,17 frente a
      0,08).
 3. **Meer Mohsin estaba lejos porque faltaba la escena, no el texto.**
-   - Con el emblema, las llamas con manos, el papel rasgado, la caligráfica de la referencia y su cámara:
-     - la imagen pasa del 72 % al 44 %;
+   - Con el emblema, las llamas con manos, el papel rasgado, el reel de proyectos, la caligráfica de la referencia y su
+     cámara:
+     - la imagen pasa del 72 % al 31 %;
      - la cámara, del 100 % al 0 %;
-     - el posprocesado, del 25 % al 0 %.
-   - Lo que queda lejos es la luz (75 %, otro número de luces), el acabado (68 %) y la profundidad (49 %): la
-     referencia tiene más medios tonos.
+     - la profundidad, del 57 % al 10 %;
+     - el acabado, del 70 % al 30 %.
+   - Cumple 5 de 9 ejes. Queda lejos la luz (75 %, otro número de luces), que es un dato de la escena más que de la
+     imagen.
 4. **El inspector tenía dos fallos que solo salieron con escenas nuevas.**
    - El gancho cogía la cámara cúbica con la que se genera un entorno de reflejos (`PMREMGenerator.fromScene`) en vez
      de la escena de la página.
    - Elegía escena solo por número de mallas: una pieza pesada de una sola malla perdía frente a una tarjeta de varias
      mallas planas.
-5. **Cuatro piezas nuevas en el kit, todas versátiles** (docs/36 §1):
+5. **Cinco piezas nuevas en el kit, todas versátiles** (docs/36 §1):
    - `GravureCanvas`: grabado para cualquier escena;
    - `ThornEmblem`: emblema de púas procedural;
    - `FlameHorizon`: llamas con manos;
-   - `TornPaper`: papel rasgado.
+   - `TornPaper`: papel rasgado;
+   - `ProjectReel`: reel de proyectos fijado al scroll con fondo desenfocado.
 
 ## 1. Chartogne: la profundidad del 28 % al 16 %
 
@@ -105,6 +108,11 @@ En el banco, la caligráfica Ruthie (la de la referencia) va en las palabras gig
 | 2 | Emblema, llamas y papel | 42 % | 100 % (el cubo del entorno) | 100 % | 25 % | 57 % | 21 % |
 | 3 | Cámara de la referencia; el gancho ya no coge el cubo | 42 % | 100 % (la tarjeta) | 75 % | 0 % | 52 % | 21 % |
 | 4 | Ruthie, tarjeta roja; el gancho elige por mallas y triángulos | 44 % | **0 %** | 75 % | 0 % | 49 % | 50 % |
+| 5 | Reel de proyectos (`ProjectReel`) tras el papel rasgado | 38 % | 0 % | 75 % | 0 % | **10 %** | 50 % |
+| 6 | Fondo del reel más tenue (0,32) | **31 %** | 0 % | 75 % | 0 % | 10 % | 48 % |
+
+**El reel resolvió la profundidad**: del 49 % al 10 %, con el acabado del 68 % al 30 %. Los medios tonos de la
+referencia salían de su sección de proyectos (fotos de pantallas y un fondo desenfocado), que el banco no tenía.
 
 **El texto empeora por la medida, no por lo que se ve.** La palabra en Ruthie, ancha y con grandes rasgos, tapa parte de
 la caja del párrafo de la lista. La visibilidad por píxeles (docs/30) da el párrafo por visible más tarde. Queda
@@ -112,10 +120,9 @@ anotado como límite de la medida de texto.
 
 ### Pendiente
 
-- **Medios tonos**: la referencia tiene un 14 % y el banco casi ninguno.
-  - Faltan la imagen roja de la tarjeta con más cuerpo, las líneas de la sala más visibles, el logotipo blanco de arriba
-    a la izquierda y la barra inferior.
-  - Es lo que más pesa en la profundidad (49 %) y en el acabado (68 %).
+- ~~Medios tonos~~: resuelto con el reel de proyectos (vueltas 5 y 6).
+- **Detalles**: el logotipo blanco de arriba a la izquierda y la barra inferior (TENSION · IMMERSION · IMPACT) con sus
+  cruces.
 - **Luz**: la referencia tiene 2 hemisféricas y 6 direccionales.
 - La figura que cae en el papel rasgado.
 

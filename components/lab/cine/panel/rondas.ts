@@ -51,6 +51,7 @@ export const RONDAS: Ronda[] = [
       { nombre: "ThornEmblem", catalogo: "thorn-emblem", ruta: "components/ui/ThornEmblem.tsx" },
       { nombre: "FlameHorizon", catalogo: "flame-horizon", ruta: "components/ui/FlameHorizon.tsx" },
       { nombre: "TornPaper", catalogo: "torn-paper", ruta: "components/ui/TornPaper.tsx" },
+      { nombre: "ProjectReel", catalogo: "project-reel", ruta: "components/ui/ProjectReel.tsx" },
       { nombre: "GravureCanvas", catalogo: "gravure-canvas", ruta: "components/ui/GravureCanvas.tsx" },
       { nombre: "lib/emblem (emblema de púas)", ruta: "lib/emblem/" },
     ],
@@ -58,7 +59,7 @@ export const RONDAS: Ronda[] = [
     doc: "40-ronda-25-sensacion.md",
     commits: ["4e17844"],
     resultado: [
-      { eje: "Meer Mohsin: imagen · cámara · posprocesado", valor: "72 → 44 % · 100 → 0 % · 25 → 0 %" },
+      { eje: "Meer Mohsin: imagen · cámara · profundidad", valor: "72 → 31 % · 100 → 0 % · 57 → 10 %" },
       { eje: "Chartogne: profundidad (imagen)", valor: "28 → 16 % (9 %)" },
       { eje: "Lusion con 5 muestras: imagen · acabado", valor: "57 % ± 25 · 34 % ± 9" },
     ],
@@ -70,7 +71,7 @@ export const RONDAS: Ronda[] = [
       { papel: "Muestras de Lusion", ruta: "vueltas/lusion/muestras" },
       { papel: "Vueltas de Chartogne", ruta: "vueltas/chartogne" },
     ],
-    pendiente: ["Meer Mohsin: medios tonos, luz, figura que cae", "Lusion: claros de más", "Chartogne: red de caminos", "B2 Bruno con decorado"],
+    pendiente: ["Meer Mohsin: luz, logotipo y barra, figura que cae", "Lusion: claros de más", "Chartogne: red de caminos", "B2 Bruno con decorado"],
   },
   {
     n: "24",

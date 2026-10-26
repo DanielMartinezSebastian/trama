@@ -13,6 +13,7 @@ import GravureCanvas from "@/components/ui/GravureCanvas";
 import ThornEmblem from "@/components/ui/ThornEmblem";
 import FlameHorizon from "@/components/ui/FlameHorizon";
 import TornPaper from "@/components/ui/TornPaper";
+import ProjectReel from "@/components/ui/ProjectReel";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -321,6 +322,28 @@ export const webgl: CatalogEntry[] = [
         <TornPaper seed={p.seed as number} depth={p.depth as number} rim={p.rim as number} edges={p.edges as "both"}>
           <div style={{ padding: "48px 6vw", fontSize: 36, lineHeight: 1.05, fontWeight: 600, color: "#111" }}>The fall was always part of the path.</div>
         </TornPaper>
+      </div>
+    ),
+  },
+  {
+    id: "project-reel",
+    component: "ProjectReel",
+    path: "@/components/ui/ProjectReel",
+    name: "Reel de proyectos fijado al scroll",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Reel de proyectos fijado al scroll, como el de meermohsin.me: la imagen del proyecto activo grande en el centro, la anterior pequeña arriba y la siguiente abajo, que suben al avanzar; el nombre a la izquierda, un contador circular a la derecha y, de fondo, la misma imagen desenfocada a pantalla completa que tiñe la sección con su color. Cada proyecto se asienta un rato antes de pasar al siguiente. Para portfolios, estudios, casos y lanzamientos. Sin WebGL; colores del tema.",
+    stageHeight: 520,
+    notes: ["Sin progress se fija al scroll: ocupa ((proyectos − 1) · perProject + 1,4) pantallas.", "backdrop = 0 quita el fondo desenfocado."],
+    props: [
+      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.35, min: 0, max: 1, step: 0.01 },
+      { key: "backdrop", label: "Fondo desenfocado", type: "number", default: 0.55, min: 0, max: 1, step: 0.05 },
+      { key: "counter", label: "Contador", type: "boolean", default: true },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", ["--bg" as string]: "#050505", ["--fg" as string]: "#f2f2f2" }}>
+        <ProjectReel progress={p.progress as number} backdrop={p.backdrop as number} counter={p.counter as boolean} height={500} />
       </div>
     ),
   },

@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Ruthie } from "next/font/google";
 import ChapterStage from "@/components/ui/ChapterStage";
 import TornPaper from "@/components/ui/TornPaper";
+import ProjectReel from "@/components/ui/ProjectReel";
 import Desplazable from "@/components/lab/cine/Desplazable";
 import RelatoMeer from "@/components/lab/cine/piezas/RelatoMeer";
 
 /*
  * Banco del relato con scroll (docs/30, docs/36 B1): la portada con el emblema, las llamas que suben y se invierten,
  * `ChapterStage` con las palabras, listas y duraciones de la sección de meermohsin.me a la misma altura de scroll (la
- * referencia fija su sección a los 3 291 px con 720 px de alto) y la franja de papel rasgado que sigue. Se captura con
+ * referencia fija su sección a los 3 291 px con 720 px de alto), la franja de papel rasgado y el reel de proyectos. Se captura con
  * el mismo guion de rueda y se compara con `cine:compare` (receta `relato`).
  */
 
@@ -49,7 +50,20 @@ export default function Page() {
           </div>
         </TornPaper>
       </div>
-      <div style={{ height: 6000 }} />
+      {/* el reel de proyectos de la referencia (9 425–12 000 px): el activo en el centro y su imagen desenfocada de fondo */}
+      <div style={{ position: "relative", zIndex: 4, fontFamily: "var(--font-sans, system-ui), sans-serif" }}>
+        <ProjectReel
+          perProject={1}
+          backdrop={0.32}
+          projects={[
+            { title: "Codenarts", image: "/img/estudio/04-workspace-unsplash.jpg" },
+            { title: "AZ-Digital-Ventures", image: "/img/estudio/02-winter-workspace-2-unsplash.jpg" },
+            { title: "Amron", image: "/img/estudio/01-gadgets-on-a-desk-unsplash.jpg" },
+            { title: "Chatone", image: "/img/estudio/03-wacom-cintiq-22hd-workspace-2-unsplash.jpg", description: "A clean, light-themed messaging app designed for effortless conversations." },
+          ]}
+        />
+      </div>
+      <div style={{ height: 2000 }} />
     </main>
   );
 }
