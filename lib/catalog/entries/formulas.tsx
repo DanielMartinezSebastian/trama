@@ -158,10 +158,14 @@ export const formulas: CatalogEntry[] = [
     props: [
       { key: "height", label: "Alto (CSS)", type: "text", default: "320px" },
       { key: "grow", label: "Crecimiento del activo", type: "number", default: 4, min: 1.5, max: 8, step: 0.5 },
+      { key: "mobileScroll", label: "Abrir con scroll en móvil", type: "boolean", default: false },
+      { key: "metaVisibility", label: "Subtítulo", type: "select", default: "always", options: ["always", "active"] },
+      { key: "titleMaxSize", label: "Título: tamaño máximo (CSS)", type: "text", default: "28px" },
+      { key: "minPanelWidth", label: "Ancho mínimo de panel (CSS)", type: "text", default: "120px" },
     ],
     render: (p) => (
       <div style={{ width: "100%", padding: 12 }}>
-        <ExpandingPanels height={p.height as string} grow={p.grow as number} panels={[{ title: "Residencias", meta: "186 viviendas", image: IMGS[0], href: "#" }, { title: "Oficinas", meta: "6.400 m²", image: IMGS[1], href: "#" }, { title: "Jardines", meta: "19.000 m²", image: IMGS[2], href: "#" }, { title: "Comercio", meta: "2.100 m²", image: IMGS[0], href: "#" }]} />
+        <ExpandingPanels height={p.height as string} grow={p.grow as number} mobileScroll={p.mobileScroll as boolean} metaVisibility={p.metaVisibility as "always" | "active"} titleMaxSize={p.titleMaxSize as string} minPanelWidth={p.minPanelWidth as string} panels={[{ title: "Residencias", meta: "186 viviendas", image: IMGS[0], href: "#" }, { title: "Oficinas", meta: "6.400 m²", image: IMGS[1], href: "#" }, { title: "Jardines", meta: "19.000 m²", image: IMGS[2], href: "#" }, { title: "Comercio", meta: "2.100 m²", image: IMGS[0], href: "#" }]} />
       </div>
     ),
   },

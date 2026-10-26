@@ -75,6 +75,11 @@
 
 .ql-trust { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px); border-top: 1px solid var(--ln); padding-top: 32px; }
 .ql-reviews { padding-inline: var(--st-gutter); max-width: var(--st-max); margin-inline: auto; }
+.ql-reviews .ui-quote blockquote { font-size: clamp(23px, 2.1vw, 30px); font-weight: 300; line-height: 1.35; }
+.ql-reviews .ui-quote__stars { font-size: 12px; letter-spacing: 0.16em; }
+.ql-faq > .ui-sh { max-width: 30ch; }
+.ql-faq > .ui-sh h2 { font-family: var(--display); font-size: clamp(36px, 4.2vw, 60px); font-weight: 300; line-height: 1.05; }
+.ql-faq .ui-acc__head { font-size: clamp(17px, 1.4vw, 20px); font-weight: 400; }
 .ql-cta { display: grid; gap: 18px; justify-items: start; }
 
 /* configuradores */
@@ -494,7 +499,7 @@
 .ql-band__m { font-family: var(--display); font-weight: 300; letter-spacing: -0.01em; }
 /* caminos: paneles con foto que se abren al pasar; el título en la tipografía de titulares */
 .ql-paths .ui-xpan__p { border-radius: clamp(14px, 1.4vw, 20px); }
-.ql-paths .ui-xpan__txt b { font-family: var(--display); font-weight: 300; font-size: clamp(26px, 2.6vw, 40px); letter-spacing: -0.01em; }
+.ql-paths .ui-xpan__txt b { font-family: var(--display); font-weight: 300; letter-spacing: -0.01em; }
   /* Galería editorial: piezas distintas en situaciones y materias coordinadas. */
 .ql-gal { padding-top: clamp(48px, 8vw, 110px); }
   .ql-gal__panel { margin: 0; display: grid; gap: 14px; align-content: center; width: min(48vw, 72svh, 700px); }

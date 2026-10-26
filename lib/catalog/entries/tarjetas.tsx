@@ -195,19 +195,25 @@ export const tarjetas: CatalogEntry[] = [
     name: "Testimonio",
     category: "tarjetas",
     styles: ALL_STYLES,
-    description: "Cita con avatar de iniciales, autor, cargo y valoración.",
+    description: "Cita con tres tratamientos (tarjeta, suave o abierta), retrato circular con respaldo de iniciales, autor, cargo y valoración.",
     stageHeight: 340,
     props: [
       { key: "quote", label: "Cita", type: "text", multiline: true, default: "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla." },
       { key: "author", label: "Autor", type: "text", default: "Lucía Pardo" },
       { key: "role", label: "Cargo", type: "text", default: "Alumna, curso de iniciación" },
+      { key: "presentation", label: "Tratamiento", type: "select", default: "card", options: ["card", "soft", "plain"] },
+      { key: "quoteFont", label: "Fuente de la cita", type: "select", default: "body", options: ["body", "display"] },
+      { key: "avatar", label: "Mostrar avatar", type: "boolean", default: true },
+      { key: "avatarSrc", label: "Foto de perfil (URL, opcional)", type: "text", default: "" },
+      { key: "avatarSize", label: "Tamaño del retrato", type: "select", default: "md", options: ["sm", "md", "lg"] },
+      { key: "avatarShape", label: "Forma del avatar", type: "select", default: "theme", options: ["theme", "circle"] },
       { key: "rating", label: "Estrellas", type: "number", default: 5, min: 0, max: 5, step: 1 },
       ...fillSpecs(),
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center">
-        <Testimonial quote={p.quote as string} author={p.author as string} role={p.role as string} rating={p.rating as number} variant={p.variant as never} {...fillValues(p)} />
+        <Testimonial presentation={p.presentation as "card" | "soft" | "plain"} quoteFont={p.quoteFont as "body" | "display"} avatar={p.avatar as boolean} avatarSrc={p.avatarSrc as string} avatarSize={p.avatarSize as "sm" | "md" | "lg"} avatarShape={p.avatarShape as "theme" | "circle"} quote={p.quote as string} author={p.author as string} role={p.role as string} rating={p.rating as number} variant={p.variant as never} {...fillValues(p)} />
       </div>
     ),
   },

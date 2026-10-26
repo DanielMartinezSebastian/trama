@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { tcls, type Tone } from "./variants";
 
 export type AvatarProps = {
@@ -25,12 +28,13 @@ const STATUS_LABEL = { online: "en línea", away: "ausente", busy: "ocupado/a", 
 
 /** Avatar con imagen o iniciales y punto de estado opcional. El nombre (y el estado) van como texto accesible. */
 export default function Avatar({ name, src, size = "md", status = "none", tone = "acc", className = "" }: AvatarProps) {
+  const [failedSrc, setFailedSrc] = useState<string>();
   const label = status === "none" ? name : `${name}, ${STATUS_LABEL[status]}`;
   return (
     <span className={`ui-avatar ui-avatar--${size} ${tcls(tone)} ${className}`.trim()} role="img" aria-label={label}>
-      {src ? (
+      {src && src !== failedSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt="" loading="lazy" />
+        <img src={src} alt="" loading="lazy" decoding="async" onError={() => setFailedSrc(src)} />
       ) : (
         <span aria-hidden>{initials(name)}</span>
       )}

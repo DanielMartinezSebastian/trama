@@ -1,5 +1,6 @@
 import { fillProps, type CardFill, type CardPattern, type CardTone } from "./fill";
 import { vcls, type Variant } from "./variants";
+import Avatar from "./Avatar";
 
 export type TestimonialProps = {
   quote?: string;
@@ -11,6 +12,14 @@ export type TestimonialProps = {
   quoteFont?: "body" | "display";
   /** avatar con las iniciales del autor */
   avatar?: boolean;
+  /** Foto de perfil; sin imagen o si falla la carga, se muestran iniciales. */
+  avatarSrc?: string;
+  /** Tamaño del retrato circular. */
+  avatarSize?: "sm" | "md" | "lg";
+  /** theme conserva el avatar de la variante; circle activa el retrato circular. */
+  avatarShape?: "theme" | "circle";
+  /** Tratamiento de la cita, independiente de la variante del tema. */
+  presentation?: "card" | "soft" | "plain";
   variant?: Variant;
   /** fondo de la tarjeta: surface · tint · gradient · accent (invertida) · pattern · image (ver fill.ts) */
   fill?: CardFill;
@@ -21,21 +30,24 @@ export type TestimonialProps = {
   className?: string;
 };
 
-/** Testimonio con avatar de iniciales, valoración y cita. */
-export default function Testimonial({ quote = "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.", author = "Lucía Pardo", role = "Alumna, curso de iniciación", rating = 5, quoteFont = "body", avatar = true, variant = "glass", fill, pattern, tone, image, className = "" }: TestimonialProps) {
+/** Testimonio con retrato circular o iniciales, valoración y cita; tres tratamientos de superficie. */
+export default function Testimonial({ quote = "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.", author = "Lucía Pardo", role = "Alumna, curso de iniciación", rating = 5, quoteFont = "body", avatar = true, avatarSrc = "", avatarSize = "md", avatarShape = "theme", presentation = "card", variant = "glass", fill, pattern, tone, image, className = "" }: TestimonialProps) {
   const f = fillProps({ fill, pattern, tone, image });
+  const stars = Math.max(0, Math.min(5, Math.round(rating)));
   const initials = author.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   return (
-    <figure className={`ui-quote ui-quote--${quoteFont} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={{ margin: 0, ...f.style }}>
+    <figure className={`ui-quote ui-quote--${quoteFont} ui-quote--${presentation} ui-surface ${f.className} ${vcls(variant)} ${className}`} style={{ margin: 0, ...f.style }}>
       {rating > 0 && (
         <div className="ui-quote__stars" role="img" aria-label={`${rating} de 5 estrellas`}>
-          {"★".repeat(Math.min(5, rating))}
-          <span style={{ opacity: 0.25 }}>{"★".repeat(5 - Math.min(5, rating))}</span>
+          {"★".repeat(stars)}
+          <span style={{ opacity: 0.25 }}>{"★".repeat(5 - stars)}</span>
         </div>
       )}
       <blockquote>“{quote}”</blockquote>
       <figcaption className="ui-quote__by">
-        {avatar && <span className="ui-quote__avatar" aria-hidden>{initials}</span>}
+        {avatar && (avatarShape === "theme" && !avatarSrc && avatarSize === "md"
+          ? <span className="ui-quote__avatar" aria-hidden>{initials}</span>
+          : <span className={`ui-quote__portrait ui-quote__portrait--${avatarShape}`} aria-hidden><Avatar name={author} src={avatarSrc} size={avatarSize} /></span>)}
         <span>
           <strong>{author}</strong>
           <span>{role}</span>

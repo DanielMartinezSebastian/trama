@@ -2633,7 +2633,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cita con avatar de iniciales, autor, cargo y valoración.",
+      "description": "Cita con tres tratamientos (tarjeta, suave o abierta), retrato circular con respaldo de iniciales, autor, cargo y valoración.",
       "props": [
         {
           "key": "quote",
@@ -2652,6 +2652,60 @@
           "type": "text",
           "default": "Alumna, curso de iniciación",
           "label": "Cargo"
+        },
+        {
+          "key": "presentation",
+          "type": "select",
+          "default": "card",
+          "label": "Tratamiento",
+          "options": [
+            "card",
+            "soft",
+            "plain"
+          ]
+        },
+        {
+          "key": "quoteFont",
+          "type": "select",
+          "default": "body",
+          "label": "Fuente de la cita",
+          "options": [
+            "body",
+            "display"
+          ]
+        },
+        {
+          "key": "avatar",
+          "type": "boolean",
+          "default": true,
+          "label": "Mostrar avatar"
+        },
+        {
+          "key": "avatarSrc",
+          "type": "text",
+          "default": "",
+          "label": "Foto de perfil (URL, opcional)"
+        },
+        {
+          "key": "avatarSize",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño del retrato",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "avatarShape",
+          "type": "select",
+          "default": "theme",
+          "label": "Forma del avatar",
+          "options": [
+            "theme",
+            "circle"
+          ]
         },
         {
           "key": "rating",
@@ -5156,6 +5210,27 @@
           "label": "Abierto al inicio",
           "min": 0,
           "max": 5
+        },
+        {
+          "key": "presentation",
+          "type": "select",
+          "default": "cards",
+          "label": "Tratamiento",
+          "options": [
+            "cards",
+            "lines"
+          ]
+        },
+        {
+          "key": "answerAlign",
+          "type": "select",
+          "default": "inherit",
+          "label": "Alineación de respuestas",
+          "options": [
+            "inherit",
+            "left",
+            "center"
+          ]
         },
         {
           "key": "variant",
@@ -8412,7 +8487,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.",
+      "description": "FAQ con cabecera superior o lateral en escritorio, acordeón de tarjetas o líneas, respuestas alineables y apertura inicial configurable. Incluye navegación por teclado y paneles accesibles.",
       "props": [
         {
           "key": "kicker",
@@ -8437,6 +8512,55 @@
           "type": "boolean",
           "default": true,
           "label": "Varios paneles abiertos"
+        },
+        {
+          "key": "align",
+          "type": "select",
+          "default": "center",
+          "label": "Alineación de cabecera",
+          "options": [
+            "left",
+            "center"
+          ]
+        },
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "stack",
+          "label": "Composición",
+          "options": [
+            "stack",
+            "split"
+          ]
+        },
+        {
+          "key": "presentation",
+          "type": "select",
+          "default": "cards",
+          "label": "Acordeón",
+          "options": [
+            "cards",
+            "lines"
+          ]
+        },
+        {
+          "key": "answerAlign",
+          "type": "select",
+          "default": "inherit",
+          "label": "Alineación de respuestas",
+          "options": [
+            "inherit",
+            "left",
+            "center"
+          ]
+        },
+        {
+          "key": "defaultOpen",
+          "type": "number",
+          "default": 0,
+          "label": "Abierto al inicio (-1 = ninguno)",
+          "min": -1,
+          "max": 5
         },
         {
           "key": "variant",
@@ -8725,7 +8849,7 @@
           "key": "items",
           "type": "text",
           "default": "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.|Lucía Pardo|Alumna, iniciación|5\nVinimos en familia y los peques no querían salir del agua.|Marcos Ibáñez|Curso familiar|5\nEl monitor grabó mis olas y corregimos la técnica al momento.|Diego Rus|Clases privadas|4",
-          "label": "Reseñas (una por línea, «cita|autor|rol|valoración»)"
+          "label": "Reseñas (una por línea, «cita|autor|rol|valoración|avatar URL opcional»)"
         },
         {
           "key": "layout",
@@ -8826,7 +8950,39 @@
           "key": "avatars",
           "type": "boolean",
           "default": true,
-          "label": "Avatares con iniciales"
+          "label": "Mostrar avatares (foto o iniciales)"
+        },
+        {
+          "key": "avatarSize",
+          "type": "select",
+          "default": "md",
+          "label": "Tamaño de los retratos",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "key": "avatarShape",
+          "type": "select",
+          "default": "theme",
+          "label": "Forma del avatar",
+          "options": [
+            "theme",
+            "circle"
+          ]
+        },
+        {
+          "key": "presentation",
+          "type": "select",
+          "default": "card",
+          "label": "Tratamiento de las citas",
+          "options": [
+            "card",
+            "soft",
+            "plain"
+          ]
         },
         {
           "key": "variant",
@@ -13556,6 +13712,34 @@
           "label": "Crecimiento del activo",
           "min": 1.5,
           "max": 8
+        },
+        {
+          "key": "mobileScroll",
+          "type": "boolean",
+          "default": false,
+          "label": "Abrir con scroll en móvil"
+        },
+        {
+          "key": "metaVisibility",
+          "type": "select",
+          "default": "always",
+          "label": "Subtítulo",
+          "options": [
+            "always",
+            "active"
+          ]
+        },
+        {
+          "key": "titleMaxSize",
+          "type": "text",
+          "default": "28px",
+          "label": "Título: tamaño máximo (CSS)"
+        },
+        {
+          "key": "minPanelWidth",
+          "type": "text",
+          "default": "120px",
+          "label": "Ancho mínimo de panel (CSS)"
         }
       ],
       "example": "import ExpandingPanels from \"@/components/ui/ExpandingPanels\";\n\n<ExpandingPanels />",

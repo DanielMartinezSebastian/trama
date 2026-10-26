@@ -821,6 +821,10 @@ function Home() {
         <ExpandingPanels
           height="min(68svh, 560px)"
           grow={3.2}
+          mobileScroll
+          metaVisibility="active"
+          titleMaxSize="36px"
+          minPanelWidth="144px"
           className="ql-paths"
           panels={[
             { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: "/img/quilate/09-categoria-alianzas.webp", alt: "Dos alianzas, una de oro amarillo pulido y otra de oro rosa martillado con diamantes, sobre travertino", href: href("alianzas") },
@@ -891,11 +895,11 @@ function Home() {
       </section>
 
       <div data-light="memoria">
-        <TestimonialSection kicker="" title="Lo que cuentan al recogerla" subtitle="" items={REVIEWS} rating={BRAND.rating.value} count={BRAND.rating.count} source={BRAND.rating.source} align="left" variant="minimal" className="ql-reviews" />
+        <TestimonialSection kicker="Historias del taller" title="Lo que cuentan al recogerla" subtitle="" items={REVIEWS} rating={BRAND.rating.value} count={BRAND.rating.count} source={BRAND.rating.source} align="left" variant="minimal" presentation="soft" avatarShape="circle" avatarSize="lg" quoteFont="display" className="ql-reviews" />
       </div>
 
       <section className="ql-wrap ql-sec" data-light="lampara">
-        <FAQSection kicker="Antes de venir" title="Preguntas frecuentes" subtitle="" items={FAQ} variant="minimal" />
+        <FAQSection kicker="Antes de venir" title="Preguntas frecuentes" subtitle="Plazos, piedras y pequeños detalles. Lo que conviene saber antes de sentarnos a dibujar." items={FAQ} variant="minimal" align="left" layout="split" presentation="lines" answerAlign="left" multiple={false} className="ql-faq" />
       </section>
 
       <section className="ql-wrap ql-sec ql-cta" data-light="lampara">
