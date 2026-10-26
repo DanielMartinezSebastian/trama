@@ -3,9 +3,16 @@
 import { useEffect } from "react";
 import { setLenis } from "@/lib/motion/lenis";
 import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
+import { SCROLL_FEELS, type ScrollFeelName } from "@/lib/motion/scroll-feel";
 
 export type SmoothScrollProps = {
-  /** inercia: 0,05 = muy flotante · 0,2 = casi nativo */
+  /**
+   * sensación del scroll de la página (docs/42): cinematic (la de Quilate: cola larga, mesetas), editorial o snappy. Fija
+   * la inercia y la publica en `<html data-scroll-feel>` para que las piezas ligadas al scroll usen la misma meseta, curva
+   * y amortiguado. `lerp` y `wheelMultiplier` la ajustan si se dan
+   */
+  feel?: ScrollFeelName;
+  /** inercia: 0,05 = muy flotante · 0,2 = casi nativo (por defecto, la de `feel`; sin `feel`, 0,1) */
   lerp?: number;
   /** multiplica la distancia de cada vuelta de la rueda */
   wheelMultiplier?: number;
@@ -22,7 +29,19 @@ export type SmoothScrollProps = {
  * Se apaga solo con `prefers-reduced-motion` y en pantallas táctiles (donde el scroll nativo ya es suave).
  * `useLenis`-style: la instancia activa está en `getLenis()` (`@/lib/motion/lenis`) y `lockScroll()` la pausa.
  */
-export default function SmoothScroll({ lerp = 0.1, wheelMultiplier = 1, anchors = true, syncGsap = true, enabled = true }: SmoothScrollProps) {
+export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wheelProp, anchors = true, syncGsap = true, enabled = true }: SmoothScrollProps) {
+  const lerp = lerpProp ?? (feel ? SCROLL_FEELS[feel].lerp : 0.1);
+  const wheelMultiplier = wheelProp ?? (feel ? SCROLL_FEELS[feel].wheelMultiplier : 1);
+  // la sensación se publica aunque el scroll suave no se active (táctil, movimiento reducido): las mesetas y las curvas
+  // de las piezas siguen valiendo
+  useEffect(() => {
+    if (!feel) return;
+    const html = document.documentElement;
+    html.dataset.scrollFeel = feel;
+    return () => {
+      if (html.dataset.scrollFeel === feel) delete html.dataset.scrollFeel;
+    };
+  }, [feel]);
   useEffect(() => {
     if (!enabled) return;
     if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;

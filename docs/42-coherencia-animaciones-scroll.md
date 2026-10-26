@@ -76,3 +76,71 @@
 3. Pieza 2. Pasar a ella Quilate (debe quedar igual: control), Ánima y Cota.
 4. Pieza 4, una pieza del kit cada vez, comparando antes y después con el eje de ritmo.
 5. Rehacer el banco de Meer Mohsin con `useScrollTimeline`, como primera prueba de un diseño nuevo.
+
+## 4. Medidas (26-10-2026): `cine:ritmo`
+
+Hay una herramienta nueva, `npm run cine:ritmo -- <captura>` (o `--comparar <a> <b>`).
+
+- **Captura**: con rueda y golpes espaciados: `cine:capture <url> --drive scroll --steps 16 --wheel 200
+  --frames-per-step 90 --solo-lienzo`.
+- **Movimiento de la escena**: sale de la cámara de three si se mueve con la pose (exacto, sobre ±3 fotogramas, porque
+  el gancho redondea a 4 decimales). Si no, del flujo del vídeo.
+
+| Medida | Quilate | Cota antes | Cota con `feel="cinematic"` |
+|---|---|---|---|
+| Inercia del scroll (s) | 0,92 | 0,68 | 0,92 |
+| Retraso de la escena (s) | 0,22 | 0,23 | 0,27 |
+| Asentamiento (s) | 0,90 | 0,87 | 0,93 |
+| **Rapidez** (pico, recorridos de escena/s) | **0,85** | 1,98 | 1,28 |
+| **Sin parar** (movimiento que queda al llegar el golpe siguiente) | **0,21** | 0,04 | 0,09 |
+| **Acoplamiento** (con la velocidad de la rueda) | **0,15** | 0,34 | 0,40 |
+
+**Lo que dicen las medidas:**
+
+1. **La firma de Quilate es «lento y deslizante».**
+   - La escena va despacio (0,85).
+   - Cuando llega el gesto siguiente, aún le queda un 21 % del movimiento: los gestos se encadenan en un flujo continuo.
+   - No copia la velocidad de la rueda (0,15).
+2. **Cota es «rápido y a tirones».**
+   - Más del doble de rapidez.
+   - Se para del todo entre gestos.
+   - Sigue a la rueda.
+
+   Es la sensación mecánica que describe el usuario.
+3. **La entrada cuenta, pero no lo es todo.** Con la sensación de Quilate, la inercia de Cota es la misma y la rapidez
+   baja a 1,28. Lo que queda es de diseño: **cuánto cambia la escena por pantalla de scroll**. Quilate cambia poco por
+   pantalla, con pasos de unos 217 svh de media y poses vecinas parecidas.
+4. **Una hipótesis descartada:** alargar los pasos de Cota a 220 svh no la acerca a Quilate (el temblor sube).
+5. **El temblor queda como experimental.** Las dos curvas son limpias vistas fotograma a fotograma. La cuenta de cambios
+   de sentido es sensible al redondeo de la captura.
+
+**Regla de diseño provisional para una sensación `cinematic`:**
+
+- rapidez entre 0,7 y 1,0;
+- «sin parar» entre 0,15 y 0,3;
+- acoplamiento por debajo de 0,2.
+
+Se comprueba con `cine:ritmo --comparar .refs3d/ritmo/quilate-lento <captura>`.
+
+## 5. Hecho en esta ronda
+
+| Pieza | Qué |
+|---|---|
+| `lib/motion/scroll-feel.ts` | Sensaciones con nombre (`cinematic` = Quilate, `editorial`, `snappy`). Curvas, `tramo()` (meseta y curva), `damp`/`dampFactor` independientes de los fotogramas, `crearSeguidor`, `mezclaPose` y `seguidorRaf` (un valor del DOM que persigue a su objetivo) |
+| `SmoothScroll feel` | La inercia de la sensación, publicada en `<html data-scroll-feel>` para las demás piezas |
+| `useScrollStory` | Meseta y curva de la sensación de la página. **Corregido: `plateau 0,3` dejaba quieto el 70 % y movía el 30 %, al revés de lo documentado y de Quilate.** Ánima, Cota y `PointCloud` pasan a moverse como Quilate. Pasa también `raw` (avance sin curva) |
+| `useScrollTimeline` | Nueva: fotogramas clave con pose con nombre, curva y meseta por tramo, seguimiento amortiguado, variables `--tl-<clave>` y `pose.current` para el 3D |
+| `PinnedSection` | `steps` y `feel`; publica `--pin-t` (con la tubería completa, la recomendada) y `--pin-step`, además de `--pin-p` en bruto |
+| `ScrubText`, `Parallax` | Siguen al scroll amortiguados (`feel`) |
+| `hooks/clock.js` | El reloj virtual ya no fija el tiempo de las animaciones ligadas al scroll (rompía las capturas de Quilate) |
+| `lib/pointcloud/scene.tsx` | Los ejes de la cámara del fotograma actual (`updateMatrixWorld` antes de leerlos) |
+| Cota | `SmoothScroll feel="cinematic"` (antes `lerp 0,07`) |
+
+## 6. Pendiente
+
+1. Pasar Quilate a `useScrollTimeline` como control: su ritmo no debe cambiar.
+2. Una ficha en docs/37 y una sección en docs/02: «elige un `feel`, usa `useScrollTimeline` o `--pin-t`, comprueba con
+   `cine:ritmo`».
+3. Ajustar en Cota cuánto cambia la escena por pantalla, hasta la regla del §4.
+4. Rehacer el banco de Meer Mohsin (`RelatoMeer`) con `useScrollTimeline`.
+5. `ChapterStage`, `ProjectReel` y `FlameHorizon` con la sensación de la página.

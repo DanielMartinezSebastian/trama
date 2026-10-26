@@ -45,7 +45,8 @@
     "cine:reestudio": "tsx scripts/cine/reestudio.mts",
     "cine:web": "tsx scripts/cine/web.mts",
     "cine:sintesis": "tsx scripts/cine/sintesis.mts",
-    "cine:rampa": "tsx scripts/cine/rampa.mts"
+    "cine:rampa": "tsx scripts/cine/rampa.mts",
+    "cine:ritmo": "tsx scripts/cine/ritmo.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

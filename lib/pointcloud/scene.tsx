@@ -279,6 +279,9 @@ function Cloud(props: PointCloudSceneProps) {
     const target = new Vector3(0, 0.12, 0);
     camera.position.set(Math.sin(yaw) * Math.cos(pitch) * dist, Math.sin(pitch) * dist + 0.12, Math.cos(yaw) * Math.cos(pitch) * dist);
     camera.lookAt(target);
+    // los ejes de la cámara, los de este fotograma: sin actualizar la matriz salían los del anterior y el desplazamiento
+    // oscilaba en cada fotograma (temblor de 20 cambios por segundo medido con cine:ritmo, docs/42)
+    camera.updateMatrixWorld();
     // la nube cae a un lado: desplazamiento en paralelo de la cámara
     const cam = camera as unknown as { fov: number; aspect: number };
     const halfH = dist * Math.tan(((cam.fov || 35) * Math.PI) / 360);

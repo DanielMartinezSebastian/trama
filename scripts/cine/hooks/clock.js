@@ -53,8 +53,13 @@
   const syncAnimations = () => {
     if (!document.getAnimations) return;
     for (const a of document.getAnimations()) {
+      // las animaciones ligadas al scroll (ScrollTimeline, ViewTimeline) siguen al scroll, no al reloj: su currentTime es un
+      // porcentaje y no se puede fijar con milisegundos
+      if (a.timeline && a.timeline !== document.timeline) continue;
+      const actual = typeof a.currentTime === "number" ? a.currentTime : 0;
+      if (!Number.isFinite(actual)) continue;
       if (!animStart.has(a)) {
-        animStart.set(a, now - (a.currentTime ?? 0));
+        animStart.set(a, now - actual);
         a.pause();
       }
       a.currentTime = now - animStart.get(a);
