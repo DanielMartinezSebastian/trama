@@ -55,17 +55,18 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 
 ### Gimnasio y deporte
 
-- [~] **E3 · Webs de gimnasio, estudio de entrenamiento, pilates o club deportivo** (búsqueda en Awwwards del
+- [x] **E3 · Webs de gimnasio, estudio de entrenamiento, pilates o club deportivo** (búsqueda en Awwwards del
   26-10-2026: «gym», «fitness», «pilates», «boxing»; descartadas las de producto, como BHOUT o Puretec, y las de
   agencias):
-  - [ ] E3a · Core Atelier Pilates — https://coreatelierpilates.com/ (HM 25-03-2026; calma, tipografía fina, reserva)
-  - [ ] E3b · Essor Fitness — https://coachsportifecublens.com/ (HM 03-01-2026; estudio de entrenamiento suizo)
-  - [ ] E3c · Between The Ears — https://btwntheears.com/ (HM 20-09-2023; gimnasio de longevidad)
-  - [ ] E3d · FIT AND YOU — https://fit-and-you.webflow.io/ (HM 03-11-2023; club premium, Webflow)
-  - [ ] E3e · Skulpt Fitness — https://www.skulptfitness.nl (HM 30-09-2022; gimnasio sin florituras, horario largo)
-  - [ ] E3f · Fenriz Gym — https://www.fenriz-gym.com/ (nominada 06-02-2024; gimnasio de artes marciales)
+  - [x] E3a · Core Atelier Pilates — https://coreatelierpilates.com/ (HM 25-03-2026; calma, tipografía fina, reserva)
+  - [x] E3b · Essor Fitness — https://coachsportifecublens.com/ (HM 03-01-2026; estudio de entrenamiento suizo)
+  - [—] E3c · Between The Ears — https://btwntheears.com/ (HM 20-09-2023; gimnasio de longevidad). **Descartada**: hoy es
+    una consulta de psicoterapia, no el gimnasio premiado.
+  - [x] E3d · FIT AND YOU — https://fit-and-you.webflow.io/ (HM 03-11-2023; club premium, Webflow)
+  - [x] E3e · Skulpt Fitness — https://www.skulptfitness.nl (HM 30-09-2022; gimnasio sin florituras, horario largo)
+  - [x] E3f · Fenriz Gym — https://www.fenriz-gym.com/ (nominada 06-02-2024; gimnasio de artes marciales)
   - Reserva: Trevor Blount Pilates (SOTD 2019), Andre Wolf Boxing (nominada 2025), Kinective (HM 2020).
-  - [ ] E3z · Síntesis de gimnasio con E3a–f.
+  - [x] E3z · Síntesis de gimnasio con E3a–f. 26-10-2026: fichas en §3.4 y síntesis en §3.5; candidata `ClassSchedule`.
   - Mirar: horario y reservas, planes y precios, entrenadores, energía del movimiento (vídeo, tipografía, cortes).
   - Contraste con Cadencia y Forja.
 
@@ -115,6 +116,10 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 ## 3. Conclusiones por web
 
 ### 3.1 Il Colorista Salon — https://ilcolorista.salon/
+
+![Montaje de ilcolorista-salon](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/ilcolorista-salon)
 
 Mención de Honor de Awwwards (29-09-2022), de studio zerotredici (Italia). Atelier de color en Isola della Scala
 (Verona). Sin WebGL a la vista pese a la etiqueta: DOM, GSAP y Highway.js para las transiciones. Material en
@@ -181,6 +186,10 @@ superficie, navegación, enlaces de reserva, precios, titulares y ocho pantallas
 
 #### E2a · ALICE Hair & Art — https://www.alicehairart.se/ (Framer)
 
+![Montaje de alicehairart-se](/lab/cine/archivo/.refs3d/webs/alicehairart-se/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/alicehairart-se/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/alicehairart-se/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/alicehairart-se/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/alicehairart-se-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/alicehairart-se)
+
 - **Estructura** (una página y `/art`): collage de fotos en B/N y color esparcidas sin rejilla, con la marca «ALICE»,
   «Hair · & Art» y la dirección en una sola línea a media altura → manifiesto → equipo → «current exhibition» con los
   cuadros que expone el salón → pie con formulario.
@@ -195,6 +204,10 @@ superficie, navegación, enlaces de reserva, precios, titulares y ocho pantallas
 
 #### E2b · Rendezvous Barbers — https://www.myrendezvous.ca/ (GSAP, ScrollTrigger y Lenis)
 
+![Montaje de myrendezvous-ca](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/myrendezvous-ca)
+
 - **Estructura**: titular centrado en serif con cursiva mezclada («Toronto-based barbershops *specializing in the
   latest modern short hair styles*») → vídeo que crece desde una miniatura → «It's all about the pleasure to feel
   yourself» → **«Locations» gigante** y cinco locales en tarjetas de retrato con «+» → frase grande con una palabra en
@@ -207,6 +220,10 @@ superficie, navegación, enlaces de reserva, precios, titulares y ocho pantallas
   el texto y **GT Alpina Typewriter en mayúsculas** para los datos (horarios, direcciones). Logo de tijeras.
 
 #### E2c · Hair Me Up — https://hairmeup.pl (Cracovia)
+
+![Montaje de hairmeup-pl](/lab/cine/archivo/.refs3d/webs/hairmeup-pl/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/hairmeup-pl/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/hairmeup-pl/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/hairmeup-pl/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/hairmeup-pl-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/hairmeup-pl)
 
 - **Estructura** (Poznaj nas, Cennik, Blog, Akademia, Sklep, Kontakt): portada con un **arco melocotón** detrás del
   nombre y un sello circular «Rozpocznij przygodę» → cuatro servicios numerados 01–04 con filete → reseñas
@@ -223,6 +240,10 @@ superficie, navegación, enlaces de reserva, precios, titulares y ocho pantallas
 
 #### E2e · Marco Ambrosi Concept Salon — https://www.marcoambrosi.salon/
 
+![Montaje de marcoambrosi-salon](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/marcoambrosi-salon)
+
 La web de hoy no es la premiada en 2021, pero sirve como modelo de **salón especialista** (extensiones).
 
 - **Estructura** (una página con anclas: Perché noi, Servizi, Prima e dopo, Recensioni, Contatti): portada con foto de
@@ -238,6 +259,10 @@ La web de hoy no es la premiada en 2021, pero sirve como modelo de **salón espe
 
 #### E2f · Don Barber & Groom — https://don-barber.gr/en (Atenas)
 
+![Montaje de don-barber-gr-en](/lab/cine/archivo/.refs3d/webs/don-barber-gr-en/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/don-barber-gr-en/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/don-barber-gr-en/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/don-barber-gr-en/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/don-barber-gr-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/don-barber-gr-en)
+
 - **Estructura**: portada partida: foto del local a la izquierda con **cuatro servicios en gótica condensada enorme**
   (Barbering, Detailed pricelist, Grooming & wellness, Manicure & pedicure), producto propio a la derecha y una
   **cinta «Welcome to Don's world»** que corre abajo → «La familia»: el nombre del dueño gigante sobre su retrato,
@@ -251,7 +276,7 @@ La web de hoy no es la premiada en 2021, pero sirve como modelo de **salón espe
 
 ### 3.3 Síntesis de peluquería (E2z)
 
-`cine:sintesis` con Il Colorista y las cinco (`.refs3d/sintesis/peluqueria/sintesis.md`): ninguna usa 3D; lo que se
+`cine:sintesis` con Il Colorista y las cinco ([sintesis.md](/lab/cine/archivo/.refs3d/sintesis/peluqueria/sintesis.md)): ninguna usa 3D; lo que se
 repite es de maquetación y de contenido, no de técnica.
 
 **Qué se repite** (de 6):
@@ -292,3 +317,135 @@ después) → reseñas con nota → locales y horario → blog o tienda (opciona
 **fotos en el equipo** (esperan a `TeamSection`), los **títulos de sección gigantes** y, en Esparta, una tipografía
 con más carácter (gótica condensada de Don o la serif cursiva de Rendezvous). Hebra puede tomar el manifiesto con
 foto difuminada de ALICE y la carta con paquetes de Il Colorista.
+
+### 3.4 Gimnasios y estudios de entrenamiento (E3a–f)
+
+Mismo método que §3.2. Ninguna usa 3D; tres llevan GSAP y una, Barba (transición entre páginas).
+
+#### E3a · Core Atelier Pilates — https://coreatelierpilates.com/ (GSAP, Lenis, Barba)
+
+![Montaje de coreatelierpilates-com](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/coreatelierpilates-com)
+
+- **Estructura** (About, Classes, Book, Shop, Events, Contact, Sign in, con área de socio: reservas, paquetes y
+  pedidos): la captura cae en «core classes». Foto del estudio a sangre → titular «core *classes*» con foto
+  superpuesta → **«semi private *small group classes*»**: un acordeón de aparatos (Reformer, Stability Chair, Tower &
+  Arc Barrel, Curated by Core) en el que **cada pestaña abierta cambia la foto fijada a la derecha** → «private
+  *sessions*» en tres tarjetas (private, duet, trio) → reserva.
+- **Reserva**: propia, con cuenta y paquetes («packages required»).
+- **Movimiento**: Barba entre páginas; la foto de la derecha queda fija mientras pasa el acordeón.
+- **Estilo**: rosa empolvado #f7e7de, marrón #744c32 y casi negro #25140c; **Minion Pro con la mitad del titular en
+  cursiva** («semi private / *small group classes*») y Albert Sans 16–18 px para el texto; etiquetas en mayúsculas de
+  13 px. Es el «salón editorial» llevado al pilates.
+
+#### E3b · Essor Fitness — https://coachsportifecublens.com/ (Framer)
+
+![Montaje de coachsportifecublens-com](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/coachsportifecublens-com)
+
+- **Estructura** (Home, Équipe, Services, Contact y «Je me lance»): «Coaching Sportif & Nutritionnel à Ecublens» con
+  el diploma del entrenador en vídeo → **«Essor Fitness™» a todo el ancho** → nota (★ 4,85/5, 60+ reviews) y lista de
+  objetivos → retrato del entrenador con la promesa y «Passez à l'action» → socios en rejilla de logos → **«Studio
+  privé haut de gamme» desfilando de lado** → cuatro fichas numeradas (Le Studio 01, Timothy 02, Christophe 03,
+  Mission 04) → «Nos Services» con cinco filas numeradas → manifiesto con retratos detrás.
+- **Precios**: en las páginas de servicio (110–180 CHF).
+- **Movimiento**: titulares que cruzan la pantalla con el scroll y **cintas blancas de texto** (Personal Training,
+  Duo Training, Coaching semi-privé) que separan secciones; fotos que se agrandan desde una miniatura.
+- **Estilo**: negro absoluto y blanco, grises #999 y #bbb; **Inter Display 600 a 208 px con espaciado −8 px**;
+  botones en píldora de contorno. Muy parecida en espíritu a «barbería de carácter».
+
+#### E3c · Between The Ears — descartada
+
+![Montaje de btwntheears-com](/lab/cine/archivo/.refs3d/webs/btwntheears-com/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/btwntheears-com/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/btwntheears-com/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/btwntheears-com/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/btwntheears-com-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/btwntheears-com)
+
+El dominio es hoy una consulta de psicoterapia y coaching («let's face your life head on»), no el gimnasio de
+longevidad premiado. Solo vale de ella **la onda de puntos** de la portada, que ya hacen `PointCloud` o
+`GradientField`.
+
+#### E3d · FIT AND YOU — https://fit-and-you.webflow.io/ (Webflow, GSAP)
+
+![Montaje de fit-and-you-webflow-io](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/fit-and-you-webflow-io)
+
+- **Estructura** (una página: Classes, Bonuses, Memberships, Locations y «Join now [+]»): «IT'S NOT FITNESS. *IT'S
+  LIFE.*» sobre vídeo → **fotos y círculos negros con texto en damero** (Unparalleled personal training, Unrivaled
+  group fitness) → «Membership with ✕ best benefits» y un **círculo naranja «Join now»** → **«Our classes» como lista
+  de nombres enormes** con filetes, agrupados por zona (Exclusive studio, Group fitness, Spa) sobre un vídeo en B/N →
+  **cifras en cinta** («4 clubs · 45 min workout · 20 activities») → **«Bonuses for you»: cuatro tarjetas ladeadas**
+  alrededor del titular → planes (50–150 $).
+- **Estilo**: negro, blanco y **naranja #fb5607**; Antonio 700 condensada en mayúsculas (158 px, espaciado −9,5 px),
+  Inter 12–14 px; el «[+]» como firma de los enlaces. Menú en isla redondeada.
+
+#### E3e · Skulpt Fitness — https://www.skulptfitness.nl (Grou, Países Bajos)
+
+![Montaje de skulptfitness-nl](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/skulptfitness-nl)
+
+- **Estructura** (Aanbod, Over ons, Contact): «SPORT VANDAAG. GROEI MORGEN.» con el párrafo a la derecha y un botón
+  redondo lima con flecha → foto a sangre que se abre con **borde curvo** → frase de humor en tres líneas escalonadas
+  («Jouw bank ligt veel lekkerder als je er uitgeput op ligt») → tres ventajas con foto (coaches, aparatos, **café
+  gratis**) → **cinta lima** «Start snel. Eindig sneller.» → lista de lo que incluye → oferta numerada 01–03 → planes
+  (Individueel, Familie, Student) con **conmutador mes/año** y planes Hyrox aparte.
+- **Menú**: pantalla entera con **tres columnas verticales** (Aanbod, Over ons, Contact en letra girada 90°) y la
+  columna de datos con horario de apertura y de personal.
+- **Reserva**: «Gratis proefles» (clase de prueba gratis) fijo arriba en lima; horario largo (6:00–23:00).
+- **Estilo**: #f5f5f5 y #202020, **lima #cef952**; Pilat Condensed 800 en mayúsculas para titulares, Suisse Intl
+  Book para el texto; bordes curvos de sección.
+
+#### E3f · Fenriz Gym — https://www.fenriz-gym.com/ (Berlín; GSAP)
+
+![Montaje de fenriz-gym-com](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/fenriz-gym-com)
+
+- **Estructura** (Kurse, Events, Preise, Kursplan, Über uns, Probetraining; DE/EN): «MARTIAL ARTS. FROM KREUZBERG.
+  WITH LOVE.» sobre foto en B/N con **una franja degradada** (amarillo, rojo, azul) que es la firma de la marca →
+  «Unsere Kurse» con el subrayado degradado y **seis disciplinas en tarjetas de retrato B/N con el nombre encima**
+  (Muay Thai, BJJ, MMA, Boxen, Fitness, Recovery) → **Probetraining** → «Über uns» con federaciones → **Events**
+  (carteles en duotono de color) → pie.
+- **Menú**: panel negro a la derecha que cae desde «Menu ≡», con el degradado arriba, enlaces en mayúsculas,
+  secundarios (Mitglieder, Shop, Hilfe) y «Probetraining» como botón.
+- **Estilo**: B/N con un solo degradado de color; Kenyan Coffee 700 (condensada, 90 px) y Roboto 300.
+
+### 3.5 Síntesis de gimnasio (E3z)
+
+`cine:sintesis` con las cinco válidas ([sintesis.md](/lab/cine/archivo/.refs3d/sintesis/gimnasio/sintesis.md)): titulares gigantes y galerías en las
+5, navegación fija y varias páginas en 4, GSAP en 3.
+
+| Rasgo | Webs | En el kit | Decisión |
+|---|---|---|---|
+| **Titular condensado en mayúsculas** enorme (Antonio, Pilat, Kenyan Coffee, Inter Display apretada) | 4 | `FitText`, `Hero` | Receta y guía; nada nuevo |
+| **Clase de prueba gratis** como llamada principal (Gratis proefles, Probetraining, «obtenez votre séance d'essai») | 4 | `Button`, `ActionBar`, `CTASection` | Receta: la llamada fija es «prueba gratis», no «reservar» |
+| **Disciplinas en tarjetas de retrato con el nombre encima** o como lista de nombres gigantes | 4 (Fenriz, FIT AND YOU, Skulpt 01–03, Essor 01–05) | `ImageGallery`, `ProjectList`, `HoverFX` | Cubierto (lista con filetes = `ProjectList`; tarjetas = galería) |
+| Planes con **mes/año**, familia, estudiante | 3 (Skulpt, FIT AND YOU, Essor por servicio) | `PricingSection` (`toggle`, `yearlyPeriod`) | Cubierto |
+| **Cinta de texto** o de cifras entre secciones | 3 (Skulpt, Essor, FIT AND YOU) | `Marquee`, `StatCounter` | Cubierto |
+| Un solo **acento saturado** sobre negro o gris (naranja, lima, degradado) | 4 | tokens `--acc` | Guía |
+| Fotografía de grupo o de lucha en **B/N** | 3 | — | Guía (tratamiento de imagen) |
+| Horario de apertura largo y **horario de clases** (Kursplan, Book) | 3 | `OpeningHours`; Cadencia y Forja tienen su horario de clases en el sitio | **Candidata a pieza** (`ClassSchedule`: semana × franjas, filtro por disciplina, plazas y lista de espera), sacándola de Cadencia y Forja; se decide en E12 |
+| Acordeón que **cambia la foto fijada** al lado | 1 (Core) | `FeatureExplorer`, `ExpandingPanels` | Comprobar en E12 si `FeatureExplorer` lo cubre |
+| Menú a pantalla entera con **columnas verticales** | 1 (Skulpt) | `FullscreenMenu` | Variante candidata, junto a la de Il Colorista (E12) |
+| Área de socio (reservas, paquetes, pedidos) | 1 (Core) | Cadencia y Forja ya la tienen | — |
+| Equipo con fotos | 2 (Essor, Core en clases) | `TeamSection` sin fotos | Refuerza la ampliación de E2 |
+
+**Plantilla de gimnasio** (para E11): portada con lema en condensada y vídeo o foto B/N → prueba gratis → disciplinas
+o clases (tarjetas o lista gigante) → por qué nosotros (3 ventajas con foto, una con humor) → cinta de cifras →
+horario de clases → planes con mes/año → equipo → ubicación y horario → pie. Llamada fija: prueba gratis.
+
+**Dos guías de estilo** (para E10):
+
+- **Club de alto contraste** (FIT AND YOU, Skulpt, Fenriz, Essor): negro o gris claro, un acento saturado (naranja
+  #fb5607, lima #cef952 o un degradado de marca), condensada en mayúsculas a 90–200 px con espaciado negativo,
+  fotos en B/N, botones en píldora o círculo.
+- **Estudio boutique** (Core Atelier): la del «salón editorial» con tonos tierra (rosa empolvado, marrón), serif con
+  cursiva, fotos cálidas y reserva con cuenta. Sirve para pilates, yoga y estudios privados.
+
+**Para Cadencia y Forja**: van por delante en producto (planificador, reservas, lista de espera, área personal).
+Les faltan la **clase de prueba gratis** como llamada principal, la **cinta de cifras** y, en Cadencia, la lista de
+disciplinas gigante de FIT AND YOU. Forja (oscura) encaja con la guía de alto contraste; un acento único saturado y
+fotos B/N la acercarían a Fenriz.
