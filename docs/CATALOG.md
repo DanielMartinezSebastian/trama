@@ -366,7 +366,7 @@ Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálc
 | `from` | number 0.4–1 | 0.85 |
 | `to` | number 0–0.8 | 0.35 |
 
-- Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.
+- Desplaza dentro de la demo o usa el control Recorrido para ver el texto encenderse y apagarse.
 - Dentro de un PinnedSection el párrafo no se mueve: usa scope=".ui-pin" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano).
 
 ### Texto que se dispersa con el scroll — `ScatterText`
@@ -776,7 +776,7 @@ Scroll con inercia de toda la página, sincronizado con ScrollTrigger. No pinta 
 | `syncGsap` | boolean | true |
 
 - Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.
-- No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio.
+- En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.
 
 ### Botón circular (también dentro de un titular) — `CircleButton`
 
@@ -1014,7 +1014,7 @@ Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de peq
 | `tilt` | number 0–30 | 14 |
 | `inset` | number 0–80 | 24 |
 
-- Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.
+- Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza dentro de la demo o usa Recorrido para verla crecer.
 - from y offset: tamaño y posición iniciales; inset y radius: el final.
 - Con movimiento reducido, ya crecida.
 
@@ -1058,7 +1058,7 @@ Contenedor cuyo tema cambia según la sección que cruza el centro de la ventana
 |---|---|---|
 | `duration` | number 0–2 | 0.7 |
 
-- Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.
+- Desplaza dentro de la demo o usa Recorrido: cada sección ocupa una pantalla y cambia el tema al llegar a ella.
 - Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.
 - Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens.
 
@@ -1429,7 +1429,7 @@ Envuelve contenido (`children`), p. ej.: `<nav>…tu cabecera…</nav>`
 |---|---|---|
 | `offset` | number 0–600 | 120 |
 
-- Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio.
+- La cabecera se esconde al bajar y reaparece al subir dentro de la demo. No se esconde mientras uno de sus enlaces tiene el foco.
 
 ### Indicador de sección — `SectionIndex`
 
@@ -1440,7 +1440,7 @@ Envuelve contenido (`children`), p. ej.: `<nav>…tu cabecera…</nav>`
 | `position` | `left` · `right` | "left" |
 | `selector` | text | "[data-section]" |
 
-- Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio.
+- La demo contiene tres secciones con data-section: el indicador cambia al cruzar el centro de la ventana. Si editas selector, debe seguir apuntando a esas secciones.
 
 ### Marco de aplicación — `AppShell`
 

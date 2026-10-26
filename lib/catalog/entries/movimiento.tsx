@@ -43,6 +43,7 @@ function ProjectsDemo(p: { view: ProjectView; preview: "follow" | "cursor" | "no
 export const movimiento: CatalogEntry[] = [
   {
     id: "split-text",
+    preview: (p) => p.trigger === "inview" || p.elastic === "scroll" ? "inview" : undefined,
     component: "SplitText",
     path: "@/components/ui/SplitText",
     name: "Texto troceado (cinético)",
@@ -150,6 +151,7 @@ export const movimiento: CatalogEntry[] = [
   },
   {
     id: "smooth-scroll",
+    preview: "scroll",
     component: "SmoothScroll",
     path: "@/components/ui/SmoothScroll",
     name: "Scroll suave (Lenis)",
@@ -159,7 +161,7 @@ export const movimiento: CatalogEntry[] = [
     stageHeight: 140,
     notes: [
       "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
-      "No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio.",
+      "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.",
     ],
     props: [
       { key: "lerp", label: "Inercia", type: "number", default: 0.1, min: 0.03, max: 0.3, step: 0.01 },
@@ -168,9 +170,9 @@ export const movimiento: CatalogEntry[] = [
       { key: "syncGsap", label: "Sincronizar con GSAP", type: "boolean", default: true },
     ],
     render: (p) => (
-      <div className="ui-center">
-        <SmoothScroll enabled={false} lerp={p.lerp as number} wheelMultiplier={p.wheelMultiplier as number} anchors={p.anchors as boolean} syncGsap={p.syncGsap as boolean} />
-        <span className="ui-hint">Sin salida visual: ver /sitios/estudio</span>
+      <div>
+        <SmoothScroll lerp={p.lerp as number} wheelMultiplier={p.wheelMultiplier as number} anchors={p.anchors as boolean} syncGsap={p.syncGsap as boolean} />
+        {["Desplaza con inercia", "Cambia la sensación", "Vuelve al principio"].map((title, i) => <section key={title} id={`smooth-demo-${i}`} className="pg-preview__section"><h2>{title}</h2><p>Prueba la rueda o el trackpad y ajusta la inercia en los controles del catálogo.</p><a href={`#smooth-demo-${(i + 1) % 3}`}>Ir a la siguiente sección ↓</a></section>)}
       </div>
     ),
   },

@@ -8,6 +8,8 @@ import PinnedSection from "@/components/ui/PinnedSection";
 import ScrubText from "@/components/ui/ScrubText";
 import SectionIndex from "@/components/ui/SectionIndex";
 import StackedCards from "@/components/ui/StackedCards";
+import HorizontalScroll from "@/components/ui/HorizontalScroll";
+import HideOnScroll from "@/components/ui/HideOnScroll";
 import { fashionArt } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -18,6 +20,7 @@ const EDITORIAL_STYLES = ["editorial", "minimal"] as CatalogEntry["styles"];
 export const scroll: CatalogEntry[] = [
   {
     id: "scrub-text",
+    preview: "inview",
     component: "ScrubText",
     path: "@/components/ui/ScrubText",
     name: "Texto que se enciende con el scroll",
@@ -25,7 +28,7 @@ export const scroll: CatalogEntry[] = [
     styles: EDITORIAL_STYLES,
     description: "Párrafo cuyas palabras pasan de apagadas a plenas según haces scroll. Un cálculo por fotograma, sin GSAP; el lector de pantalla lo lee entero.",
     stageHeight: 380,
-    notes: ["Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.", "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."],
+    notes: ["Desplaza dentro de la demo o usa el control Recorrido para ver el texto encenderse y apagarse.", "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."],
     props: [
       { key: "text", label: "Texto", type: "text", multiline: true, default: "Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir." },
       { key: "dim", label: "Opacidad apagada", type: "number", default: 0.3, min: 0.05, max: 0.6, step: 0.01 },
@@ -40,6 +43,7 @@ export const scroll: CatalogEntry[] = [
   },
   {
     id: "hide-on-scroll",
+    preview: "scroll",
     component: "HideOnScroll",
     path: "@/components/ui/HideOnScroll",
     name: "Cabecera que se esconde al bajar",
@@ -47,17 +51,21 @@ export const scroll: CatalogEntry[] = [
     styles: EDITORIAL_STYLES,
     description: "Envoltorio de cabeceras fijas: se esconde al bajar, vuelve al subir o llegar arriba, y no se esconde si un descendiente tiene el foco ni con movimiento reducido.",
     stageHeight: 140,
-    notes: ["Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio."],
+    notes: ["La cabecera se esconde al bajar y reaparece al subir dentro de la demo. No se esconde mientras uno de sus enlaces tiene el foco."],
     props: [{ key: "offset", label: "Scroll antes de esconderse (px)", type: "number", default: 120, min: 0, max: 600, step: 10 }],
     children: "<nav>…tu cabecera…</nav>",
-    render: () => (
-      <div className="ui-center">
-        <span className="ui-hint">Se esconde al bajar la página y vuelve al subir. Ver /sitios/estudio</span>
+    render: (p) => (
+      <div>
+        <HideOnScroll offset={p.offset as number}>
+          <nav className="pg-preview__header"><a href="#preview-reading">Estudio · baja y vuelve a subir</a></nav>
+        </HideOnScroll>
+        {["Empieza a bajar", "La cabecera se esconde", "Sube para recuperarla"].map((title, i) => <section key={title} id={i === 0 ? "preview-reading" : undefined} className="pg-preview__section"><h2>{title}</h2><p>La cabecera sigue la dirección del recorrido. Usa la rueda, el gesto táctil o el control Recorrido.</p></section>)}
       </div>
     ),
   },
   {
     id: "section-index",
+    preview: "scroll",
     component: "SectionIndex",
     path: "@/components/ui/SectionIndex",
     name: "Indicador de sección",
@@ -65,20 +73,21 @@ export const scroll: CatalogEntry[] = [
     styles: EDITORIAL_STYLES,
     description: "«02 / 05 · Servicios» fijo en una esquina, siguiendo la sección que cruza la mitad de la pantalla. Marca tus secciones con data-section.",
     stageHeight: 140,
-    notes: ["Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio."],
+    notes: ["La demo contiene tres secciones con data-section: el indicador cambia al cruzar el centro de la ventana. Si editas selector, debe seguir apuntando a esas secciones."],
     props: [
       { key: "position", label: "Posición", type: "select", default: "left", options: ["left", "right"] },
       { key: "selector", label: "Selector de secciones", type: "text", default: "[data-section]" },
     ],
     render: (p) => (
-      <div className="ui-center">
+      <div>
         <SectionIndex position={p.position as never} selector={p.selector as string} />
-        <span className="ui-hint">Marca tus secciones con data-section=&quot;Nombre&quot;</span>
+        {["Estudio", "Servicios", "Contacto"].map((title) => <section key={title} data-section={title} className="pg-preview__section"><h2>{title}</h2><p>El indicador de la esquina muestra la sección que estás leyendo.</p></section>)}
       </div>
     ),
   },
   {
     id: "pinned-section",
+    preview: "scroll",
     component: "PinnedSection",
     path: "@/components/ui/PinnedSection",
     name: "Sección fijada con progreso",
@@ -89,15 +98,15 @@ export const scroll: CatalogEntry[] = [
     notes: ["Ejemplo de CSS: .titulo { transform: translateX(calc(var(--pin-p) * -40vw)); }", "Ocupa (length + 1) alturas de ventana en el documento."],
     props: [{ key: "length", label: "Pantallas de recorrido", type: "number", default: 2, min: 1, max: 8, step: 0.5 }],
     children: '<h2 className="titulo">Título</h2>',
-    render: () => (
-      <div className="ui-center">
-        <PinnedSection length={1}><span /></PinnedSection>
-        <span className="ui-hint">Fija su contenido y publica --pin-p. Ver el uso en el código.</span>
-      </div>
+    render: (p) => (
+      <PinnedSection length={p.length as number}>
+        <div className="pg-preview__pin"><p>El contenido permanece fijo durante el recorrido.</p><strong>Trama en movimiento</strong><div className="pg-preview__pin-track"><span /></div><p>La barra muestra el progreso de la sección.</p></div>
+      </PinnedSection>
     ),
   },
   {
     id: "horizontal-scroll",
+    preview: "scroll",
     component: "HorizontalScroll",
     path: "@/components/ui/HorizontalScroll",
     name: "Scroll horizontal",
@@ -112,14 +121,15 @@ export const scroll: CatalogEntry[] = [
       { key: "minWidth", label: "Ancho mínimo para fijar (px)", type: "number", default: 860, min: 320, max: 1400, step: 20 },
     ],
     children: "<article>Panel 1</article>\n<article>Panel 2</article>\n<article>Panel 3</article>",
-    render: () => (
-      <div className="ui-center">
-        <span className="ui-hint">Ocupa la ventana entera mientras dura el recorrido. Ver /sitios/estudio</span>
-      </div>
+    render: (p) => (
+      <HorizontalScroll heading={p.heading as string} gap={p.gap as number} minWidth={p.minWidth as number}>
+        {["Escuchamos", "Diseñamos", "Construimos"].map((title, i) => <article key={title} className="pg-preview__horizontal"><span>0{i + 1}</span><h3>{title}</h3><p>Desplaza hacia abajo para recorrer los paneles. En una ventana estrecha se pueden deslizar horizontalmente.</p></article>)}
+      </HorizontalScroll>
     ),
   },
   {
     id: "stacked-cards",
+    preview: "scroll",
     component: "StackedCards",
     path: "@/components/ui/StackedCards",
     name: "Tarjetas apiladas",
@@ -150,6 +160,7 @@ export const scroll: CatalogEntry[] = [
   },
   {
     id: "parallax",
+    preview: "inview",
     component: "Parallax",
     path: "@/components/ui/Parallax",
     name: "Parallax",
@@ -166,7 +177,7 @@ export const scroll: CatalogEntry[] = [
             <div style={{ height: 320, background: "linear-gradient(160deg, var(--acc), var(--bg))" }} />
           </Parallax>
         </div>
-        <span className="ui-hint">Haz scroll en la página para ver el desplazamiento</span>
+        <span className="ui-hint">Desplaza dentro de la demo para ver el desplazamiento</span>
       </div>
     ),
   },
