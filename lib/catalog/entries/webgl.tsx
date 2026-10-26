@@ -166,12 +166,14 @@ export const webgl: CatalogEntry[] = [
     props: [
       { key: "word", label: "Palabra", type: "text", default: "PLAY" },
       { key: "interactive", label: "Se conduce", type: "boolean", default: true },
+      { key: "scenery", label: "Decorado (hierba, árboles, agua)", type: "boolean", default: true },
+      { key: "intro", label: "Intro (clic para empezar)", type: "boolean", default: false },
       { key: "hint", label: "Pista", type: "text", default: "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve" },
       { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
     ],
     render: (p) => (
       <div style={{ width: "100%" }}>
-        <ToyDrive word={p.word as string} interactive={p.interactive as boolean} hint={p.hint as string} height={p.height as number} />
+        <ToyDrive word={p.word as string} interactive={p.interactive as boolean} scenery={p.scenery as boolean} intro={p.intro as boolean} hint={p.hint as string} height={p.height as number} />
       </div>
     ),
   },

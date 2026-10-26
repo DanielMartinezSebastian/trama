@@ -22,6 +22,10 @@ export type ToyDriveProps = {
   render?: "auto" | "static";
   /** fuente en formato typeface de three (JSON); por defecto, Anton (OFL), servida con el kit */
   font?: string;
+  /** decorado alrededor: hierba a rodales, árboles, estanques y piedras (procedural, con semilla) */
+  scenery?: boolean;
+  /** intro de la referencia: un vacío con rejilla oculta el mundo salvo una isla; un clic lo descubre y deja conducir */
+  intro?: boolean;
   className?: string;
 };
 
@@ -35,7 +39,7 @@ export type ToyDriveProps = {
  *
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/ToyDrive`.
  */
-export default function ToyDrive({ word = "PLAY", height = 520, hint = "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve", interactive = true, render = "auto", font = "/fonts/anton/anton.typeface.json", className = "" }: ToyDriveProps) {
+export default function ToyDrive({ word = "PLAY", height = 520, hint = "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve", interactive = true, render = "auto", font = "/fonts/anton/anton.typeface.json", scenery = false, intro = false, className = "" }: ToyDriveProps) {
   const root = useRef<HTMLDivElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
@@ -72,7 +76,7 @@ export default function ToyDrive({ word = "PLAY", height = 520, hint = "Flechas 
         <div className={`ui-td__gl ${ready ? "is-on" : ""}`} aria-hidden>
           <GLBoundary onError={fail}>
             <Suspense fallback={null}>
-              <ToyDriveScene palabra={palabra} colores={colores} fuente={font} objetivo={root} interactivo={interactive} active={near} onReady={onReady} />
+              <ToyDriveScene palabra={palabra} colores={colores} fuente={font} objetivo={root} interactivo={interactive} decorado={scenery} intro={intro} active={near} onReady={onReady} />
             </Suspense>
           </GLBoundary>
         </div>

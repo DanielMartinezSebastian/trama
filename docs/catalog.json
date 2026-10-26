@@ -11957,6 +11957,18 @@
           "label": "Se conduce"
         },
         {
+          "key": "scenery",
+          "type": "boolean",
+          "default": true,
+          "label": "Decorado (hierba, árboles, agua)"
+        },
+        {
+          "key": "intro",
+          "type": "boolean",
+          "default": false,
+          "label": "Intro (clic para empezar)"
+        },
+        {
           "key": "hint",
           "type": "text",
           "default": "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve",

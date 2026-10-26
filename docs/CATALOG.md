@@ -2092,6 +2092,8 @@ Un coche de juguete que se conduce y derriba las letras de una palabra y una pil
 |---|---|---|
 | `word` | text | "PLAY" |
 | `interactive` | boolean | true |
+| `scenery` | boolean | true |
+| `intro` | boolean | false |
 | `hint` | text | "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve" |
 | `height` | number 280–800 | 480 |
 

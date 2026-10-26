@@ -18,9 +18,11 @@ export type ToyDriveSceneProps = {
   interactivo: boolean;
   active: boolean;
   onReady: () => void;
+  decorado?: boolean;
+  intro?: boolean;
 };
 
-export default function ToyDriveScene({ palabra, colores, fuente, objetivo, interactivo, active, onReady }: ToyDriveSceneProps) {
+export default function ToyDriveScene({ palabra, colores, fuente, objetivo, interactivo, active, onReady, decorado = false, intro = false }: ToyDriveSceneProps) {
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   return (
     <Canvas
@@ -35,7 +37,7 @@ export default function ToyDriveScene({ palabra, colores, fuente, objetivo, inte
     >
       <color attach="background" args={[colores.suelo]} />
       <fog attach="fog" args={[colores.suelo, 40, 75]} />
-      <ToyDriveContent palabra={palabra} colores={colores} fuente={fuente} objetivo={objetivo} interactivo={interactivo} puntero zoom={0.7} separacion={4.5} luzRelativa={[9, 24, 15]} inicio={{ pos: [0, 0.77, 2.5], rumbo: -2.356 }} onReady={onReady} />
+      <ToyDriveContent palabra={palabra} colores={colores} fuente={fuente} objetivo={objetivo} interactivo={interactivo} puntero zoom={0.7} separacion={4.5} luzRelativa={[9, 24, 15]} inicio={{ pos: [0, 0.77, 2.5], rumbo: -2.356 }} decorado={decorado} intro={intro} onReady={onReady} />
     </Canvas>
   );
 }
