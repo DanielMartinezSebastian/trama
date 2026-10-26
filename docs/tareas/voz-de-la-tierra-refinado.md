@@ -61,3 +61,14 @@ Fuentes revisadas:
 ## Estado y siguiente paso
 
 Refinado aplicado, comprobado y disponible en 3007, sin commit ni integración en `trama-cine`. El otro agente ha seguido avanzando su rama mientras tanto. Revisar esta URL; al integrar, separar los cambios propios de Voz de la Tierra de las herramientas de flujo copiadas al preparar el worktree.
+
+## Segunda revisión: cubierta y footer
+
+A petición de revisión visual posterior al primer commit (`f999049`):
+
+- La cubierta y el disco ahora se desplazan en direcciones opuestas al inspeccionarlos. En escritorio se separan en horizontal; en móvil, en vertical. La cámara se aleja y deja margen para el diámetro completo.
+- Se comprobó fotograma intermedio y pose final. La separación de profundidad entre los planos se mantiene durante la apertura; la prueba también comprueba distancia entre centros al final y que la geometría queda dentro del encuadre.
+- El footer cierra con un mensaje legible, navegación a los cuatro capítulos, fuente de misión y enlaces de créditos. Se retiró el texto de plantilla de «Demo de la librería» y se añadió una nota breve de independencia editorial.
+- QA ampliado: capturas de la apertura (`01b-apertura.png`), cubierta móvil (`06-cubierta-movil.png`) y footer (`07-footer.png`) en `.refs3d/voz/qa/`; ocho grupos completados y sin errores de consola.
+
+Estos cambios de seguimiento están sin commit en la rama aislada `feat/voz-de-la-tierra-refinado`. El servidor de revisión sigue en `http://localhost:3007/sitios/voz-de-la-tierra`.

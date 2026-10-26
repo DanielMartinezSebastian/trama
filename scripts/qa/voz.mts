@@ -41,11 +41,15 @@ try {
   await page.locator(".ui-pre").waitFor({ state: "hidden", timeout: 20000 }).catch(() => {});
   await page.waitForTimeout(1000);
   const canvas = await page.locator(".vd-record canvas").elementHandle();
-  const before = await pose();
   await page.getByRole("button", { name: "La cubierta", exact: false }).click();
+  await page.waitForTimeout(160);
+  const middle = await pose();
+  assert.ok(Math.abs(middle[0][2] - middle[1][2]) > .45, "disco y cubierta mantienen profundidad libre durante la apertura");
+  await page.screenshot({ path: resolve(out, "01b-apertura.png") });
   await page.waitForTimeout(1500);
   const after = await pose();
-  assert.ok(Math.abs(before[1][2] - after[1][2]) > .5, "la cubierta avanza para inspeccionarla");
+  assert.ok(Math.hypot(after[0][0] - after[1][0], after[0][1] - after[1][1]) > 2.7, "disco y cubierta terminan separados en el plano de inspección");
+  assert.ok(Math.abs(after[0][2] - after[1][2]) > .45, "disco y cubierta conservan profundidad para no tocarse");
   await framing();
   await page.screenshot({ path: resolve(out, "01-cubierta.png") });
   await page.getByRole("button", { name: "El disco", exact: false }).click();
@@ -102,6 +106,8 @@ try {
   await page.reload({ waitUntil: "networkidle" });
   await field.waitFor();
   assert.equal(await page.evaluate(() => localStorage.getItem("voz-de-la-tierra-surco")), null);
+  await page.locator(".vd-colophon").scrollIntoViewIfNeeded();
+  await page.screenshot({ path: resolve(out, "07-footer.png") });
   checks.push("mensaje guardado, restaurado, descargado y borrado realmente");
 
   for (const width of [320, 390, 768, 1920]) {
@@ -116,6 +122,10 @@ try {
   await page.goto(`${origin}/sitios/voz-de-la-tierra`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1200);
   await page.screenshot({ path: resolve(out, "05-movil.png") });
+  await page.getByRole("button", { name: "La cubierta", exact: false }).click();
+  await page.waitForTimeout(1500);
+  await framing();
+  await page.screenshot({ path: resolve(out, "06-cubierta-movil.png") });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload({ waitUntil: "networkidle" });
   assert.equal(await page.locator(".vd-record canvas").count(), 0);

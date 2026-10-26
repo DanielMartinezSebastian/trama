@@ -50,7 +50,7 @@ function Piece({ mode, view, pointer, onReady }: Props) {
   const lid = useRef<THREE.Mesh>(null);
   const elapsed = useRef(0);
   const progress = useRef(0);
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   useEffect(() => {
     for (const texture of [face, cover]) { texture.colorSpace = THREE.SRGBColorSpace; texture.anisotropy = 4; }
     const id = requestAnimationFrame(() => onReady?.());
@@ -67,26 +67,32 @@ function Piece({ mode, view, pointer, onReady }: Props) {
     const dt = Math.min(delta, .1), damping = 1 - Math.exp(-dt * 4);
     elapsed.current += dt;
     const inspection = view === "cubierta";
+    const portrait = size.width / Math.max(1, size.height) < .9;
     const open = mode === "surcos" ? .38 + progress.current * .35 : mode === "mensaje" ? .15 : .2;
     root.current.rotation.x = THREE.MathUtils.lerp(root.current.rotation.x, -.1 + pointer.current.y * .05 + Math.sin(progress.current * Math.PI) * .12, damping);
     root.current.rotation.y = THREE.MathUtils.lerp(root.current.rotation.y, (mode === "viaje" ? .4 : -.2) + pointer.current.x * .1, damping);
     root.current.rotation.z = THREE.MathUtils.lerp(root.current.rotation.z, mode === "mensaje" ? -.12 : .06, damping);
-    disk.current.position.x = THREE.MathUtils.lerp(disk.current.position.x, inspection ? .82 : .25 + open, damping);
-    disk.current.position.z = THREE.MathUtils.lerp(disk.current.position.z, inspection ? -.55 : .25, damping);
-    disk.current.rotation.y = THREE.MathUtils.lerp(disk.current.rotation.y, inspection ? .65 : -.12, damping);
+    // Al inspeccionar, cada pieza se aparta de la otra sobre un eje que cabe en el viewport.
+    // Los destinos están fuera del diámetro de la pieza para que no se tapen al completar el viaje.
+    const diskTarget = inspection ? (portrait ? [0, -1.48, .3] : [1.48, 0, .3]) : [.25 + open, 0, .25];
+    const coverTarget = inspection ? (portrait ? [0, 1.48, -.3] : [-1.48, 0, -.3]) : [-.48, .14, -.58 - open];
+    disk.current.position.x = THREE.MathUtils.lerp(disk.current.position.x, diskTarget[0], damping);
+    disk.current.position.y = THREE.MathUtils.lerp(disk.current.position.y, diskTarget[1], damping);
+    disk.current.position.z = THREE.MathUtils.lerp(disk.current.position.z, diskTarget[2], damping);
+    disk.current.rotation.y = THREE.MathUtils.lerp(disk.current.rotation.y, 0, damping);
     disk.current.rotation.z = Math.sin(elapsed.current * .12) * .08;
-    lid.current.position.x = THREE.MathUtils.lerp(lid.current.position.x, inspection ? -.1 : -.48, damping);
-    lid.current.position.y = THREE.MathUtils.lerp(lid.current.position.y, inspection ? 0 : .14, damping);
-    lid.current.position.z = THREE.MathUtils.lerp(lid.current.position.z, inspection ? .4 : -.38 - open, damping);
-    lid.current.rotation.y = THREE.MathUtils.lerp(lid.current.rotation.y, inspection ? 0 : -.16, damping);
-    const zoom = inspection ? 5.7 : mode === "surcos" ? 6.1 : 5.8;
+    lid.current.position.x = THREE.MathUtils.lerp(lid.current.position.x, coverTarget[0], damping);
+    lid.current.position.y = THREE.MathUtils.lerp(lid.current.position.y, coverTarget[1], damping);
+    lid.current.position.z = THREE.MathUtils.lerp(lid.current.position.z, coverTarget[2], damping);
+    lid.current.rotation.y = THREE.MathUtils.lerp(lid.current.rotation.y, 0, damping);
+    const zoom = inspection ? 8.4 : mode === "surcos" ? 6.1 : 5.8;
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, zoom, damping);
   });
   return <group ref={root} name="voyager-record">
     <mesh ref={disk} geometry={geometry} position={[.45, 0, .25]}>
       <meshStandardMaterial map={face} color="#f6d989" metalness={.28} roughness={.42} />
     </mesh>
-    <mesh ref={lid} geometry={coverGeometry} position={[-.48, .14, -.58]}>
+    <mesh ref={lid} geometry={coverGeometry} position={[-.48, .14, -.78]}>
       <meshStandardMaterial map={cover} color="#f3ead6" metalness={.23} roughness={.48} />
     </mesh>
   </group>;

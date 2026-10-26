@@ -493,22 +493,40 @@ function Mensaje() {
 function Colophon() {
   return (
     <footer className="vd-colophon">
-      <p className="vd-colophon__big">{BRAND.name}</p>
-      <div className="vd-colophon__cols">
-        <p>{BRAND.legal} Las cifras y las fechas de esta web son las que publica NASA/JPL sobre la misión Voyager.</p>
-        <p>
-          Fuentes de las cifras:{" "}
-          <a href="https://science.nasa.gov/mission/voyager/" target="_blank" rel="noopener noreferrer">
-            science.nasa.gov/mission/voyager
-          </a>
-          . Fotografías, película y grabación con sus atribuciones en <a href="/creditos">créditos</a>.
-        </p>
-        <p>Una carta de presentación, no una promesa de respuesta. Explora <a href={href("surcos")}>los surcos</a>, sigue <a href={href("viaje")}>el viaje</a> o deja <a href={href("mensaje")}>tu mensaje</a>.</p>
+      <div className="vd-colophon__top">
+        <div>
+          <p className="vd-kicker"><span>Fin de la transmisión</span><span>{BRAND.launched} — ∞</span></p>
+          <p className="vd-colophon__message">Seguimos aquí,<br /><em>por si alguien escucha.</em></p>
+        </div>
+        <a className="vd-colophon__brand" href={href()}>
+          <span>{BRAND.name}</span>
+          <small>{BRAND.sub}</small>
+        </a>
       </div>
+      <div className="vd-colophon__cols">
+        <nav aria-label="Explorar la historia">
+          <p className="vd-colophon__label">Explora</p>
+          <a href={href()}>El objeto</a>
+          <a href={href("surcos")}>Los surcos</a>
+          <a href={href("viaje")}>El viaje</a>
+          <a href={href("mensaje")}>Tu mensaje</a>
+        </nav>
+        <div>
+          <p className="vd-colophon__label">Fuentes y archivo</p>
+          <a href="https://science.nasa.gov/mission/voyager/" target="_blank" rel="noopener noreferrer">Misión Voyager · NASA/JPL ↗</a>
+          <a href="/creditos">Fotografías, película y grabación ↗</a>
+          <p>Las cifras y fechas proceden de NASA/JPL.</p>
+        </div>
+        <div>
+          <p className="vd-colophon__label">Una historia independiente</p>
+          <p>Un relato sobre el Disco de Oro, sus voces y el largo viaje de las Voyager.</p>
+          <p>{BRAND.legal}</p>
+        </div>
+      </div>
+      <p className="vd-colophon__end">{BRAND.sub}<span>Una carta de presentación desde la Tierra</span></p>
     </footer>
   );
 }
-
 /* ---------------------------------------------------------------- la página según la ruta */
 
 export function Page({ path }: { path: string[] }) {

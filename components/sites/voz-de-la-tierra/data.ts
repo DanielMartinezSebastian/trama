@@ -34,7 +34,7 @@ export const BRAND = {
   name: "La Voz de la Tierra",
   sub: "El Disco de Oro · Voyager 1 y 2",
   launched: "1977",
-  legal: "Demo de la librería Trama: una web narrativa de ejemplo, no una web oficial de la misión Voyager.",
+  legal: "Proyecto narrativo independiente; no afiliado a NASA ni al JPL.",
 };
 
 /** La ficha del objeto: lo que de verdad se sabe del disco, en pareja de clave y valor. */
