@@ -30,6 +30,7 @@ import * as cota from "@/components/sites/cota/data";
 import * as maravillas from "@/components/sites/maravillas/data";
 import * as runa from "@/components/sites/runa/data";
 import * as nadir from "@/components/sites/nadir/data";
+import * as vozDeLaTierra from "@/components/sites/voz-de-la-tierra/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
@@ -63,6 +64,7 @@ export const sites: SiteMeta[] = [
   { ...maravillas.meta, routes: maravillas.ROUTES, dir: "components/sites/maravillas" },
   { ...runa.meta, routes: runa.ROUTES, dir: "components/sites/runa" },
   { ...nadir.meta, routes: nadir.ROUTES, dir: "components/sites/nadir" },
+  { ...vozDeLaTierra.meta, routes: vozDeLaTierra.ROUTES, dir: "components/sites/voz-de-la-tierra" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

@@ -46,6 +46,7 @@ const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   maravillas: site(() => import("./maravillas/Site")),
   runa: site(() => import("./runa/Site")),
   nadir: site(() => import("./nadir/Site")),
+  "voz-de-la-tierra": site(() => import("./voz-de-la-tierra/Site")),
 };
 
 /** Marco de la web: va en el layout, así persiste (con su estado) al navegar entre sus páginas. */

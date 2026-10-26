@@ -3109,3 +3109,11 @@ Expedición de ficción en tres capítulos: una señal, un descenso y un hallazg
 Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
 
 `Button` ×2 · `ScrollProgress` · `Hero` · `Footer`
+
+### La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas — `/sitios/voz-de-la-tierra`
+
+Una carta desde la Tierra en cuatro capítulos: el Disco de Oro, sus voces, el viaje y tu mensaje. Disco y cubierta 3D con archivo fotográfico de NASA, saludos originales, película de la Tierra desde la ISS y fotografías históricas con atribución. El mismo objeto acompaña la navegación; el mensaje se conserva solo en este dispositivo y se puede descargar.
+
+Carpeta: `components/sites/voz-de-la-tierra/` · 4 páginas: El objeto · Surcos · El viaje · El mensaje
+
+`Button` ×4 · `SharedText` ×3 · `MetaTable` ×2 · `PageTransition` · `Traveler` · `Countdown` · `TextField` · `VideoPlayer` · `AudioPlayer` · `Preloader`
