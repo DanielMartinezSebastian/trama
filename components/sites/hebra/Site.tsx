@@ -5,7 +5,9 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Hero from "@/components/ui/Hero";
 import Button from "@/components/ui/Button";
 import PricingSection from "@/components/ui/PricingSection";
-import Home from "./Home";
+import Home, { Packages } from "./Home";
+import TeamSection from "@/components/ui/TeamSection";
+import SectionHeader from "@/components/ui/SectionHeader";
 import DatePicker from "@/components/ui/DatePicker";
 import Stepper from "@/components/ui/Stepper";
 import TextField from "@/components/ui/TextField";
@@ -38,11 +40,13 @@ export function Shell({ children }: { children: ReactNode }) {
 
 function Services() {
   return <div className="hb-section"><Hero kicker="SERVICIOS / A TU MEDIDA" title="Lo que tu pelo pide." subtitle="Precios con IVA, tiempo para escucharte y ningún suplemento por género. El color se presupuesta antes de empezar." primaryCta="Reservar cita" primaryHref={href("reservar")} secondaryCta="" badges="" backdrop="none" align="left" />
+    <div className="hb-services-packages"><SectionHeader kicker="PAQUETES DE LA CASA" title="Para no tener que elegir." subtitle="Lo que más se pide, con todo dentro." backdrop="paquetes" rule="none" variant="editorial"/><Packages/></div>
+    <SectionHeader kicker="SERVICIOS SUELTOS" title="O de uno en uno." subtitle="" rule="none" variant="editorial" className="hb-services-loose"/>
     <PricingSection kicker="" title="" subtitle="" layout="menu" variant="minimal" plans={SERVICES.map(s => ({ id:s.id, name:s.name, description:s.description, price:s.price ? `${s.category==="Color"?"Desde ":""}${s.price} €` : "Gratis", meta:`${s.minutes} min`, cta:"Elegir", href:`${href("reservar")}?servicio=${s.id}`, note:s.category==="Color"?"Presupuesto confirmado antes del servicio":"" }))} footnote="IVA incluido. Elige tu servicio para ver profesionales y horas disponibles." />
   </div>;
 }
 
-function Team() { return <div className="hb-section"><Hero kicker="EL EQUIPO / EL OFICIO" title="Las personas detrás del corte." subtitle="Personajes y fotografías de demostración. Cada profesional tiene su especialidad; elige con quién te apetece reservar." primaryCta="Elegir profesional" primaryHref={href("reservar")} secondaryCta="" badges="" backdrop="none" align="left"/><div className="biz-team-roster"><img src="/img/hebra/corte.webp" alt="Escena de trabajo en el estudio, imagen de referencia generada"/><div>{TEAM.map(p=><article key={p.name}><span>{p.role}</span><h2>{p.name}</h2><Button label={`Reservar con ${p.name}`} href={`${href("reservar")}?profesional=${p.name}`} variant="minimal" emphasis="outline" glyph="↗"/></article>)}</div></div></div>; }
+function Team() { return <div className="hb-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="Las manos." subtitle="Personajes de demostración. Cada profesional tiene su especialidad; elige con quién te apetece reservar." titleSize="giant" layout="rows" align="left" photoTone="mono-hover" linkLabel="Reservar" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><figure className="hb-team-scene"><img src="/img/hebra/corte.webp" alt="Escena de trabajo en el estudio, imagen de referencia generada" loading="lazy"/><figcaption>EN EL ESTUDIO / CADA CORTE EMPIEZA ESCUCHANDO</figcaption></figure></div>; }
 
 function Booking() {
   const { value: appointments, setValue, ready } = useSalon();
