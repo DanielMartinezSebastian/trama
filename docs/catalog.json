@@ -209,6 +209,7 @@
         "device-mockup-3d",
         "logo-coin",
         "logo-3d",
+        "floating-video",
         "video-player",
         "audio-player",
         "horizontal-scroll",
@@ -7844,6 +7845,62 @@
       ],
       "example": "import Logo3D from \"@/components/ui/Logo3D\";\n\n<Logo3D />",
       "preview": "/componentes#logo-3d"
+    },
+    {
+      "id": "floating-video",
+      "name": "Vídeo flotante que crece al pulsarlo",
+      "component": "FloatingVideo",
+      "import": "import FloatingVideo from \"@/components/ui/FloatingVideo\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Una miniatura de vídeo suelta sobre la página: ladeada, se mece sola y persigue un poco al cursor, con su etiqueta en mono («BEHIND THE SCENES») y un punto que parpadea. Solo crece si se pulsa: viaja desde su sitio al centro (FLIP), se oye y lleva controles; Escape, el botón o pulsar fuera la devuelven. El clip abierto sigue donde iba la miniatura. Para un making of, un teaser o un segundo vídeo junto a un reel, sin quitarle protagonismo. Sin dependencias.",
+      "props": [
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Behind the scenes",
+          "label": "Etiqueta"
+        },
+        {
+          "key": "caption",
+          "type": "text",
+          "default": "0:30",
+          "label": "Texto a la derecha"
+        },
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": -6,
+          "label": "Inclinación (°)",
+          "min": -20,
+          "max": 20
+        },
+        {
+          "key": "follow",
+          "type": "number",
+          "default": 18,
+          "label": "Persigue al cursor (px)",
+          "min": 0,
+          "max": 60
+        }
+      ],
+      "notes": [
+        "Ponlo dentro de un contenedor sticky de alto 0 para que acompañe al scroll de una sección.",
+        "fullSrc: otro vídeo (con sonido) para la versión abierta.",
+        "Con movimiento reducido no se mece ni viaja."
+      ],
+      "example": "import FloatingVideo from \"@/components/ui/FloatingVideo\";\n\n<FloatingVideo\n  label=\"Behind the scenes\"\n/>",
+      "preview": "/componentes#floating-video"
     },
     {
       "id": "video-player",

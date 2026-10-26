@@ -73,3 +73,32 @@
 .ui-vid__tag--link { top: 10px; bottom: auto; left: auto; right: 10px; z-index: 2; text-decoration: none; }
 .ui-vid__tag--link:hover { background: var(--acc); color: var(--bg); }
 .ui-vid__tag--note { top: 10px; bottom: auto; left: 10px; z-index: 2; font-size: 11px; pointer-events: none; }
+
+/* ── FloatingVideo: miniatura que flota y crece al pulsarla ───────────────────────────────────────────── */
+.ui-fvid { position: relative; width: var(--fv-w); }
+.ui-fvid__mini { --fv-x: 0px; --fv-y: 0px; position: relative; display: block; width: 100%; aspect-ratio: var(--fv-ar); padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: var(--card, #111); cursor: pointer;
+  transform: translate(var(--fv-x), var(--fv-y)) rotate(var(--fv-tilt)); transition: transform .6s cubic-bezier(.2, .8, .2, 1), border-radius .4s; animation: ui-fvid-mecer 7s ease-in-out infinite; }
+.ui-fvid__mini:hover, .ui-fvid__mini:focus-visible { --fv-tilt: 0deg; border-radius: 22px; animation-play-state: paused; }
+.ui-fvid__mini:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+.ui-fvid__mini video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+.ui-fvid__mini:hover video { transform: scale(1.06); }
+@keyframes ui-fvid-mecer { 0%, 100% { translate: 0 0; rotate: 0deg; } 33% { translate: 0 -10px; rotate: 1.2deg; } 66% { translate: 0 5px; rotate: -.8deg; } }
+.ui-fvid.is-still .ui-fvid__mini { animation: none; }
+/* el botón de play: el triángulo va un poco a la derecha de su caja para que se vea centrado (centro óptico) */
+.ui-fvid__play { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, .92); color: #111; transform: scale(.82); transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
+.ui-fvid__play svg { width: 22px; height: 22px; fill: currentColor; translate: 1.5px 0; }
+.ui-fvid__mini:hover .ui-fvid__play { transform: scale(1); }
+.ui-fvid__label { position: absolute; inset: auto 10px 10px; display: flex; justify-content: space-between; gap: 8px; font: 500 10px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
+.ui-fvid__label > span { display: inline-flex; gap: 6px; align-items: center; padding: 6px 9px; border-radius: 999px; background: rgba(0, 0, 0, .45); backdrop-filter: blur(6px); }
+.ui-fvid__label i { width: 6px; height: 6px; border-radius: 50%; background: #ff3b30; animation: ui-fvid-rec 1.6s steps(1) infinite; }
+@keyframes ui-fvid-rec { 50% { opacity: .2; } }
+/* la capa abierta: la miniatura viaja de su caja (--x0…) al centro */
+.ui-fvid__layer { position: fixed; inset: 0; z-index: 1000; background: rgba(8, 8, 12, 0); transition: background .6s; }
+.ui-fvid__layer.is-open { background: rgba(8, 8, 12, .82); }
+.ui-fvid__full { position: fixed; left: var(--x0); top: var(--y0); width: var(--w0); aspect-ratio: var(--fv-ar); overflow: hidden; border-radius: 14px; background: #000; translate: 0 0;
+  transition: left .7s cubic-bezier(.65, 0, .2, 1), top .7s cubic-bezier(.65, 0, .2, 1), width .7s cubic-bezier(.65, 0, .2, 1), translate .7s cubic-bezier(.65, 0, .2, 1), border-radius .7s; }
+.ui-fvid__layer.is-open .ui-fvid__full { left: 50%; top: 50%; width: min(88vw, calc(84svh * var(--fv-k, 1.78))); translate: -50% -50%; border-radius: 6px; }
+.ui-fvid__full video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ui-fvid__close { position: fixed; top: 20px; right: 20px; width: 48px; height: 48px; border: 0; border-radius: 50%; background: #fff; color: #111; font-size: 26px; line-height: 1; cursor: pointer; opacity: 0; transition: opacity .4s .3s; }
+.ui-fvid__layer.is-open .ui-fvid__close { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ui-fvid__mini, .ui-fvid__full, .ui-fvid__layer { animation: none; transition: none; } }

@@ -28,7 +28,25 @@ calculados (`.refs3d/lusion-web/dom-portada.txt`).
 | L7 | Tableta → escena del astronauta | Una tableta con la Tierra que crece hasta la escena negra con un astronauta flotando en 3D | `ScrollExpand` con el vídeo de la Tierra desde la ISS (NASA, dominio público) y una foto de un paseo espacial (NASA, `images:fetch -- espacio`) fundida con una máscara | hecho (foto, no 3D) |
 | L8 | Pie | (no se ve en el mapa) | «Let's work together» y correo | provisional |
 | L9 | Transición al abrir un proyecto | Cambio de imagen cada 150 ms (`cine:web`) | — | pendiente |
+| L11 | (nuevo, idea propia) Vídeo flotante | — | **`FloatingVideo`** (nueva) en «Featured Work»: un «Behind the scenes» ladeado que se mece, sigue un poco al cursor y acompaña al scroll; solo crece si se pulsa | hecho |
 | L10 | Cruces de cristal | Piezas cerradas | `CrossCluster` (commit `01356ff`) | hecho |
+
+## 2b. Cintas que no se dibujaban bien (nota del usuario, 26-10)
+
+Fotogramas de la réplica a 1440 × 900 contra las pantallas 03–06 y 29–33 del mapa de `cine:web`:
+
+- **Causa**: el SVG medía 1440 × 398 (`height: 100%` de la sección) y su `viewBox` 1440 × 1200. Con el encaje por
+  defecto (`meet`) el dibujo se encogía a un tercio en el centro de la caja; el grosor, con `non-scaling-stroke`, se
+  quedaba en 70 px. Salía un gusano gordo y corto en mitad de la sección en lugar de una cinta que cruza la página.
+- **La referencia**: un tubo fino (~16 px a 1440) que entra por arriba a la izquierda, cruza el titular y baja a rodear
+  la tarjeta del reel; la cian sale por la derecha junto a «See all projects» y baja hacia la tableta.
+- **Arreglo**: la cinta tiene la proporción de su `viewBox` (`height: auto`) y sale de la sección hacia la tarjeta;
+  trazados nuevos de 17 y 15 px; el avance sigue a la punta (`scrollRange` [0,8, −0,9]).
+- **Kit**: `LineDraw fit` (`contain` · `cover` · `stretch`) para cuando la caja no tiene la proporción del dibujo, y la
+  cinta (`tube`) sombreada con luz desde arriba (sombra que asoma por debajo, brillo arriba, desplazamientos en px de
+  pantalla pasados al `viewBox` con `--ld-u`), en lugar de un contorno oscuro.
+- **El play del reel**: el glifo ▶ caía fuera de su pastilla según la fuente; ahora es un triángulo SVG con el centro
+  óptico corregido.
 
 ## 3. Cambios llevados a la librería
 
@@ -36,6 +54,8 @@ calculados (`.refs3d/lusion-web/dom-portada.txt`).
 |---|---|---|
 | `LineDraw` | `tube` (cinta 3D en tres trazos), `color`, `scrollRange` y avance amortiguado con la sensación de la página | Sirve para firmas, subrayados y ahora cintas gruesas de cualquier color |
 | `ScrollExpand` | Nueva: una tarjeta de medios que crece con el scroll, inclinada al principio, con contenido encima | El reel, la tableta o cualquier medio que deba pasar de tarjeta a pantalla completa |
+| `LineDraw` (2) | `fit` y sombreado de la cinta con luz desde arriba | La causa del fallo (caja con otra proporción) le pasa a cualquier trazo de fondo |
+| `FloatingVideo` | Nueva: miniatura de vídeo flotante que se mece, sigue al cursor y solo crece (FLIP) al pulsarla | Making of, teaser o segundo vídeo junto a un reel |
 | `CrossCluster` | El plano de reserva redondea sus posiciones: daba un error de hidratación | — |
 | `lib/scroll/track` | Sin GSAP, sobre la medida del kit | Un solo `trackScroll` (docs/42) |
 

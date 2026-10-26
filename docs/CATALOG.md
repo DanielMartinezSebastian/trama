@@ -1967,6 +1967,21 @@ La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o 
 - Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.
 - Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.
 
+### Vídeo flotante que crece al pulsarlo — `FloatingVideo`
+
+Una miniatura de vídeo suelta sobre la página: ladeada, se mece sola y persigue un poco al cursor, con su etiqueta en mono («BEHIND THE SCENES») y un punto que parpadea. Solo crece si se pulsa: viaja desde su sitio al centro (FLIP), se oye y lleva controles; Escape, el botón o pulsar fuera la devuelven. El clip abierto sigue donde iba la miniatura. Para un making of, un teaser o un segundo vídeo junto a un reel, sin quitarle protagonismo. Sin dependencias.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Behind the scenes" |
+| `caption` | text | "0:30" |
+| `tilt` | number -20–20 | -6 |
+| `follow` | number 0–60 | 18 |
+
+- Ponlo dentro de un contenedor sticky de alto 0 para que acompañe al scroll de una sección.
+- fullSrc: otro vídeo (con sonido) para la versión abierta.
+- Con movimiento reducido no se mece ni viaja.
+
 ### Reproductor de vídeo — `VideoPlayer`
 
 Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.

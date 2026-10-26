@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import CrossCluster from "@/components/ui/CrossCluster";
 import LineDraw from "@/components/ui/LineDraw";
+import FloatingVideo from "@/components/ui/FloatingVideo";
 import ScrollExpand from "@/components/ui/ScrollExpand";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 
@@ -135,7 +136,8 @@ export default function LusionWeb() {
 
       {/* Bold Ideas */}
       <section className="lw-bold">
-        <LineDraw className="lw-ribbon lw-ribbon--azul" tube trigger="scroll" scrollRange={[1.1, 0.1]} strokeWidth={70} color="#2f3cff" viewBox="0 0 1440 1200" d="M-80 120C260 140 420 420 300 700C220 900 420 1120 760 1080C1080 1040 1180 760 1520 820" />
+        {/* la cinta entra por arriba a la izquierda, cruza el titular y baja a rodear la tarjeta del reel (pantallas 04–06) */}
+        <LineDraw className="lw-ribbon lw-ribbon--azul" tube trigger="scroll" scrollRange={[0.8, -0.9]} strokeWidth={17} color="#2f3cff" viewBox="0 0 1440 1500" d="M-60 30C120 40 260 110 330 220C410 350 430 520 420 700C410 860 330 960 210 1010C80 1060 60 1200 200 1260C360 1330 560 1250 600 1110C630 1000 560 930 470 950" />
         <h2>
           Bold Ideas,
           <br />
@@ -149,7 +151,13 @@ export default function LusionWeb() {
       <ScrollExpand length={2.2} from={{ width: "26vw", height: "16vw" }} offset={{ x: "-26vw", y: "-6vh" }} tilt={18} radius={[14, 18]}
         overlay={
           <p className="lw-playreel">
-            PLAY <span aria-hidden>▶</span> REEL
+            PLAY{" "}
+            <span aria-hidden>
+              <svg viewBox="0 0 24 24">
+                <path d="M8.5 5.8v12.4a.6.6 0 0 0 .9.5l9.8-6.2a.6.6 0 0 0 0-1L9.4 5.3a.6.6 0 0 0-.9.5Z" />
+              </svg>
+            </span>{" "}
+            REEL
           </p>
         }>
         <Reel />
@@ -160,6 +168,11 @@ export default function LusionWeb() {
         <div className="lw-work__head">
           <h2>Featured Work</h2>
           <p>A selection of immersive digital experiences created for ambitious brands and forward-thinking teams.</p>
+        </div>
+        {/* un segundo vídeo, suelto: acompaña al scroll por la columna de proyectos, se mece, sigue un poco al cursor y solo
+            crece si se pulsa (la miniatura viaja al centro y se oye) */}
+        <div className="lw-float">
+          <FloatingVideo src="/video/obrador/02-masa-rodillo.mp4" poster="/video/obrador/02-masa-rodillo.jpg" label="Behind the scenes" caption="Labs · 0:30" title="Ver el making of de Lusion Labs" width="min(280px, 46vw)" tilt={-7} />
         </div>
         <div className="lw-grid">
           {PROYECTOS.map(([titulo, img, tags]) => (
@@ -179,7 +192,8 @@ export default function LusionWeb() {
 
       {/* Where Creative Ideas */}
       <section className="lw-where">
-        <LineDraw className="lw-ribbon lw-ribbon--cian" tube trigger="scroll" scrollRange={[1.1, 0.0]} strokeWidth={60} color="#3fd8f2" viewBox="0 0 1440 1100" d="M1540 60C1200 40 1000 300 1080 520C1160 760 900 900 640 820C380 740 240 460 -120 520" />
+        {/* la cinta cian sale por la derecha junto a «See all projects», ondula bajo el titular y baja hacia la tableta (pantallas 30–33) */}
+        <LineDraw className="lw-ribbon lw-ribbon--cian" tube trigger="scroll" scrollRange={[0.85, -0.8]} strokeWidth={15} color="#3fc8ef" viewBox="0 0 1440 1500" d="M1500 40C1350 20 1220 -10 1120 20C1000 60 1060 160 960 210C820 280 700 230 640 330C580 440 720 520 760 640C800 780 640 880 470 900C300 920 220 1040 300 1180C360 1280 520 1300 600 1240" />
         <h2>
           Where Creative Ideas
           <br />
@@ -232,15 +246,23 @@ const CSS = `
 .lw-bold, .lw-where { position: relative; padding: 18vh 5vw 8vh; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4vw; align-items: end; }
 .lw-bold h2, .lw-where h2, .lw-work h2 { position: relative; z-index: 1; margin: 0; font-size: clamp(44px, 5.6vw, 92px); font-weight: 400; line-height: 1.02; letter-spacing: -0.03em; }
 .lw-bold__text, .lw-where__text { position: relative; z-index: 1; max-width: 420px; font-size: 15px; line-height: 1.35; display: grid; gap: 18px; justify-items: start; }
-.lw-ribbon { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* la cinta tiene la proporción de su viewBox (height: auto) y sale de la sección por abajo, hasta la tarjeta siguiente */
+.lw-ribbon { position: absolute; left: 0; top: 0; width: 100%; height: auto; z-index: 0; pointer-events: none; }
+.lw-ribbon--cian { top: -16vh; }
 .lw-pill { display: inline-flex; gap: 10px; align-items: center; padding: 10px 16px; border-radius: 999px; background: #fff; color: var(--lw-fg); text-decoration: none; font-family: var(--font-lw-mono), monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; transition: background .3s, color .3s; }
 .lw-pill i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; } .lw-pill:hover { background: var(--lw-fg); color: #fff; }
 .lw-reel { position: absolute; inset: 0; background: #000; } .lw-reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .8s; }
 .lw-playreel { display: flex; gap: 2.4vw; align-items: center; margin: 0; color: #fff; font-size: clamp(36px, 6vw, 96px); letter-spacing: -0.02em; }
-.lw-playreel span { display: inline-grid; place-items: center; width: 1.6em; height: .95em; border-radius: 999px; background: #fff; color: var(--lw-fg); font-size: .45em; }
-.lw-work { padding: 14vh 5vw 10vh; }
+/* la pastilla del play: el triángulo en SVG, centrado a ojo (un glifo ▶ cae fuera de su caja según la fuente) */
+.lw-playreel span { display: inline-grid; place-items: center; width: 1.45em; height: .8em; border-radius: 999px; background: #fff; color: var(--lw-fg); }
+.lw-playreel svg { width: .42em; height: .42em; fill: currentColor; translate: .03em 0; }
+/* clip: el vídeo flotante no sale de la sección (y no rompe el sticky, como haría overflow: hidden) */
+.lw-work { padding: 14vh 5vw 10vh; overflow: clip; }
 .lw-work__head { display: flex; justify-content: space-between; align-items: end; gap: 4vw; margin-bottom: 40px; }
 .lw-work__head p { max-width: 240px; margin: 0; font-family: var(--font-lw-mono), monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #555; }
+/* sticky de alto 0: el vídeo flota sobre la rejilla mientras dura la sección */
+.lw-float { position: sticky; top: 64svh; z-index: 5; height: 0; display: flex; justify-content: flex-end; pointer-events: none; }
+.lw-float > * { pointer-events: auto; filter: drop-shadow(0 18px 30px rgb(20 20 60 / .28)); }
 .lw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px 24px; }
 .lw-card { display: grid; gap: 10px; color: var(--lw-fg); text-decoration: none; }
 .lw-card__img { display: block; overflow: hidden; border-radius: 14px; aspect-ratio: 16 / 10; }

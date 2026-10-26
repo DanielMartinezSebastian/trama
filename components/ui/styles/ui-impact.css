@@ -6,10 +6,11 @@
 /* ---------- LineDraw ---------- */
 .ui-ldraw { display: block; width: 100%; height: auto; overflow: visible; }
 .ui-ldraw path { fill: none; stroke: var(--ld-c, var(--acc)); stroke-width: var(--ld-w, 3px); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1 2; /* patrón más largo que el trazo: nunca asoma un segundo guion */ }
-/* cinta 3D (tube): sombra un poco más ancha y oscura, cuerpo y un brillo fino en el centro, sobre el mismo trazado */
-.ui-ldraw--tube .ui-ldraw__sombra { stroke: color-mix(in srgb, var(--ld-c) 62%, #000); }
-.ui-ldraw--tube .ui-ldraw__cuerpo { stroke-width: calc(var(--ld-w) * 0.8); }
-.ui-ldraw--tube .ui-ldraw__brillo { stroke: color-mix(in srgb, var(--ld-c) 45%, #fff); stroke-width: calc(var(--ld-w) * 0.22); opacity: 0.75; }
+/* cinta 3D: luz desde arriba. La sombra asoma por debajo, el brillo va por la parte alta (desplazamientos en px de
+   pantalla pasados a unidades del viewBox con --ld-u, que pone LineDraw) */
+.ui-ldraw--tube .ui-ldraw__sombra { stroke: color-mix(in srgb, var(--ld-c) 55%, #000); translate: 0 calc(var(--ld-w) * 0.07 * var(--ld-u, 1)); }
+.ui-ldraw--tube .ui-ldraw__cuerpo { stroke-width: calc(var(--ld-w) * 0.86); translate: 0 calc(var(--ld-w) * -0.02 * var(--ld-u, 1)); }
+.ui-ldraw--tube .ui-ldraw__brillo { stroke: color-mix(in srgb, var(--ld-c) 40%, #fff); stroke-width: calc(var(--ld-w) * 0.26); translate: 0 calc(var(--ld-w) * -0.17 * var(--ld-u, 1)); opacity: 0.7; }
 
 /* ---------- GradientField ---------- */
 /* sin WebGL (o hasta el primer fotograma) queda un degradado CSS con los mismos colores */
