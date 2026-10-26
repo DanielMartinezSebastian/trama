@@ -18713,6 +18713,49 @@
           "uses": 1
         }
       ]
+    },
+    {
+      "slug": "nadir",
+      "title": "NÁDIR · una señal al otro lado del silencio",
+      "url": "/sitios/nadir",
+      "dir": "components/sites/nadir",
+      "description": "Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.",
+      "pages": [
+        {
+          "path": "/sitios/nadir",
+          "title": "La señal"
+        },
+        {
+          "path": "/sitios/nadir/descenso",
+          "title": "El descenso"
+        },
+        {
+          "path": "/sitios/nadir/hallazgo",
+          "title": "El hallazgo"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 2
+        },
+        {
+          "component": "ScrollProgress",
+          "id": "scroll-progress",
+          "uses": 1
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        }
+      ]
     }
   ]
 }

@@ -3101,3 +3101,11 @@ Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de tí
 Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nivel 1 · La cámara · Nivel 2 · El trono · Victoria · prensa
 
 `Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `Preloader` · `MetaTable`
+
+### NÁDIR · una señal al otro lado del silencio — `/sitios/nadir`
+
+Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.
+
+Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
+
+`Button` ×2 · `ScrollProgress` · `Hero` · `Footer`
