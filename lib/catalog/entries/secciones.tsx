@@ -204,8 +204,8 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de precios",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.",
-    notes: ["Fórmula de producto (Linear, Vercel; /sitios/faro): layout=\"joined\", highlight=\"lift\", planCase=\"none\", marker=\"check\", toggle=\"neutral\" y variant=\"editorial\" (botón principal sólido en el color del texto).", "Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a»."],
+    description: "Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.",
+    notes: ["Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.", "plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular."],
     stageHeight: 720,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Precios" },
@@ -218,7 +218,10 @@ export const secciones: CatalogEntry[] = [
         multiline: true,
         default: DEFAULT_PLANS,
       },
-      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "joined", "list", "carousel"], labels: { grid: "rejilla", joined: "una pieza con columnas", list: "lista (tarjetas horizontales)", carousel: "carrusel (Swiper)" } },
+      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "joined", "list", "carousel", "menu", "comparison"], labels: { grid: "rejilla", joined: "una pieza con columnas", list: "lista horizontal", carousel: "carrusel", menu: "carta de servicios", comparison: "tabla comparativa" } },
+      { key: "comparison", label: "Comparación: prestación|plan 1|plan 2|plan 3", type: "text", multiline: true, default: "Proyectos|1|Sin límite|Sin límite\nPuestos|1|1|5\nSoporte|Email|Prioritario|Prioritario", when: (p) => p.layout === "comparison" },
+      { key: "caption", label: "Nombre accesible de la tabla", type: "text", default: "Comparación de planes", when: (p) => p.layout === "comparison" },
+      { key: "footnote", label: "Condiciones bajo los precios", type: "text", default: "" },
       { key: "cardLayout", label: "Tarjetas", type: "select", default: "classic", options: ["classic", "compact"], when: (p) => p.layout !== "list" && p.layout !== "joined" },
       { key: "highlight", label: "Plan destacado", type: "select", default: "invert", options: ["invert", "glow", "border", "lift"], labels: { invert: "invertido (fondo de acento)", glow: "halo de acento", border: "borde grueso", lift: "luz cenital (producto)" } },
       { key: "badge", label: "Insignia del destacado", type: "text", default: "Más popular" },
@@ -240,6 +243,9 @@ export const secciones: CatalogEntry[] = [
           subtitle={p.subtitle as string}
           plans={p.plans as string}
           layout={p.layout as never}
+          comparison={p.comparison as string}
+          caption={p.caption as string}
+          footnote={p.footnote as string}
           cardLayout={p.cardLayout as never}
           highlight={p.highlight as never}
           badge={p.badge as string}

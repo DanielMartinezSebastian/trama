@@ -151,6 +151,9 @@ Seis landings construidas **solo** con `components/ui/`, en `components/landings
 
 | Slug | Qué demuestra |
 |---|---|
+| `esparta` | Barbería de barrio: navegación lateral, fotografías de oficio, ticket del ritual y carta de servicios reservables. Revisión en [51](./51-negocios-con-identidad.md). |
+| `forja` | Cuaderno de entrenamiento oscuro: fotografía de grupo, sesión explicada en tres capítulos 3D, horario, espera y lista de cuotas. Revisión en [51](./51-negocios-con-identidad.md). |
+| Iteración de las cuatro demos | Revisión visual y de competencia en [51](./51-negocios-con-identidad.md): cuatro composiciones distintas, doce fotografías generadas del oficio y entrenamiento, 3D narrativo y `PricingSection` con carta de servicios y tabla comparativa. |
 | `th-ciphergrid` | Retrowave/cyberpunk: casi todo el catálogo, fondo que cambia de escena con el scroll, formulario → `Modal` → `Toast` (guía §15). |
 | `th-mycel` | Orgánica: `AsciiBackground` con `progress` atado al scroll, alternando con `GridBackground` y sketches de textmode.js. |
 | `th-folio` | La única de tema claro: fondos de papelería, legibilidad en claro (guía §16). |
@@ -162,11 +165,13 @@ Las otras seis landings de la galería (`th-tide`, `th-brew`…) usan el sistema
 
 ## Webs completas de referencia
 
-Cinco sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y servidos en `/sitios/<slug>/…`
+Sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y servidos en `/sitios/<slug>/…`
 (arquitectura y plan en [`03-webs-completas.md`](./03-webs-completas.md); páginas y componentes de cada una en `CATALOG.md`).
 
 | Slug | Qué demuestra |
 |---|---|
+| `hebra` | Estudio de pelo editorial: collage rosa, índice Forma/Textura/Color, carta, reserva y agenda persistente. Diseño en [51](./51-negocios-con-identidad.md). |
+| `cadencia` | Club social de movimiento: planificador semanal, fotografía cotidiana, horario y espera, comparación de planes y área personal. Diseño en [51](./51-negocios-con-identidad.md). |
 | `kernel-log` | Blog de tecnología: `Article` con índice y barra de lectura, búsqueda y filtro por temas, paginación, newsletter con archivo. |
 | `pixelforge` | Tienda de assets: filtros y orden, fichas con licencias, **carrito** en `localStorage`, cupón, pago en pasos, FAQ y legales. |
 | `vigia` | Seguridad: `ChatWidget` en todas las páginas, planes → presupuesto con el plan elegido, presupuesto en 4 pasos con estimación. |

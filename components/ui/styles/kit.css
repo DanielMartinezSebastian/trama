@@ -24,6 +24,7 @@
 @import "./ui-impact.css";
 @import "./ui-local.css";
 @import "./ui-guides.css";
+@import "./ui-pricing.css";
 
 /* Mismos valores que `neutralTokens` en lib/ui/tokens.ts */
 :where(:root) {

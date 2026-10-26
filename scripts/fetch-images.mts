@@ -39,6 +39,9 @@ const EXCLUDE: string[] = [
 /** `match`: el título tiene que encajar (temas en los que la búsqueda de Commons trae mucho ruido). */
 type Topic = { n: number; queries: string[]; match?: RegExp; files?: string[] };
 const TOPICS: Record<string, Topic> = {
+  // Selección inspeccionada para Hebra y Cadencia (docs/46); títulos fijos para regenerar sin cambiar las rutas.
+  peluqueria: { n: 2, queries: [], files: ["Vintage Hair (Unsplash).jpg", "Wind Through Her Hair (Unsplash).jpg"] },
+  fitness: { n: 2, queries: [], files: ["World Gym workout (Unsplash).jpg", "Strength training (Unsplash).jpg"] },
   // Archivo histórico: títulos comprobados, sin exigir resolución moderna ni ampliar originales.
   voyager: { n: 4, queries: [], files: ["The Sounds of Earth - GPN-2000-001976.jpg", "The Sounds of Earth Record Cover - GPN-2000-001978.jpg", "The Earth seen from Apollo 17.jpg", "Pale Blue Dot.png"] },
   arquitectura: { n: 7, queries: ["unsplash modern architecture", "unsplash building facade", "pexels architecture glass building", "modern architecture building facade"] },

@@ -18,6 +18,10 @@ const site = (load: () => Promise<SiteModule>) => ({
 
 /** Cada web: su marco (barra, pie, estado compartido) y su página según la ruta. */
 const SITES: Record<string, { Shell: Shell; Page: Page }> = {
+  esparta: site(() => import("./esparta/Site")),
+  forja: site(() => import("./forja/Site")),
+  hebra: site(() => import("./hebra/Site")),
+  cadencia: site(() => import("./cadencia/Site")),
   "kernel-log": site(() => import("./kernel-log/Site")),
   pixelforge: site(() => import("./pixelforge/Site")),
   vigia: site(() => import("./vigia/Site")),

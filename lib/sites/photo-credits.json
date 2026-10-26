@@ -1415,5 +1415,57 @@
     "width": 1600,
     "height": 1155,
     "bytes": 242891
+  },
+  {
+    "file": "peluqueria/01-vintage-hair-unsplash.jpg",
+    "topic": "peluqueria",
+    "title": "Vintage Hair (Unsplash).jpg",
+    "author": "Les Anderson lesanderson",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Vintage_Hair_(Unsplash).jpg",
+    "width": 1600,
+    "height": 1085,
+    "bytes": 70837
+  },
+  {
+    "file": "peluqueria/02-wind-through-her-hair-unsplash.jpg",
+    "topic": "peluqueria",
+    "title": "Wind Through Her Hair (Unsplash).jpg",
+    "author": "Nina Strehl ninastrehl",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Wind_Through_Her_Hair_(Unsplash).jpg",
+    "width": 1600,
+    "height": 2397,
+    "bytes": 521718
+  },
+  {
+    "file": "fitness/01-world-gym-workout-unsplash.jpg",
+    "topic": "fitness",
+    "title": "World Gym workout (Unsplash).jpg",
+    "author": "Scott Webb scottwebb",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:World_Gym_workout_(Unsplash).jpg",
+    "width": 1600,
+    "height": 1063,
+    "bytes": 58350
+  },
+  {
+    "file": "fitness/02-strength-training-unsplash.jpg",
+    "topic": "fitness",
+    "title": "Strength training (Unsplash).jpg",
+    "author": "Scott Webb scottwebb",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Strength_training_(Unsplash).jpg",
+    "width": 1600,
+    "height": 1063,
+    "bytes": 70995
   }
 ]
