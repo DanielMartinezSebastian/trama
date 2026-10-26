@@ -3102,6 +3102,14 @@ Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nive
 
 `Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `Preloader` · `MetaTable`
 
+### La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas — `/sitios/voz-de-la-tierra`
+
+Historia narrativa en cuatro rutas sobre el Disco de Oro de las Voyager: el objeto, lo que va grabado en sus surcos (música, imágenes, saludos y sonidos), el viaje que lo dejó a un día luz de casa y una pregunta final. El mismo disco 3D (procedural, sin modelos externos) viaja vivo entre rutas (Traveler), los titulares vuelan palabra a palabra entre páginas (SharedText) y cada ruta entra con una transición propia: iris, barrido, barrido de líneas y fundido.
+
+Carpeta: `components/sites/voz-de-la-tierra/` · 4 páginas: El objeto · Surcos · El viaje · El mensaje
+
+`SharedText` ×4 · `Button` ×3 · `MetaTable` ×2 · `PageTransition` · `Traveler` · `Countdown` · `TextField` · `AudioPlayer` · `Preloader`
+
 ### NÁDIR · una señal al otro lado del silencio — `/sitios/nadir`
 
 Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.

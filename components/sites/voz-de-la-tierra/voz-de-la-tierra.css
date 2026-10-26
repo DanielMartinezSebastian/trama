@@ -1,0 +1,229 @@
+/* La Voz de la Tierra (docs/14 · docs/24): una historia entre rutas con un disco vivo. La tipografía la prestan los
+   tokens (Gloock para los titulares, Instrument Sans para leer, Martian Mono para las etiquetas); los colores van solo
+   por tokens: nada pegado fuera de los tonos del vinilo (la etiqueta grabada, el oro). */
+
+.vd {
+  --pad: clamp(16px, 4vw, 56px);
+  --head: 74px;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+.vd-stage { position: relative; z-index: 1; overflow-x: clip; }
+.vd a { color: inherit; }
+.vd-main { position: relative; }
+.vd-skip { position: absolute; left: -999px; top: 8px; z-index: 200; background: var(--fg); color: var(--bg); padding: 8px 12px; }
+.vd-skip:focus { left: 8px; }
+
+/* ---------- etiquetas comunes */
+.vd-kicker { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: baseline; margin: 0; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--fg) 30%, transparent); font: 500 11px/1.3 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); }
+.vd-cap { margin: 0; font-size: 14px; line-height: 1.55; color: var(--mut); max-width: 52ch; }
+.vd-cap--xs { font-size: 12.5px; }
+.vd-lead { margin: 0; max-width: 46ch; font-size: clamp(18px, 1.7vw, 24px); line-height: 1.45; }
+.vd-prose { display: grid; gap: 16px; max-width: 62ch; font-size: clamp(16.5px, 1.5vw, 20px); line-height: 1.62; }
+.vd-prose p { margin: 0; }
+.vd-prose__first { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.5; color: color-mix(in srgb, var(--fg) 92%, var(--bg)); }
+.vd-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.vd-fill { position: absolute; inset: 0; }
+
+/* ---------- cabecera fija */
+.vd-head { position: fixed; inset: 0 0 auto; z-index: 30; display: flex; align-items: center; gap: clamp(14px, 2.6vw, 40px); padding: 16px var(--pad); color: var(--fg); }
+.vd-brand { display: grid; gap: 2px; min-width: 0; text-decoration: none; }
+.vd-brand__name { font-family: var(--display); font-size: 20px; line-height: 1.1; letter-spacing: -0.01em; }
+.vd-brand__sub { font: 400 10.5px/1.3 var(--font-accent); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vd-head__nav { display: flex; flex-wrap: wrap; gap: clamp(12px, 2.4vw, 28px); margin-left: auto; font-size: 13.5px; font-weight: 600; }
+.vd-head__nav a { text-decoration: none; opacity: 0.64; transition: opacity 0.2s, color 0.2s; }
+.vd-head__nav a:hover, .vd-head__nav a:focus-visible, .vd-head__nav a[aria-current="page"] { opacity: 1; color: var(--acc); }
+.vd-head__nav a:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+.vd-head__chip { margin: 0; display: flex; gap: 8px; align-items: baseline; font: 500 11px/1 var(--font-accent); letter-spacing: 0.14em; color: var(--mut); white-space: nowrap; }
+.vd-head__chip b { color: var(--acc); font-weight: 500; }
+
+/* ---------- el preloader */
+.vd-pre { background: var(--bg); }
+.vd-pre .ui-pre__top, .vd-pre .ui-pre__bot { font: 500 11px/1.2 var(--font-accent); letter-spacing: 0.14em; color: var(--mut); }
+.vd-pre .ui-pre__bar > span { background: var(--acc); }
+.vd-load { width: min(46vw, 300px); overflow: visible; }
+
+/* ---------- el disco: el viajero llena el hueco de la página; el plano sale hasta que el lienzo está listo */
+.vd-record { position: absolute; inset: 0; }
+.vd-record canvas { display: block; width: 100%; height: 100%; }
+.vd-record__flat { position: absolute; inset: 0; display: grid; place-items: center; }
+.vd-record__flat i {
+  width: 90%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.14) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at 50% 50%, #14110f 0 27%, #b98c38 27% 100%);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.4), 0 0 40px color-mix(in srgb, var(--acc) 22%, transparent);
+}
+.vd-record__flat b {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  background: #06050a;
+}
+
+/* ---------- portada: el objeto */
+.vd-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  min-height: 100svh;
+  padding: calc(var(--head) + clamp(24px, 6vh, 72px)) var(--pad) clamp(40px, 7vh, 96px);
+}
+.vd-hero__txt { display: grid; gap: 18px; min-width: 0; }
+.vd-hero__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(60px, 11vw, 190px); line-height: 0.88; letter-spacing: -0.04em; }
+.vd-hero__piece { position: relative; width: min(100%, 30rem); aspect-ratio: 1; margin-inline: auto; display: grid; align-content: end; gap: 10px; }
+.vd-hero__cap { font: 400 11px/1.4 var(--font-accent); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); text-align: center; }
+
+/* ---------- índice de la historia: las tres palabras que viajan a sus páginas */
+.vd-index { padding: 0 var(--pad) clamp(40px, 7vw, 110px); }
+.vd-index__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--fg); }
+.vd-index__list li + li { border-top: 1px solid var(--ln); }
+.vd-index__list a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: baseline; gap: 8px clamp(16px, 3vw, 44px); padding: clamp(18px, 3vw, 32px) 0; text-decoration: none; }
+.vd-index__meta { font: 500 12px/1 var(--font-accent); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
+.vd-index__w { font-family: var(--display); font-size: clamp(42px, 7.6vw, 122px); line-height: 0.92; letter-spacing: -0.04em; transition: color 0.25s; }
+.vd-index__how { max-width: 34ch; font-size: 13px; line-height: 1.5; color: var(--mut); text-align: right; }
+.vd-index__list a:hover .vd-index__w, .vd-index__list a:focus-visible .vd-index__w { color: var(--acc); font-style: italic; }
+.vd-index__list a:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+
+/* ---------- prólogo con ficha */
+.vd-pl {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+  padding: clamp(36px, 5vw, 72px) var(--pad) clamp(48px, 8vw, 120px);
+  border-top: 1px solid var(--ln);
+}
+.vd-pl__table { align-self: start; }
+
+/* ---------- cabecera común de las rutas */
+.vd-pagehead { display: grid; gap: 16px; max-width: 1240px; padding: calc(var(--head) + clamp(28px, 7vh, 88px)) var(--pad) clamp(28px, 4vw, 60px); }
+.vd-word { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(56px, 12.5vw, 200px); line-height: 0.86; letter-spacing: -0.045em; }
+.vd-word__w { display: block; }
+
+/* ---------- surcos: el disco en una columna fija, los surcos al lado */
+.vd-surcos {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: start;
+  padding: 0 var(--pad) clamp(48px, 7vw, 110px);
+}
+.vd-surcos__aside { position: sticky; top: calc(var(--head) + 16px); display: grid; gap: 10px; }
+.vd-surcos__slot { position: relative; width: min(100%, 26rem); aspect-ratio: 1; margin-inline: auto; }
+.vd-sec { display: grid; gap: 14px; padding-top: clamp(28px, 4vw, 52px); margin-top: clamp(28px, 4vw, 52px); border-top: 1px solid var(--ln); }
+.vd-sec__k { margin: 0; font: 500 11px/1 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
+.vd-sec__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(28px, 3.8vw, 54px); line-height: 1; letter-spacing: -0.03em; }
+.vd-list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 14px; }
+.vd-list li { display: grid; gap: 4px; align-content: start; padding: 14px 16px; border: 1px solid var(--ln); background: var(--card); }
+.vd-list__t { margin: 0; font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+.vd-list__a { margin: 0; font: 400 11.5px/1.35 var(--font-accent); letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc); }
+.vd-list__c { margin: 0; font-size: 13px; line-height: 1.45; color: var(--mut); }
+.vd-audio { margin: 0; }
+
+/* ---------- el viaje: el disco empequeñecido en una moneda fija */
+.vd-coin { position: fixed; top: calc(var(--head) + 6px); right: var(--pad); width: clamp(68px, 6.5vw, 100px); aspect-ratio: 1; z-index: 5; pointer-events: none; }
+.vd-viaje__prose { padding: 0 var(--pad) clamp(36px, 5vw, 72px); }
+.vd-trip { max-width: 1240px; padding: 0 var(--pad) clamp(40px, 6vw, 80px); }
+.vd-trip__table { max-width: 1100px; }
+.vd-tl { padding: 0 var(--pad) clamp(48px, 7vw, 110px); }
+.vd-tl__list {
+  margin: 0;
+  padding: clamp(24px, 4vw, 44px) 0 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 4vw, 56px) clamp(30px, 5vw, 96px);
+  border-top: 1px solid var(--fg);
+}
+.vd-tl__list li { display: grid; gap: 8px; align-content: start; padding-left: clamp(16px, 2vw, 28px); border-left: 1px solid var(--ln); }
+.vd-tl__y { margin: 0; font: 500 12px/1 var(--font-accent); letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); }
+.vd-tl__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(26px, 3vw, 42px); line-height: 1; letter-spacing: -0.02em; }
+.vd-tl__b { margin: 0; font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); }
+.vd-count {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  margin: 0 var(--pad) clamp(48px, 7vw, 110px);
+  padding: clamp(28px, 5vw, 72px);
+  border: 1px solid var(--fg);
+  background: radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--acc) 14%, transparent), transparent 55%), var(--card);
+}
+.vd-count__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4.6vw, 60px); line-height: 1; letter-spacing: -0.03em; max-width: 26ch; }
+
+/* ---------- siguiente capítulo: la palabra siguiente ya vuela a su página */
+.vd-next { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px 24px; margin: 0 var(--pad) clamp(30px, 5vw, 60px); padding-top: 18px; border-top: 1px solid var(--fg); text-decoration: none; }
+.vd-next__k { grid-column: 1 / -1; font: 500 11px/1 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); }
+.vd-next__w { font-family: var(--display); font-size: clamp(56px, 11vw, 190px); line-height: 0.85; letter-spacing: -0.04em; transition: color 0.3s; }
+.vd-next__go { font-family: var(--display); font-size: clamp(28px, 4.4vw, 68px); line-height: 1; transition: translate 0.35s; }
+.vd-next:hover .vd-next__w, .vd-next:focus-visible .vd-next__w { color: var(--acc); font-style: italic; }
+.vd-next:hover .vd-next__go { translate: 0.2em 0; }
+.vd-next:focus-visible { outline: 2px solid var(--acc); outline-offset: 6px; }
+
+/* ---------- el mensaje: el disco frente a la escritura */
+.vd-msg {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: center;
+  padding: 0 var(--pad) clamp(48px, 7vw, 110px);
+}
+.vd-msg__piece { position: relative; width: min(100%, 28rem); aspect-ratio: 1; justify-self: center; display: grid; align-content: end; gap: 10px; }
+.vd-msg__form { display: grid; gap: 22px; max-width: 46rem; }
+.vd-form { display: grid; gap: 16px; }
+.vd-form__prompts { display: flex; flex-wrap: wrap; gap: 8px; }
+.vd-chip {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--ln);
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: var(--fg);
+  font: 400 13px/1 var(--font-accent);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.vd-chip:hover, .vd-chip:focus-visible { border-color: var(--acc); color: var(--acc); outline: none; }
+.vd-saved { display: grid; gap: 14px; padding: clamp(24px, 4vw, 44px); border: 1px solid var(--acc); background: var(--card); }
+.vd-saved__k { margin: 0; font: 500 11px/1 var(--font-accent); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
+.vd-saved__t { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(26px, 3.2vw, 44px); line-height: 1.18; letter-spacing: -0.02em; }
+
+/* ---------- colofón */
+.vd-colophon { margin-top: clamp(40px, 6vw, 96px); padding: 0 var(--pad) 36px; border-top: 1px solid var(--fg); }
+.vd-colophon__big { margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(56px, 15vw, 260px); line-height: 0.9; letter-spacing: -0.05em; color: color-mix(in srgb, var(--fg) 10%, transparent); }
+.vd-colophon__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 48px); font-size: 12.5px; line-height: 1.55; color: var(--mut); }
+.vd-colophon__cols p { margin: 0; }
+.vd-colophon__cols a { text-underline-offset: 3px; }
+
+/* ---------- horas estrechas */
+@media (max-width: 960px) {
+  .vd-hero { grid-template-columns: 1fr; gap: clamp(20px, 5vh, 40px); padding-top: calc(var(--head) + clamp(20px, 6vh, 56px)); }
+  .vd-hero__piece { order: -1; width: min(72vw, 330px); }
+  .vd-hero__t { font-size: clamp(52px, 14vw, 120px); }
+  .vd-index__list a { grid-template-columns: minmax(0, 1fr); justify-items: start; gap: 6px; }
+  .vd-index__how { max-width: none; text-align: left; }
+  .vd-pl { grid-template-columns: 1fr; }
+  .vd-surcos { grid-template-columns: 1fr; }
+  .vd-surcos__aside { position: static; }
+  .vd-surcos__slot { width: min(78vw, 320px); }
+  .vd-tl__list { grid-template-columns: 1fr; }
+  .vd-msg { grid-template-columns: 1fr; gap: clamp(24px, 5vh, 48px); }
+  .vd-msg__piece { order: -1; width: min(70vw, 310px); }
+  .vd-coin { top: calc(var(--head) - 4px); right: 14px; width: 54px; }
+}
+@media (max-width: 720px) {
+  .vd { --head: 62px; }
+  .vd-head { padding-top: 12px; padding-bottom: 12px; }
+  .vd-brand__sub { display: none; }
+  .vd-head__chip { display: none; }
+  .vd-colophon__cols { grid-template-columns: 1fr; }
+}
