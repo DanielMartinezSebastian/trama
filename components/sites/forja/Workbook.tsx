@@ -1,0 +1,13 @@
+"use client";
+import Button from "@/components/ui/Button";
+import { siteHref } from "../shared";
+import { sessionsOn } from "./data";
+import SessionStory from "./SessionStory";
+const href=(p="")=>siteHref("forja",p);
+export default function Home({days,onRequest}:{days:string[];onRequest:(r:{classId:string;date:string})=>void}){const date=days.find(d=>sessionsOn(d).some(c=>c.id==="base"));return <div className="fj-workbook">
+<section className="fj-session-cover"><div className="fj-session-kicker"><span>STRENGTH & CONDITIONING</span><span>ENTRENAR CON MÉTODO. JUNTOS.</span></div><div className="fj-session-title"><h1>LA FUERZA<br/>SE CONSTRUYE.</h1><div><p>No vienes a mover hierro.<br/>Vienes a aprender a entrenar.</p><Button label="Probar una sesión" href={href("clases")} variant="solid" glyph="↗"/></div></div><figure><img src="/img/forja/grupo.webp" alt="Entrenamiento de fuerza y acondicionamiento en grupo dentro de un gimnasio" fetchPriority="high"/><figcaption><span>UNA SESIÓN. VARIOS PUNTOS DE PARTIDA.</span><a href="#el-hierro">ASÍ TRABAJAMOS ↓</a></figcaption></figure><div className="fj-wordmark" aria-hidden>FORJA<span>↗</span></div></section>
+<section className="fj-session-intro"><p>EL MÉTODO DE LA CASA</p><h2>El progreso no está<br/>en un disco más.<br/><span>Está en lo que aprendes<br/>antes de ponerlo.</span></h2><p>Una sesión tiene intención, un bloque de trabajo y un final. La carga es una parte del proceso. El entrenador se ocupa de que tenga sentido para ti.</p></section>
+<SessionStory/>
+<section className="fj-coaching-story"><figure><img src="/img/forja/tecnica.webp" alt="Una entrenadora acompaña a un principiante con una barra sin discos" loading="lazy"/><figcaption>LA TÉCNICA NO SE SUPONE. SE TRABAJA.</figcaption></figure><div><span>NO ERES TU MARCA PERSONAL.</span><h2>EMPEZAMOS<br/>POR TU NOMBRE.</h2><p>La primera visita es para conocerte: qué has hecho antes, qué quieres conseguir y qué encaja en tu semana. Después, el entrenamiento.</p><dl><div><dt>Base camp</dt><dd>Aprender y coger confianza.</dd></div><div><dt>Heavy club</dt><dd>Un bloque de fuerza con progresión.</dd></div><div><dt>Recovery</dt><dd>Movimiento y vuelta a la calma.</dd></div></dl><Button label="Empezar por Base camp" disabled={!date} onClick={()=>date&&onRequest({classId:"base",date})} variant="solid" glyph="↗"/></div></section>
+<section className="fj-plan-poster"><div><span>LA CONSTANCIA NECESITA UN HUECO.</span><h2>EL TUYO<br/>EMPIEZA AQUÍ.</h2></div><div><p>Desde 39 €/mes.<br/>Sin matrícula ni permanencia.<br/>Los precios, con todo dentro.</p><Button label="Ver cuotas y condiciones" href={href("planes")} variant="solid" glyph="↗"/><a href={href("clases")}>O ir directamente al horario ↗</a></div></section>
+</div>;}

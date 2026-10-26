@@ -24,6 +24,15 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 | [23-demo-escaner.md](./23-demo-escaner.md) | Ronda 11: evaluación de mercado para la siguiente demo 3D y la web **Cota** (topografía con dron) con la pieza nueva **`PointCloud`**. |
 | [24-historia-interactiva-entre-rutas.md](./24-historia-interactiva-entre-rutas.md) | Ronda 12: **historia interactiva entre rutas** — la web **Maravillas**, un gabinete de curiosidades con cuatro piezas 3D reales (escaneos de museo incluidos) que viajan entre rutas (índice → sala → estante → vitrina), un juego por sala con pistas que pasan de una a otra, diseño editorial de letras enormes y la pieza nueva **`ScratchReveal`**. |
 | [25-web-videojuego-runa.md](./25-web-videojuego-runa.md) | Ronda 13: **la web de un videojuego que se juega** — **Runa**, lanzamiento de un roguelite indie con pantalla de título, selección de héroe (modelos 3D con esqueleto), cofre que se abre forzando la cerradura y jefe con puntos débiles; transiciones duras (pixelado, glitch, barrido), HUD persistente y la pieza nueva **`SkillCheck`**. |
+| [26-cine-3d-metodo-y-vocabulario.md](./26-cine-3d-metodo-y-vocabulario.md) | Ronda 14: **cine 3D** — capturar una web WebGL/WebGPU (gancho de three, firmas de shaders y del JS publicado, vídeo a fotograma exacto con reloj virtual), describirla con la **ficha de escena** (ocho ejes de vocabulario y rúbrica) y depurar una recreación en el banco `/lab/cine` hasta su calidad (`cine:capture`, `cine:analyze`, `cine:compare`). |
+| [27-estudio-plain-sight.md](./27-estudio-plain-sight.md) | Ronda 15: **primer estudio real** con el método de cine 3D — Plain Sight (motion-pieces): ficha, siete vueltas de recreación guiadas por el comparador, la verificación de lo esperado frente a lo obtenido y la pieza nueva **`TypeField`** (campo de letras 3D con palabras escondidas) más `lib/postfx`. |
+| [28-estudio-hublot-y-coste.md](./28-estudio-hublot-y-coste.md) | Ronda 17: **segundo estudio** — Hublot (darkroom.engineering, WebGPU + TSL, todo procedural): exploración gesto a gesto, siete vueltas (cámara 3 %, imagen 10 %), la pieza nueva **`Porthole`** (ventanilla de avión al alba) y **cuánto cuesta** estudiar una web 3D y sacar piezas (2–5 h por web). |
+| [29-estudio-bruno-simon-y-acabado.md](./29-estudio-bruno-simon-y-acabado.md) | Ronda 18: encuesta al usuario, **eje de acabado** del comparador (Hublot 49 % → 11 %) y **tercer estudio** — Bruno Simon (física e interacción): dinámica medida desde la pose del chasis, física propia sin WebAssembly (`lib/physics`) y la pieza **`ToyDrive`**. |
+| [30-relato-con-scroll-y-dom.md](./30-relato-con-scroll-y-dom.md) | Ronda 19: **medir el DOM** (texto sincronizado con el 3D) — el relato escrito de una web con scroll visto en los píxeles, eje de texto en el comparador, estudio de Meer Mohsin y la pieza **`ChapterStage`**. |
+| [31-estudio-lusion-materiales.md](./31-estudio-lusion-materiales.md) | Ronda 20: **materiales premium** — la portada de Lusion (sombreado analítico entre vecinas sin luces ni entorno, traducido a TSL), dinámica de un grupo de cuerpos con **`cine:conjunto`**, `--recorte` en la captura y la pieza **`CrossCluster`**. |
+| [32-estudio-chartogne-grabado.md](./32-estudio-chartogne-grabado.md) | Ronda 21: **ilustración en 3D** — Chartogne-Taillet: el grabado a lápiz (la escena guarda normal, lápiz y cercanía; la composición pinta papel, lápiz y contornos de Sobel), **`cine:tramo`** para cortar capturas con intro, curva de giro medida y la pieza **`EngravedMap`**. Imagen 8 %, acabado 7 %. |
+| [33-revision-y-herramientas.md](./33-revision-y-herramientas.md) | Ronda 22: **revisión de todos los pendientes** y herramientas nuevas del inspector — `cine:explora` (primer vistazo y gestos), `cine:sonda` (volcado de escena y uniforms), `cine:vuelta` (el bucle en una orden, con recetas e historial), `cine:tramo movimiento` y `--movil`. |
+| [34-api-grafica-flujo-y-ruido.md](./34-api-grafica-flujo-y-ruido.md) | Ronda 23: **gancho de la API gráfica** (`gl.js`: coste y pasadas con cualquier motor; la cadena de render leída sola), **`cine:flujo`** (movimiento de la imagen: la cámara de las webs sin three) y **el ruido de cada eje** (`cine:vuelta --ruido`): en webs vivas, comparar con el ruido y no con un umbral fijo. |
 | [04-pendientes.md](./04-pendientes.md) | **Lista de trabajo**: lo que queda por hacer en la web y en la librería, con los pasos de cada punto. |
 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
@@ -37,7 +46,7 @@ se quedan atrás o si un componente no aparece en la tabla de abajo.
 | **Kit** — CSS (un solo punto de entrada) | `components/ui/styles/kit.css` (importa `ui-kit.css`, `ui-carousel.css`, `ui-video.css`, `ui-view-transitions.css`) | Sí |
 | **Kit** — tokens, fuentes, iconos, utilidades | `lib/ui/` | Sí |
 | **Kit** — motores de fondos | `lib/asciify/`, `lib/sketches/`, `lib/scroll/`, `lib/text/` | Sí, solo lo que usen los componentes elegidos |
-| **Kit** — motores 3D y de relato | `lib/gems/` (gemas con trazado de rayos, HDR y tallas), `lib/story/` (`useScrollStory`, el motor de los recorridos por pasos), `lib/modelnav/` (la escena de `ModelNav`), `lib/object3d/` (la de `ObjectStage`), `lib/pointcloud/` (la de `PointCloud`) | Sí, solo lo que usen los componentes elegidos |
+| **Kit** — motores 3D y de relato | `lib/gems/` (gemas con trazado de rayos, HDR y tallas), `lib/story/` (`useScrollStory`, el motor de los recorridos por pasos), `lib/modelnav/` (la escena de `ModelNav`), `lib/object3d/` (la de `ObjectStage`), `lib/pointcloud/` (la de `PointCloud`), `lib/typefield/` (la de `TypeField`), `lib/porthole/` (la de `Porthole`: cielo, suelo y ala en TSL, WebGPU con reserva WebGL2), `lib/physics/` (física de cuerpos rígidos y vehículo, sin WebAssembly) y `lib/toydrive/` (la de `ToyDrive`), `lib/chapterstage/` (la de `ChapterStage`) `lib/crosscluster/` (la de `CrossCluster`: material analítico en TSL y física del racimo) y `lib/emblem/` (la de `ThornEmblem`: emblema de púas procedural) y `lib/gravure/` (la de `EngravedMap` y `GravureCanvas`: material de lápiz y composición de grabado en TSL, paisaje procedural) | Sí, solo lo que usen los componentes elegidos |
 | Catálogo `/componentes` | `lib/catalog/` (esquema, entradas, escenas, presets), `components/playground/` | No |
 | Web de la librería (portada, docs, demos) | `components/site/`, `lib/docs.ts`, `lib/site-data.ts` | No |
 | Demos | `app/`, `components/*.tsx`, `lib/demos*.ts`, `lib/themes/` | No |
@@ -115,17 +124,17 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
-| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `GradientField` · `AmbientLight` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
+| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `GradientField` · `FlameHorizon` (llamas con manos, coreografía por scroll) · `FluidCursor` (humo que sigue al puntero) · `AmbientLight` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` · `ScatterText` |
-| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
+| Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` (tarjeta, suave o cita abierta; retrato circular) · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `BeforeAfter` · `HoverFX` · `ScratchReveal` · `SkillCheck` · `SoundToggle` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` · `StickerCollage` · `ImageTrail` |
-| Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `LightScroll` (luz por finalidad; + `useLight`, `LIGHT_PRESETS`) · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) · `SharedText` (palabra a palabra) · `Traveler` (viaja entre rutas; + `TravelStage`, `TravelSlot`, `useTraveler`) |
+| Transiciones | `SceneFlash` · `Preloader` · `PinnedSection` · `ChapterStage` (capítulos con palabra gigante y tarjeta con fallo de señal) · `ScrollExpand` (tarjeta de medios que crece con el scroll) · `Parallax` · `Reveal` · `Presence` · `LineDraw` · `ThemeScroll` · `LightScroll` (luz por finalidad; + `useLight`, `LIGHT_PRESETS`) · `PageTransition` (ventana entera; + `PageTransitionPersist`) · `ElementTransition` (un elemento; + `SharedTransition`) · `SharedText` (palabra a palabra) · `Traveler` (viaja entre rutas; + `TravelStage`, `TravelSlot`, `useTraveler`) |
 | Datos | `StatCounter` · `LocalTime` · `KpiCard` · `Chart` · `DataTable` · `MetaTable` · `OpeningHours` · `QRCode` · `AsciiChart` · `TerminalTyper` · `Timeline` · `Countdown` · `Table` · `CodeBlock` |
 | Navegación | `NavBar` · `Tabs` · `Accordion` · `Breadcrumbs` · `Pagination` · `Dropdown` · `ScrollProgress` · `FullscreenMenu` · `HideOnScroll` · `SectionIndex` · `AppShell` · `FilterBar` · `IslandNav` · `ModelNav` · `EdgeTab` · `ActionBar` |
 | Formularios | `TextField` · `Toggle` · `RangeSlider` · `Select` · `CheckboxGroup` · `RadioGroup` · `Stepper` · `OtpInput` · `QuantityStepper` · `OptionPicker` · `DatePicker` |
 | Feedback | `Badge` · `Progress` · `Alert` · `Spinner` · `Skeleton` · `Kbd` · `Avatar` · `EmptyState` · `PriceTag` |
-| Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` · `PointCloud` · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `AudioPlayer` · `ExplorableCanvas` |
-| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` · `StatsSection` · `PricingSection` · `TestimonialSection` · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` · `GuideFrame` (guías de estilo, ver `/guias` y [16](./16-guias-de-estilo-plan.md)) |
+| Galerías, vídeo y audio | `ImageGallery` · `Carousel` (+ `CarouselLazy`, el mismo con Swiper bajo demanda) · `HorizontalScroll` · `ImageReveal` · `DistortImage` · `DragGrid` · `ObjectStage` · `ProductGallery` · `ExpandingPanels` (scroll móvil opcional, subtítulos del activo y límite tipográfico configurable sin truncar títulos) · `PointCloud` · `TypeField` · `Porthole` · `ToyDrive` · `CrossCluster` · `EngravedMap` · `GravureCanvas` · `ThornEmblem` · `ProjectReel` (reel de proyectos fijado con fondo desenfocado) · `DeviceMockup` · `DeviceMockup3D` · `LogoCoin` · `Logo3D` · `VideoPlayer` · `FloatingVideo` (vídeo flotante que crece al pulsarlo) · `AudioPlayer` · `ExplorableCanvas` |
+| Secciones | `Hero` · `ContactForm` · `CTASection` · `FAQSection` (cabecera lateral o superior, respuestas alineables) · `StatsSection` · `PricingSection` · `TestimonialSection` (tres tratamientos y fotos de perfil por reseña) · `Footer` · `FeatureGrid` · `TeamSection` · `LogoCloud` · `ArticlesSection` · `ProjectList` · `BigFooter` · `CrossfadeHero` · `FeatureExplorer` · `TornPaper` (franja de papel rasgado) · `GuideFrame` (guías de estilo, ver `/guias` y [16](./16-guias-de-estilo-plan.md)) |
 | Contenido | `Prose` · `Callout` · `TableOfContents` · `ArticleHeader` · `Article` · `MenuList` |
 | Overlays | `Modal` · `Toast` · `Tooltip` · `Drawer` · `ChatWidget` · `CommandPalette` · `CartDrawer` · `CookieBanner` |
 | Pixel art | `Icon` · `PixelFrame` · `Sprite` |
@@ -142,6 +151,9 @@ Seis landings construidas **solo** con `components/ui/`, en `components/landings
 
 | Slug | Qué demuestra |
 |---|---|
+| `esparta` | Barbería de barrio: navegación lateral, fotografías de oficio, ticket del ritual y carta de servicios reservables. Revisión en [51](./51-negocios-con-identidad.md). |
+| `forja` | Cuaderno de entrenamiento oscuro: fotografía de grupo, sesión explicada en tres capítulos 3D, horario, espera y lista de cuotas. Revisión en [51](./51-negocios-con-identidad.md). |
+| Iteración de las cuatro demos | Revisión visual y de competencia en [51](./51-negocios-con-identidad.md): cuatro composiciones distintas, doce fotografías generadas del oficio y entrenamiento, 3D narrativo y `PricingSection` con carta de servicios y tabla comparativa. |
 | `th-ciphergrid` | Retrowave/cyberpunk: casi todo el catálogo, fondo que cambia de escena con el scroll, formulario → `Modal` → `Toast` (guía §15). |
 | `th-mycel` | Orgánica: `AsciiBackground` con `progress` atado al scroll, alternando con `GridBackground` y sketches de textmode.js. |
 | `th-folio` | La única de tema claro: fondos de papelería, legibilidad en claro (guía §16). |
@@ -153,11 +165,13 @@ Las otras seis landings de la galería (`th-tide`, `th-brew`…) usan el sistema
 
 ## Webs completas de referencia
 
-Cinco sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y servidos en `/sitios/<slug>/…`
+Sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y servidos en `/sitios/<slug>/…`
 (arquitectura y plan en [`03-webs-completas.md`](./03-webs-completas.md); páginas y componentes de cada una en `CATALOG.md`).
 
 | Slug | Qué demuestra |
 |---|---|
+| `hebra` | Estudio de pelo editorial: collage rosa, índice Forma/Textura/Color, carta, reserva y agenda persistente. Diseño en [51](./51-negocios-con-identidad.md). |
+| `cadencia` | Club social de movimiento: planificador semanal, fotografía cotidiana, horario y espera, comparación de planes y área personal. Diseño en [51](./51-negocios-con-identidad.md). |
 | `kernel-log` | Blog de tecnología: `Article` con índice y barra de lectura, búsqueda y filtro por temas, paginación, newsletter con archivo. |
 | `pixelforge` | Tienda de assets: filtros y orden, fichas con licencias, **carrito** en `localStorage`, cupón, pago en pasos, FAQ y legales. |
 | `vigia` | Seguridad: `ChatWidget` en todas las páginas, planes → presupuesto con el plan elegido, presupuesto en 4 pasos con estimación. |

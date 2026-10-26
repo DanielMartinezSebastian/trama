@@ -10,11 +10,11 @@
  * Navegador: el Chromium de Playwright si está instalado (`npx playwright install chromium`); si no, el más reciente que haya
  * en la caché de Playwright (%LOCALAPPDATA%\ms-playwright o ~/.cache/ms-playwright), o el de PLAYWRIGHT_CHROMIUM.
  */
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { homedir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { chromium, type Browser } from "playwright";
 import { STYLE_GUIDES } from "../lib/ui/guides";
+import { chromiumPath } from "./chromium-path.mts";
 
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(name);
@@ -37,22 +37,6 @@ const targets: Target[] = guidesBase
 if (!targets.length) {
   console.log("Uso: npm run refs:probe -- <url…>   ·   npm run refs:probe -- --guides http://localhost:3000");
   process.exit(1);
-}
-
-/** Ruta de un Chromium utilizable: el de Playwright, la variable de entorno o el más reciente de la caché. */
-function chromiumPath(): string | undefined {
-  if (process.env.PLAYWRIGHT_CHROMIUM) return process.env.PLAYWRIGHT_CHROMIUM;
-  if (existsSync(chromium.executablePath())) return undefined;
-  const cache = process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, "ms-playwright") : join(homedir(), ".cache", "ms-playwright");
-  if (!existsSync(cache)) return undefined;
-  const dirs = readdirSync(cache).filter((d) => /^chromium-\d+$/.test(d)).sort((a, b) => Number(b.split("-")[1]) - Number(a.split("-")[1]));
-  for (const d of dirs) {
-    for (const rel of ["chrome-win64/chrome.exe", "chrome-linux/chrome", "chrome-linux64/chrome", "chrome-mac/Chromium.app/Contents/MacOS/Chromium"]) {
-      const p = join(cache, d, rel);
-      if (existsSync(p)) return p;
-    }
-  }
-  return undefined;
 }
 
 /** Se ejecuta dentro de la página (sin imports: Playwright la serializa). */

@@ -45,7 +45,7 @@ for (const f of files) {
 // ---------- 2. barrel: todos los componentes por nombre + utilidades públicas ----------
 // Componentes que necesitan dependencias opcionales (three, @react-three/fiber): fuera del barrel para que `import … from "trama-ui"`
 // no obligue a instalarlas; se importan por subruta (`trama-ui/RetroCanvas`).
-const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes", "RetroModel", "DeviceMockup3D", "Logo3D", "DistortImage", "ObjectStage", "ExplorableCanvas"]);
+const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes", "RetroModel", "DeviceMockup3D", "Logo3D", "DistortImage", "ObjectStage", "ExplorableCanvas", "TypeField", "Porthole", "ToyDrive", "ChapterStage", "CrossCluster", "EngravedMap", "GravureCanvas", "ThornEmblem"]);
 const OPTIONAL_PEERS = { three: ">=0.170", "@react-three/fiber": ">=9" };
 const components = kitComponents().map((f) => posix.basename(f, ".tsx")).filter((c) => !OPTIONAL_PEER_COMPONENTS.has(c)).sort();
 const barrel = [
@@ -53,6 +53,7 @@ const barrel = [
   ...components.map((c) => `export { default as ${c} } from "./components/ui/${c}";`),
   `export * from "./components/ui/intent";`,
   `export * from "./components/ui/fill";`,
+  `export type { PricingPlan } from "./lib/ui/pricing";`,
   `export * from "./components/ui/variants";`,
   `export { tokensToStyle, neutralTokens, dotmatrixTokens, editorialTokens, editorialDarkTokens, blueprintTokens, forestTokens, voltTokens, nightTokens, poolTokens, TOKEN_THEMES, FONT_PRESETS, FONT_PAIRINGS, type TokenSet, type KitTheme } from "./lib/ui/tokens";`,
   `export { STYLE_GUIDES, guide, guideToStyle, GUIDE_EASES, GUIDE_FONTSHARE_CSS, type StyleGuide, type GuideHero, type GuideStory } from "./lib/ui/guides";`,

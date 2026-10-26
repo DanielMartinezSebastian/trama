@@ -329,4 +329,150 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
 .ui-obj__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
 .ui-obj__gl.is-on { opacity: 1; }
 .ui-obj__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+/* TypeField: campo de letras 3D con palabras escondidas (lib/typefield). Sin WebGL, las palabras en plano sobre el fondo */
+.ui-tf { position: relative; width: 100%; overflow: hidden; background: var(--bg); }
+.ui-tf__flat { position: absolute; inset: 0; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0.15em 0.5em; padding: 1rem;
+  font: 400 clamp(36px, 8vw, 96px) / 0.9 var(--display, var(--font)); text-transform: uppercase; letter-spacing: -0.01em; }
+.ui-tf__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
+.ui-tf__gl.is-on { opacity: 1; }
+.ui-tf__gl canvas { display: block; width: 100% !important; height: 100% !important; }
 @media (prefers-reduced-motion: reduce) { .ui-dimg__gl, .ui-obj__gl { transition: none; } }
+
+/* Porthole: la vista desde la ventanilla de un avión al alba (docs/28). La escena es fotográfica: el fondo plano imita su
+   cielo (rampa medida en Hublot) dentro de la ventanilla, sobre la cabina en penumbra */
+.ui-ph { position: relative; width: 100%; overflow: hidden; background: #010205; isolation: isolate; touch-action: pan-y; user-select: none; }
+.ui-ph__flat { position: absolute; inset: 0; display: grid; place-items: center;
+  background: radial-gradient(60% 80% at 38% 50%, #0b1b33 0%, #030812 55%, #010205 100%); }
+.ui-ph__window { width: min(36%, 300px); aspect-ratio: 3 / 4; border-radius: 34% / 26%;
+  box-shadow: 0 0 0 clamp(10px, 2.2vw, 22px) #06142a, 0 0 60px 20px rgba(4, 16, 36, 0.8);
+  background: linear-gradient(to bottom, #010409 0%, #020c1f 30%, #0e2542 46%, #3f5b89 56%, #9ec3f5 64%, #d8f0e6 68%, #ca8844 71%, #2a1c10 73%, #050707 80%, #010202 100%); }
+.ui-ph__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; cursor: grab; }
+.ui-ph__gl:active { cursor: grabbing; }
+.ui-ph__gl.is-on { opacity: 1; }
+.ui-ph__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-ph__content { position: relative; z-index: 1; height: 100%; pointer-events: none; }
+.ui-ph__content > * { pointer-events: auto; }
+.ui-ph__hint { position: absolute; z-index: 1; left: 50%; bottom: 1rem; transform: translateX(-50%); margin: 0; padding: 0.35rem 0.75rem;
+  border-radius: 999px; font: 500 0.75rem/1.2 var(--font-mono, ui-monospace, monospace); letter-spacing: 0.04em; color: #c9d6e6;
+  background: rgba(2, 6, 14, 0.55); backdrop-filter: blur(6px); transition: opacity 0.4s; pointer-events: none; }
+.ui-ph.is-out .ui-ph__hint { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .ui-ph__gl { transition: none; } }
+
+/* ToyDrive: coche de juguete con física (docs/29). La versión plana es la palabra sobre el fondo */
+.ui-td { position: relative; width: 100%; overflow: hidden; background: var(--bg); outline: none; touch-action: none; user-select: none; }
+.ui-td:focus-visible { box-shadow: inset 0 0 0 2px var(--acc); }
+.ui-td__flat { position: absolute; inset: 0; display: grid; place-items: center; }
+.ui-td__flat span { font: 400 clamp(56px, 14vw, 180px)/0.9 var(--font-display, "Anton", Impact, sans-serif); letter-spacing: 0.02em; color: var(--fg); opacity: 0.9; }
+.ui-td__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s linear; cursor: pointer; }
+.ui-td__gl.is-on { opacity: 1; }
+.ui-td__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-td__hint { position: absolute; left: 50%; bottom: 0.9rem; transform: translateX(-50%); margin: 0; padding: 0.35rem 0.75rem; max-width: calc(100% - 2rem);
+  border-radius: 999px; font: 500 0.72rem/1.3 var(--font-mono, ui-monospace, monospace); text-align: center; color: var(--fg);
+  background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(6px); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .ui-td__gl { transition: none; } }
+
+/* CrossCluster: racimo de cruces que siguen al puntero (docs/31). La versión plana son las cruces en SVG; el contenido
+   (titular, botones) va encima sin quitarle el puntero a la escena */
+.ui-cc { position: relative; width: 100%; overflow: hidden; isolation: isolate; touch-action: pan-y; }
+.ui-cc__flat { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ui-cc__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; }
+.ui-cc__gl.is-on { opacity: 1; }
+.ui-cc__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-cc__content { position: relative; z-index: 1; height: 100%; pointer-events: none; }
+.ui-cc__content > * { pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .ui-cc__gl { transition: none; } }
+
+/* EngravedMap: paisaje grabado a lápiz (docs/32). La versión plana es un rayado del color del lápiz sobre el papel */
+.ui-em { position: relative; width: 100%; overflow: hidden; isolation: isolate; background: var(--em-paper); touch-action: pan-y; }
+.ui-em__flat { position: absolute; inset: 0;
+  background: repeating-linear-gradient(-28deg, color-mix(in srgb, var(--em-pencil) 38%, transparent) 0 1px, transparent 1px 7px) var(--em-paper);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, #000 30%, transparent 75%); }
+.ui-em__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; }
+.ui-em__gl.is-on { opacity: 1; }
+.ui-em__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-em__content { position: relative; z-index: 1; height: 100%; pointer-events: none; }
+.ui-em__content > * { pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .ui-em__gl { transition: none; } }
+/* ThornEmblem: emblema 3D de púas (docs/36 B1). Sin WebGL, una silueta plana de púas en el color del emblema */
+.ui-te { position: relative; width: 100%; overflow: hidden; isolation: isolate; }
+.ui-te__flat { position: absolute; inset: 18% 22%; background: var(--te-color); opacity: 0.55;
+  clip-path: polygon(50% 38%, 64% 4%, 58% 36%, 96% 10%, 66% 44%, 100% 50%, 66% 56%, 92% 90%, 58% 62%, 62% 98%, 50% 64%, 38% 98%, 42% 62%, 8% 90%, 34% 56%, 0% 50%, 34% 44%, 4% 10%, 42% 36%, 36% 4%); }
+.ui-te__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s linear; pointer-events: none; }
+.ui-te__gl.is-on { opacity: 1; }
+.ui-te__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-te__content { position: relative; z-index: 1; height: 100%; }
+@media (prefers-reduced-motion: reduce) { .ui-te__gl { transition: none; } }
+/* FlameHorizon: horizonte de llamas con manos (docs/36 B1). Sin WebGL, el degradado del borde en CSS */
+.ui-flh { position: relative; width: 100%; overflow: hidden; isolation: isolate;
+  background: linear-gradient(to top, color-mix(in srgb, var(--flh-color) 45%, var(--bg)) 0, var(--flh-color) var(--flh-level), var(--bg) calc(var(--flh-level) + 2%)); }
+.ui-flh--abs { position: absolute; inset: 0; }
+.ui-flh canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; }
+.ui-flh[data-gl] canvas { opacity: 1; }
+.ui-flh__content { position: relative; z-index: 1; height: 100%; }
+/* TornPaper: franja de papel con los bordes rasgados (docs/36 B1) */
+.ui-torn { position: relative; color: var(--fg); }
+.ui-torn__body { position: relative; background: var(--torn-color); }
+.ui-torn__edge { display: block; width: 100%; height: var(--torn-depth); }
+.ui-torn__edge--bottom { transform: scaleY(-1); }
+.ui-torn__paper { fill: var(--torn-color); }
+.ui-torn__rim { fill: var(--torn-rim); }
+/* ScrollExpand: tarjeta de medios que crece con el scroll (docs/43). Todo sale de --se-t (0–1) */
+.ui-sxp__stage { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; perspective: 1400px; }
+.ui-sxp__card { position: relative; overflow: hidden;
+  width: calc(var(--se-w0) + (100vw - 2 * var(--se-in) - var(--se-w0)) * var(--se-t));
+  height: calc(var(--se-h0) + (100svh - 2 * var(--se-in) - var(--se-h0)) * var(--se-t));
+  border-radius: calc(var(--se-r0) + (var(--se-r1) - var(--se-r0)) * var(--se-t));
+  transform: translate(calc(var(--se-x0) * (1 - var(--se-t))), calc(var(--se-y0) * (1 - var(--se-t)))) rotateX(calc(var(--se-tilt) * (1 - var(--se-t)))) rotateZ(calc(var(--se-tilt) * -0.25 * (1 - var(--se-t))));
+  will-change: width, height, transform; }
+.ui-sxp__media, .ui-sxp__media > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ui-sxp__overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.ui-sxp__overlay > * { pointer-events: auto; }
+/* FluidCursor: humo que sigue al puntero (docs/41 P5). Nunca captura el puntero */
+.ui-fluid { display: block; pointer-events: none; }
+.ui-fluid--fixed { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 400; }
+.ui-fluid--absolute { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* ProjectReel: reel de proyectos fijado al scroll (docs/36 B1) */
+.ui-reel .ui-pin__in, .ui-reel--libre .ui-pin__in { background: var(--bg); color: var(--fg); }
+.ui-reel--libre .ui-pin__in { position: relative; height: 100%; display: grid; }
+.ui-reel__stage { position: relative; height: 100%; overflow: hidden; }
+.ui-reel__backdrop { position: absolute; inset: -8%; }
+.ui-reel__backdrop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(42px) saturate(1.2) brightness(0.62); transform: scale(1.1); }
+.ui-reel__card { position: absolute; left: 50%; top: 50%; width: clamp(220px, 34vw, 560px); aspect-ratio: 16 / 10; margin: 0; will-change: transform, opacity; }
+.ui-reel__card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ui-reel__titles { position: absolute; left: clamp(16px, 4vw, 64px); top: 50%; width: 30vw; height: 0; }
+.ui-reel__title { position: absolute; left: 0; top: 0; margin: 0; font-size: clamp(16px, 1.6vw, 26px); font-weight: 600; letter-spacing: -0.01em; text-transform: uppercase; white-space: nowrap; }
+.ui-reel__desc { position: absolute; right: clamp(16px, 4vw, 64px); top: 50%; transform: translateY(-50%); width: min(22ch, 22vw); margin: 0; font-size: 12px; line-height: 1.4; }
+.ui-reel__counter { position: absolute; right: clamp(16px, 4vw, 64px); top: calc(50% + 56px); width: 44px; height: 44px; display: grid; place-items: center; font-size: 12px; font-style: italic; }
+.ui-reel__counter svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.ui-reel__ring { fill: none; stroke: color-mix(in srgb, var(--fg) 25%, transparent); stroke-width: 1; }
+.ui-reel__arc { fill: none; stroke: var(--fg); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--reel-p, 0)); }
+@media (max-width: 640px) {
+  .ui-reel__titles { top: auto; bottom: 22%; width: auto; }
+  .ui-reel__desc { display: none; }
+  .ui-reel__card { width: 72vw; }
+}
+
+/* ChapterStage: escenario por capítulos fijado al scroll (docs/30). La palabra gigante se releva dentro de .ui-chs__words
+   (máscara de una línea); la tarjeta va encima, centrada, como en la referencia */
+.ui-chs .ui-pin__in { background: var(--bg); color: var(--fg); }
+.ui-chs__stage { position: relative; height: 100%; overflow: hidden; display: grid; place-items: center; }
+.ui-chs__room { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--acc); stroke-width: 0.15; opacity: 0.35; vector-effect: non-scaling-stroke; }
+.ui-chs__words { position: relative; display: grid; overflow: hidden; height: 1.15em; line-height: 1.1; font-size: clamp(64px, 15vw, 230px);
+  font-family: var(--chs-font, var(--font-instrument-serif, "Instrument Serif", Georgia, serif)); font-style: italic; color: var(--acc); }
+.ui-chs__word { grid-area: 1 / 1; display: block; text-align: center; white-space: nowrap; will-change: transform; }
+.ui-chs__card { position: absolute; left: 50%; top: 50%; width: clamp(120px, 15vw, 220px); aspect-ratio: 3 / 4; object-fit: cover; transform: translate(-50%, -50%);
+  filter: grayscale(1) contrast(1.2); mix-blend-mode: luminosity; outline: 1px solid var(--acc); }
+.ui-chs__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s linear; pointer-events: none; }
+.ui-chs__gl.is-on { opacity: 1; }
+.ui-chs__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-chs__lists { position: absolute; right: clamp(16px, 5vw, 64px); top: 50%; transform: translateY(-50%); display: grid; text-align: right; }
+.ui-chs__lists ul { grid-area: 1 / 1; margin: 0; padding: 0; list-style: none; font: 500 clamp(11px, 1vw, 14px)/1.6 var(--font-mono, ui-monospace, monospace); color: var(--acc); }
+.ui-chs__bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-around; padding: 14px max(16px, 4vw) 18px;
+  font: 600 11px/1 var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); border-top: 1px solid color-mix(in srgb, var(--acc) 30%, transparent); }
+.ui-chs__bar span { transition: color 0.3s; }
+.ui-chs__bar span.is-on { color: var(--fg); }
+.ui-chs__bar i { position: absolute; left: 0; top: -1px; height: 1px; width: calc(var(--ch-p, 0) * 100%); background: var(--acc); }
+@media (max-width: 640px) { .ui-chs__lists { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ui-chs__gl { transition: none; } }
+.ui-chs--libre { position: relative; overflow: hidden; }
+.ui-chs--libre .ui-pin__in { position: relative; height: 100%; display: grid; background: var(--bg); color: var(--fg); }

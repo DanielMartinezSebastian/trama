@@ -23,6 +23,8 @@ Referencia de props: [`docs/CATALOG.md`](docs/CATALOG.md) (generada; también en
 
 ## Desarrollar
 
+Para trabajar con Claude Code y Codex, preparar worktrees y verificar capturas: [flujo de agentes](docs/flujo-agentes.md).
+
 ```bash
 npm install
 npm run dev            # http://localhost:3000 — galería, /componentes, /demo/<slug>

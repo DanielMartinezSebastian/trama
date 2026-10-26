@@ -31,7 +31,10 @@ export type PreloaderProps = {
    * caché del navegador, donde el cargador de three los encuentra después
    */
   assets?: string[];
-  /** fragmentos de JS que cargar por adelantado, p. ej. `() => import("./scene")` (el mismo del `lazy` de la escena) */
+  /**
+   * fragmentos de JS que cargar por adelantado: funciones que devuelven el import dinámico de la escena, el mismo del
+   * `lazy` (sin escribir aquí un import de ejemplo: build-package reescribe los import relativos, también en comentarios)
+   */
   modules?: Array<() => Promise<unknown>>;
   /**
    * esperar a que el 3D pinte: todos los elementos `root` deben cumplir `ready` (p. ej. `{ root: ".ui-pcloud__gl", ready:

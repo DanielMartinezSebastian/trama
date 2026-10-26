@@ -167,6 +167,36 @@ Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y
 - `material="clay"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint="scene"`).
 - Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.
 
+### Horizonte de llamas con manos — `FlameHorizon`
+
+Un horizonte de llamas que sube desde abajo, con lenguas que corren hacia arriba, el color más vivo junto al borde y un halo encima, y siluetas de manos en garra que se mecen. Con progress (0–1) sigue la coreografía de meermohsin.me para atarla al scroll: las llamas suben hasta llenarlo todo y se invierte (rojo arriba, llamas negras con manos abajo). Para portadas oscuras, conciertos, videojuegos, terror o transiciones entre secciones. WebGL a pelo, sin dependencias; colores del tema (--acc sobre --bg).
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.3 |
+| `hands` | number 0–12 | 9 |
+| `speed` | number 0–3 | 1 |
+| `height` | number 240–800 | 440 |
+
+- progress manda sobre level e invert.
+- hands = 0 deja solo las llamas.
+- Sin WebGL, un degradado CSS a la altura del borde; con movimiento reducido, quieto.
+
+### Humo que sigue al puntero — `FluidCursor`
+
+Una simulación de fluidos (remolinos, presión, disipación) que suelta color al mover el ratón o el dedo, como la estela roja de la portada de meermohsin.me (que usa la de Pavel Dobryakov, MIT; esta es una reescritura con sus mismos pasos). Con position="fixed" cubre la ventana sin bloquear clics. Por defecto, los valores medidos en la referencia. WebGL a pelo, sin dependencias; color del tema (--acc).
+
+| prop | tipo | default |
+|---|---|---|
+| `opacity` | number 0.1–1 | 0.6 |
+| `fade` | number 0.2–10 | 5.5 |
+| `curl` | number 0–40 | 1.2 |
+| `radius` | number 0.01–0.5 | 0.035 |
+
+- Mueve el puntero por el escenario.
+- fade y drag controlan cuánto dura el humo y su movimiento; curl, los remolinos.
+- Con movimiento reducido no se pinta.
+
 ### Fondo de color en WebGL (manchas, cinta, haces) — `GradientField`
 
 Fondo de color animado en WebGL sin dependencias: manchas que se mezclan (mesh), la cinta iridiscente de Stripe (ribbon) o los haces de luz en diagonal de Raycast (beams). Usa los colores del tema (--bg, --acc, --acc2) y cambia con él. Media resolución, pausado fuera de pantalla; sin WebGL queda un degradado CSS.
@@ -435,6 +465,7 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 | `originalPrice` | text | "" |
 | `period` | text | "/ mes" |
 | `note` | text | "" |
+| `meta` | text | "" |
 | `features` | text | "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centr…" |
 | `cta` | text | "Empezar ahora" |
 | `highlighted` | boolean | true |
@@ -451,13 +482,19 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 
 ### Testimonio — `Testimonial`
 
-Cita con avatar de iniciales, autor, cargo y valoración.
+Cita con tres tratamientos (tarjeta, suave o abierta), retrato circular con respaldo de iniciales, autor, cargo y valoración.
 
 | prop | tipo | default |
 |---|---|---|
 | `quote` | text | "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla." |
 | `author` | text | "Lucía Pardo" |
 | `role` | text | "Alumna, curso de iniciación" |
+| `presentation` | `card` · `soft` · `plain` | "card" |
+| `quoteFont` | `body` · `display` | "body" |
+| `avatar` | boolean | true |
+| `avatarSrc` | text | "" |
+| `avatarSize` | `sm` · `md` · `lg` | "md" |
+| `avatarShape` | `theme` · `circle` | "theme" |
 | `rating` | number 0–5 | 5 |
 | `fill` | `surface` · `tint` · `gradient` · `accent` · `pattern` · `image` | "surface" |
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
@@ -966,6 +1003,32 @@ Envuelve contenido (`children`), p. ej.: `<img src="…" alt="" />`
 |---|---|---|
 | `speed` | number -0.5–0.5 | 0.15 |
 
+### Tarjeta de medios que crece con el scroll — `ScrollExpand`
+
+Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de pequeña a pantalla completa mientras la sección se queda fija: el reel de lusion.co, que sale de una tarjeta del texto y acaba a sangre, o una tableta que se convierte en la escena. Llega inclinada como un plano en 3D y se endereza al crecer; encima, un titular o «PLAY REEL» que crece con ella. Todo se interpola en CSS desde un solo avance con la tubería de scroll del kit (meseta, curva y seguimiento amortiguado, docs/42). Sin WebGL.
+
+| prop | tipo | default |
+|---|---|---|
+| `tilt` | number 0–30 | 14 |
+| `inset` | number 0–80 | 24 |
+
+- Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.
+- from y offset: tamaño y posición iniciales; inset y radius: el final.
+- Con movimiento reducido, ya crecida.
+
+### Escenario por capítulos con fallo de señal — `ChapterStage`
+
+Escenario fijado al scroll para contar algo por capítulos: una palabra gigante por capítulo que se releva dentro de una máscara (la que sale sube con curva en S, la que entra llega desde abajo frenando), una tarjeta central con la imagen del capítulo que sufre un fallo de señal (separación de color, desgarros, líneas) en cada relevo, una sala en perspectiva dibujada con líneas, la lista del capítulo y la barra de capítulos. Coreografía medida en meermohsin.me con la medida del DOM de cine:capture (docs/30). Fijado al scroll de la página o controlado con progress (0–1). Colores del tema; sin WebGL, imagen y líneas en SVG.
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.1 |
+| `height` | number 320–800 | 520 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ChapterStage.
+- Sin progress se fija al scroll: ocupa (suma de perChapter + 1) pantallas.
+- perChapter admite una duración por capítulo, en pantallas.
+
 ### Trazo que se dibuja (firma, subrayado, círculo) — `LineDraw`
 
 Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el scroll: firma, subrayado, círculo o flecha a mano alzada, o cualquier trazado propio (`d` + `viewBox`). La firma sobre la foto de Lando Norris. Decorativo (aria-hidden): el texto va aparte.
@@ -975,12 +1038,15 @@ Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el 
 | `shape` | `signature` · `underline` · `circle` · `arrow` | "signature" |
 | `trigger` | `inview` · `mount` · `scroll` | "inview" |
 | `duration` | number 0.3–5 | 1.6 |
-| `strokeWidth` | number 1–12 | 3 |
+| `strokeWidth` | number 1–90 | 3 |
+| `tube` | boolean | false |
 | `tone` | `acc` · `acc2` · `fg` · `mut` | "acc" |
 
 - Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.
 - trigger="scroll" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.
 - Sin JS o con movimiento reducido el trazo se ve completo.
+- tube pinta el trazo como una cinta 3D (sombra, cuerpo y brillo): con grosores de 30 a 120, como las cintas de lusion.co. color fija un color propio y scrollRange el tramo de la ventana.
+- Con trigger="scroll" el avance sigue al scroll amortiguado con la sensación de la página (docs/42).
 
 ### Tema que cambia por sección — `ThemeScroll`
 
@@ -1264,6 +1330,8 @@ Preguntas frecuentes con paneles animados por CSS.
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | false |
 | `defaultOpen` | number 0–5 | 0 |
+| `presentation` | `cards` · `lines` | "cards" |
+| `answerAlign` | `inherit` · `left` · `center` | "inherit" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Migas de pan — `Breadcrumbs`
@@ -1900,6 +1968,21 @@ La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o 
 - Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.
 - Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.
 
+### Vídeo flotante que crece al pulsarlo — `FloatingVideo`
+
+Una miniatura de vídeo suelta sobre la página: ladeada, se mece sola y persigue un poco al cursor, con su etiqueta en mono («BEHIND THE SCENES») y un punto que parpadea. Solo crece si se pulsa: viaja desde su sitio al centro (FLIP), se oye y lleva controles; Escape, el botón o pulsar fuera la devuelven. El clip abierto sigue donde iba la miniatura. Para un making of, un teaser o un segundo vídeo junto a un reel, sin quitarle protagonismo. Sin dependencias.
+
+| prop | tipo | default |
+|---|---|---|
+| `label` | text | "Behind the scenes" |
+| `caption` | text | "0:30" |
+| `tilt` | number -20–20 | -6 |
+| `follow` | number 0–60 | 18 |
+
+- Ponlo dentro de un contenedor sticky de alto 0 para que acompañe al scroll de una sección.
+- fullSrc: otro vídeo (con sonido) para la versión abierta.
+- Con movimiento reducido no se mece ni viaja.
+
 ### Reproductor de vídeo — `VideoPlayer`
 
 Reproductor sobre el <video> nativo, sin dependencias, con controles propios del estilo: play, progreso arrastrable, volumen, velocidad, subtítulos, imagen en imagen, pantalla completa y atajos de teclado. Los enlaces de YouTube y Vimeo se cargan bajo demanda, sin cookies hasta pulsar play. El modo fondo rellena un contenedor, en bucle y sin controles.
@@ -2026,6 +2109,132 @@ Un objeto 3D con metal, vidrio, plástico barnizado o mate y reflejos de estudio
 - Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ObjectStage.
 - Es el contrapunto limpio de RetroCanvas: misma tecnología, sin filtro retro.
 
+### Campo de letras con palabras escondidas — `TypeField`
+
+Un suelo de letras en 3D (56 × 23 columnas extruidas) con palabras escondidas a la vista: en reposo son del color del fondo, como todas; con el scroll, el puntero o solas, suben letra a letra con rebote, toman su color y dan sombra mientras el resto se hunde en una onda que sale del centro, y vuelven desde la última letra. El puntero hunde y tiñe las letras de alrededor. Concepto y coreografía medidos copia a copia en Plain Sight (motion-pieces) con cine:capture (docs/27). Letras y niebla del fondo (tema claro u oscuro), palabras de sus tokens; fuente Anton (OFL) servida con el kit. Sin WebGL o con movimiento reducido, las palabras en plano.
+
+| prop | tipo | default |
+|---|---|---|
+| `words` | text | "ABOUT\nCONTACT\|acc2\nWORKS\|acc\nNEWS\|acc2" |
+| `trigger` | `loop` · `hover` · `scroll` | "loop" |
+| `duration` | number 3–16 | 6 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/TypeField.
+- Una palabra por línea, «TEXTO|tono» (acc, acc2, fg, mut); hasta cuatro.
+
+### Ventanilla de avión al alba (WebGPU) — `Porthole`
+
+La vista desde la ventanilla de un avión al alba, como fondo de portada: cielo con su resplandor bajo el horizonte, estrellas que titilan, ciudades y ríos en el suelo y el ala con su librea, todo procedural (sin modelos ni texturas). La cámara se asoma hacia el puntero como una cabeza y, al arrastrar, sale por la ventanilla (otro arrastre la devuelve). Concepto, cámara (ganancias y seguimiento) y la rampa del cielo medidos en Hublot (darkroom.engineering) con cine:capture (docs/28). WebGPU con reserva WebGL2, materiales de nodos sin luces. El tema pone la librea; los colores del cielo son los medidos. Sin WebGL o con movimiento reducido, el cielo plano enmarcado por la ventanilla.
+
+| prop | tipo | default |
+|---|---|---|
+| `livery` | `acc` · `acc2` · `fg` · `mut` | "acc" |
+| `cities` | number 0–1 | 0.35 |
+| `interactive` | boolean | true |
+| `hint` | text | "Arrastra para salir por la ventanilla" |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/Porthole.
+- Mueve el puntero para asomarte; arrastra para salir por la ventanilla.
+- children va encima de la escena (titular, botones).
+
+### Coche de juguete con física — `ToyDrive`
+
+Un coche de juguete que se conduce y derriba las letras de una palabra y una pila de cajas, todo con física, desde una cámara isométrica que lo persigue: para portadas que quieren que el visitante juegue. Flechas o WASD con la pieza enfocada (espacio frena, R vuelve a la salida); con el ratón o el dedo, mantener pulsado lleva el coche hacia ese punto. Cámara (dirección, distancia, fov 25 y seguimiento) y dinámica (aceleración, punta, frenada, giro) medidas en el portfolio de Bruno Simon con cine:capture (docs/29). La física es la del kit, lib/physics, sin WebAssembly. Colores del tema: suelo del fondo, coche del acento, letras del texto. Sin WebGL o con movimiento reducido, la palabra en plano.
+
+| prop | tipo | default |
+|---|---|---|
+| `word` | text | "PLAY" |
+| `interactive` | boolean | true |
+| `scenery` | boolean | true |
+| `intro` | boolean | false |
+| `hint` | text | "Flechas o WASD para conducir · mantén pulsado para ir hacia un punto · R vuelve" |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ToyDrive.
+- Haz clic en la escena y conduce con las flechas; o mantén pulsado sobre el suelo.
+- La palabra admite hasta 8 letras.
+
+### Racimo de cruces que sigue al puntero — `CrossCluster`
+
+Un racimo de cruces de plástico que flotan juntas, se empujan y siguen al puntero, para portadas con un objeto 3D vivo detrás del titular. Sin luces ni mapa de entorno: cada píxel calcula de forma analítica la oclusión, la sombra y el reflejo que le dan las demás cruces, sobre un matcap y una sombra propia horneada; las de cristal refractan lo que tienen detrás. Material traducido de los shaders de la portada de Lusion; cámara y dinámica (cuánto sigue al puntero, cuánto tarda en volver, cómo se agita en reposo) medidas con cine:capture y cine:conjunto (docs/31). Física del kit, lib/physics, sin WebAssembly. Colores del tema: fondo de --card, cruces de acento, texto y atenuado, cristal de --acc2.
+
+| prop | tipo | default |
+|---|---|---|
+| `count` | number 8–40 | 24 |
+| `glass` | number 0–4 | 2 |
+| `glossy` | number 0–1 | 0.25 |
+| `follow` | number 0–1 | 0.35 |
+| `interactive` | boolean | true |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/CrossCluster.
+- Usa WebGPU (o su reserva WebGL2): cada píxel recorre todas las cruces, así que con más de 30 el coste sube.
+- El contenido que pases como hijo va encima sin quitarle el puntero a la escena.
+
+### Paisaje grabado a lápiz — `EngravedMap`
+
+Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: parcelas con surcos en direcciones distintas y caminos en blanco, casas con tejado a dos aguas y árboles con contorno, con un vuelo de entrada desde el horizonte, una bandada de pájaros, un leve paralaje con el puntero y la vista que gira al arrastrar. Para bodegas, territorio, turismo o cualquier marca que quiera un 3D que no parezca 3D. Técnica medida en la portada de Chartogne-Taillet (docs/32): la escena no pinta colores sino normal, lápiz y cercanía, y una pasada final pone papel, lápiz y contornos de Sobel. Imagen al 8 %, acabado al 7 % y cámara al 5 % de la referencia. Colores del tema: papel de --card y lápiz de --mut.
+
+| prop | tipo | default |
+|---|---|---|
+| `seed` | number 1–99 | 3 |
+| `intro` | number 0–8 | 3 |
+| `interactive` | boolean | true |
+| `height` | number 280–800 | 520 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/EngravedMap.
+- Pinta siempre a 2× (como la referencia): los contornos y el grano se afinan al reducirse.
+- El motor del grabado (lib/gravure: materialLapiz y pilaGrabado) vale para cualquier escena con WebGPURenderer.
+
+### Grabado a lápiz para cualquier escena — `GravureCanvas`
+
+Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz sobre papel: rayado que engorda con la sombra, contornos más gruesos cerca, grano y fibra del papel, viñeta y entrada por baldosas. Las mallas de los hijos toman el material de lápiz; cada una puede pedir su ajuste (objeto, suelo, follaje, o los del paisaje de Chartogne) con userData.lapiz. Es la técnica de EngravedMap (medida en Chartogne-Taillet, docs/32) para cualquier objeto: productos «dibujados», arquitectura, mapas o portadas editoriales. Colores del tema: papel de --card y lápiz de --mut.
+
+| prop | tipo | default |
+|---|---|---|
+| `preset` | `objeto` · `suelo` · `follaje` · `casa` · `arbol` | "objeto" |
+| `lineWidth` | number 0–3 | 0.5 |
+| `grain` | number 0–0.4 | 0.123 |
+| `intro` | number 0–5 | 1.5 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/GravureCanvas.
+- Los hijos son elementos de react-three-fiber; sus materiales se sustituyen por el de lápiz (userData.sinLapiz los deja fuera).
+- La luz es la de la referencia (dos direccionales fijas): las luces de la escena no cuentan.
+
+### Emblema 3D de púas — `ThornEmblem`
+
+Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en tres formas: alas tribales góticas en dos piezas que pueden batir (ojos de almendra, cuernos, púas erizadas y lenguas de fuego, todo en punta; el de meermohsin.me, que va sobre los ojos y luego da vueltas por el relato), una máscara barroca con rizos o alas de espinas, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
+
+| prop | tipo | default |
+|---|---|---|
+| `shape` | `wings` · `mask` · `spikes` | "wings" |
+| `lighting` | `red` · `studio` | "red" |
+| `seed` | number 1–99 | 7 |
+| `spikes` | number 3–12 | 7 |
+| `barbs` | number 0–2 | 1 |
+| `curl` | number 0–1.2 | 0.55 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.
+- progress controla la coreografía; sin él, se balancea solo.
+- Sin WebGL o con movimiento reducido, una silueta plana de púas.
+
+### Reel de proyectos fijado al scroll — `ProjectReel`
+
+Reel de proyectos fijado al scroll, como el de meermohsin.me: la imagen del proyecto activo grande en el centro, la anterior pequeña arriba y la siguiente abajo, que suben al avanzar; el nombre a la izquierda, un contador circular a la derecha y, de fondo, la misma imagen desenfocada a pantalla completa que tiñe la sección con su color. Cada proyecto se asienta un rato antes de pasar al siguiente. Para portfolios, estudios, casos y lanzamientos. Sin WebGL; colores del tema.
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.35 |
+| `backdrop` | number 0–1 | 0.55 |
+| `counter` | boolean | true |
+
+- Sin progress se fija al scroll: ocupa ((proyectos − 1) · perProject + 1,4) pantallas.
+- backdrop = 0 quita el fondo desenfocado.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.
@@ -2059,6 +2268,10 @@ Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con 
 |---|---|---|
 | `height` | text | "320px" |
 | `grow` | number 1.5–8 | 4 |
+| `mobileScroll` | boolean | false |
+| `metaVisibility` | `always` · `active` | "always" |
+| `titleMaxSize` | text | "28px" |
+| `minPanelWidth` | text | "120px" |
 
 ### Lienzo explorable por arrastre — `ExplorableCanvas`
 
@@ -2135,7 +2348,7 @@ Cierre de página: titular corto, una frase y uno o dos botones sobre una superf
 
 ### Sección de FAQ — `FAQSection`
 
-Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.
+FAQ con cabecera superior o lateral en escritorio, acordeón de tarjetas o líneas, respuestas alineables y apertura inicial configurable. Incluye navegación por teclado y paneles accesibles.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2143,6 +2356,11 @@ Cabecera de sección más acordeón: las preguntas frecuentes listas para el fin
 | `title` | text | "Todo lo que necesitas saber" |
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | true |
+| `align` | `left` · `center` | "center" |
+| `layout` | `stack` · `split` | "stack" |
+| `presentation` | `cards` · `lines` | "cards" |
+| `answerAlign` | `inherit` · `left` · `center` | "inherit" |
+| `defaultOpen` | number -1–5 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Sección de cifras — `StatsSection`
@@ -2158,7 +2376,7 @@ Cabecera de sección más una fila de cifras ASCII que cuentan hacia arriba (Sta
 
 ### Sección de precios — `PricingSection`
 
-Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.
+Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2166,7 +2384,10 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `title` | text | "Un plan para cada tamaño" |
 | `subtitle` | text | "Cambia o cancela cuando quieras." |
 | `plans` | text | "Básico\|9 €\|/ mes\|no\|Un proyecto;Exportación PNG;Soporte por email;-Dominio propio\…" |
-| `layout` | `grid` · `joined` · `list` · `carousel` | "grid" |
+| `layout` | `grid` · `joined` · `list` · `carousel` · `menu` · `comparison` | "grid" |
+| `comparison` | text | "Proyectos\|1\|Sin límite\|Sin límite\nPuestos\|1\|1\|5\nSoporte\|Email\|Prioritario\|P…" |
+| `caption` | text | "Comparación de planes" |
+| `footnote` | text | "" |
 | `cardLayout` | `classic` · `compact` | "classic" |
 | `highlight` | `invert` · `glow` · `border` · `lift` | "invert" |
 | `badge` | text | "Más popular" |
@@ -2180,8 +2401,8 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
-- Fórmula de producto (Linear, Vercel; /sitios/faro): layout="joined", highlight="lift", planCase="none", marker="check", toggle="neutral" y variant="editorial" (botón principal sólido en el color del texto).
-- Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a».
+- Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.
+- plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular.
 
 ### Sección de testimonios — `TestimonialSection`
 
@@ -2204,6 +2425,9 @@ Prueba social lista para pegar: cabecera, resumen de valoraciones (media con est
 | `pageSize` | number 0–6 | 0 |
 | `quoteFont` | `body` · `display` | "body" |
 | `avatars` | boolean | true |
+| `avatarSize` | `sm` · `md` · `lg` | "md" |
+| `avatarShape` | `theme` · `circle` | "theme" |
+| `presentation` | `card` · `soft` · `plain` | "card" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.
@@ -2305,6 +2529,20 @@ Correo grande, enlaces que ruedan y un titular que llena el ancho, con los color
 | `note` | text | "© 2026 Estudio" |
 | `credit` | text | "Hecho con Trama" |
 | `city` | text | "Madrid" |
+
+### Franja de papel rasgado — `TornPaper`
+
+Una franja de papel con los bordes rasgados: el corte irregular con fibras y el canto blanco del papel que asoma por partes, como la sección «The fall was always part of the path» de meermohsin.me. Envuelve cualquier contenido (texto, imagen, figura). Dos SVG con semilla, sin JavaScript en tiempo de ejecución. Papel de --acc y canto de --fg.
+
+| prop | tipo | default |
+|---|---|---|
+| `seed` | number 1–99 | 4 |
+| `depth` | number 12–120 | 48 |
+| `rim` | number 0–1 | 1 |
+| `edges` | `both` · `top` · `bottom` | "both" |
+
+- edges elige qué bordes se rasgan.
+- Otra semilla, otro rasgado (el mismo en servidor y cliente).
 
 ### Hero con fundido de fotografías — `CrossfadeHero`
 
@@ -2704,6 +2942,38 @@ Archivo: `components/landings/minimal/FacetaLanding.tsx`
 
 Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.
 
+### Esparta · barbería de carácter — `/sitios/esparta`
+
+Barbería de barrio con fotografías de corte y barba, navegación lateral, ticket del ritual, carta de servicios y reserva con profesional y agenda persistente.
+
+Carpeta: `components/sites/esparta/` · 5 páginas: La barbería · Corte y barba · Los barberos · Reservar sillón · Mis citas
+
+`Button` ×15 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+
+### Forja · entrena tu siguiente nivel — `/sitios/forja`
+
+Cuaderno de entrenamiento oscuro: una sesión explicada en tres capítulos 3D, fotografía de grupo, horario, reservas y espera, lista de cuotas y área personal persistente.
+
+Carpeta: `components/sites/forja/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
+
+`Button` ×19 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+
+### Hebra · un buen día de pelo — `/sitios/hebra`
+
+Salón de corte y color con diagnóstico de estilo, servicios con precio y duración, reserva por profesional, agenda y cambios de cita guardados en el navegador.
+
+Carpeta: `components/sites/hebra/` · 5 páginas: El salón · Servicios y precios · Las manos · Reservar cita · Mis citas
+
+`Button` ×14 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `ImageReveal` · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+
+### Cadencia · encuentra tu ritmo — `/sitios/cadencia`
+
+Club social de movimiento con planificador de frecuencia semanal, clases reservables, lista de espera, comparación de planes y área personal persistente.
+
+Carpeta: `components/sites/cadencia/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
+
+`Button` ×18 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+
 ### Kernel Log · blog de tecnología — `/sitios/kernel-log`
 
 El blog de una ingeniera de plataformas: artículos largos con código, índice y barra de lectura, buscador por temas, newsletter con archivo y página personal.
@@ -2886,7 +3156,7 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
-`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
 
 ### Ánima · fiesta de Halloween en Valencia — `/sitios/anima`
 
@@ -2919,3 +3189,19 @@ Web de lanzamiento de un videojuego indie que es su propia demo: pantalla de tí
 Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nivel 1 · La cámara · Nivel 2 · El trono · Victoria · prensa
 
 `Traveler` ×3 · `SkillCheck` · `SoundToggle` · `PageTransition` · `Preloader` · `MetaTable`
+
+### La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas — `/sitios/voz-de-la-tierra`
+
+Una carta desde la Tierra en cuatro capítulos: el Disco de Oro, sus voces, el viaje y tu mensaje. Disco y cubierta 3D con archivo fotográfico de NASA, saludos originales, película de la Tierra desde la ISS y fotografías históricas con atribución. El mismo objeto acompaña la navegación; el mensaje se conserva solo en este dispositivo y se puede descargar.
+
+Carpeta: `components/sites/voz-de-la-tierra/` · 4 páginas: El objeto · Surcos · El viaje · El mensaje
+
+`Button` ×4 · `SharedText` ×3 · `MetaTable` ×2 · `PageTransition` · `Traveler` · `Countdown` · `TextField` · `VideoPlayer` · `AudioPlayer` · `Preloader`
+
+### NÁDIR · una señal al otro lado del silencio — `/sitios/nadir`
+
+Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.
+
+Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
+
+`Button` ×2 · `ScrollProgress` · `Hero` · `Footer`

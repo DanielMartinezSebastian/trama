@@ -23,7 +23,7 @@
 .ct-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; z-index: 0;
   background: radial-gradient(70% 60% at 50% 55%, color-mix(in srgb, var(--acc2) 8%, transparent), transparent 70%); }
 .ct-steps { position: relative; z-index: 1; list-style: none; margin: -100svh 0 0; padding: 0; pointer-events: none; }
-.ct-step { min-height: 130svh; }
+.ct-step { min-height: 175svh; }
 .ct-step--hero { display: grid; min-height: 100svh; align-items: end; padding: 0 var(--st-gutter) clamp(40px, 9vh, 96px); }
 .ct-hero { max-width: 760px; pointer-events: auto; }
 .ct-hero__title { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(44px, 7.4vw, 112px); line-height: 0.95; letter-spacing: -0.035em; text-wrap: balance; }

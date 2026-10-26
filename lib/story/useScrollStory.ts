@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type RefObject } from "react";
+import { resolveFeel, tramo, type Curva, type ScrollFeel, type ScrollFeelName } from "@/lib/motion/scroll-feel";
 
 /**
  * El motor de los recorridos por pasos de Trama (Quilate y Ánima, docs/19 §7 y docs/20): un escenario fijo (`sticky`) y una
@@ -25,6 +26,8 @@ export type StoryFrame = {
   j: number;
   next: number;
   t: number;
+  /** el avance entre los dos pasos sin meseta ni curva (0–1): para curvas propias de cada tramo */
+  raw: number;
   /** centros de los pasos en px de la ventana, y la línea media */
   centers: number[];
   mid: number;
@@ -33,8 +36,12 @@ export type StoryFrame = {
 };
 
 export type ScrollStoryOptions = {
+  /** sensación (docs/42): de ella salen la meseta y la curva si no se dan; por defecto, la de la página (`SmoothScroll feel`) */
+  feel?: ScrollFeelName | ScrollFeel;
   /** fracción de cada tramo que se queda quieta en el centro de los pasos (0,3 = el 30 %) */
   plateau?: number;
+  /** curva del recorrido entre mesetas */
+  curve?: Curva;
   /** cuadros: distancia (en altos de ventana) a la que empiezan a desenfocarse y a apagarse, y desenfoque máximo (px) */
   cards?: { blurFrom?: number; fadeFrom?: number; fadeSpan?: number; blur?: number } | false;
   onFrame?: (f: StoryFrame) => void;
@@ -43,14 +50,16 @@ export type ScrollStoryOptions = {
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 export const smooth = (t: number) => t * t * (3 - 2 * t);
 
-export function useScrollStory(list: RefObject<HTMLElement | null>, stage: RefObject<HTMLElement | null>, { plateau = 0.3, cards = {}, onFrame }: ScrollStoryOptions = {}) {
+export function useScrollStory(list: RefObject<HTMLElement | null>, stage: RefObject<HTMLElement | null>, { feel, plateau: plateauProp, curve: curveProp, cards = {}, onFrame }: ScrollStoryOptions = {}) {
   useEffect(() => {
+    const f = resolveFeel(feel);
+    const plateau = plateauProp ?? f.plateau;
+    const curve = curveProp ?? f.curve;
     const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
     const cardEls = cards === false ? [] : Array.from(stage.current?.querySelectorAll<HTMLElement>("[data-card]") ?? []);
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const { blurFrom = 0.08, fadeFrom = 0.16, fadeSpan = 0.3, blur: maxBlur = 16 } = cards || {};
     if (!items.length) return;
-    const edge = (1 - plateau) / 2;
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -62,7 +71,7 @@ export function useScrollStory(list: RefObject<HTMLElement | null>, stage: RefOb
       let j = 0;
       while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
       const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : clamp01((mid - centers[j]) / (centers[j + 1] - centers[j]));
-      const t = smooth(clamp01((raw - edge) / (1 - 2 * edge)));
+      const t = tramo(raw, plateau, curve);
       const next = Math.min(j + 1, centers.length - 1);
       const st = stage.current?.style;
       const span = centers[centers.length - 1] - centers[0];
@@ -86,7 +95,7 @@ export function useScrollStory(list: RefObject<HTMLElement | null>, stage: RefOb
         el.style.visibility = op < 0.02 ? "hidden" : "";
         el.style.setProperty("--y", y.toFixed(1));
       }
-      onFrame?.({ j, next, t, centers, mid, lerp: (a, b) => a + (b - a) * t });
+      onFrame?.({ j, next, t, raw, centers, mid, lerp: (a, b) => a + (b - a) * t });
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(update);

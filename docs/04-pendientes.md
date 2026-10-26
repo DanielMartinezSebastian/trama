@@ -153,6 +153,26 @@ axe-core con Playwright sobre `npm start` (ver «Pruebas» más abajo).
 - [ ] **Imágenes ASCII sin JS.** Los componentes con lienzo no tienen alternativa estática cuando falla WebGL o está
       activo `prefers-reduced-motion`; revisar `RetroCanvas`, `AsciiBackground` y `TextmodeBackground`.
 
+## 4b. Cine 3D: capturar y recrear webs WebGL/WebGPU (docs/26, 23-10-2026)
+
+- [x] **Camera-scroll, quinta vuelta** (24-10-2026): flotación, transición de material y cámara de autor; SSIM 0,921,
+      ningún eje por encima del 18 % (docs/26 §6).
+- [x] **Primer estudio real** (24-10-2026): Plain Sight → `TypeField` y `lib/postfx` (docs/27).
+- [x] `TypeField` en tema oscuro y la coreografía letra a letra (docs/27 §3b, ronda 16).
+- [x] **Segundo estudio** (24-10-2026): Hublot → `Porthole` y `lib/porthole`; cámara 3 %, imagen 10 %; coste del método (docs/28).
+- [x] **Tercer estudio** (24-10-2026): Bruno Simon → `ToyDrive` y `lib/physics`; dinámica 12 %; eje de acabado (docs/29).
+- [x] **Relato con scroll y medida del DOM** (24-10-2026): Meer Mohsin → `ChapterStage`; eje de texto 21 % (docs/30).
+- [x] **Ronda 20, materiales** (24-10-2026): Lusion → `CrossCluster` (material analítico en TSL) y `cine:conjunto`; dinámica 17,6 %, acabado 27 % (docs/31).
+- [x] **Ronda 21, ilustración en 3D** (25-10-2026): Chartogne-Taillet → `EngravedMap` y `lib/gravure` (grabado a lápiz); imagen 8 %, acabado 7 %, cámara 5 %; `cine:tramo` (docs/32).
+- [x] **Ronda 22, revisión y herramientas** (25-10-2026): `cine:explora`, `cine:sonda`, `cine:vuelta` (recetas de los siete estudios), `cine:tramo movimiento`, `--movil`; pájaros y giro por arrastre en `EngravedMap` (docs/33).
+- [x] **Ronda 23, API gráfica, flujo y ruido** (25-10-2026): `hooks/gl.js` (presupuesto y cadena de render con cualquier motor), `cine:flujo` (eje de movimiento de imagen), `cine:vuelta --ruido`; Active Theory (sin three) como caso; el ruido de Lusion (48 % de imagen) obliga a comparar distribuciones (docs/34 §5).
+- [ ] Decorado de `ToyDrive` para subir el acabado y eje de cámara por ventanas (docs/29 §8).
+- [ ] Lo pendiente de Hublot: pueblos más cálidos, puntos muy brillantes, bisel, destello de lente con sol (docs/28 §8).
+- [ ] **Candidatas para próximos estudios**: Bruno Simon (bruno-simon.com: WebGPU + TSL, físicas con Rapier, conducción con teclado; ronda 18) y Chartogne-Taillet (chartogne-taillet.com/en, propuesta del usuario 24-10-2026: three r122, mapa ilustrado de viñedos con 145 mallas, puntos y líneas, GSAP + ScrollTrigger, sonido; aviso de edad «Enter»: capturar con `--clic`).
+- [ ] **Motores sin three**: flujo óptico para la cámara, WebGPU Inspector y Spector.js para las pasadas.
+- [ ] **Extraer al kit** la pila TSL del banco (`lib/postfx`, componente `PostFX`) y añadir el campo `cine` a las guías.
+- [ ] **Más pases en el banco**: GTAO, SSR, LUT, desenfoque de movimiento, niebla por altura, partículas.
+
 ## 5. Auditoría de calidad de las demos nuevas (19-10-2026)
 
 Webs revisadas: `/sitios/estudio`, `/sitios/pulso` y `/sitios/barro` (todas sus páginas, a 1280 y a 390 px reales) con

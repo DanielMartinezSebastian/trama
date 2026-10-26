@@ -14,6 +14,10 @@
   },
   "private": true,
   "scripts": {
+    "doctor": "tsx scripts/doctor.mts",
+    "verify": "npm run typecheck && npm run catalog:check && npm run check:shadows && npm run cine:test",
+    "smoke": "tsx scripts/smoke.mts",
+    "cine:test": "tsx scripts/cine/base-url.test.mts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -28,7 +32,21 @@
     "kit:pull": "tsx scripts/kit-pull.mts",
     "pkg:build": "tsx scripts/build-package.mts",
     "pkg:pack": "tsx scripts/build-package.mts && cd dist-npm && npm pack",
-    "refs:probe": "tsx scripts/probe-refs.mts"
+    "refs:probe": "tsx scripts/probe-refs.mts",
+    "cine:capture": "tsx scripts/cine/capture.mts",
+    "cine:analyze": "tsx scripts/cine/analyze.mts",
+    "cine:compare": "tsx scripts/cine/compare.mts",
+    "cine:conjunto": "tsx scripts/cine/conjunto.mts",
+    "cine:tramo": "tsx scripts/cine/tramo.mts",
+    "cine:explora": "tsx scripts/cine/explora.mts",
+    "cine:sonda": "tsx scripts/cine/sonda.mts",
+    "cine:vuelta": "tsx scripts/cine/vuelta.mts",
+    "cine:flujo": "tsx scripts/cine/flujo.mts",
+    "cine:reestudio": "tsx scripts/cine/reestudio.mts",
+    "cine:web": "tsx scripts/cine/web.mts",
+    "cine:sintesis": "tsx scripts/cine/sintesis.mts",
+    "cine:rampa": "tsx scripts/cine/rampa.mts",
+    "cine:ritmo": "tsx scripts/cine/ritmo.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

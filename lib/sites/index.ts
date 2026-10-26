@@ -29,11 +29,21 @@ import * as anima from "@/components/sites/anima/data";
 import * as cota from "@/components/sites/cota/data";
 import * as maravillas from "@/components/sites/maravillas/data";
 import * as runa from "@/components/sites/runa/data";
+import * as vozDeLaTierra from "@/components/sites/voz-de-la-tierra/data";
+import * as nadir from "@/components/sites/nadir/data";
+import * as hebra from "@/components/sites/hebra/data";
+import * as cadencia from "@/components/sites/cadencia/data";
+import * as esparta from "@/components/sites/esparta/data";
+import * as forja from "@/components/sites/forja/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
 
 export const sites: SiteMeta[] = [
+  { ...esparta.meta, routes: esparta.ROUTES, dir: "components/sites/esparta" },
+  { ...forja.meta, routes: forja.ROUTES, dir: "components/sites/forja" },
+  { ...hebra.meta, routes: hebra.ROUTES, dir: "components/sites/hebra" },
+  { ...cadencia.meta, routes: cadencia.ROUTES, dir: "components/sites/cadencia" },
   { ...kernel.meta, routes: kernel.ROUTES, dir: "components/sites/kernel-log" },
   { ...pixelforge.meta, routes: pixelforge.ROUTES, dir: "components/sites/pixelforge" },
   { ...vigia.meta, routes: vigia.ROUTES, dir: "components/sites/vigia" },
@@ -61,6 +71,8 @@ export const sites: SiteMeta[] = [
   { ...cota.meta, routes: cota.ROUTES, dir: "components/sites/cota" },
   { ...maravillas.meta, routes: maravillas.ROUTES, dir: "components/sites/maravillas" },
   { ...runa.meta, routes: runa.ROUTES, dir: "components/sites/runa" },
+  { ...vozDeLaTierra.meta, routes: vozDeLaTierra.ROUTES, dir: "components/sites/voz-de-la-tierra" },
+  { ...nadir.meta, routes: nadir.ROUTES, dir: "components/sites/nadir" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

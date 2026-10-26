@@ -148,11 +148,13 @@ export const navegacion: CatalogEntry[] = [
       { key: "items", label: "Entradas (Pregunta|Respuesta por línea)", type: "text", multiline: true, default: "¿Necesito experiencia?|Ninguna. Empezamos desde cero con material blando.\n¿Qué incluye el precio?|Neopreno, tabla, monitor titulado y seguro.\n¿Puedo cancelar?|Hasta 24 horas antes, sin coste." },
       { key: "multiple", label: "Varios abiertos a la vez", type: "boolean", default: false },
       { key: "defaultOpen", label: "Abierto al inicio", type: "number", default: 0, min: 0, max: 5, step: 1 },
+      { key: "presentation", label: "Tratamiento", type: "select", default: "cards", options: ["cards", "lines"] },
+      { key: "answerAlign", label: "Alineación de respuestas", type: "select", default: "inherit", options: ["inherit", "left", "center"] },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center">
-        <Accordion items={p.items as string} multiple={p.multiple as boolean} defaultOpen={p.defaultOpen as number} variant={p.variant as never} />
+        <Accordion presentation={p.presentation as "cards" | "lines"} answerAlign={p.answerAlign as "inherit" | "left" | "center"} items={p.items as string} multiple={p.multiple as boolean} defaultOpen={p.defaultOpen as number} variant={p.variant as never} />
       </div>
     ),
   },

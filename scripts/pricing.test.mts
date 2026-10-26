@@ -1,0 +1,10 @@
+import assert from "node:assert/strict";
+import { pricingPlans,pricingSelection } from "../lib/ui/pricing.ts";
+const old=pricingPlans("Club|59 €|/ mes|si|8 clases;Sala libre|Para tener una rutina|590 €|2 días / semana|Sin matrícula");
+assert.equal(old.length,1);assert.equal(old[0].highlighted,true);assert.deepEqual(old[0].features,["8 clases","Sala libre"]);assert.equal(old[0].meta,"2 días / semana");assert.equal(old[0].note,"Sin matrícula");
+const typed=[{id:"corte",name:"Corte",price:"24 €",meta:"45 min",href:"/reservar?servicio=corte"}];assert.equal(pricingPlans(typed),typed);
+assert.deepEqual(pricingSelection(typed[0],false,"/ año"),{id:"corte",name:"Corte",price:"24 €",period:"",yearly:false});
+assert.equal(pricingSelection(old[0],true,"/ año").price,"590 €");assert.equal(pricingSelection(old[0],true,"/ año").period,"/ año");
+assert.equal(pricingSelection({name:"Gratis",price:"0 €",period:"siempre",yearlyPrice:"0 €"},true,"/ año").yearly,false);
+assert.deepEqual(pricingPlans("\n\n"),[]);assert.equal(pricingPlans("Plan|9 €|/ mes|no|Uno\\; dos;Tres")[0].features?.length,2);
+console.log("✓ Precios: formato anterior, datos tipados, metadatos, condiciones, pago anual y valores escapados");

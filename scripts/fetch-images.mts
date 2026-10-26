@@ -31,11 +31,19 @@ const EXCLUDE: string[] = [
   "Thomas Rowlandson - Vaux-Hall - Dr. Johnson, Oliver Goldsmith, Mary Robinson, et al.jpg", "(Venice) French goldsmith, mechanical celestial and terrestrial globe, post 1565 - Correr Museum.jpg",
   "Residence of Hon. W.W. Sullivan, Charlottetown, P.E.I. E.W. Taylor's Jewelry Store, Interior & Exterior, Southside Queen Square (IA dr residence-of-hon-ww-sullivan-charlottetown-pei-ew-taylors-jewelr-4475021).jpg",
   "Paul Goldsmith 2024.jpg", "Metro Mall Jewelry Mall Downtown Miami FL September 2026 - 02.jpg",
+  // retratos: animales, la cara tapada o de espaldas (la portada necesita un rostro de frente)
+  "Posing for a portrait (Unsplash).jpg", "Portrait of a Giraffe (Unsplash).jpg", "Bundled Up (Unsplash).jpg", "Man in hat facing away (Unsplash).jpg",
   "Big Desert Wilderness Area, Victoria, Australia (Unsplash).jpg", "Coffee art and iphone (Unsplash).jpg", "Sambazon 2016 (Unsplash).jpg", "Tidal Basin, Washington, United States (Unsplash xVnPN3fVGfY).jpg", "West Rim Trail, Grand Canyon Village, United States (Unsplash).jpg", "plant-in-a-coworking", "paris-coffee", "man-in-cafe", "aerial-view-of-cape-town", "food-of-the-city",
 ];
 
 /** `match`: el título tiene que encajar (temas en los que la búsqueda de Commons trae mucho ruido). */
-const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> = {
+type Topic = { n: number; queries: string[]; match?: RegExp; files?: string[] };
+const TOPICS: Record<string, Topic> = {
+  // Selección inspeccionada para Hebra y Cadencia (docs/46); títulos fijos para regenerar sin cambiar las rutas.
+  peluqueria: { n: 2, queries: [], files: ["Vintage Hair (Unsplash).jpg", "Wind Through Her Hair (Unsplash).jpg"] },
+  fitness: { n: 2, queries: [], files: ["World Gym workout (Unsplash).jpg", "Strength training (Unsplash).jpg"] },
+  // Archivo histórico: títulos comprobados, sin exigir resolución moderna ni ampliar originales.
+  voyager: { n: 4, queries: [], files: ["The Sounds of Earth - GPN-2000-001976.jpg", "The Sounds of Earth Record Cover - GPN-2000-001978.jpg", "The Earth seen from Apollo 17.jpg", "Pale Blue Dot.png"] },
   arquitectura: { n: 7, queries: ["unsplash modern architecture", "unsplash building facade", "pexels architecture glass building", "modern architecture building facade"] },
   interiores: { n: 6, queries: ["unsplash interior design", "unsplash modern interior living room", "pexels interior lobby", "interior design modern living room"] },
   eventos: { n: 6, queries: ["unsplash concert crowd", "unsplash festival stage lights", "pexels conference audience", "music festival crowd stage"] },
@@ -47,6 +55,10 @@ const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> =
   deporte: { n: 8, queries: ["unsplash racing car", "unsplash motorsport", "pexels race car", "unsplash athlete portrait", "unsplash cyclist road", "unsplash helmet"] },
   pasteleria: { n: 14, queries: ["unsplash cake", "unsplash pastry", "unsplash croissant", "unsplash bakery", "unsplash macarons", "unsplash cupcake", "pexels cake", "pexels pastry", "unsplash dessert", "unsplash tart", "unsplash cheesecake", "unsplash donut", "unsplash cinnamon roll", "unsplash wedding cake", "unsplash strawberry cake", "pexels bakery"] },
   joyeria: { n: 14, queries: ["jewelry store interior", "jewellery shop window", "jewelry display case", "jeweller workshop", "goldsmith workbench", "goldsmith at work", "jeweler hands", "gemstones loose", "cut gemstones", "diamond loose", "jewelry unsplash", "gold necklace unsplash", "engagement ring box", "earrings unsplash", "jewellery making"], match: /\b(rings?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant|jeweller\w*|jeweler\w*|workshop|workbench)\b/i },
+  // retratos de cerca y con poca luz: la portada de meermohsin.me (un rostro sobre negro con luz roja, docs/40 §4)
+  retratos: { n: 12, queries: ["portrait unsplash", "man portrait unsplash", "male portrait", "portrait of a man", "headshot man unsplash", "man portrait studio unsplash", "portrait of young man unsplash", "man black shirt portrait", "man portrait dark background", "young man portrait", "pexels portrait", "man face portrait"] },
+  // astronautas en paseos espaciales (NASA, dominio público): la última escena de lusion.co (docs/43)
+  espacio: { n: 6, queries: ["astronaut spacewalk", "spacewalk EVA astronaut", "astronaut extravehicular activity", "astronaut floating space station"], match: /astronaut|spacewalk|EVA|extravehicular/i },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 
@@ -74,7 +86,23 @@ async function search(q: string, quality: boolean): Promise<Cand[]> {
     .filter((x): x is Cand => x !== null);
 }
 
-async function pick(topic: string, cfg: { n: number; queries: string[]; match?: RegExp }): Promise<Cand[]> {
+async function pick(topic: string, cfg: Topic): Promise<Cand[]> {
+  if (cfg.files) {
+    const chosen: Cand[] = [];
+    for (const title of cfg.files) {
+      const params = new URLSearchParams({ action: "query", format: "json", titles: `File:${title}`, redirects: "1", prop: "imageinfo", iiprop: "url|size|mime|extmetadata", iiurlwidth: "1600" });
+      const response = await fetch(`https://commons.wikimedia.org/w/api.php?${params}`, { headers: { "User-Agent": UA } });
+      if (!response.ok) throw new Error(`Commons ${response.status}`);
+      const data = await response.json() as { query?: { pages: Record<string, any> } };
+      const page = Object.values(data.query?.pages ?? {})[0];
+      const info = page?.imageinfo?.[0], meta = info?.extmetadata ?? {};
+      const lic = String(meta.LicenseShortName?.value ?? "");
+      if (!info || !["image/jpeg", "image/png"].includes(info.mime) || !OK_LIC.test(lic) || BAD_LIC.test(lic)) throw new Error(`Archivo no apto: ${title} (${lic})`);
+      chosen.push({ title: page.title.replace(/^File:/, ""), w: info.width, h: info.height, lic, licUrl: String(meta.LicenseUrl?.value ?? ""), author: strip(String(meta.Artist?.value ?? "NASA")), thumb: info.width > 1600 ? info.thumburl : info.url, page: info.descriptionurl, quality: true });
+      await wait(400);
+    }
+    return chosen;
+  }
   const pool = new Map<string, Cand>();
   for (const q of cfg.queries) {
     for (const quality of [true, false]) {

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe de captura</title>
+<!--
+  Visor de `cine:analyze` (docs/26 §2): el vídeo de la captura con sus gráficas sincronizadas (cámara, imagen, movimiento,
+  coste) y notas por momento. Se abre como archivo local junto a video.mp4. Las notas se guardan en este navegador y se
+  exportan como notas.json, que `cine:analyze` mezcla en ficha.json la próxima vez que se ejecute. Publicado como
+  artifact de claude.ai con la capacidad `db`, las notas y la rúbrica se guardan además en el documento notas/<id> del
+  artifact (las comparten quienes lo abren y Claude las lee), y la exportación pasa por la capacidad `downloads`.
+-->
+<style>
+  :root { --bg: #0b0c10; --card: #14161c; --fg: #e8e8ea; --mut: #8a8f9c; --ln: #262a33; --acc: #7aa2ff; --acc2: #ffb86b; --ok: #6bd49a; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 ui-sans-serif, system-ui, sans-serif; }
+  header { padding: 16px 20px; border-bottom: 1px solid var(--ln); display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; }
+  header h1 { margin: 0; font-size: 16px; }
+  header a { color: var(--acc); word-break: break-all; }
+  .mut { color: var(--mut); }
+  main { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr); gap: 16px; padding: 16px 20px; }
+  @media (max-width: 1000px) { main { grid-template-columns: minmax(0, 1fr); } }
+  .card { background: var(--card); border: 1px solid var(--ln); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .card h2 { margin: 0 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--mut); font-weight: 600; }
+  video { width: 100%; display: block; border-radius: 8px; background: #000; }
+  .bar { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
+  button, select, textarea, input { font: inherit; color: var(--fg); background: #1c1f27; border: 1px solid var(--ln); border-radius: 6px; padding: 5px 9px; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--acc); }
+  canvas.chart { width: 100%; height: 86px; display: block; cursor: pointer; }
+  .chart-row { margin-bottom: 10px; }
+  .chart-row .lbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--mut); margin-bottom: 2px; gap: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 2px; vertical-align: middle; margin: 0 4px 0 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td, th { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--ln); vertical-align: top; }
+  th { color: var(--mut); font-weight: 500; }
+  .tramo { cursor: pointer; }
+  .tramo.on td { background: #1d2433; }
+  .swatches { display: flex; gap: 4px; }
+  .swatches span { width: 28px; height: 28px; border-radius: 4px; border: 1px solid var(--ln); }
+  .tags span { display: inline-block; margin: 0 6px 6px 0; padding: 2px 8px; border-radius: 99px; background: #1c1f27; border: 1px solid var(--ln); font-size: 12px; }
+  .notes li { margin-bottom: 6px; }
+  .notes .t { color: var(--acc2); cursor: pointer; font-variant-numeric: tabular-nums; }
+  textarea { width: 100%; min-height: 54px; resize: vertical; }
+  pre { white-space: pre-wrap; word-break: break-word; font-size: 12px; margin: 0; max-height: 360px; overflow: auto; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="titulo">Informe</h1>
+  <a id="url" target="_blank" rel="noopener"></a>
+  <span class="mut" id="metaLine"></span>
+</header>
+<main>
+  <section class="card">
+    <video id="v" src="video.mp4" controls muted playsinline></video>
+    <div class="bar">
+      <button id="prev" title="Fotograma anterior (,)">‹ 1f</button>
+      <button id="next" title="Fotograma siguiente (.)">1f ›</button>
+      <select id="rate"><option value="1">1×</option><option value="0.5">0,5×</option><option value="0.25" selected>0,25×</option><option value="0.1">0,1×</option></select>
+      <span id="tc" class="mut">0:00.000 · f0</span>
+      <a href="anotado.mp4" target="_blank">vídeo anotado</a>
+      <a href="hoja.jpg" target="_blank">hoja de contacto</a>
+    </div>
+    <div style="margin-top:14px" id="charts"></div>
+  </section>
+  <section style="display:grid;gap:16px;align-content:start">
+    <div class="card">
+      <h2>Planos y movimientos de cámara</h2>
+      <table id="tramos"><thead><tr><th>Plano</th><th>Tramo</th><th>Movimiento</th><th>Curva (error)</th><th>Meseta</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="card">
+      <h2>Notas en este instante</h2>
+      <div class="bar" style="margin:0 0 8px">
+        <select id="eje"></select>
+        <button id="addNote">Añadir en <span id="addT">0,000 s</span></button>
+        <button id="export">Exportar notas.json</button>
+      </div>
+      <textarea id="nota" placeholder="Qué se ve: «el giro se pasa y vuelve», «el texto entra 200 ms después del objeto»…"></textarea>
+      <ul class="notes" id="notes"></ul>
+    </div>
+    <div class="card">
+      <h2>Rúbrica</h2>
+      <table id="rubrica"><tbody></tbody></table>
+      <p class="mut" style="margin:8px 0 0;font-size:12px">Elige la nota que mejor describe lo que se ve (anclas de lib/cine/rubric.ts); se exporta con las notas.</p>
+    </div>
+  </section>
+  <section class="card" style="grid-column:1/-1">
+    <div class="grid2">
+      <div><h2>Imagen</h2><div id="imagen"></div></div>
+      <div><h2>Técnica medida</h2><div id="tecnica"></div></div>
+      <div><h2>Indicios (shaders y código)</h2><div id="firmas" class="tags"></div></div>
+    </div>
+  </section>
+  <section class="card" style="grid-column:1/-1">
+    <h2>Ficha (ficha.json)</h2>
+    <pre id="ficha"></pre>
+  </section>
+</main>
+<script>
+const DATA = /*DATA*/null;
+const $ = (s) => document.querySelector(s);
+const v = $("#v");
+const fps = DATA.fps;
+const key = "cine-notas:" + DATA.id;
+const fmt = (t) => { const m = Math.floor(t / 60); return `${m}:${(t - m * 60).toFixed(3).padStart(6, "0")}`; };
+const cs = getComputedStyle(document.documentElement);
+const col = (n) => cs.getPropertyValue(n).trim();
+
+$("#titulo").textContent = DATA.titulo;
+$("#url").textContent = DATA.url; $("#url").href = DATA.url;
+$("#metaLine").textContent = `${DATA.meta.drive} · ${DATA.meta.size.join("×")} · ${DATA.meta.frames} fotogramas · ${fps} fps · ${DATA.meta.fecha.slice(0, 16).replace("T", " ")}`;
+v.playbackRate = 0.25;
+$("#rate").onchange = (e) => (v.playbackRate = +e.target.value);
+const stepF = (d) => { v.pause(); v.currentTime = Math.max(0, Math.min(v.duration || 1e9, v.currentTime + d / fps)); };
+$("#prev").onclick = () => stepF(-1); $("#next").onclick = () => stepF(1);
+addEventListener("keydown", (e) => { if (e.target.tagName === "TEXTAREA") return; if (e.key === ",") stepF(-1); if (e.key === ".") stepF(1); if (e.key === " ") { e.preventDefault(); v.paused ? v.play() : v.pause(); } });
+
+// ---------------------------------------------------------------- gráficas
+const S = DATA.series;
+const CHARTS = [
+  { id: "pos", label: "Posición de la cámara (x, y, z)", lines: [["x", "--acc"], ["y", "--ok"], ["z", "--acc2"]] },
+  { id: "dist", label: "Distancia al centro de la escena", lines: [["dist", "--acc"]] },
+  { id: "fov", label: "Campo de visión (°)", lines: [["fov", "--acc2"]] },
+  { id: "luma", label: "Luminancia media · altas luces recortadas ×10", lines: [["luma", "--fg"], ["clip10", "--acc2"]] },
+  { id: "mov", label: "Energía de movimiento (diferencia entre fotogramas)", lines: [["mov", "--ok"]] },
+  { id: "calls", label: "Llamadas de dibujo por fotograma", lines: [["calls", "--mut"]] },
+].filter((c) => c.lines.some(([k]) => S[k] && S[k].some((x) => x !== null)));
+const box = $("#charts");
+const canvases = [];
+for (const c of CHARTS) {
+  const row = document.createElement("div");
+  row.className = "chart-row";
+  const vals = c.lines.flatMap(([k]) => S[k].filter((x) => x !== null));
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  row.innerHTML = `<div class="lbl"><span>${c.label}</span><span class="legend">${c.lines.map(([k, cl]) => `<i style="background:${col(cl)}"></i>${k}`).join("")} · ${lo.toFixed(3)} – ${hi.toFixed(3)}</span></div>`;
+  const cv = document.createElement("canvas");
+  cv.className = "chart";
+  row.appendChild(cv);
+  box.appendChild(row);
+  canvases.push({ cv, c, lo, hi });
+  cv.onclick = (e) => { const r = cv.getBoundingClientRect(); v.pause(); v.currentTime = ((e.clientX - r.left) / r.width) * (S.t[S.t.length - 1] || 0); };
+}
+function draw() {
+  const T = S.t[S.t.length - 1] || 1;
+  const now = v.currentTime;
+  for (const { cv, c, lo, hi } of canvases) {
+    const dpr = devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+    const g = cv.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, w, h);
+    // tramos de fondo
+    DATA.tramos.forEach((tr, i) => { g.fillStyle = i % 2 ? "#ffffff06" : "#ffffff0c"; g.fillRect((tr.v0 / T) * w, 0, ((tr.v1 - tr.v0) / T) * w, h); });
+    for (const cut of DATA.cortes) { g.fillStyle = col("--acc2"); g.fillRect((cut / T) * w, 0, 1, h); }
+    const span = hi - lo || 1;
+    for (const [k, cl] of c.lines) {
+      g.strokeStyle = col(cl); g.lineWidth = 1.5; g.beginPath();
+      let started = false;
+      S[k].forEach((y, i) => { if (y === null) return; const x = (S.t[i] / T) * w; const yy = h - 4 - ((y - lo) / span) * (h - 8); started ? g.lineTo(x, yy) : (g.moveTo(x, yy), (started = true)); });
+      g.stroke();
+    }
+    for (const n of notas) { g.fillStyle = col("--acc2"); g.beginPath(); g.arc((n.v / T) * w, 5, 3, 0, 7); g.fill(); }
+    g.fillStyle = col("--fg"); g.fillRect((now / T) * w, 0, 1.5, h);
+  }
+  const f = Math.round(now * fps);
+  $("#tc").textContent = `${fmt(now)} · f${f}`;
+  $("#addT").textContent = now.toFixed(3).replace(".", ",") + " s";
+  document.querySelectorAll(".tramo").forEach((el, i) => el.classList.toggle("on", now >= DATA.tramos[i].v0 && now <= DATA.tramos[i].v1));
+  requestAnimationFrame(draw);
+}
+
+// ---------------------------------------------------------------- tramos
+const tb = $("#tramos tbody");
+DATA.tramos.forEach((tr) => {
+  const row = document.createElement("tr");
+  row.className = "tramo";
+  row.innerHTML = `<td>${tr.id}</td><td>${tr.v0.toFixed(2)}–${tr.v1.toFixed(2)} s<br><span class="mut">${tr.reloj}</span></td><td>${tr.movimientos.join(" + ")}</td><td>${tr.curvas.map((c) => `${c.curva} <span class="mut">(${c.rmse.toFixed(3)})</span>`).join("<br>") || "—"}</td><td>${tr.meseta ? Math.round(tr.meseta * 100) + " %" : "—"}</td>`;
+  row.onclick = () => { v.pause(); v.currentTime = tr.v0; };
+  tb.appendChild(row);
+});
+
+// ---------------------------------------------------------------- notas y rúbrica
+let notas = [];
+let rubrica = {};
+try { const s = JSON.parse(localStorage.getItem(key) || "null"); if (s) ({ notas = [], rubrica = {} } = s); } catch {}
+if (!notas.length && DATA.notas) ({ notas = [], rubrica = {} } = DATA.notas);
+// en claude.ai (capacidad db), las notas viven en el documento notas/<id> del artifact; en local, en este navegador
+let db = null;
+const docNotas = "notas/" + String(DATA.id).replace(/[^w-]/g, "_");
+const save = () => {
+  try { localStorage.setItem(key, JSON.stringify({ notas, rubrica })); } catch {}
+  if (db) db.doc(docNotas).set({ notas, rubrica, actualizado: new Date().toISOString() }).catch(() => {});
+};
+for (const e of DATA.ejes) $("#eje").insertAdjacentHTML("beforeend", `<option value="${e.id}">${e.nombre}</option>`);
+function renderNotas() {
+  $("#notes").innerHTML = "";
+  [...notas].sort((a, b) => a.v - b.v).forEach((n) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="t">${n.v.toFixed(3)} s</span> <span class="mut">${n.eje}</span> — ${n.texto.replace(/</g, "&lt;")} <button style="padding:0 6px">×</button>`;
+    li.querySelector(".t").onclick = () => { v.pause(); v.currentTime = n.v; };
+    li.querySelector("button").onclick = () => { notas = notas.filter((x) => x !== n); save(); renderNotas(); };
+    $("#notes").appendChild(li);
+  });
+}
+$("#addNote").onclick = () => {
+  const texto = $("#nota").value.trim();
+  if (!texto) return;
+  const vt = v.currentTime;
+  // `t` en el reloj de la ficha (segundos o progreso de scroll); `v`, en segundos de vídeo
+  notas.push({ v: vt, t: DATA.relojDe(vt), eje: $("#eje").value, texto });
+  $("#nota").value = "";
+  save(); renderNotas();
+};
+$("#export").onclick = async () => {
+  const datos = JSON.stringify({ notas, rubrica }, null, 1);
+  const downloads = await window.claude?.use?.("downloads").catch(() => null);
+  if (downloads) return downloads.save({ filename: "notas.json", data: datos }).catch(() => {});
+  const blob = new Blob([JSON.stringify({ notas, rubrica }, null, 1)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "notas.json" });
+  a.click();
+};
+const rb = $("#rubrica tbody");
+for (const e of DATA.ejes) {
+  const row = document.createElement("tr");
+  row.innerHTML = `<th style="width:34%">${e.nombre}</th><td><select><option value="">—</option>${e.anclas.map((a, i) => `<option value="${i + 1}" title="${a.replace(/"/g, "&quot;")}">${i + 1} · ${a.slice(0, 60)}…</option>`).join("")}</select><div class="mut" style="font-size:12px;margin-top:4px"></div></td>`;
+  const sel = row.querySelector("select"), why = row.querySelector("div");
+  const show = () => (why.textContent = sel.value ? e.anclas[sel.value - 1] : "");
+  if (rubrica[e.id]) sel.value = rubrica[e.id].nota;
+  show();
+  sel.onchange = () => { if (sel.value) rubrica[e.id] = { nota: +sel.value, porque: e.anclas[sel.value - 1] }; else delete rubrica[e.id]; show(); save(); };
+  rb.appendChild(row);
+}
+DATA.relojDe = new Function("vt", DATA.relojFn);
+(async () => {
+  try { db = (await window.claude?.use?.("db")) ?? null; } catch { db = null; }
+  if (!db) return;
+  const snap = await db.doc(docNotas).get().catch(() => null);
+  const d = snap?.exists ? snap.data() : null;
+  if (d) {
+    notas = Array.isArray(d.notas) ? [...d.notas] : [];
+    rubrica = d.rubrica && typeof d.rubrica === "object" ? { ...d.rubrica } : {};
+    renderNotas();
+    DATA.ejes.forEach((e, i) => {
+      const sel = rb.querySelectorAll("select")[i];
+      sel.value = rubrica[e.id] ? String(rubrica[e.id].nota) : "";
+      sel.dispatchEvent(new Event("input"));
+      sel.nextElementSibling.textContent = sel.value ? e.anclas[sel.value - 1] : "";
+    });
+  } else if (notas.length || Object.keys(rubrica).length) save();
+})();
+
+// ---------------------------------------------------------------- imagen, técnica e indicios
+const im = DATA.imagen;
+$("#imagen").innerHTML = `
+  <div class="swatches" style="margin-bottom:8px">${im.paleta.map((c) => `<span title="${c.hex} · ${Math.round(c.peso * 100)} %" style="background:${c.hex}"></span>`).join("")}</div>
+  <table><tbody>
+  <tr><th>Luminancia media</th><td>${im.luma.toFixed(3)}</td></tr>
+  <tr><th>Altas luces recortadas</th><td>${(im.recorte * 100).toFixed(2)} %</td></tr>
+  <tr><th>Contraste (p90 − p10)</th><td>${im.contraste.toFixed(3)}</td></tr>
+  <tr><th>Saturación media</th><td>${im.saturacion.toFixed(3)}</td></tr>
+  <tr><th>Viñeteado (borde / centro)</th><td>${im.vineta.toFixed(3)}</td></tr>
+  <tr><th>Cortes de plano</th><td>${DATA.cortes.length ? DATA.cortes.map((c) => c.toFixed(2) + " s").join(", ") : "ninguno"}</td></tr>
+  <tr><th>Energía de movimiento</th><td>media ${im.movimiento.media.toFixed(4)} · pico ${im.movimiento.pico.toFixed(4)}</td></tr>
+  </tbody></table>`;
+const f = DATA.ficha;
+$("#tecnica").innerHTML = `<table><tbody>
+  <tr><th>Renderer</th><td>${f.render.renderer} · three r${DATA.medidas.revision ?? "?"}</td></tr>
+  <tr><th>Tone mapping</th><td>${f.render.toneMapping} · exposición ${f.render.exposicion}</td></tr>
+  <tr><th>Lente</th><td>fov ${DATA.medidas.fovRango.join("–")}° · ${DATA.medidas.focalMM ?? "?"} mm</td></tr>
+  <tr><th>Luces</th><td>${f.luz.luces.map((l) => `${l.tipo} ${l.intensidad}`).join(", ") || "—"} · entorno ${f.luz.entorno.tipo}</td></tr>
+  <tr><th>Posprocesado</th><td>${f.post.map((p) => p.tipo).join(" → ") || "—"}${DATA.medidas.paseSinIdentificar?.length ? `<br><span class="mut">sin identificar: ${DATA.medidas.paseSinIdentificar.join(", ")}</span>` : ""}</td></tr>
+  <tr><th>Presupuesto</th><td>${f.presupuesto.drawCalls} llamadas · ${f.presupuesto.triangulos} triángulos · ${f.presupuesto.pasadasPorFotograma} pasadas</td></tr>
+  </tbody></table>`;
+const tags = (o, p) => Object.entries(o || {}).map(([k, n]) => `<span title="${p}">${k} <span class="mut">${n}</span></span>`).join("");
+$("#firmas").innerHTML = tags(DATA.medidas.firmasShaders, "shaders") + tags(DATA.medidas.firmasCodigo, "código publicado") || '<span class="mut">ninguno</span>';
+$("#ficha").textContent = JSON.stringify(f, null, 1);
+renderNotas();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

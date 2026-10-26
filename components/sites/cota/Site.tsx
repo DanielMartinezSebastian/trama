@@ -65,7 +65,7 @@ export function Shell({ children }: { children: ReactNode }) {
         waitFor={{ root: ".ui-pcloud__gl", ready: ".is-on" }}
         art={<ScanLoading />}
       />
-      <SmoothScroll lerp={0.07} syncGsap={false} />
+      <SmoothScroll feel="cinematic" syncGsap={false} />
       <header className="ct-head">
         <a className="ct-brand" href="#top" aria-label="Cota, arriba">
           <span aria-hidden>◬</span> Cota

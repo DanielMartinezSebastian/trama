@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import { whenIntroDone } from "@/lib/motion/intro";
+import { resolveFeel, seguidorRaf } from "@/lib/motion/scroll-feel";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 
 /** Trazos de mano alzada listos para usar: `d` + `viewBox`. Cada `M` es un tramo que se dibuja después del anterior. */
@@ -30,6 +31,21 @@ export type LineDrawProps = {
   /** grosor en px de pantalla (no escala con el dibujo) */
   strokeWidth?: number;
   tone?: "acc" | "acc2" | "fg" | "mut";
+  /** color propio (CSS); manda sobre `tone` */
+  color?: string;
+  /**
+   * cinta 3D: el trazo se pinta tres veces (sombra, cuerpo y un brillo fino en el centro), como las cintas de lusion.co.
+   * Pensado para trazos gruesos (`strokeWidth` de 30 a 120)
+   */
+  tube?: boolean;
+  /**
+   * cómo encaja el dibujo si la caja del SVG no tiene la proporción del `viewBox`: `contain` lo encoge entero (y el grosor no
+   * encoge: queda un trazo gordo y corto), `cover` lo recorta, `stretch` lo estira (el grosor no se deforma). Para una cinta
+   * de fondo que cruza la sección, `cover` o `stretch`; o dale a la caja la proporción del `viewBox` (`height: auto`)
+   */
+  fit?: "contain" | "cover" | "stretch";
+  /** con `trigger="scroll"`: dónde empieza y dónde acaba de dibujarse, en fracciones del alto de la ventana (tope del trazo) */
+  scrollRange?: [number, number];
   /** cambia para volver a dibujar */
   playKey?: number;
   className?: string;
@@ -42,7 +58,7 @@ export type LineDrawProps = {
  * `trigger="scroll"` el avance es el del scroll entre el 90 % y el 35 % del alto de la ventana. Sin JS o con movimiento
  * reducido, el trazo se ve completo.
  */
-export default function LineDraw({ shape = "signature", d, viewBox, trigger = "inview", duration = 1.6, delay = 0, strokeWidth = 3, tone = "acc", playKey = 0, className = "", style }: LineDrawProps) {
+export default function LineDraw({ shape = "signature", d, viewBox, trigger = "inview", duration = 1.6, delay = 0, strokeWidth = 3, tone = "acc", color, tube = false, fit = "contain", scrollRange = [0.9, 0.35], playKey = 0, className = "", style }: LineDrawProps) {
   const ref = useRef<SVGSVGElement>(null);
   const reduced = useReducedMotion();
   const def = LINE_SHAPES[shape] ?? LINE_SHAPES.signature;
@@ -54,8 +70,9 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
     const svg = ref.current;
     if (!svg || reduced) return;
     const paths = Array.from(svg.querySelectorAll<SVGPathElement>("path"));
-    // reparto del tiempo por longitud real de cada tramo
-    const lens = paths.map((p) => p.getTotalLength?.() || 1);
+    // reparto del tiempo por longitud real de cada tramo (las copias de la cinta comparten el de su tramo)
+    const tramoDe = (p: SVGPathElement) => Number(p.dataset.parte ?? 0);
+    const lens = parts.map((_, i) => paths.find((p) => tramoDe(p) === i)?.getTotalLength?.() || 1);
     const total = lens.reduce((a, b) => a + b, 0) || 1;
     let acc = 0;
     const spans = lens.map((l) => {
@@ -64,11 +81,20 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
       return [start, acc / total] as const;
     });
     const setProgress = (t: number) =>
-      paths.forEach((p, i) => {
-        const [a, b] = spans[i];
+      paths.forEach((p) => {
+        const [a, b] = spans[tramoDe(p)];
         const local = Math.min(1, Math.max(0, (t - a) / (b - a || 1)));
         p.style.strokeDashoffset = String(1.01 * (1 - local)); // 1,01: sin el punto del remate redondo al principio
       });
+
+    // la cinta sombrea con desplazamientos en px de pantalla; el SVG los aplica en unidades del viewBox
+    const escala = () => {
+      const k = svg.getBoundingClientRect().width / (svg.viewBox.baseVal?.width || 1);
+      svg.style.setProperty("--ld-u", String(k > 0 ? 1 / k : 1));
+    };
+    escala();
+    const ro = tube ? new ResizeObserver(escala) : undefined;
+    ro?.observe(svg);
 
     svg.removeAttribute("data-in");
     paths.forEach((p) => {
@@ -79,11 +105,14 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
 
     if (trigger === "scroll") {
       let raf = 0;
+      // el avance sigue al scroll amortiguado con la sensación de la página (docs/42)
+      const seg = seguidorRaf(resolveFeel().damp.pose, setProgress);
+      const [desde, hasta] = scrollRange;
       const tick = () => {
         raf = 0;
         const r = svg.getBoundingClientRect();
         const vh = window.innerHeight || 1;
-        setProgress((vh * 0.9 - r.top) / (vh * 0.55));
+        seg.set((vh * desde - r.top) / (vh * Math.max(0.05, desde - hasta)));
       };
       const onScroll = () => {
         if (!raf) raf = requestAnimationFrame(tick);
@@ -92,19 +121,27 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       return () => {
+        ro?.disconnect();
         cancelAnimationFrame(raf);
+        seg.stop();
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onScroll);
       };
     }
 
     const play = () =>
-      paths.forEach((p, i) => {
-        const [a, b] = spans[i];
+      paths.forEach((p) => {
+        const [a, b] = spans[tramoDe(p)];
         p.style.transition = `stroke-dashoffset ${(b - a) * duration}s cubic-bezier(0.55, 0.1, 0.35, 1) ${delay + a * duration}s`;
         p.style.strokeDashoffset = "0";
       });
-    if (trigger === "mount") return whenIntroDone(() => requestAnimationFrame(play));
+    if (trigger === "mount") {
+      const cancel = whenIntroDone(() => requestAnimationFrame(play));
+      return () => {
+        ro?.disconnect();
+        cancel();
+      };
+    }
     let io: IntersectionObserver | undefined;
     const cancel = whenIntroDone(() => {
       io = new IntersectionObserver(
@@ -119,16 +156,25 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
       io.observe(svg);
     });
     return () => {
+      ro?.disconnect();
       cancel();
       io?.disconnect();
     };
-  }, [trigger, duration, delay, path, reduced, playKey]);
+  }, [trigger, duration, delay, path, reduced, tube, playKey, scrollRange[0], scrollRange[1]]);
 
   return (
-    <svg ref={ref} className={`ui-ldraw ${className}`.trim()} viewBox={vb} style={{ ...style, "--ld-c": `var(--${tone})`, "--ld-w": `${strokeWidth}px` } as CSSProperties} aria-hidden focusable="false">
-      {parts.map((p, i) => (
-        <path key={i} d={p} pathLength={1} />
-      ))}
+    <svg ref={ref} className={`ui-ldraw ${tube ? "ui-ldraw--tube" : ""} ${className}`.trim()} viewBox={vb} preserveAspectRatio={fit === "cover" ? "xMidYMid slice" : fit === "stretch" ? "none" : undefined} style={{ ...style, "--ld-c": color || `var(--${tone})`, "--ld-w": `${strokeWidth}px` } as CSSProperties} aria-hidden focusable="false">
+      {parts.map((p, i) =>
+        tube ? (
+          <g key={i}>
+            <path d={p} pathLength={1} data-parte={i} className="ui-ldraw__sombra" />
+            <path d={p} pathLength={1} data-parte={i} className="ui-ldraw__cuerpo" />
+            <path d={p} pathLength={1} data-parte={i} className="ui-ldraw__brillo" />
+          </g>
+        ) : (
+          <path key={i} d={p} pathLength={1} data-parte={i} />
+        ),
+      )}
     </svg>
   );
 }

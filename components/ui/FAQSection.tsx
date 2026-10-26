@@ -10,6 +10,12 @@ export type FAQSectionProps = {
   items?: string;
   multiple?: boolean;
   align?: "left" | "center";
+  /** Cabecera encima o a un lado en escritorio. */
+  layout?: "stack" | "split";
+  presentation?: "cards" | "lines";
+  answerAlign?: "inherit" | "left" | "center";
+  /** Índice abierto al inicio; -1 cierra todos. */
+  defaultOpen?: number;
   variant?: Variant;
   className?: string;
 };
@@ -22,14 +28,18 @@ export default function FAQSection({
   items,
   multiple = true,
   align = "center",
+  layout = "stack",
+  presentation = "cards",
+  answerAlign = "inherit",
+  defaultOpen = 0,
   variant = "glass",
   className = "",
 }: FAQSectionProps) {
   return (
-    <section className={`ui-faqs ${align === "left" ? "ui-faqs--left" : ""} ${className}`}>
-      <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align={align} variant="minimal" />
+    <section className={`ui-faqs ui-faqs--${layout} ${align === "left" ? "ui-faqs--left" : ""} ${className}`}>
+      <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align={align} rule={layout === "split" ? "none" : "line"} variant="minimal" />
       <div className="ui-faqs__body">
-        <Accordion items={items} multiple={multiple} variant={variant} />
+        <Accordion items={items} multiple={multiple} defaultOpen={defaultOpen} presentation={presentation} answerAlign={answerAlign} variant={variant} />
       </div>
     </section>
   );

@@ -12,6 +12,16 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 **Trama** es el nombre de esta librería de componentes (el paquete se llama `trama-ui`).
 
+## Trabajo con Claude Code y Codex
+
+- Estas instrucciones son la fuente común; `CLAUDE.md` las importa. Flujo y preparación: `docs/flujo-agentes.md`.
+- Al comenzar, revisa `git status --short` y `git worktree list`. Conserva los cambios existentes y registra qué tarea, rama y URL estás usando.
+- Para tareas simultáneas usa un worktree por tarea, con dependencias, `.next`, puerto y salidas propios. Si se comparte directorio, trabaja por turnos.
+- Ejecuta `npm run doctor` para diagnosticar el entorno; `npm run doctor -- --cine --browser` comprueba también el navegador y los requisitos de cine.
+- Ejecuta `npm run verify` antes de entregar. El build va aparte y nunca se ejecuta junto al dev del mismo worktree. No detengas servidores ajenos.
+- Comprueba cambios visuales con `npm run smoke -- <url-local>` y las herramientas de cine cuando corresponda. Una captura no sustituye la revisión visual.
+- Al cambiar de agente deja un registro por tarea con objetivo, rama, cambios, decisiones, comprobaciones y siguiente paso; plantilla en `docs/flujo-agentes.md`.
+
 Este repo es una **librería de componentes** para proyectos Next.js (ASCII, textmode, pixel art y secciones de landing)
 más un sitio que la enseña. Dos tipos de tarea:
 
@@ -38,7 +48,7 @@ más un sitio que la enseña. Dos tipos de tarea:
 ## 2. Cambiar o ampliar la librería
 
 - Kit = `components/ui/` + `components/ui/styles/` + `lib/ui/` + motores (`lib/asciify`, `lib/sketches`, `lib/scroll`,
-  `lib/text`, `lib/gems`, `lib/story`, `lib/modelnav`, `lib/object3d`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Web de la librería (`/`, `/docs`, `/demos`) = `components/site/` + `lib/docs.ts`
+  `lib/text`, `lib/gems`, `lib/story`, `lib/modelnav`, `lib/object3d`, `lib/typefield`, `lib/porthole`, `lib/physics`, `lib/toydrive`, `lib/chapterstage`, `lib/crosscluster`, `lib/gravure`, `lib/postfx`, `lib/cine`). Catálogo `/componentes` = `lib/catalog/` + `components/playground/`. Web de la librería (`/`, `/docs`, `/demos`) = `components/site/` + `lib/docs.ts`
   (las páginas de `/docs` son los `.md` de `docs/`). Demos y landings = el resto.
   El kit **no** puede importar del catálogo, de las landings ni de `lib/themes`/`lib/demos`.
 - Componente nuevo o cambio de props: sigue `docs/02-guia-de-componentes.md` §3 y §9, regístralo en
@@ -47,5 +57,8 @@ más un sitio que la enseña. Dos tipos de tarea:
 - Antes de terminar: `npm run typecheck`, `npm run catalog:check`, `npm run check:shadows` (sin sombras de texto negras ni brillos sin `--glow`: guía §8.0) y, si tocaste rutas o CSS, `npm run build`
   (**nunca** con el `next dev` del usuario en marcha: comparten `.next/` y lo deja roto).
 - Paquete npm: `npm run pkg:build` (y `pkg:pack` para probar el `.tgz`); ver «Publicar en npm» en `docs/README.md`.
+- Estudiar una web 3D de referencia (cámara, luz, posprocesado, movimiento) o depurar una recreación: `npm run
+  cine:capture -- <url>`, `cine:analyze`, `cine:compare` y `cine:rampa` (`scripts/cine/`, ficha en `lib/cine/`, banco en `/lab/cine/[estudio]`);
+  método, vocabulario y trampas en `docs/26-cine-3d-metodo-y-vocabulario.md`.
 - Hay trampas documentadas (legibilidad sobre fondos, `min-width: 0` en grids anidados, glifos bitmap sin acentos…):
   `docs/02-guia-de-componentes.md` §10 y §16.

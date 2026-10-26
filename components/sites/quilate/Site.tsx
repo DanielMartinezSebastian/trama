@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import Preloader from "@/components/ui/Preloader";
 import ActionBar from "@/components/ui/ActionBar";
 import BeforeAfter from "@/components/ui/BeforeAfter";
-import BentoGrid from "@/components/ui/BentoGrid";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
 import ExpandingPanels from "@/components/ui/ExpandingPanels";
@@ -22,6 +21,7 @@ import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+import { useScrollStory } from "@/lib/story/useScrollStory";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { money } from "@/lib/commerce/money";
@@ -188,8 +188,8 @@ export function Shell({ children }: { children: ReactNode }) {
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
           {/* scroll con inercia (Lenis): aceleración y frenada largas, para que el recorrido del anillo se sienta continuo */}
-          {/* lerp bajo: la frenada es larga, con mucha cola al soltar la rueda */}
-          <SmoothScroll lerp={0.04} wheelMultiplier={0.85} syncGsap={false} />
+          {/* la sensación cinematic (lerp 0,04, rueda × 0,85): la frenada es larga, con mucha cola al soltar la rueda */}
+          <SmoothScroll feel="cinematic" syncGsap={false} />
           <PointerGlow />
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>
           {/* navegación isla (como Arbor): píldora flotante con menú a pantalla completa, la marca y la cita */}
@@ -464,7 +464,6 @@ const MANIFESTO_WORDS = MANIFESTO.split(" ");
 const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo", "trio", "face", "gem"] as const;
 /** el paso del cuadro de cada capítulo */
 const cardStep = (c: number) => BEATS.findIndex((b) => b.kind === "card" && b.chapter === c);
-const smooth = (t: number) => t * t * (3 - 2 * t);
 /** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
 const words = (t: string) =>
   t.split(" ").map((w, i) => (
@@ -501,26 +500,12 @@ function Home() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
-  // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos; también el progreso (0–1)
-  useEffect(() => {
-    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
-    if (!items.length) return;
-    const cards = Array.from(sticky.current?.querySelectorAll<HTMLElement>("[data-card]") ?? []);
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const mid = innerHeight / 2;
-      const centers = items.map((el) => {
-        const r = el.getBoundingClientRect();
-        return r.top + r.height / 2;
-      });
-      let j = 0;
-      while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
-      // meseta: la pose se queda quieta en el 30 % central alrededor de cada capítulo y la transición ocupa el resto, así
-      // el anillo ya está colocado cuando el cuadro de texto llega al centro (y no salta tarde)
-      const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j])));
-      const t = smooth(Math.min(1, Math.max(0, (raw - 0.15) / 0.7)));
+  // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos (el motor del kit,
+  // `useScrollStory`, con la sensación cinematic: meseta del 30 % y una S; docs/42). El motor publica también el progreso,
+  // el peso de cada escena (--w), las cintas (--r, --o) y los cuadros que se disuelven; aquí va lo propio de Quilate
+  useScrollStory(list, sticky, {
+    feel: "cinematic",
+    onFrame: ({ j, t, centers, mid }) => {
       const a = BEATS[j].pose;
       const b = BEATS[Math.min(j + 1, BEATS.length - 1)].pose;
       const p = pose.current;
@@ -540,53 +525,16 @@ function Home() {
         p.pave *= 0.55;
         p.zoom *= 1.08 - 0.22 * p.trio;
       }
-      const span = centers[centers.length - 1] - centers[0];
       const st = sticky.current?.style;
-      st?.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
-      // peso de cada escena (fondo y líneas técnicas): la actual se apaga mientras la siguiente se enciende, con el mismo t
-      for (let k = 0; k < BEATS.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
       st?.setProperty("--ring-x", p.x.toFixed(3));
       // cuánto «interludio» hay ahora (0 en un cuadro, 1 en un interludio): en móvil el anillo baja al centro sin cuadro
       const il = (k: number) => (BEATS[k]?.kind === "interlude" ? 1 : 0);
       st?.setProperty("--ilv", (il(j) * (1 - t) + il(j + 1) * t).toFixed(3));
-      // cintas de texto: avance de cada paso respecto a la línea media (−1 entrando por abajo, 0 centrado, 1 saliendo por
-      // arriba) y su opacidad: las de un interludio se apagan del todo (|r| = 0,45) antes de que asome un cuadro vecino
-      for (let k = 0; k < centers.length; k++) {
-        const gap = (centers[Math.min(k + 1, centers.length - 1)] - centers[Math.max(k - 1, 0)]) / 2 || innerHeight;
-        const r = Math.min(1.2, Math.max(-1.2, (mid - centers[k]) / gap));
-        st?.setProperty(`--r${k}`, r.toFixed(4));
-        st?.setProperty(`--o${k}`, (1 - smooth(Math.min(1, Math.max(0, (Math.abs(r) - 0.3) / 0.15)))).toFixed(3));
-      }
-      // cuadros: se mueven con el scroll (como si fueran en su paso) y se disuelven al alejarse de la línea media: opacidad
-      // entera hasta el 16 % de la altura y nada al 46 %; desenfoque desde el 8 % hasta 16 px al 43 %
-      for (const el of cards) {
-        const k = Number(el.dataset.card);
-        const y = centers[k] - mid;
-        const d = Math.abs(y) / innerHeight;
-        const a = 1 - smooth(Math.min(1, Math.max(0, (d - 0.16) / 0.3)));
-        const blur = still ? 0 : 16 * smooth(Math.min(1, Math.max(0, (d - 0.08) / 0.35)));
-        el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-        el.style.opacity = a.toFixed(3);
-        el.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : "";
-        el.style.visibility = a < 0.02 ? "hidden" : "";
-        el.style.setProperty("--y", y.toFixed(1));
-      }
       // cuánto queda del último paso: el fundido inferior crece en el tramo final
       const last = centers[centers.length - 1];
       st?.setProperty("--story-end", Math.min(1, Math.max(0, (mid - last) / (innerHeight * 0.5))).toFixed(3));
-    };
-    const on = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    addEventListener("scroll", on, { passive: true });
-    addEventListener("resize", on);
-    return () => {
-      cancelAnimationFrame(raf);
-      removeEventListener("scroll", on);
-      removeEventListener("resize", on);
-    };
-  }, []);
+    },
+  });
   // el paso activo (para el aspecto del anillo, la palabra gigante y el índice)
   const [step, setStep] = useState(0);
   useEffect(() => {
@@ -873,71 +821,85 @@ function Home() {
         <ExpandingPanels
           height="min(68svh, 560px)"
           grow={3.2}
+          mobileScroll
+          metaVisibility="active"
+          titleMaxSize="36px"
+          minPanelWidth="144px"
           className="ql-paths"
           panels={[
-            { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: photo("joyeria", 11).src, alt: "Anillo de oro con piedras de colores engastadas en el aro", href: href("alianzas") },
-            { title: "Compromiso", meta: "Solitario con piedra certificada · 4 a 6 semanas", image: photo("joyeria", 12).src, alt: "Anillo de oro con zafiros, esmeralda y diamantes engastados en línea", href: href("compromiso") },
-            { title: "A medida", meta: "Del boceto a la pieza, contigo en el taller", image: photo("joyeria", 1).src, alt: "Joyas hechas a mano sobre la mesa de un orfebre", href: href("cita") },
-            { title: "Transformar", meta: "Una joya heredada, rehecha para hoy", image: photo("joyeria", 10).src, alt: "Anillo antiguo de oro con una piedra azul", href: href("taller") },
+            { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: "/img/quilate/09-categoria-alianzas.webp", alt: "Dos alianzas, una de oro amarillo pulido y otra de oro rosa martillado con diamantes, sobre travertino", href: href("alianzas") },
+            { title: "Compromiso", meta: "Solitario con piedra certificada · 4 a 6 semanas", image: "/img/quilate/10-categoria-compromiso.webp", alt: "Solitario de oro blanco con diamante redondo sobre mármol claro", href: href("compromiso") },
+            { title: "A medida", meta: "Del boceto a la pieza, contigo en el taller", image: "/img/quilate/11-categoria-a-medida.webp", alt: "Manos de joyero dibujando un anillo a medida junto a una pieza con esmeralda", href: href("cita") },
+            { title: "Transformar", meta: "Una joya heredada, rehecha para hoy", image: "/img/quilate/12-categoria-transformar.webp", alt: "Joyero restaurando un anillo heredado de oro con zafiro azul", href: href("taller") },
           ]}
         />
       </section>
 
-      <section className="ql-gal" data-light="taller" aria-label="El taller, en fotos">
+      <section className="ql-gal" data-light="taller" aria-label="Anillos en distintas materias y situaciones">
         <div className="ql-wrap ql-sechead">
-          <p className="ql-kicker">Del banco a la vitrina</p>
-          <h2 className="ql-h2">Así se hace una joya.</h2>
+          <p className="ql-kicker">Ocho piezas, ocho atmósferas</p>
+          <h2 className="ql-h2">La luz también diseña.</h2>
+          <p className="ql-mut">De una alianza martillada a un solitario de color: cada forma encuentra su propia materia y su propia luz.</p>
         </div>
-        <HorizontalScroll gap={28} minWidth={900} className="ql-gal__hs">
+        <HorizontalScroll gap={24} minWidth={900} className="ql-gal__hs">
           {[
-            { i: 5, from: "bottom", cap: "El banco", t: "Flexo, limas y cera: aquí empieza todo.", alt: "Banco de joyero con flexo, limas y piezas a medio hacer" },
-            { i: 4, from: "left", cap: "La fundición", t: "El oro se funde y se vierte en el molde.", alt: "Molde de piedra para fundir joyas" },
-            { i: 0, from: "top", cap: "El hilo", t: "Torcido y soldado a mano, vuelta a vuelta.", alt: "Joyas de hilo de metal retorcido" },
-            { i: 6, from: "bottom", cap: "El esmalte", t: "Color al fuego entre oro y piedra.", alt: "Cadena de oro con piedras y esmalte" },
-            { i: 1, from: "left", cap: "La mesa", t: "Cada pieza, terminada a mano antes de salir.", alt: "Joyas hechas a mano sobre la mesa de un orfebre" },
-            { i: 11, from: "bottom", cap: "El engaste", t: "Piedra a piedra, garra a garra, con lupa.", alt: "Anillo de oro con piedras de colores engastadas en el aro" },
-            { i: 9, from: "right", cap: "El oficio", t: "Dos mil años haciendo anillos igual: a mano.", alt: "Anillo romano de oro" },
-            { i: 10, from: "top", cap: "La herencia", t: "Una joya antigua se puede rehacer sin perder su historia.", alt: "Anillo medieval de oro con una piedra azul" },
-            { i: 8, from: "bottom", cap: "El museo", t: "Lo bien hecho dura siglos.", alt: "Corona de hojas de laurel en oro en una vitrina de museo" },
-            { i: 7, from: "center", cap: "La vitrina", t: "Y al final, la luz que la hace brillar.", alt: "Vitrina con brazaletes de oro iluminados" },
+            { src: "/img/quilate/04-toi-et-moi.webp", cap: "Dos historias", text: "Zafiro pera y diamante en un mismo aro.", alt: "Anillo toi et moi de oro amarillo con zafiro azul pera y diamante sobre caliza rosada", from: "left" },
+            { src: "/img/quilate/01-solitario-marmol.webp", cap: "Luz de día", text: "Mármol claro, reflejo neutro, piedra a la vista.", alt: "Solitario blanco de seis garras sobre mármol veteado", from: "bottom" },
+            { src: "/img/quilate/02-sello-verde.webp", cap: "Sello de autor", text: "Oro cepillado y una turmalina al ras.", alt: "Anillo sello de oro amarillo cepillado con pequeña turmalina verde sobre arena rojiza", from: "center" },
+            { src: "/img/quilate/03-perla-organica.webp", cap: "Forma orgánica", text: "Dos curvas de oro abrazan una perla.", alt: "Anillo escultórico de oro champán con bandas cruzadas y perla sobre lino y papel", from: "right" },
+            { src: "/img/quilate/05-alianza-pave.webp", cap: "Textura compartida", text: "Oro rosa martillado y un hilo de diamantes.", alt: "Alianza de oro rosa con acabado martillado y pavé de diamantes sobre travertino", from: "bottom" },
+            { src: "/img/quilate/06-alianza-platino.webp", cap: "Materia y carácter", text: "Platino satinado con una veta de meteorito.", alt: "Alianza ancha de platino satinado con incrustación oscura sobre pizarra", from: "left" },
+            { src: "/img/quilate/07-vintage-granate.webp", cap: "Memoria antigua", text: "Granate, oro grabado y luz de terciopelo.", alt: "Anillo vintage de oro con granate oval y pequeños diamantes sobre terciopelo burdeos", from: "center" },
+            { src: "/img/quilate/08-art-deco.webp", cap: "Geometría serena", text: "Talla esmeralda y líneas Art Déco.", alt: "Anillo Art Déco de oro blanco con diamante champagne talla esmeralda y baguettes sobre cerámica azul", from: "right" },
           ].map((f, n) => (
-            <figure key={f.i} className="ql-gal__panel" data-tall={n % 2 === 0 ? "" : undefined}>
-              <ImageReveal src={photo("joyeria", f.i).src} alt={f.alt} ratio={n % 2 === 0 ? "4 / 5" : "5 / 4"} from={f.from as never} zoom={1.2} />
+            <figure key={f.src} className="ql-gal__panel">
+              <ImageReveal src={f.src} alt={f.alt} ratio="3 / 2" from={f.from as never} zoom={1.08} duration={1.05} />
               <figcaption>
                 <span className="ql-gal__n">{String(n + 1).padStart(2, "0")}</span>
                 <b>{f.cap}</b>
-                <span>{f.t}</span>
+                <span>{f.text}</span>
               </figcaption>
             </figure>
           ))}
         </HorizontalScroll>
       </section>
-
       <section className="ql-wrap ql-sec" data-light="lupa">
-        <div className="ql-sechead">
+        <div className="ql-sechead ql-proof__head">
           <p className="ql-kicker">Por qué fiarte</p>
-          <h2 className="ql-h2">Lo que firmamos con cada pieza.</h2>
+          <h2 className="ql-h2">Antes de fundir, todo queda claro.</h2>
+          <p className="ql-mut">Cada decisión importante se habla contigo y queda por escrito antes de empezar.</p>
         </div>
-        <BentoGrid
-          columns={4}
-          variant="minimal"
-          className="ql-bento"
-          cells={[
-            { title: "Contraste y punzón", text: "Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos.", stat: "750", span: "2x1", image: photo("joyeria", 8).src },
-            { title: "Piedras certificadas", text: "GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color.", stat: "GIA", span: "1x2", image: photo("joyeria", 12).src },
-            { title: "Precio cerrado", text: "El desglose que ves es el que pagas. Sin «desde» al final.", span: "1x1" },
-            { title: "De por vida", text: "Limpieza y revisión gratis; ajuste de talla gratis el primer año.", stat: "∞", span: "1x1" },
-            { title: "Hecho aquí", text: "Sin intermediarios: lo que encargas se dibuja, funde y engasta en el taller.", span: "2x1", image: photo("joyeria", 5).src },
-          ]}
-        />
+        <div className="ql-proof">
+          <figure className="ql-proof__photo">
+            <img src="/img/quilate/13-punzon-taller.webp" alt="Manos de joyero marcando el interior de una alianza de oro en el banco de trabajo" loading="lazy" />
+            <figcaption><span>En el taller</span><span>El oficio también se firma.</span></figcaption>
+          </figure>
+          <ol className="ql-proof__list">
+            <li>
+              <span className="ql-proof__index">01</span><div><p className="ql-proof__eyebrow">Metal identificado</p><h3>Contraste y punzón</h3><p>Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos.</p></div><b className="ql-proof__mark">750<br /><small>950</small></b>
+            </li>
+            <li>
+              <span className="ql-proof__index">02</span><div><p className="ql-proof__eyebrow">Origen declarado</p><h3>Piedras certificadas</h3><p>GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color.</p></div><b className="ql-proof__mark">GIA<br /><small>IGI</small></b>
+            </li>
+            <li>
+              <span className="ql-proof__index">03</span><div><p className="ql-proof__eyebrow">Sin sorpresas</p><h3>Precio cerrado</h3><p>El desglose que ves es el que pagas. Sin «desde» al final.</p></div><b className="ql-proof__mark">€</b>
+            </li>
+            <li>
+              <span className="ql-proof__index">04</span><div><p className="ql-proof__eyebrow">Cuidado continuo</p><h3>De por vida</h3><p>Limpieza y revisión gratis; ajuste de talla gratis el primer año.</p></div><b className="ql-proof__mark">∞</b>
+            </li>
+            <li>
+              <span className="ql-proof__index">05</span><div><p className="ql-proof__eyebrow">Taller propio</p><h3>Hecho aquí</h3><p>Sin intermediarios: lo que encargas se dibuja, funde y engasta en el taller.</p></div><b className="ql-proof__mark">VLC</b>
+            </li>
+          </ol>
+        </div>
       </section>
 
       <div data-light="memoria">
-        <TestimonialSection kicker="" title="Lo que cuentan al recogerla" subtitle="" items={REVIEWS} rating={BRAND.rating.value} count={BRAND.rating.count} source={BRAND.rating.source} align="left" variant="minimal" className="ql-reviews" />
+        <TestimonialSection kicker="Historias del taller" title="Lo que cuentan al recogerla" subtitle="" items={REVIEWS} rating={BRAND.rating.value} count={BRAND.rating.count} source={BRAND.rating.source} align="left" variant="minimal" presentation="soft" avatarShape="circle" avatarSize="lg" quoteFont="display" className="ql-reviews" />
       </div>
 
       <section className="ql-wrap ql-sec" data-light="lampara">
-        <FAQSection kicker="Antes de venir" title="Preguntas frecuentes" subtitle="" items={FAQ} variant="minimal" />
+        <FAQSection kicker="Antes de venir" title="Preguntas frecuentes" subtitle="Plazos, piedras y pequeños detalles. Lo que conviene saber antes de sentarnos a dibujar." items={FAQ} variant="minimal" align="left" layout="split" presentation="lines" answerAlign="left" multiple={false} className="ql-faq" />
       </section>
 
       <section className="ql-wrap ql-sec ql-cta" data-light="lampara">

@@ -3,6 +3,7 @@
 import { createElement, useEffect, useRef, type CSSProperties } from "react";
 import { clamp01, pinProgress, trackScroll } from "@/lib/motion/progress";
 import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
+import { resolveFeel, seguidorRaf, type ScrollFeelName } from "@/lib/motion/scroll-feel";
 
 export type ScrubTextProps = {
   children: string;
@@ -17,6 +18,8 @@ export type ScrubTextProps = {
   /** con `scope`: tramo del recorrido de la sección (0–1) en el que se encienden las palabras */
   range?: [number, number];
   as?: "p" | "h2" | "h3" | "div";
+  /** sensación del scroll (docs/42): las palabras siguen al scroll amortiguadas; por defecto, la de la página */
+  feel?: ScrollFeelName;
   className?: string;
 };
 
@@ -26,7 +29,7 @@ export type ScrubTextProps = {
  * Dentro de un `PinnedSection` usa `scope=".ui-pin"` y `range`: las palabras se encienden en ese tramo de la sección.
  * Con `prefers-reduced-motion` se ve completo desde el principio.
  */
-export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to = 0.35, scope, range = [0, 1], as = "p", className = "" }: ScrubTextProps) {
+export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to = 0.35, scope, range = [0, 1], as = "p", feel, className = "" }: ScrubTextProps) {
   const ref = useRef<HTMLElement>(null);
   const words = text.split(/\s+/).filter(Boolean);
 
@@ -40,19 +43,21 @@ export default function ScrubText({ children: text, dim = 0.3, from = 0.85, to =
     }
     const host = scope ? el.closest<HTMLElement>(scope) : null;
     const [r0, r1] = range;
-    if (host)
-      return trackScroll(host, (r, vh) => {
-        const p = clamp01((pinProgress(r, vh) - r0) / Math.max(0.001, r1 - r0));
-        ws.forEach((w, i) => w.style.setProperty("--w", clamp01(p * ws.length - i).toFixed(3)));
-      });
-    return trackScroll(el, (r, vh) => {
-      // progreso del párrafo: 0 cuando su tope está en `from`, 1 cuando su base llega a `to`
-      const start = vh * from;
-      const end = vh * to;
-      const p = clamp01((start - r.top) / (start - end + r.height));
-      ws.forEach((w, i) => w.style.setProperty("--w", clamp01(p * ws.length - i).toFixed(3)));
-    });
-  }, [from, to, text, scope, range[0], range[1]]);
+    // las palabras siguen al progreso amortiguadas (docs/42): no copian cada tirón de la rueda
+    const p = seguidorRaf(resolveFeel(feel).damp.pose, (v) => ws.forEach((w, i) => w.style.setProperty("--w", clamp01(v * ws.length - i).toFixed(3))));
+    const stop = host
+      ? trackScroll(host, (r, vh) => p.set(clamp01((pinProgress(r, vh) - r0) / Math.max(0.001, r1 - r0))))
+      : trackScroll(el, (r, vh) => {
+          // progreso del párrafo: 0 cuando su tope está en `from`, 1 cuando su base llega a `to`
+          const start = vh * from;
+          const end = vh * to;
+          p.set(clamp01((start - r.top) / (start - end + r.height)));
+        });
+    return () => {
+      stop();
+      p.stop();
+    };
+  }, [from, to, text, scope, range[0], range[1], feel]);
 
   return createElement(
     as,

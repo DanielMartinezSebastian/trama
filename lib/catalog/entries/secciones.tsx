@@ -142,7 +142,7 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de FAQ",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.",
+    description: "FAQ con cabecera superior o lateral en escritorio, acordeón de tarjetas o líneas, respuestas alineables y apertura inicial configurable. Incluye navegación por teclado y paneles accesibles.",
     stageHeight: 480,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Preguntas frecuentes" },
@@ -155,11 +155,16 @@ export const secciones: CatalogEntry[] = [
         default: "¿Necesito experiencia?|Ninguna. Empezamos desde cero con material blando.\n¿Qué incluye el precio?|Neopreno, tabla, monitor titulado y seguro.\n¿Puedo cancelar?|Hasta 24 horas antes, sin coste.",
       },
       { key: "multiple", label: "Varios paneles abiertos", type: "boolean", default: true },
+      { key: "align", label: "Alineación de cabecera", type: "select", default: "center", options: ["left", "center"] },
+      { key: "layout", label: "Composición", type: "select", default: "stack", options: ["stack", "split"] },
+      { key: "presentation", label: "Acordeón", type: "select", default: "cards", options: ["cards", "lines"] },
+      { key: "answerAlign", label: "Alineación de respuestas", type: "select", default: "inherit", options: ["inherit", "left", "center"] },
+      { key: "defaultOpen", label: "Abierto al inicio (-1 = ninguno)", type: "number", default: 0, min: -1, max: 5, step: 1 },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <FAQSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} multiple={p.multiple as boolean} variant={p.variant as never} />
+        <FAQSection layout={p.layout as "stack" | "split"} presentation={p.presentation as "cards" | "lines"} answerAlign={p.answerAlign as "inherit" | "left" | "center"} align={p.align as "left" | "center"} defaultOpen={p.defaultOpen as number} kicker={p.kicker as string} title={p.title as string} items={p.items as string} multiple={p.multiple as boolean} variant={p.variant as never} />
       </div>
     ),
   },
@@ -199,8 +204,8 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de precios",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.",
-    notes: ["Fórmula de producto (Linear, Vercel; /sitios/faro): layout=\"joined\", highlight=\"lift\", planCase=\"none\", marker=\"check\", toggle=\"neutral\" y variant=\"editorial\" (botón principal sólido en el color del texto).", "Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a»."],
+    description: "Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.",
+    notes: ["Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.", "plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular."],
     stageHeight: 720,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Precios" },
@@ -213,7 +218,10 @@ export const secciones: CatalogEntry[] = [
         multiline: true,
         default: DEFAULT_PLANS,
       },
-      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "joined", "list", "carousel"], labels: { grid: "rejilla", joined: "una pieza con columnas", list: "lista (tarjetas horizontales)", carousel: "carrusel (Swiper)" } },
+      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "joined", "list", "carousel", "menu", "comparison"], labels: { grid: "rejilla", joined: "una pieza con columnas", list: "lista horizontal", carousel: "carrusel", menu: "carta de servicios", comparison: "tabla comparativa" } },
+      { key: "comparison", label: "Comparación: prestación|plan 1|plan 2|plan 3", type: "text", multiline: true, default: "Proyectos|1|Sin límite|Sin límite\nPuestos|1|1|5\nSoporte|Email|Prioritario|Prioritario", when: (p) => p.layout === "comparison" },
+      { key: "caption", label: "Nombre accesible de la tabla", type: "text", default: "Comparación de planes", when: (p) => p.layout === "comparison" },
+      { key: "footnote", label: "Condiciones bajo los precios", type: "text", default: "" },
       { key: "cardLayout", label: "Tarjetas", type: "select", default: "classic", options: ["classic", "compact"], when: (p) => p.layout !== "list" && p.layout !== "joined" },
       { key: "highlight", label: "Plan destacado", type: "select", default: "invert", options: ["invert", "glow", "border", "lift"], labels: { invert: "invertido (fondo de acento)", glow: "halo de acento", border: "borde grueso", lift: "luz cenital (producto)" } },
       { key: "badge", label: "Insignia del destacado", type: "text", default: "Más popular" },
@@ -235,6 +243,9 @@ export const secciones: CatalogEntry[] = [
           subtitle={p.subtitle as string}
           plans={p.plans as string}
           layout={p.layout as never}
+          comparison={p.comparison as string}
+          caption={p.caption as string}
+          footnote={p.footnote as string}
           cardLayout={p.cardLayout as never}
           highlight={p.highlight as never}
           badge={p.badge as string}
@@ -265,7 +276,7 @@ export const secciones: CatalogEntry[] = [
       { key: "title", label: "Titular", type: "text", default: "Alumnos que ya cogieron su ola" },
       {
         key: "items",
-        label: "Reseñas (una por línea, «cita|autor|rol|valoración»)",
+        label: "Reseñas (una por línea, «cita|autor|rol|valoración|avatar URL opcional»)",
         type: "text",
         multiline: true,
         default:
@@ -282,13 +293,16 @@ export const secciones: CatalogEntry[] = [
       { key: "distribution", label: "Reparto por estrellas (filtra las citas)", type: "text", default: "5:180, 4:26, 3:6, 2:1, 1:1", when: (p) => (p.rating as number) > 0 },
       { key: "pageSize", label: "Citas al principio (0 = todas; rejilla)", type: "number", default: 0, min: 0, max: 6, step: 1, when: (p) => p.layout === "grid" },
       { key: "quoteFont", label: "Fuente de la cita", type: "select", default: "body", options: ["body", "display"], labels: { body: "la del texto", display: "la de titulares" } },
-      { key: "avatars", label: "Avatares con iniciales", type: "boolean", default: true },
+      { key: "avatars", label: "Mostrar avatares (foto o iniciales)", type: "boolean", default: true },
+      { key: "avatarSize", label: "Tamaño de los retratos", type: "select", default: "md", options: ["sm", "md", "lg"] },
+      { key: "avatarShape", label: "Forma del avatar", type: "select", default: "theme", options: ["theme", "circle"] },
+      { key: "presentation", label: "Tratamiento de las citas", type: "select", default: "card", options: ["card", "soft", "plain"] },
       variantProp("glass"),
     ],
     notes: ["Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.", "El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar."],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <TestimonialSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} align={p.align as never} rating={p.rating as number} count={p.count as number} source={p.source as string} distribution={p.distribution as string} pageSize={p.pageSize as number} quoteFont={p.quoteFont as never} avatars={p.avatars as boolean} variant={p.variant as never} />
+        <TestimonialSection presentation={p.presentation as "card" | "soft" | "plain"} avatarSize={p.avatarSize as "sm" | "md" | "lg"} avatarShape={p.avatarShape as "theme" | "circle"} kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} align={p.align as never} rating={p.rating as number} count={p.count as number} source={p.source as string} distribution={p.distribution as string} pageSize={p.pageSize as number} quoteFont={p.quoteFont as never} avatars={p.avatars as boolean} variant={p.variant as never} />
       </div>
     ),
   },
