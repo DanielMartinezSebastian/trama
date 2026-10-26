@@ -7,6 +7,7 @@ import { FontLoader, type Font } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 import { Mundo, cuerpo, esferasCaja, plano, type Cuerpo } from "../physics/world";
 import { Vehiculo, type Mandos } from "../physics/vehicle";
+import Decorado, { type OpcionesDecorado } from "./decorado";
 
 /*
  * Escena de `ToyDrive` (docs/29): un coche de juguete con física que empuja las letras de una palabra y unas cajas, con
@@ -42,6 +43,14 @@ export type ToyDriveContentProps = {
   separacion?: number;
   /** posición de la luz principal relativa al foco de la cámara (por defecto, la medida en la referencia) */
   luzRelativa?: [number, number, number];
+  /** decorado alrededor (hierba, árboles, estanques, piedras; `lib/toydrive/decorado`): true, sus opciones o nada */
+  decorado?: boolean | OpcionesDecorado;
+  /**
+   * la intro de la referencia: el mundo oculto bajo un vacío morado con una rejilla de cruces, salvo una isla alrededor
+   * del coche con un borde que brilla; la cámara se aleja en los dos primeros segundos (0,82 → 1) y un clic descubre el
+   * mundo (el vacío se abre desde la isla). Hasta el clic no se conduce
+   */
+  intro?: boolean;
   onReady?: () => void;
 };
 
@@ -96,7 +105,7 @@ function modeloCoche(pintura: THREE.MeshStandardMaterial, piloto: THREE.MeshStan
   return { g, ruedas };
 }
 
-export default function ToyDriveContent({ palabra, colores, fuente, objetivo, interactivo = true, inicio = { pos: [0, 0.77, 0], rumbo: 0 }, suelo = 0, mandosExternos, puntero = false, radio = 45, zoom = 1, separacion = 9, luzRelativa = [11.5, 26.6, -12.4], onReady }: ToyDriveContentProps) {
+export default function ToyDriveContent({ palabra, colores, fuente, objetivo, interactivo = true, inicio = { pos: [0, 0.77, 0], rumbo: 0 }, suelo = 0, mandosExternos, puntero = false, radio = 45, zoom = 1, separacion = 9, luzRelativa = [11.5, 26.6, -12.4], decorado, intro = false, onReady }: ToyDriveContentProps) {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const raycaster = useThree((s) => s.raycaster);
   const gl = useThree((s) => s.gl);
@@ -262,7 +271,80 @@ export default function ToyDriveContent({ palabra, colores, fuente, objetivo, in
     camera.updateProjectionMatrix();
   }, [camera, foco, offset]);
 
-  useFrame((_, delta) => {
+  // la intro: «espera» hasta el clic, «abre» mientras el vacío se aparta y «fuera» después
+  const fase = useRef<{ f: "espera" | "abre" | "fuera"; t: number }>({ f: intro ? "espera" : "fuera", t: 0 });
+  const vacio = useMemo(() => {
+    if (!intro) return null;
+    // rejilla de cruces: una textura pequeña que se repite (128 px, una cruz por casilla)
+    const c = document.createElement("canvas");
+    c.width = c.height = 128;
+    const x = c.getContext("2d")!;
+    x.fillStyle = "#160c26";
+    x.fillRect(0, 0, 128, 128);
+    x.strokeStyle = "#5d3c94";
+    x.lineWidth = 5;
+    x.beginPath();
+    x.moveTo(56, 56);
+    x.lineTo(72, 72);
+    x.moveTo(72, 56);
+    x.lineTo(56, 72);
+    x.stroke();
+    const tex = new THREE.CanvasTexture(c);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(380, 380);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const R = 3.8;
+    const suelo0 = new THREE.Mesh(new THREE.RingGeometry(R, 300, 96, 1), new THREE.MeshBasicMaterial({ map: tex, fog: false }));
+    const borde = new THREE.Mesh(new THREE.RingGeometry(R, R + 0.14, 96, 1), new THREE.MeshBasicMaterial({ color: new THREE.Color(3, 1.2, 2.6), fog: false, toneMapped: false }));
+    for (const m of [suelo0, borde]) {
+      m.rotation.x = -Math.PI / 2;
+      m.position.set(inicio.pos[0], suelo + 0.03, inicio.pos[2]);
+      m.renderOrder = 2;
+    }
+    return { suelo0, borde, tex };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intro]);
+  useEffect(() => {
+    if (!vacio) return;
+    return () => {
+      vacio.tex.dispose();
+      for (const m of [vacio.suelo0, vacio.borde]) {
+        m.geometry.dispose();
+        (m.material as THREE.Material).dispose();
+      }
+    };
+  }, [vacio]);
+  useEffect(() => {
+    if (!intro) return;
+    const el: HTMLElement = gl.domElement;
+    const obj = objetivo?.current;
+    const empieza = () => {
+      if (fase.current.f === "espera") fase.current = { f: "abre", t: -1 };
+    };
+    el.addEventListener("pointerdown", empieza);
+    obj?.addEventListener("pointerdown", empieza);
+    return () => {
+      el.removeEventListener("pointerdown", empieza);
+      obj?.removeEventListener("pointerdown", empieza);
+    };
+  }, [intro, gl, objetivo]);
+  const decoradoRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }, delta) => {
+    // intro: el vacío se abre desde la isla, acelerando, y deja ver lo que ocultaba
+    const fi = fase.current;
+    if (vacio) {
+      if (fi.f === "abre" && fi.t < 0) fi.t = clock.elapsedTime;
+      const abre = fi.f === "espera" ? 0 : Math.min(1, (clock.elapsedTime - fi.t) / 1.4);
+      const s = 1 + Math.pow(abre, 2.2) * 80;
+      vacio.suelo0.scale.setScalar(s);
+      vacio.borde.scale.setScalar(s);
+      vacio.suelo0.visible = vacio.borde.visible = abre < 1;
+      if (abre >= 1 && fi.f === "abre") fi.f = "fuera";
+      const oculto = fi.f === "espera";
+      if (grupo.current) grupo.current.visible = !oculto;
+      if (decoradoRef.current) decoradoRef.current.visible = !oculto;
+    }
     const { mundo, chasis, vehiculo, coche, objetos } = escena;
     const ext = mandosExternos?.current ?? {};
     const t = teclas.current;
@@ -286,7 +368,7 @@ export default function ToyDriveContent({ palabra, colores, fuente, objetivo, in
       }
     }
     const suma = (k: keyof Mandos) => Math.min(1, (t[k] ?? 0) + (ext[k] ?? 0) + (ptr[k] ?? 0));
-    vehiculo.mandos = { adelante: suma("adelante"), atras: suma("atras"), izquierda: suma("izquierda"), derecha: suma("derecha"), freno: suma("freno") };
+    vehiculo.mandos = fi.f === "espera" ? { adelante: 0, atras: 0, izquierda: 0, derecha: 0, freno: 1 } : { adelante: suma("adelante"), atras: suma("atras"), izquierda: suma("izquierda"), derecha: suma("derecha"), freno: suma("freno") };
     // fuera del área o con R: de vuelta a la salida, quieto
     if (volver.current || Math.hypot(chasis.pos[0] - inicio.pos[0], chasis.pos[2] - inicio.pos[2]) > radio || chasis.pos[1] < suelo - 5) {
       volver.current = false;
@@ -322,7 +404,9 @@ export default function ToyDriveContent({ palabra, colores, fuente, objetivo, in
     const k = 1 - Math.pow(1 - SEGUIMIENTO, Math.min(3, delta * 60));
     foco.x += (chasis.pos[0] - foco.x) * k;
     foco.z += (chasis.pos[2] - foco.z) * k;
-    camera.position.copy(foco).add(offset);
+    // la intro: la cámara empieza más cerca (0,82) y se aleja entre 0,8 y 2 s con curva sine.in (medido en la referencia)
+    const acerca = vacio ? 0.82 + 0.18 * (1 - Math.cos((Math.min(1, Math.max(0, (clock.elapsedTime - 0.8) / 1.2)) * Math.PI) / 2)) : 1;
+    camera.position.copy(foco).addScaledVector(offset, acerca);
     if (luz.current) {
       luz.current.position.set(foco.x + luzRelativa[0], foco.y + luzRelativa[1], foco.z + luzRelativa[2]);
       luz.current.target.position.copy(foco);
@@ -337,6 +421,26 @@ export default function ToyDriveContent({ palabra, colores, fuente, objetivo, in
       <mesh rotation-x={-Math.PI / 2} position-y={suelo} receiveShadow material={escena.mats.suelo}>
         <planeGeometry args={[400, 400]} />
       </mesh>
+      {vacio && (
+        <>
+          <primitive object={vacio.suelo0} />
+          <primitive object={vacio.borde} />
+        </>
+      )}
+      {decorado && (
+        <group ref={decoradoRef}>
+          <Decorado
+            centro={[inicio.pos[0], inicio.pos[2]]}
+            suelo={suelo}
+            // libres: la salida del coche y la fila de letras, que está a `separacion` por delante
+            libres={[
+              { x: inicio.pos[0], z: inicio.pos[2], r: 4 },
+              { x: inicio.pos[0] + Math.cos(inicio.rumbo) * separacion, z: inicio.pos[2] + Math.sin(inicio.rumbo) * separacion, r: 5 },
+            ]}
+            opciones={decorado === true ? {} : decorado}
+          />
+        </group>
+      )}
       <hemisphereLight args={["#ffe7d1", "#5b3a6e", 0.35]} />
       <directionalLight
         ref={luz}

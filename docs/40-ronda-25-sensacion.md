@@ -126,6 +126,59 @@ anotado como límite de la medida de texto.
 - **Luz**: la referencia tiene 2 hemisféricas y 6 direccionales.
 - La figura que cae en el papel rasgado.
 
+## 4b. La portada de Meer Mohsin: la foto
+
+A petición del usuario, con `npm run images:fetch -- retratos`:
+
+- es un tema nuevo del script, con fotos CC0 de Unsplash en Wikimedia Commons;
+- los créditos quedan en `lib/sites/photo-credits.json`;
+- los descartes (animales, caras tapadas, de espaldas) quedan en `EXCLUDE` por su título exacto.
+
+En el banco va `public/img/retratos/01-a-friend-unsplash.jpg`, un rostro de frente en blanco y negro. Está virado a rojo
+oscuro, fundido con el negro por una máscara radial y con los ojos bajo el emblema.
+
+## 4c. Lusion (B3): los claros de más
+
+La sonda mide el blanco de las cruces en #ffffff, pero con el material del banco salen el doble de claros que en la
+referencia. Se baja hasta igualar el reparto de tonos:
+
+| Vuelta | Blanco | Muestras | Imagen | Acabado | Claros (ref. 0,08) |
+|---|---|---|---|---|---|
+| 3 | #ffffff | 5 | 57 % ± 25 | 34 % ± 9 | 0,17 |
+| 5 | #d4d4d4 | 3 | 41 % ± 6 | 25 % ± 5 | 0,13 |
+| 6 | #bcbcbc | 3 | **23 % ± 15** (ruido 21 %: cumple) | 25 % ± 6 | 0,10 |
+
+Lusion cumple 6 de 9 ejes. Queda el posprocesado (35 %), que es un dato de la cadena de render y no de la imagen, y
+el acabado (25 %, frente a un objetivo del 15 %).
+
+## 4d. Bruno (B2): decorado e intro
+
+- **`lib/toydrive/decorado.tsx`** (prop `decorado` de `ToyDriveContent`):
+  - matas de hierba a rodales, con hojas que van de oscuro en la raíz a claro en la punta;
+  - árboles de copa con bultos facetados, más claros arriba;
+  - estanques de borde irregular con orilla de espuma, y piedras;
+  - todo con semilla e instanciado, con materiales estándar (vale en WebGL y en WebGPU);
+  - deja libres la salida del coche y la palabra.
+- **Intro** (prop `intro`):
+  - el mundo, oculto bajo un vacío morado con una rejilla de cruces, salvo una isla con un borde que brilla;
+  - la cámara se aleja de 0,82 a 1 entre 0,8 y 2 s, con curva `sine.in`, como en la referencia;
+  - un clic abre el vacío desde la isla, acelerando; hasta entonces no se conduce.
+
+| Vuelta | Cambio | Imagen | Acabado | Atmósfera | Profundidad | Cámara |
+|---|---|---|---|---|---|---|
+| 1 | Reestudio: plano naranja | 100 % | 81 % | 55 % | — | 55 % |
+| 2 | Decorado | 100 % | **34 %** | 48 % | 61 % | 55 % |
+| 3 | Intro | **80 %** | 39 % | **18 %** | 50 % | 50 % |
+| 4 | Alejamiento `sine.in`, más hierba (1 600 matas), vacío más oscuro | **65 %** | **25 %** | **14 %** | **39 %** | 50 % |
+
+**Pendiente en Bruno**:
+- La cámara (50 %) sigue al coche, y el coche gira distinto tras el clic (69° de diferencia en las piezas): es la dinámica de la salida, no la cámara.
+- La luz (45 %).
+- La imagen (65 %): falta la sombra del mundo. La referencia tiene oscuros también fuera de la intro.
+
+Lo que dicen los tonos: la referencia tiene un 38 % de oscuros (la intro y las sombras del mundo) y el banco no tenía
+ninguno. Con la intro sube al 22 %.
+
 ## 5. Inspector
 
 - **`hooks/three.js`**:

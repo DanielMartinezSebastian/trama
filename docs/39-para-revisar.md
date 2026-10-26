@@ -16,6 +16,7 @@
 | `ProjectReel`: reel de proyectos con fondo desenfocado | http://localhost:3005/componentes#project-reel y el final del banco del relato | El paso de un proyecto a otro y el fondo | Meer Mohsin, sección de proyectos |
 | `TornPaper`: franja de papel rasgado | http://localhost:3005/componentes#torn-paper | El corte y el canto blanco | Meer Mohsin, «The fall was always part of the path» |
 | `GravureCanvas`: grabado a lápiz para cualquier escena | http://localhost:3005/componentes#gravure-canvas | ¿Te sirve el grabado fuera del paisaje? | El grabado de Chartogne-Taillet |
+| **Bruno**: intro y decorado de juguete | http://localhost:3005/lab/cine/bruno (haz clic y conduce con las flechas) | La intro (vacío morado, isla, clic), la hierba, los árboles, el agua | https://bruno-simon.com/ |
 | **Chartogne**: el paisaje más denso | http://localhost:3005/lab/cine/chartogne | Cepas en trazos, árboles sin tronco, casas pequeñas | https://chartogne-taillet.com/en |
 
 Puntúalo en el panel (http://localhost:3005/lab/cine): cada ficha con demo tiene el bloque «Tu puntuación», con
@@ -34,7 +35,7 @@ quiero saberlo antes que nada.
 | Orden del plan | El de docs/36 §7, con lo de Meer Mohsin primero porque era la demo más lejana |
 | Piezas nuevas en el kit (`GravureCanvas`, `ThornEmblem`, `FlameHorizon`, `TornPaper`, `ProjectReel`) | Entran en el catálogo `/componentes`; las quito si no te convencen |
 | Chartogne: la profundidad se queda en el 16 % (objetivo: 15 %) | Lo dejo así. El punto que falta está en el desenfoque y costaría varias vueltas más |
-| La portada de Meer Mohsin lleva la foto de una persona | No la copio: el banco pone un degradado. Si quieres una figura, dime de dónde sacar la imagen |
+| La portada de Meer Mohsin lleva la foto de una persona | **Hecho** (me lo pediste): `npm run images:fetch -- retratos` (tema nuevo, fotos CC0 de Unsplash en Commons con sus créditos). En la portada del banco va `public/img/retratos/01-a-friend-unsplash.jpg`, virada a rojo. Si prefieres otra de las 8, dime el número (hoja: `public/img/retratos/`) |
 | Nada se fusiona en `main` | Todo sigue en `feat/cine-captura` hasta que lo pidas |
 
 ## 4. Bloqueos

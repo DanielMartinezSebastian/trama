@@ -30,7 +30,14 @@ export default function Page() {
       <Desplazable />
       <RelatoMeer />
       <section style={{ position: "relative", zIndex: 2, height: 900, display: "grid", placeItems: "center", overflow: "hidden", background: "radial-gradient(ellipse at 50% 40%, #3a0006 0, #000 60%)" }}>
-        <h1 style={{ margin: 0, fontSize: "clamp(64px, 11vw, 168px)", fontWeight: 500, letterSpacing: "-0.04em", whiteSpace: "nowrap" }}>ALWAYS DOING TO</h1>
+        {/* el rostro de la portada (CC0, Unsplash: public/img/retratos), virado a rojo oscuro y fundido con el negro; los ojos
+            quedan en el centro de la vista, bajo el emblema, como en la referencia */}
+        <img
+          src="/img/retratos/01-a-friend-unsplash.jpg"
+          alt=""
+          style={{ position: "absolute", left: "50%", top: 360, width: "min(820px, 70vw)", transform: "translate(-50%, -38%)", filter: "grayscale(1) sepia(1) saturate(4) hue-rotate(-40deg) brightness(0.42) contrast(1.25)", maskImage: "radial-gradient(ellipse 42% 58% at 50% 45%, #000 40%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 42% 58% at 50% 45%, #000 40%, transparent 100%)" }}
+        />
+        <h1 style={{ position: "relative", margin: 0, fontFamily: "var(--font-sans, system-ui), sans-serif", fontSize: "clamp(64px, 11vw, 168px)", fontWeight: 500, letterSpacing: "-0.04em", whiteSpace: "nowrap" }}>ALWAYS DOING TO</h1>
       </section>
       <div style={{ height: 2391 }} />
       <div style={{ position: "relative", zIndex: 3 }}>

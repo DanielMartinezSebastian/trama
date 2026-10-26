@@ -61,7 +61,8 @@ export const RONDAS: Ronda[] = [
     resultado: [
       { eje: "Meer Mohsin: imagen · cámara · profundidad", valor: "72 → 31 % · 100 → 0 % · 57 → 10 %" },
       { eje: "Chartogne: profundidad (imagen)", valor: "28 → 16 % (9 %)" },
-      { eje: "Lusion con 5 muestras: imagen · acabado", valor: "57 % ± 25 · 34 % ± 9" },
+      { eje: "Lusion (3 muestras): imagen · acabado", valor: "57 → 23 % ± 15 (cumple) · 34 → 25 %" },
+      { eje: "Bruno con decorado e intro: imagen · acabado · atmósfera", valor: "100 → 65 % · 81 → 25 % · 55 → 14 %" },
     ],
     conclusion:
       "El eje de profundidad encontró lo que el ojo notaba: el paisaje de Chartogne era menos denso que la referencia. Meer Mohsin estaba lejos porque faltaba la escena, no el texto: con el emblema de púas, las llamas con manos, el papel rasgado, la caligráfica y la cámara de la referencia, la imagen baja del 72 al 44 % y la cámara del 100 al 0 %. Con cinco muestras, Lusion queda claramente por encima de su ruido: la causa son los claros de más.",
@@ -71,7 +72,7 @@ export const RONDAS: Ronda[] = [
       { papel: "Muestras de Lusion", ruta: "vueltas/lusion/muestras" },
       { papel: "Vueltas de Chartogne", ruta: "vueltas/chartogne" },
     ],
-    pendiente: ["Meer Mohsin: luz, logotipo y barra, figura que cae", "Lusion: claros de más", "Chartogne: red de caminos", "B2 Bruno con decorado"],
+    pendiente: ["Meer Mohsin: luz, logotipo y barra, figura que cae", "Lusion: acabado y posprocesado", "Chartogne: red de caminos", "Bruno: sombra del mundo y salida del coche"],
   },
   {
     n: "24",

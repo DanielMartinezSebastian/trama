@@ -46,6 +46,10 @@ export const bruno: Ficha = {
         colores: { suelo: "#b8582a", coche: "#b81d24", letras: "#c9c0dc", cajas: "#c7c0d8", acento: "#ff3b3b" },
         inicio: { pos: [39.6201, 1.2133, 37.8466], rumbo: 0.2306 },
         suelo: 0.441,
+        // el decorado de la referencia (docs/36 B2): hierba a rodales, árboles rosas, estanques y piedras
+        decorado: true,
+        // la intro: vacío morado con la isla, la cámara que se aleja y el clic que descubre el mundo
+        intro: true,
       },
     },
   ],

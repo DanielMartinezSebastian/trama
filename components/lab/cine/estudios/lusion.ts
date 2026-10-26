@@ -1,6 +1,8 @@
 import type { Ficha } from "@/lib/cine/schema";
 
-const AZUL = "#061dfb", BLANCA = "#ffffff", NEGRA = "#111111";
+// la blanca medida es #ffffff, pero el banco la pinta con el doble de claros que la referencia (docs/40 §2): se baja hasta
+// igualar el reparto de tonos
+const AZUL = "#061dfb", BLANCA = "#bcbcbc", NEGRA = "#111111";
 /** las 24 cruces de la portada (sonda de la escena): azules 4 mates y 2 pulidas, blancas 6 y 2, negras 6 y 2, y dos de cristal */
 const PIEZAS = [
   ...[0, 1, 2, 3, 4, 5, 6, 7].flatMap((k) => [AZUL, BLANCA, NEGRA].map((color) => ({ color, pulida: k % 4 === 3 }))).filter((p, i) => !(p.color === AZUL && i >= 15 && !p.pulida)),
