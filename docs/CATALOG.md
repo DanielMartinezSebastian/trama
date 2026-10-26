@@ -2718,6 +2718,31 @@ Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérge
 
 Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.
 
+### Miniatura de enlace (LinkPreview) — `LinkPreview`
+
+Miniatura de una página al pasar el cursor o enfocar su enlace con teclado. Vista en vivo o imagen estática, carga bajo demanda y tema heredado del disparador. Puede envolver un enlace propio, incluido next/link.
+
+| prop | tipo | default |
+|---|---|---|
+| `href` | text | "/demo/th-ciphergrid" |
+| `label` | text | "Ver página" |
+| `title` | text | "" |
+| `mode` | `live` · `image` | "live" |
+| `image` | text | "" |
+| `width` | number 160–720 | 360 |
+| `delay` | number 0–1000 | 240 |
+| `viewportWidth` | number 320–1920 | 1280 |
+| `viewportHeight` | number 320–1440 | 800 |
+| `loadingLabel` | text | "Cargando vista previa…" |
+| `errorLabel` | text | "Abre el enlace para ver la página" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "outline" |
+
+- Con children se conserva el enlace original y sus eventos; sin children se crea un enlace HTML con href y label. No añade una parada de tabulador ni reemplaza la navegación.
+- La vista en vivo requiere que el destino permita iframes y que su origen esté autorizado por la CSP del proyecto. Para webs externas que no lo permitan, usa mode="image" con una captura propia en image.
+- width es un máximo en píxeles. viewportWidth y viewportHeight definen la resolución del iframe y la proporción de la miniatura. title vacío oculta el pie.
+- Escape, scroll, cambio de tamaño, clic y pérdida de foco o hover cierran y descargan la vista, también durante el retardo. Solo se mantiene una miniatura activa. El hover táctil está desactivado.
+- El portal copia el tema al abrirse. Respeta movimiento reducido en su aparición; las animaciones dentro de la página en vivo dependen de esa página.
+
 ### Modal — `Modal`
 
 Diálogo modal: un botón lo abre, el fondo o Escape lo cierran; pausa el scroll y el tabulador no sale de él. Con size="full" es una pantalla de entrada a toda la ventana («Entrar con sonido / sin sonido», «¿Eres mayor de edad?»); con actions lleva botones propios y con dismissible={false} obliga a elegir. position: fixed, sin portal.

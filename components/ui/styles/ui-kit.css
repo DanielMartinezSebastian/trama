@@ -2045,3 +2045,17 @@ details.ui-callout[open] .ui-callout__chev { rotate: 180deg; }
 .ui-s--glass .ui-count__cell, .ui-s--solid .ui-count__cell, .ui-s--outline .ui-count__cell { padding: 12px 14px; border: var(--s-bd, 1px solid var(--ln)); border-radius: var(--s-r, var(--r, 12px)); background: var(--s-bg, transparent); }
 @keyframes ui-count-in { from { transform: translateY(-60%); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .ui-count__v { animation: none; } }
+
+/* LinkPreview: portal con los tokens del disparador; el enlace conserva su maquetacion. */
+.ui-link-preview { display: contents; }
+.ui-link-preview > a:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+.ui-link-preview__panel { position: fixed; z-index: 1000; pointer-events: none; overflow: hidden; color: var(--fg); background: var(--bg); animation: ui-link-preview-in 160ms ease-out; }
+.ui-link-preview__viewport { position: relative; overflow: hidden; background: var(--bg); }
+.ui-link-preview__status { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center; font-size: 11px; line-height: 1.5; color: var(--mut); }
+.ui-link-preview__viewport iframe { display: block; max-width: none; border: 0; transform-origin: top left; opacity: 0; transition: opacity 160ms ease; }
+.ui-link-preview__image { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 160ms ease; }
+.ui-link-preview__viewport .is-ready { opacity: 1; }
+.ui-link-preview__caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 36px; padding: 0 12px; border-top: 1px solid var(--ln); background: var(--s-bg); font-family: var(--s-ff); font-size: 10px; line-height: 1.5; }
+.ui-link-preview__caption > span:first-child { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+@keyframes ui-link-preview-in { from { opacity: 0; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .ui-link-preview__panel { animation: none; } .ui-link-preview__viewport iframe, .ui-link-preview__image { transition: none; } }

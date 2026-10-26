@@ -61,6 +61,7 @@ const barrel = [
   `export { useCart, type CartLine } from "./lib/commerce/cart";`,
   `export { money, discount } from "./lib/commerce/money";`,
   `export type { ContactFormProps, ContactFormResult } from "./components/ui/ContactForm";`,
+  `export type { LinkPreviewProps } from "./components/ui/LinkPreview";`,
   // transiciones de página: además del componente, el envoltorio de elementos fijos y las ayudas para elegir animación
   `export * from "./components/ui/PageTransition";`,
   // transiciones de elementos sueltos: ElementTransition va por nombre arriba; aquí, SharedTransition y los tipos
