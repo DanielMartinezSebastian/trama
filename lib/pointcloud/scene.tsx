@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { dampFactor } from "@/lib/motion/scroll-feel";
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Line, LineBasicMaterial, Plane, Points, Raycaster, ShaderMaterial, Vector2, Vector3 } from "three";
 
 /**
@@ -265,7 +266,9 @@ function Cloud(props: PointCloudSceneProps) {
   }, [gl, camera, ray, plane, mat]);
 
   useFrame((st, dt) => {
-    const P = state.current, s = S.current, k = Math.min(1, dt * 5);
+    // la pose se sigue a 5/s, igual a cualquier frecuencia. Con 9/s (el de la sensación cinematic) la nube copiaba la cola
+    // del scroll: acoplamiento 0,43 frente a 0,29 medido con cine:ritmo (docs/42 §7)
+    const P = state.current, s = S.current, k = dampFactor(5, Math.min(dt, 0.1));
     for (const key of KEYS) s[key] += (P[key] - s[key]) * k;
     const u = mat.uniforms;
     u.uTime.value = st.clock.elapsedTime;

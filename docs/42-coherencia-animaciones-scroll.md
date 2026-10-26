@@ -144,3 +144,28 @@ Se comprueba con `cine:ritmo --comparar .refs3d/ritmo/quilate-lento <captura>`.
 3. Ajustar en Cota cuánto cambia la escena por pantalla, hasta la regla del §4.
 4. Rehacer el banco de Meer Mohsin (`RelatoMeer`) con `useScrollTimeline`.
 5. `ChapterStage`, `ProjectReel` y `FlameHorizon` con la sensación de la página.
+
+## 7. Segunda ronda (26-10-2026)
+
+- **Quilate con el motor del kit** (`useScrollStory` con `feel="cinematic"`, sin su copia de 62 líneas). Control con
+  `cine:ritmo`: las ocho medidas, idénticas (`.refs3d/ritmo/quilate-motor`).
+- **Guía**: docs/02 §6.5 y ficha de concepto en docs/37 §11.
+- **Cota, ajuste del cambio por pantalla:**
+
+  | Variante | Rapidez | Sin parar | Acoplamiento |
+  |---|---|---|---|
+  | Quilate (objetivo) | 0,85 | 0,21 | 0,15 |
+  | Cota antes (`lerp 0,07`, pasos de 130 svh) | 1,98 | 0,04 | 0,34 |
+  | `feel cinematic` | 1,28 | 0,09 | 0,40 |
+  | + pasos de 220 svh | 1,07 | 0,41 | 0,34 |
+  | **+ pasos de 175 svh (queda así)** | **1,07** | 0,40 | **0,29** |
+  | + seguimiento de la nube a 9/s | 1,09 | 0,55 | 0,43 |
+
+  **Lo que enseña:**
+  - **Alargar los pasos baja la rapidez**, pero no hasta Quilate.
+  - **Seguir la pose más deprisa empeora**: la escena copia la cola del scroll.
+  - **Lo que queda es coreografía**: cuánto cambian las poses vecinas. En Quilate cambian poco (el anillo gira unos 0,4–0,8
+    rad por paso y se desplaza un 20 % del ancho). Se ajusta pose a pose, como hace el usuario con los encuadres de
+    Quilate, no con el motor.
+  - **Regla nueva para docs/02 §6.5**: el seguimiento de la escena, entre 4 y 6/s cuando el scroll ya tiene inercia larga.
+    Los 9/s de Quilate funcionan porque sus mesetas absorben la cola.
