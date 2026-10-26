@@ -54,6 +54,8 @@ const TOPICS: Record<string, Topic> = {
   joyeria: { n: 14, queries: ["jewelry store interior", "jewellery shop window", "jewelry display case", "jeweller workshop", "goldsmith workbench", "goldsmith at work", "jeweler hands", "gemstones loose", "cut gemstones", "diamond loose", "jewelry unsplash", "gold necklace unsplash", "engagement ring box", "earrings unsplash", "jewellery making"], match: /\b(rings?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant|jeweller\w*|jeweler\w*|workshop|workbench)\b/i },
   // retratos de cerca y con poca luz: la portada de meermohsin.me (un rostro sobre negro con luz roja, docs/40 §4)
   retratos: { n: 12, queries: ["portrait unsplash", "man portrait unsplash", "male portrait", "portrait of a man", "headshot man unsplash", "man portrait studio unsplash", "portrait of young man unsplash", "man black shirt portrait", "man portrait dark background", "young man portrait", "pexels portrait", "man face portrait"] },
+  // astronautas en paseos espaciales (NASA, dominio público): la última escena de lusion.co (docs/43)
+  espacio: { n: 6, queries: ["astronaut spacewalk", "spacewalk EVA astronaut", "astronaut extravehicular activity", "astronaut floating space station"], match: /astronaut|spacewalk|EVA|extravehicular/i },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 

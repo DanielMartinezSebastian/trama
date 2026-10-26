@@ -40,6 +40,38 @@ export type Ronda = {
 
 export const RONDAS: Ronda[] = [
   {
+    n: "26",
+    fecha: "26-10-2026",
+    titulo: "Réplicas completas y scroll con sensación: Meer Mohsin con su emblema, Lusion entera, la tubería de Quilate en el kit",
+    tipo: "estudio",
+    fuente: { nombre: "Lusion (web entera)", url: "https://lusion.co/", motor: "three r158 (todo en WebGL)", gesto: "rueda" },
+    lab: "/lab/cine/lusion-web",
+    componentes: [
+      { nombre: "ScrollExpand", catalogo: "scroll-expand", ruta: "components/ui/ScrollExpand.tsx" },
+      { nombre: "LineDraw (tube)", catalogo: "line-draw", ruta: "components/ui/LineDraw.tsx" },
+      { nombre: "ThornEmblem (wings)", catalogo: "thorn-emblem", ruta: "lib/emblem/alas.ts" },
+      { nombre: "FluidCursor", catalogo: "fluid-cursor", ruta: "components/ui/FluidCursor.tsx" },
+      { nombre: "lib/motion/scroll-feel", ruta: "lib/motion/scroll-feel.ts" },
+      { nombre: "useScrollTimeline", ruta: "lib/story/useScrollTimeline.ts" },
+    ],
+    herramientas: ["cine:ritmo (perfil de scroll)", "volcado del DOM con estilos", "images:fetch retratos y espacio"],
+    doc: "43-lusion-replica.md",
+    commits: [],
+    resultado: [
+      { eje: "Quilate con el motor del kit (ritmo)", valor: "8 de 8 medidas idénticas" },
+      { eje: "Cota: rapidez · acoplamiento", valor: "1,98 → 1,07 · 0,34 → 0,29" },
+    ],
+    conclusion:
+      "Las demos tienen que ser la web entera, no la sección medida. Meer Mohsin: el emblema, rehecho tras estudiarlo (dos alas tribales que dan vueltas y acaban pequeñas arriba). Lusion: réplica de la portada entera con piezas del kit. Y la sensación de Quilate es ahora una tubería del kit que se mide con cine:ritmo (docs/42).",
+    capturas: {},
+    extras: [
+      { papel: "Ritmo de Quilate y Cota", ruta: "ritmo" },
+      { papel: "Inventario de Lusion", ruta: "lusion-web" },
+      { papel: "Inventario de la portada de Meer Mohsin", ruta: "mm-hero" },
+    ],
+    pendiente: ["Lusion: reel curvado en WebGL, astronauta 3D, transición de proyecto", "Meer Mohsin: secciones S1, S6–S9 (docs/41)", "Chartogne completa"],
+  },
+  {
     n: "25",
     fecha: "25–26-10-2026",
     titulo: "Sensación y profundidad: Meer Mohsin con su escena, Chartogne más denso, muestras y grabado para cualquier escena",

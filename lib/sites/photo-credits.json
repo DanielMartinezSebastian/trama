@@ -1337,5 +1337,83 @@
     "width": 453,
     "height": 614,
     "bytes": 16728
+  },
+  {
+    "file": "espacio/01-eva-nogales-in-2023-06.jpg",
+    "topic": "espacio",
+    "title": "Eva Nogales in 2023 06.jpg",
+    "author": "Cmichel67",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Eva_Nogales_in_2023_06.jpg",
+    "width": 1600,
+    "height": 2399,
+    "bytes": 198621
+  },
+  {
+    "file": "espacio/02-astronauts-hoffman-and-musgrave-performing-an-ex.jpg",
+    "topic": "espacio",
+    "title": "Astronauts Hoffman and Musgrave performing an Extravehicular Activity on the Hubble Space Telescope (27514172414).jpg",
+    "author": "NASA Hubble Space Telescope",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Astronauts_Hoffman_and_Musgrave_performing_an_Extravehicular_Activity_on_the_Hubble_Space_Telescope_(27514172414).jpg",
+    "width": 1600,
+    "height": 1600,
+    "bytes": 349296
+  },
+  {
+    "file": "espacio/03-nasa-astronaut-nichole-ayers-is-pictured-during-.jpg",
+    "topic": "espacio",
+    "title": "NASA astronaut Nichole Ayers is pictured during a spacewalk (iss073e0008841).jpg",
+    "author": "NASA Johnson Space Center",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:NASA_astronaut_Nichole_Ayers_is_pictured_during_a_spacewalk_(iss073e0008841).jpg",
+    "width": 1600,
+    "height": 2400,
+    "bytes": 149966
+  },
+  {
+    "file": "espacio/04-nasa-astronaut-is-pictured-during-a-spacewalk-is.jpg",
+    "topic": "espacio",
+    "title": "NASA astronaut is pictured during a spacewalk (iss073e0010437).jpg",
+    "author": "NASA Johnson Space Center",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:NASA_astronaut_is_pictured_during_a_spacewalk_(iss073e0010437).jpg",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 137070
+  },
+  {
+    "file": "espacio/05-nasa-astronaut-chris-williams-participates-in-sp.jpg",
+    "topic": "espacio",
+    "title": "NASA astronaut Chris Williams participates in spacewalk training (jsc2024e055545).jpg",
+    "author": "NASA Johnson Space Center / NASA/Robert Markowitz",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:NASA_astronaut_Chris_Williams_participates_in_spacewalk_training_(jsc2024e055545).jpg",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 205779
+  },
+  {
+    "file": "espacio/06-artist-concept-of-apollo-9-extravehicular-activi.jpg",
+    "topic": "espacio",
+    "title": "Artist concept of Apollo 9 extravehicular activity (S69-18547).jpg",
+    "author": "NASA/JSC",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Artist_concept_of_Apollo_9_extravehicular_activity_(S69-18547).jpg",
+    "width": 1600,
+    "height": 1155,
+    "bytes": 242891
   }
 ]

@@ -97,7 +97,7 @@ function Plano({ piezas }: { piezas: PiezaRacimo[] }) {
   return (
     <svg className="ui-cc__flat" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden>
       {puntos.map((p, i) => (
-        <g key={i} transform={`translate(${p.x} ${p.y}) rotate(${p.giro})`} opacity={p.cristal ? 0.55 : 1}>
+        <g key={i} transform={`translate(${p.x.toFixed(3)} ${p.y.toFixed(3)}) rotate(${Math.round(p.giro)})`} opacity={p.cristal ? 0.55 : 1}>
           <rect x={-7} y={-2.2} width={14} height={4.4} rx={1} fill={p.color} />
           <rect x={-2.2} y={-7} width={4.4} height={14} rx={1} fill={p.color} />
         </g>

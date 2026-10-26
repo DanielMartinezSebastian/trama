@@ -113,6 +113,7 @@
         "preloader",
         "pinned-section",
         "parallax",
+        "scroll-expand",
         "chapter-stage",
         "line-draw",
         "theme-scroll",
@@ -12462,6 +12463,43 @@
       "preview": "/componentes#fluid-cursor"
     },
     {
+      "id": "scroll-expand",
+      "name": "Tarjeta de medios que crece con el scroll",
+      "component": "ScrollExpand",
+      "import": "import ScrollExpand from \"@/components/ui/ScrollExpand\";",
+      "category": "transiciones",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de pequeña a pantalla completa mientras la sección se queda fija: el reel de lusion.co, que sale de una tarjeta del texto y acaba a sangre, o una tableta que se convierte en la escena. Llega inclinada como un plano en 3D y se endereza al crecer; encima, un titular o «PLAY REEL» que crece con ella. Todo se interpola en CSS desde un solo avance con la tubería de scroll del kit (meseta, curva y seguimiento amortiguado, docs/42). Sin WebGL.",
+      "props": [
+        {
+          "key": "tilt",
+          "type": "number",
+          "default": 14,
+          "label": "Inclinación inicial (°)",
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "inset",
+          "type": "number",
+          "default": 24,
+          "label": "Margen final (px)",
+          "min": 0,
+          "max": 80
+        }
+      ],
+      "notes": [
+        "Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.",
+        "from y offset: tamaño y posición iniciales; inset y radius: el final.",
+        "Con movimiento reducido, ya crecida."
+      ],
+      "example": "import ScrollExpand from \"@/components/ui/ScrollExpand\";\n\n<ScrollExpand />",
+      "preview": "/componentes#scroll-expand"
+    },
+    {
       "id": "chapter-stage",
       "name": "Escenario por capítulos con fallo de señal",
       "component": "ChapterStage",
@@ -13945,7 +13983,13 @@
           "default": 3,
           "label": "Grosor (px)",
           "min": 1,
-          "max": 12
+          "max": 90
+        },
+        {
+          "key": "tube",
+          "type": "boolean",
+          "default": false,
+          "label": "Cinta 3D (tube)"
         },
         {
           "key": "tone",
@@ -13963,7 +14007,9 @@
       "notes": [
         "Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.",
         "trigger=\"scroll\" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.",
-        "Sin JS o con movimiento reducido el trazo se ve completo."
+        "Sin JS o con movimiento reducido el trazo se ve completo.",
+        "tube pinta el trazo como una cinta 3D (sombra, cuerpo y brillo): con grosores de 30 a 120, como las cintas de lusion.co. color fija un color propio y scrollRange el tramo de la ventana.",
+        "Con trigger=\"scroll\" el avance sigue al scroll amortiguado con la sensación de la página (docs/42)."
       ],
       "example": "import LineDraw from \"@/components/ui/LineDraw\";\n\n<LineDraw />",
       "preview": "/componentes#line-draw"

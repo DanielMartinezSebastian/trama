@@ -15,6 +15,7 @@ import FlameHorizon from "@/components/ui/FlameHorizon";
 import TornPaper from "@/components/ui/TornPaper";
 import ProjectReel from "@/components/ui/ProjectReel";
 import FluidCursor from "@/components/ui/FluidCursor";
+import ScrollExpand from "@/components/ui/ScrollExpand";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -372,6 +373,29 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ position: "relative", width: "100%", height: 400, background: "linear-gradient(223.86deg, #b00405 0%, #000 90%)", ["--acc" as string]: "#e60000" }}>
         <FluidCursor position="absolute" opacity={p.opacity as number} fade={p.fade as number} curl={p.curl as number} radius={p.radius as number} />
+      </div>
+    ),
+  },
+  {
+    id: "scroll-expand",
+    component: "ScrollExpand",
+    path: "@/components/ui/ScrollExpand",
+    name: "Tarjeta de medios que crece con el scroll",
+    category: "transiciones",
+    styles: EDITORIAL,
+    description:
+      "Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de pequeña a pantalla completa mientras la sección se queda fija: el reel de lusion.co, que sale de una tarjeta del texto y acaba a sangre, o una tableta que se convierte en la escena. Llega inclinada como un plano en 3D y se endereza al crecer; encima, un titular o «PLAY REEL» que crece con ella. Todo se interpola en CSS desde un solo avance con la tubería de scroll del kit (meseta, curva y seguimiento amortiguado, docs/42). Sin WebGL.",
+    stageHeight: 420,
+    notes: ["Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.", "from y offset: tamaño y posición iniciales; inset y radius: el final.", "Con movimiento reducido, ya crecida."],
+    props: [
+      { key: "tilt", label: "Inclinación inicial (°)", type: "number", default: 14, min: 0, max: 30, step: 1 },
+      { key: "inset", label: "Margen final (px)", type: "number", default: 24, min: 0, max: 80, step: 2 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <ScrollExpand length={1.5} tilt={p.tilt as number} inset={p.inset as number} overlay={<p style={{ color: "#fff", fontSize: 40, margin: 0 }}>PLAY ▶ REEL</p>}>
+          <video src="/video/cielo/01-nubes-atardecer.mp4" muted loop playsInline autoPlay />
+        </ScrollExpand>
       </div>
     ),
   },

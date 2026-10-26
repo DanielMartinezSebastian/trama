@@ -996,6 +996,19 @@ Envuelve contenido (`children`), p. ej.: `<img src="…" alt="" />`
 |---|---|---|
 | `speed` | number -0.5–0.5 | 0.15 |
 
+### Tarjeta de medios que crece con el scroll — `ScrollExpand`
+
+Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de pequeña a pantalla completa mientras la sección se queda fija: el reel de lusion.co, que sale de una tarjeta del texto y acaba a sangre, o una tableta que se convierte en la escena. Llega inclinada como un plano en 3D y se endereza al crecer; encima, un titular o «PLAY REEL» que crece con ella. Todo se interpola en CSS desde un solo avance con la tubería de scroll del kit (meseta, curva y seguimiento amortiguado, docs/42). Sin WebGL.
+
+| prop | tipo | default |
+|---|---|---|
+| `tilt` | number 0–30 | 14 |
+| `inset` | number 0–80 | 24 |
+
+- Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.
+- from y offset: tamaño y posición iniciales; inset y radius: el final.
+- Con movimiento reducido, ya crecida.
+
 ### Escenario por capítulos con fallo de señal — `ChapterStage`
 
 Escenario fijado al scroll para contar algo por capítulos: una palabra gigante por capítulo que se releva dentro de una máscara (la que sale sube con curva en S, la que entra llega desde abajo frenando), una tarjeta central con la imagen del capítulo que sufre un fallo de señal (separación de color, desgarros, líneas) en cada relevo, una sala en perspectiva dibujada con líneas, la lista del capítulo y la barra de capítulos. Coreografía medida en meermohsin.me con la medida del DOM de cine:capture (docs/30). Fijado al scroll de la página o controlado con progress (0–1). Colores del tema; sin WebGL, imagen y líneas en SVG.
@@ -1018,12 +1031,15 @@ Un trazo SVG que se dibuja solo al entrar en pantalla, al montar o siguiendo el 
 | `shape` | `signature` · `underline` · `circle` · `arrow` | "signature" |
 | `trigger` | `inview` · `mount` · `scroll` | "inview" |
 | `duration` | number 0.3–5 | 1.6 |
-| `strokeWidth` | number 1–12 | 3 |
+| `strokeWidth` | number 1–90 | 3 |
+| `tube` | boolean | false |
 | `tone` | `acc` · `acc2` · `fg` · `mut` | "acc" |
 
 - Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.
 - trigger="scroll" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.
 - Sin JS o con movimiento reducido el trazo se ve completo.
+- tube pinta el trazo como una cinta 3D (sombra, cuerpo y brillo): con grosores de 30 a 120, como las cintas de lusion.co. color fija un color propio y scrollRange el tramo de la ventana.
+- Con trigger="scroll" el avance sigue al scroll amortiguado con la sensación de la página (docs/42).
 
 ### Tema que cambia por sección — `ThemeScroll`
 

@@ -6,6 +6,10 @@
 /* ---------- LineDraw ---------- */
 .ui-ldraw { display: block; width: 100%; height: auto; overflow: visible; }
 .ui-ldraw path { fill: none; stroke: var(--ld-c, var(--acc)); stroke-width: var(--ld-w, 3px); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1 2; /* patrón más largo que el trazo: nunca asoma un segundo guion */ }
+/* cinta 3D (tube): sombra un poco más ancha y oscura, cuerpo y un brillo fino en el centro, sobre el mismo trazado */
+.ui-ldraw--tube .ui-ldraw__sombra { stroke: color-mix(in srgb, var(--ld-c) 62%, #000); }
+.ui-ldraw--tube .ui-ldraw__cuerpo { stroke-width: calc(var(--ld-w) * 0.8); }
+.ui-ldraw--tube .ui-ldraw__brillo { stroke: color-mix(in srgb, var(--ld-c) 45%, #fff); stroke-width: calc(var(--ld-w) * 0.22); opacity: 0.75; }
 
 /* ---------- GradientField ---------- */
 /* sin WebGL (o hasta el primer fotograma) queda un degradado CSS con los mismos colores */

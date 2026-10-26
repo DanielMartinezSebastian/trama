@@ -34,17 +34,20 @@ export const ronda5: CatalogEntry[] = [
       "Cada tramo (`M…`) se dibuja después del anterior, con el tiempo repartido por su longitud real.",
       "trigger=\"scroll\" avanza entre el 90 % y el 35 % del alto de la ventana y se borra al subir.",
       "Sin JS o con movimiento reducido el trazo se ve completo.",
+      "tube pinta el trazo como una cinta 3D (sombra, cuerpo y brillo): con grosores de 30 a 120, como las cintas de lusion.co. color fija un color propio y scrollRange el tramo de la ventana.",
+      "Con trigger=\"scroll\" el avance sigue al scroll amortiguado con la sensación de la página (docs/42).",
     ],
     props: [
       { key: "shape", label: "Trazo", type: "select", default: "signature", options: Object.keys(LINE_SHAPES), labels: { signature: "firma", underline: "subrayado", circle: "círculo", arrow: "flecha" } },
       { key: "trigger", label: "Disparador", type: "select", default: "inview", options: ["inview", "mount", "scroll"] },
       { key: "duration", label: "Duración (s)", type: "number", default: 1.6, min: 0.3, max: 5, step: 0.1 },
-      { key: "strokeWidth", label: "Grosor (px)", type: "number", default: 3, min: 1, max: 12, step: 0.5 },
+      { key: "strokeWidth", label: "Grosor (px)", type: "number", default: 3, min: 1, max: 90, step: 0.5 },
+      { key: "tube", label: "Cinta 3D (tube)", type: "boolean", default: false },
       { key: "tone", label: "Color", type: "select", default: "acc", options: ["acc", "acc2", "fg", "mut"] },
     ],
     render: (p, { replay }) => (
       <div style={{ width: "min(100%, 520px)", padding: 24 }}>
-        <LineDraw shape={p.shape as never} trigger={p.trigger as never} duration={p.duration as number} strokeWidth={p.strokeWidth as number} tone={p.tone as never} playKey={replay} />
+        <LineDraw shape={p.shape as never} trigger={p.trigger as never} duration={p.duration as number} strokeWidth={p.strokeWidth as number} tube={p.tube as boolean} tone={p.tone as never} playKey={replay} />
       </div>
     ),
   },
