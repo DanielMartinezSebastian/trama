@@ -1,29 +1,40 @@
+import { pinProgress, trackScroll as medir } from "@/lib/motion/progress";
+import { seguidorRaf } from "@/lib/motion/scroll-feel";
 import { clamp, scrollState } from "./store";
 
 /**
- * Mide el scroll del documento con GSAP ScrollTrigger y lo publica en `scrollState`
- * (progreso suavizado y velocidad). Devuelve la función que lo detiene.
+ * Mide el scroll de una sección (de su tope arriba a su base abajo) y lo publica en `scrollState`: progreso suavizado y
+ * velocidad. Es la misma medida que el resto del kit (`trackScroll` de `lib/motion/progress`, compatible con Lenis), sin
+ * GSAP (docs/42: un solo `trackScroll`). El progreso suavizado persigue al real en ~0,6 s, como el `power2.out` de 0,6 s
+ * de la versión con GSAP; la velocidad (−1..1, 2200 px/s = 1) decae sola al parar. Devuelve la función que lo detiene
+ * (asíncrona, como antes, para no cambiar a quien la usa).
  */
 export async function trackScroll(trigger: HTMLElement): Promise<() => void> {
-  const { gsap } = await import("gsap");
-  const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-  gsap.registerPlugin(ScrollTrigger);
-
-  const st = ScrollTrigger.create({
-    trigger,
-    start: "top top",
-    end: "bottom bottom",
-    onUpdate: (self) => {
-      scrollState.raw = self.progress;
-      gsap.to(scrollState, { p: self.progress, duration: 0.6, ease: "power2.out", overwrite: "auto" });
-    },
-  });
+  const suave = seguidorRaf(5, (v) => (scrollState.p = v));
+  let ultimoY = window.scrollY, ultimoT = performance.now(), raf = 0, objetivoV = 0;
+  // la velocidad: medida en cada evento y suavizada en su propio bucle hasta que vuelve a 0
   const tick = () => {
-    scrollState.v += (clamp(st.getVelocity() / 2200, -1, 1) - scrollState.v) * 0.15;
+    raf = 0;
+    // sin eventos de scroll en 100 ms, el objetivo es 0
+    if (performance.now() - ultimoT > 100) objetivoV = 0;
+    scrollState.v += (objetivoV - scrollState.v) * 0.15;
+    if (Math.abs(scrollState.v) > 1e-3 || objetivoV !== 0) raf = requestAnimationFrame(tick);
+    else scrollState.v = 0;
   };
-  gsap.ticker.add(tick);
+  const parar = medir(trigger, (r, vh) => {
+    const p = pinProgress(r, vh);
+    scrollState.raw = p;
+    suave.set(p);
+    const ahora = performance.now(), y = window.scrollY;
+    const dt = Math.max(1, ahora - ultimoT);
+    objetivoV = clamp((((y - ultimoY) / dt) * 1000) / 2200, -1, 1);
+    ultimoY = y;
+    ultimoT = ahora;
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
   return () => {
-    st.kill();
-    gsap.ticker.remove(tick);
+    parar();
+    suave.stop();
+    cancelAnimationFrame(raf);
   };
 }
