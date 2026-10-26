@@ -138,6 +138,7 @@
         "data-table",
         "meta-table",
         "opening-hours",
+        "class-schedule",
         "qr-code"
       ]
     },
@@ -14651,6 +14652,93 @@
       ],
       "example": "import OpeningHours from \"@/components/ui/OpeningHours\";\n\n<OpeningHours\n  title=\"Horario\"\n/>",
       "preview": "/componentes#opening-hours"
+    },
+    {
+      "id": "class-schedule",
+      "name": "Horario de clases",
+      "component": "ClassSchedule",
+      "import": "import ClassSchedule from \"@/components/ui/ClassSchedule\";",
+      "category": "datos",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Clases de gimnasio, estudio o academia en los próximos días: filtro por disciplina y nivel, plazas libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por bookings y salen por onBook. Un día en filas o la semana en columnas.",
+      "props": [
+        {
+          "key": "classes",
+          "type": "text",
+          "default": "07:30|Fuerza base|50|Fuerza|Inicio|Inés|Sala 1|12|8|1,3,5\n09:00|Movilidad|45|Movilidad|Todos|Nico|Sala 2|10|5\n13:30|Engine|45|Cardio|Intermedio|Dani|Sala 1|12|12|1,2,3,4,5\n18:00|Fuerza en grupo|55|Fuerza|Intermedio|Inés|Sala 1|12|11|1,2,3,4\n19:00|Reset|40|Movilidad|Inicio|Nico|Sala 2|10|7",
+          "label": "Clases (hora|nombre|min|disciplina|nivel|monitor|sala|plazas|ocupadas|días)",
+          "hint": "Días: 0 = domingo … 6 = sábado; sin días, todos"
+        },
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "list",
+          "label": "Forma",
+          "options": [
+            "list",
+            "week"
+          ]
+        },
+        {
+          "key": "daysAhead",
+          "type": "number",
+          "default": 7,
+          "label": "Días a la vista",
+          "min": 1,
+          "max": 14
+        },
+        {
+          "key": "filters",
+          "type": "select",
+          "default": "both",
+          "label": "Filtros",
+          "options": [
+            "both",
+            "category",
+            "none"
+          ]
+        },
+        {
+          "key": "bookLabel",
+          "type": "text",
+          "default": "Reservar",
+          "label": "Botón de reserva"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "glass",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).",
+        "Los días se calculan en el navegador para no desajustar la hidratación."
+      ],
+      "example": "import ClassSchedule from \"@/components/ui/ClassSchedule\";\n\n<ClassSchedule />",
+      "preview": "/componentes#class-schedule"
     },
     {
       "id": "menu-list",

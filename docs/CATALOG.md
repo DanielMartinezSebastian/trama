@@ -1256,6 +1256,22 @@ Datos clave-valor en una caja de línea fina (fechas, lugar, superficie, plazo).
 - El estado depende de la hora del navegador convertida a la zona del negocio: un visitante de otro país ve si abre según la hora de allí.
 - Para la ficha de Google y la búsqueda con IA: <JsonLd data={{ "@type": "Bakery", openingHoursSpecification: openingHoursSchema(hours, exceptions) }} />.
 
+### Horario de clases — `ClassSchedule`
+
+Clases de gimnasio, estudio o academia en los próximos días: filtro por disciplina y nivel, plazas libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por bookings y salen por onBook. Un día en filas o la semana en columnas.
+
+| prop | tipo | default |
+|---|---|---|
+| `classes` | text | "07:30\|Fuerza base\|50\|Fuerza\|Inicio\|Inés\|Sala 1\|12\|8\|1,3,5\n09:00\|Movilidad\|…" |
+| `layout` | `list` · `week` | "list" |
+| `daysAhead` | number 1–14 | 7 |
+| `filters` | `both` · `category` · `none` | "both" |
+| `bookLabel` | text | "Reservar" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
+
+- Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).
+- Los días se calculan en el navegador para no desajustar la hidratación.
+
 ### Código QR — `QRCode`
 
 Código QR en SVG generado en el propio componente (sin dependencias ni servicios externos; modo byte UTF-8, versiones 1–10, niveles L/M/Q/H). Módulos cuadrados, en puntos (dot matrix) o redondeados, en el color del tema. Para la carta de cada mesa, el enlace de reserva o la ficha de una pieza en el escaparate.

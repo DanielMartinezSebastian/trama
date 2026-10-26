@@ -180,3 +180,47 @@ body:has(.ui-actionbar--fixed.ui-actionbar--always) .ui-cook { bottom: calc(88px
   html:has(.ui-actionbar--fixed) { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 }
 html:has(.ui-actionbar--fixed.ui-actionbar--always) { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+/* ---------- ClassSchedule: horario de clases (docs/50 §3.5) ---------- */
+.ui-sched { display: grid; gap: 18px; width: 100%; min-width: 0; font-family: var(--s-ff); }
+.ui-sched[aria-busy="true"] { min-height: 240px; }
+.ui-sched__days { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px; }
+.ui-sched__days button { flex: none; display: grid; gap: 2px; justify-items: center; min-width: 58px; padding: 10px 12px; border: 1px solid var(--ln); border-radius: var(--s-r, 12px); background: none; color: var(--mut); font: inherit; cursor: pointer; text-transform: capitalize; }
+.ui-sched__days button span { font-size: 12px; }
+.ui-sched__days button b { font-size: 20px; color: var(--fg); }
+.ui-sched__days button[aria-pressed="true"] { background: var(--acc); border-color: var(--acc); color: var(--bg); }
+.ui-sched__days button[aria-pressed="true"] b { color: var(--bg); }
+.ui-sched__filters { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.ui-sched__filters [role="group"] { display: flex; flex-wrap: wrap; gap: 6px; }
+.ui-sched__filters button { padding: 6px 12px; border: 1px solid var(--ln); border-radius: 999px; background: none; color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
+.ui-sched__filters button[aria-pressed="true"] { border-color: var(--acc); color: var(--acc); }
+.ui-sched__filters label { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--mut); }
+.ui-sched__filters select { padding: 6px 10px; border: 1px solid var(--ln); border-radius: calc(var(--s-r, 12px) * 0.6); background: var(--bg); color: var(--fg); font: inherit; font-size: 13px; }
+.ui-sched__list { list-style: none; margin: 0; padding: 0; display: grid; }
+.ui-sched__row { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 18px 0; border-top: 1px solid var(--ln); }
+.ui-sched__row:last-child { border-bottom: 1px solid var(--ln); }
+.ui-sched__time { display: grid; gap: 2px; }
+.ui-sched__time strong { font-size: 22px; font-variant-numeric: tabular-nums; }
+.ui-sched__time small, .ui-sched__info small { font-size: 12px; color: var(--mut); }
+.ui-sched__info { display: grid; gap: 4px; min-width: 0; }
+.ui-sched__info h3 { margin: 0; font-size: 18px; }
+.ui-sched__info p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--mut); }
+.ui-sched__tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--acc); }
+.ui-sched__act { display: grid; gap: 6px; justify-items: end; text-align: right; font-size: 12px; color: var(--mut); }
+.ui-sched__row.is-full .ui-sched__act span { color: var(--fg); }
+.ui-sched__row.is-booked .ui-sched__act span { color: var(--acc); font-weight: 600; }
+.ui-sched__empty { margin: 0; padding: 32px 0; color: var(--mut); text-align: center; }
+.ui-sched__week { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; }
+.ui-sched__week section { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.ui-sched__week h3 { margin: 0 0 4px; display: flex; gap: 6px; align-items: baseline; font-size: 13px; font-weight: 400; color: var(--mut); text-transform: capitalize; }
+.ui-sched__week h3 b { font-size: 20px; color: var(--fg); }
+.ui-sched__chip { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--ln); text-align: left; font: inherit; color: var(--fg); cursor: pointer; }
+.ui-sched__chip time { font-size: 12px; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ui-sched__chip strong { font-size: 14px; line-height: 1.2; }
+.ui-sched__chip small { font-size: 11px; color: var(--mut); }
+.ui-sched__chip.is-full { opacity: 0.7; }
+.ui-sched__chip.is-booked { border-color: var(--acc); cursor: default; }
+@media (max-width: 640px) {
+  .ui-sched__row { grid-template-columns: 64px minmax(0, 1fr); }
+  .ui-sched__act { grid-column: 2; justify-items: start; text-align: left; }
+}

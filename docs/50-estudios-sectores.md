@@ -110,8 +110,16 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 - [ ] **E11 · Modelos por sector**: recetas en `CATALOG.md` («Landings de referencia» o «Webs completas») para
   peluquería, gimnasio y academia, montadas con Secciones del kit; o, si las demos de la otra sesión ya lo cubren,
   mejorarlas con lo aprendido.
-- [ ] **E12 · Piezas nuevas o ampliadas** que salgan de las síntesis, con la lista de versatilidad de docs/36 §1,
+- [~] **E12 · Piezas nuevas o ampliadas** que salgan de las síntesis, con la lista de versatilidad de docs/36 §1,
   catálogo y docs/README.
+  - [x] `TeamSection`: foto con marco (`shape`: portrait, square, circle, oval), tratamiento (`photoTone`: color, mono,
+    mono-hover), biografía, enlace por persona (`linkLabel`), `layout="rows"`, `members` como datos (26-10-2026).
+  - [x] `SectionHeader`: `titleSize="giant"` y `backdrop` (palabra de fondo cortada) (26-10-2026).
+  - [x] `ClassSchedule` (nueva, categoría datos): días desde hoy, filtros de disciplina y nivel, plazas, lista de espera,
+    `bookings` y `onBook`; en lista o semana. Sale de los horarios de Cadencia y Forja (26-10-2026).
+  - [ ] `FullscreenMenu`: filetes que se dibujan y subida escalonada (Il Colorista) y columnas verticales (Skulpt).
+  - [ ] `PageTransition` con marca en el centro (Il Colorista).
+  - [ ] Comprobar si `FeatureExplorer` cubre el acordeón que cambia la foto fija (Core Atelier).
 
 ## 3. Conclusiones por web
 

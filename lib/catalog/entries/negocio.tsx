@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ActionBar from "@/components/ui/ActionBar";
+import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
 import MenuList from "@/components/ui/MenuList";
 import OpeningHours from "@/components/ui/OpeningHours";
@@ -14,6 +15,11 @@ import { ALL_STYLES, toneProp, variantProp } from "./shared";
 const HOURS = "L-V|07:30-14:00 17:00-20:30\nS|08:00-14:30\nD|cerrado";
 const MENU =
   "#Bollería|Del horno, cada mañana desde las 6\nCroissant de mantequilla|Hojaldre de 27 capas con mantequilla de Soria|1,90|gluten,huevo,leche|\nNapolitana de chocolate|Con chocolate negro al 70 %|2,20|gluten,huevo,leche,soja|\nPan de masa madre|Fermentación de 24 horas, 750 g|4,50|gluten|vegano\n#Tartas|Porción o entera por encargo\nTarta de queso|Al horno, cremosa por dentro|4,80|leche,huevo,gluten|la más pedida\nTarta de almendra|Sin harina de trigo|4,50|huevo,frutos de cáscara|sin gluten\nBizcocho de aceite y limón|Esponjoso, sin lácteos|3,20|gluten,huevo|sin lactosa";
+
+function ScheduleDemo(p: ClassScheduleProps) {
+  const [bookings, setBookings] = useState<ScheduleBooking[]>([]);
+  return <ClassSchedule {...p} bookings={bookings} onBook={(c, date, waitlist) => setBookings((b) => [...b, { classId: c.id, date, waitlist }])} />;
+}
 
 function DateDemo({ mode, months, slots, shortcuts, calendar }: { mode: "single" | "range"; months: 1 | 2; slots: boolean; shortcuts: number; calendar: "open" | "collapsed" }) {
   const [v, setV] = useState("");
@@ -68,6 +74,30 @@ export const negocio: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "min(100%, 380px)", padding: 16 }}>
         <OpeningHours hours={p.hours as string} exceptions={p.exceptions as string} layout={p.layout as never} timeZone={(p.timeZone as string) || "Europe/Madrid"} soonMinutes={p.soonMinutes as number} title={p.title as string} variant={p.variant as never} />
+      </div>
+    ),
+  },
+  {
+    id: "class-schedule",
+    component: "ClassSchedule",
+    path: "@/components/ui/ClassSchedule",
+    name: "Horario de clases",
+    category: "datos",
+    styles: ALL_STYLES,
+    description: "Clases de gimnasio, estudio o academia en los próximos días: filtro por disciplina y nivel, plazas libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por bookings y salen por onBook. Un día en filas o la semana en columnas.",
+    stageHeight: 520,
+    props: [
+      { key: "classes", label: "Clases (hora|nombre|min|disciplina|nivel|monitor|sala|plazas|ocupadas|días)", type: "text", multiline: true, default: "07:30|Fuerza base|50|Fuerza|Inicio|Inés|Sala 1|12|8|1,3,5\n09:00|Movilidad|45|Movilidad|Todos|Nico|Sala 2|10|5\n13:30|Engine|45|Cardio|Intermedio|Dani|Sala 1|12|12|1,2,3,4,5\n18:00|Fuerza en grupo|55|Fuerza|Intermedio|Inés|Sala 1|12|11|1,2,3,4\n19:00|Reset|40|Movilidad|Inicio|Nico|Sala 2|10|7", hint: "Días: 0 = domingo … 6 = sábado; sin días, todos" },
+      { key: "layout", label: "Forma", type: "select", default: "list", options: ["list", "week"], labels: { list: "un día en filas", week: "semana en columnas" } },
+      { key: "daysAhead", label: "Días a la vista", type: "number", default: 7, min: 1, max: 14, step: 1 },
+      { key: "filters", label: "Filtros", type: "select", default: "both", options: ["both", "category", "none"] },
+      { key: "bookLabel", label: "Botón de reserva", type: "text", default: "Reservar" },
+      variantProp("glass"),
+    ],
+    notes: ["Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).", "Los días se calculan en el navegador para no desajustar la hidratación."],
+    render: (p) => (
+      <div style={{ width: "min(100%, 860px)", padding: 16 }}>
+        <ScheduleDemo classes={p.classes as string} layout={p.layout as never} daysAhead={p.daysAhead as number} filters={p.filters as never} bookLabel={p.bookLabel as string} variant={p.variant as never} />
       </div>
     ),
   },
