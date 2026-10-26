@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { crearEmblema, type OpcionesEmblema } from "./geometry";
+import { crearMascara } from "./mascara";
 
 /*
  * Lienzo de `ThornEmblem`: el emblema de espinas con un material de laca brillante (el rojo de la referencia sobre
@@ -16,7 +17,7 @@ import { crearEmblema, type OpcionesEmblema } from "./geometry";
 export type PoseEmblema = { giro: [number, number, number]; escala: number; brillo: number; y?: number };
 
 export type ThornEmblemSceneProps = {
-  forma: OpcionesEmblema;
+  forma: OpcionesEmblema & { tipo?: "puas" | "mascara" };
   color: string;
   pose: (t: number) => PoseEmblema;
   active: boolean;
@@ -43,7 +44,7 @@ function Entorno() {
 
 function Emblema({ forma, color, pose, onReady }: Omit<ThornEmblemSceneProps, "active">) {
   const malla = useRef<THREE.Mesh>(null);
-  const geo = useMemo(() => crearEmblema(forma), [JSON.stringify(forma)]); // eslint-disable-line react-hooks/exhaustive-deps
+  const geo = useMemo(() => (forma.tipo === "mascara" ? crearMascara({ semilla: forma.semilla, rizo: forma.curva !== undefined ? forma.curva / 0.55 : 1 }) : crearEmblema(forma)), [JSON.stringify(forma)]); // eslint-disable-line react-hooks/exhaustive-deps
   const mat = useMemo(() => new THREE.MeshPhysicalMaterial({ color, roughness: 0.3, metalness: 0.7, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 0.4 }), []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => void mat.color.set(color), [mat, color]);
   useEffect(

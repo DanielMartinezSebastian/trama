@@ -1233,5 +1233,57 @@
     "width": 1600,
     "height": 2400,
     "bytes": 188317
+  },
+  {
+    "file": "retratos/09-shadow-obscures-male-face-unsplash.jpg",
+    "topic": "retratos",
+    "title": "Shadow obscures male face (Unsplash).jpg",
+    "author": "Malik Earnest resolvxd",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Shadow_obscures_male_face_(Unsplash).jpg",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 63698
+  },
+  {
+    "file": "retratos/10-feeling-blue-unsplash.jpg",
+    "topic": "retratos",
+    "title": "Feeling Blue (Unsplash).jpg",
+    "author": "Luke Braswell lukebraswell",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Feeling_Blue_(Unsplash).jpg",
+    "width": 1600,
+    "height": 616,
+    "bytes": 82653
+  },
+  {
+    "file": "retratos/11-shadowed-portrait-unsplash.jpg",
+    "topic": "retratos",
+    "title": "Shadowed Portrait (Unsplash).jpg",
+    "author": "WillSpirit SBLN willspirit",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Shadowed_Portrait_(Unsplash).jpg",
+    "width": 1600,
+    "height": 1030,
+    "bytes": 42921
+  },
+  {
+    "file": "retratos/12-summer-2016-unsplash.jpg",
+    "topic": "retratos",
+    "title": "Summer 2016 (Unsplash).jpg",
+    "author": "Chao Yan ychaochao627",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Summer_2016_(Unsplash).jpg",
+    "width": 1600,
+    "height": 900,
+    "bytes": 72373
   }
 ]

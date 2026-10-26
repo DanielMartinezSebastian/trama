@@ -40,6 +40,7 @@ export default function RelatoMeer() {
   const gira = tramo(y, 500, 2400);
   const sube = tramo(y, 3000, 4600);
   const apaga = 1 - tramo(y, 4600, 5500);
+  // en la portada la máscara va sobre los ojos del retrato (un 15 % por encima del centro) y baja al empezar el scroll
   return (
     <>
       {verLlamas && (
@@ -47,9 +48,9 @@ export default function RelatoMeer() {
           <FlameHorizon progress={llamas} position="absolute" color="#c8000f" />
         </div>
       )}
-      <div style={{ position: "fixed", inset: 0, zIndex: 6, pointerEvents: "none", opacity: apaga, transform: `translateY(${-sube * 22}vh)` }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 6, pointerEvents: "none", opacity: apaga, transform: `translateY(${-15 * (1 - tramo(y, 0, 700)) - sube * 22}vh)` }}>
         {/* la cámara de la referencia (fija en z = 1,2 con fov 45): el emblema, a la escala que le corresponde */}
-        <ThornEmblem height="100%" progress={gira} interactive={false} camera={CAMARA} toneMapped={false} scale={(0.72 - 0.12 * sube) * 0.375} />
+        <ThornEmblem height="100%" shape="mask" progress={gira} interactive={false} camera={CAMARA} toneMapped={false} scale={(0.72 - 0.12 * sube) * 0.26} />
       </div>
     </>
   );

@@ -16,6 +16,8 @@ export type ThornEmblemProps = {
   height?: number | string;
   /** semilla: otra semilla, otras púas */
   seed?: number;
+  /** spikes = alas de púas · mask = máscara tribal con el hueco de los ojos (la de meermohsin.me) */
+  shape?: "spikes" | "mask";
   /** púas principales por ala */
   spikes?: number;
   /** púas secundarias en las largas (0–2) */
@@ -54,7 +56,7 @@ const suave = (t: number) => t * t * (3 - 2 * t);
  *
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/ThornEmblem`.
  */
-export default function ThornEmblem({ children, height = 480, seed = 7, spikes = 7, barbs = 1, curl = 0.55, color, scale = 1, progress, camera, toneMapped = true, interactive = true, render = "auto", className = "" }: ThornEmblemProps) {
+export default function ThornEmblem({ children, height = 480, seed = 7, shape = "spikes", spikes = 7, barbs = 1, curl = 0.55, color, scale = 1, progress, camera, toneMapped = true, interactive = true, render = "auto", className = "" }: ThornEmblemProps) {
   const root = useRef<HTMLDivElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
@@ -63,7 +65,7 @@ export default function ThornEmblem({ children, height = 480, seed = 7, spikes =
   const onReady = useCallback(() => setReady(true), []);
   const col = color || tokens?.["--acc"] || "#a8001c";
   const camara = useMemo(() => ({ posicion: camera?.position ?? ([0, 0, 4.2] as [number, number, number]), fov: camera?.fov ?? 35 }), [camera?.position, camera?.fov]);
-  const forma = useMemo(() => ({ semilla: seed, puas: spikes, ramas: barbs, curva: curl }), [seed, spikes, barbs, curl]);
+  const forma = useMemo(() => ({ tipo: shape === "mask" ? ("mascara" as const) : ("puas" as const), semilla: seed, puas: spikes, ramas: barbs, curva: curl }), [shape, seed, spikes, barbs, curl]);
 
   // la pose se lee de refs: cambiar progress o el puntero no vuelve a montar la escena
   const estado = useRef({ progress, scale, puntero: [0, 0] as [number, number], suave: [0, 0] as [number, number] });

@@ -36,6 +36,7 @@
         "retro-canvas",
         "retro-model",
         "flame-horizon",
+        "fluid-cursor",
         "gradient-field"
       ]
     },
@@ -12185,8 +12186,18 @@
         "editorial",
         "minimal"
       ],
-      "description": "Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
+      "description": "Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en dos formas: una máscara tribal con el hueco de los ojos (cuernos, alas, garfios y lágrimas que se afilan y acaban en rizo, con púas a lo largo; la de la portada de meermohsin.me) o alas de espinas con un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
       "props": [
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "mask",
+          "label": "Forma",
+          "options": [
+            "mask",
+            "spikes"
+          ]
+        },
         {
           "key": "seed",
           "type": "number",
@@ -12385,6 +12396,59 @@
       ],
       "example": "import ProjectReel from \"@/components/ui/ProjectReel\";\n\n<ProjectReel />",
       "preview": "/componentes#project-reel"
+    },
+    {
+      "id": "fluid-cursor",
+      "name": "Humo que sigue al puntero",
+      "component": "FluidCursor",
+      "import": "import FluidCursor from \"@/components/ui/FluidCursor\";",
+      "category": "fondos",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Una simulación de fluidos (remolinos, presión, disipación) que suelta color al mover el ratón o el dedo, como la estela roja de la portada de meermohsin.me (que usa la de Pavel Dobryakov, MIT; esta es una reescritura con sus mismos pasos). Con position=\"fixed\" cubre la ventana sin bloquear clics. Por defecto, los valores medidos en la referencia. WebGL a pelo, sin dependencias; color del tema (--acc).",
+      "props": [
+        {
+          "key": "opacity",
+          "type": "number",
+          "default": 0.6,
+          "label": "Opacidad",
+          "min": 0.1,
+          "max": 1
+        },
+        {
+          "key": "fade",
+          "type": "number",
+          "default": 5.5,
+          "label": "Se apaga (disipación)",
+          "min": 0.2,
+          "max": 10
+        },
+        {
+          "key": "curl",
+          "type": "number",
+          "default": 1.2,
+          "label": "Remolinos",
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "radius",
+          "type": "number",
+          "default": 0.035,
+          "label": "Tamaño del trazo",
+          "min": 0.01,
+          "max": 0.5
+        }
+      ],
+      "notes": [
+        "Mueve el puntero por el escenario.",
+        "fade y drag controlan cuánto dura el humo y su movimiento; curl, los remolinos.",
+        "Con movimiento reducido no se pinta."
+      ],
+      "example": "import FluidCursor from \"@/components/ui/FluidCursor\";\n\n<FluidCursor />",
+      "preview": "/componentes#fluid-cursor"
     },
     {
       "id": "chapter-stage",

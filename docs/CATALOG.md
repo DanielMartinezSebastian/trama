@@ -182,6 +182,21 @@ Un horizonte de llamas que sube desde abajo, con lenguas que corren hacia arriba
 - hands = 0 deja solo las llamas.
 - Sin WebGL, un degradado CSS a la altura del borde; con movimiento reducido, quieto.
 
+### Humo que sigue al puntero — `FluidCursor`
+
+Una simulación de fluidos (remolinos, presión, disipación) que suelta color al mover el ratón o el dedo, como la estela roja de la portada de meermohsin.me (que usa la de Pavel Dobryakov, MIT; esta es una reescritura con sus mismos pasos). Con position="fixed" cubre la ventana sin bloquear clics. Por defecto, los valores medidos en la referencia. WebGL a pelo, sin dependencias; color del tema (--acc).
+
+| prop | tipo | default |
+|---|---|---|
+| `opacity` | number 0.1–1 | 0.6 |
+| `fade` | number 0.2–10 | 5.5 |
+| `curl` | number 0–40 | 1.2 |
+| `radius` | number 0.01–0.5 | 0.035 |
+
+- Mueve el puntero por el escenario.
+- fade y drag controlan cuánto dura el humo y su movimiento; curl, los remolinos.
+- Con movimiento reducido no se pinta.
+
 ### Fondo de color en WebGL (manchas, cinta, haces) — `GradientField`
 
 Fondo de color animado en WebGL sin dependencias: manchas que se mezclan (mesh), la cinta iridiscente de Stripe (ribbon) o los haces de luz en diagonal de Raycast (beams). Usa los colores del tema (--bg, --acc, --acc2) y cambia con él. Media resolución, pausado fuera de pantalla; sin WebGL queda un degradado CSS.
@@ -2151,10 +2166,11 @@ Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz so
 
 ### Emblema 3D de púas — `ThornEmblem`
 
-Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
+Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en dos formas: una máscara tribal con el hueco de los ojos (cuernos, alas, garfios y lágrimas que se afilan y acaban en rizo, con púas a lo largo; la de la portada de meermohsin.me) o alas de espinas con un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
 
 | prop | tipo | default |
 |---|---|---|
+| `shape` | `mask` · `spikes` | "mask" |
 | `seed` | number 1–99 | 7 |
 | `spikes` | number 3–12 | 7 |
 | `barbs` | number 0–2 | 1 |

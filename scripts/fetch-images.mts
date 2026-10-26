@@ -50,7 +50,7 @@ const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> =
   pasteleria: { n: 14, queries: ["unsplash cake", "unsplash pastry", "unsplash croissant", "unsplash bakery", "unsplash macarons", "unsplash cupcake", "pexels cake", "pexels pastry", "unsplash dessert", "unsplash tart", "unsplash cheesecake", "unsplash donut", "unsplash cinnamon roll", "unsplash wedding cake", "unsplash strawberry cake", "pexels bakery"] },
   joyeria: { n: 14, queries: ["jewelry store interior", "jewellery shop window", "jewelry display case", "jeweller workshop", "goldsmith workbench", "goldsmith at work", "jeweler hands", "gemstones loose", "cut gemstones", "diamond loose", "jewelry unsplash", "gold necklace unsplash", "engagement ring box", "earrings unsplash", "jewellery making"], match: /\b(rings?|jewel\w*|necklace|earrings?|bracelets?|gold\w*|diamonds?|gem\w*|pendant|jeweller\w*|jeweler\w*|workshop|workbench)\b/i },
   // retratos de cerca y con poca luz: la portada de meermohsin.me (un rostro sobre negro con luz roja, docs/40 §4)
-  retratos: { n: 8, queries: ["portrait unsplash", "man portrait unsplash", "male portrait", "portrait of a man", "portrait photography man", "pexels portrait", "man face portrait", "young man portrait"] },
+  retratos: { n: 12, queries: ["portrait unsplash", "man portrait unsplash", "male portrait", "portrait of a man", "headshot man unsplash", "man portrait studio unsplash", "portrait of young man unsplash", "man black shirt portrait", "man portrait dark background", "young man portrait", "pexels portrait", "man face portrait"] },
   verano: { n: 6, queries: ["unsplash swimming pool", "unsplash palm trees", "unsplash beach summer", "pexels pool summer", "unsplash sunset beach"] },
 };
 

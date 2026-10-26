@@ -124,7 +124,7 @@ estilos** para cualquier componente con variante. La URL guarda el componente ab
 
 | Categoría | Componentes (`components/ui/`) |
 |---|---|
-| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `GradientField` · `FlameHorizon` (llamas con manos, coreografía por scroll) · `AmbientLight` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
+| Fondos | `AsciiBackground` · `TextmodeBackground` · `GridBackground` · `GradientField` · `FlameHorizon` (llamas con manos, coreografía por scroll) · `FluidCursor` (humo que sigue al puntero) · `AmbientLight` · `CrtOverlay` · `RetroCanvas` (+ `RetroFX`, `RetroShapes`, `RetroModel`) |
 | Texto | `ScrambleText` · `Typewriter` · `NeonSign` · `BitmapText` · `Marquee` · `SectionHeader` · `Divider` · `SplitText` · `FitText` · `ScrubText` · `ScatterText` |
 | Tarjetas | `AsciiCard` · `Panel` · `PricingCard` · `Testimonial` · `BlogCard` · `StackedCards` · `BentoGrid` · `ProductCard` · `BlueprintFrame` · `CellGrid` |
 | Interacción | `Button` · `MagneticButton` · `GlyphCursor` · `Spotlight` · `BeforeAfter` · `HoverFX` · `ScratchReveal` · `SkillCheck` · `SoundToggle` · `ScrollArea` · `RollLink` · `CustomCursor` · `SmoothScroll` · `CircleButton` · `StickerCollage` · `ImageTrail` |

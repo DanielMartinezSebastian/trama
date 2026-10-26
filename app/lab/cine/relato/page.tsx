@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Ruthie } from "next/font/google";
+import { Ruthie, Stack_Sans_Headline } from "next/font/google";
 import ChapterStage from "@/components/ui/ChapterStage";
 import TornPaper from "@/components/ui/TornPaper";
 import ProjectReel from "@/components/ui/ProjectReel";
 import Desplazable from "@/components/lab/cine/Desplazable";
 import RelatoMeer from "@/components/lab/cine/piezas/RelatoMeer";
+import PortadaMeer from "@/components/lab/cine/piezas/PortadaMeer";
 
 /*
  * Banco del relato con scroll (docs/30, docs/36 B1): la portada con el emblema, las llamas que suben y se invierten,
@@ -15,6 +16,8 @@ import RelatoMeer from "@/components/lab/cine/piezas/RelatoMeer";
 
 // la caligráfica de la referencia para las palabras gigantes (su web la carga como «ruthie»)
 const ruthie = Ruthie({ weight: "400", subsets: ["latin"], variable: "--font-ruthie" });
+// la de palo seco de la referencia (StackSansHeadline ExtraLight y Regular)
+const stack = Stack_Sans_Headline({ weight: ["200", "400"], subsets: ["latin"], variable: "--font-stack" });
 
 export const metadata: Metadata = { title: "Banco de relato · Trama", robots: { index: false, follow: false } };
 
@@ -26,20 +29,12 @@ const CAPITULOS = [
 
 export default function Page() {
   return (
-    <main className={ruthie.variable} style={{ background: "#000", color: "#fff", ["--bg" as string]: "#000", ["--fg" as string]: "#f2f2f2", ["--acc" as string]: "#990000", ["--mut" as string]: "#8a7a7a" }}>
+    <main className={`${ruthie.variable} ${stack.variable}`} style={{ background: "#000", color: "#fff", ["--bg" as string]: "#000", ["--fg" as string]: "#f2f2f2", ["--acc" as string]: "#990000", ["--mut" as string]: "#8a7a7a" }}>
       <Desplazable />
       <RelatoMeer />
-      <section style={{ position: "relative", zIndex: 2, height: 900, display: "grid", placeItems: "center", overflow: "hidden", background: "radial-gradient(ellipse at 50% 40%, #3a0006 0, #000 60%)" }}>
-        {/* el rostro de la portada (CC0, Unsplash: public/img/retratos), virado a rojo oscuro y fundido con el negro; los ojos
-            quedan en el centro de la vista, bajo el emblema, como en la referencia */}
-        <img
-          src="/img/retratos/01-a-friend-unsplash.jpg"
-          alt=""
-          style={{ position: "absolute", left: "50%", top: 360, width: "min(820px, 70vw)", transform: "translate(-50%, -38%)", filter: "grayscale(1) sepia(1) saturate(4) hue-rotate(-40deg) brightness(0.42) contrast(1.25)", maskImage: "radial-gradient(ellipse 42% 58% at 50% 45%, #000 40%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 42% 58% at 50% 45%, #000 40%, transparent 100%)" }}
-        />
-        <h1 style={{ position: "relative", margin: 0, fontFamily: "var(--font-sans, system-ui), sans-serif", fontSize: "clamp(64px, 11vw, 168px)", fontWeight: 500, letterSpacing: "-0.04em", whiteSpace: "nowrap" }}>ALWAYS DOING TO</h1>
-      </section>
-      <div style={{ height: 2391 }} />
+      <PortadaMeer />
+      {/* el relato se fija a los 3 291 px, como en la referencia, sea cual sea el alto de la portada (100vh) */}
+      <div style={{ height: "calc(3291px - 100vh)" }} />
       <div style={{ position: "relative", zIndex: 3 }}>
         {/* la tarjeta de la referencia va virada a rojo */}
         <style>{`.ui-chs__gl canvas, .ui-chs__card { filter: grayscale(1) sepia(1) saturate(7) hue-rotate(-38deg) brightness(0.8) contrast(1.3); }`}</style>

@@ -416,6 +416,10 @@ a.ui-bento__cell:hover .ui-bento__img { transform: scale(1.05); }
 .ui-torn__edge--bottom { transform: scaleY(-1); }
 .ui-torn__paper { fill: var(--torn-color); }
 .ui-torn__rim { fill: var(--torn-rim); }
+/* FluidCursor: humo que sigue al puntero (docs/41 P5). Nunca captura el puntero */
+.ui-fluid { display: block; pointer-events: none; }
+.ui-fluid--fixed { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 400; }
+.ui-fluid--absolute { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* ProjectReel: reel de proyectos fijado al scroll (docs/36 B1) */
 .ui-reel .ui-pin__in, .ui-reel--libre .ui-pin__in { background: var(--bg); color: var(--fg); }
 .ui-reel--libre .ui-pin__in { position: relative; height: 100%; display: grid; }

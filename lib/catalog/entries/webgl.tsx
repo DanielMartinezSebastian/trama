@@ -14,6 +14,7 @@ import ThornEmblem from "@/components/ui/ThornEmblem";
 import FlameHorizon from "@/components/ui/FlameHorizon";
 import TornPaper from "@/components/ui/TornPaper";
 import ProjectReel from "@/components/ui/ProjectReel";
+import FluidCursor from "@/components/ui/FluidCursor";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
@@ -263,10 +264,11 @@ export const webgl: CatalogEntry[] = [
     category: "galerias",
     styles: EDITORIAL,
     description:
-      "Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
+      "Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en dos formas: una máscara tribal con el hueco de los ojos (cuernos, alas, garfios y lágrimas que se afilan y acaban en rizo, con púas a lo largo; la de la portada de meermohsin.me) o alas de espinas con un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
     stageHeight: 520,
     notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.", "progress controla la coreografía; sin él, se balancea solo.", "Sin WebGL o con movimiento reducido, una silueta plana de púas."],
     props: [
+      { key: "shape", label: "Forma", type: "select", default: "mask", options: ["mask", "spikes"], labels: { mask: "máscara tribal", spikes: "alas de púas" } },
       { key: "seed", label: "Semilla", type: "number", default: 7, min: 1, max: 99, step: 1 },
       { key: "spikes", label: "Púas por ala", type: "number", default: 7, min: 3, max: 12, step: 1 },
       { key: "barbs", label: "Púas secundarias", type: "number", default: 1, min: 0, max: 2, step: 1 },
@@ -275,7 +277,7 @@ export const webgl: CatalogEntry[] = [
     ],
     render: (p) => (
       <div style={{ width: "100%", background: "#050505", ["--acc" as string]: "#a8001c" }}>
-        <ThornEmblem seed={p.seed as number} spikes={p.spikes as number} barbs={p.barbs as number} curl={p.curl as number} height={p.height as number} />
+        <ThornEmblem shape={p.shape as "mask"} seed={p.seed as number} spikes={p.spikes as number} barbs={p.barbs as number} curl={p.curl as number} height={p.height as number} />
       </div>
     ),
   },
@@ -346,6 +348,29 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%", ["--bg" as string]: "#050505", ["--fg" as string]: "#f2f2f2" }}>
         <ProjectReel progress={p.progress as number} backdrop={p.backdrop as number} counter={p.counter as boolean} height={500} />
+      </div>
+    ),
+  },
+  {
+    id: "fluid-cursor",
+    component: "FluidCursor",
+    path: "@/components/ui/FluidCursor",
+    name: "Humo que sigue al puntero",
+    category: "fondos",
+    styles: EDITORIAL,
+    description:
+      "Una simulación de fluidos (remolinos, presión, disipación) que suelta color al mover el ratón o el dedo, como la estela roja de la portada de meermohsin.me (que usa la de Pavel Dobryakov, MIT; esta es una reescritura con sus mismos pasos). Con position=\"fixed\" cubre la ventana sin bloquear clics. Por defecto, los valores medidos en la referencia. WebGL a pelo, sin dependencias; color del tema (--acc).",
+    stageHeight: 420,
+    notes: ["Mueve el puntero por el escenario.", "fade y drag controlan cuánto dura el humo y su movimiento; curl, los remolinos.", "Con movimiento reducido no se pinta."],
+    props: [
+      { key: "opacity", label: "Opacidad", type: "number", default: 0.6, min: 0.1, max: 1, step: 0.05 },
+      { key: "fade", label: "Se apaga (disipación)", type: "number", default: 5.5, min: 0.2, max: 10, step: 0.1 },
+      { key: "curl", label: "Remolinos", type: "number", default: 1.2, min: 0, max: 40, step: 0.5 },
+      { key: "radius", label: "Tamaño del trazo", type: "number", default: 0.035, min: 0.01, max: 0.5, step: 0.005 },
+    ],
+    render: (p) => (
+      <div style={{ position: "relative", width: "100%", height: 400, background: "linear-gradient(223.86deg, #b00405 0%, #000 90%)", ["--acc" as string]: "#e60000" }}>
+        <FluidCursor position="absolute" opacity={p.opacity as number} fade={p.fade as number} curl={p.curl as number} radius={p.radius as number} />
       </div>
     ),
   },
