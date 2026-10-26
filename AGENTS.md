@@ -12,6 +12,16 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 **Trama** es el nombre de esta librería de componentes (el paquete se llama `trama-ui`).
 
+## Trabajo con Claude Code y Codex
+
+- Estas instrucciones son la fuente común; `CLAUDE.md` las importa. Flujo y preparación: `docs/flujo-agentes.md`.
+- Al comenzar, revisa `git status --short` y `git worktree list`. Conserva los cambios existentes y registra qué tarea, rama y URL estás usando.
+- Para tareas simultáneas usa un worktree por tarea, con dependencias, `.next`, puerto y salidas propios. Si se comparte directorio, trabaja por turnos.
+- Ejecuta `npm run doctor` para diagnosticar el entorno; `npm run doctor -- --cine --browser` comprueba también el navegador y los requisitos de cine.
+- Ejecuta `npm run verify` antes de entregar. El build va aparte y nunca se ejecuta junto al dev del mismo worktree. No detengas servidores ajenos.
+- Comprueba cambios visuales con `npm run smoke -- <url-local>` y las herramientas de cine cuando corresponda. Una captura no sustituye la revisión visual.
+- Al cambiar de agente deja un registro por tarea con objetivo, rama, cambios, decisiones, comprobaciones y siguiente paso; plantilla en `docs/flujo-agentes.md`.
+
 Este repo es una **librería de componentes** para proyectos Next.js (ASCII, textmode, pixel art y secciones de landing)
 más un sitio que la enseña. Dos tipos de tarea:
 

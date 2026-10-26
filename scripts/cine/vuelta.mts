@@ -5,6 +5,7 @@
  * lanzaban a mano 12–18 veces por estudio.
  *
  *   npm run cine:vuelta -- <estudio> [--nota "qué cambié"] [--sin-captura]
+ *   npm run cine:vuelta -- <estudio> --base-url http://localhost:3006  origen del banco (o CINE_BASE_URL)
  *   npm run cine:vuelta -- <estudio> --referencia      vuelve a capturar la referencia con la receta (y su tramo)
  *   npm run cine:vuelta -- <estudio> --ruido           el ruido de cada eje: la referencia contra otra captura de sí misma
  *   npm run cine:vuelta -- <estudio> --muestras 5      N parejas referencia/banco: mediana y dispersión por eje (webs vivas)
@@ -18,6 +19,7 @@ import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
+import { bancoUrl } from "./base-url.mts";
 import { textoVeredicto, veredictos, type Objetivos } from "../../lib/cine/objetivos";
 
 type Receta = { url: string; captura: string; ref: string; referencia?: string; tramoReferencia?: [number, number]; comparar?: string; conjunto?: { ref: string; args: string }; flujo?: boolean; objetivos?: Objetivos; carpeta: string };
@@ -49,10 +51,12 @@ if (argv.includes("--lista")) {
 
 const id = argv.find((a) => !a.startsWith("--") && RECETAS[a]);
 if (!id) {
-  console.log(`Uso: npm run cine:vuelta -- <estudio> [--nota "…"] [--sin-captura] [--referencia]\nEstudios: ${Object.keys(RECETAS).filter((k) => k !== "_").join(", ")}`);
+  console.log(`Uso: npm run cine:vuelta -- <estudio> [--nota "…"] [--sin-captura] [--referencia] [--base-url http://localhost:3006]\nEstudios: ${Object.keys(RECETAS).filter((k) => k !== "_").join(", ")}`);
   process.exit(1);
 }
-const r = RECETAS[id];
+const baseIndex = argv.indexOf("--base-url");
+if (baseIndex >= 0 && (!argv[baseIndex + 1] || argv[baseIndex + 1].startsWith("--"))) throw new Error("Falta el origen de --base-url");
+const r = { ...RECETAS[id], url: bancoUrl(RECETAS[id].url, baseIndex >= 0 ? argv[baseIndex + 1] : process.env.CINE_BASE_URL) };
 const CARPETA = resolve(r.carpeta);
 mkdirSync(CARPETA, { recursive: true });
 
