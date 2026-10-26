@@ -10,6 +10,7 @@ import DeviceMockup3D from "@/components/ui/DeviceMockup3D";
 import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
 import Logo3D, { LOGO3D_MOTIONS, LOGO3D_STYLES } from "@/components/ui/Logo3D";
 import LogoCoin from "@/components/ui/LogoCoin";
+import FloatingVideo from "@/components/ui/FloatingVideo";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
 import { DEVICES, DEVICE_FINISHES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
@@ -483,6 +484,29 @@ export const galerias: CatalogEntry[] = [
           render={p.render as never}
           alt={p.alt as string}
         />
+      </div>
+    ),
+  },
+  {
+    id: "floating-video",
+    component: "FloatingVideo",
+    path: "@/components/ui/FloatingVideo",
+    name: "Vídeo flotante que crece al pulsarlo",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description:
+      "Una miniatura de vídeo suelta sobre la página: ladeada, se mece sola y persigue un poco al cursor, con su etiqueta en mono («BEHIND THE SCENES») y un punto que parpadea. Solo crece si se pulsa: viaja desde su sitio al centro (FLIP), se oye y lleva controles; Escape, el botón o pulsar fuera la devuelven. El clip abierto sigue donde iba la miniatura. Para un making of, un teaser o un segundo vídeo junto a un reel, sin quitarle protagonismo. Sin dependencias.",
+    stageHeight: 380,
+    notes: ["Ponlo dentro de un contenedor sticky de alto 0 para que acompañe al scroll de una sección.", "fullSrc: otro vídeo (con sonido) para la versión abierta.", "Con movimiento reducido no se mece ni viaja."],
+    props: [
+      { key: "label", label: "Etiqueta", type: "text", default: "Behind the scenes" },
+      { key: "caption", label: "Texto a la derecha", type: "text", default: "0:30" },
+      { key: "tilt", label: "Inclinación (°)", type: "number", default: -6, min: -20, max: 20, step: 1 },
+      { key: "follow", label: "Persigue al cursor (px)", type: "number", default: 18, min: 0, max: 60, step: 2 },
+    ],
+    render: (p) => (
+      <div style={{ display: "grid", placeItems: "center", minHeight: 320 }}>
+        <FloatingVideo src="/video/obrador/02-masa-rodillo.mp4" poster="/video/obrador/02-masa-rodillo.jpg" label={p.label as string} caption={p.caption as string} tilt={p.tilt as number} follow={p.follow as number} />
       </div>
     ),
   },

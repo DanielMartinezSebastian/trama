@@ -61,6 +61,14 @@ quiero saberlo antes que nada.
 - **Para ti**: mira la máscara del relato y la réplica de Lusion. Lo pendiente de Lusion está en docs/43 §4: el reel
   curvado de verdad, el astronauta en 3D y la transición de proyecto.
 
+## 3d. Lusion: cintas, play y vídeo flotante (tercera tanda)
+
+- **Cintas de LineDraw**: no se dibujaban bien porque la caja del SVG tenía otra proporción que su dibujo y lo encogía a
+  un tercio con el grosor intacto. Ahora son tubos finos que cruzan la página como en la original (docs/43 §2b). Mira
+  `/lab/cine/lusion-web` entre «Bold Ideas» y el reel, y entre «See all projects» y la tableta.
+- **Play del reel**: centrado (triángulo SVG en vez del glifo).
+- **Segundo vídeo**: `FloatingVideo` (nueva en el kit) en «Featured Work»; púlsalo para que crezca.
+
 ## 4. Bloqueos
 
 _Ninguno por ahora._

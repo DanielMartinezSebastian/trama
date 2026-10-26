@@ -38,6 +38,12 @@ export type LineDrawProps = {
    * Pensado para trazos gruesos (`strokeWidth` de 30 a 120)
    */
   tube?: boolean;
+  /**
+   * cómo encaja el dibujo si la caja del SVG no tiene la proporción del `viewBox`: `contain` lo encoge entero (y el grosor no
+   * encoge: queda un trazo gordo y corto), `cover` lo recorta, `stretch` lo estira (el grosor no se deforma). Para una cinta
+   * de fondo que cruza la sección, `cover` o `stretch`; o dale a la caja la proporción del `viewBox` (`height: auto`)
+   */
+  fit?: "contain" | "cover" | "stretch";
   /** con `trigger="scroll"`: dónde empieza y dónde acaba de dibujarse, en fracciones del alto de la ventana (tope del trazo) */
   scrollRange?: [number, number];
   /** cambia para volver a dibujar */
@@ -52,7 +58,7 @@ export type LineDrawProps = {
  * `trigger="scroll"` el avance es el del scroll entre el 90 % y el 35 % del alto de la ventana. Sin JS o con movimiento
  * reducido, el trazo se ve completo.
  */
-export default function LineDraw({ shape = "signature", d, viewBox, trigger = "inview", duration = 1.6, delay = 0, strokeWidth = 3, tone = "acc", color, tube = false, scrollRange = [0.9, 0.35], playKey = 0, className = "", style }: LineDrawProps) {
+export default function LineDraw({ shape = "signature", d, viewBox, trigger = "inview", duration = 1.6, delay = 0, strokeWidth = 3, tone = "acc", color, tube = false, fit = "contain", scrollRange = [0.9, 0.35], playKey = 0, className = "", style }: LineDrawProps) {
   const ref = useRef<SVGSVGElement>(null);
   const reduced = useReducedMotion();
   const def = LINE_SHAPES[shape] ?? LINE_SHAPES.signature;
@@ -81,6 +87,15 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
         p.style.strokeDashoffset = String(1.01 * (1 - local)); // 1,01: sin el punto del remate redondo al principio
       });
 
+    // la cinta sombrea con desplazamientos en px de pantalla; el SVG los aplica en unidades del viewBox
+    const escala = () => {
+      const k = svg.getBoundingClientRect().width / (svg.viewBox.baseVal?.width || 1);
+      svg.style.setProperty("--ld-u", String(k > 0 ? 1 / k : 1));
+    };
+    escala();
+    const ro = tube ? new ResizeObserver(escala) : undefined;
+    ro?.observe(svg);
+
     svg.removeAttribute("data-in");
     paths.forEach((p) => {
       p.style.transition = "none";
@@ -106,6 +121,7 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       return () => {
+        ro?.disconnect();
         cancelAnimationFrame(raf);
         seg.stop();
         window.removeEventListener("scroll", onScroll);
@@ -119,7 +135,13 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
         p.style.transition = `stroke-dashoffset ${(b - a) * duration}s cubic-bezier(0.55, 0.1, 0.35, 1) ${delay + a * duration}s`;
         p.style.strokeDashoffset = "0";
       });
-    if (trigger === "mount") return whenIntroDone(() => requestAnimationFrame(play));
+    if (trigger === "mount") {
+      const cancel = whenIntroDone(() => requestAnimationFrame(play));
+      return () => {
+        ro?.disconnect();
+        cancel();
+      };
+    }
     let io: IntersectionObserver | undefined;
     const cancel = whenIntroDone(() => {
       io = new IntersectionObserver(
@@ -134,13 +156,14 @@ export default function LineDraw({ shape = "signature", d, viewBox, trigger = "i
       io.observe(svg);
     });
     return () => {
+      ro?.disconnect();
       cancel();
       io?.disconnect();
     };
-  }, [trigger, duration, delay, path, reduced, playKey, scrollRange[0], scrollRange[1]]);
+  }, [trigger, duration, delay, path, reduced, tube, playKey, scrollRange[0], scrollRange[1]]);
 
   return (
-    <svg ref={ref} className={`ui-ldraw ${tube ? "ui-ldraw--tube" : ""} ${className}`.trim()} viewBox={vb} style={{ ...style, "--ld-c": color || `var(--${tone})`, "--ld-w": `${strokeWidth}px` } as CSSProperties} aria-hidden focusable="false">
+    <svg ref={ref} className={`ui-ldraw ${tube ? "ui-ldraw--tube" : ""} ${className}`.trim()} viewBox={vb} preserveAspectRatio={fit === "cover" ? "xMidYMid slice" : fit === "stretch" ? "none" : undefined} style={{ ...style, "--ld-c": color || `var(--${tone})`, "--ld-w": `${strokeWidth}px` } as CSSProperties} aria-hidden focusable="false">
       {parts.map((p, i) =>
         tube ? (
           <g key={i}>
