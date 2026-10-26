@@ -37,7 +37,10 @@ const EXCLUDE: string[] = [
 ];
 
 /** `match`: el título tiene que encajar (temas en los que la búsqueda de Commons trae mucho ruido). */
-const TOPICS: Record<string, { n: number; queries: string[]; match?: RegExp }> = {
+type Topic = { n: number; queries: string[]; match?: RegExp; files?: string[] };
+const TOPICS: Record<string, Topic> = {
+  // Archivo histórico: títulos comprobados, sin exigir resolución moderna ni ampliar originales.
+  voyager: { n: 4, queries: [], files: ["The Sounds of Earth - GPN-2000-001976.jpg", "The Sounds of Earth Record Cover - GPN-2000-001978.jpg", "The Earth seen from Apollo 17.jpg", "Pale Blue Dot.png"] },
   arquitectura: { n: 7, queries: ["unsplash modern architecture", "unsplash building facade", "pexels architecture glass building", "modern architecture building facade"] },
   interiores: { n: 6, queries: ["unsplash interior design", "unsplash modern interior living room", "pexels interior lobby", "interior design modern living room"] },
   eventos: { n: 6, queries: ["unsplash concert crowd", "unsplash festival stage lights", "pexels conference audience", "music festival crowd stage"] },
@@ -78,7 +81,23 @@ async function search(q: string, quality: boolean): Promise<Cand[]> {
     .filter((x): x is Cand => x !== null);
 }
 
-async function pick(topic: string, cfg: { n: number; queries: string[]; match?: RegExp }): Promise<Cand[]> {
+async function pick(topic: string, cfg: Topic): Promise<Cand[]> {
+  if (cfg.files) {
+    const chosen: Cand[] = [];
+    for (const title of cfg.files) {
+      const params = new URLSearchParams({ action: "query", format: "json", titles: `File:${title}`, redirects: "1", prop: "imageinfo", iiprop: "url|size|mime|extmetadata", iiurlwidth: "1600" });
+      const response = await fetch(`https://commons.wikimedia.org/w/api.php?${params}`, { headers: { "User-Agent": UA } });
+      if (!response.ok) throw new Error(`Commons ${response.status}`);
+      const data = await response.json() as { query?: { pages: Record<string, any> } };
+      const page = Object.values(data.query?.pages ?? {})[0];
+      const info = page?.imageinfo?.[0], meta = info?.extmetadata ?? {};
+      const lic = String(meta.LicenseShortName?.value ?? "");
+      if (!info || !["image/jpeg", "image/png"].includes(info.mime) || !OK_LIC.test(lic) || BAD_LIC.test(lic)) throw new Error(`Archivo no apto: ${title} (${lic})`);
+      chosen.push({ title: page.title.replace(/^File:/, ""), w: info.width, h: info.height, lic, licUrl: String(meta.LicenseUrl?.value ?? ""), author: strip(String(meta.Artist?.value ?? "NASA")), thumb: info.width > 1600 ? info.thumburl : info.url, page: info.descriptionurl, quality: true });
+      await wait(400);
+    }
+    return chosen;
+  }
   const pool = new Map<string, Cand>();
   for (const q of cfg.queries) {
     for (const quality of [true, false]) {

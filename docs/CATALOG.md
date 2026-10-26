@@ -3104,11 +3104,11 @@ Carpeta: `components/sites/runa/` · 5 páginas: Título · Elige héroe · Nive
 
 ### La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas — `/sitios/voz-de-la-tierra`
 
-Historia narrativa en cuatro rutas sobre el Disco de Oro de las Voyager: el objeto, lo que va grabado en sus surcos (música, imágenes, saludos y sonidos), el viaje que lo dejó a un día luz de casa y una pregunta final. El mismo disco 3D (procedural, sin modelos externos) viaja vivo entre rutas (Traveler), los titulares vuelan palabra a palabra entre páginas (SharedText) y cada ruta entra con una transición propia: iris, barrido, barrido de líneas y fundido.
+Una carta desde la Tierra en cuatro capítulos: el Disco de Oro, sus voces, el viaje y tu mensaje. Disco y cubierta 3D con archivo fotográfico de NASA, saludos originales, película de la Tierra desde la ISS y fotografías históricas con atribución. El mismo objeto acompaña la navegación; el mensaje se conserva solo en este dispositivo y se puede descargar.
 
 Carpeta: `components/sites/voz-de-la-tierra/` · 4 páginas: El objeto · Surcos · El viaje · El mensaje
 
-`SharedText` ×4 · `Button` ×3 · `MetaTable` ×2 · `PageTransition` · `Traveler` · `Countdown` · `TextField` · `AudioPlayer` · `Preloader`
+`Button` ×4 · `SharedText` ×3 · `MetaTable` ×2 · `PageTransition` · `Traveler` · `Countdown` · `TextField` · `VideoPlayer` · `AudioPlayer` · `Preloader`
 
 ### NÁDIR · una señal al otro lado del silencio — `/sitios/nadir`
 

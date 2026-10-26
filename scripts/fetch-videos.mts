@@ -43,6 +43,9 @@ type Clip = {
 
 /** Lista curada por tema. Para cambiar un clip: busca con `--buscar`, mira su hoja con `--hojas` y ajusta `start`. */
 const CLIPS: Record<string, Clip[]> = {
+  voyager: [
+    { title: "Earth Illuminated- ISS Time-lapse Photography.webm", start: 24, dur: 10, name: "tierra-desde-la-iss", alt: "El horizonte de la Tierra, ciudades y nubes vistos desde la Estación Espacial Internacional" },
+  ],
   oceano: [
     { title: "Aerial view of a green sea turtle (Chelonia mydas) swimming in the reef at Lady Musgrave Island, Queensland, Australia.webm", start: 21, dur: 12, name: "arrecife", alt: "Los canales turquesa de un arrecife de coral, vistos desde el aire" },
     { title: "Aerial view of a blacktip reef shark (Carcharhinus melanopterus) at Lady Musgrave Island, Queensland, Australia.webm", start: 7, dur: 10, name: "tiburon-puntas-negras", alt: "Un tiburón de puntas negras patrulla el agua clara sobre la arena, visto desde el aire" },

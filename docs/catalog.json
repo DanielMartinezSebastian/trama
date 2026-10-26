@@ -18719,7 +18719,7 @@
       "title": "La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas",
       "url": "/sitios/voz-de-la-tierra",
       "dir": "components/sites/voz-de-la-tierra",
-      "description": "Historia narrativa en cuatro rutas sobre el Disco de Oro de las Voyager: el objeto, lo que va grabado en sus surcos (música, imágenes, saludos y sonidos), el viaje que lo dejó a un día luz de casa y una pregunta final. El mismo disco 3D (procedural, sin modelos externos) viaja vivo entre rutas (Traveler), los titulares vuelan palabra a palabra entre páginas (SharedText) y cada ruta entra con una transición propia: iris, barrido, barrido de líneas y fundido.",
+      "description": "Una carta desde la Tierra en cuatro capítulos: el Disco de Oro, sus voces, el viaje y tu mensaje. Disco y cubierta 3D con archivo fotográfico de NASA, saludos originales, película de la Tierra desde la ISS y fotografías históricas con atribución. El mismo objeto acompaña la navegación; el mensaje se conserva solo en este dispositivo y se puede descargar.",
       "pages": [
         {
           "path": "/sitios/voz-de-la-tierra",
@@ -18740,13 +18740,13 @@
       ],
       "components": [
         {
-          "component": "SharedText",
-          "id": "shared-text",
+          "component": "Button",
+          "id": "button",
           "uses": 4
         },
         {
-          "component": "Button",
-          "id": "button",
+          "component": "SharedText",
+          "id": "shared-text",
           "uses": 3
         },
         {
@@ -18772,6 +18772,11 @@
         {
           "component": "TextField",
           "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "VideoPlayer",
+          "id": "video-player",
           "uses": 1
         },
         {

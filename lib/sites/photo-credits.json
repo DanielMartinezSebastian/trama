@@ -1285,5 +1285,57 @@
     "width": 1600,
     "height": 900,
     "bytes": 72373
+  },
+  {
+    "file": "voyager/01-the-sounds-of-earth-gpn-2000-001976.jpg",
+    "topic": "voyager",
+    "title": "The Sounds of Earth - GPN-2000-001976.jpg",
+    "author": "NASA",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Sounds_of_Earth_-_GPN-2000-001976.jpg",
+    "width": 1600,
+    "height": 1599,
+    "bytes": 186114
+  },
+  {
+    "file": "voyager/02-the-sounds-of-earth-record-cover-gpn-2000-001978.jpg",
+    "topic": "voyager",
+    "title": "The Sounds of Earth Record Cover - GPN-2000-001978.jpg",
+    "author": "NASA/JPL",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Sounds_of_Earth_Record_Cover_-_GPN-2000-001978.jpg",
+    "width": 1600,
+    "height": 1600,
+    "bytes": 282619
+  },
+  {
+    "file": "voyager/03-the-earth-seen-from-apollo-17.jpg",
+    "topic": "voyager",
+    "title": "The Earth seen from Apollo 17.jpg",
+    "author": "NASA/Apollo 17 crew; taken by either Harrison Schmitt or Ron Evans",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17.jpg",
+    "width": 1600,
+    "height": 1601,
+    "bytes": 300698
+  },
+  {
+    "file": "voyager/04-pale-blue-dot.jpg",
+    "topic": "voyager",
+    "title": "Pale Blue Dot.png",
+    "author": "Voyager 1",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Pale_Blue_Dot.png",
+    "width": 453,
+    "height": 614,
+    "bytes": 16728
   }
 ]

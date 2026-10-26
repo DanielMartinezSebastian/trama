@@ -3,13 +3,22 @@
  * publica NASA/JPL (misión Voyager); la invitación final («Disco de Oro II») es una ficción y la web lo dice. */
 
 export const SLUG = "voz-de-la-tierra";
+export const MEDIA = {
+  record: "/img/voyager/01-the-sounds-of-earth-gpn-2000-001976.jpg",
+  cover: "/img/voyager/02-the-sounds-of-earth-record-cover-gpn-2000-001978.jpg",
+  earth: "/img/voyager/03-the-earth-seen-from-apollo-17.jpg",
+  pale: "/img/voyager/04-pale-blue-dot.jpg",
+  video: "/video/voyager/01-tierra-desde-la-iss.mp4",
+  poster: "/video/voyager/01-tierra-desde-la-iss.jpg",
+  greetings: "/audio/voyager/saludos.mp3",
+};
 
 export const meta = {
   slug: SLUG,
   name: "La Voz de la Tierra",
   title: "La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas",
   blurb:
-    "Historia narrativa en cuatro rutas sobre el Disco de Oro de las Voyager: el objeto, lo que va grabado en sus surcos (música, imágenes, saludos y sonidos), el viaje que lo dejó a un día luz de casa y una pregunta final. El mismo disco 3D (procedural, sin modelos externos) viaja vivo entre rutas (Traveler), los titulares vuelan palabra a palabra entre páginas (SharedText) y cada ruta entra con una transición propia: iris, barrido, barrido de líneas y fundido.",
+    "Una carta desde la Tierra en cuatro capítulos: el Disco de Oro, sus voces, el viaje y tu mensaje. Disco y cubierta 3D con archivo fotográfico de NASA, saludos originales, película de la Tierra desde la ISS y fotografías históricas con atribución. El mismo objeto acompaña la navegación; el mensaje se conserva solo en este dispositivo y se puede descargar.",
   accent: "#e8b64c",
   tag: "cifras reales · 3D · narrativa",
 };
@@ -25,7 +34,7 @@ export const BRAND = {
   name: "La Voz de la Tierra",
   sub: "El Disco de Oro · Voyager 1 y 2",
   launched: "1977",
-  legal: "Demo de la librería Trama: una web narrativa de ejemplo, no una web oficial de la misión Voyager.",
+  legal: "Proyecto narrativo independiente; no afiliado a NASA ni al JPL.",
 };
 
 /** La ficha del objeto: lo que de verdad se sabe del disco, en pareja de clave y valor. */
@@ -55,10 +64,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "objeto",
     word: "El objeto",
     year: "1977",
-    lede: "En 1977 la NASA puso en dos naves un disco de oro: no va a ningún sitio determinado. Es una carta sin remite, escrita solo con lo que se puede oír y ver.",
+    lede: "En 1977 enviamos al espacio una pequeña muestra de lo que significa estar aquí. Dos discos de oro. Un planeta entero por presentar.",
     body: [
-      "Es un disco de cobre bañado en oro, de doce pulgadas, girando a 16⅔ rpm (más lento que un vinilo casero). Lo protege una funda de aluminio con las instrucciones grabadas: cómo girarlo, cuánto dura la onda que lleva y, en la lámina superior, el mapa de púlsares que sitúa la posición de nuestra estrella en la galaxia.",
-      "En la etiqueta ponía «The Sounds of Earth». El equipo que eligió lo que iba dentro lo encabezó Carl Sagan con Timothy Ferris: música, saludos, sonidos y fotografías. No lleva dirección de vuelta porque no hay una de vuelta: solo hay con quién hablar si alguien lo encuentra.",
+      "Doce pulgadas de cobre bañado en oro. Una cubierta de aluminio, una aguja y las instrucciones para reproducirlo a 16⅔ revoluciones por minuto. También un mapa de púlsares: una manera de explicar de dónde venimos sin compartir un idioma.",
+      "Un comité presidido por Carl Sagan seleccionó la música, los sonidos, los saludos y las imágenes. El resultado viaja en Voyager 1 y Voyager 2. No sabemos si alguien lo encontrará. Sabemos que quisimos dejar constancia de que estuvimos aquí.",
     ],
     next: "surcos",
   },
@@ -68,8 +77,8 @@ export const CHAPTERS: Chapter[] = [
     year: "1977",
     lede: "No es un mapa del planeta, es una muestra: 90 minutos de música, 115 imágenes, 55 saludos y el ruido que había en el mundo.",
     body: [
-      "Para poner un planeta en un disco alguien tuvo que elegir: qué música lo representa, qué foto lo resume, qué ruido se queda. Todas las decisiones fueron discutidas y ninguna es definitiva. Los discos las van por sus surcos en orden, una banda detrás de otra, y dan instrucciones para leerse.",
-      "Aquí van cortes escogidos tal como aparecen en el disco; no es toda la lista, la lista completa la publica la NASA. Y el disco es un objeto público: con un tocadiscos y una aguja fina se lee casi cincuenta años después, tal y como está.",
+      "Elegir fue la parte difícil. ¿Cómo presentar un mundo que tiene océanos, ciudades, muchas lenguas y maneras tan distintas de hacer música? El disco no pretende contarlo todo. Abre una conversación.",
+      "Estos son algunos de sus contenidos. Más abajo puedes escuchar los saludos originales: voces humanas grabadas en 1977, sin traducción automática ni recreaciones.",
     ],
     next: "viaje",
   },
@@ -79,7 +88,7 @@ export const CHAPTERS: Chapter[] = [
     year: "1977 → ∞",
     lede: "La distancia no se mide en kilómetros, se mide en horas de luz: la señal de Voyager 1 tarda casi un día en llegar a casa.",
     body: [
-      "Voyager 1 se aleja a unos 17 km/s y ya no gira alrededor del Sol: dejó atrás la heliopausa en 2012. No mira nada, solo envía. El disco de oro no es un mapa de cómo volver, es la voz de alguien que salió de casa.",
+      "Voyager 1 se aleja a unos 17 km/s y cruzó la heliopausa en 2012. Voyager 2 la siguió en 2018. Las dos continúan su camino por el espacio interestelar, con el mismo mensaje sujeto a su estructura.",
       "El 18 de noviembre de 2026 a las 10:16 UTC la señal de Voyager 1 tarda exactamente 24 horas en llegar: la distancia a la Tierra habrá alcanzado los 25.902 millones de km que recorre la luz en un día entero. La web cuenta hacia esa marca.",
     ],
     next: "mensaje",
@@ -88,9 +97,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "mensaje",
     word: "El mensaje",
     year: "HOY",
-    lede: "El disco no espera respuesta, pero nosotros sí. Escribimos una frase; la guardamos en tu navegador, no la enviamos.",
+    lede: "Si solo pudieras dejar una frase de este planeta, ¿cuál sería? Un saludo, un recuerdo o algo que merezca seguir viajando.",
     body: [
-      "Que no se nos vaya la mano: lo que se propone aquí es una ficción (la llamamos «Disco de Oro II») y no se va a grabar. Pero la pregunta es real: si mañana se grabara otro disco, ¿qué pondrías tú? La web te deja escribirlo.",
+      "Este surco es un ejercicio imaginario, no una nueva misión. Tu frase se queda en este dispositivo. Puedes descargarla como recuerdo, cambiarla o borrarla cuando quieras.",
     ],
     next: null,
   },
@@ -111,8 +120,8 @@ export const SECTIONS: Section[] = [
     cap: "La banda la coordinó Timothy Ferris: de la música clásica al rock and roll, sin hilo temático.",
     items: [
       { title: "Concierto de Brandemburgo n.º 2", author: "J. S. Bach", cap: "Primera pieza de la banda" },
-      { title: "Cavata (Cuarteto de cuerdas n.º 13)", author: "L. van Beethoven", cap: "La melodía lenta del cuarteto" },
-      { title: "Melancholy Blues", author: "Louis Armstrong", cap: "El único jazz del disco" },
+      { title: "Cavatina · Cuarteto n.º 13", author: "L. van Beethoven", cap: "La melodía lenta del cuarteto" },
+      { title: "Melancholy Blues", author: "Louis Armstrong", cap: "Jazz de Nueva Orleans" },
       { title: "Johnny B. Goode", author: "Chuck Berry", cap: "Rock and roll, letra en inglés" },
       { title: "Dark Was the Night", author: "Blind Willie Johnson", cap: "Una voz y una guitarra" },
       { title: "Chakrulo", author: "Polifonía de Georgia", cap: "Coro de voces, himno de su país" },
@@ -122,20 +131,18 @@ export const SECTIONS: Section[] = [
   {
     kicker: "Saludos",
     title: "55 lenguas",
-    cap: "Es lo primero que se oye: la banda empieza en los saludos, en todas las lenguas que cabían.",
+    cap: "Voces de distintas comunidades, reunidas por Linda Salzman Sagan. La grabación original puede escucharse aquí.",
     items: [
-      { title: "Hola / Hello", author: "España · EE. UU.", cap: "El hola español y el hello del inglés" },
-      { title: "Bonjour / Hallo", author: "Francia · Alemania", cap: "Dos lenguas de contacto" },
-      { title: "Jambo", author: "Suajili", cap: "El hola del este de África" },
-      { title: "Merhaba", author: "Turquía", cap: "«Bienvenido» en turco" },
-      { title: "Salam", author: "Lenguas árabes", cap: "«Paz»" },
-      { title: "Los primeros dos saludos", author: "Sumerio · Acadio", cap: "Dos lenguas que ya nadie habla" },
+      { title: "Español", author: "Un saludo para todos", cap: "Una voz cotidiana dirigida al universo" },
+      { title: "Inglés", author: "Los niños del planeta Tierra", cap: "Un saludo pronunciado por un niño" },
+      { title: "Acadio", author: "Una lengua antigua", cap: "También las lenguas del pasado tienen un lugar" },
+      { title: "Mandarín", author: "Una invitación", cap: "El deseo de que alguien pueda visitarnos" },
     ],
   },
   {
     kicker: "Sonidos",
     title: "Los sonidos de la Tierra",
-    cap: "«The Sounds of Earth»: lo que suena fuera de nuestra casa, en una sola toma.",
+    cap: "Oleaje, viento, aves, ballenas, máquinas y personas: un retrato del planeta hecho de sonido.",
     items: [
       { title: "Trueno y lluvia", author: "Naturaleza", cap: "Lo que humedece y lo que descarga" },
       { title: "Olas y viento", author: "Naturaleza", cap: "Dos estados del mar y del aire" },
@@ -150,12 +157,9 @@ export const SECTIONS: Section[] = [
     title: "115 imágenes",
     cap: "Cada imagen va codificada en los surcos: la portada explica el código, la lámina enseña cómo se lee.",
     items: [
-      { title: "La Tierra desde el espacio", author: "Imagen final", cap: "El planeta tal y como se ve desde arriba" },
-      { title: "La anatomía de un ser humano", author: "Una de las primeras", cap: "Lo primero que la imagen enseña" },
-      { title: "El ADN", author: "Una de las primeras", cap: "La molécula con la que estamos hechos" },
-      { title: "Un supermercado", author: "Una del medio", cap: "Lo que se ve en cualquier lado del mundo" },
-      { title: "Una avenida con tráfico", author: "Una del medio", cap: "Cómo se mueve la gente" },
-      { title: "La Gran Muralla", author: "Una del medio", cap: "Lo que queda de las civilizaciones" },
+      { title: "Nuestro lugar", author: "Astronomía", cap: "El Sol, los planetas y las magnitudes que compartimos" },
+      { title: "La vida", author: "Biología", cap: "La estructura del ADN y la anatomía humana" },
+      { title: "Lo cotidiano", author: "Cultura", cap: "Comida, construcción, transporte y encuentros" },
     ],
   },
 ];
@@ -179,8 +183,8 @@ export const LIGHT_DAY_CHIP = "2026-11-18 · 10:16 UTC";
 
 /** La ficha del viaje, para MetaTable (valores de NASA/JPL, 2026). */
 export const TRIP = [
-  { k: "Distancia · Voyager 1", v: "≈ 25,9 mil millones de km (casi un día luz)" },
-  { k: "Distancia · Voyager 2", v: "≈ 21,7 mil millones de km" },
+  { k: "Un día luz", v: "≈ 25.902 millones de km" },
+  { k: "En ese hito", v: "24 h de ida · al menos 48 h para recibir respuesta a una orden" },
   { k: "Velocidad", v: "~17 km/s (V1): es la señal, no la nave, la que tarda casi un día" },
   { k: "Fuera de la burbuja del Sol", v: "Heliopausa · Voyager 1 en 2012 · Voyager 2 en 2018" },
 ];
@@ -191,15 +195,15 @@ export const FINAL = {
   title: "Ponerla en el disco",
   cap: "Escribe una frase corta, un saludo o una única palabra. La guardamos aquí, en tu navegador, y no se envía a ningún sitio.",
   placeholder: "Una frase corta. No tiene que ser bonita.",
-  note: "Esto es una demo: la frase se queda en tu navegador (localStorage). No hay backend.",
+  note: "Solo se guarda en este dispositivo. No se envía al espacio ni a ningún servidor.",
   cardKicker: "SURCO 001 · 2026",
   cardTitle: "Tu frase, en el surco",
   again: "Escribir otra",
   home: "Volver al principio",
   prompts: [
-    "Escríbele a quien no entiende este planeta",
-    "Un saludo para quien no sepa español",
-    "Una frase exacta sobre tu día de hoy",
+    "Aquí aprendimos a escuchar.",
+    "Todavía nos sorprende el mar.",
+    "Ojalá encuentres un lugar al que llamar casa.",
   ],
 };
 

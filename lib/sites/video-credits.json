@@ -287,5 +287,22 @@
     "width": 1280,
     "height": 720,
     "bytes": 1526024
+  },
+  {
+    "file": "voyager/01-tierra-desde-la-iss.mp4",
+    "poster": "voyager/01-tierra-desde-la-iss.jpg",
+    "topic": "voyager",
+    "alt": "El horizonte de la Tierra, ciudades y nubes vistos desde la Estación Espacial Internacional",
+    "title": "Earth Illuminated- ISS Time-lapse Photography.webm",
+    "author": "NASA Johnson",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Earth_Illuminated-_ISS_Time-lapse_Photography.webm",
+    "start": 24,
+    "duration": 10,
+    "width": 1280,
+    "height": 720,
+    "bytes": 1317836
   }
 ]
