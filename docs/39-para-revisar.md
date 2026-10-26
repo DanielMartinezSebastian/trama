@@ -69,6 +69,12 @@ quiero saberlo antes que nada.
 - **Play del reel**: centrado (triángulo SVG en vez del glifo).
 - **Segundo vídeo**: `FloatingVideo` (nueva en el kit) en «Featured Work»; púlsalo para que crezca.
 
+## 3e. Estudios por sector (pendiente, 26-10)
+
+Plan en docs/50: Il Colorista, Surfing Academy, Future London Academy, Honhar, Peppa Sauce y K72 (navegación y
+transiciones), más búsqueda de webs de gimnasio y de peluquería en Awwwards. Salen guías de estilo, modelos por sector
+y piezas. Si tienes más ejemplos, añádelos allí.
+
 ## 4. Bloqueos
 
 _Ninguno por ahora._
