@@ -53,3 +53,25 @@
 5. Textos y detalles que faltan en S2, S4 y S5. Modales (S10).
 
 Cada fase: capturas a tamaño real del banco junto a la referencia, sin defectos visibles, y después las cifras.
+
+## 4. Estado (26-10-2026)
+
+**Hecho:**
+
+- **Portada** (commit `424b827`):
+  - P1–P3 y P5–P12;
+  - P4 en una primera versión: máscara procedural, más sencilla que el modelo de la referencia;
+  - ver la tabla de §1.
+- **Fuera de la portada**:
+  - llamas, escenario por capítulos, papel rasgado y carrusel de proyectos (ronda 25, docs/40);
+  - Lusion: cruces de cristal cerradas (commit `01356ff`).
+
+**Pendiente, por orden:**
+
+1. Build: hay cambios en páginas del laboratorio y en el CSS desde el último. Con el servidor parado; después, borrar
+   `.next/dev` y relanzarlo.
+2. La salida de la máscara sobre el escenario por capítulos (S3).
+3. S1, S6 y S7: «THIS WILL FEEL DIFFERENT», el proceso con el haz y la silueta.
+4. S8 y S9: el diario y los premios.
+5. Portada: P13 (cursor), P14 (grano) y la navegación letra a letra.
+6. Lusion y Chartogne: inventario completo y réplica con contenido, como aquí.

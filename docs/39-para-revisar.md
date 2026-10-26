@@ -38,6 +38,15 @@ quiero saberlo antes que nada.
 | La portada de Meer Mohsin lleva la foto de una persona | **Hecho** (me lo pediste): `npm run images:fetch -- retratos` (tema nuevo, fotos CC0 de Unsplash en Commons con sus créditos). En la portada del banco va `public/img/retratos/01-a-friend-unsplash.jpg`, virada a rojo. Si prefieres otra de las 8, dime el número (hoja: `public/img/retratos/`) |
 | Nada se fusiona en `main` | Todo sigue en `feat/cine-captura` hasta que lo pidas |
 
+## 3b. Lo que hice con tus notas del 26-10-2026
+
+- **Las piezas se quedan en el kit** (lo confirmaste).
+- **Meer Mohsin**: la portada, rehecha desde un inventario completo de la web (docs/41).
+  - Cinta de texto por encima de la cara, humo con el ratón (`FluidCursor`), máscara tribal y retrato nuevo.
+  - Lo que falta del resto de la web está en docs/41 §4.
+- **Lusion**: las cruces de cristal ya son una pieza cerrada, sin tubos por dentro.
+- **Pendiente**: que Lusion y Chartogne tengan el contenido del original, no solo el componente.
+
 ## 4. Bloqueos
 
 _Ninguno por ahora._
