@@ -2972,7 +2972,7 @@ Barbería de barrio con fotografías de corte y barba, navegación lateral, tick
 
 Carpeta: `components/sites/esparta/` · 5 páginas: La barbería · Corte y barba · Los barberos · Reservar sillón · Mis citas
 
-`Button` ×15 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+`Button` ×14 · `Marquee` ×2 · `PricingSection` ×2 · `TeamSection` ×2 · `TextField` ×2 · `Hero` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
 
 ### Forja · entrena tu siguiente nivel — `/sitios/forja`
 
@@ -2988,7 +2988,7 @@ Salón de corte y color con diagnóstico de estilo, servicios con precio y durac
 
 Carpeta: `components/sites/hebra/` · 5 páginas: El salón · Servicios y precios · Las manos · Reservar cita · Mis citas
 
-`Button` ×14 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `ImageReveal` · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+`Button` ×13 · `SectionHeader` ×3 · `TeamSection` ×2 · `TextField` ×2 · `Hero` ×2 · `ImageReveal` · `Stepper` · `PricingSection` · `OpeningHours` · `DatePicker` · `ActionBar`
 
 ### Cadencia · encuentra tu ritmo — `/sitios/cadencia`
 
@@ -2996,7 +2996,7 @@ Club social de movimiento con planificador de frecuencia semanal, clases reserva
 
 Carpeta: `components/sites/cadencia/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
 
-`Button` ×18 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+`Button` ×16 · `Hero` ×2 · `Modal` ×2 · `Marquee` · `SectionHeader` · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ClassSchedule` · `ActionBar` · `QRCode`
 
 ### Kernel Log · blog de tecnología — `/sitios/kernel-log`
 

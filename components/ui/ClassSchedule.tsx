@@ -28,14 +28,24 @@ export type ScheduleBooking = { classId: string; date: string; waitlist?: boolea
 export type ClassScheduleProps = {
   /** las clases como datos o una por línea: «hora|nombre|minutos|disciplina|nivel|monitor|sala|plazas|ocupadas|días (1,3,5)» */
   classes?: ScheduleClass[] | string;
-  /** días que se ofrecen a partir de hoy */
+  /** días que se ofrecen */
   daysAhead?: number;
+  /** a partir de qué día: 0 = hoy, 1 = mañana */
+  startOffset?: number;
   /** list = un día con sus clases en filas · week = la semana en columnas */
   layout?: "list" | "week";
   /** filtros de disciplina y de nivel */
   filters?: "both" | "category" | "none";
   /** reservas hechas (las guarda quien usa el componente) */
   bookings?: ScheduleBooking[];
+  /** si una clase se da un día (horario de apertura, festivos…); por defecto, según `weekdays` */
+  availableOn?: (c: ScheduleClass, date: string) => boolean;
+  /** disciplina elegida al abrir («Fuerza»); "" = todas */
+  defaultCategory?: string;
+  /** con una reserva hecha, el botón lleva aquí («Ver mi reserva») */
+  bookedHref?: string;
+  /** texto de ese botón */
+  bookedCta?: string;
   /** plazas libres de una clase un día; por defecto, plazas − ocupadas */
   freePlaces?: (c: ScheduleClass, date: string) => number;
   /** al pulsar reservar (o lista de espera si está completa) */
@@ -44,6 +54,8 @@ export type ClassScheduleProps = {
   waitlistLabel?: string;
   /** con una reserva hecha */
   bookedLabel?: string;
+  /** apuntado a la lista de espera */
+  waitlistedLabel?: string;
   /** clase sin plazas */
   fullLabel?: string;
   /** sin clases para el día y los filtros */
@@ -86,21 +98,23 @@ const byTime = (a: ScheduleClass, b: ScheduleClass) => a.time.localeCompare(b.ti
  * libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por `bookings` y salen por `onBook`.
  * En lista (un día) o en semana (columnas). Los días se calculan en el cliente.
  */
-export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7, layout = "list", filters = "both", bookings = [], freePlaces, onBook, bookLabel = "Reservar", waitlistLabel = "Lista de espera", bookedLabel = "Reservada", fullLabel = "Completa", emptyText = "No hay clases con estos filtros este día.", allLabel = "Todas", locale = "es-ES", variant = "glass", className = "" }: ClassScheduleProps) {
+export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7, startOffset = 0, layout = "list", filters = "both", bookings = [], availableOn, defaultCategory = "", bookedHref = "", bookedCta = "Ver mi reserva", freePlaces, onBook, bookLabel = "Reservar", waitlistLabel = "Lista de espera", bookedLabel = "Reservada", waitlistedLabel = "En lista de espera", fullLabel = "Completa", emptyText = "No hay clases con estos filtros este día.", allLabel = "Todas", locale = "es-ES", variant = "glass", className = "" }: ClassScheduleProps) {
   const list = useMemo(() => (typeof classes === "string" ? parse(classes) : classes), [classes]);
   const [days, setDays] = useState<string[]>([]);
   const [day, setDay] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(defaultCategory);
+  useEffect(() => setCategory(defaultCategory), [defaultCategory]);
   const [level, setLevel] = useState("");
   useEffect(() => {
     const t = new Date();
-    const ds = Array.from({ length: Math.max(1, daysAhead) }, (_, i) => iso(new Date(t.getFullYear(), t.getMonth(), t.getDate() + i)));
+    const ds = Array.from({ length: Math.max(1, daysAhead) }, (_, i) => iso(new Date(t.getFullYear(), t.getMonth(), t.getDate() + startOffset + i)));
     setDays(ds);
     setDay((d) => (ds.includes(d) ? d : ds[0]));
-  }, [daysAhead]);
+  }, [daysAhead, startOffset]);
 
   const categories = [...new Set(list.map((c) => c.category).filter(Boolean))] as string[];
   const levels = [...new Set(list.map((c) => c.level).filter((l) => l && l !== "Todos"))] as string[];
+  const on = (c: ScheduleClass, date: string) => (availableOn ? availableOn(c, date) : onDay(c, date));
   const pass = (c: ScheduleClass) => (!category || c.category === category) && (!level || !c.level || c.level === level || c.level === "Todos");
   const free = (c: ScheduleClass, date: string) => (freePlaces ? freePlaces(c, date) : Math.max(0, (c.capacity ?? Infinity) - (c.booked ?? 0)));
   const label = (date: string, o: Intl.DateTimeFormatOptions) => new Date(`${date}T12:00:00`).toLocaleDateString(locale, o);
@@ -108,7 +122,7 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
   const action = (c: ScheduleClass, date: string) => {
     const b = bookings.find((x) => x.classId === c.id && x.date === date);
     const n = free(c, date);
-    const state = b ? (b.waitlist ? waitlistLabel : bookedLabel) : !Number.isFinite(n) ? "" : n === 0 ? fullLabel : `${n} ${n === 1 ? "plaza" : "plazas"}`;
+    const state = b ? (b.waitlist ? waitlistedLabel : bookedLabel) : !Number.isFinite(n) ? "" : n === 0 ? fullLabel : `${n} ${n === 1 ? "plaza" : "plazas"}`;
     return { b, n, state };
   };
 
@@ -151,7 +165,7 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
                 <b>{label(d, { day: "numeric" })}</b>
               </h3>
               {list
-                .filter((c) => onDay(c, d) && pass(c))
+                .filter((c) => on(c, d) && pass(c))
                 .sort(byTime)
                 .map((c) => {
                   const { b, n, state } = action(c, d);
@@ -169,7 +183,7 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
       </div>
     );
 
-  const today = list.filter((c) => onDay(c, day) && pass(c)).sort(byTime);
+  const today = list.filter((c) => on(c, day) && pass(c)).sort(byTime);
   return (
     <div className={`ui-sched ui-sched--list ${vcls(variant)} ${className}`}>
       <div className="ui-sched__days" role="group" aria-label="Día">
@@ -199,6 +213,7 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
                 </div>
                 <div className="ui-sched__act">
                   {state && <span>{state}</span>}
+                  {b && bookedHref && <Button label={bookedCta} href={bookedHref} emphasis="primary" size="sm" variant={variant} />}
                   {onBook && !b && <Button label={n === 0 ? waitlistLabel : bookLabel} onClick={() => onBook(c, day, n === 0)} emphasis={n === 0 ? "outline" : "primary"} size="sm" variant={variant} />}
                 </div>
               </li>

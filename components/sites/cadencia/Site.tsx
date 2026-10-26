@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { usePathname } from "next/navigation";
 import Button from "@/components/ui/Button";
 import Hero from "@/components/ui/Hero";
+import ClassSchedule from "@/components/ui/ClassSchedule";
 import ClubJournal from "./Journal";
 import PricingSection from "@/components/ui/PricingSection";
 import FAQSection from "@/components/ui/FAQSection";
@@ -57,15 +58,11 @@ export function Shell({ children }: { children: ReactNode }) {
 function Home() { const { days, request } = useClub(); return <ClubJournal days={days} onRequest={request} />; }
 
 function Schedule() {
-  const { days, value, request, ready } = useClub();
-  const [date, setDate] = useState("");
-  const [activity, setActivity] = useState("Todas");
-  const [level, setLevel] = useState("Todos");
+  const { value, request, ready } = useClub();
+  const [activity, setActivity] = useState("");
   useEffect(() => { const a = new URLSearchParams(location.search).get("actividad"); if (a && ["Fuerza", "Movilidad", "Cardio"].includes(a)) setActivity(a); }, []);
-  const selected = date || days[0];
-  const filtered = (selected ? sessionsOn(selected) : CLASSES).filter(c => (activity === "Todas" || c.category === activity) && (level === "Todos" || c.level === level || c.level === "Todos"));
-  return <div className="cd-section"><Hero kicker="HORARIO / LOS PRÓXIMOS SIETE DÍAS" title="UN HUECO PARA MOVERTE." subtitle="Elige día, actividad y nivel. Tu primera sesión es gratis. Plazas de demostración: la disponibilidad no corresponde a un gimnasio real." primaryCta="" secondaryCta="" badges="" backdrop="none" align="left" /><div className="cd-days" aria-label="Día de entrenamiento">{days.map(d => <button key={d} aria-pressed={selected === d} onClick={() => setDate(d)}><span>{new Date(`${d}T12:00:00`).toLocaleDateString("es-ES",{ weekday: "short" })}</span><b>{d.slice(-2)}</b></button>)}</div><div className="cd-filters"><fieldset><legend>Actividad</legend>{["Todas", "Fuerza", "Movilidad", "Cardio"].map(a => <button key={a} aria-pressed={activity === a} onClick={() => setActivity(a)}>{a}</button>)}</fieldset><label>Nivel<select aria-label="Nivel" value={level} onChange={e => setLevel(e.target.value)}><option>Todos</option><option>Inicio</option><option>Intermedio</option></select></label><span>{filtered.length} sesiones</span></div>
-    {!selected || !ready ? <p role="status">Preparando el horario…</p> : !filtered.length ? <div className="cd-empty"><h2>OTRO RITMO, OTRO FILTRO.</h2><p>No hay clases con esta combinación. Prueba otra actividad o nivel.</p><Button label="Ver todas las clases" onClick={() => { setActivity("Todas"); setLevel("Todos"); }} variant="solid" /></div> : <div className="cd-schedule">{filtered.map(c => { const booking = value.bookings.find(b => b.key === keyFor(c.id,selected)); const places = Math.max(0, freePlaces(c.id, selected) - (booking && !booking.waitlist ? 1 : 0)); return <article key={c.id}><div className="cd-class-time"><strong>{c.time}</strong><small>{c.minutes} min</small></div><div><span className="cd-class-tag">{c.category} / {c.level}</span><h2>{c.name}</h2><p>{c.description}</p><small>{c.coach} · {c.room}</small></div><div className="cd-class-action"><span>{booking ? booking.waitlist ? "En tu lista de espera" : "Tu plaza está guardada" : places === 0 ? "Completa · lista de espera" : `${places} ${places === 1 ? "plaza libre" : "plazas libres"}`}</span><Button label={booking ? "Ver mi reserva" : places ? "Reservar plaza" : "Entrar en espera"} href={booking ? href("mi-ritmo") : undefined} onClick={booking ? undefined : () => request({ classId: c.id, date: selected })} emphasis={places || booking ? "primary" : "outline"} variant="solid" glyph="↗" /></div></article>; })}</div>}
+  return <div className="cd-section"><Hero kicker="HORARIO / LOS PRÓXIMOS SIETE DÍAS" title="UN HUECO PARA MOVERTE." subtitle="Elige día, actividad y nivel. Tu primera sesión es gratis. Plazas de demostración: la disponibilidad no corresponde a un gimnasio real." primaryCta="" secondaryCta="" badges="" backdrop="none" align="left" />
+    {!ready ? <p role="status">Preparando el horario…</p> : <ClassSchedule classes={CLASSES} startOffset={1} availableOn={(c, d) => sessionsOn(d).some(s => s.id === c.id)} defaultCategory={activity} bookings={value.bookings} freePlaces={(c, d) => { const own = value.bookings.find(b => b.key === keyFor(c.id, d)); return Math.max(0, freePlaces(c.id, d) - (own && !own.waitlist ? 1 : 0)); }} onBook={(c, d) => request({ classId: c.id, date: d })} bookLabel="Reservar plaza" waitlistLabel="Entrar en espera" bookedLabel="Tu plaza está guardada" waitlistedLabel="En tu lista de espera" bookedHref={href("mi-ritmo")} emptyText="Otro ritmo, otro filtro: no hay clases con esta combinación." variant="solid" className="cd-sched" />}
     <p className="cd-small">Cancelación hasta 2 horas antes. Puedes gestionar plazas y listas de espera desde Mi ritmo. La demo no envía notificaciones.</p>
   </div>;
 }

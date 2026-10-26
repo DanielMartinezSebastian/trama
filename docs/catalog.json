@@ -16537,12 +16537,12 @@
         {
           "component": "Button",
           "id": "button",
-          "uses": 15
+          "uses": 14
         },
         {
-          "component": "Hero",
-          "id": "hero",
-          "uses": 3
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 2
         },
         {
           "component": "PricingSection",
@@ -16550,8 +16550,18 @@
           "uses": 2
         },
         {
+          "component": "TeamSection",
+          "id": "team-section",
+          "uses": 2
+        },
+        {
           "component": "TextField",
           "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
           "uses": 2
         },
         {
@@ -16689,21 +16699,26 @@
         {
           "component": "Button",
           "id": "button",
-          "uses": 14
+          "uses": 13
         },
         {
-          "component": "Hero",
-          "id": "hero",
+          "component": "SectionHeader",
+          "id": "section-header",
           "uses": 3
         },
         {
-          "component": "PricingSection",
-          "id": "pricing-section",
+          "component": "TeamSection",
+          "id": "team-section",
           "uses": 2
         },
         {
           "component": "TextField",
           "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
           "uses": 2
         },
         {
@@ -16714,6 +16729,11 @@
         {
           "component": "Stepper",
           "id": "stepper",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
           "uses": 1
         },
         {
@@ -16765,7 +16785,7 @@
         {
           "component": "Button",
           "id": "button",
-          "uses": 18
+          "uses": 16
         },
         {
           "component": "Hero",
@@ -16776,6 +16796,16 @@
           "component": "Modal",
           "id": "modal",
           "uses": 2
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "SectionHeader",
+          "id": "section-header",
+          "uses": 1
         },
         {
           "component": "TextField",
@@ -16800,6 +16830,11 @@
         {
           "component": "OpeningHours",
           "id": "opening-hours",
+          "uses": 1
+        },
+        {
+          "component": "ClassSchedule",
+          "id": "class-schedule",
           "uses": 1
         },
         {
