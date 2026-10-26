@@ -3,6 +3,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
+import { MeshBasicNodeMaterial } from "three/webgpu";
 import { uniform, uniformArray } from "three/tsl";
 import { geometriaCruz } from "./geometry";
 import { materialCruz, type DatosRacimo } from "./material";
@@ -81,7 +82,18 @@ export default function CrossClusterContent({ piezas, objetivo, interactivo = tr
       m.renderOrder = orden;
       return { m, indices };
     };
-    const mallas = [malla(opacas, "opaca", 0), malla(cristal, "cristal-detras", 1), malla(cristal, "cristal", 2)].filter((x) => x !== null);
+    // el cristal sin escribir profundidad pinta las caras por orden de dibujo, no por cercanía: donde dos brazos de la misma
+    // cruz se solapan en pantalla, junto a la unión, salía una costura dentada. Una pasada solo de profundidad entre la
+    // cara trasera y la delantera deja que la delantera pinte solo la superficie más cercana
+    const profundidad = (() => {
+      if (!cristal.length) return null;
+      const m = new THREE.InstancedMesh(geo, new MeshBasicNodeMaterial({ colorWrite: false, depthWrite: true }) as unknown as THREE.Material, cristal.length);
+      m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+      m.frustumCulled = false;
+      m.renderOrder = 1.5;
+      return { m, indices: cristal };
+    })();
+    const mallas = [malla(opacas, "opaca", 0), malla(cristal, "cristal-detras", 1), profundidad, malla(cristal, "cristal", 2)].filter((x) => x !== null);
     return { datos, mallas, racimo: crearRacimo({ n, ...fisica }) };
     // las piezas cambian de identidad en cada render del padre: se comparan por contenido
     // eslint-disable-next-line react-hooks/exhaustive-deps

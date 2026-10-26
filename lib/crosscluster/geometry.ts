@@ -30,9 +30,9 @@ function perfil() {
     const a = (i / 8) * (Math.PI / 2);
     p.push(new THREE.Vector2(BRAZO - CANTO + Math.sin(a) * CANTO, 1 - CANTO + Math.cos(a) * CANTO));
   }
-  // el costado, hasta el centro (dentro de los otros brazos a partir de y = BRAZO). Sin chaflán en la unión: hecho en el
-  // torno, cada brazo deja un aro donde se cruza con el de al lado (docs/31 §6)
-  for (const y of [0.8, 0.62, 0.48, 0.38, 0.3, 0]) p.push(new THREE.Vector2(BRAZO, y));
+  // el costado, hasta el centro; geometriaCruz lo recorta por la curva donde entra en los otros brazos. Sin chaflán en la
+  // unión: hecho en el torno, cada brazo deja un aro donde se cruza con el de al lado (docs/31 §6)
+  for (const y of [0.8, 0.62, 0.48, 0.38, 0.3, 0.22, 0.15, 0.09, 0.04, 0]) p.push(new THREE.Vector2(BRAZO, y));
   // LatheGeometry orienta las caras según el sentido del perfil: hacia fuera si sube por el costado
   return p.reverse();
 }
@@ -72,9 +72,23 @@ function fibonacci(n: number) {
 let cache: THREE.BufferGeometry | null = null;
 
 /** la geometría de la cruz con sus atributos horneados (compartida: no la deseches) */
-export function geometriaCruz(segmentos = 28): THREE.BufferGeometry {
+export function geometriaCruz(segmentos = 48): THREE.BufferGeometry {
   if (cache) return cache;
   const brazo = new THREE.LatheGeometry(perfil(), segmentos);
+  /*
+   * Una sola superficie cerrada: el costado de cada medio brazo empieza donde sale de los otros dos, no en el centro. En
+   * su eje local (+y), el brazo está dentro del de x cuando |y| < |x| y dentro del de z cuando |y| < |z| (dos cilindros
+   * del mismo radio se cortan en esa curva). Así el cristal no deja ver los tubos de dentro (docs/40, nota del usuario).
+   * Los anillos del costado (radio BRAZO, hasta y = 0,8) se reparten entre esa curva y 0,8.
+   */
+  const P0 = brazo.attributes.position as THREE.BufferAttribute;
+  for (let i = 0; i < P0.count; i++) {
+    const x = P0.getX(i), y = P0.getY(i), z = P0.getZ(i);
+    if (Math.abs(Math.hypot(x, z) - BRAZO) > 1e-4 || y > 0.8 + 1e-4) continue;
+    // un poco por dentro (0,02): las costuras de dos brazos se solapan en vez de dejar rendijas entre sus cuerdas
+    const y0 = Math.max(Math.abs(x), Math.abs(z)) - 0.02;
+    P0.setY(i, y0 + (y / 0.8) * (0.8 - y0));
+  }
   const giros = [
     new THREE.Euler(0, 0, 0),
     new THREE.Euler(Math.PI, 0, 0),
