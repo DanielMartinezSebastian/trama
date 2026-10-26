@@ -13,6 +13,8 @@ export type PricingCardProps = {
   period?: string;
   /** texto pequeño bajo el precio («facturado anualmente», «IVA incluido»…) */
   note?: string;
+  /** Dato breve del servicio o frecuencia del plan, independiente del periodo de cobro. */
+  meta?: string;
   /** una característica por línea; empezar la línea con «-» la marca como no incluida */
   features?: string;
   cta?: string;
@@ -51,6 +53,7 @@ export default function PricingCard({
   originalPrice = "",
   period = "/ mes",
   note = "",
+  meta = "",
   features = "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG",
   cta = "Empezar ahora",
   onSelect,
@@ -86,6 +89,7 @@ export default function PricingCard({
         {showBadge && badgePlacement === "inline" && badgeEl}
       </span>
       {description && <p className="ui-price__desc">{description}</p>}
+      {meta && <span className="ui-price__meta">{meta}</span>}
     </div>
   );
   const amount = (

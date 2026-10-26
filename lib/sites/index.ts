@@ -31,11 +31,19 @@ import * as maravillas from "@/components/sites/maravillas/data";
 import * as runa from "@/components/sites/runa/data";
 import * as vozDeLaTierra from "@/components/sites/voz-de-la-tierra/data";
 import * as nadir from "@/components/sites/nadir/data";
+import * as hebra from "@/components/sites/hebra/data";
+import * as cadencia from "@/components/sites/cadencia/data";
+import * as esparta from "@/components/sites/esparta/data";
+import * as forja from "@/components/sites/forja/data";
 
 export type SiteRoute = { path: string; title: string };
 export type SiteMeta = { slug: string; name: string; title: string; blurb: string; accent: string; tag: string; routes: SiteRoute[]; dir: string };
 
 export const sites: SiteMeta[] = [
+  { ...esparta.meta, routes: esparta.ROUTES, dir: "components/sites/esparta" },
+  { ...forja.meta, routes: forja.ROUTES, dir: "components/sites/forja" },
+  { ...hebra.meta, routes: hebra.ROUTES, dir: "components/sites/hebra" },
+  { ...cadencia.meta, routes: cadencia.ROUTES, dir: "components/sites/cadencia" },
   { ...kernel.meta, routes: kernel.ROUTES, dir: "components/sites/kernel-log" },
   { ...pixelforge.meta, routes: pixelforge.ROUTES, dir: "components/sites/pixelforge" },
   { ...vigia.meta, routes: vigia.ROUTES, dir: "components/sites/vigia" },

@@ -2487,6 +2487,12 @@
           "label": "Nota bajo el precio"
         },
         {
+          "key": "meta",
+          "type": "text",
+          "default": "",
+          "label": "Duración o frecuencia"
+        },
+        {
           "key": "features",
           "type": "text",
           "default": "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centralizada",
@@ -8586,7 +8592,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.",
+      "description": "Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.",
       "props": [
         {
           "key": "kicker",
@@ -8621,8 +8627,28 @@
             "grid",
             "joined",
             "list",
-            "carousel"
+            "carousel",
+            "menu",
+            "comparison"
           ]
+        },
+        {
+          "key": "comparison",
+          "type": "text",
+          "default": "Proyectos|1|Sin límite|Sin límite\nPuestos|1|1|5\nSoporte|Email|Prioritario|Prioritario",
+          "label": "Comparación: prestación|plan 1|plan 2|plan 3"
+        },
+        {
+          "key": "caption",
+          "type": "text",
+          "default": "Comparación de planes",
+          "label": "Nombre accesible de la tabla"
+        },
+        {
+          "key": "footnote",
+          "type": "text",
+          "default": "",
+          "label": "Condiciones bajo los precios"
         },
         {
           "key": "cardLayout",
@@ -8742,8 +8768,8 @@
         }
       ],
       "notes": [
-        "Fórmula de producto (Linear, Vercel; /sitios/faro): layout=\"joined\", highlight=\"lift\", planCase=\"none\", marker=\"check\", toggle=\"neutral\" y variant=\"editorial\" (botón principal sólido en el color del texto).",
-        "Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a»."
+        "Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.",
+        "plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular."
       ],
       "example": "import PricingSection from \"@/components/ui/PricingSection\";\n\n<PricingSection\n  title=\"Un plan para cada tamaño\"\n/>",
       "preview": "/componentes#pricing-section"
@@ -16131,6 +16157,315 @@
     }
   ],
   "sites": [
+    {
+      "slug": "esparta",
+      "title": "Esparta · barbería de carácter",
+      "url": "/sitios/esparta",
+      "dir": "components/sites/esparta",
+      "description": "Barbería de barrio con fotografías de corte y barba, navegación lateral, ticket del ritual, carta de servicios y reserva con profesional y agenda persistente.",
+      "pages": [
+        {
+          "path": "/sitios/esparta",
+          "title": "La barbería"
+        },
+        {
+          "path": "/sitios/esparta/servicios",
+          "title": "Corte y barba"
+        },
+        {
+          "path": "/sitios/esparta/equipo",
+          "title": "Los barberos"
+        },
+        {
+          "path": "/sitios/esparta/reservar",
+          "title": "Reservar sillón"
+        },
+        {
+          "path": "/sitios/esparta/mis-citas",
+          "title": "Mis citas"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 15
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 3
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 2
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "Stepper",
+          "id": "stepper",
+          "uses": 1
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 1
+        },
+        {
+          "component": "DatePicker",
+          "id": "date-picker",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "forja",
+      "title": "Forja · entrena tu siguiente nivel",
+      "url": "/sitios/forja",
+      "dir": "components/sites/forja",
+      "description": "Cuaderno de entrenamiento oscuro: una sesión explicada en tres capítulos 3D, fotografía de grupo, horario, reservas y espera, lista de cuotas y área personal persistente.",
+      "pages": [
+        {
+          "path": "/sitios/forja",
+          "title": "El club"
+        },
+        {
+          "path": "/sitios/forja/clases",
+          "title": "Horario y reservas"
+        },
+        {
+          "path": "/sitios/forja/planes",
+          "title": "Planes"
+        },
+        {
+          "path": "/sitios/forja/club",
+          "title": "Espacio y equipo"
+        },
+        {
+          "path": "/sitios/forja/mi-ritmo",
+          "title": "Mi ritmo"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 19
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 2
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 2
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "Chart",
+          "id": "chart",
+          "uses": 1
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        },
+        {
+          "component": "QRCode",
+          "id": "qr-code",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "hebra",
+      "title": "Hebra · un buen día de pelo",
+      "url": "/sitios/hebra",
+      "dir": "components/sites/hebra",
+      "description": "Salón de corte y color con diagnóstico de estilo, servicios con precio y duración, reserva por profesional, agenda y cambios de cita guardados en el navegador.",
+      "pages": [
+        {
+          "path": "/sitios/hebra",
+          "title": "El salón"
+        },
+        {
+          "path": "/sitios/hebra/servicios",
+          "title": "Servicios y precios"
+        },
+        {
+          "path": "/sitios/hebra/equipo",
+          "title": "Las manos"
+        },
+        {
+          "path": "/sitios/hebra/reservar",
+          "title": "Reservar cita"
+        },
+        {
+          "path": "/sitios/hebra/mis-citas",
+          "title": "Mis citas"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 14
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 3
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 2
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 2
+        },
+        {
+          "component": "ImageReveal",
+          "id": "image-reveal",
+          "uses": 1
+        },
+        {
+          "component": "Stepper",
+          "id": "stepper",
+          "uses": 1
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 1
+        },
+        {
+          "component": "DatePicker",
+          "id": "date-picker",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "cadencia",
+      "title": "Cadencia · encuentra tu ritmo",
+      "url": "/sitios/cadencia",
+      "dir": "components/sites/cadencia",
+      "description": "Club social de movimiento con planificador de frecuencia semanal, clases reservables, lista de espera, comparación de planes y área personal persistente.",
+      "pages": [
+        {
+          "path": "/sitios/cadencia",
+          "title": "El club"
+        },
+        {
+          "path": "/sitios/cadencia/clases",
+          "title": "Horario y reservas"
+        },
+        {
+          "path": "/sitios/cadencia/planes",
+          "title": "Planes"
+        },
+        {
+          "path": "/sitios/cadencia/club",
+          "title": "Espacio y equipo"
+        },
+        {
+          "path": "/sitios/cadencia/mi-ritmo",
+          "title": "Mi ritmo"
+        }
+      ],
+      "components": [
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 18
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 2
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 2
+        },
+        {
+          "component": "TextField",
+          "id": "text-field",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "PricingSection",
+          "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "Chart",
+          "id": "chart",
+          "uses": 1
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        },
+        {
+          "component": "QRCode",
+          "id": "qr-code",
+          "uses": 1
+        }
+      ]
+    },
     {
       "slug": "kernel-log",
       "title": "Kernel Log · blog de tecnología",

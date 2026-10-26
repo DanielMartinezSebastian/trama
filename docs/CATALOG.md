@@ -465,6 +465,7 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 | `originalPrice` | text | "" |
 | `period` | text | "/ mes" |
 | `note` | text | "" |
+| `meta` | text | "" |
 | `features` | text | "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centr…" |
 | `cta` | text | "Empezar ahora" |
 | `highlighted` | boolean | true |
@@ -2358,7 +2359,7 @@ Cabecera de sección más una fila de cifras ASCII que cuentan hacia arriba (Sta
 
 ### Sección de precios — `PricingSection`
 
-Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (invertido, con halo, con borde o con luz cenital) y características no incluidas. Rejilla, una sola pieza con columnas (joined, como Linear o Vercel), lista horizontal o carrusel.
+Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2366,7 +2367,10 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `title` | text | "Un plan para cada tamaño" |
 | `subtitle` | text | "Cambia o cancela cuando quieras." |
 | `plans` | text | "Básico\|9 €\|/ mes\|no\|Un proyecto;Exportación PNG;Soporte por email;-Dominio propio\…" |
-| `layout` | `grid` · `joined` · `list` · `carousel` | "grid" |
+| `layout` | `grid` · `joined` · `list` · `carousel` · `menu` · `comparison` | "grid" |
+| `comparison` | text | "Proyectos\|1\|Sin límite\|Sin límite\nPuestos\|1\|1\|5\nSoporte\|Email\|Prioritario\|P…" |
+| `caption` | text | "Comparación de planes" |
+| `footnote` | text | "" |
 | `cardLayout` | `classic` · `compact` | "classic" |
 | `highlight` | `invert` · `glow` · `border` · `lift` | "invert" |
 | `badge` | text | "Más popular" |
@@ -2380,8 +2384,8 @@ Cabecera + planes (PricingCard) con selector mensual/anual, plan destacado (inve
 | `autoplay` | number 0–8 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
-- Fórmula de producto (Linear, Vercel; /sitios/faro): layout="joined", highlight="lift", planCase="none", marker="check", toggle="neutral" y variant="editorial" (botón principal sólido en el color del texto).
-- Un precio anual igual al mensual («A medida», «0 €») mantiene su periodo y no muestra «equivale a».
+- Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.
+- plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular.
 
 ### Sección de testimonios — `TestimonialSection`
 
@@ -2917,6 +2921,38 @@ Archivo: `components/landings/minimal/FacetaLanding.tsx`
 ## Webs completas de referencia
 
 Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.
+
+### Esparta · barbería de carácter — `/sitios/esparta`
+
+Barbería de barrio con fotografías de corte y barba, navegación lateral, ticket del ritual, carta de servicios y reserva con profesional y agenda persistente.
+
+Carpeta: `components/sites/esparta/` · 5 páginas: La barbería · Corte y barba · Los barberos · Reservar sillón · Mis citas
+
+`Button` ×15 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+
+### Forja · entrena tu siguiente nivel — `/sitios/forja`
+
+Cuaderno de entrenamiento oscuro: una sesión explicada en tres capítulos 3D, fotografía de grupo, horario, reservas y espera, lista de cuotas y área personal persistente.
+
+Carpeta: `components/sites/forja/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
+
+`Button` ×19 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+
+### Hebra · un buen día de pelo — `/sitios/hebra`
+
+Salón de corte y color con diagnóstico de estilo, servicios con precio y duración, reserva por profesional, agenda y cambios de cita guardados en el navegador.
+
+Carpeta: `components/sites/hebra/` · 5 páginas: El salón · Servicios y precios · Las manos · Reservar cita · Mis citas
+
+`Button` ×14 · `Hero` ×3 · `PricingSection` ×2 · `TextField` ×2 · `ImageReveal` · `Stepper` · `OpeningHours` · `DatePicker` · `ActionBar`
+
+### Cadencia · encuentra tu ritmo — `/sitios/cadencia`
+
+Club social de movimiento con planificador de frecuencia semanal, clases reservables, lista de espera, comparación de planes y área personal persistente.
+
+Carpeta: `components/sites/cadencia/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
+
+`Button` ×18 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
 
 ### Kernel Log · blog de tecnología — `/sitios/kernel-log`
 

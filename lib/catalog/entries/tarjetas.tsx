@@ -151,6 +151,7 @@ export const tarjetas: CatalogEntry[] = [
       { key: "originalPrice", label: "Precio anterior (tachado)", type: "text", default: "" },
       { key: "period", label: "Periodo", type: "text", default: "/ mes" },
       { key: "note", label: "Nota bajo el precio", type: "text", default: "" },
+      { key: "meta", label: "Duración o frecuencia", type: "text", default: "" },
       { key: "features", label: "Características (una por línea; «-» = no incluida)", type: "text", multiline: true, default: "Proyectos ilimitados\nSoporte prioritario\nExportación a PNG y SVG\n-Facturación centralizada" },
       { key: "cta", label: "Botón", type: "text", default: "Empezar ahora" },
       { key: "highlighted", label: "Destacada", type: "boolean", default: true },
@@ -173,6 +174,7 @@ export const tarjetas: CatalogEntry[] = [
             originalPrice={p.originalPrice as string}
             period={p.period as string}
             note={p.note as string}
+            meta={p.meta as string}
             features={p.features as string}
             cta={p.cta as string}
             highlighted={p.highlighted as boolean}
