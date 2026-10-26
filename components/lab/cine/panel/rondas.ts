@@ -56,7 +56,7 @@ export const RONDAS: Ronda[] = [
     ],
     herramientas: ["cine:vuelta --muestras N", "gancho: sin cubos de entorno", "gancho: escena por mallas y triángulos"],
     doc: "40-ronda-25-sensacion.md",
-    commits: [],
+    commits: ["4e17844"],
     resultado: [
       { eje: "Meer Mohsin: imagen · cámara · posprocesado", valor: "72 → 44 % · 100 → 0 % · 25 → 0 %" },
       { eje: "Chartogne: profundidad (imagen)", valor: "28 → 16 % (9 %)" },
