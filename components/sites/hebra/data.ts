@@ -9,11 +9,11 @@ export const SERVICES = [
   { id: "ritual", name: "Pausa para tu pelo", description: "Limpieza, masaje e hidratación con acabado natural.", price: 35, minutes: 45, category: "Cuidado" },
   { id: "consulta", name: "Primero, hablamos", description: "Diagnóstico de color o gran cambio. Sin compromiso.", price: 0, minutes: 20, category: "Cuidado" },
 ];
-// photo: los retratos los genera Codex (docs/encargo-imagenes-negocios.md); hasta entonces, avatar de iniciales
+// photo: retratos generados por Codex (docs/encargo-imagenes-negocios.md)
 export const TEAM: { name: string; role: string; initial: string; services: string[]; bio: string; photo?: string }[] = [
-  { name: "Alba", role: "Corte y textura", initial: "A", services: ["corte", "rizo", "ritual", "consulta"], bio: "Doce años cortando en seco y en mojado. Le interesa más cómo te peinas el martes que cómo sales del salón." },
-  { name: "Vera", role: "Color y luz", initial: "V", services: ["corte", "color", "luz", "ritual", "consulta"], bio: "Pinta la luz a mano alzada. Antes de abrir un tubo de color, te pregunta cada cuánto quieres volver." },
-  { name: "Leo", role: "Forma y acabado", initial: "L", services: ["corte", "rizo", "ritual", "consulta"], bio: "Rizos, ondas y melenas que se secan solas. Te enseña a repetir el acabado en casa con lo que ya tienes." },
+  { name: "Alba", role: "Corte y textura", initial: "A", services: ["corte", "rizo", "ritual", "consulta"], bio: "Doce años cortando en seco y en mojado. Le interesa más cómo te peinas el martes que cómo sales del salón.", photo: "/img/hebra/equipo/alba.webp" },
+  { name: "Vera", role: "Color y luz", initial: "V", services: ["corte", "color", "luz", "ritual", "consulta"], bio: "Pinta la luz a mano alzada. Antes de abrir un tubo de color, te pregunta cada cuánto quieres volver.", photo: "/img/hebra/equipo/vera.webp" },
+  { name: "Leo", role: "Forma y acabado", initial: "L", services: ["corte", "rizo", "ritual", "consulta"], bio: "Rizos, ondas y melenas que se secan solas. Te enseña a repetir el acabado en casa con lo que ya tienes.", photo: "/img/hebra/equipo/leo.webp" },
 ];
 /** La carta como paquetes con nombre (docs/50 §3.1: Il Colorista): lo que incluye y el precio; se reserva por su servicio principal */
 export const PACKAGES = [

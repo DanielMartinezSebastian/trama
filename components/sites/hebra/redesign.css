@@ -30,3 +30,15 @@
 .hb-team-scene figcaption { font-size:9px; letter-spacing:.1em; margin-top:12px; }
 @media(max-width:760px) { .hb-packages { grid-template-columns:1fr; }.hb-packages article, .hb-packages article:nth-child(2n) { padding:22px 0; border-left:0; }.hb-team-home { padding:50px 5%; }.hb .ui-team__avatar { width:80px; height:100px; font-size:38px; } }
 .hb-packages strong { grid-column:2; grid-row:2; }
+
+/* trabajos del estudio: collage suelto, sin rejilla (ALICE) */
+.hb-works { position:relative; display:grid; grid-template-columns:repeat(12,1fr); gap:20px; padding:40px 7% 90px; align-items:start; }
+.hb-works > p { grid-column:1/-1; margin:0 0 10px; }
+.hb-work { margin:0; }
+.hb-work img { width:100%; aspect-ratio:4/5; object-fit:cover; }
+.hb-work figcaption { font-size:8px; letter-spacing:.1em; margin-top:10px; }
+.hb-work--0 { grid-column:1/5; }
+.hb-works .hb-work--1 { grid-column:5/8; margin-top:140px; }
+.hb-works .hb-work--2 { grid-column:8/11; margin-top:40px; }
+.hb-works .hb-work--3 { grid-column:11/13; margin-top:200px; }
+@media(max-width:760px) { .hb-works { grid-template-columns:1fr 1fr; gap:12px; padding:20px 5% 50px; }.hb-works .hb-work { grid-column:auto; margin-top:0; }.hb-works .hb-work--1,.hb-works .hb-work--3 { margin-top:40px; } }

@@ -21,3 +21,10 @@
 .fj-disc-card:hover::after, .fj-disc-card:focus-visible::after { scale:1 1; }
 @media (prefers-reduced-motion: reduce) { .fj-disc-card img, .fj-disc-card::after { transition:none; } }
 @media(max-width:900px) { .fj-disc-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }.fj-disc-head { flex-direction:column; align-items:flex-start; }.fj-disc-head h2 { text-align:left; } }
+
+.fj-team { margin-top:70px; }
+.fj .ui-team__card { padding:0 0 18px; border:0; background:none; box-shadow:none; }
+.fj .ui-team__photo { border-radius:0; }
+.fj .ui-team__card strong { font:400 44px/1 var(--font-anton),sans-serif; text-transform:uppercase; }
+.fj .ui-sh--giant h2 { font-family:var(--font-anton),sans-serif; font-weight:400; letter-spacing:0; line-height:.95; text-transform:uppercase; }
+.fj .ui-team__link { color:var(--acc); }

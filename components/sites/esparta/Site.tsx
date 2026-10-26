@@ -44,7 +44,7 @@ function Services() {
   </div>;
 }
 
-function Team() { return <div className="ep-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="LOS BARBEROS." subtitle="Personajes de demostración. Cada uno tiene su especialidad; elige con quién te sientas." titleSize="giant" shape="oval" photoTone="mono" align="left" linkLabel="Reservar con él" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><figure className="ep-team-scene"><img src="/img/esparta/local.webp" alt="Sillones de cuero, espejos de madera y azulejos de una barbería clásica" loading="lazy"/><figcaption>EL LOCAL / AZULEJO, CUERO Y ESPEJO</figcaption></figure></div>; }
+function Team() { return <div className="ep-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="LOS BARBEROS." subtitle="Personajes de demostración. Cada uno tiene su especialidad; elige con quién te sientas." titleSize="giant" shape="oval" photoTone="mono" align="left" linkLabel="Reservar con él" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><div className="ep-team-scenes"><figure><img src="/img/esparta/navaja.webp" alt="Afeitado con navaja y toalla caliente en primer plano" loading="lazy"/><figcaption>LA NAVAJA / TOALLA CALIENTE Y PULSO</figcaption></figure><figure><img src="/img/esparta/sillon.webp" alt="Un sillón de barbero vacío con la luz del local" loading="lazy"/><figcaption>EL SILLÓN / TE ESTÁ ESPERANDO</figcaption></figure></div></div>; }
 
 function Booking() {
   const { value: appointments, setValue, ready } = useSalon();

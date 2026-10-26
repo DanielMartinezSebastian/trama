@@ -24,3 +24,9 @@
 @keyframes cd-disc-in { from { opacity:0; scale:1.04; } }
 @media (prefers-reduced-motion: reduce) { .cd-disc-grid figure { animation:none; } }
 @media(max-width:760px) { .cd-disciplines { padding:55px 5% 20px; }.cd-disc-grid { grid-template-columns:1fr; }.cd-disc-grid figure { position:static; order:-1; max-width:75%; }.cd-disc-detail { padding-left:0; } }
+
+.cd-team { margin-top:70px; }
+.cd .ui-team__photo { border-radius:220px 220px 0 0; }
+.cd .ui-team__card { padding:0 0 18px; border:0; background:none; box-shadow:none; }
+.cd .ui-team__card strong { font:400 34px var(--font-fraunces),serif; }
+.cd .ui-team__link { color:var(--fg); }

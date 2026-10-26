@@ -29,3 +29,8 @@
 @media(max-width:760px) { .ep-ribbon { margin-inline:-5%; }.ep .ui-team__card strong { font-size:36px; } }
 .ep .ui-team__avatar, .ep .ui-team__photo { max-width:300px; }
 @media(max-width:760px) { .ep .ui-team__avatar, .ep .ui-team__photo { max-width:200px; } }
+
+.ep-team-scenes { display:grid; grid-template-columns:1fr 1.4fr; gap:18px; margin-top:60px; }
+.ep-team-scenes img { width:100%; height:min(60vh,520px); object-fit:cover; }
+.ep-team-scenes figcaption { font-size:8px; letter-spacing:.1em; margin-top:12px; }
+@media(max-width:760px) { .ep-team-scenes { grid-template-columns:1fr; } }
