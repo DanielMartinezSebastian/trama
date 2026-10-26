@@ -47,6 +47,20 @@ quiero saberlo antes que nada.
 - **Lusion**: las cruces de cristal ya son una pieza cerrada, sin tubos por dentro.
 - **Pendiente**: que Lusion y Chartogne tengan el contenido del original, no solo el componente.
 
+## 3c. Lo que hice con tus notas del 26-10-2026 (segunda tanda)
+
+- **Un solo `trackScroll`** (lo aprobaste si no rompía nada): sin GSAP, comprobado en las landings temáticas.
+- **La máscara de Meer Mohsin, rehecha tras estudiarla a fondo** (docs/41 §5):
+  - dos alas tribales góticas en punta, con la luz roja de la referencia;
+  - sale de los ojos dando vueltas en 3D y, al llegar al relato, se encoge y se queda pequeña y oscura arriba hasta el
+    papel rasgado, como en la original.
+- **Lusion entera**: http://localhost:3000/lab/cine/lusion-web (docs/43).
+  - Cabecera con menú, portada con las cruces, cintas 3D, reel que crece, rejilla de proyectos y la tableta que se
+    convierte en la escena del astronauta.
+  - Al kit van `ScrollExpand` (nueva) y `LineDraw tube`.
+- **Para ti**: mira la máscara del relato y la réplica de Lusion. Lo pendiente de Lusion está en docs/43 §4: el reel
+  curvado de verdad, el astronauta en 3D y la transición de proyecto.
+
 ## 4. Bloqueos
 
 _Ninguno por ahora._
