@@ -72,18 +72,18 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 
 ### Academia y centros de formación
 
-- [ ] **E4 · Surfing Academy** — https://surfing.academy/
+- [x] **E4 · Surfing Academy** (26-10-2026, §3.6) — https://surfing.academy/
   - Escuela de surf: cursos, niveles, calendario o reserva, ubicación, galería. Mirar si hay vídeo o canvas en la
     portada y cómo lo resuelve en móvil.
   - Los defaults de copy del kit ya son de una escuela de surf: comparar con lo que hacen ellos.
-- [ ] **E5 · Future London Academy** — https://futurelondonacademy.co.uk/
+- [x] **E5 · Future London Academy** (26-10-2026, §3.6) — https://futurelondonacademy.co.uk/
   - Academia de formación ejecutiva y creativa: catálogo de cursos, fichas de curso (programa, fechas, precio,
     profesorado), testimonios, logos de empresas, solicitud.
   - Salida: plantilla «academia» con páginas de catálogo y de curso.
-- [ ] **E6 · Honhar** — https://honhar.in/
+- [x] **E6 · Honhar** (26-10-2026, §3.6; formación profesional) — https://honhar.in/
   - Confirmar sector al mapearla (por el nombre, oficio o talento; puede ser formación o plataforma de artistas).
     Estudiar dentro de academia si encaja; si no, como referencia de maquetación.
-- [ ] **E7 · Síntesis de academia** (`cine:sintesis` con E4–E6 y las que se añadan): plantilla común, guía de estilo y
+- [x] **E7 · Síntesis de academia** (26-10-2026, §3.7; candidata `CohortList`) (`cine:sintesis` con E4–E6 y las que se añadan): plantilla común, guía de estilo y
   piezas que falten (catálogo de cursos con filtros, ficha de curso, calendario de convocatorias, solicitud por pasos).
 
 ### Producto
@@ -117,6 +117,8 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
   - [x] `SectionHeader`: `titleSize="giant"` y `backdrop` (palabra de fondo cortada) (26-10-2026).
   - [x] `ClassSchedule` (nueva, categoría datos): días desde hoy, filtros de disciplina y nivel, plazas, lista de espera,
     `bookings` y `onBook`; en lista o semana. Sale de los horarios de Cadencia y Forja (26-10-2026).
+  - [ ] `CohortList` (academias, §3.7): programas por convocatoria con formato, nivel, fechas y estado.
+  - [ ] `TeamSection layout="wall"`: muro denso de profesorado (FLA).
   - [ ] `FullscreenMenu`: filetes que se dibujan y subida escalonada (Il Colorista) y columnas verticales (Skulpt).
   - [ ] `PageTransition` con marca en el centro (Il Colorista).
   - [ ] Comprobar si `FeatureExplorer` cubre el acordeón que cambia la foto fija (Core Atelier).
@@ -457,3 +459,105 @@ horario de clases → planes con mes/año → equipo → ubicación y horario �
 Les faltan la **clase de prueba gratis** como llamada principal, la **cinta de cifras** y, en Cadencia, la lista de
 disciplinas gigante de FIT AND YOU. Forja (oscura) encaja con la guía de alto contraste; un acento único saturado y
 fotos B/N la acercarían a Fenriz.
+
+### 3.6 Academias (E4–E6)
+
+Mismo método que §3.2. En Future London Academy, el perfil cayó en la página de profesores y el scroll se atascó en el
+pie; la portada se volvió a capturar con `scrollTo` (la página mueve el documento entero, no reacciona a la rueda
+sintética).
+
+#### E4 · Surfing Academy — https://surfing.academy/ (Lenis)
+
+![Montaje de surfing-academy](/lab/cine/archivo/.refs3d/webs/surfing-academy/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/surfing-academy/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/surfing-academy/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/surfing-academy/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/surfing-academy-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/surfing-academy)
+
+- **Qué es**: no es una escuela con local, sino **la academia de un entrenador** (Andrey Khurtin): viajes de surf
+  por convocatorias, curso en línea, surfskate y vlogs. La marca es la persona: su avatar con el nombre escrito a mano
+  va fijo arriba a la izquierda en todas las pantallas.
+- **Estructura** (una página por anclas y una por destino: /mentawai, /g-land, /maldives…): portada con «your
+  surfing progress *(starts here)*» y un **dibujo de línea** de cuatro surfistas con la tabla, con tres notas sueltas
+  sobre el dibujo (método, mentores, destinos) → **calendario de viajes** en filas: destino, **etiquetas de nivel**
+  (beginner, intermediate, advanced, en negro), una línea de qué lo hace especial, **convocatorias por mes** con sus
+  fechas y «learn more» → «(about me)» en una tarjeta verde con forma de **billete troquelado** → «*the core of my
+  approach»: cuatro principios con una foto suelta cada uno → cifras (140 000+ seguidores, 30 000 000+
+  visualizaciones, 1 000+ alumnos) → «(the first introductory lesson is **a gift** for you!)» con vídeo → dos bandas
+  de llamada (analizar tus errores, empezar el curso) → «((reviews))».
+- **Reserva**: por convocatoria; chat flotante abajo a la derecha. Primera clase gratis.
+- **Móvil**: la misma página apilada; el avatar fijo se queda encima del contenido (un fallo).
+- **Estilo**: gris claro #ededed y blanco, **naranja #ff4f28** y verde #39be91; Hauora en **minúsculas** para todo
+  (16 px, titulares 40–64 px), títulos entre paréntesis y asteriscos como tic tipográfico; botones naranja con
+  **sombra dura desplazada** en negro; garabatos a mano (subrayados, flechas, llamas).
+
+#### E5 · Future London Academy — https://futurelondonacademy.co.uk/
+
+![Montaje de futurelondonacademy-co-uk](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/futurelondonacademy-co-uk)
+
+- **Estructura** (Courses, Tailored solutions, Teachers, Journal, Contact y «Log in»): portada amarilla con «WE CREATE
+  LEARNING EXPERIENCES» y una **F gigante de líneas blancas** → foto de clase y **muro de profesores**
+  («200+ famous teachers and mentors»: retratos en cuadrícula con nombre y empresa, «Explore all») → **cursos
+  destacados como tarjetas amarillas que se solapan** (Tailored, Executive Programme, Mini-MBA), cada una con su
+  formato en chips (anytime, online, upon request, next cohort) → **lista de cursos** a todo el ancho con el formato
+  en letra de contorno («SELF-PACED, ONLINE») y flecha → testimonio con retrato B/N y flechas → **muro de logos**
+  («We have already inspired people from these companies»: BMW, Microsoft, Nike, IKEA…) → Instagram, redes y
+  boletín.
+- **Solicitud**: en cada ficha de curso; hay cuenta de alumno.
+- **Estilo**: **amarillo #ffe32b**, negro #1a1a1a y gris #f1f1f1; una sola letra (OnyFuture) en mayúsculas para
+  titulares (40 px, espaciado −2 px) y la misma en contorno para el formato; fotos documentales de las clases.
+
+#### E6 · Honhar — https://honhar.in/ (GSAP, Lottie)
+
+![Montaje de honhar-in](/lab/cine/archivo/.refs3d/webs/honhar-in/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/honhar-in/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/honhar-in/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/honhar-in/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/honhar-in-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/honhar-in)
+
+- **Qué es** (sector confirmado): **instituto de formación profesional** en Mohali (marketing digital, diseño, ventas),
+  respaldado por una agencia.
+- **Estructura** (Programs, H Movement, Mentors, Honhar Tales, Outcomes y «Enroll Now»): portada amarilla con una
+  **escena 3D de pollitos** en una pizarra («हम GYAAN नहीं SKILLS बांटते हैं») → **sellos de valoración** en
+  recuadros (Trustpilot, Glassdoor, Google… «Rated 4.8/5») → «Tricity's most *practical skill* academy» → **cifras en
+  recuadros** (625+ alumnos, 6 promociones, 17 masterclasses) → cuatro principios con la palabra tachada («~~LEARN~~
+  Work on live campaigns») → logos de prensa → **programas en tarjetas** con «Launching soon», la promoción («batch-12»),
+  chips (12 semanas, 9 módulos, presencial), lo que incluye, mentores en avatares y «Apply now» / «Pre-book demo
+  class» → próximos talleres y masterclasses → «Launching soon!» con tarjetas difuminadas → «**masterclass gratis
+  antes de cada curso**» → resultados («22 alumnos han montado su empresa») → testimonios en vídeo B/N.
+- **Estilo**: **amarillo #ffcc00** y negro, tarjetas blancas o negras; **neobrutalismo**: botones blancos con borde
+  y **sombra negra desplazada**, recuadros con borde; Magic Brush (pincel) para titulares en mayúsculas, Montserrat
+  para el texto.
+
+### 3.7 Síntesis de academia (E7)
+
+`cine:sintesis` con las tres ([sintesis.md](/lab/cine/archivo/.refs3d/sintesis/academia/sintesis.md)): ninguna usa WebGL
+(la escena de pollitos de Honhar es una animación); varias páginas en las 3. Lo que importa es el contenido:
+
+| Rasgo | Webs | En el kit | Decisión |
+|---|---|---|---|
+| **Programas por convocatoria**: nombre, nivel, formato (presencial, en línea, a tu ritmo), duración, **fechas de la próxima promoción** y solicitar | 3 | no hay pieza (`PricingSection` y `ProductCard` son otra cosa; `ClassSchedule` es semanal) | **Candidata a pieza** (`CohortList`: filas o tarjetas con chips de formato y nivel, convocatorias con fechas, estado «abierta / últimas plazas / próximamente» y CTA); E12 |
+| **Primera clase o masterclass gratis** | 2 (Surfing, Honhar) | `CTASection` | Receta: como la prueba gratis de los gimnasios |
+| **Profesorado como muro** (retrato, nombre, empresa) o el autor como marca | 3 | `TeamSection` (ya con fotos) | Cubierto; falta la disposición en muro denso (cuadrícula sin hueco) → variante `layout="wall"` en E12 |
+| **Prueba social**: logos de empresas, sellos de valoración, cifras grandes | 3 | `LogoCloud`, `StatsSection`, `StatCounter` | Cubierto; los sellos con nota («Rated 4.8/5») son una variante de `LogoCloud` |
+| Testimonios con retrato B/N o en vídeo | 3 | `TestimonialSection`, `VideoPlayer` | Cubierto |
+| Lista de cursos a todo el ancho con flecha | 1 (FLA) | `ProjectList` | Cubierto |
+| Tarjetas destacadas que se solapan | 1 (FLA) | `StackedCards` | Cubierto |
+| Botones con **sombra dura desplazada** | 2 (Surfing, Honhar) | variante `retro` del kit | Comprobar en E10 que `retro` lo da sin tocar nada |
+| Ilustración de línea y garabatos a mano | 1 (Surfing) | `LineDraw` | Decorado de demo |
+
+**Plantilla de academia** (para E11), con dos páginas además de la portada:
+
+- *Portada*: promesa + CTA a la próxima convocatoria → cifras y sellos → programas por convocatoria → método en 3–4
+  principios → profesorado → testimonios → clase gratis → logos → boletín.
+- *Catálogo*: lista de programas con filtros (formato, nivel, área) y estado de la convocatoria.
+- *Ficha de programa*: qué aprendes, temario por módulos (`Accordion`), profesorado, convocatorias y precio,
+  preguntas frecuentes y solicitud por pasos (`Stepper` + `TextField`).
+
+**Dos guías de estilo** (para E10):
+
+- **Academia de autor** (Surfing): gris claro, un naranja y un verde, todo en minúsculas, títulos entre paréntesis,
+  ilustración de línea y garabatos; el retrato del autor como marca fija.
+- **Escuela amarilla** (FLA, Honhar): amarillo saturado y negro, mayúsculas, recuadros y sombras duras
+  (neobrutalismo en Honhar, editorial en FLA), fotos documentales de las clases.
+
+**El copy por defecto del kit** (escuela de surf de Cantabria) se queda: encaja con Surfing Academy en tono (cercano,
+de progreso) aunque ellos venden viajes y no clases en una playa fija.
