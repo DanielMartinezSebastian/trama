@@ -9,9 +9,17 @@ import Porthole from "@/components/ui/Porthole";
 import ToyDrive from "@/components/ui/ToyDrive";
 import CrossCluster from "@/components/ui/CrossCluster";
 import EngravedMap from "@/components/ui/EngravedMap";
+import GravureCanvas from "@/components/ui/GravureCanvas";
+import ThornEmblem from "@/components/ui/ThornEmblem";
+import FlameHorizon from "@/components/ui/FlameHorizon";
+import TornPaper from "@/components/ui/TornPaper";
 import ChapterStage from "@/components/ui/ChapterStage";
 import { fashionArt, withSize, type LookKind } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
+import { lazy } from "react";
+
+// el bodegón de muestra lleva react-three-fiber: se descarga con el lienzo, no con el catálogo
+const BodegonGrabado = lazy(() => import("@/lib/gravure/muestra"));
 
 /** WebGL y rejillas (ver docs/06-indice-replicar-webs-premiadas.md, Fase 3). */
 const KINDS: LookKind[] = ["coat", "arch", "dress", "fabric", "still", "shirt"];
@@ -211,6 +219,108 @@ export const webgl: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "100%" }}>
         <EngravedMap seed={p.seed as number} intro={p.intro as number} interactive={p.interactive as boolean} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "gravure-canvas",
+    component: "GravureCanvas",
+    path: "@/components/ui/GravureCanvas",
+    name: "Grabado a lápiz para cualquier escena",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz sobre papel: rayado que engorda con la sombra, contornos más gruesos cerca, grano y fibra del papel, viñeta y entrada por baldosas. Las mallas de los hijos toman el material de lápiz; cada una puede pedir su ajuste (objeto, suelo, follaje, o los del paisaje de Chartogne) con userData.lapiz. Es la técnica de EngravedMap (medida en Chartogne-Taillet, docs/32) para cualquier objeto: productos «dibujados», arquitectura, mapas o portadas editoriales. Colores del tema: papel de --card y lápiz de --mut.",
+    stageHeight: 520,
+    notes: [
+      "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/GravureCanvas.",
+      "Los hijos son elementos de react-three-fiber; sus materiales se sustituyen por el de lápiz (userData.sinLapiz los deja fuera).",
+      "La luz es la de la referencia (dos direccionales fijas): las luces de la escena no cuentan.",
+    ],
+    props: [
+      { key: "preset", label: "Ajuste por defecto", type: "select", default: "objeto", options: ["objeto", "suelo", "follaje", "casa", "arbol"] },
+      { key: "lineWidth", label: "Grosor de contorno", type: "number", default: 0.5, min: 0, max: 3, step: 0.1 },
+      { key: "grain", label: "Grano", type: "number", default: 0.123, min: 0, max: 0.4, step: 0.01 },
+      { key: "intro", label: "Entrada (s)", type: "number", default: 1.5, min: 0, max: 5, step: 0.5 },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%" }}>
+        <GravureCanvas preset={p.preset as "objeto"} lineWidth={p.lineWidth as number} grain={p.grain as number} intro={p.intro as number} height={p.height as number}>
+          <BodegonGrabado />
+        </GravureCanvas>
+      </div>
+    ),
+  },
+  {
+    id: "thorn-emblem",
+    component: "ThornEmblem",
+    path: "@/components/ui/ThornEmblem",
+    name: "Emblema 3D de púas",
+    category: "galerias",
+    styles: EDITORIAL,
+    description:
+      "Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
+    stageHeight: 520,
+    notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.", "progress controla la coreografía; sin él, se balancea solo.", "Sin WebGL o con movimiento reducido, una silueta plana de púas."],
+    props: [
+      { key: "seed", label: "Semilla", type: "number", default: 7, min: 1, max: 99, step: 1 },
+      { key: "spikes", label: "Púas por ala", type: "number", default: 7, min: 3, max: 12, step: 1 },
+      { key: "barbs", label: "Púas secundarias", type: "number", default: 1, min: 0, max: 2, step: 1 },
+      { key: "curl", label: "Curva", type: "number", default: 0.55, min: 0, max: 1.2, step: 0.05 },
+      { key: "height", label: "Alto (px)", type: "number", default: 480, min: 280, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", background: "#050505", ["--acc" as string]: "#a8001c" }}>
+        <ThornEmblem seed={p.seed as number} spikes={p.spikes as number} barbs={p.barbs as number} curl={p.curl as number} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "flame-horizon",
+    component: "FlameHorizon",
+    path: "@/components/ui/FlameHorizon",
+    name: "Horizonte de llamas con manos",
+    category: "fondos",
+    styles: EDITORIAL,
+    description:
+      "Un horizonte de llamas que sube desde abajo, con lenguas que corren hacia arriba, el color más vivo junto al borde y un halo encima, y siluetas de manos en garra que se mecen. Con progress (0–1) sigue la coreografía de meermohsin.me para atarla al scroll: las llamas suben hasta llenarlo todo y se invierte (rojo arriba, llamas negras con manos abajo). Para portadas oscuras, conciertos, videojuegos, terror o transiciones entre secciones. WebGL a pelo, sin dependencias; colores del tema (--acc sobre --bg).",
+    stageHeight: 480,
+    notes: ["progress manda sobre level e invert.", "hands = 0 deja solo las llamas.", "Sin WebGL, un degradado CSS a la altura del borde; con movimiento reducido, quieto."],
+    props: [
+      { key: "progress", label: "Progreso (coreografía)", type: "number", default: 0.3, min: 0, max: 1, step: 0.01 },
+      { key: "hands", label: "Manos", type: "number", default: 9, min: 0, max: 12, step: 1 },
+      { key: "speed", label: "Velocidad", type: "number", default: 1, min: 0, max: 3, step: 0.1 },
+      { key: "height", label: "Alto (px)", type: "number", default: 440, min: 240, max: 800, step: 10 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", ["--bg" as string]: "#000", ["--acc" as string]: "#b0001a" }}>
+        <FlameHorizon progress={p.progress as number} hands={p.hands as number} speed={p.speed as number} height={p.height as number} />
+      </div>
+    ),
+  },
+  {
+    id: "torn-paper",
+    component: "TornPaper",
+    path: "@/components/ui/TornPaper",
+    name: "Franja de papel rasgado",
+    category: "secciones",
+    styles: EDITORIAL,
+    description:
+      "Una franja de papel con los bordes rasgados: el corte irregular con fibras y el canto blanco del papel que asoma por partes, como la sección «The fall was always part of the path» de meermohsin.me. Envuelve cualquier contenido (texto, imagen, figura). Dos SVG con semilla, sin JavaScript en tiempo de ejecución. Papel de --acc y canto de --fg.",
+    stageHeight: 420,
+    notes: ["edges elige qué bordes se rasgan.", "Otra semilla, otro rasgado (el mismo en servidor y cliente)."],
+    props: [
+      { key: "seed", label: "Semilla", type: "number", default: 4, min: 1, max: 99, step: 1 },
+      { key: "depth", label: "Alto del rasgado (px)", type: "number", default: 48, min: 12, max: 120, step: 2 },
+      { key: "rim", label: "Canto blanco", type: "number", default: 1, min: 0, max: 1, step: 1 },
+      { key: "edges", label: "Bordes", type: "select", default: "both", options: ["both", "top", "bottom"] },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", background: "#000", padding: "24px 0", ["--acc" as string]: "#b0001a", ["--fg" as string]: "#f2f2f2" }}>
+        <TornPaper seed={p.seed as number} depth={p.depth as number} rim={p.rim as number} edges={p.edges as "both"}>
+          <div style={{ padding: "48px 6vw", fontSize: 36, lineHeight: 1.05, fontWeight: 600, color: "#111" }}>The fall was always part of the path.</div>
+        </TornPaper>
       </div>
     ),
   },

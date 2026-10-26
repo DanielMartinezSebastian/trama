@@ -15,7 +15,7 @@ export type OpcionesPaisaje = {
   arboles?: number;
 };
 
-export const PAISAJE_CHARTOGNE = { semilla: 3, pueblo: { centro: [-0.7, 0.35] as [number, number], radio: 1.5 }, casas: 900, arboles: 5000 };
+export const PAISAJE_CHARTOGNE = { semilla: 3, pueblo: { centro: [-0.7, 0.35] as [number, number], radio: 1.5 }, casas: 1300, arboles: 5000 };
 
 function generador(semilla: number) {
   let s = semilla >>> 0;
@@ -69,11 +69,12 @@ export function crearPaisaje(op: OpcionesPaisaje = {}) {
   casa.computeVertexNormals();
 
   // el árbol: copa de dos bultos y tronco corto
-  const copa1 = new THREE.IcosahedronGeometry(0.5, 1).scale(1, 0.85, 1).translate(0, 0.95, 0);
+  // la copa casi en el suelo: en la referencia los árboles son bultos redondos sin tronco a la vista (docs/39 §4)
+  const copa1 = new THREE.IcosahedronGeometry(0.5, 1).scale(1, 0.85, 1).translate(0, 0.62, 0);
   // la copa pequeña con 20 caras: a la distancia de la vista no se distingue, y deja el paisaje en ~110 triángulos por
   // árbol, como la referencia (521 000 triángulos con 5084 instancias, medido con el gancho gl.js, docs/34 §2)
-  const copa2 = new THREE.IcosahedronGeometry(0.34, 0).translate(0.22, 1.25, 0.08);
-  const tronco = new THREE.CylinderGeometry(0.07, 0.09, 0.55, 4, 1, true).translate(0, 0.27, 0);
+  const copa2 = new THREE.IcosahedronGeometry(0.34, 0).translate(0.22, 0.92, 0.08);
+  const tronco = new THREE.CylinderGeometry(0.07, 0.09, 0.3, 4, 1, true).translate(0, 0.15, 0);
   const arbol = mergeGeometries([copa1, copa2, tronco].map((g) => (g.index ? g.toNonIndexed() : g)))!;
   arbol.computeVertexNormals();
 
@@ -85,14 +86,15 @@ export function crearPaisaje(op: OpcionesPaisaje = {}) {
 
   // casas: alineadas con calles (dos direcciones por barrio), más juntas en el centro
   const casas: THREE.Matrix4[] = [];
-  for (let k = 0; casas.length < o.casas && k < o.casas * 20; k++) {
+  for (let k = 0; casas.length < o.casas && k < o.casas * 30; k++) {
     const r = Math.sqrt(azar()) * o.pueblo.radio;
     const a = azar() * Math.PI * 2;
     const x = o.pueblo.centro[0] + Math.cos(a) * r * 1.25, z = o.pueblo.centro[1] + Math.sin(a) * r * 0.85;
     if (azar() > 1.15 - r / o.pueblo.radio) continue;
     const barrio = n(x * 2.3, z * 2.3);
     const rumbo = barrio * Math.PI + (azar() < 0.5 ? 0 : Math.PI / 2);
-    const s = 0.045 + azar() * 0.03;
+    // casas pequeñas y apretadas, en hileras (la referencia: el pueblo es un tejido continuo de tejados)
+    const s = 0.034 + azar() * 0.022;
     q.setFromAxisAngle(eje, rumbo);
     pos.set(x, altura(x, z) - 0.005, z);
     esc.set(s * (1 + azar() * 0.9), s * (0.9 + azar() * 0.5), s);
@@ -105,13 +107,13 @@ export function crearPaisaje(op: OpcionesPaisaje = {}) {
   for (let k = 0; arboles.length < o.arboles && k < o.arboles * 30; k++) {
     let x: number, z: number;
     const tipo = azar();
-    if (tipo < 0.22) {
+    if (tipo < 0.3) {
       // en el pueblo y su borde
       const r = Math.sqrt(azar()) * o.pueblo.radio * 1.3;
       const a = azar() * Math.PI * 2;
       x = o.pueblo.centro[0] + Math.cos(a) * r * 1.25;
       z = o.pueblo.centro[1] + Math.sin(a) * r * 0.85;
-    } else if (tipo < 0.55) {
+    } else if (tipo < 0.8) {
       const s = setos[Math.floor(azar() * setos.length)];
       const t = (azar() - 0.5) * s.l;
       x = s.x + Math.cos(s.a) * t + (azar() - 0.5) * 0.04;
@@ -121,7 +123,7 @@ export function crearPaisaje(op: OpcionesPaisaje = {}) {
       z = (azar() - 0.5) * 9.6;
       if (n(x * 0.9 + 11, z * 0.9 + 5) < 0.62) continue;
     }
-    const s = 0.035 + azar() * 0.03;
+    const s = 0.026 + azar() * 0.02;
     q.setFromAxisAngle(eje, azar() * Math.PI * 2);
     pos.set(x, altura(x, z) - 0.004, z);
     esc.set(s, s * (0.85 + azar() * 0.4), s);

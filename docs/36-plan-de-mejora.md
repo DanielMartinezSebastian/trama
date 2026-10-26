@@ -155,6 +155,16 @@ Cada captura nueva pasa por el procedimiento (docs/35) y deja receta, ruido y vu
 | D7 | **`PostFX`**: la pila TSL como componente, con el pase anamórfico | `lib/postfx`, Active Theory | componente envoltorio |
 | D8 | **Bandada** (`Flock`) para cualquier escena | `lib/gravure/birds` | técnica |
 
+**D1 hecho (ronda 25):**
+
+- `components/ui/GravureCanvas.tsx` con `lib/gravure/canvas.tsx`:
+  - envuelve los hijos de R3F y les pone el material de lápiz;
+  - `userData.lapiz` elige el ajuste de cada malla y `userData.sinLapiz` la deja fuera.
+- Ajustes genéricos en `AJUSTES_LAPIZ`: objeto, suelo y follaje.
+- Dirección nueva `diagonal` en el material.
+- Variación fuera de la referencia: el bodegón de `lib/gravure/muestra.tsx`, en el catálogo (`/componentes#gravure-canvas`).
+- Chartogne no empeora: el material solo gana opciones, con los mismos valores por defecto.
+
 Cada extracción: variación fuera de la referencia + vuelta de la referencia original sin empeorar (la pieza
 publicada sigue reproduciendo su estudio) + entrada de catálogo + ficha de concepto.
 

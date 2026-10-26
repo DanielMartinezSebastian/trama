@@ -38,14 +38,20 @@
   };
   requestAnimationFrame(tick);
 
-  // mallas visibles de una escena, recontadas como mucho cada 60 fotogramas
+  // lo poblada que está una escena: mallas visibles más sus triángulos (uno por cada 2000), recontado como mucho cada 60
+  // fotogramas. Los triángulos desempatan: una pieza de pocas mallas pero pesada (un emblema extruido) es la escena de
+  // la página, y la tarjeta de varias mallas planas que pinta otro lienzo no lo es
   const counts = new WeakMap();
   const meshCount = (scene) => {
     const c = counts.get(scene);
     if (c && c.f > state.frame - 60) return c.n;
     let n = 0;
     scene.traverse((o) => {
-      if ((o.isMesh || o.isPoints) && o.visible !== false) n += o.isInstancedMesh ? o.count : 1;
+      if (!((o.isMesh || o.isPoints) && o.visible !== false)) return;
+      const copias = o.isInstancedMesh ? o.count : 1;
+      const g = o.geometry;
+      const tris = g ? (g.index ? g.index.count : g.attributes && g.attributes.position ? g.attributes.position.count : 0) / 3 : 0;
+      n += copias + (tris * copias) / 2000;
     });
     counts.set(scene, { n, f: state.frame });
     return n;
@@ -60,7 +66,12 @@
       const isScene = !!(scene && scene.isScene);
       // la escena es la de la cámara en perspectiva; una cámara genérica (Camera, la del cuadrado a pantalla completa de
       // los motores propios como el de Lusion) solo cuenta si no se ha visto ninguna en perspectiva hace poco
-      if (isScene && camera && camera.isPerspectiveCamera) {
+      // las seis caras de un cubo (PMREMGenerator.fromScene, CubeCamera: fov 90 y aspecto 1 hacia un búfer) no son la
+      // escena de la página: un entorno de estudio como RoomEnvironment tiene más mallas que la escena y la suplantaba
+      const esCubo = !!(target && camera && camera.isPerspectiveCamera && camera.fov === 90 && camera.aspect === 1);
+      if (esCubo) {
+        /* no cuenta para elegir escena */
+      } else if (isScene && camera && camera.isPerspectiveCamera) {
         // con varias escenas en perspectiva por fotograma (Lusion pinta la de las cruces y la de las tarjetas de la
         // página), la más poblada
         const n = meshCount(scene);

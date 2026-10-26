@@ -7,6 +7,7 @@
  *   npm run cine:vuelta -- <estudio> [--nota "qué cambié"] [--sin-captura]
  *   npm run cine:vuelta -- <estudio> --referencia      vuelve a capturar la referencia con la receta (y su tramo)
  *   npm run cine:vuelta -- <estudio> --ruido           el ruido de cada eje: la referencia contra otra captura de sí misma
+ *   npm run cine:vuelta -- <estudio> --muestras 5      N parejas referencia/banco: mediana y dispersión por eje (webs vivas)
  *   npm run cine:vuelta -- --lista                     estudios con receta y su última vuelta
  *
  * Salida en `<carpeta>/vuelta-NN/`: banco/, cmp/ (comparacion.md, lado.mp4), par.png (referencia arriba, banco abajo, al
@@ -111,7 +112,56 @@ if (r.flujo) {
 }
 tsx("compare.mts", [r.ref, BANCO, "--out", CMP, ...partir(r.comparar ?? "")]);
 const cmp = JSON.parse(readFileSync(join(CMP, "comparacion.json"), "utf8")) as { alejamiento: Record<string, number> };
-const alejamiento: Record<string, number> = { ...cmp.alejamiento };
+let alejamiento: Record<string, number> = { ...cmp.alejamiento };
+
+/*
+ * Muestras (docs/36 A2): en una web viva (Lusion, Bruno) una comparación es una muestra. Con `--muestras N` se comparan
+ * N parejas (referencia k contra banco k): el eje es la mediana y su dispersión la mitad del rango. Las referencias de
+ * más se guardan en `<carpeta>/muestras/` y se reutilizan de una vuelta a otra; el ruido sale de compararlas entre sí
+ * (su mediana sustituye a ruido.json en el veredicto).
+ */
+const MUESTRAS = Math.max(1, Number(opt("--muestras", "1")) || 1);
+let dispersion: Record<string, number> | null = null;
+let ruidoMuestras: Record<string, number> | null = null;
+if (MUESTRAS > 1) {
+  const mediana = (xs: number[]) => {
+    const s = [...xs].sort((a, b) => a - b);
+    return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2;
+  };
+  const porEje = (cs: Record<string, number>[]) => {
+    const ejes = [...new Set(cs.flatMap((c) => Object.keys(c)))];
+    return Object.fromEntries(ejes.map((e) => [e, cs.map((c) => c[e]).filter((x) => x !== undefined)]));
+  };
+  const leerCmp = (d: string) => (JSON.parse(readFileSync(join(d, "comparacion.json"), "utf8")) as { alejamiento: Record<string, number> }).alejamiento;
+  const refs = [r.ref];
+  for (let k = 2; k <= MUESTRAS; k++) {
+    const rk = join(CARPETA, "muestras", `ref-${k}`);
+    if (!existsSync(join(rk, "timeline.jsonl"))) capturarReferencia(rk);
+    refs.push(rk);
+  }
+  const muestras = [cmp.alejamiento];
+  for (let k = 2; k <= MUESTRAS; k++) {
+    const bk = join(DIR, `banco-${k}`), ck = join(DIR, `cmp-${k}`);
+    console.log(`→ muestra ${k} de ${MUESTRAS}`);
+    if (!sinCaptura || !existsSync(join(bk, "timeline.jsonl"))) tsx("capture.mts", [r.url, ...partir(r.captura), "--out", bk]);
+    tsx("analyze.mts", [bk]);
+    if (r.flujo) tsx("flujo.mts", [bk]);
+    tsx("compare.mts", [refs[k - 1], bk, "--out", ck, ...partir(r.comparar ?? "")]);
+    muestras.push(leerCmp(ck));
+  }
+  // el ruido: cada referencia contra la siguiente (una vez; se guarda con las muestras)
+  const ruidos: Record<string, number>[] = [];
+  for (let k = 1; k < refs.length; k++) {
+    const ck = join(CARPETA, "muestras", `ruido-${k}`);
+    if (!existsSync(join(ck, "comparacion.json"))) tsx("compare.mts", [refs[k - 1], refs[k], "--out", ck, ...partir(r.comparar ?? "")]);
+    ruidos.push(leerCmp(ck));
+  }
+  const pe = porEje(muestras);
+  alejamiento = Object.fromEntries(Object.entries(pe).map(([e, xs]) => [e, mediana(xs)]));
+  dispersion = Object.fromEntries(Object.entries(pe).map(([e, xs]) => [e, (Math.max(...xs) - Math.min(...xs)) / 2]));
+  ruidoMuestras = Object.fromEntries(Object.entries(porEje(ruidos)).map(([e, xs]) => [e, mediana(xs)]));
+  writeFileSync(join(DIR, "muestras.json"), JSON.stringify({ n: MUESTRAS, muestras, ruidos, mediana: alejamiento, dispersion, ruido: ruidoMuestras }, null, 1));
+}
 
 // la dinámica del conjunto (racimos, enjambres) si la receta la tiene
 if (r.conjunto) {
@@ -166,23 +216,24 @@ try {
   /* sin git */
 }
 const ant = previas.filter((p) => p.n !== n).pop();
-const ruido = existsSync(join(CARPETA, "ruido.json")) ? (JSON.parse(readFileSync(join(CARPETA, "ruido.json"), "utf8")) as { alejamiento: Record<string, number> }).alejamiento : null;
+const ruido = ruidoMuestras ?? (existsSync(join(CARPETA, "ruido.json")) ? (JSON.parse(readFileSync(join(CARPETA, "ruido.json"), "utf8")) as { alejamiento: Record<string, number> }).alejamiento : null);
 const ver = veredictos(alejamiento, ruido, r.objetivos);
 const lineas = [
   `# ${id} · vuelta ${n}${opt("--nota", "") ? ` · ${opt("--nota", "")}` : ""}`,
   "",
   `**Cumple ${ver.cumple} de ${ver.total} ejes**${ver.cumple === ver.total ? " · listo: todos en su objetivo" : ` · el que más falta: ${ver.ejes.filter((e) => e.cumple === false).sort((a, b) => b.falta - a.falta)[0]?.eje}`}`,
   "",
+  ...(dispersion ? [`Con ${MUESTRAS} muestras: «Ahora» es la mediana (± la mitad del rango) y el ruido, la mediana de las referencias entre sí.`, ""] : []),
   `| Eje | Ahora | Antes | Cambio | Ruido | Objetivo | Veredicto |`,
   `|---|---|---|---|---|---|---|`,
 ];
 for (const e of ver.ejes) {
   const a = ant?.alejamiento?.[e.eje];
   const d = a === undefined ? "" : Math.round((e.valor - a) * 100);
-  lineas.push(`| ${e.eje} | ${Math.round(e.valor * 100)} % | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} | ${e.ruido === undefined ? "—" : Math.round(e.ruido * 100) + " %"} | ${e.objetivo === null ? "—" : Math.round(e.objetivo * 100) + " %"} | ${textoVeredicto(e)} |`);
+  lineas.push(`| ${e.eje} | ${Math.round(e.valor * 100)} %${dispersion?.[e.eje] !== undefined ? ` ± ${Math.round(dispersion[e.eje] * 100)}` : ""} | ${a === undefined ? "—" : Math.round(a * 100) + " %"} | ${d === "" ? "" : d === 0 ? "=" : d < 0 ? `▼ ${-d}` : `▲ ${d}`} | ${e.ruido === undefined ? "—" : Math.round(e.ruido * 100) + " %"} | ${e.objetivo === null ? "—" : Math.round(e.objetivo * 100) + " %"} | ${textoVeredicto(e)} |`);
 }
 lineas.push("", `Tonos (claro · medio · oscuro · color): referencia ${Object.values(tr).join(" · ")} · banco ${Object.values(tb).join(" · ")}`, "", `Par de fotogramas: ${join(DIR, "par.png")} · lado a lado: ${join(CMP, "lado.mp4")} · comparación: ${join(CMP, "comparacion.md")}`);
 writeFileSync(join(DIR, "vuelta.md"), lineas.join("\n") + "\n");
-if (!sinCaptura) appendFileSync(join(CARPETA, "historial.jsonl"), JSON.stringify({ n, fecha: new Date().toISOString(), nota: opt("--nota", ""), commit, alejamiento, veredicto: { cumple: ver.cumple, total: ver.total, ejes: Object.fromEntries(ver.ejes.map((e) => [e.eje, e.cumple])) }, tonos: { referencia: tr, banco: tb } }) + "\n");
+if (!sinCaptura) appendFileSync(join(CARPETA, "historial.jsonl"), JSON.stringify({ n, fecha: new Date().toISOString(), nota: opt("--nota", ""), commit, alejamiento, ...(dispersion ? { muestras: MUESTRAS, dispersion } : {}), veredicto: { cumple: ver.cumple, total: ver.total, ejes: Object.fromEntries(ver.ejes.map((e) => [e.eje, e.cumple])) }, tonos: { referencia: tr, banco: tb } }) + "\n");
 console.log(lineas.join("\n"));
 console.log(`\n  ${((Date.now() - t0) / 1000).toFixed(0)} s`);

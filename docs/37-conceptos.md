@@ -141,9 +141,16 @@
   - Las bandas, **en las coordenadas del modelo** (70 por metro en el terreno; 7–9 por unidad en los objetos).
   - Papel #fff5dd, lápiz #8c887d; viñeta de 1,8 con −0,28; grano de 0,123; papel al 25 %.
   - **Pintar siempre a 2×.**
-- **Piezas**: `lib/gravure` (`materialLapiz`, `pilaGrabado`), `EngravedMap`. Pendiente: `GravureCanvas` para cualquier
-  escena (docs/36 D1).
-- **Verificar**: imagen ≤ 10 %, acabado ≤ 10 % (Chartogne: 8 % y 7 %; ruido de 0 %).
+  - **La densidad depende del tamaño en pantalla, no de la escena.** Los ajustes de Chartogne sirven para piezas de unos
+    20 px. Un objeto que ocupa 250 px pide unos 34 trazos por unidad y un tono graduado: líneas finas en la luz y tinta
+    casi llena en la sombra. Si no, sale todo o nada.
+  - **Para objetos sueltos, planos diagonales del mundo** (`direccion: "diagonal"`). Las líneas siguen la curva de cada
+    superficie y pasan de un objeto a otro. Los anillos alrededor del origen dejan dianas en las caras planas.
+- **Piezas**:
+  - `lib/gravure` (`materialLapiz`, `pilaGrabado`, `AJUSTES_LAPIZ`);
+  - `GravureCanvas`, para cualquier escena de R3F, con `userData.lapiz` por malla;
+  - `EngravedMap`, el paisaje de la referencia.
+- **Verificar**: imagen ≤ 10 %, acabado ≤ 10 %, profundidad ≤ 15 % (Chartogne: 9 %, 10 % y 16 %; ruido de 0–1 %).
 - **Referencias**: Chartogne-Taillet.
 
 ## 9. La cadena de render como firma

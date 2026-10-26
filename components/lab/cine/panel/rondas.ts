@@ -40,6 +40,39 @@ export type Ronda = {
 
 export const RONDAS: Ronda[] = [
   {
+    n: "25",
+    fecha: "25–26-10-2026",
+    titulo: "Sensación y profundidad: Meer Mohsin con su escena, Chartogne más denso, muestras y grabado para cualquier escena",
+    tipo: "estudio",
+    fuente: { nombre: "Meer Mohsin (portada y relato)", url: "https://www.meermohsin.me/", motor: "three r180", gesto: "rueda" },
+    lab: "/lab/cine/relato",
+    receta: "relato",
+    componentes: [
+      { nombre: "ThornEmblem", catalogo: "thorn-emblem", ruta: "components/ui/ThornEmblem.tsx" },
+      { nombre: "FlameHorizon", catalogo: "flame-horizon", ruta: "components/ui/FlameHorizon.tsx" },
+      { nombre: "TornPaper", catalogo: "torn-paper", ruta: "components/ui/TornPaper.tsx" },
+      { nombre: "GravureCanvas", catalogo: "gravure-canvas", ruta: "components/ui/GravureCanvas.tsx" },
+      { nombre: "lib/emblem (emblema de púas)", ruta: "lib/emblem/" },
+    ],
+    herramientas: ["cine:vuelta --muestras N", "gancho: sin cubos de entorno", "gancho: escena por mallas y triángulos"],
+    doc: "40-ronda-25-sensacion.md",
+    commits: [],
+    resultado: [
+      { eje: "Meer Mohsin: imagen · cámara · posprocesado", valor: "72 → 44 % · 100 → 0 % · 25 → 0 %" },
+      { eje: "Chartogne: profundidad (imagen)", valor: "28 → 16 % (9 %)" },
+      { eje: "Lusion con 5 muestras: imagen · acabado", valor: "57 % ± 25 · 34 % ± 9" },
+    ],
+    conclusion:
+      "El eje de profundidad encontró lo que el ojo notaba: el paisaje de Chartogne era menos denso que la referencia. Meer Mohsin estaba lejos porque faltaba la escena, no el texto: con el emblema de púas, las llamas con manos, el papel rasgado, la caligráfica y la cámara de la referencia, la imagen baja del 72 al 44 % y la cámara del 100 al 0 %. Con cinco muestras, Lusion queda claramente por encima de su ruido: la causa son los claros de más.",
+    capturas: {},
+    extras: [
+      { papel: "Prueba de llamas y emblema", ruta: "vueltas/relato" },
+      { papel: "Muestras de Lusion", ruta: "vueltas/lusion/muestras" },
+      { papel: "Vueltas de Chartogne", ruta: "vueltas/chartogne" },
+    ],
+    pendiente: ["Meer Mohsin: medios tonos, luz, figura que cae", "Lusion: claros de más", "Chartogne: red de caminos", "B2 Bruno con decorado"],
+  },
+  {
     n: "24",
     fecha: "25-10-2026",
     titulo: "Reestudio, mapa de webs enteras, profundidad y veredicto por objetivos",

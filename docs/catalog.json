@@ -35,6 +35,7 @@
         "crt-overlay",
         "retro-canvas",
         "retro-model",
+        "flame-horizon",
         "gradient-field"
       ]
     },
@@ -218,6 +219,8 @@
         "toy-drive",
         "cross-cluster",
         "engraved-map",
+        "gravure-canvas",
+        "thorn-emblem",
         "point-cloud",
         "product-gallery",
         "expanding-panels",
@@ -243,6 +246,7 @@
         "articles-section",
         "project-list",
         "big-footer",
+        "torn-paper",
         "crossfade-hero",
         "feature-explorer",
         "guide-frame"
@@ -12091,6 +12095,241 @@
       ],
       "example": "import EngravedMap from \"@/components/ui/EngravedMap\";\n\n<EngravedMap />",
       "preview": "/componentes#engraved-map"
+    },
+    {
+      "id": "gravure-canvas",
+      "name": "Grabado a lápiz para cualquier escena",
+      "component": "GravureCanvas",
+      "import": "import GravureCanvas from \"@/components/ui/GravureCanvas\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz sobre papel: rayado que engorda con la sombra, contornos más gruesos cerca, grano y fibra del papel, viñeta y entrada por baldosas. Las mallas de los hijos toman el material de lápiz; cada una puede pedir su ajuste (objeto, suelo, follaje, o los del paisaje de Chartogne) con userData.lapiz. Es la técnica de EngravedMap (medida en Chartogne-Taillet, docs/32) para cualquier objeto: productos «dibujados», arquitectura, mapas o portadas editoriales. Colores del tema: papel de --card y lápiz de --mut.",
+      "props": [
+        {
+          "key": "preset",
+          "type": "select",
+          "default": "objeto",
+          "label": "Ajuste por defecto",
+          "options": [
+            "objeto",
+            "suelo",
+            "follaje",
+            "casa",
+            "arbol"
+          ]
+        },
+        {
+          "key": "lineWidth",
+          "type": "number",
+          "default": 0.5,
+          "label": "Grosor de contorno",
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "grain",
+          "type": "number",
+          "default": 0.123,
+          "label": "Grano",
+          "min": 0,
+          "max": 0.4
+        },
+        {
+          "key": "intro",
+          "type": "number",
+          "default": 1.5,
+          "label": "Entrada (s)",
+          "min": 0,
+          "max": 5
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/GravureCanvas.",
+        "Los hijos son elementos de react-three-fiber; sus materiales se sustituyen por el de lápiz (userData.sinLapiz los deja fuera).",
+        "La luz es la de la referencia (dos direccionales fijas): las luces de la escena no cuentan."
+      ],
+      "example": "import GravureCanvas from \"@/components/ui/GravureCanvas\";\n\n<GravureCanvas />",
+      "preview": "/componentes#gravure-canvas"
+    },
+    {
+      "id": "thorn-emblem",
+      "name": "Emblema 3D de púas",
+      "component": "ThornEmblem",
+      "import": "import ThornEmblem from \"@/components/ui/ThornEmblem\";",
+      "category": "galerias",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
+      "props": [
+        {
+          "key": "seed",
+          "type": "number",
+          "default": 7,
+          "label": "Semilla",
+          "min": 1,
+          "max": 99
+        },
+        {
+          "key": "spikes",
+          "type": "number",
+          "default": 7,
+          "label": "Púas por ala",
+          "min": 3,
+          "max": 12
+        },
+        {
+          "key": "barbs",
+          "type": "number",
+          "default": 1,
+          "label": "Púas secundarias",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "curl",
+          "type": "number",
+          "default": 0.55,
+          "label": "Curva",
+          "min": 0,
+          "max": 1.2
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 480,
+          "label": "Alto (px)",
+          "min": 280,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.",
+        "progress controla la coreografía; sin él, se balancea solo.",
+        "Sin WebGL o con movimiento reducido, una silueta plana de púas."
+      ],
+      "example": "import ThornEmblem from \"@/components/ui/ThornEmblem\";\n\n<ThornEmblem />",
+      "preview": "/componentes#thorn-emblem"
+    },
+    {
+      "id": "flame-horizon",
+      "name": "Horizonte de llamas con manos",
+      "component": "FlameHorizon",
+      "import": "import FlameHorizon from \"@/components/ui/FlameHorizon\";",
+      "category": "fondos",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Un horizonte de llamas que sube desde abajo, con lenguas que corren hacia arriba, el color más vivo junto al borde y un halo encima, y siluetas de manos en garra que se mecen. Con progress (0–1) sigue la coreografía de meermohsin.me para atarla al scroll: las llamas suben hasta llenarlo todo y se invierte (rojo arriba, llamas negras con manos abajo). Para portadas oscuras, conciertos, videojuegos, terror o transiciones entre secciones. WebGL a pelo, sin dependencias; colores del tema (--acc sobre --bg).",
+      "props": [
+        {
+          "key": "progress",
+          "type": "number",
+          "default": 0.3,
+          "label": "Progreso (coreografía)",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "hands",
+          "type": "number",
+          "default": 9,
+          "label": "Manos",
+          "min": 0,
+          "max": 12
+        },
+        {
+          "key": "speed",
+          "type": "number",
+          "default": 1,
+          "label": "Velocidad",
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "default": 440,
+          "label": "Alto (px)",
+          "min": 240,
+          "max": 800
+        }
+      ],
+      "notes": [
+        "progress manda sobre level e invert.",
+        "hands = 0 deja solo las llamas.",
+        "Sin WebGL, un degradado CSS a la altura del borde; con movimiento reducido, quieto."
+      ],
+      "example": "import FlameHorizon from \"@/components/ui/FlameHorizon\";\n\n<FlameHorizon />",
+      "preview": "/componentes#flame-horizon"
+    },
+    {
+      "id": "torn-paper",
+      "name": "Franja de papel rasgado",
+      "component": "TornPaper",
+      "import": "import TornPaper from \"@/components/ui/TornPaper\";",
+      "category": "secciones",
+      "styles": [
+        "editorial",
+        "minimal"
+      ],
+      "description": "Una franja de papel con los bordes rasgados: el corte irregular con fibras y el canto blanco del papel que asoma por partes, como la sección «The fall was always part of the path» de meermohsin.me. Envuelve cualquier contenido (texto, imagen, figura). Dos SVG con semilla, sin JavaScript en tiempo de ejecución. Papel de --acc y canto de --fg.",
+      "props": [
+        {
+          "key": "seed",
+          "type": "number",
+          "default": 4,
+          "label": "Semilla",
+          "min": 1,
+          "max": 99
+        },
+        {
+          "key": "depth",
+          "type": "number",
+          "default": 48,
+          "label": "Alto del rasgado (px)",
+          "min": 12,
+          "max": 120
+        },
+        {
+          "key": "rim",
+          "type": "number",
+          "default": 1,
+          "label": "Canto blanco",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "edges",
+          "type": "select",
+          "default": "both",
+          "label": "Bordes",
+          "options": [
+            "both",
+            "top",
+            "bottom"
+          ]
+        }
+      ],
+      "notes": [
+        "edges elige qué bordes se rasgan.",
+        "Otra semilla, otro rasgado (el mismo en servidor y cliente)."
+      ],
+      "example": "import TornPaper from \"@/components/ui/TornPaper\";\n\n<TornPaper />",
+      "preview": "/componentes#torn-paper"
     },
     {
       "id": "chapter-stage",

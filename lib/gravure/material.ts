@@ -21,7 +21,9 @@ export type DireccionTrazo =
   /** bandas horizontales (los árboles: el punto lejano está arriba) */
   | "arriba"
   /** surcos de viña: una dirección distinta en cada parcela (celdas de Voronoi), caminos en blanco entre ellas */
-  | "parcelas";
+  | "parcelas"
+  /** planos paralelos en el mundo: líneas que siguen la curva de cada superficie, como un grabado clásico (objetos sueltos) */
+  | "diagonal";
 
 export type OpcionesLapiz = {
   direccion?: DireccionTrazo;
@@ -42,10 +44,12 @@ export type OpcionesLapiz = {
   camino?: number;
   prados?: number;
   sinSurcos?: { centro: [number, number]; radio: number };
+  /** a qué profundidad (m) deja de contar la cercanía que engorda los contornos (la referencia: 2,5) */
+  alcance?: number;
 };
 
 /** los ajustes medidos en la referencia para cada tipo de pieza */
-export const LAPIZ_TERRENO: OpcionesLapiz = { direccion: "parcelas", subdivision: 70, tono: 0.25, luzDesplazamiento: -0.5, luzMultiplicador: 3, umbral: 0.7, fundidoDesde: 0, fundidoEn: 0 };
+export const LAPIZ_TERRENO: OpcionesLapiz = { direccion: "parcelas", subdivision: 70, tono: 0.22, luzDesplazamiento: -0.5, luzMultiplicador: 3, umbral: 0.7, fundidoDesde: 0, fundidoEn: 0 };
 export const LAPIZ_ARBOL: OpcionesLapiz = { direccion: "arriba", subdivision: 9, tono: 0.2, luzDesplazamiento: -0.7, luzMultiplicador: 3, umbral: 0.75, fundidoDesde: 0.7, fundidoEn: 1.5 };
 export const LAPIZ_CASA: OpcionesLapiz = { direccion: "origen", subdivision: 7, tono: 0.3, luzDesplazamiento: -0.7, luzMultiplicador: 3, umbral: 0.75, fundidoDesde: 0.7, fundidoEn: 1.5 };
 
@@ -94,7 +98,7 @@ const voronoi = Fn(([p]: [V2]) => {
 
 /** material de lápiz para mallas (también InstancedMesh): ver la cabecera */
 export function materialLapiz(op: OpcionesLapiz = {}) {
-  const o = { parcela: 0.16, camino: 0.028, prados: 0.22, ...LAPIZ_CASA, ...op } as Required<Omit<OpcionesLapiz, "sinSurcos">> & Pick<OpcionesLapiz, "sinSurcos">;
+  const o = { parcela: 0.16, camino: 0.028, prados: 0.22, alcance: 2.5, ...LAPIZ_CASA, ...op } as Required<Omit<OpcionesLapiz, "sinSurcos">> & Pick<OpcionesLapiz, "sinSurcos">;
   const m = new MeshBasicNodeMaterial();
   m.fog = false;
   m.colorNode = Fn(() => {
@@ -109,23 +113,31 @@ export function materialLapiz(op: OpcionesLapiz = {}) {
     const papel = float(0).toVar();
     if (o.direccion === "parcelas") {
       const xz = vec2(positionWorld.x, positionWorld.z);
-      // parcelas en franjas: la celda se estira 2,6 veces a lo largo de una dirección que cambia despacio por el terreno
+      // parcelas en franjas: la celda se estira 3,4 veces a lo largo de una dirección que cambia despacio por el terreno
       const giro = float(0.5);
       const xr = vec2(xz.x.mul(cos(giro)).sub(xz.y.mul(sin(giro))), xz.x.mul(sin(giro)).add(xz.y.mul(cos(giro))));
-      const v = voronoi(xr.div(vec2(o.parcela * 2.6, o.parcela))) as unknown as V3;
+      const v = voronoi(xr.div(vec2(o.parcela * 3.4, o.parcela))) as unknown as V3;
       const a = v.x.mul(Math.PI);
       const surco = dot(xz, vec2(cos(a), sin(a))).mul(o.subdivision);
+      // las cepas: cada surco es una fila de trazos cortos con huecos, no una línea seguida (la referencia, de cerca);
+      // el desfase por fila evita que los huecos se alineen
+      const fila = floor(surco);
+      const cepa = fract(dot(xz, vec2(sin(a).negate(), cos(a))).mul(o.subdivision * 0.55).add(hash1(vec2(fila, v.x.mul(97)))));
+      const cepas = cepa.greaterThan(0.2).toFloat();
       // prados (sin surcos: el anillo suave del origen) y el pueblo, sin viña
       const sinViña = v.z.lessThan(o.prados).toFloat();
       const pueblo = o.sinSurcos ? clamp(float(1).sub(length(xz.sub(vec2(o.sinSurcos.centro[0], o.sinSurcos.centro[1]))).div(o.sinSurcos.radio)).mul(4), 0, 1) : float(0);
       const anillo = length(positionWorld).mul(o.subdivision);
-      banda.assign(abs(fract(mix(surco, anillo, max(sinViña, pueblo))).sub(0.5)).mul(2));
+      banda.assign(abs(fract(mix(surco, anillo, max(sinViña, pueblo))).sub(0.5)).mul(2).mul(mix(cepas, float(1), max(sinViña, pueblo))));
       // los prados y el pueblo, más claros
       fuerte.addAssign(max(sinViña, pueblo).mul(-0.9));
       // caminos: papel entre parcelas, con un trazo a cada lado
       const ancho = float(o.camino);
       papel.assign(v.y.lessThan(ancho).toFloat().mul(float(1).sub(pueblo.mul(0.7))));
       fuerte.addAssign(v.y.sub(ancho).abs().lessThan(0.012).toFloat().mul(1.4).mul(float(1).sub(pueblo)));
+    } else if (o.direccion === "diagonal") {
+      // los mismos planos para toda la escena: las líneas pasan de un objeto a otro sin saltos
+      banda.assign(abs(fract(dot(positionWorld, vec3(0.62, 0.58, 0.53)).mul(o.subdivision)).sub(0.5)).mul(2));
     } else {
       // en las coordenadas del modelo, como la referencia (vModelPosition): cada casa y cada árbol lleva sus propias
       // bandas, del mismo número sea cual sea su tamaño en pantalla
@@ -138,7 +150,7 @@ export function materialLapiz(op: OpcionesLapiz = {}) {
     const lapiz = mix(clamp(base, 0, 1), trazo, fundido).mul(float(1).sub(papel));
 
     const r = normalize(normalView).x.mul(0.5).add(0.5);
-    const cerca = float(1).sub(clamp(profundidad.mul(0.4), 0, 1));
+    const cerca = float(1).sub(clamp(profundidad.div(o.alcance), 0, 1));
     return vec4(r, lapiz, cerca, 1);
   })();
   return m;

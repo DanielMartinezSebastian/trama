@@ -167,6 +167,21 @@ Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y
 - `material="clay"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint="scene"`).
 - Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.
 
+### Horizonte de llamas con manos — `FlameHorizon`
+
+Un horizonte de llamas que sube desde abajo, con lenguas que corren hacia arriba, el color más vivo junto al borde y un halo encima, y siluetas de manos en garra que se mecen. Con progress (0–1) sigue la coreografía de meermohsin.me para atarla al scroll: las llamas suben hasta llenarlo todo y se invierte (rojo arriba, llamas negras con manos abajo). Para portadas oscuras, conciertos, videojuegos, terror o transiciones entre secciones. WebGL a pelo, sin dependencias; colores del tema (--acc sobre --bg).
+
+| prop | tipo | default |
+|---|---|---|
+| `progress` | number 0–1 | 0.3 |
+| `hands` | number 0–12 | 9 |
+| `speed` | number 0–3 | 1 |
+| `height` | number 240–800 | 440 |
+
+- progress manda sobre level e invert.
+- hands = 0 deja solo las llamas.
+- Sin WebGL, un degradado CSS a la altura del borde; con movimiento reducido, quieto.
+
 ### Fondo de color en WebGL (manchas, cinta, haces) — `GradientField`
 
 Fondo de color animado en WebGL sin dependencias: manchas que se mezclan (mesh), la cinta iridiscente de Stripe (ribbon) o los haces de luz en diagonal de Raycast (beams). Usa los colores del tema (--bg, --acc, --acc2) y cambia con él. Media resolución, pausado fuera de pantalla; sin WebGL queda un degradado CSS.
@@ -2116,6 +2131,38 @@ Un paisaje de viñas y pueblo dibujado como un grabado a lápiz sobre papel: par
 - Pinta siempre a 2× (como la referencia): los contornos y el grano se afinan al reducirse.
 - El motor del grabado (lib/gravure: materialLapiz y pilaGrabado) vale para cualquier escena con WebGPURenderer.
 
+### Grabado a lápiz para cualquier escena — `GravureCanvas`
+
+Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz sobre papel: rayado que engorda con la sombra, contornos más gruesos cerca, grano y fibra del papel, viñeta y entrada por baldosas. Las mallas de los hijos toman el material de lápiz; cada una puede pedir su ajuste (objeto, suelo, follaje, o los del paisaje de Chartogne) con userData.lapiz. Es la técnica de EngravedMap (medida en Chartogne-Taillet, docs/32) para cualquier objeto: productos «dibujados», arquitectura, mapas o portadas editoriales. Colores del tema: papel de --card y lápiz de --mut.
+
+| prop | tipo | default |
+|---|---|---|
+| `preset` | `objeto` · `suelo` · `follaje` · `casa` · `arbol` | "objeto" |
+| `lineWidth` | number 0–3 | 0.5 |
+| `grain` | number 0–0.4 | 0.123 |
+| `intro` | number 0–5 | 1.5 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/GravureCanvas.
+- Los hijos son elementos de react-three-fiber; sus materiales se sustituyen por el de lápiz (userData.sinLapiz los deja fuera).
+- La luz es la de la referencia (dos direccionales fijas): las luces de la escena no cuentan.
+
+### Emblema 3D de púas — `ThornEmblem`
+
+Un emblema 3D de púas curvas y simétrico, como un tatuaje tribal o un logotipo de metal: alas de espinas con púas secundarias y un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
+
+| prop | tipo | default |
+|---|---|---|
+| `seed` | number 1–99 | 7 |
+| `spikes` | number 3–12 | 7 |
+| `barbs` | number 0–2 | 1 |
+| `curl` | number 0–1.2 | 0.55 |
+| `height` | number 280–800 | 480 |
+
+- Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.
+- progress controla la coreografía; sin él, se balancea solo.
+- Sin WebGL o con movimiento reducido, una silueta plana de púas.
+
 ### Nube de puntos de un terreno escaneado — `PointCloud`
 
 Un terreno escaneado como nube de puntos (topografía con dron, LIDAR, gemelos digitales), procedural y sin descargas: un barrido que revela los puntos con estela, color por cota (--acc2 en el valle, --acc en la cumbre), edificios que se levantan, línea de medida con su distancia y desnivel ({d}, {h}) y una lupa que lee la X/Y/Z bajo el ratón; un clic lanza un pulso de escaneo. Sola (motion) o guiada desde fuera con state (useScrollStory). Sin WebAssembly. Nació en /sitios/cota.
@@ -2395,6 +2442,20 @@ Correo grande, enlaces que ruedan y un titular que llena el ancho, con los color
 | `note` | text | "© 2026 Estudio" |
 | `credit` | text | "Hecho con Trama" |
 | `city` | text | "Madrid" |
+
+### Franja de papel rasgado — `TornPaper`
+
+Una franja de papel con los bordes rasgados: el corte irregular con fibras y el canto blanco del papel que asoma por partes, como la sección «The fall was always part of the path» de meermohsin.me. Envuelve cualquier contenido (texto, imagen, figura). Dos SVG con semilla, sin JavaScript en tiempo de ejecución. Papel de --acc y canto de --fg.
+
+| prop | tipo | default |
+|---|---|---|
+| `seed` | number 1–99 | 4 |
+| `depth` | number 12–120 | 48 |
+| `rim` | number 0–1 | 1 |
+| `edges` | `both` · `top` · `bottom` | "both" |
+
+- edges elige qué bordes se rasgan.
+- Otra semilla, otro rasgado (el mismo en servidor y cliente).
 
 ### Hero con fundido de fotografías — `CrossfadeHero`
 
