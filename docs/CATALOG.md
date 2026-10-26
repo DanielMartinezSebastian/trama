@@ -481,13 +481,19 @@ Plan con precio, características (incluidas y no incluidas) y llamada a la acci
 
 ### Testimonio — `Testimonial`
 
-Cita con avatar de iniciales, autor, cargo y valoración.
+Cita con tres tratamientos (tarjeta, suave o abierta), retrato circular con respaldo de iniciales, autor, cargo y valoración.
 
 | prop | tipo | default |
 |---|---|---|
 | `quote` | text | "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla." |
 | `author` | text | "Lucía Pardo" |
 | `role` | text | "Alumna, curso de iniciación" |
+| `presentation` | `card` · `soft` · `plain` | "card" |
+| `quoteFont` | `body` · `display` | "body" |
+| `avatar` | boolean | true |
+| `avatarSrc` | text | "" |
+| `avatarSize` | `sm` · `md` · `lg` | "md" |
+| `avatarShape` | `theme` · `circle` | "theme" |
 | `rating` | number 0–5 | 5 |
 | `fill` | `surface` · `tint` · `gradient` · `accent` · `pattern` · `image` | "surface" |
 | `pattern` | `dots` · `grid` · `diagonal` · `waves` · `checker` · `rays` | "dots" |
@@ -1323,6 +1329,8 @@ Preguntas frecuentes con paneles animados por CSS.
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | false |
 | `defaultOpen` | number 0–5 | 0 |
+| `presentation` | `cards` · `lines` | "cards" |
+| `answerAlign` | `inherit` · `left` · `center` | "inherit" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Migas de pan — `Breadcrumbs`
@@ -2244,6 +2252,10 @@ Columnas verticales que se reparten el ancho; al pasar el puntero o enfocar con 
 |---|---|---|
 | `height` | text | "320px" |
 | `grow` | number 1.5–8 | 4 |
+| `mobileScroll` | boolean | false |
+| `metaVisibility` | `always` · `active` | "always" |
+| `titleMaxSize` | text | "28px" |
+| `minPanelWidth` | text | "120px" |
 
 ### Lienzo explorable por arrastre — `ExplorableCanvas`
 
@@ -2320,7 +2332,7 @@ Cierre de página: titular corto, una frase y uno o dos botones sobre una superf
 
 ### Sección de FAQ — `FAQSection`
 
-Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.
+FAQ con cabecera superior o lateral en escritorio, acordeón de tarjetas o líneas, respuestas alineables y apertura inicial configurable. Incluye navegación por teclado y paneles accesibles.
 
 | prop | tipo | default |
 |---|---|---|
@@ -2328,6 +2340,11 @@ Cabecera de sección más acordeón: las preguntas frecuentes listas para el fin
 | `title` | text | "Todo lo que necesitas saber" |
 | `items` | text | "¿Necesito experiencia?\|Ninguna. Empezamos desde cero con material blando.\n¿Qué inclu…" |
 | `multiple` | boolean | true |
+| `align` | `left` · `center` | "center" |
+| `layout` | `stack` · `split` | "stack" |
+| `presentation` | `cards` · `lines` | "cards" |
+| `answerAlign` | `inherit` · `left` · `center` | "inherit" |
+| `defaultOpen` | number -1–5 | 0 |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Sección de cifras — `StatsSection`
@@ -2389,6 +2406,9 @@ Prueba social lista para pegar: cabecera, resumen de valoraciones (media con est
 | `pageSize` | number 0–6 | 0 |
 | `quoteFont` | `body` · `display` | "body" |
 | `avatars` | boolean | true |
+| `avatarSize` | `sm` · `md` · `lg` | "md" |
+| `avatarShape` | `theme` · `circle` | "theme" |
+| `presentation` | `card` · `soft` · `plain` | "card" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 - Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.
@@ -3085,7 +3105,7 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
-`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
 
 ### Ánima · fiesta de Halloween en Valencia — `/sitios/anima`
 

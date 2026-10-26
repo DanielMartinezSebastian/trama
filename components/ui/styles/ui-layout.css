@@ -60,22 +60,29 @@
 
 /* ---------- ExpandingPanels ---------- */
 .ui-xpan { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.ui-xpan__li { flex: 1 1 0; min-width: 0; transition: flex-grow var(--dur-l, 1.1s) var(--ease-out, ease-out); }
+.ui-xpan__li { display: flex; flex: 1 1 0; min-width: min(var(--xp-min-width, 120px), calc((100% - (var(--xp-count, 4) - 1) * 4px) / var(--xp-count, 4))); min-height: min-content; container-type: inline-size; transition: flex-grow var(--dur-l, 1.1s) var(--ease-out, ease-out); }
 .ui-xpan__li[data-on] { flex-grow: var(--xp-grow, 4); }
-.ui-xpan__p { position: relative; display: block; width: 100%; height: 100%; overflow: clip; color: #fff; text-decoration: none; background: var(--card); }
+.ui-xpan__p { position: relative; display: flex; align-items: flex-end; box-sizing: border-box; width: 100%; min-height: min-content; padding: 16px; overflow: clip; color: #fff; text-decoration: none; background: var(--card); }
 .ui-xpan__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform var(--dur-l, 1.1s) var(--ease-out, ease-out); }
 .ui-xpan__li[data-on] .ui-xpan__img { transform: scale(1); }
 .ui-xpan__p::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 55%); }
-.ui-xpan__txt { position: absolute; z-index: 1; left: 16px; right: 16px; bottom: 16px; display: grid; gap: 4px; }
-.ui-xpan__txt small { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
-.ui-xpan__txt b { font-size: clamp(18px, 2vw, 28px); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ui-xpan__txt { position: relative; z-index: 1; display: grid; width: 100%; min-width: 0; gap: 4px; }
+.ui-xpan__txt small { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; overflow-wrap: anywhere; }
+.ui-xpan[data-meta="active"] .ui-xpan__txt small { position: absolute; inset: auto 0 calc(100% + 8px); opacity: 0; transform: translateY(8px); visibility: hidden; transition: opacity 0.3s ease, transform 0.5s var(--ease-out, ease-out), visibility 0s 0.3s; }
+.ui-xpan[data-meta="active"] .ui-xpan__li[data-on] small { opacity: 0.85; transform: translateY(0); visibility: visible; transition-delay: 0.2s, 0.2s, 0s; }
+.ui-xpan__txt b { font-size: min(var(--xp-title-max, 28px), clamp(18px, 10cqi, 48px)); font-weight: 600; line-height: 1.12; letter-spacing: -0.02em; white-space: normal; overflow-wrap: anywhere; text-wrap: balance; }
 .ui-xpan__p:focus-visible { outline: 3px solid var(--acc); outline-offset: -3px; }
 @media (max-width: 720px) {
   .ui-xpan { flex-direction: column; height: auto !important; }
-  .ui-xpan__li { flex: none; height: 72px; transition: height var(--dur-l, 1.1s) var(--ease-out, ease-out); }
+  .ui-xpan__li { flex: none; min-width: 0; height: 92px; transition: height var(--dur-l, 1.1s) var(--ease-out, ease-out); }
   .ui-xpan__li[data-on] { height: 260px; }
+  /* Keep the scroll range constant throughout expansion, including reversals.
+     The extra height is redistributed by flex, rather than added to the page. */
+  .ui-xpan[data-scroll] { height: calc(var(--xp-count) * 92px + 168px + (var(--xp-count) - 1) * 4px) !important; overflow-anchor: none; }
+  .ui-xpan[data-scroll] .ui-xpan__li { flex: 0 1 92px; height: auto; min-height: 92px; transition: flex-grow var(--dur-l, 1.1s) var(--ease-out, ease-out); }
+  .ui-xpan[data-scroll] .ui-xpan__li[data-on] { flex-grow: 1; height: auto; }
 }
-@media (prefers-reduced-motion: reduce) { .ui-xpan__li, .ui-xpan__img { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .ui-xpan .ui-xpan__li, .ui-xpan__img, .ui-xpan[data-meta="active"] .ui-xpan__txt small { transition: none; } }
 
 /* ---------- ScatterText ---------- */
 .ui-scatter { position: relative; }

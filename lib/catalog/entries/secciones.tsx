@@ -142,7 +142,7 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de FAQ",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera de sección más acordeón: las preguntas frecuentes listas para el final de una landing.",
+    description: "FAQ con cabecera superior o lateral en escritorio, acordeón de tarjetas o líneas, respuestas alineables y apertura inicial configurable. Incluye navegación por teclado y paneles accesibles.",
     stageHeight: 480,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "Preguntas frecuentes" },
@@ -155,11 +155,16 @@ export const secciones: CatalogEntry[] = [
         default: "¿Necesito experiencia?|Ninguna. Empezamos desde cero con material blando.\n¿Qué incluye el precio?|Neopreno, tabla, monitor titulado y seguro.\n¿Puedo cancelar?|Hasta 24 horas antes, sin coste.",
       },
       { key: "multiple", label: "Varios paneles abiertos", type: "boolean", default: true },
+      { key: "align", label: "Alineación de cabecera", type: "select", default: "center", options: ["left", "center"] },
+      { key: "layout", label: "Composición", type: "select", default: "stack", options: ["stack", "split"] },
+      { key: "presentation", label: "Acordeón", type: "select", default: "cards", options: ["cards", "lines"] },
+      { key: "answerAlign", label: "Alineación de respuestas", type: "select", default: "inherit", options: ["inherit", "left", "center"] },
+      { key: "defaultOpen", label: "Abierto al inicio (-1 = ninguno)", type: "number", default: 0, min: -1, max: 5, step: 1 },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <FAQSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} multiple={p.multiple as boolean} variant={p.variant as never} />
+        <FAQSection layout={p.layout as "stack" | "split"} presentation={p.presentation as "cards" | "lines"} answerAlign={p.answerAlign as "inherit" | "left" | "center"} align={p.align as "left" | "center"} defaultOpen={p.defaultOpen as number} kicker={p.kicker as string} title={p.title as string} items={p.items as string} multiple={p.multiple as boolean} variant={p.variant as never} />
       </div>
     ),
   },
@@ -265,7 +270,7 @@ export const secciones: CatalogEntry[] = [
       { key: "title", label: "Titular", type: "text", default: "Alumnos que ya cogieron su ola" },
       {
         key: "items",
-        label: "Reseñas (una por línea, «cita|autor|rol|valoración»)",
+        label: "Reseñas (una por línea, «cita|autor|rol|valoración|avatar URL opcional»)",
         type: "text",
         multiline: true,
         default:
@@ -282,13 +287,16 @@ export const secciones: CatalogEntry[] = [
       { key: "distribution", label: "Reparto por estrellas (filtra las citas)", type: "text", default: "5:180, 4:26, 3:6, 2:1, 1:1", when: (p) => (p.rating as number) > 0 },
       { key: "pageSize", label: "Citas al principio (0 = todas; rejilla)", type: "number", default: 0, min: 0, max: 6, step: 1, when: (p) => p.layout === "grid" },
       { key: "quoteFont", label: "Fuente de la cita", type: "select", default: "body", options: ["body", "display"], labels: { body: "la del texto", display: "la de titulares" } },
-      { key: "avatars", label: "Avatares con iniciales", type: "boolean", default: true },
+      { key: "avatars", label: "Mostrar avatares (foto o iniciales)", type: "boolean", default: true },
+      { key: "avatarSize", label: "Tamaño de los retratos", type: "select", default: "md", options: ["sm", "md", "lg"] },
+      { key: "avatarShape", label: "Forma del avatar", type: "select", default: "theme", options: ["theme", "circle"] },
+      { key: "presentation", label: "Tratamiento de las citas", type: "select", default: "card", options: ["card", "soft", "plain"] },
       variantProp("glass"),
     ],
     notes: ["Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.", "El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar."],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <TestimonialSection kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} align={p.align as never} rating={p.rating as number} count={p.count as number} source={p.source as string} distribution={p.distribution as string} pageSize={p.pageSize as number} quoteFont={p.quoteFont as never} avatars={p.avatars as boolean} variant={p.variant as never} />
+        <TestimonialSection presentation={p.presentation as "card" | "soft" | "plain"} avatarSize={p.avatarSize as "sm" | "md" | "lg"} avatarShape={p.avatarShape as "theme" | "circle"} kicker={p.kicker as string} title={p.title as string} items={p.items as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} effect={p.effect as never} align={p.align as never} rating={p.rating as number} count={p.count as number} source={p.source as string} distribution={p.distribution as string} pageSize={p.pageSize as number} quoteFont={p.quoteFont as never} avatars={p.avatars as boolean} variant={p.variant as never} />
       </div>
     ),
   },

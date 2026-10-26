@@ -166,11 +166,11 @@ export function datosVivos(r: Ronda): Viva {
   return { capturas, extras, alejamiento, de: cmp ?? null, vueltas: historial, ruido, veredicto, puntuaciones, orden: r.receta && r.lab ? `npm run cine:vuelta -- ${r.receta}` : null };
 }
 
-/** los documentos del método que el panel enseña (docs/26–34) */
+/** Documentos del laboratorio numerados desde 26 (hasta 99). */
 export const DOCS_CINE = (() => {
   try {
     return readdirSync(join(process.cwd(), "docs"))
-      .filter((f) => /^(2[6-9]|3\d)-.*\.md$/.test(f))
+      .filter((f) => /^(2[6-9]|[3-9]\d)-.*\.md$/.test(f))
       .sort();
   } catch {
     return [] as string[];

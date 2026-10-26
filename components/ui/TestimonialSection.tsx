@@ -11,7 +11,7 @@ export type TestimonialSectionProps = {
   kicker?: string;
   title?: string;
   subtitle?: string;
-  /** un testimonio por línea: «cita|autor|rol|valoración (0-5)» */
+  /** un testimonio por línea: «cita|autor|rol|valoración (0-5)|URL de avatar opcional» */
   items?: string;
   /** grid = rejilla · carousel = carrusel de Swiper */
   layout?: "grid" | "carousel";
@@ -39,6 +39,12 @@ export type TestimonialSectionProps = {
   quoteFont?: "body" | "display";
   /** avatar con iniciales en cada cita */
   avatars?: boolean;
+  /** Tratamiento visual de las citas, independiente del tema. */
+  presentation?: "card" | "soft" | "plain";
+  /** Tamaño de los retratos circulares. */
+  avatarSize?: "sm" | "md" | "lg";
+  /** theme mantiene la forma anterior; circle usa retratos circulares. */
+  avatarShape?: "theme" | "circle";
   variant?: Variant;
   className?: string;
 };
@@ -83,6 +89,9 @@ export default function TestimonialSection({
   pageSize = 0,
   quoteFont = "body",
   avatars = true,
+  presentation = "card",
+  avatarSize = "md",
+  avatarShape = "theme",
   variant = "glass",
   className = "",
 }: TestimonialSectionProps) {
@@ -93,7 +102,7 @@ export default function TestimonialSection({
         .split("\n")
         .map((l) => splitEscaped(l, "|"))
         .filter((r) => r[0]?.trim())
-        .map(([quote, author = "", role = "", r = ""]) => ({ quote, author, role, rating: parseInt(r, 10) || 0 })),
+        .map(([quote, author = "", role = "", r = "", avatarSrc = ""]) => ({ quote, author, role, rating: parseInt(r, 10) || 0, avatarSrc })),
     [items],
   );
   const dist = useMemo(
@@ -110,7 +119,7 @@ export default function TestimonialSection({
 
   const filtered = stars ? rows.filter((r) => r.rating === stars) : rows;
   const paged = layout === "grid" && shown > 0 ? filtered.slice(0, shown) : filtered;
-  const cards = paged.map((r, i) => <Testimonial key={r.author + i} quote={r.quote} author={r.author} role={r.role} rating={r.rating} quoteFont={quoteFont} avatar={avatars} variant={variant} />);
+  const cards = paged.map((r, i) => <Testimonial key={r.author + i} quote={r.quote} author={r.author} role={r.role} rating={r.rating} quoteFont={quoteFont} avatar={avatars} avatarSrc={r.avatarSrc} avatarSize={avatarSize} avatarShape={avatarShape} presentation={presentation} variant={variant} />);
 
   const hasHead = !!(kicker || title || subtitle);
   const summary = rating > 0 && (
