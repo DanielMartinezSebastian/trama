@@ -452,6 +452,43 @@ conviene saber al ampliarlo:
   navegación. Un `setState` para mover algo que deba entrar en la captura nueva llega tarde: re-renderiza después.
   Clases del viaje: `ui-vt-travel` + `--move|--arrive|--leave` + `--live|--crossfade` + `--cover|--stretch` + ritmo.
 
+### 6.5 Animar con el scroll: sensación, tramos y seguimiento (docs/42)
+
+Una animación ligada al scroll se siente bien (como Quilate) cuando pasa por tres etapas. Cada una tiene su pieza en el kit;
+no las escribas a mano.
+
+| Etapa | Pieza | Sin ella |
+|---|---|---|
+| 1. Entrada con inercia | `<SmoothScroll feel="cinematic">` (o `editorial`, `snappy`), una vez por página | Cada golpe de rueda es un salto |
+| 2. Tramos con meseta y curva | `useScrollTimeline` (pasos `[data-step]` con pose con nombre), `useScrollStory` (si la escena ya suaviza) o `PinnedSection steps` (`--pin-t`) | Las cosas se mueven siempre y nunca «llegan» |
+| 3. Seguimiento amortiguado | Incluido en `useScrollTimeline`, `--pin-t`, `ScrubText` y `Parallax`. En una escena 3D: `crearSeguidor` o `damp` (`lib/motion/scroll-feel`) | Lo que se mueve copia cada tirón de la rueda |
+
+**Reglas**
+
+- **Una sensación por página.** `feel` en `SmoothScroll`; las piezas la leen de `<html data-scroll-feel>`. No mezcles
+  `lerp` sueltos.
+- **Usa `--pin-t`, no `--pin-p`,** en `PinnedSection` (`--pin-p` es el progreso en bruto, 1:1 con el scroll).
+- **Un solo avance para todo lo del tramo.** La pose 3D, los fundidos, los textos y los cuadros salen del mismo `t` del
+  motor, así van a la vez.
+- **Una sola fuente por variable.** Si la escena 3D ya suaviza su pose, no la pases por `useScrollTimeline` con `damp`
+  (usa `damp: false` o `useScrollStory`). Dos suavizados encadenados la vuelven perezosa.
+- **Lo material, más lento que lo geométrico:** `damp.look` (4/s) frente a `damp.pose` (9/s) en `cinematic`.
+- **Poco cambio por pantalla.** Quilate cambia poco la escena por cada pantalla de scroll; si la escena va rápida, la
+  sensación es mecánica aunque todo lo demás esté bien.
+
+**Comprobar**
+
+```
+npm run cine:capture -- <url> --drive scroll --steps 16 --wheel 200 --frames-per-step 90 --solo-lienzo --out <dir>
+npm run cine:ritmo -- --comparar .refs3d/ritmo/quilate-lento <dir>
+```
+
+Objetivo `cinematic`:
+
+- **rapidez**: 0,7–1,0;
+- **«sin parar»**: 0,15–0,3 (la escena aún se mueve un poco al llegar el gesto siguiente: los gestos se encadenan);
+- **acoplamiento**: menor de 0,2 (no copia la velocidad de la rueda).
+
 ## 7. Fondos (painters y sketches)
 
 - **Painter (asciify):** `(ctx, w, h, t, p) => void`, `p = {x, y, down, active}` normalizado 0–1. Dibuja a ~640 px de

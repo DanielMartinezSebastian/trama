@@ -183,3 +183,23 @@
   1,2 × 1,7 y 5 × 2,6 (textos).
 - **Piezas**: la composición de `lib/gravure` (`progreso`). Pendiente: `TileReveal` para DOM e imágenes (docs/36 D3).
 - **Referencias**: Chartogne-Taillet (todo su DOM es WebGL con esta aparición).
+
+## 11. Scroll con sensación (la tubería de Quilate)
+
+- **Qué es**: una animación ligada al scroll que se siente continua y «llega». Tiene tres etapas:
+  - entrada con inercia;
+  - tramos con meseta y curva;
+  - seguimiento amortiguado.
+
+  Todo lo del tramo comparte un mismo avance.
+- **Cuándo**: cualquier relato por scroll (objeto 3D, secciones fijadas, texto que se enciende, parallax).
+- **Regla**: docs/02 §6.5.
+  - Una `feel` por página.
+  - `useScrollTimeline`, `useScrollStory` o `--pin-t`.
+  - Una sola fuente por variable.
+  - Poco cambio de escena por pantalla.
+- **Piezas**: `lib/motion/scroll-feel`, `SmoothScroll feel`, `useScrollStory`, `useScrollTimeline`, `PinnedSection
+  steps`, `ScrubText`, `Parallax`.
+- **Verificar**: `cine:ritmo --comparar` con Quilate. Rapidez de 0,7 a 1,0, «sin parar» de 0,15 a 0,3 y acoplamiento
+  por debajo de 0,2.
+- **Referencias**: Quilate (docs/19 §7, docs/42).
