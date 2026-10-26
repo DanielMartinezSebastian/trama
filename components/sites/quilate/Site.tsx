@@ -22,6 +22,7 @@ import OpeningHours from "@/components/ui/OpeningHours";
 import OptionPicker from "@/components/ui/OptionPicker";
 import QRCode from "@/components/ui/QRCode";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+import { useScrollStory } from "@/lib/story/useScrollStory";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { money } from "@/lib/commerce/money";
@@ -188,8 +189,8 @@ export function Shell({ children }: { children: ReactNode }) {
       <QCtx.Provider value={value}>
         <LightScroll cues={CUES} initial="vitrina" cue={cue ?? undefined} duration={1.1}>
           {/* scroll con inercia (Lenis): aceleración y frenada largas, para que el recorrido del anillo se sienta continuo */}
-          {/* lerp bajo: la frenada es larga, con mucha cola al soltar la rueda */}
-          <SmoothScroll lerp={0.04} wheelMultiplier={0.85} syncGsap={false} />
+          {/* la sensación cinematic (lerp 0,04, rueda × 0,85): la frenada es larga, con mucha cola al soltar la rueda */}
+          <SmoothScroll feel="cinematic" syncGsap={false} />
           <PointerGlow />
           <a className="ql-skip" href="#contenido">Saltar al contenido</a>
           {/* navegación isla (como Arbor): píldora flotante con menú a pantalla completa, la marca y la cita */}
@@ -464,7 +465,6 @@ const MANIFESTO_WORDS = MANIFESTO.split(" ");
 const POSE_KEYS = ["explode", "head", "engrave", "pave", "yaw", "x", "y", "zoom", "solo", "trio", "face", "gem"] as const;
 /** el paso del cuadro de cada capítulo */
 const cardStep = (c: number) => BEATS.findIndex((b) => b.kind === "card" && b.chapter === c);
-const smooth = (t: number) => t * t * (3 - 2 * t);
 /** palabras sueltas con su índice, para que el titular se monte palabra a palabra con el scroll */
 const words = (t: string) =>
   t.split(" ").map((w, i) => (
@@ -501,26 +501,12 @@ function Home() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
-  // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos; también el progreso (0–1)
-  useEffect(() => {
-    const items = Array.from(list.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
-    if (!items.length) return;
-    const cards = Array.from(sticky.current?.querySelectorAll<HTMLElement>("[data-card]") ?? []);
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const mid = innerHeight / 2;
-      const centers = items.map((el) => {
-        const r = el.getBoundingClientRect();
-        return r.top + r.height / 2;
-      });
-      let j = 0;
-      while (j < centers.length - 1 && centers[j + 1] <= mid) j++;
-      // meseta: la pose se queda quieta en el 30 % central alrededor de cada capítulo y la transición ocupa el resto, así
-      // el anillo ya está colocado cuando el cuadro de texto llega al centro (y no salta tarde)
-      const raw = j >= centers.length - 1 || mid <= centers[0] ? 0 : Math.min(1, Math.max(0, (mid - centers[j]) / (centers[j + 1] - centers[j])));
-      const t = smooth(Math.min(1, Math.max(0, (raw - 0.15) / 0.7)));
+  // la pose sale de dónde está la línea media de la ventana entre los centros de dos pasos (el motor del kit,
+  // `useScrollStory`, con la sensación cinematic: meseta del 30 % y una S; docs/42). El motor publica también el progreso,
+  // el peso de cada escena (--w), las cintas (--r, --o) y los cuadros que se disuelven; aquí va lo propio de Quilate
+  useScrollStory(list, sticky, {
+    feel: "cinematic",
+    onFrame: ({ j, t, centers, mid }) => {
       const a = BEATS[j].pose;
       const b = BEATS[Math.min(j + 1, BEATS.length - 1)].pose;
       const p = pose.current;
@@ -540,53 +526,16 @@ function Home() {
         p.pave *= 0.55;
         p.zoom *= 1.08 - 0.22 * p.trio;
       }
-      const span = centers[centers.length - 1] - centers[0];
       const st = sticky.current?.style;
-      st?.setProperty("--story-p", String(Math.min(1, Math.max(0, (mid - centers[0]) / (span || 1)))));
-      // peso de cada escena (fondo y líneas técnicas): la actual se apaga mientras la siguiente se enciende, con el mismo t
-      for (let k = 0; k < BEATS.length; k++) st?.setProperty(`--w${k}`, (k === j ? 1 - t : k === j + 1 ? t : 0).toFixed(3));
       st?.setProperty("--ring-x", p.x.toFixed(3));
       // cuánto «interludio» hay ahora (0 en un cuadro, 1 en un interludio): en móvil el anillo baja al centro sin cuadro
       const il = (k: number) => (BEATS[k]?.kind === "interlude" ? 1 : 0);
       st?.setProperty("--ilv", (il(j) * (1 - t) + il(j + 1) * t).toFixed(3));
-      // cintas de texto: avance de cada paso respecto a la línea media (−1 entrando por abajo, 0 centrado, 1 saliendo por
-      // arriba) y su opacidad: las de un interludio se apagan del todo (|r| = 0,45) antes de que asome un cuadro vecino
-      for (let k = 0; k < centers.length; k++) {
-        const gap = (centers[Math.min(k + 1, centers.length - 1)] - centers[Math.max(k - 1, 0)]) / 2 || innerHeight;
-        const r = Math.min(1.2, Math.max(-1.2, (mid - centers[k]) / gap));
-        st?.setProperty(`--r${k}`, r.toFixed(4));
-        st?.setProperty(`--o${k}`, (1 - smooth(Math.min(1, Math.max(0, (Math.abs(r) - 0.3) / 0.15)))).toFixed(3));
-      }
-      // cuadros: se mueven con el scroll (como si fueran en su paso) y se disuelven al alejarse de la línea media: opacidad
-      // entera hasta el 16 % de la altura y nada al 46 %; desenfoque desde el 8 % hasta 16 px al 43 %
-      for (const el of cards) {
-        const k = Number(el.dataset.card);
-        const y = centers[k] - mid;
-        const d = Math.abs(y) / innerHeight;
-        const a = 1 - smooth(Math.min(1, Math.max(0, (d - 0.16) / 0.3)));
-        const blur = still ? 0 : 16 * smooth(Math.min(1, Math.max(0, (d - 0.08) / 0.35)));
-        el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-        el.style.opacity = a.toFixed(3);
-        el.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : "";
-        el.style.visibility = a < 0.02 ? "hidden" : "";
-        el.style.setProperty("--y", y.toFixed(1));
-      }
       // cuánto queda del último paso: el fundido inferior crece en el tramo final
       const last = centers[centers.length - 1];
       st?.setProperty("--story-end", Math.min(1, Math.max(0, (mid - last) / (innerHeight * 0.5))).toFixed(3));
-    };
-    const on = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    addEventListener("scroll", on, { passive: true });
-    addEventListener("resize", on);
-    return () => {
-      cancelAnimationFrame(raf);
-      removeEventListener("scroll", on);
-      removeEventListener("resize", on);
-    };
-  }, []);
+    },
+  });
   // el paso activo (para el aspecto del anillo, la palabra gigante y el índice)
   const [step, setStep] = useState(0);
   useEffect(() => {
