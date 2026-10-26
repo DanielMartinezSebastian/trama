@@ -811,6 +811,15 @@ a.ui-button { text-decoration: none; }
 .ui-sh.ui-s--editorial { gap: 12px; }
 .ui-sh.ui-s--editorial h2 { font-family: var(--display, inherit); font-weight: 400; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance; text-shadow: none; }
 .ui-sh.ui-s--editorial .ui-sh__kicker { font-size: 13px; letter-spacing: 0.08em; text-shadow: none; }
+/* titular gigante: ocupa el ancho y se aprieta (salones y gimnasios, docs/50 §3.3) */
+.ui-sh--giant { width: 100%; }
+.ui-sh--giant h2, .ui-sh--giant.ui-s--editorial h2 { font-size: clamp(52px, 12.5vw, 200px); line-height: 0.86; letter-spacing: -0.045em; text-wrap: balance; }
+.ui-sh--giant p { max-width: 60ch; }
+/* palabra de fondo: enorme, tenue y cortada por el borde de la cabecera */
+.ui-sh--backdrop { position: relative; isolation: isolate; width: 100%; overflow: clip; padding-block: clamp(24px, 5vw, 64px); }
+.ui-sh--backdrop:not(.ui-sh--giant) > :not(.ui-sh__word) { max-width: 560px; }
+.ui-sh__word { position: absolute; z-index: -1; inset-block-start: 50%; inset-inline-start: -0.04em; translate: 0 -50%; font-family: var(--display, var(--s-ff)); font-size: clamp(120px, 27vw, 420px); font-weight: 400; line-height: 0.8; letter-spacing: -0.04em; white-space: nowrap; color: color-mix(in srgb, var(--acc) 13%, transparent); pointer-events: none; user-select: none; text-transform: none; text-shadow: none; }
+.ui-sh--center .ui-sh__word { inset-inline-start: 50%; translate: -50% -50%; }
 
 /* ---------- Divider ---------- */
 .ui-div { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--mut); font-family: var(--s-ff); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: var(--legibility-ts); }
@@ -1488,7 +1497,41 @@ a.ui-crumbs__link { text-decoration: none; }
 .ui-feats__item p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; }
 .ui-team__card { padding: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 .ui-team__avatar { width: 56px; height: 56px; display: grid; place-content: center; border-radius: min(var(--s-r, 12px), 50%); background: color-mix(in srgb, var(--acc) 22%, transparent); border: 1px solid var(--acc); color: var(--acc); font-weight: 800; font-family: var(--mono); font-size: 16px; }
-.ui-team__card span:last-child { font-size: 13px; color: var(--mut); }
+.ui-team__role { font-size: 13px; color: var(--mut); }
+.ui-team__card p, .ui-team__about p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; }
+.ui-team__link { justify-self: center; display: inline-flex; gap: 6px; font-size: 13px; font-weight: 600; color: var(--acc); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.ui-team__link span { transition: translate 0.25s ease; }
+.ui-team__link:hover span, .ui-team__link:focus-visible span { translate: 3px 0; }
+/* fotos: marco y tratamiento (docs/50 §3.3: el equipo con foto aparece en 5 de 6 salones) */
+.ui-team__card.has-photo { padding: 12px 12px 20px; }
+.ui-team__photo { display: block; width: 100%; overflow: hidden; aspect-ratio: 4 / 5; border-radius: calc(var(--s-r, 12px) * 0.6); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.ui-team__photo img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 0.5s ease, scale 0.6s ease; }
+.ui-team__photo--square { aspect-ratio: 1; }
+.ui-team__photo--circle { aspect-ratio: 1; border-radius: 50%; width: min(100%, 220px); justify-self: center; }
+.ui-team__photo--oval { border-radius: 999px; }
+.ui-team--mono .ui-team__photo img, .ui-team--mono-hover .ui-team__photo img { filter: grayscale(1) contrast(1.05); }
+.ui-team--mono-hover .ui-team__card:hover img, .ui-team--mono-hover .ui-team__row:hover img { filter: none; scale: 1.03; }
+.ui-team--left { justify-items: stretch; text-align: left; }
+.ui-team--left .ui-team__grid { max-width: none; }
+.ui-team--left .ui-team__card { justify-items: start; text-align: left; }
+.ui-team--left .ui-team__link { justify-self: start; }
+/* filas: nombre · bio y enlace · foto, separadas por filetes */
+.ui-team__rows { width: 100%; max-width: 1100px; display: grid; text-align: left; }
+.ui-team__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(120px, 0.9fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding-block: 20px; border-top: 1px solid var(--ln); }
+.ui-team__row:last-child { border-bottom: 1px solid var(--ln); }
+.ui-team__who { display: grid; gap: 4px; }
+.ui-team__who strong { font-size: 15px; }
+.ui-team__about { display: grid; gap: 12px; justify-items: start; }
+.ui-team__about .ui-team__link { justify-self: start; }
+.ui-team__row > .ui-team__photo { width: min(100%, 220px); justify-self: end; }
+.ui-team__row .ui-team__avatar { justify-self: end; }
+@media (max-width: 640px) {
+  .ui-team__row { grid-template-columns: minmax(0, 1fr) 88px; row-gap: 10px; }
+  .ui-team__who { grid-column: 1; grid-row: 1; }
+  .ui-team__about { grid-column: 1; grid-row: 2; }
+  .ui-team__row > .ui-team__photo, .ui-team__row > .ui-team__avatar { grid-column: 2; grid-row: 1 / span 2; }
+}
+@media (prefers-reduced-motion: reduce) { .ui-team__photo img, .ui-team__link span { transition: none; } }
 .ui-logos { width: 100%; display: grid; gap: 16px; justify-items: center; text-align: center; }
 .ui-logos__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); text-shadow: var(--legibility-ts); }
 .ui-logos__row { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(20px, 4vw, 48px); font-family: var(--s-ff); }

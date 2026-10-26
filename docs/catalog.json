@@ -1749,7 +1749,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Sobretítulo, titular, subtítulo y regla decorativa.",
+      "description": "Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.",
       "props": [
         {
           "key": "kicker",
@@ -1790,6 +1790,24 @@
             "ascii",
             "dots"
           ]
+        },
+        {
+          "key": "titleSize",
+          "type": "select",
+          "default": "md",
+          "label": "Titular",
+          "hint": "giant: a lo ancho y apretado, como los «Locations» de las barberías",
+          "options": [
+            "md",
+            "giant"
+          ]
+        },
+        {
+          "key": "backdrop",
+          "type": "text",
+          "default": "",
+          "label": "Palabra de fondo",
+          "hint": "Enorme y tenue detrás de la cabecera, cortada por el borde («blog», «tienda»)"
         },
         {
           "key": "variant",
@@ -9269,7 +9287,7 @@
         "dotmatrix",
         "editorial"
       ],
-      "description": "Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.",
+      "description": "Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avatar de iniciales), biografía y enlace por persona para reservar con ella; en rejilla, carrusel o filas.",
       "props": [
         {
           "key": "kicker",
@@ -9286,18 +9304,20 @@
         {
           "key": "people",
           "type": "text",
-          "default": "Marta Solé|Directora y monitora\nEnzo Rial|Monitor de iniciación\nCarla Duque|Monitora y fotógrafa",
-          "label": "Personas (una por línea, «nombre|rol»)"
+          "default": "Marta Solé|Directora y monitora|/img/retratos/03-pixie-cut-unsplash.jpg|Doce años en el agua y una regla: nadie sale sin coger su ola.|#reservar\nEnzo Rial|Monitor de iniciación|/img/retratos/06-man-with-crossed-arms-unsplash.jpg|Paciencia infinita con el primer remo.|#reservar\nCarla Duque|Monitora y fotógrafa|/img/retratos/01-a-friend-unsplash.jpg|Te enseña y luego te lo enseña en foto.|#reservar",
+          "label": "Personas (una por línea, «nombre|rol|foto|bio|enlace»)",
+          "hint": "Sin foto, avatar de iniciales; sin enlace, sin botón"
         },
         {
           "key": "layout",
           "type": "select",
           "default": "grid",
           "label": "Disposición",
-          "hint": "carousel usa Swiper: arrastre, flechas y puntos",
+          "hint": "carousel usa Swiper; rows es una fila por persona, como en los salones",
           "options": [
             "grid",
-            "carousel"
+            "carousel",
+            "rows"
           ]
         },
         {
@@ -9315,6 +9335,62 @@
           "label": "Reproducción automática (s, 0 = manual)",
           "min": 0,
           "max": 8
+        },
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "portrait",
+          "label": "Marco de la foto",
+          "options": [
+            "portrait",
+            "square",
+            "circle",
+            "oval"
+          ]
+        },
+        {
+          "key": "photoTone",
+          "type": "select",
+          "default": "color",
+          "label": "Tratamiento",
+          "hint": "mono-hover: blanco y negro que se colorea al pasar",
+          "options": [
+            "color",
+            "mono",
+            "mono-hover"
+          ]
+        },
+        {
+          "key": "align",
+          "type": "select",
+          "default": "center",
+          "label": "Alineación",
+          "options": [
+            "center",
+            "left"
+          ]
+        },
+        {
+          "key": "linkLabel",
+          "type": "text",
+          "default": "Reservar",
+          "label": "Texto del enlace"
+        },
+        {
+          "key": "titleSize",
+          "type": "select",
+          "default": "md",
+          "label": "Titular",
+          "options": [
+            "md",
+            "giant"
+          ]
+        },
+        {
+          "key": "backdrop",
+          "type": "text",
+          "default": "",
+          "label": "Palabra de fondo"
         },
         {
           "key": "variant",

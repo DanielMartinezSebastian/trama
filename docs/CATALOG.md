@@ -299,7 +299,7 @@ Filas de texto en bucle, en CSS puro y sin JS. Siete estilos y color por token.
 
 ### Cabecera de sección — `SectionHeader`
 
-Sobretítulo, titular, subtítulo y regla decorativa.
+Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.
 
 | prop | tipo | default |
 |---|---|---|
@@ -308,6 +308,8 @@ Sobretítulo, titular, subtítulo y regla decorativa.
 | `subtitle` | text | "Reserva, elige tu horario y nosotros nos ocupamos del resto." |
 | `align` | `left` · `center` | "left" |
 | `rule` | `none` · `line` · `ascii` · `dots` | "line" |
+| `titleSize` | `md` · `giant` | "md" |
+| `backdrop` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
 
 ### Separador — `Divider`
@@ -2462,16 +2464,22 @@ Cabecera de sección + rejilla de «por qué elegirnos» (glifo + título + text
 
 ### Sección de equipo — `TeamSection`
 
-Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.
+Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avatar de iniciales), biografía y enlace por persona para reservar con ella; en rejilla, carrusel o filas.
 
 | prop | tipo | default |
 |---|---|---|
 | `kicker` | text | "El equipo" |
 | `title` | text | "Quién te va a enseñar" |
-| `people` | text | "Marta Solé\|Directora y monitora\nEnzo Rial\|Monitor de iniciación\nCarla Duque\|Monit…" |
-| `layout` | `grid` · `carousel` | "grid" |
+| `people` | text | "Marta Solé\|Directora y monitora\|/img/retratos/03-pixie-cut-unsplash.jpg\|Doce años e…" |
+| `layout` | `grid` · `carousel` · `rows` | "grid" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
+| `shape` | `portrait` · `square` · `circle` · `oval` | "portrait" |
+| `photoTone` | `color` · `mono` · `mono-hover` | "color" |
+| `align` | `center` · `left` | "center" |
+| `linkLabel` | text | "Reservar" |
+| `titleSize` | `md` · `giant` | "md" |
+| `backdrop` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |
 
 ### Tira de marcas — `LogoCloud`

@@ -3,53 +3,116 @@ import SectionHeader from "./SectionHeader";
 import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 
+export type TeamMember = {
+  name: string;
+  role?: string;
+  /** foto (URL); sin ella, avatar de iniciales */
+  photo?: string;
+  /** dos o tres líneas sobre la persona */
+  bio?: string;
+  /** enlace propio: reservar con esa persona, su Instagram… */
+  href?: string;
+};
+
 export type TeamSectionProps = {
   kicker?: string;
   title?: string;
   subtitle?: string;
-  /** una por línea: «nombre|rol» */
+  /** una por línea: «nombre|rol|foto|bio|enlace» (solo el nombre es obligatorio) */
   people?: string;
-  /** grid = rejilla · carousel = carrusel de Swiper */
-  layout?: "grid" | "carousel";
+  /** las mismas personas como datos; si se pasa, manda sobre `people` */
+  members?: TeamMember[];
+  /** grid = rejilla · carousel = carrusel de Swiper · rows = una fila por persona (nombre, bio y foto), como en los salones */
+  layout?: "grid" | "carousel" | "rows";
   /** con layout="carousel": tarjetas visibles en pantallas anchas */
   perView?: number;
   /** con layout="carousel": segundos entre tarjetas (0 = manual) */
   autoplay?: number;
+  /** marco de la foto: portrait (4:5) · square · circle · oval (4:5 con los extremos redondos) */
+  shape?: "portrait" | "square" | "circle" | "oval";
+  /** tratamiento de la foto: color · mono (blanco y negro) · mono-hover (blanco y negro que se colorea al pasar) */
+  photoTone?: "color" | "mono" | "mono-hover";
+  align?: "center" | "left";
+  /** texto del enlace de cada persona («Reservar», «Instagram»); "" = sin enlaces */
+  linkLabel?: string;
+  /** tamaño del titular de la cabecera (`SectionHeader`) */
+  titleSize?: "md" | "giant";
+  /** palabra de fondo de la cabecera (`SectionHeader`); "" = sin ella */
+  backdrop?: string;
   variant?: Variant;
   className?: string;
 };
 
 const DEFAULT_PEOPLE = "Marta Solé|Directora y monitora\nEnzo Rial|Monitor de iniciación\nCarla Duque|Monitora y fotógrafa";
 
-/** Cabecera de sección + grid de perfiles. Sin fotos: usa el mismo avatar de iniciales que `Testimonial`. */
-export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, layout = "grid", perView = 3, autoplay = 0, variant = "glass", className = "" }: TeamSectionProps) {
-  const rows = people.split("\n").map((l) => splitEscaped(l, "|")).filter((r) => r[0]?.trim());
-  const cards = rows.map(([name, role], i) => {
-    const initials = (name ?? "")
-      .split(" ")
-      .map((w) => w[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase();
-    return (
-      <div key={name + i} className={`ui-team__card ui-surface ${vcls(variant)}`}>
-        <span className="ui-team__avatar" aria-hidden>
-          {initials}
-        </span>
+const initials = (name: string) =>
+  name
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+/**
+ * Cabecera de sección + perfiles del equipo. Con foto (marco y tratamiento a elegir) o, si falta, el avatar de iniciales;
+ * biografía y un enlace por persona para reservar con ella. En rejilla, en carrusel o en filas.
+ */
+export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, members, layout = "grid", perView = 3, autoplay = 0, shape = "portrait", photoTone = "color", align = "center", linkLabel = "Reservar", titleSize = "md", backdrop = "", variant = "glass", className = "" }: TeamSectionProps) {
+  const list: TeamMember[] =
+    members ??
+    people
+      .split("\n")
+      .map((l) => splitEscaped(l, "|").map((x) => x.trim()))
+      .filter((r) => r[0])
+      .map(([name, role, photo, bio, href]) => ({ name, role, photo, bio, href }));
+  const rows = layout === "rows";
+  const cards = list.map(({ name, role, photo, bio, href }, i) => {
+    const media = photo ? (
+      <span className={`ui-team__photo ui-team__photo--${shape}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={photo} alt="" loading="lazy" decoding="async" />
+      </span>
+    ) : (
+      <span className="ui-team__avatar" aria-hidden>
+        {initials(name)}
+      </span>
+    );
+    const link = href && linkLabel && (
+      <a className="ui-team__link" href={href} aria-label={`${linkLabel}: ${name}`}>
+        {linkLabel} <span aria-hidden>→</span>
+      </a>
+    );
+    return rows ? (
+      <div key={name + i} className="ui-team__row">
+        <div className="ui-team__who">
+          <strong>{name}</strong>
+          {role && <span className="ui-team__role">{role}</span>}
+        </div>
+        <div className="ui-team__about">
+          {bio && <p>{bio}</p>}
+          {link}
+        </div>
+        {media}
+      </div>
+    ) : (
+      <div key={name + i} className={`ui-team__card ui-surface ${vcls(variant)} ${photo ? "has-photo" : ""}`}>
+        {media}
         <strong>{name}</strong>
-        <span>{role}</span>
+        {role && <span className="ui-team__role">{role}</span>}
+        {bio && <p>{bio}</p>}
+        {link}
       </div>
     );
   });
   return (
-    <section className={`ui-team ${className}`}>
-      <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align="center" variant="minimal" />
+    <section className={`ui-team ui-team--${layout} ui-team--${align} ui-team--${photoTone} ${className}`}>
+      <SectionHeader kicker={kicker} title={title} subtitle={subtitle} align={align} titleSize={titleSize} backdrop={backdrop} variant="minimal" />
       {layout === "carousel" ? (
         <Carousel perView={perView} autoplay={autoplay} variant={variant} label={title}>
           {cards}
         </Carousel>
       ) : (
-        <div className="ui-team__grid">{cards}</div>
+        <div className={rows ? "ui-team__rows" : "ui-team__grid"}>{cards}</div>
       )}
     </section>
   );

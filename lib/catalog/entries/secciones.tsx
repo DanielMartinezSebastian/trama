@@ -380,26 +380,33 @@ export const secciones: CatalogEntry[] = [
     name: "Sección de equipo",
     category: "secciones",
     styles: ALL_STYLES,
-    description: "Cabecera de sección + grid de perfiles con avatar de iniciales: la página «sobre nosotros» lista para pegar.",
-    stageHeight: 420,
+    description: "Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avatar de iniciales), biografía y enlace por persona para reservar con ella; en rejilla, carrusel o filas.",
+    stageHeight: 560,
     props: [
       { key: "kicker", label: "Sobretítulo", type: "text", default: "El equipo" },
       { key: "title", label: "Titular", type: "text", default: "Quién te va a enseñar" },
       {
         key: "people",
-        label: "Personas (una por línea, «nombre|rol»)",
+        label: "Personas (una por línea, «nombre|rol|foto|bio|enlace»)",
         type: "text",
         multiline: true,
-        default: "Marta Solé|Directora y monitora\nEnzo Rial|Monitor de iniciación\nCarla Duque|Monitora y fotógrafa",
+        default: "Marta Solé|Directora y monitora|/img/retratos/03-pixie-cut-unsplash.jpg|Doce años en el agua y una regla: nadie sale sin coger su ola.|#reservar\nEnzo Rial|Monitor de iniciación|/img/retratos/06-man-with-crossed-arms-unsplash.jpg|Paciencia infinita con el primer remo.|#reservar\nCarla Duque|Monitora y fotógrafa|/img/retratos/01-a-friend-unsplash.jpg|Te enseña y luego te lo enseña en foto.|#reservar",
+        hint: "Sin foto, avatar de iniciales; sin enlace, sin botón",
       },
-      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "carousel"], hint: "carousel usa Swiper: arrastre, flechas y puntos" },
+      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "carousel", "rows"], hint: "carousel usa Swiper; rows es una fila por persona, como en los salones" },
       { key: "perView", label: "Visibles en pantalla ancha", type: "number", default: 3, min: 1, max: 4, step: 1, when: (p) => p.layout === "carousel" },
       { key: "autoplay", label: "Reproducción automática (s, 0 = manual)", type: "number", default: 0, min: 0, max: 8, step: 1, when: (p) => p.layout === "carousel" },
+      { key: "shape", label: "Marco de la foto", type: "select", default: "portrait", options: ["portrait", "square", "circle", "oval"] },
+      { key: "photoTone", label: "Tratamiento", type: "select", default: "color", options: ["color", "mono", "mono-hover"], hint: "mono-hover: blanco y negro que se colorea al pasar" },
+      { key: "align", label: "Alineación", type: "select", default: "center", options: ["center", "left"] },
+      { key: "linkLabel", label: "Texto del enlace", type: "text", default: "Reservar" },
+      { key: "titleSize", label: "Titular", type: "select", default: "md", options: ["md", "giant"] },
+      { key: "backdrop", label: "Palabra de fondo", type: "text", default: "" },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <TeamSection kicker={p.kicker as string} title={p.title as string} people={p.people as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} variant={p.variant as never} />
+        <TeamSection kicker={p.kicker as string} title={p.title as string} people={p.people as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} shape={p.shape as never} photoTone={p.photoTone as never} align={p.align as never} linkLabel={p.linkLabel as string} titleSize={p.titleSize as never} backdrop={p.backdrop as string} variant={p.variant as never} />
       </div>
     ),
   },
