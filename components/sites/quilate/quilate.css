@@ -495,23 +495,45 @@
 /* caminos: paneles con foto que se abren al pasar; el título en la tipografía de titulares */
 .ql-paths .ui-xpan__p { border-radius: clamp(14px, 1.4vw, 20px); }
 .ql-paths .ui-xpan__txt b { font-family: var(--display); font-weight: 300; font-size: clamp(26px, 2.6vw, 40px); letter-spacing: -0.01em; }
-/* galería: recorrido horizontal con fotos que se descubren, alternando vertical y apaisada, con su paso numerado */
+  /* Galería editorial: piezas distintas en situaciones y materias coordinadas. */
 .ql-gal { padding-top: clamp(48px, 8vw, 110px); }
-.ql-gal__panel { margin: 0; display: grid; gap: 14px; align-content: center; width: min(36vw, 52svh, 520px); }
-.ql-gal__panel:not([data-tall]) { width: min(52vw, 80svh, 760px); }
+  .ql-gal__panel { margin: 0; display: grid; gap: 14px; align-content: center; width: min(48vw, 72svh, 700px); }
 .ql-gal__panel .ui-imgr, .ql-gal__panel img { border-radius: clamp(12px, 1.2vw, 18px); overflow: hidden; }
 .ql-gal__panel figcaption { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; align-items: baseline; }
 .ql-gal__n { grid-row: span 2; font-family: var(--display); font-size: 44px; font-weight: 300; line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--acc) 70%, transparent); }
 .ql-gal__panel figcaption b { font-family: var(--display); font-weight: 400; font-size: 26px; }
 .ql-gal__panel figcaption span:last-child { color: var(--mut); font-size: 15px; }
 @media (max-width: 899px) {
-  .ql-gal__panel, .ql-gal__panel:not([data-tall]) { width: 78vw; }
+    .ql-gal__panel { width: 74vw; }
   .ql-band { padding-block: 22px; }
 }
 /* garantías: bento con fotos veladas para que el texto se lea */
-.ql-bento .ui-bento__img { filter: brightness(0.55) saturate(0.9); }
-.ql-bento .ui-bento__stat { font-family: var(--display); font-weight: 300; color: var(--acc); }
-.ql-bento .ui-bento__t { font-family: var(--display); font-weight: 400; font-size: 26px; }
+/* Commitments: a single workshop detail beside five readable guarantees. */
+.ql-proof__head { max-width: 820px; }
+.ql-proof { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); gap: clamp(28px, 5vw, 76px); align-items: stretch; margin-top: clamp(28px, 4vw, 56px); }
+.ql-proof__photo { position: relative; min-height: 620px; margin: 0; overflow: hidden; border-radius: clamp(14px, 1.4vw, 20px); background: var(--card); }
+.ql-proof__photo::after { position: absolute; inset: 40% 0 0; content: ""; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg) 84%, transparent)); pointer-events: none; }
+.ql-proof__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ql-proof__photo figcaption { position: absolute; z-index: 1; right: 24px; bottom: 24px; left: 24px; display: grid; gap: 5px; }
+.ql-proof__photo figcaption span:first-child { color: var(--acc); font: 500 11px/1.4 var(--font-geist-mono, monospace); letter-spacing: 0.16em; text-transform: uppercase; }
+.ql-proof__photo figcaption span:last-child { color: var(--fg); font: 400 clamp(24px, 2.6vw, 36px)/1.15 var(--display); }
+.ql-proof__list { display: grid; align-content: center; list-style: none; padding: 0; margin: 0; }
+.ql-proof__list li { display: grid; grid-template-columns: 34px minmax(0, 1fr) 62px; gap: clamp(12px, 2vw, 24px); align-items: center; padding: 20px 0; border-top: 1px solid var(--ln); }
+.ql-proof__list li:last-child { border-bottom: 1px solid var(--ln); }
+.ql-proof__index { align-self: start; padding-top: 3px; color: var(--acc); font: 12px/1.4 var(--font-geist-mono, monospace); }
+.ql-proof__list li > div { min-width: 0; }
+.ql-proof__eyebrow { margin: 0 0 4px; color: var(--mut); font: 11px/1.4 var(--font-geist-mono, monospace); letter-spacing: 0.1em; text-transform: uppercase; }
+.ql-proof__list h3 { margin: 0 0 5px; color: var(--fg); font: 400 clamp(22px, 2vw, 28px)/1.15 var(--display); }
+.ql-proof__list li > div > p:last-child { max-width: 48ch; margin: 0; color: var(--mut); font-size: 14px; line-height: 1.55; }
+.ql-proof__mark { color: color-mix(in srgb, var(--acc) 82%, var(--fg)); text-align: right; font: 300 27px/0.94 var(--display); }
+.ql-proof__mark small { font-size: 14px; }
+@media (max-width: 899px) {
+  .ql-proof { grid-template-columns: 1fr; gap: 24px; }
+  .ql-proof__photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .ql-proof__photo figcaption { right: 18px; bottom: 18px; left: 18px; }
+  .ql-proof__list li { grid-template-columns: 28px minmax(0, 1fr) 48px; gap: 12px; padding: 18px 0; }
+  .ql-proof__mark { font-size: 23px; }
+}
 
 /* ---------- pantalla de carga: el brillante se talla ---------- */
 .ql-pre { background: var(--bg); }

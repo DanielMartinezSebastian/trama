@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import Preloader from "@/components/ui/Preloader";
 import ActionBar from "@/components/ui/ActionBar";
 import BeforeAfter from "@/components/ui/BeforeAfter";
-import BentoGrid from "@/components/ui/BentoGrid";
 import CookieBanner from "@/components/ui/CookieBanner";
 import DatePicker from "@/components/ui/DatePicker";
 import ExpandingPanels from "@/components/ui/ExpandingPanels";
@@ -824,61 +823,71 @@ function Home() {
           grow={3.2}
           className="ql-paths"
           panels={[
-            { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: photo("joyeria", 11).src, alt: "Anillo de oro con piedras de colores engastadas en el aro", href: href("alianzas") },
-            { title: "Compromiso", meta: "Solitario con piedra certificada · 4 a 6 semanas", image: photo("joyeria", 12).src, alt: "Anillo de oro con zafiros, esmeralda y diamantes engastados en línea", href: href("compromiso") },
-            { title: "A medida", meta: "Del boceto a la pieza, contigo en el taller", image: photo("joyeria", 1).src, alt: "Joyas hechas a mano sobre la mesa de un orfebre", href: href("cita") },
-            { title: "Transformar", meta: "Una joya heredada, rehecha para hoy", image: photo("joyeria", 10).src, alt: "Anillo antiguo de oro con una piedra azul", href: href("taller") },
+            { title: "Alianzas", meta: "Metal, ancho, perfil y grabado · 12 días", image: "/img/quilate/09-categoria-alianzas.webp", alt: "Dos alianzas, una de oro amarillo pulido y otra de oro rosa martillado con diamantes, sobre travertino", href: href("alianzas") },
+            { title: "Compromiso", meta: "Solitario con piedra certificada · 4 a 6 semanas", image: "/img/quilate/10-categoria-compromiso.webp", alt: "Solitario de oro blanco con diamante redondo sobre mármol claro", href: href("compromiso") },
+            { title: "A medida", meta: "Del boceto a la pieza, contigo en el taller", image: "/img/quilate/11-categoria-a-medida.webp", alt: "Manos de joyero dibujando un anillo a medida junto a una pieza con esmeralda", href: href("cita") },
+            { title: "Transformar", meta: "Una joya heredada, rehecha para hoy", image: "/img/quilate/12-categoria-transformar.webp", alt: "Joyero restaurando un anillo heredado de oro con zafiro azul", href: href("taller") },
           ]}
         />
       </section>
 
-      <section className="ql-gal" data-light="taller" aria-label="El taller, en fotos">
+      <section className="ql-gal" data-light="taller" aria-label="Anillos en distintas materias y situaciones">
         <div className="ql-wrap ql-sechead">
-          <p className="ql-kicker">Del banco a la vitrina</p>
-          <h2 className="ql-h2">Así se hace una joya.</h2>
+          <p className="ql-kicker">Ocho piezas, ocho atmósferas</p>
+          <h2 className="ql-h2">La luz también diseña.</h2>
+          <p className="ql-mut">De una alianza martillada a un solitario de color: cada forma encuentra su propia materia y su propia luz.</p>
         </div>
-        <HorizontalScroll gap={28} minWidth={900} className="ql-gal__hs">
+        <HorizontalScroll gap={24} minWidth={900} className="ql-gal__hs">
           {[
-            { i: 5, from: "bottom", cap: "El banco", t: "Flexo, limas y cera: aquí empieza todo.", alt: "Banco de joyero con flexo, limas y piezas a medio hacer" },
-            { i: 4, from: "left", cap: "La fundición", t: "El oro se funde y se vierte en el molde.", alt: "Molde de piedra para fundir joyas" },
-            { i: 0, from: "top", cap: "El hilo", t: "Torcido y soldado a mano, vuelta a vuelta.", alt: "Joyas de hilo de metal retorcido" },
-            { i: 6, from: "bottom", cap: "El esmalte", t: "Color al fuego entre oro y piedra.", alt: "Cadena de oro con piedras y esmalte" },
-            { i: 1, from: "left", cap: "La mesa", t: "Cada pieza, terminada a mano antes de salir.", alt: "Joyas hechas a mano sobre la mesa de un orfebre" },
-            { i: 11, from: "bottom", cap: "El engaste", t: "Piedra a piedra, garra a garra, con lupa.", alt: "Anillo de oro con piedras de colores engastadas en el aro" },
-            { i: 9, from: "right", cap: "El oficio", t: "Dos mil años haciendo anillos igual: a mano.", alt: "Anillo romano de oro" },
-            { i: 10, from: "top", cap: "La herencia", t: "Una joya antigua se puede rehacer sin perder su historia.", alt: "Anillo medieval de oro con una piedra azul" },
-            { i: 8, from: "bottom", cap: "El museo", t: "Lo bien hecho dura siglos.", alt: "Corona de hojas de laurel en oro en una vitrina de museo" },
-            { i: 7, from: "center", cap: "La vitrina", t: "Y al final, la luz que la hace brillar.", alt: "Vitrina con brazaletes de oro iluminados" },
+            { src: "/img/quilate/04-toi-et-moi.webp", cap: "Dos historias", text: "Zafiro pera y diamante en un mismo aro.", alt: "Anillo toi et moi de oro amarillo con zafiro azul pera y diamante sobre caliza rosada", from: "left" },
+            { src: "/img/quilate/01-solitario-marmol.webp", cap: "Luz de día", text: "Mármol claro, reflejo neutro, piedra a la vista.", alt: "Solitario blanco de seis garras sobre mármol veteado", from: "bottom" },
+            { src: "/img/quilate/02-sello-verde.webp", cap: "Sello de autor", text: "Oro cepillado y una turmalina al ras.", alt: "Anillo sello de oro amarillo cepillado con pequeña turmalina verde sobre arena rojiza", from: "center" },
+            { src: "/img/quilate/03-perla-organica.webp", cap: "Forma orgánica", text: "Dos curvas de oro abrazan una perla.", alt: "Anillo escultórico de oro champán con bandas cruzadas y perla sobre lino y papel", from: "right" },
+            { src: "/img/quilate/05-alianza-pave.webp", cap: "Textura compartida", text: "Oro rosa martillado y un hilo de diamantes.", alt: "Alianza de oro rosa con acabado martillado y pavé de diamantes sobre travertino", from: "bottom" },
+            { src: "/img/quilate/06-alianza-platino.webp", cap: "Materia y carácter", text: "Platino satinado con una veta de meteorito.", alt: "Alianza ancha de platino satinado con incrustación oscura sobre pizarra", from: "left" },
+            { src: "/img/quilate/07-vintage-granate.webp", cap: "Memoria antigua", text: "Granate, oro grabado y luz de terciopelo.", alt: "Anillo vintage de oro con granate oval y pequeños diamantes sobre terciopelo burdeos", from: "center" },
+            { src: "/img/quilate/08-art-deco.webp", cap: "Geometría serena", text: "Talla esmeralda y líneas Art Déco.", alt: "Anillo Art Déco de oro blanco con diamante champagne talla esmeralda y baguettes sobre cerámica azul", from: "right" },
           ].map((f, n) => (
-            <figure key={f.i} className="ql-gal__panel" data-tall={n % 2 === 0 ? "" : undefined}>
-              <ImageReveal src={photo("joyeria", f.i).src} alt={f.alt} ratio={n % 2 === 0 ? "4 / 5" : "5 / 4"} from={f.from as never} zoom={1.2} />
+            <figure key={f.src} className="ql-gal__panel">
+              <ImageReveal src={f.src} alt={f.alt} ratio="3 / 2" from={f.from as never} zoom={1.08} duration={1.05} />
               <figcaption>
                 <span className="ql-gal__n">{String(n + 1).padStart(2, "0")}</span>
                 <b>{f.cap}</b>
-                <span>{f.t}</span>
+                <span>{f.text}</span>
               </figcaption>
             </figure>
           ))}
         </HorizontalScroll>
       </section>
-
       <section className="ql-wrap ql-sec" data-light="lupa">
-        <div className="ql-sechead">
+        <div className="ql-sechead ql-proof__head">
           <p className="ql-kicker">Por qué fiarte</p>
-          <h2 className="ql-h2">Lo que firmamos con cada pieza.</h2>
+          <h2 className="ql-h2">Antes de fundir, todo queda claro.</h2>
+          <p className="ql-mut">Cada decisión importante se habla contigo y queda por escrito antes de empezar.</p>
         </div>
-        <BentoGrid
-          columns={4}
-          variant="minimal"
-          className="ql-bento"
-          cells={[
-            { title: "Contraste y punzón", text: "Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos.", stat: "750", span: "2x1", image: photo("joyeria", 8).src },
-            { title: "Piedras certificadas", text: "GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color.", stat: "GIA", span: "1x2", image: photo("joyeria", 12).src },
-            { title: "Precio cerrado", text: "El desglose que ves es el que pagas. Sin «desde» al final.", span: "1x1" },
-            { title: "De por vida", text: "Limpieza y revisión gratis; ajuste de talla gratis el primer año.", stat: "∞", span: "1x1" },
-            { title: "Hecho aquí", text: "Sin intermediarios: lo que encargas se dibuja, funde y engasta en el taller.", span: "2x1", image: photo("joyeria", 5).src },
-          ]}
-        />
+        <div className="ql-proof">
+          <figure className="ql-proof__photo">
+            <img src="/img/quilate/13-punzon-taller.webp" alt="Manos de joyero marcando el interior de una alianza de oro en el banco de trabajo" loading="lazy" />
+            <figcaption><span>En el taller</span><span>El oficio también se firma.</span></figcaption>
+          </figure>
+          <ol className="ql-proof__list">
+            <li>
+              <span className="ql-proof__index">01</span><div><p className="ql-proof__eyebrow">Metal identificado</p><h3>Contraste y punzón</h3><p>Cada pieza lleva la ley del metal y nuestro punzón, como pide la ley de metales preciosos.</p></div><b className="ql-proof__mark">750<br /><small>950</small></b>
+            </li>
+            <li>
+              <span className="ql-proof__index">02</span><div><p className="ql-proof__eyebrow">Origen declarado</p><h3>Piedras certificadas</h3><p>GIA o IGI en diamantes; origen y tratamiento declarados en piedras de color.</p></div><b className="ql-proof__mark">GIA<br /><small>IGI</small></b>
+            </li>
+            <li>
+              <span className="ql-proof__index">03</span><div><p className="ql-proof__eyebrow">Sin sorpresas</p><h3>Precio cerrado</h3><p>El desglose que ves es el que pagas. Sin «desde» al final.</p></div><b className="ql-proof__mark">€</b>
+            </li>
+            <li>
+              <span className="ql-proof__index">04</span><div><p className="ql-proof__eyebrow">Cuidado continuo</p><h3>De por vida</h3><p>Limpieza y revisión gratis; ajuste de talla gratis el primer año.</p></div><b className="ql-proof__mark">∞</b>
+            </li>
+            <li>
+              <span className="ql-proof__index">05</span><div><p className="ql-proof__eyebrow">Taller propio</p><h3>Hecho aquí</h3><p>Sin intermediarios: lo que encargas se dibuja, funde y engasta en el taller.</p></div><b className="ql-proof__mark">VLC</b>
+            </li>
+          </ol>
+        </div>
       </section>
 
       <div data-light="memoria">

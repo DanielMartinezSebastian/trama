@@ -3069,7 +3069,7 @@ Taller de joyería contado solo con sus servicios: siete capítulos (escuchar, e
 
 Carpeta: `components/sites/quilate/` · 6 páginas: Inicio · Alianzas · Compromiso · Taller · Tu talla · Cita
 
-`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `BentoGrid` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
+`OptionPicker` ×13 · `TextField` ×5 · `MetaTable` ×4 · `OpeningHours` ×2 · `Marquee` · `Hero` · `FAQSection` · `TestimonialSection` · `SmoothScroll` · `Preloader` · `FullscreenMenu` · `HorizontalScroll` · `ImageReveal` · `IslandNav` · `ExpandingPanels` · `CookieBanner` · `DatePicker` · `ActionBar` · `QRCode` · `LightScroll` · `BeforeAfter`
 
 ### Ánima · fiesta de Halloween en Valencia — `/sitios/anima`
 
