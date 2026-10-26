@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import FlameHorizon from "@/components/ui/FlameHorizon";
 import ThornEmblem from "@/components/ui/ThornEmblem";
+import { CURVAS, seguidorRaf } from "@/lib/motion/scroll-feel";
 
 /*
  * Lo que rodea al relato en meermohsin.me (docs/36 B1), atado al scroll con las posiciones medidas en la referencia
@@ -13,15 +14,19 @@ import ThornEmblem from "@/components/ui/ThornEmblem";
  *     y se apaga sobre el relato (3 625–4 919 px) hasta desaparecer hacia los 5 500 px.
  */
 const CAMARA = { position: [0, 0, 1.2] as [number, number, number], fov: 45 };
-const tramo = (y: number, a: number, b: number) => Math.min(1, Math.max(0, (y - a) / (b - a)));
+/** tramo de scroll [a, b] con curva en S (docs/42: nada lineal; lo que llega, se asienta) */
+const tramo = (y: number, a: number, b: number) => CURVAS.smooth(Math.min(1, Math.max(0, (y - a) / (b - a))));
 
 export default function RelatoMeer() {
+  // una sola posición de scroll, amortiguada (5/s: el scroll ya tiene la inercia de feel="cinematic"), de la que sale todo:
+  // llamas, máscara y su salida van a la vez y no copian cada tirón de la rueda (docs/42, docs/02 §6.5)
   const [y, setY] = useState(0);
   useEffect(() => {
+    const seg = seguidorRaf(5, setY);
     let raf = 0;
     const lee = () => {
       raf = 0;
-      setY(window.scrollY);
+      seg.set(window.scrollY);
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(lee);
@@ -31,16 +36,20 @@ export default function RelatoMeer() {
     return () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
+      seg.stop();
     };
   }, []);
-  const llamas = tramo(y, 1300, 3050);
+  const llamas = Math.min(1, Math.max(0, (y - 1300) / 1750));
   const verLlamas = y > 1100 && y < 3450;
   // las llamas tapan el relato hasta que este se fija (en la referencia, a 2 987 px aún llenan la pantalla)
   const funde = 1 - tramo(y, 3150, 3400);
   const gira = tramo(y, 500, 2400);
   const sube = tramo(y, 3000, 4600);
-  const apaga = 1 - tramo(y, 4600, 5500);
-  // en la portada la máscara va sobre los ojos del retrato (un 15 % por encima del centro) y baja al empezar el scroll
+  // la salida sobre el relato: primero se apaga a un 40 % y se desenfoca (queda detrás, como en la referencia, sin tapar la
+  // palabra ni la tarjeta) y luego se va del todo; antes iba a plena luz hasta desaparecer de golpe
+  const tenue = 1 - 0.6 * tramo(y, 3100, 3700);
+  const apaga = tenue * (1 - tramo(y, 4400, 5200));
+  const desenfoque = 3 * tramo(y, 3100, 3700);
   return (
     <>
       {verLlamas && (
@@ -48,9 +57,10 @@ export default function RelatoMeer() {
           <FlameHorizon progress={llamas} position="absolute" color="#c8000f" />
         </div>
       )}
-      <div style={{ position: "fixed", inset: 0, zIndex: 6, pointerEvents: "none", opacity: apaga, transform: `translateY(${-15 * (1 - tramo(y, 0, 700)) - sube * 22}vh)` }}>
+      {/* en la portada la máscara va sobre los ojos del retrato (un 15 % por encima del centro) y baja al empezar el scroll */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 6, pointerEvents: "none", opacity: apaga, filter: desenfoque > 0.05 ? `blur(${desenfoque.toFixed(2)}px)` : undefined, transform: `translateY(${-15 * (1 - tramo(y, 0, 700)) - sube * 22}vh)` }}>
         {/* la cámara de la referencia (fija en z = 1,2 con fov 45): el emblema, a la escala que le corresponde */}
-        <ThornEmblem height="100%" shape="mask" progress={gira} interactive={false} camera={CAMARA} toneMapped={false} scale={(0.72 - 0.12 * sube) * 0.26} />
+        <ThornEmblem height="100%" shape="mask" progress={gira} interactive={false} camera={CAMARA} toneMapped={false} scale={(0.72 - 0.18 * sube) * 0.26} />
       </div>
     </>
   );

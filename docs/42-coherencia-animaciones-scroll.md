@@ -169,3 +169,20 @@ Se comprueba con `cine:ritmo --comparar .refs3d/ritmo/quilate-lento <captura>`.
     Quilate, no con el motor.
   - **Regla nueva para docs/02 §6.5**: el seguimiento de la escena, entre 4 y 6/s cuando el scroll ya tiene inercia larga.
     Los 9/s de Quilate funcionan porque sus mesetas absorben la cola.
+
+## 8. Tercera ronda: el banco de Meer Mohsin y las piezas que faltaban
+
+- **`RelatoMeer`**:
+  - una sola posición de scroll, amortiguada a 5/s, de la que salen las llamas, la máscara y su salida;
+  - tramos en S en vez de lineales;
+  - `SmoothScroll feel="cinematic"` en la página.
+- **Salida de la máscara sobre el escenario** (queja del usuario): ahora se apaga al 40 % y se desenfoca sobre el
+  relato, y luego se va. Antes iba a plena luz hasta desaparecer de golpe.
+- **Una sola barra TENSION · IMMERSION · IMPACT**: la del escenario se oculta en el banco. En la referencia hay una.
+- **`ChapterStage` y `ProjectReel`**: el avance sigue al scroll amortiguado con la sensación de la página.
+  `FlameHorizon` recibe el avance de quien lo usa.
+
+**Estado de la propuesta (§2):**
+
+- hechas: piezas 1, 2, 3, 4 (las seis piezas de scroll del kit), 6 (`cine:ritmo`) y 7 (docs/02 §6.5 y docs/37 §11);
+- queda la pieza 5: un solo `trackScroll`; el de GSAP (`lib/scroll/track`) solo lo usa un fondo y se deja.

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { pinProgress, trackScroll } from "@/lib/motion/progress";
+import { resolveFeel, seguidorRaf } from "@/lib/motion/scroll-feel";
 
 export type ReelProject = {
   title: string;
@@ -87,7 +88,14 @@ export default function ProjectReel({ projects = DEMO, perProject = 1, backdrop 
     if (controlado) return;
     const el = outer.current;
     if (!el) return;
-    return trackScroll(el, (r, vh) => pintar(pinProgress(r, vh)));
+    // el avance sigue al scroll amortiguado con la sensación de la página (docs/42)
+    const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const seg = seguidorRaf(quieto ? Infinity : resolveFeel().damp.pose, pintar);
+    const stop = trackScroll(el, (r, vh) => seg.set(pinProgress(r, vh)));
+    return () => {
+      stop();
+      seg.stop();
+    };
   }, [controlado, pintar]);
   useEffect(() => {
     if (controlado) pintar(Math.min(1, Math.max(0, progress ?? 0)));

@@ -473,6 +473,8 @@ no las escribas a mano.
 - **Una sola fuente por variable.** Si la escena 3D ya suaviza su pose, no la pases por `useScrollTimeline` con `damp`
   (usa `damp: false` o `useScrollStory`). Dos suavizados encadenados la vuelven perezosa.
 - **Lo material, más lento que lo geométrico:** `damp.look` (4/s) frente a `damp.pose` (9/s) en `cinematic`.
+- **Seguimiento de la escena entre 4 y 6/s** si el scroll ya tiene inercia larga; más rápido, la escena copia la cola del scroll
+  (los 9/s de Quilate funcionan porque sus mesetas largas absorben la cola).
 - **Poco cambio por pantalla.** Quilate cambia poco la escena por cada pantalla de scroll; si la escena va rápida, la
   sensación es mecánica aunque todo lo demás esté bien.
 

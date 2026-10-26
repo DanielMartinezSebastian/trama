@@ -70,7 +70,7 @@ Cada fase: capturas a tamaño real del banco junto a la referencia, sin defectos
 
 1. Build: hay cambios en páginas del laboratorio y en el CSS desde el último. Con el servidor parado; después, borrar
    `.next/dev` y relanzarlo.
-2. La salida de la máscara sobre el escenario por capítulos (S3).
+2. ~~La salida de la máscara sobre el escenario por capítulos (S3)~~: hecha (docs/42 §8).
 3. S1, S6 y S7: «THIS WILL FEEL DIFFERENT», el proceso con el haz y la silueta.
 4. S8 y S9: el diario y los premios.
 5. Portada: P13 (cursor), P14 (grano) y la navegación letra a letra.

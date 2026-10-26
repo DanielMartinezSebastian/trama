@@ -5,6 +5,7 @@ import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import { pinProgress, trackScroll } from "@/lib/motion/progress";
+import { resolveFeel, seguidorRaf } from "@/lib/motion/scroll-feel";
 import { fronteras as calcularFronteras, posicionPalabra } from "@/lib/chapterstage/coreografia";
 
 // three y react-three-fiber solo se descargan cuando la pieza está cerca de la pantalla
@@ -104,7 +105,14 @@ export default function ChapterStage({ chapters = DEMO, perChapter = 1.6, wordFo
     if (controlado) return;
     const el = outer.current;
     if (!el) return;
-    return trackScroll(el, (r, vh) => pintar(pinProgress(r, vh) * total));
+    // el avance sigue al scroll amortiguado con la sensación de la página (docs/42): no copia cada tirón de la rueda
+    const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const seg = seguidorRaf(quieto ? Infinity : resolveFeel().damp.pose, pintar);
+    const stop = trackScroll(el, (r, vh) => seg.set(pinProgress(r, vh) * total));
+    return () => {
+      stop();
+      seg.stop();
+    };
   }, [controlado, pintar, total]);
 
   useEffect(() => {
