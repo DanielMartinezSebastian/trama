@@ -88,14 +88,14 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 
 ### Producto
 
-- [ ] **E8 · Peppa Sauce** — https://www.peppasauce.love/
+- [x] **E8 · Peppa Sauce** (26-10-2026, §3.8) — https://www.peppasauce.love/
   - Producto de consumo (salsa): presentación del producto, sabores, dónde comprar o tienda, tono de marca. Mirar 3D o
     animación del bote, color y tipografía.
   - Salida: guía de estilo «producto de marca» y contraste con la fórmula de producto de docs/07.
 
 ### Transiciones, maquetación y navegación
 
-- [ ] **E9 · K72** — https://k72.ca/en
+- [x] **E9 · K72** (26-10-2026, §3.9: escalera y menú con marquesina → E12) — https://k72.ca/en
   - Agencia creativa de Montreal. Nota del usuario: «muy interesante la navegación»; estudiar a fondo transiciones y
     maquetación.
   - Capturar el menú abierto y cerrado (`cine:capture --clic`), la transición entre páginas y entre proyectos, el hover
@@ -119,6 +119,8 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
     `bookings` y `onBook`; en lista o semana. Sale de los horarios de Cadencia y Forja (26-10-2026).
   - [ ] `CohortList` (academias, §3.7): programas por convocatoria con formato, nivel, fechas y estado.
   - [ ] `TeamSection layout="wall"`: muro denso de profesorado (FLA).
+  - [ ] `PageTransition kind="stairs"` (K72, §3.9): bloques en escalera al navegar y al abrir el menú.
+  - [ ] `FullscreenMenu linkHover="marquee"` (K72): la fila gira a banda del acento con marquesina del `meta`.
   - [ ] `FullscreenMenu`: filetes que se dibujan y subida escalonada (Il Colorista) y columnas verticales (Skulpt).
   - [ ] `PageTransition` con marca en el centro (Il Colorista).
   - [ ] Comprobar si `FeatureExplorer` cubre el acordeón que cambia la foto fija (Core Atelier).
@@ -561,3 +563,79 @@ Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/honhar-in/estudio/montaje.jpg
 
 **El copy por defecto del kit** (escuela de surf de Cantabria) se queda: encaja con Surfing Academy en tono (cercano,
 de progreso) aunque ellos venden viajes y no clases en una playa fija.
+
+### 3.8 Producto: Peppa Sauce (E8) — https://www.peppasauce.love/
+
+![Montaje de peppasauce-love](/lab/cine/archivo/.refs3d/webs/peppasauce-love/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/peppasauce-love/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/peppasauce-love/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/peppasauce-love/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/peppasauce-love-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/peppasauce-love)
+
+- **Qué es**: la salsa picante de una familia («Mama Joyce Peppa Sauce, Fiery Blasian Hot Sauce», de Guyana). Una sola
+  página; la compra sale a otra tienda.
+- **El bote fijo**: la botella (`div.bottle`, fija) se queda en el centro de la pantalla mientras toda la página pasa
+  por detrás; a veces se aparta a un lado (en «A taste of Guyana» queda cortada en el borde derecho). Es el concepto de
+  la web: **el producto como objeto que acompaña al scroll**.
+- **Estructura**: tres tarjetas con marco de etiqueta antigua (estrellas, llamas, gotas, lunas en las esquinas): la
+  historia de Mama Joyce, el sello circular de la marca y «Blasian hot sauce · 2,400 SHU» → «A taste of Guyana» con
+  el mapa y una **cinta de texto en el marco** («WTF IS GUYANA») → **maridajes en palabras gigantes** con
+  ilustración: «the best with EGG», «goes great with CHICKEN», «STEAK» → la abuela ilustrada y «hand milled» → «this
+  sauce is not for EVERYTHING» a toda pantalla → «Flavor meet heat» → **lo que no**: «don't ruin it with MINT»,
+  «leave out the RASPBERRY», «CEREAL» → «Buy the damn stuff».
+- **Movimiento**: pantalla de carga y cortinilla (`page-cover`), cursor propio, cinta «BUY NOW ✶» fija arriba.
+- **Tono**: con humor y descaro («WTF is Guyana», «Buy the damn stuff»); la familia y el origen como argumento.
+- **Estilo**: **azul noche #141329** y **crema #feeee2** (dos tintas, como una serigrafía), ilustraciones planas en
+  gris azulado; Obviously (grotesca ancha, 50–245 px, espaciado negativo) y Vulf Sans en mayúsculas para el texto.
+
+**Contra el kit y docs/07**:
+
+| Rasgo | En el kit | Decisión |
+|---|---|---|
+| Producto fijo que acompaña al scroll | `ObjectStage`, `Traveler` (entre rutas), `PinnedSection` | Comprobar en E12 si `ObjectStage` admite una imagen (no 3D) fija con posiciones por sección; si no, receta con `position: sticky` |
+| Palabras gigantes con ilustración y nota pequeña al lado | `FitText` | Receta |
+| Cinta de compra fija | `Marquee` | Cubierto |
+| Tarjetas con marco de etiqueta (esquinas ornamentales) | no hay | Decorado de demo |
+| Dos tintas | tokens | Guía «producto de marca»: `--bg` y `--fg` y nada más; el color lo ponen el producto y la foto |
+
+La fórmula de producto de docs/07 (Linear, Stripe: SaaS) no sirve para un producto de consumo: aquí no hay
+funciones ni precios, hay **origen, maridajes y tono**. La guía «producto de marca» (E10) sale de esta web.
+
+### 3.9 Navegación y transiciones: K72 (E9) — https://k72.ca/en
+
+![Montaje de k72-ca-en](/lab/cine/archivo/.refs3d/webs/k72-ca-en/estudio/montaje.jpg)
+
+Capturas: [montaje](/lab/cine/archivo/.refs3d/webs/k72-ca-en/estudio/montaje.jpg) · [pantallas del mapa](/lab/cine/archivo/.refs3d/webs/k72-ca-en/pantallas) · [tira](/lab/cine/archivo/.refs3d/webs/k72-ca-en/tira.jpg) · [móvil](/lab/cine/archivo/.refs3d/webs/k72-ca-movil/tira.jpg) · [carpeta](/lab/cine/archivo/.refs3d/webs/k72-ca-en)
+
+Fotogramas de la navegación en [nav/](/lab/cine/archivo/.refs3d/webs/k72-ca-en/nav): menú
+([apertura](/lab/cine/archivo/.refs3d/webs/k72-ca-en/nav/m-menu.jpg), [hover y cierre](/lab/cine/archivo/.refs3d/webs/k72-ca-en/nav/m-menu2.jpg))
+y paso a Work ([fotogramas](/lab/cine/archivo/.refs3d/webs/k72-ca-en/nav/m-work2.jpg)), cada 100–150 ms.
+
+- **Portada sin scroll**: una sola pantalla. Fondo de **vídeos que se suceden** (campañas de la agencia), encima
+  «THE SPARK FOR ALL [vídeo] THINGS CREATIVE» con **un vídeo pequeño metido en el titular** como si fuera una palabra
+  y una elipse lima dibujada alrededor de «CREATIVE»; dos **píldoras de contorno gigantes**, WORK y AGENCY, y la
+  **hora de Montreal** en directo abajo a la izquierda. Al pasar por WORK, la píldora y el texto se vuelven lima.
+- **Transición en escalera** (la firma): al navegar, unos **bloques negros bajan en escalera** desde la esquina
+  superior derecha (cinco columnas, cada una con retraso) hasta tapar la pantalla; en la página nueva, la misma
+  escalera en gris se retira y deja ver el contenido. Unos 600 ms en cada sentido. El menú se abre con la misma
+  escalera.
+- **Menú**: negro a pantalla completa, **cuatro filas** (WORK, AGENCY, CONTACT, BLOG) separadas por filetes y centradas
+  en mayúsculas enormes; abajo, hora, avisos legales y redes en **píldoras de contorno**; arriba, EN/FR y una cruz
+  fina. **Al pasar por una fila, esta gira y se convierte en una banda lima** con una **marquesina** que repite otra
+  frase («KNOW US», «SEND US A FAX», «READ ARTICLES») intercalada con **imágenes en píldora**. Es lo más original de
+  la web.
+- **Work**: «WORK¹⁷» (el número de proyectos en superíndice) y rejilla de dos columnas; al pasar por un proyecto, las
+  esquinas se redondean y aparece «VIEW PROJECT» en una píldora; **una barra fina arriba dice qué proyecto estás
+  viendo** (cliente, título y año) y cambia con el scroll.
+- **Estilo**: negro, blanco y **lima #d3fd50**; grotesca neutra en mayúsculas, píldoras de contorno como único botón.
+
+**Contra el kit**:
+
+| Rasgo | En el kit | Decisión |
+|---|---|---|
+| Transición en escalera de bloques | `PageTransition` tiene `blinds` (franjas) pero no escalera | **Ampliar** `PageTransition` con `kind="stairs"` (columnas con retraso escalonado, dirección y color del tema); vale también para abrir un menú (E12) |
+| Fila del menú que gira a banda con marquesina | `FullscreenMenu` (sin efecto de fila) y `Marquee` | **Ampliar** `FullscreenMenu` con `linkHover="marquee"`: la fila se vuelve banda del acento con una marquesina del `meta` del enlace e imágenes opcionales (E12) |
+| Vídeo dentro de un titular | no hay | Candidata pequeña: un `InlineMedia` (vídeo o imagen en píldora del alto de la línea) o receta con `SplitText`; se decide en E12 |
+| Hora local en directo | `LocalTime` | Cubierto |
+| Barra superior con el proyecto en vista | no hay | Receta con `IntersectionObserver` sobre `ProjectList` / `ImageGallery` |
+| Píldoras de contorno gigantes | `Button` `emphasis="outline"` | Cubierto |
+
+No hace falta una ronda de cine completa (docs/35): no hay 3D; son dos ampliaciones del kit y una receta.
