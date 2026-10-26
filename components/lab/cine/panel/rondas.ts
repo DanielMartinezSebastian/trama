@@ -56,7 +56,7 @@ export const RONDAS: Ronda[] = [
     ],
     herramientas: ["cine:ritmo (perfil de scroll)", "volcado del DOM con estilos", "images:fetch retratos y espacio"],
     doc: "43-lusion-replica.md",
-    commits: [],
+    commits: ["eff3b7e"],
     resultado: [
       { eje: "Quilate con el motor del kit (ritmo)", valor: "8 de 8 medidas idénticas" },
       { eje: "Cota: rapidez · acoplamiento", valor: "1,98 → 1,07 · 0,34 → 0,29" },
