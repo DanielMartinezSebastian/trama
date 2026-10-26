@@ -12,7 +12,7 @@ export default function Page() {
       {[0.12, 0.25, 0.75, 0.95].map((p) => (
         <FlameHorizon key={p} progress={p} height={300} className={`p-${Math.round(p * 100)}`} />
       ))}
-      <ThornEmblem height={300} shape="mask" />
+      <ThornEmblem height={300} shape="wings" lighting="red" />
       <ThornEmblem height={300} progress={1} />
     </main>
   );

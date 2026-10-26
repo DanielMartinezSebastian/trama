@@ -75,3 +75,35 @@ Cada fase: capturas a tamaño real del banco junto a la referencia, sin defectos
 4. S8 y S9: el diario y los premios.
 5. Portada: P13 (cursor), P14 (grano) y la navegación letra a letra.
 6. Lusion y Chartogne: inventario completo y réplica con contenido, como aquí.
+
+## 5. La máscara, rehecha (26-10-2026, tras la nota del usuario)
+
+**Nota del usuario:** «no me gusta nada cómo acaba y cómo desaparece; tampoco se parece en nada a la original; es un
+elemento en dos partes».
+
+**Lo que dijo el estudio a fondo** (secuencia de 16 fotogramas de la portada al relato y recortes a tamaño real):
+
+- **La máscara de la cara y el emblema del relato son el mismo objeto**: sale de los ojos dando vueltas.
+- **Dos piezas**: ala derecha y ala izquierda (la sonda: 2 mallas de 42 542 vértices), blancas y facetadas, que se ven
+  rojas por tres luces puntuales rojas.
+- **Estilo de tatuaje tribal gótico**: todo en punta, sin rizos. Ojos de almendra de borde grueso, cuerno alto, púas
+  largas casi horizontales erizadas de espinas, cola larga, lenguas de fuego y borde dentado junto al puente. Mi máscara
+  tenía rizos barrocos: no se parecía.
+- **Coreografía**:
+  - da vueltas en 3D sobre varios ejes: de canto en X (320, 1032), plano (462, 610, 1720), de frente como mariposa (800,
+    2120, 3319) y vertical (2919);
+  - crece sobre el relato (3719);
+  - **al final se encoge, se oscurece y se queda pequeña arriba** durante todo el escenario por capítulos (4319–8400);
+  - se va cuando llega el papel rasgado. No se desvanece en el sitio.
+
+**Lo que hay ahora:**
+
+- **`lib/emblem/alas.ts`**: alas tribales procedurales en dos piezas que pueden batir (`aleteo`).
+- **`ThornEmblem`**:
+  - `shape="wings"`;
+  - `lighting="red"`, con las luces medidas;
+  - `choreography`, una pose propia por fotograma para atarla a una línea de tiempo.
+- **`RelatoMeer`**:
+  - 18 fotogramas clave medidos (giro, escala, altura, brillo y aleteo), con tramos en S sobre el scroll amortiguado;
+  - la cámara de la escena de la referencia (fov 35 en z = 14), sin tone mapping.
+- **Logo de la portada**: las alas en blanco, en la tarjeta que gira.

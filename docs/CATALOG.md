@@ -2166,11 +2166,12 @@ Envuelve una escena de react-three-fiber y la dibuja como un grabado a lápiz so
 
 ### Emblema 3D de púas — `ThornEmblem`
 
-Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en dos formas: una máscara tribal con el hueco de los ojos (cuernos, alas, garfios y lágrimas que se afilan y acaban en rizo, con púas a lo largo; la de la portada de meermohsin.me) o alas de espinas con un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
+Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en tres formas: alas tribales góticas en dos piezas que pueden batir (ojos de almendra, cuernos, púas erizadas y lenguas de fuego, todo en punta; el de meermohsin.me, que va sobre los ojos y luego da vueltas por el relato), una máscara barroca con rizos o alas de espinas, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.
 
 | prop | tipo | default |
 |---|---|---|
-| `shape` | `mask` · `spikes` | "mask" |
+| `shape` | `wings` · `mask` · `spikes` | "wings" |
+| `lighting` | `red` · `studio` | "red" |
 | `seed` | number 1–99 | 7 |
 | `spikes` | number 3–12 | 7 |
 | `barbs` | number 0–2 | 1 |

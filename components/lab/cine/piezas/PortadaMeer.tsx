@@ -43,7 +43,7 @@ export default function PortadaMeer() {
       {/* lo fijo: logo, navegación, CTA, sonido, barra de abajo y humo */}
       <div className="mmh__logo" aria-hidden>
         <div className="mmh__logo-gira">
-          <ThornEmblem height="100%" color="#f4f4f4" interactive={false} scale={1.25} />
+          <ThornEmblem height="100%" shape="wings" color="#f4f4f4" interactive={false} scale={1.05} />
         </div>
       </div>
       <nav className="mmh__nav" aria-label="Principal">

@@ -6,6 +6,8 @@ import { useReducedMotion } from "@/lib/ui/useReducedMotion";
 import { useTokens } from "@/lib/ui/useTokens";
 import type { PoseEmblema } from "@/lib/emblem/scene";
 
+export type { PoseEmblema };
+
 // three y react-three-fiber solo se descargan cuando la pieza está cerca de la pantalla
 const ThornEmblemScene = lazy(() => import("@/lib/emblem/scene"));
 
@@ -16,8 +18,18 @@ export type ThornEmblemProps = {
   height?: number | string;
   /** semilla: otra semilla, otras púas */
   seed?: number;
-  /** spikes = alas de púas · mask = máscara tribal con el hueco de los ojos (la de meermohsin.me) */
-  shape?: "spikes" | "mask";
+  /**
+   * wings = alas tribales góticas en dos piezas que pueden batir (el emblema de meermohsin.me) · mask = máscara barroca con
+   * el hueco de los ojos y rizos · spikes = alas de púas
+   */
+  shape?: "wings" | "mask" | "spikes";
+  /** studio = laca del color del emblema con reflejos de estudio · red = blanco facetado bajo tres luces rojas (la de la referencia) */
+  lighting?: "studio" | "red";
+  /**
+   * coreografía propia: la pose en cada fotograma (giro en radianes, escala, brillo 0–1, altura y aleteo de las alas).
+   * Manda sobre progress y el balanceo; para atar el emblema a una línea de tiempo de scroll
+   */
+  choreography?: (time: number) => PoseEmblema;
   /** púas principales por ala */
   spikes?: number;
   /** púas secundarias en las largas (0–2) */
@@ -56,7 +68,7 @@ const suave = (t: number) => t * t * (3 - 2 * t);
  *
  * Requiere `three` y `@react-three/fiber` (dependencias opcionales del paquete): se importa por subruta, `trama-ui/ThornEmblem`.
  */
-export default function ThornEmblem({ children, height = 480, seed = 7, shape = "spikes", spikes = 7, barbs = 1, curl = 0.55, color, scale = 1, progress, camera, toneMapped = true, interactive = true, render = "auto", className = "" }: ThornEmblemProps) {
+export default function ThornEmblem({ children, height = 480, seed = 7, shape = "spikes", lighting = "studio", choreography, spikes = 7, barbs = 1, curl = 0.55, color, scale = 1, progress, camera, toneMapped = true, interactive = true, render = "auto", className = "" }: ThornEmblemProps) {
   const root = useRef<HTMLDivElement>(null);
   const tokens = useTokens(root);
   const reduced = useReducedMotion();
@@ -65,7 +77,7 @@ export default function ThornEmblem({ children, height = 480, seed = 7, shape = 
   const onReady = useCallback(() => setReady(true), []);
   const col = color || tokens?.["--acc"] || "#a8001c";
   const camara = useMemo(() => ({ posicion: camera?.position ?? ([0, 0, 4.2] as [number, number, number]), fov: camera?.fov ?? 35 }), [camera?.position, camera?.fov]);
-  const forma = useMemo(() => ({ tipo: shape === "mask" ? ("mascara" as const) : ("puas" as const), semilla: seed, puas: spikes, ramas: barbs, curva: curl }), [shape, seed, spikes, barbs, curl]);
+  const forma = useMemo(() => ({ tipo: shape === "wings" ? ("alas" as const) : shape === "mask" ? ("mascara" as const) : ("puas" as const), semilla: seed, puas: spikes, ramas: barbs, curva: curl }), [shape, seed, spikes, barbs, curl]);
 
   // la pose se lee de refs: cambiar progress o el puntero no vuelve a montar la escena
   const estado = useRef({ progress, scale, puntero: [0, 0] as [number, number], suave: [0, 0] as [number, number] });
@@ -86,7 +98,10 @@ export default function ThornEmblem({ children, height = 480, seed = 7, shape = 
       el.removeEventListener("pointerleave", sale);
     };
   }, [interactive]);
+  const coreo = useRef(choreography);
+  coreo.current = choreography;
   const pose = useCallback((t: number): PoseEmblema => {
+    if (coreo.current) return coreo.current(t);
     const e = estado.current;
     e.suave[0] += (e.puntero[0] - e.suave[0]) * 0.06;
     e.suave[1] += (e.puntero[1] - e.suave[1]) * 0.06;
@@ -105,7 +120,7 @@ export default function ThornEmblem({ children, height = 480, seed = 7, shape = 
         <div className={`ui-te__gl ${ready ? "is-on" : ""}`} aria-hidden>
           <GLBoundary onError={fail}>
             <Suspense fallback={null}>
-              <ThornEmblemScene forma={forma} color={col} pose={pose} active={near} onReady={onReady} camara={camara} plano={!toneMapped} />
+              <ThornEmblemScene forma={forma} color={col} pose={pose} active={near} onReady={onReady} camara={camara} plano={!toneMapped} luz={lighting === "red" ? "roja" : "estudio"} />
             </Suspense>
           </GLBoundary>
         </div>

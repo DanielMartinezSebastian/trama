@@ -264,11 +264,12 @@ export const webgl: CatalogEntry[] = [
     category: "galerias",
     styles: EDITORIAL,
     description:
-      "Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en dos formas: una máscara tribal con el hueco de los ojos (cuernos, alas, garfios y lágrimas que se afilan y acaban en rizo, con púas a lo largo; la de la portada de meermohsin.me) o alas de espinas con un núcleo vertical, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
+      "Un emblema 3D simétrico, como un tatuaje tribal o un logotipo de metal, en tres formas: alas tribales góticas en dos piezas que pueden batir (ojos de almendra, cuernos, púas erizadas y lenguas de fuego, todo en punta; el de meermohsin.me, que va sobre los ojos y luego da vueltas por el relato), una máscara barroca con rizos o alas de espinas, en laca brillante con reflejos de estudio y una luz de contra de su color. Procedural (semilla, púas, curva): cada marca tiene el suyo. Se balancea y se inclina hacia el puntero; con progress (0–1) sigue la coreografía de meermohsin.me, de frente a de canto y vertical, para atarlo al scroll. Para portadas oscuras, música, moda o videojuegos. Color: --acc del tema.",
     stageHeight: 520,
     notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ThornEmblem.", "progress controla la coreografía; sin él, se balancea solo.", "Sin WebGL o con movimiento reducido, una silueta plana de púas."],
     props: [
-      { key: "shape", label: "Forma", type: "select", default: "mask", options: ["mask", "spikes"], labels: { mask: "máscara tribal", spikes: "alas de púas" } },
+      { key: "shape", label: "Forma", type: "select", default: "wings", options: ["wings", "mask", "spikes"], labels: { wings: "alas tribales (dos piezas)", mask: "máscara barroca", spikes: "alas de púas" } },
+      { key: "lighting", label: "Luz", type: "select", default: "red", options: ["red", "studio"], labels: { red: "tres luces rojas", studio: "estudio" } },
       { key: "seed", label: "Semilla", type: "number", default: 7, min: 1, max: 99, step: 1 },
       { key: "spikes", label: "Púas por ala", type: "number", default: 7, min: 3, max: 12, step: 1 },
       { key: "barbs", label: "Púas secundarias", type: "number", default: 1, min: 0, max: 2, step: 1 },
@@ -277,7 +278,7 @@ export const webgl: CatalogEntry[] = [
     ],
     render: (p) => (
       <div style={{ width: "100%", background: "#050505", ["--acc" as string]: "#a8001c" }}>
-        <ThornEmblem shape={p.shape as "mask"} seed={p.seed as number} spikes={p.spikes as number} barbs={p.barbs as number} curl={p.curl as number} height={p.height as number} />
+        <ThornEmblem shape={p.shape as "wings"} lighting={p.lighting as "red"} seed={p.seed as number} spikes={p.spikes as number} barbs={p.barbs as number} curl={p.curl as number} height={p.height as number} />
       </div>
     ),
   },
