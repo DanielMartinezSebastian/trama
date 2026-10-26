@@ -37,8 +37,8 @@ export default function CreditosPage() {
         reutilizarlas y redistribuirlas (CC0, dominio público o CC BY). Gracias a quienes las hicieron y las compartieron. Cada foto enlaza a su página de origen.
       </p>
       <section aria-labelledby="t-campanas">
-        <h2 id="t-campanas">Imágenes generadas: Hebra, Esparta, Cadencia y Forja</h2>
-        <p className="cr__lead">Estas escenas fueron generadas con OpenAI para cuatro marcas ficticias. No representan clientes, equipo ni resultados reales. La barra 3D de Forja está modelada por código, sin recursos de terceros.</p>
+        <h2 id="t-campanas">Imágenes generadas: Hebra, Esparta, Cadencia, Forja y Quilate</h2>
+        <p className="cr__lead">Estas escenas fueron generadas con OpenAI para cinco marcas ficticias. No representan clientes, equipo ni resultados reales. La barra 3D de Forja está modelada por código, sin recursos de terceros.</p>
         <ul className="cr__grid">{generatedBusinessArt.map(a=><li className="cr__item" key={a.src}><img src={a.src} alt="" width={160} height={100} loading="lazy"/><div><b>{a.title}</b><span>Imagen generada · Escena ficticia</span></div></li>)}</ul>
       </section>
       {Object.entries(TOPICS).map(([topic, label]) => {

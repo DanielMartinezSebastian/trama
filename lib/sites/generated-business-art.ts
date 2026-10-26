@@ -36,4 +36,11 @@ export const generatedBusinessArt = [
   { src: "/img/forja/pesado.webp", title: "Forja · Heavy club, peso muerto" },
   { src: "/img/forja/cardio.webp", title: "Forja · Engine room, assault bike" },
   { src: "/img/forja/movilidad.webp", title: "Forja · Mobility lab" },
+  { src: "/img/hebra/salon.webp", title: "Hebra · El estudio, luz y espejos" },
+  { src: "/img/forja/sala.webp", title: "Forja · La sala de entrenamiento" },
+  { src: "/img/quilate/14-ajuste-talla.webp", title: "Quilate · Ajuste de talla en el banco" },
+  { src: "/img/quilate/15-reparacion-cadena.webp", title: "Quilate · Reparación del cierre de una cadena" },
+  { src: "/img/quilate/16-transformar-herencia.webp", title: "Quilate · Rediseñar una joya heredada" },
+  { src: "/img/quilate/17-limpieza-antes.webp", title: "Quilate · Limpieza, simulación del antes" },
+  { src: "/img/quilate/18-limpieza-despues.webp", title: "Quilate · Limpieza, simulación del después" },
 ] as const;

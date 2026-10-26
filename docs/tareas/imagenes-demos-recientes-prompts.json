@@ -1,0 +1,31 @@
+[
+  {
+    "path": "hebra/salon.webp",
+    "prompt": "Use case: photorealistic-natural. One landscape 3:2 editorial interior photograph for Hebra, a fictional Mediterranean hair studio. An intimate welcoming salon with pale blush plaster walls, tall arched slim brass mirrors above pale stone stations, comfortable dark styling chairs, subtle eucalyptus in a vase and a large side window. A clean working salon, not a palatial spa. No people. Warm soft natural morning light, linen and real slightly imperfect material textures, restrained bright editorial color. Compose at seated eye height with coherent reflections, enough visual depth for a wide page banner. No text, logos, labels, watermark, signage."
+  },
+  {
+    "path": "forja/sala.webp",
+    "prompt": "Use case: photorealistic-natural. One landscape 3:2 editorial architectural photograph for Forja, a fictional neighborhood strength and conditioning gym. Black and white high contrast, dark industrial training room with weathered concrete walls, tall black grid warehouse windows along left side, black rubber floor, aligned black steel squat racks, neatly stored plain weight plates, a rowing machine and kettlebells, open uncluttered central training lane. No people. Strong directional window light, rich readable blacks and fine film grain, practical authentic gym rather than luxury health spa. Coherent equipment and reflections. No text, numbers, brands, logos, signage or watermark."
+  },
+  {
+    "path": "quilate/14-ajuste-talla.webp",
+    "prompt": "Use case: photorealistic-natural. One landscape 3:2 close editorial photograph for a fictional artisan jeweler in Valencia. Subject: actual ring sizing craft. Cropped adult craftsperson hands holding a plain yellow gold wedding band on a smooth tapered steel ring mandrel above a worn dark wood jeweler bench; small rawhide mallet held naturally in other hand ready for careful adjustment. No face. Clear logical tool contact, credible small scale. Warm brass and wood details, neutral task lamp illuminates the gold honestly, soft amber background, shallow depth of field with sharp tool and ring. Worn tools and authentic skin textures. No text, no numbers etched on mandrel, no logos, no watermark. Not a catalog shot of an isolated product."
+  },
+  {
+    "path": "quilate/15-reparacion-cadena.webp",
+    "prompt": "Use case: photorealistic-natural. One landscape 3:2 macro editorial photograph of jewelry repair for a fictional artisanal workshop in Valencia. Main subject: a tiny broken yellow gold chain clasp being repaired on a cream refractory soldering block. One cropped adult jeweler hand holds fine tweezers that position a small jump ring at the clasp, the other holds a small precision jeweler torch directed only at the metal, a very small controlled blue flame. No face. Anatomically coherent hands and realistic tools, plausible jeweler bench, warm wood in blurred background, neutral working task light with soft golden highlights. Craft in action, not finished necklaces on display. No writing, logos, numbers or watermark."
+  },
+  {
+    "path": "quilate/16-transformar-herencia.webp",
+    "prompt": "Use case: photorealistic-natural. One landscape 3:2 editorial overhead still life photograph for a fictional artisan jeweler in Valencia, representing redesign of inherited jewelry. On a worn warm wooden bench, a modest old yellow gold ring with empty stone setting, a carefully removed oval blue sapphire resting in a small plain gem tray, a few reclaimed gold offcuts in a small weighing pan, jeweler calipers, and an open ivory sketchbook with a simple graphite line drawing of a contemporary bezel ring that could hold that sapphire. Show one coherent planning scene, not a before and after comparison. Intimate warm soft domestic light, muted gold and cream palette, tactile paper and believable tiny scale. No people. Sketch contains no handwriting, numbers, labels or text. No logos, brands, watermark."
+  },
+  {
+    "path": "quilate/17-limpieza-antes.webp",
+    "prompt": "Use case: photorealistic-natural. Create ONE SQUARE 1:1 photographic BEFORE image for an interactive jewelry cleaning comparison on a fictional artisan jeweler website. A single modest yellow gold solitaire ring, plain smooth rounded band, six-prong setting with one round colorless brilliant-cut diamond, standing upright at a three-quarter front angle on a matte warm charcoal jeweler tray. Entire ring visible with generous margins, centered, ring silhouette about 65 percent of canvas width. Honest neutral diffuse daylight, fixed camera, 85mm macro lens, detailed natural metal and stone. BEFORE condition: realistic thin buildup of skin oils and pale soap residue on the stone and under prongs dulling the diamond, fingerprints on gold, mild surface grime but no structural damage, missing prongs, bent metal, scratches that would require repair, rust or dramatic corrosion. This is cleaning and inspection, not restoration. No hands, no tools, no other jewelry, no text, logos, labels, dividing line or watermark. Do not add artificial glow or sparkle effects. We will later edit this exact image to clean the SAME ring, with camera lighting background and geometry unchanged."
+  },
+  {
+    "path": "quilate/18-limpieza-despues.webp",
+    "prompt": "Use case: precise-object-edit. Edit the supplied BEFORE ring photograph into its matching AFTER CLEANING AND INSPECTION photograph for a fictional jeweler website comparison slider. Change ONLY cleanliness: remove skin oil, fingerprints, soap haze and dirt from the SAME yellow gold ring and diamond, including under the prongs. Reveal clear diamond facets and clean gold reflecting the EXISTING soft light, understated natural brilliance, no starburst or fake glow. Preserve the exact silhouette, band thickness, diamond size and position, every prong and its position, the entire ring pose, perspective, camera crop, resolution, focus plane, shadow, charcoal tray texture and tone, and identical illumination and exposure. Keep minor existing wear and scratches: cleaning alone does not change geometry or erase metal wear. No repair, added stones, changed setting, changed ring angle, retouching the background, text, labels or watermark. Output one square standalone after image only.",
+    "reference": "quilate/17-limpieza-antes.webp"
+  }
+]

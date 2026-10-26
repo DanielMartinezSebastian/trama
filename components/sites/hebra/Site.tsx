@@ -46,7 +46,7 @@ function Services() {
   </div>;
 }
 
-function Team() { return <div className="hb-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="Las manos." subtitle="Personajes de demostración. Cada profesional tiene su especialidad; elige con quién te apetece reservar." titleSize="giant" layout="rows" align="left" photoTone="mono-hover" linkLabel="Reservar" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><figure className="hb-team-scene"><img src="/img/hebra/corte.webp" alt="Escena de trabajo en el estudio, imagen de referencia generada" loading="lazy"/><figcaption>EN EL ESTUDIO / CADA CORTE EMPIEZA ESCUCHANDO</figcaption></figure></div>; }
+function Team() { return <div className="hb-section"><TeamSection kicker="EL EQUIPO / EL OFICIO" title="Las manos." subtitle="Personajes de demostración. Cada profesional tiene su especialidad; elige con quién te apetece reservar." titleSize="giant" layout="rows" align="left" photoTone="mono-hover" linkLabel="Reservar" variant="minimal" members={TEAM.map(p=>({name:p.name,role:p.role,bio:p.bio,photo:p.photo,href:`${href("reservar")}?profesional=${p.name}`}))}/><figure className="hb-team-scene"><img src="/img/hebra/salon.webp" alt="El salón Hebra: espejos en arco, puestos de trabajo y luz natural" loading="lazy"/><figcaption>EL ESTUDIO / UN LUGAR PARA SENTARTE SIN PRISA</figcaption></figure></div>; }
 
 function Booking() {
   const { value: appointments, setValue, ready } = useSalon();
