@@ -38,13 +38,31 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
   - Mapa, estilo y transiciones. Mirar: cómo presenta servicios y precios, el equipo, la reserva y la galería de
     trabajos; el tono (lujo, color, editorial).
   - Salida: guía de estilo «salón editorial» y contraste con Hebra y Esparta.
-- [ ] **E2 · Buscar 3–4 webs más de peluquería, barbería o estética** en Awwwards (SOTD, Honorable Mention o
-  nominadas), para que la síntesis tenga con qué cruzar. Anotarlas aquí antes de estudiarlas.
+- [~] **E2 · Más webs de peluquería, barbería o estética** (búsqueda en Awwwards del 26-10-2026: «hair salon»,
+  «barber», «beauty salon», «hairdresser»; descartadas las que solo coinciden en el nombre: Le Salon Peugeot,
+  Salon 94, Heleen Hülsmann, Cielia):
+  - [ ] E2a · ALICE Hair & Art — https://www.alicehairart.se/ (HM 11-02-2025; peluquería y arte en Estocolmo, Framer)
+  - [ ] E2b · Rendezvous Barbers — https://www.myrendezvous.ca/ (HM 31-07-2024; barberías de Toronto)
+  - [ ] E2c · Hair Me Up — https://hairmeup.pl (nominada 16-04-2024; salón con blog y tienda)
+  - [ ] E2d · Fruits Hair Lab — https://fruitshairlab.com/ (nominada 03-01-2023; «minimal maximalism», Nashville)
+  - [ ] E2e · Marco Ambrosi Salon — https://www.marcoambrosi.salon/ (HM 02-06-2021; color y extensiones, vídeo)
+  - [ ] E2f · Don Barber & Groom — https://don-barber.gr/en (HM 15-03-2021; barbería de lujo asequible)
+  - Reserva por si alguna no carga: Serenity Hair Salon (nominada 2025), Base Coat Nail Salon (HM 2020, Shopify).
+  - [ ] E2z · Síntesis de peluquería (`cine:sintesis` con E1 y E2a–f): plantilla, guía y si `ShapeMosaic` se hace.
 
 ### Gimnasio y deporte
 
-- [ ] **E3 · Buscar 3–4 webs de gimnasio, estudio de entrenamiento, yoga o club deportivo** en Awwwards (no hay
-  ninguna en la lista del usuario todavía). Anotarlas aquí y estudiarlas con §1.
+- [~] **E3 · Webs de gimnasio, estudio de entrenamiento, pilates o club deportivo** (búsqueda en Awwwards del
+  26-10-2026: «gym», «fitness», «pilates», «boxing»; descartadas las de producto, como BHOUT o Puretec, y las de
+  agencias):
+  - [ ] E3a · Core Atelier Pilates — https://coreatelierpilates.com/ (HM 25-03-2026; calma, tipografía fina, reserva)
+  - [ ] E3b · Essor Fitness — https://coachsportifecublens.com/ (HM 03-01-2026; estudio de entrenamiento suizo)
+  - [ ] E3c · Between The Ears — https://btwntheears.com/ (HM 20-09-2023; gimnasio de longevidad)
+  - [ ] E3d · FIT AND YOU — https://fit-and-you.webflow.io/ (HM 03-11-2023; club premium, Webflow)
+  - [ ] E3e · Skulpt Fitness — https://www.skulptfitness.nl (HM 30-09-2022; gimnasio sin florituras, horario largo)
+  - [ ] E3f · Fenriz Gym — https://www.fenriz-gym.com/ (nominada 06-02-2024; gimnasio de artes marciales)
+  - Reserva: Trevor Blount Pilates (SOTD 2019), Andre Wolf Boxing (nominada 2025), Kinective (HM 2020).
+  - [ ] E3z · Síntesis de gimnasio con E3a–f.
   - Mirar: horario y reservas, planes y precios, entrenadores, energía del movimiento (vídeo, tipografía, cortes).
   - Contraste con Cadencia y Forja.
 
@@ -141,10 +159,10 @@ de contacto, WhatsApp y teléfono.
 | Rasgo | En el kit | Decisión |
 |---|---|---|
 | Menú a pantalla completa con enlaces enormes | `FullscreenMenu` | Ampliar si se repite: filetes que se dibujan y subida escalonada con máscara |
-| Carta de servicios con paquetes y precio | `MenuList` (layout `list`) | Cubierto; comprobar que la descripción del paquete y la nota al pie se ven así |
-| Equipo en retratos circulares B/N | `TeamSection` | Comprobar si tiene retrato circular y en blanco y negro; si no, ampliarlo |
+| Carta de servicios con paquetes y precio | `MenuList` (layout `list`: `description`, `price`, `footnote`) | Cubierto |
+| Equipo en retratos circulares B/N | `TeamSection` **sin fotos** (solo iniciales) | **Ampliar**: foto por persona, forma (círculo o recuadro) y tratamiento (color o B/N); reutilizar `Avatar` como hizo Codex en `Testimonial` |
 | Horario y contacto en el pie | `OpeningHours`, `Footer` | Cubierto |
-| Transición con la marca en el centro | `PageTransition` | Revisar si admite un logo o dibujo propio durante el cambio |
+| Transición con la marca en el centro | `PageTransition` (View Transitions; sin marca) | Candidata a ampliar: una marca o dibujo propio en el centro durante el cambio |
 | **Mosaico de formas con fotos que se disuelven en color** | no hay (`StickerCollage` y `RetroShapes` son otra cosa) | **Firma de la web.** Candidata a pieza (`ShapeMosaic`: rejilla de círculos y cuadrados con los tonos del tema, foto opcional en cada forma, deriva y disolución con el scroll); se decide en la síntesis de peluquería (E2) si se repite |
 | Cabecera de forma con pinceladas de acuarela | no hay | Firma; decorado de demo, no pieza |
 
