@@ -62,7 +62,7 @@ export async function botones(page: Page) {
 }
 
 /** avisos que hay que pasar para ver la escena: cookies, edad, «entrar», sonido */
-export const AVISO = /^(enter|entrer|entrar|accept|accepter|aceptar|agree|ok|yes|oui|sí|start|explore|begin|continue|discover|i agree|allow|got it|enter site|enter experience)\b/i;
+export const AVISO = /^(enter|entrer|entrar|entra|accept|accepter|aceptar|accetta|accetto|akzeptieren|alle akzeptieren|aceitar|agree|ok|yes|oui|sí|start|explore|begin|continue|discover|i agree|allow|got it|enter site|enter experience)\b/i;
 
 /**
  * Pasos en una línea, separados por «;» (coordenadas relativas 0–1 al viewport):
