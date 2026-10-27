@@ -1,44 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ContactForm from "@/components/ui/ContactForm";
 import Marquee from "@/components/ui/Marquee";
-import OpeningHours from "@/components/ui/OpeningHours";
 import PricingSection from "@/components/ui/PricingSection";
-import "./talla.css";
+import { OFERTA } from "./data";
+import { tallaHref } from "./enlaces";
 
 /*
- * Talla Fitness: réplica de Skulpt Fitness (docs/50 §3.4), un gimnasio de barrio sin florituras. Gris claro, casi negro y
+ * Portada de Talla Fitness: réplica de Skulpt Fitness (docs/50 §3.4); cabecera, menú, pie y demás páginas en Sitio.tsx
+ * (docs/56), un gimnasio de barrio sin florituras. Gris claro, casi negro y
  * lima; condensada gruesa en mayúsculas y una sans neutra; bordes de sección curvos, humor, la clase de prueba gratis
  * siempre a la vista, una cinta lima (Marquee), la oferta numerada, planes con conmutador mes/año (PricingSection) y el
  * menú a pantalla completa en columnas con la palabra girada.
  */
 
 
-const OFERTA = [
-  { t: "FITNESS", img: "/img/inspiraciones/talla/menu-fitness.webp" },
-  { t: "ENTRENAMIENTO PERSONAL", img: "/img/inspiraciones/talla/menu-personal.webp" },
-  { t: "CLASES EN GRUPO", img: "/img/inspiraciones/talla/menu-grupo.webp" },
-  { t: "HYROX", img: "/img/inspiraciones/talla/menu-hyrox.webp" },
-];
 
 export default function Talla() {
   const [of, setOf] = useState(0);
-  const [menu, setMenu] = useState(false);
-  useEffect(() => {
-    if (!menu) return;
-    const k = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
-    addEventListener("keydown", k);
-    return () => removeEventListener("keydown", k);
-  }, [menu]);
 
   return (
-    <div className="tl">
-      <header className="tl-head">
-        <a href="#inicio" className="tl-logo">TALLA</a>
-        <a href="#planes" className="tl-prueba">Clase de prueba gratis</a>
-        <button type="button" className="tl-menu-btn" aria-expanded={menu} onClick={() => setMenu(!menu)}>{menu ? "Cerrar" : "Menú"}</button>
-      </header>
+    <>
 
       <section className="tl-hero" id="inicio">
         <h1>ENTRENA HOY.<br />CRECE MAÑANA.</h1>
@@ -83,7 +66,7 @@ export default function Talla() {
       <section className="tl-oferta">
         <div className="tl-oferta__lista">
           {OFERTA.map((o, i) => (
-            <a key={o.t} href="#planes" onPointerEnter={() => setOf(i)} onFocus={() => setOf(i)} className={of === i ? "is-on" : ""}><small>0{i + 1}</small>{o.t}</a>
+            <a key={o.t} href={tallaHref(`oferta/${o.id}`)} onPointerEnter={() => setOf(i)} onFocus={() => setOf(i)} className={of === i ? "is-on" : ""}><small>0{i + 1}</small>{o.t}</a>
           ))}
         </div>
         <figure className="tl-oferta__foto" aria-hidden>
@@ -104,7 +87,8 @@ export default function Talla() {
           highlight="border"
           yearlyPeriod="/ mes, pago anual"
           yearlyNote="ahorra"
-          cta="MÁS INFORMACIÓN"
+          cta="HAZTE SOCIO"
+          ctaHref={tallaHref("socio")}
           badge=""
           variant="outline"
           footnote="* Con la cuota anual."
@@ -112,8 +96,8 @@ export default function Talla() {
         />
         <h3>CUOTAS HYROX</h3>
         <div className="tl-hyrox">
-          <article><b>HYROX BÁSICO</b><p>Entrena en grupos pequeños con nuestros coaches para tu primera carrera.</p><span>40 € / mes</span></article>
-          <article><b>HYROX PREMIUM</b><p>Grupo pequeño, plan individual y sesión mensual de técnica.</p><span>58 € / mes</span></article>
+          <a href={tallaHref("socio?plan=hyrox-basico")}><b>HYROX BÁSICO</b><p>Entrena en grupos pequeños con nuestros coaches para tu primera carrera.</p><span>40 € / mes</span></a>
+          <a href={tallaHref("socio?plan=hyrox-premium")}><b>HYROX PREMIUM</b><p>Grupo pequeño, plan individual y sesión mensual de técnica.</p><span>58 € / mes</span></a>
         </div>
       </section>
 
@@ -123,31 +107,12 @@ export default function Talla() {
         <div className="tl-contacto__cuerpo">
           <div>
             <p>¿Te apetece pasarte o quieres preguntar algo? Escríbenos y te contamos todo lo que quieras saber, sin compromiso.</p>
-            <a href="#planes" className="tl-prueba">Clase de prueba gratis</a>
+            <a href={tallaHref("horario")} className="tl-prueba">Clase de prueba gratis</a>
           </div>
           <ContactForm title="Escríbenos para saber más" subtitle="" submitLabel="Enviar" successMessage="Gracias, te escribimos pronto." variant="minimal" className="tl-form" />
         </div>
       </section>
 
-      <footer className="tl-pie">
-        <OpeningHours title="Horario" hours={"L-V|06:00-23:00\nS-D|08:00-21:00"} variant="minimal" />
-        <div><p>hola@talla.example<br />910 000 000<br />Calle de Oca 72<br />28025 Madrid</p></div>
-      </footer>
-
-      <div className={`tl-menu ${menu ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Menú" aria-hidden={!menu} inert={!menu}>
-        <a href="#inicio" className="tl-logo">TALLA</a>
-        <nav aria-label="Principal" onClick={() => setMenu(false)}>
-          <a href="#planes"><span>OFERTA</span></a>
-          <a href="#inicio"><span>NOSOTROS</span></a>
-          <a href="#planes"><span>CONTACTO</span></a>
-        </nav>
-        <div className="tl-menu__datos">
-          <p>hola@talla.example<br />910 000 000<br />Calle de Oca 72<br />28025 Madrid</p>
-          <p><b>HORARIO</b><br />Lunes a viernes: 06:00 – 23:00<br />Sábado y domingo: 08:00 – 21:00</p>
-          <p><b>HORARIO CON PERSONAL</b><br />Lunes a viernes: 08:00 – 22:00<br />Sábado y domingo: 09:00 – 13:00</p>
-        </div>
-        <button type="button" className="tl-menu-btn tl-menu__cerrar" onClick={() => setMenu(false)}>Cerrar</button>
-      </div>
-    </div>
+    </>
   );
 }

@@ -120,3 +120,40 @@
   .tl-oferta a { font-size: 12vw; padding-top: 30px; }
   .tl-oferta__foto { position: static; }
 }
+
+/* ---------- varias páginas (docs/56) ---------- */
+.tl-hyrox a { display: grid; gap: 8px; padding: 22px; border: 1.5px solid #c7c7c7; background: #fff; transition: border-color 0.25s, translate 0.25s; }
+.tl-hyrox a:hover { border-color: #000; translate: 0 -3px; }
+.tl-prueba { transition: background-color 0.25s, color 0.25s; }
+.tl-prueba:hover { background: #000; color: var(--acc) !important; }
+.tl-pie a:hover, .tl-menu__datos a:hover, .tl-aviso a { text-decoration: underline; }
+.tl-boton { padding: 8px 18px; border-radius: 999px; border: 1.5px solid currentColor; font: 400 15px var(--tl-cond); transition: background-color 0.25s, color 0.25s; }
+.tl-boton:hover { background: #000; color: #fff !important; }
+
+.tl-pag { display: grid; gap: 40px; align-content: start; min-height: 100svh; padding: 40px 16px 120px; }
+.tl-pag__cab { display: grid; gap: 16px; }
+.tl-pag__cab h1, .tl-ficha h1 { margin: 0; font: 400 clamp(60px, 11vw, 170px)/0.85 var(--tl-cond); }
+.tl-pag__cab p { margin: 0; max-width: 36em; font-size: 18px; }
+.tl-volver { justify-self: start; font: 400 18px var(--tl-cond); }
+.tl-oferta-lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.tl-oferta-lista a { display: grid; gap: 6px; }
+.tl-oferta-lista img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 28px; transition: border-radius 0.4s; }
+.tl-oferta-lista a:hover img { border-radius: 4px; }
+.tl-oferta-lista small { font-size: 14px; }
+.tl-oferta-lista b { font: 400 34px/0.9 var(--tl-cond); }
+.tl-ficha { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 5vw; align-items: start; }
+.tl-ficha img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 28px; }
+.tl-ficha > div { display: grid; gap: 20px; }
+.tl-ficha h1 { font-size: clamp(48px, 7vw, 110px); }
+.tl-ficha p { margin: 0; max-width: 34em; font-size: 18px; }
+.tl-ficha ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.tl-botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.tl-aviso { margin: 0; padding: 12px 16px; border-radius: 16px; background: var(--acc); }
+.tl-flujo { --ui-book-top: 80px; }
+.tl-flujo legend, .tl-flujo h2, .tl-flujo h3 { font-family: var(--tl-cond); font-weight: 400; }
+.tl-contacto-pag { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 5vw; }
+.tl-contacto-pag p { margin: 0 0 16px; }
+@media (max-width: 760px) {
+  .tl-ficha, .tl-contacto-pag { grid-template-columns: 1fr; }
+  .tl-head .tl-prueba { font-size: 13px; padding: 6px 12px; }
+}
