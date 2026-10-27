@@ -888,3 +888,72 @@ html:has(.gx-page) body {
   overflow-x: clip;
   overflow-y: visible;
 }
+
+/* ---------- hoja de estilo de una guía (/guias/<guía>, docs/54) ---------- */
+.gs { display: grid; gap: clamp(48px, 7vw, 96px); }
+.gs-indice { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
+.gs-indice a { color: var(--mut); text-decoration: none; border-bottom: 1px solid var(--ln); }
+.gs-indice a:hover { color: var(--fg); }
+.gs-portada, .gs-espec, .gs-superficies, .gs-gestos-vivos, .gs-kit { border: 1px solid var(--ln); border-radius: 12px; overflow: hidden; }
+.gs-portada { padding: clamp(32px, 6vw, 80px) 0; }
+.gs-portada .ui-g-brand { margin: 8px 0 18px; }
+.gs-espec { padding: 32px 0; }
+.gs-espec p { margin: 0 0 10px; }
+.gs-espec .ui-g-label { margin-top: 18px; opacity: 0.7; }
+.gs-espec .ui-g-brand { white-space: nowrap; font-size: min(var(--g-fs-brand), calc((100cqi - 2 * var(--g-margin, 24px)) / 7)); }
+.gs-espec { container-type: inline-size; }
+.gs-sec { display: grid; gap: 18px; min-width: 0; }
+.gs-sec h2 { margin: 0; font-size: clamp(26px, 3vw, 40px); letter-spacing: -0.02em; }
+.gs-sec h3 { margin: 10px 0 0; font-size: 17px; }
+.gs-nota { margin: 0; max-width: 72ch; color: var(--mut); line-height: 1.6; }
+.gs-nota b { color: var(--fg); }
+.gs-colores { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.gs-color { margin: 0; display: grid; gap: 8px; }
+.gs-color i { display: block; height: 88px; border-radius: 10px; border: 1px solid var(--ln); }
+.gs-color figcaption { display: grid; font: 12px/1.4 var(--mono); }
+.gs-color figcaption span { color: var(--mut); }
+.gs-tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.gs-tabla caption { text-align: left; margin-bottom: 8px; color: var(--mut); font-size: 13px; }
+.gs-tabla th, .gs-tabla td { padding: 8px 10px; border-bottom: 1px solid var(--ln); text-align: left; vertical-align: middle; }
+.gs-tabla thead th { color: var(--mut); font-weight: 500; font-size: 12px; }
+.gs-tabla--repo { display: block; overflow-x: auto; }
+.gs-muestras { display: inline-flex; flex-wrap: wrap; gap: 3px; vertical-align: middle; }
+.gs-muestras i { width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--ln); }
+.gs-dl { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; gap: 8px 20px; margin: 0; font-size: 15px; }
+.gs-dl dt { color: var(--mut); }
+.gs-dl dd { margin: 0; min-width: 0; }
+.gs-superficies, .gs-gestos-vivos { padding: 28px 0; }
+.gs-fila { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.gs-fila .ui-g-card { min-width: 220px; }
+.gs-cinta { flex: 1 1 260px; min-width: 0; }
+.gs-gestos { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.gs-gestos span { color: var(--mut); }
+.gs-kit { display: grid; gap: 28px; padding-bottom: 28px; }
+.gs-kit__fila { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.gs-fichas { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.gs-receta { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.gs-receta code { margin-left: 6px; }
+.gs-reglas { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.gs-reglas .is-ex span { color: var(--acc); }
+@media (max-width: 760px) {
+  .gs-dl { grid-template-columns: 1fr; gap: 2px; }
+  .gs-dl dd { margin-bottom: 8px; }
+}
+
+/* ---------- índice de guías en /guias ---------- */
+.gi { display: grid; gap: clamp(40px, 6vw, 72px); margin-bottom: clamp(48px, 7vw, 96px); }
+.gi-rejilla { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.gi-guia { display: grid; align-content: start; gap: 10px; min-width: 0; padding: 18px; border-radius: 12px; border: 1px solid var(--ln); text-decoration: none; color: inherit; transition: border-color 0.2s, translate 0.2s; }
+.gi-guia:hover { border-color: var(--acc); translate: 0 -2px; }
+.gi-guia__muestra { display: grid; gap: 6px; padding: 18px; border-radius: 8px; min-height: 120px; align-content: end; }
+.gi-guia__muestra b { font-size: 34px; line-height: 1; }
+.gi-guia__muestra span { display: flex; gap: 4px; }
+.gi-guia__muestra span i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(127, 127, 127, 0.4); }
+.gi-guia small { color: var(--mut); }
+.gi-guia p { margin: 0; font-size: 14px; color: var(--mut); line-height: 1.5; }
+.gi-grupo { display: grid; gap: 10px; }
+.gi-grupo h3 { margin: 0; font-size: 15px; color: var(--mut); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+.gi-fuentes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+.gi-fuentes div { padding: 16px; border: 1px solid var(--ln); border-radius: 10px; }
+.gi-fuentes b { display: block; font-size: 28px; }
+.gi-fuentes p { margin: 4px 0 0; color: var(--mut); font-size: 14px; }

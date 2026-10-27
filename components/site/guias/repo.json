@@ -1,0 +1,6880 @@
+{
+ "fecha": "2026-10-27",
+ "base": "http://localhost:3020",
+ "paginas": [
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/autor",
+   "guia": "autor",
+   "titulo": "Academia de autor",
+   "medidas": {
+    "fondo": "#ededed",
+    "paleta": [
+     [
+      "#ededed",
+      78
+     ],
+     [
+      "#ffffff",
+      21
+     ],
+     [
+      "#17191a",
+      1
+     ],
+     [
+      "#555555",
+      51
+     ],
+     [
+      "#17191a",
+      43
+     ],
+     [
+      "#ededed",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Onest",
+     "vw": 3.1,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.3,
+     "measureEm": 30
+    },
+    "familias": [
+     "Onest"
+    ],
+    "margen": 105,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5
+   },
+   "rasgos": {
+    "lum": 0.846873231509858,
+    "sat": 0,
+    "hue": 0,
+    "cat": "redonda",
+    "vw": 3.1,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "rotulo",
+     "afinidad": 0.251
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.245
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.242
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/barberia",
+   "guia": "barberia",
+   "titulo": "Barbería de carácter",
+   "medidas": {
+    "fondo": "#eceae0",
+    "paleta": [
+     [
+      "#eceae0",
+      70
+     ],
+     [
+      "#f6f4ee",
+      29
+     ],
+     [
+      "#111111",
+      1
+     ],
+     [
+      "#5c5c5c",
+      49
+     ],
+     [
+      "#111111",
+      28
+     ],
+     [
+      "#ffffff",
+      19
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 8.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 26
+    },
+    "familias": [
+     "Archivo",
+     "Antonio"
+    ],
+    "margen": 43,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 0.8206032253691192,
+    "sat": 0,
+    "hue": 0,
+    "cat": "condensada",
+    "vw": 8.6,
+    "weight": 400,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.9,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.279
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.244
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.24
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/boutique",
+   "guia": "boutique",
+   "titulo": "Estudio boutique",
+   "medidas": {
+    "fondo": "#f7e7de",
+    "paleta": [
+     [
+      "#f7e7de",
+      70
+     ],
+     [
+      "#fbf1ec",
+      28
+     ],
+     [
+      "#25140c",
+      1
+     ],
+     [
+      "#7c5a48",
+      62
+     ],
+     [
+      "#25140c",
+      32
+     ],
+     [
+      "#f7e7de",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 4.9,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.4,
+     "measureEm": 25
+    },
+    "familias": [
+     "Inter",
+     "Cormorant Garamond"
+    ],
+    "margen": 32,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.5
+   },
+   "rasgos": {
+    "lum": 0.8219991121530439,
+    "sat": 0.2653061224489796,
+    "hue": 20.769230769230774,
+    "cat": "serifa",
+    "vw": 4.9,
+    "weight": 400,
+    "ls": -1,
+    "upper": false,
+    "lh": 1,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "lujo",
+     "afinidad": 0.294
+    },
+    {
+     "guia": "salon",
+     "afinidad": 0.285
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.25
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/calido",
+   "guia": "calido",
+   "titulo": "Editorial cálido",
+   "medidas": {
+    "fondo": "#fdfbef",
+    "paleta": [
+     [
+      "#fdfbef",
+      76
+     ],
+     [
+      "#f3efdc",
+      23
+     ],
+     [
+      "#2e3a26",
+      1
+     ],
+     [
+      "#5b6150",
+      60
+     ],
+     [
+      "#2e3a26",
+      34
+     ],
+     [
+      "#fdfbef",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Gloock",
+     "vw": 38.3,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 19.4,
+     "lh": 1.5,
+     "measureEm": 22
+    },
+    "familias": [
+     "Instrument Sans",
+     "Gloock"
+    ],
+    "margen": 63,
+    "radios": [
+     "píldora",
+     "20"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.4
+   },
+   "rasgos": {
+    "lum": 0.9610900223063283,
+    "sat": 0.20833333333333334,
+    "hue": 96,
+    "cat": "serifa",
+    "vw": 38.3,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 19.4,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "monocromo",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.232
+    },
+    {
+     "guia": "escuela",
+     "afinidad": 0.224
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/club",
+   "guia": "club",
+   "titulo": "Club de alto contraste",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      77
+     ],
+     [
+      "#141414",
+      22
+     ],
+     [
+      "#ffffff",
+      1
+     ],
+     [
+      "#ffffff",
+      58
+     ],
+     [
+      "#999999",
+      36
+     ],
+     [
+      "#000000",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 46.7,
+     "peso": 700,
+     "interlineado": 0.8,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 18.7,
+     "lh": 1.4,
+     "measureEm": 24
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 24,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.215, 0.61, 0.355, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.2
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "condensada",
+    "vw": 46.7,
+    "weight": 700,
+    "ls": -4,
+    "upper": true,
+    "lh": 0.8,
+    "body": 18.7,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.191
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.188
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.174
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/electrico",
+   "guia": "electrico",
+   "titulo": "Acento eléctrico",
+   "medidas": {
+    "fondo": "#282c20",
+    "paleta": [
+     [
+      "#282c20",
+      99
+     ],
+     [
+      "#e8eadf",
+      1
+     ],
+     [
+      "#a3a893",
+      64
+     ],
+     [
+      "#ffffff",
+      22
+     ],
+     [
+      "#e8eadf",
+      11
+     ]
+    ],
+    "titular": {
+     "letra": "Anton",
+     "vw": 7.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.3,
+     "measureEm": 26
+    },
+    "familias": [
+     "Mona Sans",
+     "Anton",
+     "Geist Mono"
+    ],
+    "margen": 16,
+    "radios": [
+     "10",
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.7
+   },
+   "rasgos": {
+    "lum": 0.02356764911906527,
+    "sat": 0.2075471698113204,
+    "hue": 70.90909090909088,
+    "cat": "condensada",
+    "vw": 7.6,
+    "weight": 400,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.9,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "barberia",
+     "afinidad": 0.279
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.213
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.191
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/escuela",
+   "guia": "escuela",
+   "titulo": "Escuela amarilla",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#1a1a1a",
+      1
+     ],
+     [
+      "#6f6f6f",
+      55
+     ],
+     [
+      "#1a1a1a",
+      38
+     ],
+     [
+      "#ffffff",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Space Grotesk",
+     "vw": 32.3,
+     "peso": 500,
+     "interlineado": 0.8,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.3,
+     "measureEm": 25
+    },
+    "familias": [
+     "Space Grotesk"
+    ],
+    "margen": 36,
+    "radios": [
+     "8"
+    ],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.7
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 32.3,
+    "weight": 500,
+    "ls": -4,
+    "upper": true,
+    "lh": 0.8,
+    "body": 18,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "monocromo",
+     "afinidad": 0.372
+    },
+    {
+     "guia": "calido",
+     "afinidad": 0.224
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.206
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/ludico",
+   "guia": "ludico",
+   "titulo": "Lúdico",
+   "medidas": {
+    "fondo": "#f4d4d4",
+    "paleta": [
+     [
+      "#f4d4d4",
+      92
+     ],
+     [
+      "#fff7f0",
+      7
+     ],
+     [
+      "#2b1d1d",
+      1
+     ],
+     [
+      "#2b1d1d",
+      68
+     ],
+     [
+      "#6b4a4a",
+      18
+     ],
+     [
+      "#ffffff",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Bricolage Grotesque",
+     "vw": 3.6,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Instrument Sans",
+     "Bricolage Grotesque"
+    ],
+    "margen": 20,
+    "radios": [
+     "píldora",
+     "16"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.6
+   },
+   "rasgos": {
+    "lum": 0.7107352968013961,
+    "sat": 0.5925925925925928,
+    "hue": 0,
+    "cat": "redonda",
+    "vw": 3.6,
+    "weight": 800,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "autor",
+     "afinidad": 0.245
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.24
+    },
+    {
+     "guia": "rotulo",
+     "afinidad": 0.208
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/lujo",
+   "guia": "lujo",
+   "titulo": "Lujo tranquilo",
+   "medidas": {
+    "fondo": "#f5eee9",
+    "paleta": [
+     [
+      "#f5eee9",
+      73
+     ],
+     [
+      "#ece3dc",
+      27
+     ],
+     [
+      "#373f1d",
+      1
+     ],
+     [
+      "#5f5d4b",
+      47
+     ],
+     [
+      "#373f1d",
+      25
+     ],
+     [
+      "#ffffff",
+      23
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 8.3,
+     "peso": 300,
+     "interlineado": 0.9,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.4,
+     "measureEm": 23
+    },
+    "familias": [
+     "Inter",
+     "Cormorant Garamond"
+    ],
+    "margen": 16,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 4.9
+   },
+   "rasgos": {
+    "lum": 0.8644474092157354,
+    "sat": 0.3695652173913044,
+    "hue": 74.11764705882354,
+    "cat": "serifa",
+    "vw": 8.3,
+    "weight": 300,
+    "ls": -2,
+    "upper": true,
+    "lh": 0.9,
+    "body": 18,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "salon",
+     "afinidad": 0.302
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.294
+    },
+    {
+     "guia": "barberia",
+     "afinidad": 0.244
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/marca",
+   "guia": "marca",
+   "titulo": "Producto de marca",
+   "medidas": {
+    "fondo": "#141329",
+    "paleta": [
+     [
+      "#141329",
+      98
+     ],
+     [
+      "#feeee2",
+      2
+     ],
+     [
+      "#8f93b8",
+      55
+     ],
+     [
+      "#feeee2",
+      37
+     ],
+     [
+      "#141329",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 13,
+     "peso": 800,
+     "interlineado": 0.9,
+     "tracking": -3,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 24,
+     "lh": 1.2,
+     "measureEm": 19
+    },
+    "familias": [
+     "Space Grotesk",
+     "Archivo"
+    ],
+    "margen": 36,
+    "radios": [
+     "píldora",
+     "28",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.2
+   },
+   "rasgos": {
+    "lum": 0.0077456260227587595,
+    "sat": 0.22404371584699448,
+    "hue": 234.14634146341461,
+    "cat": "grotesca",
+    "vw": 13,
+    "weight": 800,
+    "ls": -3,
+    "upper": true,
+    "lh": 0.9,
+    "body": 24,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.221
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.188
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.182
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/monocromo",
+   "guia": "monocromo",
+   "titulo": "Monocromo de agencia",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#0e0e0e",
+      1
+     ],
+     [
+      "#0e0e0e",
+      58
+     ],
+     [
+      "#5c5c5c",
+      37
+     ],
+     [
+      "#ffffff",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 46,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.3,
+     "measureEm": 28
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 12,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.4
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 46,
+    "weight": 500,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "escuela",
+     "afinidad": 0.372
+    },
+    {
+     "guia": "calido",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.23
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/nocturno",
+   "guia": "nocturno",
+   "titulo": "Producto nocturno",
+   "medidas": {
+    "fondo": "#08090a",
+    "paleta": [
+     [
+      "#08090a",
+      98
+     ],
+     [
+      "#f7f8f8",
+      2
+     ],
+     [
+      "#8a8f98",
+      55
+     ],
+     [
+      "#f7f8f8",
+      37
+     ],
+     [
+      "#08090a",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 5,
+     "peso": 510,
+     "interlineado": 1,
+     "tracking": -2.2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.6,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter"
+    ],
+    "margen": 120,
+    "radios": [
+     "píldora",
+     "8",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4
+   },
+   "rasgos": {
+    "lum": 0.0026891276634492802,
+    "sat": 0.06363636363636366,
+    "hue": 218.57142857142856,
+    "cat": "grotesca",
+    "vw": 5,
+    "weight": 510,
+    "ls": -2.2,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.28
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.221
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.215
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/papel",
+   "guia": "papel",
+   "titulo": "Estudio en papel",
+   "medidas": {
+    "fondo": "#f2efe9",
+    "paleta": [
+     [
+      "#f2efe9",
+      80
+     ],
+     [
+      "#e8e4dc",
+      19
+     ],
+     [
+      "#121110",
+      1
+     ],
+     [
+      "#121110",
+      54
+     ],
+     [
+      "#625d54",
+      38
+     ],
+     [
+      "#f2efe9",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 3.2,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -3.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 30
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 40,
+    "radios": [
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6.6
+   },
+   "rasgos": {
+    "lum": 0.8649344164380824,
+    "sat": 0.20689655172413762,
+    "hue": 40.00000000000006,
+    "cat": "grotesca",
+    "vw": 3.2,
+    "weight": 500,
+    "ls": -3.5,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "tecnico",
+     "afinidad": 0.338
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.25
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.24
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/pixel",
+   "guia": "pixel",
+   "titulo": "Arcade pixel",
+   "medidas": {
+    "fondo": "#140b26",
+    "paleta": [
+     [
+      "#140b26",
+      73
+     ],
+     [
+      "#2b1e2a",
+      26
+     ],
+     [
+      "#f4efff",
+      2
+     ],
+     [
+      "#a99cc9",
+      58
+     ],
+     [
+      "#f4efff",
+      36
+     ],
+     [
+      "#140b26",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Silkscreen",
+     "vw": 23.5,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.6,
+     "measureEm": 22
+    },
+    "familias": [
+     "Space Mono",
+     "Silkscreen"
+    ],
+    "margen": 140,
+    "radios": [],
+    "curvas": [
+     "steps(3)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.9
+   },
+   "rasgos": {
+    "lum": 0.00528007304524406,
+    "sat": 0.2941176470588234,
+    "hue": 257.33333333333326,
+    "cat": "pixel",
+    "vw": 23.5,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 17,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.186
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.174
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.172
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/puntos",
+   "guia": "puntos",
+   "titulo": "Matriz de puntos",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      97
+     ],
+     [
+      "#0d0d0d",
+      2
+     ],
+     [
+      "#e6e6e6",
+      1
+     ],
+     [
+      "#8c8c8c",
+      70
+     ],
+     [
+      "#e6e6e6",
+      22
+     ],
+     [
+      "#000000",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Doto",
+     "vw": 5,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 34
+    },
+    "familias": [
+     "IBM Plex Mono",
+     "Doto"
+    ],
+    "margen": 170,
+    "radios": [
+     "píldora",
+     "6",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.2
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "pixel",
+    "vw": 5,
+    "weight": 800,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.28
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.245
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.186
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/rotulo",
+   "guia": "rotulo",
+   "titulo": "Rótulo cinético",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#1f2b5e",
+      1
+     ],
+     [
+      "#1f2b5e",
+      63
+     ],
+     [
+      "#4f5880",
+      33
+     ],
+     [
+      "#ffffff",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Onest",
+     "vw": 15.2,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 30
+    },
+    "familias": [
+     "Onest"
+    ],
+    "margen": 60,
+    "radios": [],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.6
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.504,
+    "hue": 228.57142857142856,
+    "cat": "redonda",
+    "vw": 15.2,
+    "weight": 500,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "autor",
+     "afinidad": 0.251
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.208
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.2
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/salon",
+   "guia": "salon",
+   "titulo": "Salón editorial claro",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      68
+     ],
+     [
+      "#f4f4f4",
+      31
+     ],
+     [
+      "#1f1f1f",
+      1
+     ],
+     [
+      "#868686",
+      62
+     ],
+     [
+      "#1f1f1f",
+      32
+     ],
+     [
+      "#ffffff",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 7.6,
+     "peso": 300,
+     "interlineado": 1.1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 22.9,
+     "lh": 1.6,
+     "measureEm": 20
+    },
+    "familias": [
+     "Manrope",
+     "Cormorant Garamond"
+    ],
+    "margen": 24,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.5
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "serifa",
+    "vw": 7.6,
+    "weight": 300,
+    "ls": 0,
+    "upper": false,
+    "lh": 1.1,
+    "body": 22.9,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "lujo",
+     "afinidad": 0.302
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.285
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.216
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/tecnico",
+   "guia": "tecnico",
+   "titulo": "Técnico de producto",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#24363f",
+      1
+     ],
+     [
+      "#5b6b73",
+      74
+     ],
+     [
+      "#24363f",
+      22
+     ],
+     [
+      "#ffffff",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Switzer",
+     "vw": 4.4,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Switzer"
+    ],
+    "margen": 24,
+    "radios": [
+     "4"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.5
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.2727272727272728,
+    "hue": 200,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 300,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.338
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.222
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.21
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/terminal",
+   "guia": "terminal",
+   "titulo": "Terminal de neón",
+   "medidas": {
+    "fondo": "#08020f",
+    "paleta": [
+     [
+      "#08020f",
+      75
+     ],
+     [
+      "#120a1c",
+      24
+     ],
+     [
+      "#f4ecff",
+      1
+     ],
+     [
+      "#a78bc7",
+      50
+     ],
+     [
+      "#f4ecff",
+      30
+     ],
+     [
+      "#ffffff",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "JetBrains Mono",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 25
+    },
+    "familias": [
+     "JetBrains Mono"
+    ],
+    "margen": 170,
+    "radios": [
+     "4"
+    ],
+    "curvas": [
+     "steps(4)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.8
+   },
+   "rasgos": {
+    "lum": 0.0012952997321942074,
+    "sat": 0.34883720930232565,
+    "hue": 268,
+    "cat": "mono",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.245
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.207
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.178
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-ciphergrid",
+   "titulo": "CIPHERGRID · producto ciberpunk",
+   "medidas": {
+    "fondo": "#08020f",
+    "paleta": [
+     [
+      "#08020f",
+      75
+     ],
+     [
+      "#07020e",
+      23
+     ],
+     [
+      "#ff2fd0",
+      2
+     ],
+     [
+      "#f4ecff",
+      43
+     ],
+     [
+      "#a78bc7",
+      30
+     ],
+     [
+      "#ff2fd0",
+      21
+     ]
+    ],
+    "titular": {
+     "letra": "JetBrains Mono",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 21
+    },
+    "familias": [
+     "JetBrains Mono",
+     "ui-monospace",
+     "monospace"
+    ],
+    "margen": 255,
+    "radios": [
+     "6",
+     "4",
+     "3",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 6,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 12.5
+   },
+   "rasgos": {
+    "lum": 0.0012952997321942074,
+    "sat": 1,
+    "hue": 313.5576923076923,
+    "cat": "mono",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "terminal",
+     "afinidad": 0.447
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.236
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.2
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-dotmatrix",
+   "titulo": "SIGNAL · dot matrix",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      97
+     ],
+     [
+      "#ff3b3b",
+      3
+     ],
+     [
+      "#e6e6e6",
+      47
+     ],
+     [
+      "#8c8c8c",
+      30
+     ],
+     [
+      "#ff3b3b",
+      17
+     ]
+    ],
+    "titular": {
+     "letra": "Doto",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 21
+    },
+    "familias": [
+     "IBM Plex Mono",
+     "monospace",
+     "ui-monospace",
+     "Doto",
+     "JetBrains Mono"
+    ],
+    "margen": 255,
+    "radios": [
+     "6",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 8,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 8.9
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 1,
+    "hue": 0,
+    "cat": "pixel",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.47
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.225
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.217
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-faceta",
+   "titulo": "FACETA · landing larga con kit",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      72
+     ],
+     [
+      "#04121c",
+      25
+     ],
+     [
+      "#151d23",
+      3
+     ],
+     [
+      "#eaf6ff",
+      39
+     ],
+     [
+      "#de966f",
+      29
+     ],
+     [
+      "#8fb3c9",
+      28
+     ]
+    ],
+    "titular": {
+     "letra": "Pixelify Sans",
+     "vw": 1,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 12,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.7,
+     "measureEm": 19
+    },
+    "familias": [
+     "Pixelify Sans",
+     "ui-monospace"
+    ],
+    "margen": 115,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "linear"
+    ],
+    "hover": 0,
+    "libs": [
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 38.7
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0.6271186440677966,
+    "hue": 21.081081081081095,
+    "cat": "pixel",
+    "vw": 1,
+    "weight": 400,
+    "ls": 12,
+    "upper": false,
+    "lh": 0,
+    "body": 20,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.103
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.101
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.094
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-folio",
+   "titulo": "FOLIO · editorial de tema claro",
+   "medidas": {
+    "fondo": "#f5f1e6",
+    "paleta": [
+     [
+      "#f5f1e6",
+      64
+     ],
+     [
+      "#e1ded4",
+      19
+     ],
+     [
+      "#e2ded3",
+      11
+     ],
+     [
+      "#ffffff",
+      4
+     ],
+     [
+      "#241d14",
+      41
+     ],
+     [
+      "#5a4e3d",
+      29
+     ],
+     [
+      "#a3311f",
+      19
+     ]
+    ],
+    "titular": {
+     "letra": "JetBrains Mono",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 21
+    },
+    "familias": [
+     "JetBrains Mono",
+     "ui-monospace",
+     "monospace"
+    ],
+    "margen": 257,
+    "radios": [
+     "3",
+     "4",
+     "12",
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 6,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 12.8
+   },
+   "rasgos": {
+    "lum": 0.8803624229174739,
+    "sat": 0.6804123711340205,
+    "hue": 8.181818181818187,
+    "cat": "mono",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ludico",
+     "afinidad": 0.252
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.211
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.197
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-geometry",
+   "titulo": "FORMAS · 2000dvh",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      73
+     ],
+     [
+      "#04121c",
+      26
+     ],
+     [
+      "#eb9167",
+      1
+     ],
+     [
+      "#eaf6ff",
+      82
+     ],
+     [
+      "#04121c",
+      13
+     ],
+     [
+      "#3fd0c9",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Pixelify Sans",
+     "vw": 1,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 12,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.7,
+     "measureEm": 19
+    },
+    "familias": [
+     "Pixelify Sans"
+    ],
+    "margen": 115,
+    "radios": [],
+    "curvas": [],
+    "hover": 0,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 20
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0.606694560669456,
+    "hue": 177.1034482758621,
+    "cat": "pixel",
+    "vw": 1,
+    "weight": 400,
+    "ls": 12,
+    "upper": false,
+    "lh": 0,
+    "body": 20,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.103
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.102
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.095
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-minimal",
+   "titulo": "MARÉ · minimal pixel",
+   "medidas": {
+    "fondo": "#04121c",
+    "paleta": [
+     [
+      "#04121c",
+      60
+     ],
+     [
+      "#000000",
+      36
+     ],
+     [
+      "#ff8a5c",
+      4
+     ],
+     [
+      "#eaf6ff",
+      58
+     ],
+     [
+      "#3fd0c9",
+      23
+     ],
+     [
+      "#04121c",
+      19
+     ]
+    ],
+    "titular": {
+     "letra": "Pixelify Sans",
+     "vw": 1,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 12,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.7,
+     "measureEm": 19
+    },
+    "familias": [
+     "Pixelify Sans"
+    ],
+    "margen": 115,
+    "radios": [],
+    "curvas": [],
+    "hover": 1,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 4
+   },
+   "rasgos": {
+    "lum": 0.005422648826734804,
+    "sat": 1,
+    "hue": 16.932515337423297,
+    "cat": "pixel",
+    "vw": 1,
+    "weight": 400,
+    "ls": 12,
+    "upper": false,
+    "lh": 0,
+    "body": 20,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "pixel",
+     "afinidad": 0.1
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.097
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.092
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-mycel",
+   "titulo": "MYCEL · red micelar orgánica",
+   "medidas": {
+    "fondo": "#071410",
+    "paleta": [
+     [
+      "#071410",
+      72
+     ],
+     [
+      "#06120f",
+      21
+     ],
+     [
+      "#1c2824",
+      5
+     ],
+     [
+      "#67e38a",
+      2
+     ],
+     [
+      "#eef7ec",
+      39
+     ],
+     [
+      "#93b399",
+      30
+     ],
+     [
+      "#67e38a",
+      24
+     ]
+    ],
+    "titular": {
+     "letra": "JetBrains Mono",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 21
+    },
+    "familias": [
+     "JetBrains Mono",
+     "ui-monospace",
+     "monospace"
+    ],
+    "margen": 255,
+    "radios": [
+     "12",
+     "4",
+     "6",
+     "píldora",
+     "3"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 6,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 12.9
+   },
+   "rasgos": {
+    "lum": 0.005828931728758416,
+    "sat": 1,
+    "hue": 40.122699386503086,
+    "cat": "mono",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "terminal",
+     "afinidad": 0.396
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.23
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.198
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-silo",
+   "titulo": "SILO · hard techno minimal",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      100
+     ],
+     [
+      "#f2f2f2",
+      50
+     ],
+     [
+      "#7a7a7a",
+      50
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 31,
+     "peso": 900,
+     "interlineado": 0.8,
+     "tracking": -7.5,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Inter",
+     "JetBrains Mono"
+    ],
+    "margen": 72,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 3,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 4.8
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 31,
+    "weight": 900,
+    "ls": -7.5,
+    "upper": true,
+    "lh": 0.8,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "club",
+     "afinidad": 0.231
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.23
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.167
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/abuela-rosa",
+   "titulo": "Abuela Rosa (réplica de Peppa Sauce)",
+   "medidas": {
+    "fondo": "#141329",
+    "paleta": [
+     [
+      "#141329",
+      99
+     ],
+     [
+      "#feeee2",
+      1
+     ],
+     [
+      "#feeee2",
+      94
+     ],
+     [
+      "#8f93b8",
+      4
+     ],
+     [
+      "#141329",
+      1
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 4.5,
+     "peso": 700,
+     "interlineado": 0.7,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Space Grotesk",
+     "Archivo"
+    ],
+    "margen": 36,
+    "radios": [
+     "28",
+     "50",
+     "píldora"
+    ],
+    "curvas": [],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.3
+   },
+   "rasgos": {
+    "lum": 0.0077456260227587595,
+    "sat": 0.22404371584699448,
+    "hue": 234.14634146341461,
+    "cat": "grotesca",
+    "vw": 4.5,
+    "weight": 700,
+    "ls": 0,
+    "upper": true,
+    "lh": 0.7,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.296
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.256
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.214
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/ahora",
+   "titulo": "Ahora (réplica de Future London Academy)",
+   "medidas": {
+    "fondo": "#1a1a1a",
+    "paleta": [
+     [
+      "#1a1a1a",
+      38
+     ],
+     [
+      "#ffffff",
+      26
+     ],
+     [
+      "#ffe32b",
+      26
+     ],
+     [
+      "#ededed",
+      10
+     ],
+     [
+      "#1a1a1a",
+      60
+     ],
+     [
+      "#ffffff",
+      23
+     ],
+     [
+      "#999999",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Space Grotesk",
+     "vw": 6.7,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -5,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.3,
+     "measureEm": 22
+    },
+    "familias": [
+     "Space Grotesk"
+    ],
+    "margen": 36,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.55, 0.1, 0.35, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 8.4
+   },
+   "rasgos": {
+    "lum": 0.010329823029626936,
+    "sat": 1,
+    "hue": 52.07547169811323,
+    "cat": "grotesca",
+    "vw": 6.7,
+    "weight": 500,
+    "ls": -5,
+    "upper": true,
+    "lh": 1,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.265
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.221
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.201
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/cita",
+   "titulo": "Cita Barbers (réplica de Rendezvous)",
+   "medidas": {
+    "fondo": "#ff622b",
+    "paleta": [
+     [
+      "#ff622b",
+      50
+     ],
+     [
+      "#ffffff",
+      25
+     ],
+     [
+      "#000000",
+      23
+     ],
+     [
+      "#05060a",
+      2
+     ],
+     [
+      "#000000",
+      70
+     ],
+     [
+      "#ffffff",
+      29
+     ],
+     [
+      "#ff622b",
+      1
+     ]
+    ],
+    "titular": {
+     "letra": "Playfair Display",
+     "vw": 8.6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -5.2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.2,
+     "measureEm": 15
+    },
+    "familias": [
+     "Inter",
+     "Playfair Display",
+     "IBM Plex Mono"
+    ],
+    "margen": 20,
+    "radios": [
+     "6",
+     "píldora",
+     "8",
+     "13"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 13.4
+   },
+   "rasgos": {
+    "lum": 0.30169783096139335,
+    "sat": 1,
+    "hue": 15.56603773584908,
+    "cat": "serifa",
+    "vw": 8.6,
+    "weight": 400,
+    "ls": -5.2,
+    "upper": false,
+    "lh": 1,
+    "body": 20,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.228
+    },
+    {
+     "guia": "calido",
+     "afinidad": 0.195
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.194
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/impulso",
+   "titulo": "Impulso (réplica de Essor Fitness)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      87
+     ],
+     [
+      "#1c1c1c",
+      12
+     ],
+     [
+      "#ffffff",
+      1
+     ],
+     [
+      "#ffffff",
+      62
+     ],
+     [
+      "#999999",
+      37
+     ],
+     [
+      "#bbbbbb",
+      2
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 14.4,
+     "peso": 600,
+     "interlineado": 0.9,
+     "tracking": -5.4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 19,
+     "lh": 1.3,
+     "measureEm": 28
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 24,
+    "radios": [
+     "8",
+     "10",
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear",
+     "cubic-bezier(0.7, 0, 0.2, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 21.6
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 14.4,
+    "weight": 600,
+    "ls": -5.4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 19,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.275
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.204
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/lobo",
+   "titulo": "Lobo (réplica de Fenriz Gym)",
+   "medidas": {
+    "fondo": "#1c1c1c",
+    "paleta": [
+     [
+      "#1c1c1c",
+      37
+     ],
+     [
+      "#e8e8e8",
+      34
+     ],
+     [
+      "#000000",
+      18
+     ],
+     [
+      "#ffffff",
+      5
+     ],
+     [
+      "#1c1c1c",
+      43
+     ],
+     [
+      "#ffffff",
+      22
+     ],
+     [
+      "#e8e8e8",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 8.4,
+     "peso": 700,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 27
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 144,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "cubic-bezier(0.7, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 9.5
+   },
+   "rasgos": {
+    "lum": 0.011612245179743885,
+    "sat": 0.7593360995850621,
+    "hue": 8.52459016393442,
+    "cat": "condensada",
+    "vw": 8.4,
+    "weight": 700,
+    "ls": 0,
+    "upper": true,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.336
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.194
+    },
+    {
+     "guia": "barberia",
+     "afinidad": 0.189
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/matiz",
+   "titulo": "Matiz (réplica de Il Colorista)",
+   "medidas": {
+    "fondo": "#feeec2",
+    "paleta": [
+     [
+      "#feeec2",
+      27
+     ],
+     [
+      "#ffffff",
+      27
+     ],
+     [
+      "#f4f4f4",
+      16
+     ],
+     [
+      "#9aa0a6",
+      13
+     ],
+     [
+      "#1f1f1f",
+      46
+     ],
+     [
+      "#868686",
+      34
+     ],
+     [
+      "#ffffff",
+      12
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 5,
+     "peso": 200,
+     "interlineado": 1.1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 24,
+     "lh": 1.6,
+     "measureEm": 18
+    },
+    "familias": [
+     "Manrope",
+     "Cormorant Garamond"
+    ],
+    "margen": 340,
+    "radios": [
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 3,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 8.8
+   },
+   "rasgos": {
+    "lum": 0.8611494382835264,
+    "sat": 0.9677419354838711,
+    "hue": 44,
+    "cat": "serifa",
+    "vw": 5,
+    "weight": 200,
+    "ls": 0,
+    "upper": false,
+    "lh": 1.1,
+    "body": 24,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "salon",
+     "afinidad": 0.34
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.271
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.241
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/melena",
+   "titulo": "Melena (réplica de Hair Me Up)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      42
+     ],
+     [
+      "#ffd5bf",
+      31
+     ],
+     [
+      "#feede4",
+      25
+     ],
+     [
+      "#963e13",
+      2
+     ],
+     [
+      "#2c2c2c",
+      58
+     ],
+     [
+      "#6d6d6d",
+      24
+     ],
+     [
+      "#ffffff",
+      11
+     ]
+    ],
+    "titular": {
+     "letra": "DM Serif Display",
+     "vw": 8.7,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 36
+    },
+    "familias": [
+     "Lora",
+     "DM Serif Display"
+    ],
+    "margen": 58,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 10,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6.3
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 1,
+    "hue": 20.625,
+    "cat": "serifa",
+    "vw": 8.7,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.338
+    },
+    {
+     "guia": "salon",
+     "afinidad": 0.276
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.251
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/nucleo",
+   "titulo": "Núcleo (réplica de Core Atelier Pilates)",
+   "medidas": {
+    "fondo": "#744c32",
+    "paleta": [
+     [
+      "#744c32",
+      42
+     ],
+     [
+      "#f7e7de",
+      22
+     ],
+     [
+      "#25140c",
+      22
+     ],
+     [
+      "#fbf1ec",
+      14
+     ],
+     [
+      "#ffffff",
+      59
+     ],
+     [
+      "#25140c",
+      25
+     ],
+     [
+      "#7c5a48",
+      12
+     ]
+    ],
+    "titular": {
+     "letra": "Crimson Pro",
+     "vw": 5.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.4,
+     "measureEm": 29
+    },
+    "familias": [
+     "Albert Sans",
+     "Crimson Pro"
+    ],
+    "margen": 22,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 0.09112175921304226,
+    "sat": 0.3975903614457831,
+    "hue": 23.636363636363626,
+    "cat": "serifa",
+    "vw": 5.6,
+    "weight": 400,
+    "ls": -1,
+    "upper": false,
+    "lh": 0.9,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.308
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.24
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.213
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/nura",
+   "titulo": "Nura (réplica de ALICE Hair & Art)",
+   "medidas": {
+    "fondo": "#dedede",
+    "paleta": [
+     [
+      "#dedede",
+      36
+     ],
+     [
+      "#f5f5f5",
+      26
+     ],
+     [
+      "#dcdcdc",
+      19
+     ],
+     [
+      "#ffe14d",
+      5
+     ],
+     [
+      "#121212",
+      86
+     ],
+     [
+      "#5c5c5c",
+      8
+     ],
+     [
+      "#ffffff",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 1.3,
+     "peso": 400,
+     "interlineado": 1.3,
+     "tracking": 32,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.3,
+     "measureEm": 43
+    },
+    "familias": [
+     "Geist"
+    ],
+    "margen": 8,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 4.6
+   },
+   "rasgos": {
+    "lum": 0.7304607400903537,
+    "sat": 1,
+    "hue": 49.88764044943821,
+    "cat": "grotesca",
+    "vw": 1.3,
+    "weight": 400,
+    "ls": 32,
+    "upper": true,
+    "lh": 1.3,
+    "body": 12,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.083
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.081
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.081
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/oficio",
+   "titulo": "Oficio (réplica de Honhar)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      42
+     ],
+     [
+      "#ffcc00",
+      38
+     ],
+     [
+      "#ffffff",
+      18
+     ],
+     [
+      "#1d1d1d",
+      1
+     ],
+     [
+      "#000000",
+      69
+     ],
+     [
+      "#ffffff",
+      23
+     ],
+     [
+      "#333333",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Permanent Marker",
+     "vw": 3,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.5,
+     "measureEm": 57
+    },
+    "familias": [
+     "Montserrat",
+     "Permanent Marker"
+    ],
+    "margen": 42,
+    "radios": [
+     "8",
+     "6",
+     "14",
+     "4",
+     "10"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 9,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 9.6
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 1,
+    "hue": 48,
+    "cat": "redonda",
+    "vw": 3,
+    "weight": 400,
+    "ls": 2,
+    "upper": true,
+    "lh": 0,
+    "body": 20,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.131
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.13
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.127
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/patron",
+   "titulo": "Patrón (réplica de Don Barber & Groom)",
+   "medidas": {
+    "fondo": "#eceae0",
+    "paleta": [
+     [
+      "#eceae0",
+      26
+     ],
+     [
+      "#7e929c",
+      21
+     ],
+     [
+      "#ffffff",
+      19
+     ],
+     [
+      "#757171",
+      18
+     ],
+     [
+      "#000000",
+      60
+     ],
+     [
+      "#ffffff",
+      34
+     ],
+     [
+      "#d8c08a",
+      2
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 6.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 9,
+     "lh": 1.6,
+     "measureEm": 53
+    },
+    "familias": [
+     "Archivo",
+     "Antonio"
+    ],
+    "margen": 44,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.7, 0, 0.2, 1)"
+    ],
+    "hover": 4,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.8
+   },
+   "rasgos": {
+    "lum": 0.8206032253691192,
+    "sat": 0.5,
+    "hue": 41.53846153846155,
+    "cat": "condensada",
+    "vw": 6.6,
+    "weight": 400,
+    "ls": 0,
+    "upper": true,
+    "lh": 0.9,
+    "body": 9,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "barberia",
+     "afinidad": 0.392
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.222
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.214
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/q47",
+   "titulo": "Q47 (réplica de K72)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      100
+     ],
+     [
+      "#ffffff",
+      100
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 9.5,
+     "peso": 300,
+     "interlineado": 0.9,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 20
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": null,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.55, 0.1, 0.35, 1)"
+    ],
+    "hover": 3,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 9.5,
+    "weight": 300,
+    "ls": 0,
+    "upper": true,
+    "lh": 0.9,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.28
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.25
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.223
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/raiz",
+   "titulo": "Raíz (réplica de Marco Ambrosi)",
+   "medidas": {
+    "fondo": "#1a1d20",
+    "paleta": [
+     [
+      "#1a1d20",
+      44
+     ],
+     [
+      "#141618",
+      28
+     ],
+     [
+      "#202428",
+      20
+     ],
+     [
+      "#0f1112",
+      7
+     ],
+     [
+      "#9aa0a6",
+      59
+     ],
+     [
+      "#f2f0ed",
+      30
+     ],
+     [
+      "#c3c8cc",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Playfair Display",
+     "vw": 4.8,
+     "peso": 600,
+     "interlineado": 1.1,
+     "tracking": 0.2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.7,
+     "measureEm": 33
+    },
+    "familias": [
+     "Outfit",
+     "Playfair Display"
+    ],
+    "margen": 154,
+    "radios": [
+     "12",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 7,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 8.2
+   },
+   "rasgos": {
+    "lum": 0.012026262356602799,
+    "sat": 0.6,
+    "hue": 29.67741935483872,
+    "cat": "serifa",
+    "vw": 4.8,
+    "weight": 600,
+    "ls": 0.2,
+    "upper": false,
+    "lh": 1.1,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.239
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.215
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.203
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/remada",
+   "titulo": "Remada (réplica de Surfing Academy)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      44
+     ],
+     [
+      "#ededed",
+      40
+     ],
+     [
+      "#39be91",
+      9
+     ],
+     [
+      "#17191a",
+      4
+     ],
+     [
+      "#17191a",
+      65
+     ],
+     [
+      "#555555",
+      25
+     ],
+     [
+      "#ededed",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Onest",
+     "vw": 6.9,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.3,
+     "measureEm": 22
+    },
+    "familias": [
+     "Onest"
+    ],
+    "margen": 120,
+    "radios": [
+     "4",
+     "6",
+     "50",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.55, 0.1, 0.35, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 11
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.9999999999999999,
+    "hue": 10.883720930232585,
+    "cat": "redonda",
+    "vw": 6.9,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1,
+    "body": 12,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "autor",
+     "afinidad": 0.258
+    },
+    {
+     "guia": "rotulo",
+     "afinidad": 0.24
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.222
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/talla",
+   "titulo": "Talla (réplica de Skulpt Fitness)",
+   "medidas": {
+    "fondo": "#202020",
+    "paleta": [
+     [
+      "#202020",
+      58
+     ],
+     [
+      "#f5f5f5",
+      31
+     ],
+     [
+      "#ffffff",
+      10
+     ],
+     [
+      "#cef952",
+      1
+     ],
+     [
+      "#202020",
+      54
+     ],
+     [
+      "#f5f5f5",
+      38
+     ],
+     [
+      "#a9a9a9",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 8.5,
+     "peso": 700,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 22,
+     "lh": 1.5,
+     "measureEm": 21
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 16,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.7, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.6
+   },
+   "rasgos": {
+    "lum": 0.014443843596092545,
+    "sat": 0,
+    "hue": 0,
+    "cat": "condensada",
+    "vw": 8.5,
+    "weight": 700,
+    "ls": 0,
+    "upper": true,
+    "lh": 1,
+    "body": 22,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.329
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.226
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.224
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/vive",
+   "titulo": "Vive (réplica de FIT AND YOU)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      54
+     ],
+     [
+      "#111111",
+      20
+     ],
+     [
+      "#ffffff",
+      11
+     ],
+     [
+      "#1b1b1b",
+      8
+     ],
+     [
+      "#ffffff",
+      74
+     ],
+     [
+      "#000000",
+      13
+     ],
+     [
+      "#fb5607",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 11,
+     "peso": 700,
+     "interlineado": 0.9,
+     "tracking": -6,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.4,
+     "measureEm": 16
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 17,
+    "radios": [
+     "50",
+     "1",
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 5,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 8.7
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0.9733333333333338,
+    "hue": 18.904109589041127,
+    "cat": "condensada",
+    "vw": 11,
+    "weight": 700,
+    "ls": -6,
+    "upper": true,
+    "lh": 0.9,
+    "body": 12,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "club",
+     "afinidad": 0.22
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.211
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.175
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/almibar",
+   "titulo": "Almíbar · pastelería de obrador",
+   "medidas": {
+    "fondo": "#f7f1e8",
+    "paleta": [
+     [
+      "#f7f1e8",
+      53
+     ],
+     [
+      "#efe5d8",
+      46
+     ],
+     [
+      "#b8344f",
+      1
+     ],
+     [
+      "#2a1d16",
+      48
+     ],
+     [
+      "#6b5a4e",
+      46
+     ],
+     [
+      "#b8344f",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 1.9,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 37
+    },
+    "familias": [
+     "Inter",
+     "Fraunces"
+    ],
+    "margen": 128,
+    "radios": [
+     "píldora",
+     "13",
+     "8",
+     "18",
+     "25"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
+    ],
+    "hover": 6,
+    "libs": [
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 6.1
+   },
+   "rasgos": {
+    "lum": 0.8851094597485122,
+    "sat": 0.559322033898305,
+    "hue": 347.72727272727275,
+    "cat": "serifa",
+    "vw": 1.9,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 0,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.218
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.168
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.16
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/almibar-barrio",
+   "titulo": "Almíbar · café de barrio en puntos",
+   "medidas": {
+    "fondo": "#ebe4d6",
+    "paleta": [
+     [
+      "#ebe4d6",
+      50
+     ],
+     [
+      "#f3eee4",
+      46
+     ],
+     [
+      "#1d1a17",
+      4
+     ],
+     [
+      "#b9501d",
+      1
+     ],
+     [
+      "#5b5148",
+      58
+     ],
+     [
+      "#1d1a17",
+      40
+     ],
+     [
+      "#f3eee4",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Doto",
+     "vw": 5.8,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 0,
+     "measureEm": 72
+    },
+    "familias": [
+     "Inter",
+     "IBM Plex Mono",
+     "Doto"
+    ],
+    "margen": 144,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 4,
+    "libs": [
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 0.7800401222752579,
+    "sat": 0.3442622950819669,
+    "hue": 40.00000000000006,
+    "cat": "pixel",
+    "vw": 5.8,
+    "weight": 800,
+    "ls": -1,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ludico",
+     "afinidad": 0.262
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.249
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.222
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/almibar-taller",
+   "titulo": "Almíbar Taller · tartas a medida",
+   "medidas": {
+    "fondo": "#f6ece8",
+    "paleta": [
+     [
+      "#f6ece8",
+      58
+     ],
+     [
+      "#efdfd9",
+      42
+     ],
+     [
+      "#2b1a1e",
+      1
+     ],
+     [
+      "#6b5458",
+      53
+     ],
+     [
+      "#2b1a1e",
+      40
+     ],
+     [
+      "#b4475d",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 1.7,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.5,
+     "measureEm": 29
+    },
+    "familias": [
+     "Instrument Sans",
+     "Fraunces"
+    ],
+    "margen": 112,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 7,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 8.4
+   },
+   "rasgos": {
+    "lum": 0.85409930884525,
+    "sat": 0.4342629482071713,
+    "hue": 347.88990825688074,
+    "cat": "serifa",
+    "vw": 1.7,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 0,
+    "body": 20,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.219
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.173
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.168
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/alzado",
+   "titulo": "Alzado · arquitectura que se entiende en maqueta",
+   "medidas": {
+    "fondo": "#efebe3",
+    "paleta": [
+     [
+      "#efebe3",
+      78
+     ],
+     [
+      "#1b1a17",
+      22
+     ],
+     [
+      "#625d54",
+      53
+     ],
+     [
+      "#1b1a17",
+      32
+     ],
+     [
+      "#efebe3",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 2.4,
+     "peso": 500,
+     "interlineado": 1.1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 25
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight",
+     "Geist Mono"
+    ],
+    "margen": 40,
+    "radios": [
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 3,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 8.1
+   },
+   "rasgos": {
+    "lum": 0.833134352280845,
+    "sat": 0.07692307692307696,
+    "hue": 38.571428571428555,
+    "cat": "grotesca",
+    "vw": 2.4,
+    "weight": 500,
+    "ls": 0,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.428
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.265
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.239
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/anima",
+   "titulo": "Ánima · fiesta de Halloween en Valencia",
+   "medidas": {
+    "fondo": "#0b0708",
+    "paleta": [
+     [
+      "#0b0708",
+      97
+     ],
+     [
+      "#171012",
+      3
+     ],
+     [
+      "#a99a8f",
+      56
+     ],
+     [
+      "#f2e9df",
+      36
+     ],
+     [
+      "#ff7a1a",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 1.3,
+     "peso": 400,
+     "interlineado": 1.5,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 0,
+     "measureEm": 0
+    },
+    "familias": [
+     "Inter",
+     "Gloock"
+    ],
+    "margen": 92,
+    "radios": [
+     "18",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
+    ],
+    "hover": 7,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 26.9
+   },
+   "rasgos": {
+    "lum": 0.00240636817954167,
+    "sat": 1.0000000000000002,
+    "hue": 25.152838427947586,
+    "cat": "grotesca",
+    "vw": 1.3,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1.5,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.201
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.14
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.14
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/arbor",
+   "titulo": "Arbor · residencias entre árboles",
+   "medidas": {
+    "fondo": "#25331f",
+    "paleta": [
+     [
+      "#25331f",
+      53
+     ],
+     [
+      "#3d5233",
+      26
+     ],
+     [
+      "#4a4a30",
+      7
+     ],
+     [
+      "#2f4a3a",
+      7
+     ],
+     [
+      "#b9b49c",
+      42
+     ],
+     [
+      "#efe8d6",
+      40
+     ],
+     [
+      "#ffffff",
+      11
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 1.4,
+     "peso": 700,
+     "interlineado": 1,
+     "tracking": -1.6,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.6,
+     "measureEm": 32
+    },
+    "familias": [
+     "Instrument Sans",
+     "Cormorant Garamond"
+    ],
+    "margen": 58,
+    "radios": [
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 3.5
+   },
+   "rasgos": {
+    "lum": 0.02859896624680483,
+    "sat": 0.6256157635467979,
+    "hue": 42.519685039370074,
+    "cat": "serifa",
+    "vw": 1.4,
+    "weight": 700,
+    "ls": -1.6,
+    "upper": true,
+    "lh": 1,
+    "body": 20,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "terminal",
+     "afinidad": 0.169
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.165
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.16
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/barro",
+   "titulo": "Barro · cerámica hecha a mano",
+   "medidas": {
+    "fondo": "#f4eee4",
+    "paleta": [
+     [
+      "#f4eee4",
+      62
+     ],
+     [
+      "#eadfce",
+      37
+     ],
+     [
+      "#231a14",
+      1
+     ],
+     [
+      "#4f4338",
+      69
+     ],
+     [
+      "#231a14",
+      30
+     ],
+     [
+      "#f4eee4",
+      2
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 1.5,
+     "peso": 700,
+     "interlineado": 0,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 24
+    },
+    "familias": [
+     "Inter"
+    ],
+    "margen": 128,
+    "radios": [
+     "6",
+     "píldora",
+     "7"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 2.1
+   },
+   "rasgos": {
+    "lum": 0.8598360431685284,
+    "sat": 0.3999999999999999,
+    "hue": 36.428571428571445,
+    "cat": "grotesca",
+    "vw": 1.5,
+    "weight": 700,
+    "ls": -4,
+    "upper": false,
+    "lh": 0,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.236
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.169
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.166
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/cadencia",
+   "titulo": "Cadencia · encuentra tu ritmo",
+   "medidas": {
+    "fondo": "#f6f4e9",
+    "paleta": [
+     [
+      "#f6f4e9",
+      42
+     ],
+     [
+      "#e8ecdc",
+      32
+     ],
+     [
+      "#173b33",
+      26
+     ],
+     [
+      "#173b33",
+      47
+     ],
+     [
+      "#54665a",
+      27
+     ],
+     [
+      "#f6f4e9",
+      13
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 6.1,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -5.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.7,
+     "measureEm": 40
+    },
+    "familias": [
+     "Manrope",
+     "Fraunces"
+    ],
+    "margen": 58,
+    "radios": [
+     "píldora",
+     "40",
+     "50",
+     "60"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.8
+   },
+   "rasgos": {
+    "lum": 0.9017738970831055,
+    "sat": 0.4450261780104711,
+    "hue": 351.5294117647059,
+    "cat": "serifa",
+    "vw": 6.1,
+    "weight": 400,
+    "ls": -5.5,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.357
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.246
+    },
+    {
+     "guia": "calido",
+     "afinidad": 0.238
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/clara-vidal",
+   "titulo": "Clara Vidal · estilismo",
+   "medidas": {
+    "fondo": "#f5f5f7",
+    "paleta": [
+     [
+      "#f5f5f7",
+      62
+     ],
+     [
+      "#fbfbfd",
+      30
+     ],
+     [
+      "#ffffff",
+      7
+     ],
+     [
+      "#6e6e73",
+      57
+     ],
+     [
+      "#1d1d1f",
+      36
+     ],
+     [
+      "#0066cc",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 6.7,
+     "peso": 700,
+     "interlineado": 1,
+     "tracking": -4.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 13,
+     "lh": 1.5,
+     "measureEm": 22
+    },
+    "familias": [
+     "Inter"
+    ],
+    "margen": 220,
+    "radios": [
+     "28",
+     "20",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 3,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.9
+   },
+   "rasgos": {
+    "lum": 0.9143269331086399,
+    "sat": 1,
+    "hue": 210,
+    "cat": "grotesca",
+    "vw": 6.7,
+    "weight": 700,
+    "ls": -4.5,
+    "upper": false,
+    "lh": 1,
+    "body": 13,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.266
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.246
+    },
+    {
+     "guia": "monocromo",
+     "afinidad": 0.197
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/cota",
+   "titulo": "Cota · topografía con dron y gemelos digitales",
+   "medidas": {
+    "fondo": "#0a0f12",
+    "paleta": [
+     [
+      "#0a0f12",
+      100
+     ],
+     [
+      "#ffb347",
+      37
+     ],
+     [
+      "#e6eef2",
+      31
+     ],
+     [
+      "#8fa3ad",
+      30
+     ]
+    ],
+    "titular": {
+     "letra": "Space Grotesk",
+     "vw": 7.4,
+     "peso": 600,
+     "interlineado": 1,
+     "tracking": -3.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 21
+    },
+    "familias": [
+     "ui-monospace",
+     "Inter",
+     "Space Grotesk",
+     "Geist Mono"
+    ],
+    "margen": 52,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 10.7
+   },
+   "rasgos": {
+    "lum": 0.004498501240667262,
+    "sat": 0.9999999999999999,
+    "hue": 35.217391304347814,
+    "cat": "grotesca",
+    "vw": 7.4,
+    "weight": 600,
+    "ls": -3.5,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.333
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.22
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.198
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/esparta",
+   "titulo": "Esparta · barbería de carácter",
+   "medidas": {
+    "fondo": "#eee8db",
+    "paleta": [
+     [
+      "#eee8db",
+      46
+     ],
+     [
+      "#e2d9c7",
+      27
+     ],
+     [
+      "#1f2e3a",
+      24
+     ],
+     [
+      "#a33322",
+      3
+     ],
+     [
+      "#1f2e3a",
+      48
+     ],
+     [
+      "#625d55",
+      38
+     ],
+     [
+      "#eee8db",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Anton",
+     "vw": 10,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.8,
+     "measureEm": 14
+    },
+    "familias": [
+     "Manrope",
+     "Archivo",
+     "Anton"
+    ],
+    "margen": 22,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5
+   },
+   "rasgos": {
+    "lum": 0.8100484144804406,
+    "sat": 0.6548223350253808,
+    "hue": 7.906976744186068,
+    "cat": "condensada",
+    "vw": 10,
+    "weight": 400,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.9,
+    "body": 12,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "barberia",
+     "afinidad": 0.464
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.229
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.215
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/estudio",
+   "titulo": "Marea Studio · estudio creativo",
+   "medidas": {
+    "fondo": "#f2efe9",
+    "paleta": [
+     [
+      "#f2efe9",
+      75
+     ],
+     [
+      "#e8e4dc",
+      13
+     ],
+     [
+      "#121110",
+      11
+     ],
+     [
+      "#6c675e",
+      60
+     ],
+     [
+      "#121110",
+      32
+     ],
+     [
+      "#f2efe9",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 1.5,
+     "peso": 400,
+     "interlineado": 1.3,
+     "tracking": -0.7,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 0,
+     "measureEm": 84
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 48,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 12.6
+   },
+   "rasgos": {
+    "lum": 0.8649344164380824,
+    "sat": 0.20689655172413762,
+    "hue": 40.00000000000006,
+    "cat": "grotesca",
+    "vw": 1.5,
+    "weight": 400,
+    "ls": -0.7,
+    "upper": false,
+    "lh": 1.3,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.28
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.248
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.244
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/faro",
+   "titulo": "Faro · soporte para equipos y agentes",
+   "medidas": {
+    "fondo": "#08090a",
+    "paleta": [
+     [
+      "#08090a",
+      98
+     ],
+     [
+      "#7170ff",
+      1
+     ],
+     [
+      "#f7f8f8",
+      1
+     ],
+     [
+      "#8a8f98",
+      45
+     ],
+     [
+      "#f7f8f8",
+      27
+     ],
+     [
+      "#cccdcd",
+      25
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 5,
+     "peso": 510,
+     "interlineado": 1,
+     "tracking": -2.2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.5,
+     "measureEm": 29
+    },
+    "familias": [
+     "Inter"
+    ],
+    "margen": 180,
+    "radios": [
+     "10",
+     "píldora",
+     "6",
+     "16",
+     "5"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 8,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 5.7
+   },
+   "rasgos": {
+    "lum": 0.0026891276634492802,
+    "sat": 0.06363636363636366,
+    "hue": 218.57142857142856,
+    "cat": "grotesca",
+    "vw": 5,
+    "weight": 510,
+    "ls": -2.2,
+    "upper": false,
+    "lh": 1,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.8
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.262
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.234
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/forja",
+   "titulo": "Forja · entrena tu siguiente nivel",
+   "medidas": {
+    "fondo": "#141515",
+    "paleta": [
+     [
+      "#141515",
+      54
+     ],
+     [
+      "#232725",
+      25
+     ],
+     [
+      "#f16538",
+      21
+     ],
+     [
+      "#a5aca6",
+      47
+     ],
+     [
+      "#f1eee6",
+      29
+     ],
+     [
+      "#141515",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Anton",
+     "vw": 8.5,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -2.5,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.7,
+     "measureEm": 28
+    },
+    "familias": [
+     "Mona Sans",
+     "IBM Plex Mono",
+     "Anton",
+     "Archivo"
+    ],
+    "margen": 58,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 5
+   },
+   "rasgos": {
+    "lum": 0.0073919620366489115,
+    "sat": 0.868544600938967,
+    "hue": 14.594594594594582,
+    "cat": "condensada",
+    "vw": 8.5,
+    "weight": 400,
+    "ls": -2.5,
+    "upper": true,
+    "lh": 1,
+    "body": 12,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.299
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.189
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.179
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/foro",
+   "titulo": "ArcoForo · una semana de diseño, arte y cultura digital",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      37
+     ],
+     [
+      "#0a0a0a",
+      34
+     ],
+     [
+      "#ffffff",
+      29
+     ],
+     [
+      "#0a0a0a",
+      49
+     ],
+     [
+      "#ffffff",
+      31
+     ],
+     [
+      "#555555",
+      17
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 1,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Inter",
+     "Instrument Serif",
+     "Inter Tight"
+    ],
+    "margen": 17,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 3,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 3.6
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 1,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 0,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.189
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.136
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.135
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/hamaca",
+   "titulo": "Hamaca · radio de verano",
+   "medidas": {
+    "fondo": "#fff7f0",
+    "paleta": [
+     [
+      "#fff7f0",
+      47
+     ],
+     [
+      "#f4d4d4",
+      25
+     ],
+     [
+      "#e0c8d5",
+      12
+     ],
+     [
+      "#fffdf8",
+      8
+     ],
+     [
+      "#2b1d1d",
+      66
+     ],
+     [
+      "#6b4a4a",
+      29
+     ],
+     [
+      "#2f5be0",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "VT323",
+     "vw": 1.5,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "IBM Plex Mono",
+     "Silkscreen",
+     "VT323"
+    ],
+    "margen": 65,
+    "radios": [
+     "3",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 8,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0.9407279919162562,
+    "sat": 0.7405857740585774,
+    "hue": 225.08474576271192,
+    "cat": "pixel",
+    "vw": 1.5,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 0,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "autor",
+     "afinidad": 0.159
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.151
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.149
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/hebra",
+   "titulo": "Hebra · un buen día de pelo",
+   "medidas": {
+    "fondo": "#f7e6e9",
+    "paleta": [
+     [
+      "#f7e6e9",
+      46
+     ],
+     [
+      "#f2d6db",
+      39
+     ],
+     [
+      "#2b2031",
+      15
+     ],
+     [
+      "#2b2031",
+      54
+     ],
+     [
+      "#6e4c5c",
+      22
+     ],
+     [
+      "#f2d6db",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 7.2,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.8,
+     "measureEm": 12
+    },
+    "familias": [
+     "Manrope",
+     "Instrument Serif"
+    ],
+    "margen": 58,
+    "radios": [
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.4
+   },
+   "rasgos": {
+    "lum": 0.8225097779305147,
+    "sat": 0.5185185185185179,
+    "hue": 349.28571428571433,
+    "cat": "serifa",
+    "vw": 7.2,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 0.9,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "lujo",
+     "afinidad": 0.355
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.324
+    },
+    {
+     "guia": "salon",
+     "afinidad": 0.265
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/kernel-log",
+   "titulo": "Kernel Log · blog de tecnología",
+   "medidas": {
+    "fondo": "#0a0f1a",
+    "paleta": [
+     [
+      "#0a0f1a",
+      100
+     ],
+     [
+      "#8b98ad",
+      62
+     ],
+     [
+      "#e6edf6",
+      32
+     ],
+     [
+      "#5eead4",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Space Grotesk",
+     "vw": 4.3,
+     "peso": 700,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 13,
+     "lh": 1.5,
+     "measureEm": 64
+    },
+    "familias": [
+     "Inter",
+     "Space Grotesk"
+    ],
+    "margen": 200,
+    "radios": [
+     "3",
+     "píldora",
+     "4"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 2.8
+   },
+   "rasgos": {
+    "lum": 0.004807588719156048,
+    "sat": 0.769230769230769,
+    "hue": 170.57142857142856,
+    "cat": "grotesca",
+    "vw": 4.3,
+    "weight": 700,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 13,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.367
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.24
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.216
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/maravillas",
+   "titulo": "Maravillas · un gabinete de curiosidades que hay que recomponer",
+   "medidas": {
+    "fondo": "#efe9de",
+    "paleta": [
+     [
+      "#efe9de",
+      96
+     ],
+     [
+      "#1b1814",
+      4
+     ],
+     [
+      "#6d655a",
+      55
+     ],
+     [
+      "#1b1814",
+      42
+     ],
+     [
+      "#c8412b",
+      1
+     ]
+    ],
+    "titular": {
+     "letra": "Bodoni Moda",
+     "vw": 16.5,
+     "peso": 400,
+     "interlineado": 0.8,
+     "tracking": -4.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.6,
+     "measureEm": 24
+    },
+    "familias": [
+     "Instrument Sans",
+     "Bodoni Moda",
+     "Geist Mono"
+    ],
+    "margen": 58,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 4,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 3
+   },
+   "rasgos": {
+    "lum": 0.8190247574638212,
+    "sat": 0.09547738693467331,
+    "hue": 34.73684210526312,
+    "cat": "serifa",
+    "vw": 16.5,
+    "weight": 400,
+    "ls": -4.5,
+    "upper": false,
+    "lh": 0.8,
+    "body": 17,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "calido",
+     "afinidad": 0.373
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.285
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.247
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/mota",
+   "titulo": "Mota · interiorismo y marca con carácter",
+   "medidas": {
+    "fondo": "#ff5a36",
+    "paleta": [
+     [
+      "#ff5a36",
+      38
+     ],
+     [
+      "#bfe6ff",
+      33
+     ],
+     [
+      "#f4f0e8",
+      30
+     ],
+     [
+      "#17140f",
+      83
+     ],
+     [
+      "#625c52",
+      17
+     ]
+    ],
+    "titular": {
+     "letra": "Bricolage Grotesque",
+     "vw": 2.4,
+     "peso": 400,
+     "interlineado": 1.2,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Inter",
+     "Bricolage Grotesque"
+    ],
+    "margen": 35,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 3.8
+   },
+   "rasgos": {
+    "lum": 0.2883867058235695,
+    "sat": 1,
+    "hue": 203.4375,
+    "cat": "redonda",
+    "vw": 2.4,
+    "weight": 400,
+    "ls": -1,
+    "upper": false,
+    "lh": 1.2,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "autor",
+     "afinidad": 0.225
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.201
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.172
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/nadir",
+   "titulo": "NÁDIR · una señal al otro lado del silencio",
+   "medidas": {
+    "fondo": "#071923",
+    "paleta": [
+     [
+      "#071923",
+      99
+     ],
+     [
+      "#edf5ef",
+      1
+     ],
+     [
+      "#a6bdc3",
+      69
+     ],
+     [
+      "#edf5ef",
+      20
+     ],
+     [
+      "#e8b693",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 21,
+     "peso": 850,
+     "interlineado": 0.8,
+     "tracking": -7.5,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.8,
+     "measureEm": 23
+    },
+    "familias": [
+     "Instrument Sans",
+     "IBM Plex Mono",
+     "Archivo"
+    ],
+    "margen": 58,
+    "radios": [],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 3,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 4.9
+   },
+   "rasgos": {
+    "lum": 0.008617816013709959,
+    "sat": 0.6488549618320612,
+    "hue": 24.70588235294116,
+    "cat": "grotesca",
+    "vw": 21,
+    "weight": 850,
+    "ls": -7.5,
+    "upper": true,
+    "lh": 0.8,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.224
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.172
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.166
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/onda",
+   "titulo": "Onda Instruments · equipos para DJ y músicos",
+   "medidas": {
+    "fondo": "#202021",
+    "paleta": [
+     [
+      "#202021",
+      49
+     ],
+     [
+      "#0b0b0c",
+      48
+     ],
+     [
+      "#ff6a1a",
+      2
+     ],
+     [
+      "#a1a1aa",
+      2
+     ],
+     [
+      "#a1a1aa",
+      54
+     ],
+     [
+      "#f4f4f5",
+      39
+     ],
+     [
+      "#ff6a1a",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Syne",
+     "vw": 6.1,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 13,
+     "lh": 1.6,
+     "measureEm": 20
+    },
+    "familias": [
+     "Inter",
+     "Syne"
+    ],
+    "margen": 120,
+    "radios": [
+     "6",
+     "10",
+     "píldora",
+     "4",
+     "24"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.2
+   },
+   "rasgos": {
+    "lum": 0.01449905282978896,
+    "sat": 1.0000000000000002,
+    "hue": 20.960698689956303,
+    "cat": "grotesca",
+    "vw": 6.1,
+    "weight": 800,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 13,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.274
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.22
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.218
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/pixelforge",
+   "titulo": "Pixelforge · tienda de assets",
+   "medidas": {
+    "fondo": "#2b1e2a",
+    "paleta": [
+     [
+      "#2b1e2a",
+      56
+     ],
+     [
+      "#140b26",
+      40
+     ],
+     [
+      "#ffcc4d",
+      2
+     ],
+     [
+      "#3a2a2c",
+      1
+     ],
+     [
+      "#a99cc9",
+      46
+     ],
+     [
+      "#f4efff",
+      38
+     ],
+     [
+      "#140b26",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Silkscreen",
+     "vw": 4.4,
+     "peso": 400,
+     "interlineado": 1.2,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.6,
+     "measureEm": 33
+    },
+    "familias": [
+     "Space Mono",
+     "Space Grotesk",
+     "Silkscreen"
+    ],
+    "margen": 140,
+    "radios": [
+     "píldora",
+     "8"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4
+   },
+   "rasgos": {
+    "lum": 0.01609305042773382,
+    "sat": 1,
+    "hue": 42.808988764044955,
+    "cat": "pixel",
+    "vw": 4.4,
+    "weight": 400,
+    "ls": -2,
+    "upper": false,
+    "lh": 1.2,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "puntos",
+     "afinidad": 0.24
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.211
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.19
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/plano",
+   "titulo": "Plano · revisión de modelos de edificación",
+   "medidas": {
+    "fondo": "#f4f2ec",
+    "paleta": [
+     [
+      "#f4f2ec",
+      100
+     ],
+     [
+      "#5f5b53",
+      49
+     ],
+     [
+      "#232220",
+      49
+     ],
+     [
+      "#c43500",
+      1
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 1.2,
+     "peso": 800,
+     "interlineado": 0,
+     "tracking": -3,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 21
+    },
+    "familias": [
+     "Inter",
+     "Geist Mono",
+     "Inter Tight"
+    ],
+    "margen": 776,
+    "radios": [
+     "píldora",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 3.7
+   },
+   "rasgos": {
+    "lum": 0.8879348682324221,
+    "sat": 0.06741573033707865,
+    "hue": 40,
+    "cat": "grotesca",
+    "vw": 1.2,
+    "weight": 800,
+    "ls": -3,
+    "upper": true,
+    "lh": 0,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.187
+    },
+    {
+     "guia": "ludico",
+     "afinidad": 0.148
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.144
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/pulso",
+   "titulo": "Pulso · panel de métricas",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      53
+     ],
+     [
+      "#141312",
+      46
+     ],
+     [
+      "#1c3631",
+      1
+     ],
+     [
+      "#ece9e2",
+      55
+     ],
+     [
+      "#8f8a80",
+      39
+     ],
+     [
+      "#3ddc84",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 2.6,
+     "peso": 600,
+     "interlineado": 1.1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 38
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 10,
+    "radios": [
+     "píldora",
+     "5",
+     "7"
+    ],
+    "curvas": [
+     "linear",
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 9,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0.6943231441048036,
+    "hue": 146.79245283018872,
+    "cat": "grotesca",
+    "vw": 2.6,
+    "weight": 600,
+    "ls": -3,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.323
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.205
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.195
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/runa",
+   "titulo": "Runa · el roguelite de Estudio Musgo, en una demo que se juega en la web",
+   "medidas": {
+    "fondo": "#0a0a12",
+    "paleta": [
+     [
+      "#0a0a12",
+      100
+     ],
+     [
+      "#8b8aa3",
+      65
+     ],
+     [
+      "#f4f1e8",
+      26
+     ],
+     [
+      "#08f7fe",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Anton",
+     "vw": 36,
+     "peso": 400,
+     "interlineado": 0.8,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 22
+    },
+    "familias": [
+     "Space Grotesk",
+     "Press Start 2P",
+     "Anton"
+    ],
+    "margen": 58,
+    "radios": [],
+    "curvas": [
+     "steps(3)",
+     "steps(1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 2.7
+   },
+   "rasgos": {
+    "lum": 0.003252849097616393,
+    "sat": 0.9919354838709676,
+    "hue": 181.70731707317077,
+    "cat": "condensada",
+    "vw": 36,
+    "weight": 400,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.8,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "electrico",
+     "afinidad": 0.226
+    },
+    {
+     "guia": "club",
+     "afinidad": 0.222
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.194
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/sonar",
+   "titulo": "Sonar · estudio de identidad sonora",
+   "medidas": {
+    "fondo": "#0b1119",
+    "paleta": [
+     [
+      "#0b1119",
+      53
+     ],
+     [
+      "#e7eef5",
+      26
+     ],
+     [
+      "#0e1622",
+      21
+     ],
+     [
+      "#93a3b5",
+      54
+     ],
+     [
+      "#e7eef5",
+      31
+     ],
+     [
+      "#0b1119",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Newsreader",
+     "vw": 7.2,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 30
+    },
+    "familias": [
+     "Inter",
+     "Newsreader"
+    ],
+    "margen": 40,
+    "radios": [
+     "píldora",
+     "14"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "linear"
+    ],
+    "hover": 2,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 3.4
+   },
+   "rasgos": {
+    "lum": 0.005422321483555922,
+    "sat": 0.1868131868131869,
+    "hue": 211.76470588235293,
+    "cat": "serifa",
+    "vw": 7.2,
+    "weight": 400,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.29
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.261
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.225
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/travesia",
+   "titulo": "Travesía · documentales de mar",
+   "medidas": {
+    "fondo": "#050606",
+    "paleta": [
+     [
+      "#050606",
+      60
+     ],
+     [
+      "#0b0d0c",
+      40
+     ],
+     [
+      "#9a9d97",
+      62
+     ],
+     [
+      "#ece6da",
+      33
+     ],
+     [
+      "#f4efe6",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 1.3,
+     "peso": 400,
+     "interlineado": 1.4,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18.7,
+     "lh": 1.4,
+     "measureEm": 23
+    },
+    "familias": [
+     "JetBrains Mono",
+     "Fraunces"
+    ],
+    "margen": 40,
+    "radios": [
+     "6"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 8,
+    "libs": [
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0.0017566320645905418,
+    "sat": 0.3214285714285716,
+    "hue": 40,
+    "cat": "serifa",
+    "vw": 1.3,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1.4,
+    "body": 18.7,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.157
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.156
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.144
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/vertice",
+   "titulo": "Vértice · grupo industrial",
+   "medidas": {
+    "fondo": "#ecece7",
+    "paleta": [
+     [
+      "#ecece7",
+      54
+     ],
+     [
+      "#f6f6f3",
+      46
+     ],
+     [
+      "#2a4b8d",
+      1
+     ],
+     [
+      "#5b6169",
+      57
+     ],
+     [
+      "#15181c",
+      39
+     ],
+     [
+      "#2a4b8d",
+      3
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 6.6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 20,
+     "lh": 1.5,
+     "measureEm": 35
+    },
+    "familias": [
+     "Instrument Sans"
+    ],
+    "margen": 140,
+    "radios": [
+     "4",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "linear"
+    ],
+    "hover": 12,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.8
+   },
+   "rasgos": {
+    "lum": 0.8359329407776989,
+    "sat": 0.5409836065573771,
+    "hue": 220,
+    "cat": "serifa",
+    "vw": 6.6,
+    "weight": 400,
+    "ls": -1,
+    "upper": false,
+    "lh": 1,
+    "body": 20,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.5
+    },
+    {
+     "guia": "salon",
+     "afinidad": 0.303
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.283
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/vigia",
+   "titulo": "Vigía · videovigilancia",
+   "medidas": {
+    "fondo": "#06101e",
+    "paleta": [
+     [
+      "#06101e",
+      98
+     ],
+     [
+      "#38bdf8",
+      2
+     ],
+     [
+      "#8ea3bf",
+      36
+     ],
+     [
+      "#e8f0fb",
+      34
+     ],
+     [
+      "#38bdf8",
+      28
+     ]
+    ],
+    "titular": {
+     "letra": "Manrope",
+     "vw": 4.4,
+     "peso": 800,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.6,
+     "measureEm": 16
+    },
+    "familias": [
+     "Manrope",
+     "ui-monospace"
+    ],
+    "margen": 160,
+    "radios": [
+     "14",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 8,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.9
+   },
+   "rasgos": {
+    "lum": 0.005030374700832202,
+    "sat": 0.9320388349514562,
+    "hue": 198.4375,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 800,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.344
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.265
+    },
+    {
+     "guia": "terminal",
+     "afinidad": 0.231
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/volt",
+   "titulo": "Nora Vidal · ciclista profesional",
+   "medidas": {
+    "fondo": "#282c20",
+    "paleta": [
+     [
+      "#282c20",
+      63
+     ],
+     [
+      "#e8eadf",
+      22
+     ],
+     [
+      "#303428",
+      15
+     ],
+     [
+      "#a3a893",
+      40
+     ],
+     [
+      "#e8eadf",
+      37
+     ],
+     [
+      "#282c20",
+      16
+     ]
+    ],
+    "titular": {
+     "letra": "Schibsted Grotesk",
+     "vw": 15.7,
+     "peso": 800,
+     "interlineado": 0.9,
+     "tracking": -5,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 0,
+     "measureEm": 24
+    },
+    "familias": [
+     "Schibsted Grotesk",
+     "Bodoni Moda"
+    ],
+    "margen": 32,
+    "radios": [
+     "6",
+     "2"
+    ],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.55, 0.1, 0.35, 1)",
+     "ease"
+    ],
+    "hover": 3,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.7
+   },
+   "rasgos": {
+    "lum": 0.02356764911906527,
+    "sat": 1,
+    "hue": 70.58823529411768,
+    "cat": "grotesca",
+    "vw": 15.7,
+    "weight": 800,
+    "ls": -5,
+    "upper": true,
+    "lh": 0.9,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.254
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.169
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.167
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/voz-de-la-tierra",
+   "titulo": "La Voz de la Tierra · el Disco de Oro de las Voyager, en cuatro rutas",
+   "medidas": {
+    "fondo": "#0a0908",
+    "paleta": [
+     [
+      "#0a0908",
+      57
+     ],
+     [
+      "#000000",
+      43
+     ],
+     [
+      "#f3ead6",
+      57
+     ],
+     [
+      "#b2a796",
+      37
+     ],
+     [
+      "#e8b64c",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Gloock",
+     "vw": 7.8,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 0,
+     "measureEm": 42
+    },
+    "familias": [
+     "Instrument Sans",
+     "Martian Mono",
+     "Gloock"
+    ],
+    "margen": 56,
+    "radios": [],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 3,
+    "libs": [
+     "three",
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 5.4
+   },
+   "rasgos": {
+    "lum": 0.002774358040429794,
+    "sat": 0.7722772277227723,
+    "hue": 40.769230769230774,
+    "cat": "serifa",
+    "vw": 7.8,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "pixel",
+     "afinidad": 0.216
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.203
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.193
+    }
+   ]
+  }
+ ],
+ "fallidas": [
+  "/sitios/quilate: page.evaluate: Target crashed "
+ ]
+}

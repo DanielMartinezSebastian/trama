@@ -79,6 +79,17 @@ sonda de estilos y los bordes izquierdos de la réplica. Informe en `.refs3d/par
 `TeamSection rowLink` (nuevo): la fila entera es el enlace de reserva y el nombre se subraya al pasar. Con él, el margen
 coincide (8 px) y el par sube a **8 de 11**.
 
+## Revisión en móvil (27-10-2026)
+
+- En móvil la réplica salía 760 px más abajo, con un hueco negro encima. El `margin-top: 90svh` del manifiesto (lo
+  único que no es `absolute` en la portada) atravesaba la portada y `.nu`. Se arregla con `display: flow-root` en la
+  portada. El par no lo detectaba: el margen y el largo de página daban cerca.
+- La barra fija de cuatro accesos ocupaba dos filas en móvil y tapaba el texto. ALICE deja una sola línea, así que aquí
+  quedan Info y Arriba.
+- La letra (Px Grotesk) es de pago; Geist es la libre más cercana y la medida de familias seguirá en «lejos».
+- Hover del primer pantallazo: Pelo y & Arte se rellenan de negro, como Hair e Info, y la calle es un enlace que se
+  subraya. El par sube a **10 de 11**; solo queda la letra.
+
 ## Siguiente
 
 - El conmutador «Hair / & Art» con la barra que se rellena.

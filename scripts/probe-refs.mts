@@ -4,7 +4,12 @@
  *
  *   npm run refs:probe -- https://ejemplo.com https://otra.com        → .refs/<fecha>/datos.json + capturas
  *   npm run refs:probe -- --guides http://localhost:3000               → mide las guías de /guias y las compara con los
- *                                                                          rangos de las webs premiadas (docs/16 §2)
+ *                                                                          rangos de las webs premiadas (docs/16 §2);
+ *                                                                          con --solo terminal,papel, solo esas
+ *   npm run refs:probe -- --repo http://localhost:3020                  → mide todo el repo (webs completas, landings del
+ *                                                                        kit, réplicas del laboratorio y las guías) y
+ *                                                                        escribe components/site/guias/repo.json con la
+ *                                                                        afinidad de cada página con cada guía (docs/54)
  *   npm run refs:probe -- --par <url-original> <url-réplica> [--nombre q47]
  *                                                                      → mide las dos y escribe par.md con las diferencias
  *                                                                        (en .refs3d/pares/<nombre>/, se ve en /lab/cine/archivo)
@@ -18,10 +23,11 @@
  * Navegador: el Chromium de Playwright si está instalado (`npx playwright install chromium`); si no, el más reciente que haya
  * en la caché de Playwright (%LOCALAPPDATA%\ms-playwright o ~/.cache/ms-playwright), o el de PLAYWRIGHT_CHROMIUM.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
-import { STYLE_GUIDES } from "../lib/ui/guides";
+import { GUIDE_EXCEPTIONS, STYLE_GUIDES } from "../lib/ui/guides";
+import { afinidades, rasgos, type Medida } from "./guias-afinidad.mts";
 import { chromiumPath } from "./chromium-path.mts";
 import { aceptarCookies } from "./cine/navegador.mts";
 
@@ -31,7 +37,8 @@ const opt = (name: string, fallback: string) => {
   const i = argv.indexOf(name);
   return i >= 0 && argv[i + 1] ? argv[i + 1] : fallback;
 };
-const guidesBase = flag("--guides") ? opt("--guides", "http://localhost:3000") : null;
+const repoBase = flag("--repo") ? opt("--repo", "http://localhost:3000").replace(/\/$/, "") : null;
+const guidesBase = flag("--guides") ? opt("--guides", "http://localhost:3000") : repoBase;
 const parIdx = argv.indexOf("--par");
 const par = parIdx >= 0 ? [argv[parIdx + 1], argv[parIdx + 2]] : null;
 if (par && !par.every((u) => /^https?:\/\//.test(u ?? ""))) {
@@ -45,14 +52,28 @@ const WAIT = Number(opt("--wait", guidesBase ? "2500" : "7000"));
 const parNombre = par ? opt("--nombre", par[0].replace(/^https?:\/\/(www\.)?/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 40)) : "";
 const OUT = opt("--out", par ? join(".refs3d", "pares", parNombre) : join(".refs", new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")));
 const SHOTS = !flag("--no-shots");
-const MOBILE = !flag("--no-mobile");
-const skip = new Set(["--guides", "--out", "--wait", "--nombre", "--limite"].flatMap((k) => (argv.includes(k) ? [argv[argv.indexOf(k) + 1]] : [])));
+// en --repo basta el escritorio: la afinidad se calcula con él (y son más de setenta páginas)
+const MOBILE = !flag("--no-mobile") && !repoBase;
+const skip = new Set(["--guides", "--repo", "--out", "--wait", "--nombre", "--limite", "--solo"].flatMap((k) => (argv.includes(k) ? [argv[argv.indexOf(k) + 1]] : [])));
 
-type Target = { url: string; label: string; guide?: (typeof STYLE_GUIDES)[number] };
+/** `--guides <base> --solo a,b`: mide solo esas guías (para comprobar una guía nueva o cambiada sin medir las demás) */
+const SOLO = flag("--solo") ? opt("--solo", "").split(",").filter(Boolean) : null;
+
+type Target = { url: string; label: string; guide?: (typeof STYLE_GUIDES)[number]; tipo?: "guia" | "web" | "landing" | "replica"; titulo?: string };
+
+/** las páginas del repo: webs completas y landings (de CATALOG.md, que se genera del registro) y réplicas del laboratorio */
+function paginasRepo(base: string): Target[] {
+  const cat = readFileSync("docs/CATALOG.md", "utf8");
+  const out: Target[] = [];
+  for (const m of cat.matchAll(/^### (.+?) — `(\/(?:sitios|demo)\/[a-z0-9-]+)`$/gm)) out.push({ url: base + m[2], label: m[2], tipo: m[2].startsWith("/sitios") ? "web" : "landing", titulo: m[1] });
+  const reg = existsSync("components/lab/estudios/registro.ts") ? readFileSync("components/lab/estudios/registro.ts", "utf8") : "";
+  for (const m of reg.matchAll(/slug: "([^"]+)", nombre: "([^"]+)", ref: "([^"]+)"/g)) out.push({ url: `${base}/lab/estudios/${m[1]}`, label: `/lab/estudios/${m[1]}`, tipo: "replica", titulo: `${m[2]} (réplica de ${m[3]})` });
+  return out;
+}
 const targets: Target[] = par
   ? [{ url: par[0], label: "original" }, { url: par[1], label: "replica" }]
   : guidesBase
-  ? STYLE_GUIDES.map((g) => ({ url: `${guidesBase.replace(/\/$/, "")}/guias/relato/${g.id}/${g.stories[0]}`, label: g.id, guide: g }))
+  ? [...STYLE_GUIDES.filter((g) => !SOLO || SOLO.includes(g.id)).map((g) => ({ url: `${guidesBase.replace(/\/$/, "")}/guias/relato/${g.id}/${g.stories[0]}`, label: g.id, guide: g, tipo: "guia" as const, titulo: g.label })), ...(repoBase ? paginasRepo(repoBase) : [])]
   : argv.filter((a) => /^https?:\/\//.test(a) && !skip.has(a)).map((url) => ({ url, label: url.replace(/^https?:\/\/(www\.)?/, "") }));
 
 if (!targets.length) {
@@ -99,6 +120,21 @@ function probe() {
     inc(fams, fam(cs.fontFamily), t.length);
     chars += t.length;
   }
+  // tamaño pintado: Framer y otros escriben el titular grande y lo encogen con transform (397 px a 0,52). La escala sale
+  // de las matrices del elemento y sus antepasados, no de la caja: una letra girada (la «C» del logo de Oficio) infla la
+  // caja sin cambiar de tamaño
+  const escalaPintada = (el: Element) => {
+    let k = 1;
+    for (let e: Element | null = el; e && e !== document.documentElement; e = e.parentElement) {
+      const c = getComputedStyle(e);
+      if (c.transform && c.transform !== "none") {
+        const m = new DOMMatrixReadOnly(c.transform);
+        k *= Math.hypot(m.a, m.b);
+      }
+      if (c.scale && c.scale !== "none") k *= parseFloat(c.scale) || 1;
+    }
+    return k > 0.05 && k < 20 ? k : 1;
+  };
   // el titular se mide en el primer pantallazo, como en las premiadas (la marca a todo el ancho del pie no cuenta)
   const biggest = [...seen]
     .filter((el) => {
@@ -108,14 +144,11 @@ function probe() {
       return visible && r.width > 4 && r.height > 4 && r.top < H && r.bottom > 0 && r.left < W && r.right > 0;
     })
     .map((el) => ({ el, cs: getComputedStyle(el) }))
-    .map((x) => ({ ...x, pintado: parseFloat(x.cs.fontSize) * ((x.el as HTMLElement).offsetWidth > 0 ? x.el.getBoundingClientRect().width / (x.el as HTMLElement).offsetWidth : 1) }))
+    .map((x) => ({ ...x, pintado: parseFloat(x.cs.fontSize) * escalaPintada(x.el) }))
     .sort((a, b) => b.pintado - a.pintado)
     .slice(0, 3)
     .map(({ el, cs }) => {
-      // tamaño pintado: Framer y otros escriben el titular grande y lo encogen con transform (397 px a 0,52)
-      const he = el as HTMLElement;
-      const escala = he.offsetWidth > 0 ? el.getBoundingClientRect().width / he.offsetWidth : 1;
-      const s = parseFloat(cs.fontSize) * (escala > 0.05 && escala < 20 ? escala : 1);
+      const s = parseFloat(cs.fontSize) * escalaPintada(el);
       return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || 0), ls: r1((parseFloat(cs.letterSpacing) / parseFloat(cs.fontSize)) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily) };
     });
   // texto: el tamaño más repetido entre los párrafos largos (un párrafo con estilo de titular no cuenta)
@@ -316,15 +349,8 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
 /** guías de titular condensado (docs/50 E10): el titular puede ir entre 8,5 y 11,5 vw */
 const CONDENSADAS = ["electrico", "club", "barberia"];
 
-/**
- * Excepciones medidas de las guías de sector (docs/50 E10): rasgos de su familia que salen de los rangos de las premiadas
- * generalistas, cada uno con la web donde se midió. La regla se da por buena para esa guía.
- */
-const EXCEPCIONES: Record<string, string[]> = {
-  salon: ["interlineado del titular 0,8–1", "texto 14–20 px"], // Il Colorista: Cormorant a 1,11 y texto a 24 px
-  autor: ["margen lateral 10–80 px o contenido centrado (escritorio)"], // Surfing Academy: 120 px
-  marca: ["interlineado del texto 1,3–1,6"], // Peppa Sauce: texto de cartel a 1,2
-};
+/** excepciones medidas de las guías de sector: una sola fuente, `GUIDE_EXCEPTIONS` en lib/ui/guides.ts */
+const EXCEPCIONES: Record<string, string[]> = Object.fromEntries(Object.entries(GUIDE_EXCEPTIONS).map(([id, xs]) => [id, xs.map((x) => x.rule as string)]));
 
 /** Rangos de las webs premiadas (docs/16 §2). Cada regla devuelve null si cumple o el motivo si no. */
 function check(d: Data, m: Data | null, g: Target["guide"]) {
@@ -363,7 +389,7 @@ await Promise.all(
     for (let t = queue.shift(); t; t = queue.shift()) {
       const desk = await measure(browser, t, { width: 1440, height: 900 }, "desk");
       const mob = MOBILE ? await measure(browser, t, { width: 390, height: 844 }, "mob") : null;
-      const row: Record<string, unknown> = { url: t.url, label: t.label, desk, mob };
+      const row: Record<string, unknown> = { url: t.url, label: t.label, tipo: t.tipo, titulo: t.titulo, desk, mob };
       if (t.guide && !("error" in desk)) row.check = check(desk, mob && !("error" in mob) ? mob : null, t.guide);
       results.push(row);
       console.log(`· ${t.label}${"error" in desk ? ` — ${desk.error}` : ""}`);
@@ -426,7 +452,9 @@ function informePar(o: Data, r: Data, om: Data | null, rm: Data | null) {
   f("Movimiento", "scroll suavizado (Lenis)", o.libs.lenis, r.libs.lenis, o.libs.lenis === r.libs.lenis);
   f("Hover", "elementos que cambian", o.hover.length, r.hover.length, o.hover.length === 0 ? null : r.hover.length >= o.hover.length / 2);
   const tipos = (d: Data) => [...new Set(d.hover.flatMap((h) => h.cambia.map((c) => c.replace(/^hijo /, ""))))];
-  const faltan = tipos(o).filter((t) => !tipos(r).includes(t));
+  // una raya que crece en un hijo o en ::after es el mismo gesto: para comparar no cuenta dónde está
+  const base = (t: string) => t.replace(/^:(?:before|after):/, "");
+  const faltan = tipos(o).filter((t) => !tipos(r).some((x) => base(x) === base(t)));
   f("Hover", "propiedades que cambian", tipos(o).join(", "), tipos(r).join(", "), faltan.length === 0);
   if (om && rm) {
     f("Móvil", "titular (vw)", om.biggest[0]?.vw, rm.biggest[0]?.vw, om.biggest[0] && om.biggest[0].size >= 24 && rm.biggest[0] ? rel(om.biggest[0].vw, rm.biggest[0].vw, 0.2) : null);
@@ -484,6 +512,37 @@ if (par) {
   const ok = (d: unknown): d is Data => !!d && !("error" in (d as object));
   if (ro && rr && ok(ro.desk) && ok(rr.desk)) informePar(ro.desk, rr.desk, ok(ro.mob) ? ro.mob : null, ok(rr.mob) ? rr.mob : null);
   else (console.log("No se pudo medir el par:", (ro?.desk as { error?: string })?.error ?? "", (rr?.desk as { error?: string })?.error ?? ""), (process.exitCode = 1));
+} else if (repoBase) {
+  // afinidad de cada página del repo con cada guía, medidas contra medidas (docs/54)
+  const ok = (d: unknown): d is Data => !!d && !("error" in (d as object));
+  const guias = results.filter((r) => r.tipo === "guia" && ok(r.desk)).map((r) => ({ id: r.label as string, r: rasgos(r.desk as unknown as Medida)! })).filter((g) => g.r);
+  const resumen = (d: Data) => ({
+    fondo: d.palette.fondos[0]?.[0] ?? null,
+    paleta: [...d.palette.fondos.slice(0, 4), ...d.palette.tintas.slice(0, 3)].map(([c, p]) => [c, p]),
+    titular: d.biggest[0] ? { letra: d.biggest[0].family, vw: d.biggest[0].vw, peso: d.biggest[0].weight, interlineado: d.biggest[0].lh, tracking: d.biggest[0].ls, mayusculas: d.biggest[0].upper } : null,
+    texto: d.body,
+    familias: d.families,
+    margen: d.margin >= 9999 ? null : d.margin,
+    radios: d.radii,
+    curvas: d.easings,
+    hover: d.hover.length,
+    libs: Object.entries(d.libs).filter(([, v]) => v).map(([k]) => k),
+    pantallas: d.pageVh,
+  });
+  const paginas = results
+    .filter((r) => ok(r.desk))
+    .map((r) => {
+      const d = r.desk as Data;
+      const rg = rasgos(d as unknown as Medida);
+      return { tipo: r.tipo, ruta: String(r.label).startsWith("/") ? r.label : `/guias/relato/${r.label}`, guia: r.tipo === "guia" ? r.label : undefined, titulo: r.titulo, medidas: resumen(d), rasgos: rg, afinidad: rg ? afinidades(rg, guias.filter((g) => g.id !== r.label)) : [] };
+    })
+    .sort((a, b) => String(a.tipo).localeCompare(String(b.tipo)) || String(a.ruta).localeCompare(String(b.ruta)));
+  const fallidas = results.filter((r) => !ok(r.desk)).map((r) => `${r.label}: ${(r.desk as { error?: string }).error}`);
+  const destino = "components/site/guias/repo.json";
+  writeFileSync(destino, JSON.stringify({ fecha: new Date().toISOString().slice(0, 10), base: repoBase, paginas, fallidas }, null, 1) + "\n");
+  console.log(`\nRepo medido: ${paginas.length} páginas (${fallidas.length} fallidas) → ${destino}`);
+  for (const p of paginas.filter((x) => x.tipo !== "guia")) console.log(`  ${String(p.ruta).padEnd(34)} ${p.afinidad.map((a) => `${a.guia} ${a.afinidad}`).join(" · ")}`);
+  for (const f of fallidas) console.log(`  ✗ ${f}`);
 } else if (guidesBase) {
   let fails = 0;
   for (const r of results) {

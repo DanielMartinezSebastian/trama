@@ -14,6 +14,9 @@ import { forestTokens, nightTokens, poolTokens, tokensToStyle, voltTokens, type 
  * familias de los estudios por sector: salen del cuaderno del laboratorio (docs/cuaderno, docs/53) y sus valores, de los
  * pares medidos con `refs:probe --par` contra las webs de referencia (docs/50 E10).
  *
+ * Las cuatro del final (terminal, pixel, puntos, papel) son la estética propia del repo: las páginas de Trama que
+ * `refs:probe --repo` no podía asignar a ninguna de las anteriores, con sus valores medidos en ellas (docs/54).
+ *
  * Fuentes: todas libres. Switzer y General Sans (Fontshare, licencia ITF: uso comercial y web, pero sin redistribuir los
  * archivos) se nombran por familia con una de Google detrás: si la web carga la hoja de Fontshare, se usan; si no, cae a la
  * alternativa (`GUIDE_FONTSHARE_CSS`).
@@ -31,6 +34,9 @@ export type StyleGuide = {
   sectors: string;
   /** webs premiadas medidas de las que sale (docs/16 §5.1) */
   refs: string[];
+  /** de dónde sale: premiadas = webs de Awwwards medidas (docs/16) · sectores = estudios por sector y sus réplicas medidas
+   * (docs/50) · repo = la estética propia de las demos y webs de Trama (docs/54) */
+  source?: "premiadas" | "sectores" | "repo";
   /** variante de estilo sugerida para los componentes del kit (`variant`) */
   variant: "editorial" | "minimal" | "outline" | "retro" | "glass";
   tokens: TokenSet;
@@ -87,10 +93,14 @@ const f = {
   geistMono: `var(--font-geist-mono), ${MONO}`,
   martian: `var(--font-martian-mono), var(--font-geist-mono), ${MONO}`,
   silkscreen: `var(--font-silkscreen), ${MONO}`,
+  jetbrains: `var(--font-jetbrains-mono), ${MONO}`,
+  spaceMono: `var(--font-space-mono), ${MONO}`,
+  plexMono: `var(--font-ibm-plex-mono), ${MONO}`,
+  doto: `var(--font-doto), var(--font-ibm-plex-mono), ${MONO}`,
 };
 
 /** Curvas medidas (docs/16 §2): `expo.out` en CSS, la estándar de Material y la `easeOutQuart` de muchas premiadas. */
-export const GUIDE_EASES = { expoOut: "cubic-bezier(0.19, 1, 0.22, 1)", expoInOut: "cubic-bezier(0.87, 0, 0.13, 1)", standard: "cubic-bezier(0.4, 0, 0.2, 1)", quartOut: "cubic-bezier(0.165, 0.84, 0.44, 1)", power2InOut: "cubic-bezier(0.45, 0, 0.55, 1)" };
+export const GUIDE_EASES = { expoOut: "cubic-bezier(0.19, 1, 0.22, 1)", expoInOut: "cubic-bezier(0.87, 0, 0.13, 1)", standard: "cubic-bezier(0.4, 0, 0.2, 1)", quartOut: "cubic-bezier(0.165, 0.84, 0.44, 1)", power2InOut: "cubic-bezier(0.45, 0, 0.55, 1)", quintOut: "cubic-bezier(0.22, 1, 0.36, 1)" };
 const E = GUIDE_EASES;
 
 /** Hoja oficial de Fontshare con Switzer y General Sans (se sirve desde sus servidores; ver la nota de licencia arriba). */
@@ -99,6 +109,7 @@ export const GUIDE_FONTSHARE_CSS = "https://api.fontshare.com/v2/css?f[]=switzer
 export const STYLE_GUIDES: StyleGuide[] = [
   {
     id: "lujo",
+    source: "premiadas",
     label: "Lujo tranquilo",
     note: "Hueso cálido, una tinta oliva, serifa fina en mayúsculas y vídeo a sangre. Calma, tiempo y oficio.",
     sectors: "Hotel, clínica estética, inmobiliaria de lujo, bodega, joyería",
@@ -115,6 +126,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "monocromo",
+    source: "premiadas",
     label: "Monocromo de agencia",
     note: "Blanco y negro, una grotesca gigante en peso normal con tracking muy negativo, rejilla fina. El trabajo pone el color.",
     sectors: "Estudios, agencias, portfolios, productoras",
@@ -131,6 +143,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "tecnico",
+    source: "premiadas",
     label: "Técnico de producto",
     note: "Gris frío y pizarra, grotesca suiza fina con mono, el visual dentro de un marco, datos y reloj en la cabecera.",
     sectors: "Hardware, IA, ingeniería, industria, B2B técnico",
@@ -147,6 +160,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "nocturno",
+    source: "premiadas",
     label: "Producto nocturno",
     note: "Negro azulado, grises de la misma tinta, Inter a 510 de peso y la interfaz real como imagen.",
     sectors: "SaaS, herramientas para desarrolladores, IA",
@@ -163,6 +177,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "electrico",
+    source: "premiadas",
     label: "Acento eléctrico",
     note: "Casi negro y un acento ácido, condensada gruesa en mayúsculas y grotesca variable para leer. Velocidad.",
     sectors: "Deporte, motor, música, eventos, marcas personales",
@@ -179,6 +194,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "rotulo",
+    source: "premiadas",
     label: "Rótulo cinético",
     note: "Blanco y un azul marino, una frase gigante que se mueve y una foto que hace de ventana; chips en letra extendida.",
     sectors: "Inmobiliaria, inversión, turismo, agencias de servicios",
@@ -195,6 +211,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "calido",
+    source: "premiadas",
     label: "Editorial cálido",
     note: "Crema, tinta verde y una serifa de contraste enorme; telón de color entre páginas. Arquitectura y cultura.",
     sectors: "Arquitectura, cultura, editoriales, gastronomía de autor",
@@ -211,6 +228,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "ludico",
+    source: "premiadas",
     label: "Lúdico",
     note: "Pareja de colores vivos, una grotesca redonda y gruesa, pixel en las etiquetas. Para jugar y explorar.",
     sectors: "Cultura joven, juegos, música, comunidades, marcas con humor",
@@ -228,6 +246,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   // --- familias de los estudios por sector (docs/50 E10, docs/cuaderno: valores de los pares medidos) ---
   {
     id: "salon",
+    source: "sectores",
     label: "Salón editorial claro",
     note: "Blanco y gris claro con un pastel cálido, serifa muy fina y texto grande y ligero; formas o fotos de trabajos como único adorno.",
     sectors: "Peluquería y color, estética, estudio de belleza, floristería",
@@ -244,6 +263,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "barberia",
+    source: "sectores",
     label: "Barbería de carácter",
     note: "Hueso y negro con un acento saturado, condensada o serifa enorme con la cursiva para el énfasis, datos en mayúsculas y botones en óvalo.",
     sectors: "Barbería, sastrería, tatuaje, coctelería, tienda de oficio",
@@ -260,6 +280,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "club",
+    source: "sectores",
     label: "Club de alto contraste",
     note: "Negro absoluto y blanco con un acento saturado, condensada en mayúsculas gigante y muy apretada, píldoras de contorno y texto que rueda.",
     sectors: "Gimnasio, artes marciales, entrenador personal, agencia creativa",
@@ -276,6 +297,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "boutique",
+    source: "sectores",
     label: "Estudio boutique",
     note: "Rosa empolvado y marrón tierra, serifa con media frase en cursiva, sans limpia con aire y reserva siempre a mano.",
     sectors: "Pilates, yoga, estudio privado, fisioterapia, spa urbano",
@@ -292,6 +314,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "autor",
+    source: "sectores",
     label: "Academia de autor",
     note: "Gris claro con dos acentos, todo en minúsculas, títulos entre paréntesis, garabatos a mano y botones con sombra dura: la marca es la persona.",
     sectors: "Formación de una persona, coaching, viajes guiados, creadores con comunidad",
@@ -308,6 +331,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "escuela",
+    source: "sectores",
     label: "Escuela amarilla",
     note: "Amarillo saturado y negro, una grotesca en mayúsculas siempre apretada, recuadros con borde y sombra dura; fotos documentales de las clases.",
     sectors: "Academia, escuela de diseño o negocio, formación profesional, bootcamp",
@@ -324,6 +348,7 @@ export const STYLE_GUIDES: StyleGuide[] = [
   },
   {
     id: "marca",
+    source: "sectores",
     label: "Producto de marca",
     note: "Dos tintas como una serigrafía, grotesca estrecha y gruesa a tamaño de cartel, texto grande en mayúsculas y el producto fijo mientras pasa la página.",
     sectors: "Salsas, conservas, bebidas, cosmética de marca, producto de autor",
@@ -338,7 +363,109 @@ export const STYLE_GUIDES: StyleGuide[] = [
     heroes: ["product-center", "wordmark"],
     stories: ["product", "object"],
   },
+  // ── las del repo (docs/54): la estética propia de Trama, medida en sus webs y landings con `refs:probe --repo` ──
+  {
+    id: "terminal",
+    source: "repo",
+    label: "Terminal de neón",
+    note: "Negro tintado del color del acento, todo en monoespaciada, titulares gruesos en mayúsculas y un solo neón para lo que se puede tocar.",
+    sectors: "Herramientas para desarrolladores, ciberseguridad, infraestructura, datos, lanzamientos técnicos",
+    refs: ["CIPHERGRID (/demo/th-ciphergrid)", "MYCEL (/demo/th-mycel)", "Kernel Log (/sitios/kernel-log)"],
+    variant: "outline",
+    tokens: { bg: "#08020f", fg: "#f4ecff", mut: "#a78bc7", acc: "#ff2fd0", acc2: "#67e38a", card: "#120a1c", ln: "rgba(244,236,255,0.14)", r: 4, font: f.jetbrains, display: f.jetbrains, accentFont: f.jetbrains },
+    fonts: { display: f.jetbrains, body: f.jetbrains, accent: f.jetbrains, mono: f.jetbrains },
+    type: { brand: "clamp(3rem, 13vw, 12rem)", h1: "clamp(2.25rem, 4.4vw, 4.25rem)", h2: "clamp(1.5rem, 2.4vw, 2.25rem)", body: "0.875rem", label: "0.75rem", weight: 800, lineHeight: 1, tracking: -0.02, upper: true, labelUpper: true, labelTracking: 0.08, bodyLineHeight: 1.6 },
+    space: { margin: "max(24px, calc((100vw - 1100px) / 2))", gutter: "16px", cols: 12, section: "clamp(80px, 9vw, 128px)", header: "56px", measure: "34em" },
+    surface: { radius: 4, pill: false, shadow: false },
+    motion: { fast: 0.15, reveal: 0.6, page: 0.4, stagger: 0.03, ease: "steps(4, end)", easeReveal: E.standard },
+    heroes: ["dark-data", "product-center"],
+    stories: ["product", "timeline"],
+  },
+  {
+    id: "pixel",
+    source: "repo",
+    label: "Arcade pixel",
+    note: "Ciruela de noche, letra de píxel solo en los titulares, monoespaciada para leer, un amarillo de moneda y esquinas que no se redondean.",
+    sectors: "Videojuegos indie, estudios creativos, eventos, merchandising, comunidades",
+    refs: ["Pixelforge (/sitios/pixelforge)", "Hamaca (/sitios/hamaca)", "MINIMAL (/demo/th-minimal)"],
+    variant: "retro",
+    tokens: { bg: "#140b26", fg: "#f4efff", mut: "#a99cc9", acc: "#ffcc4d", acc2: "#ff6b8b", card: "#2b1e2a", ln: "rgba(244,239,255,0.18)", r: 0, font: f.spaceMono, display: f.silkscreen, accentFont: f.silkscreen },
+    fonts: { display: f.silkscreen, body: f.spaceMono, accent: f.silkscreen, mono: f.spaceMono },
+    type: { brand: "clamp(3rem, 12vw, 11rem)", h1: "clamp(2rem, 4.4vw, 4rem)", h2: "clamp(1.5rem, 2.4vw, 2.25rem)", body: "1.0625rem", label: "0.75rem", weight: 400, lineHeight: 1, tracking: -0.02, upper: false, labelUpper: true, labelTracking: 0.06, bodyLineHeight: 1.6 },
+    space: { margin: "max(24px, calc((100vw - 1160px) / 2))", gutter: "16px", cols: 12, section: "clamp(80px, 9vw, 128px)", header: "64px", measure: "33em" },
+    surface: { radius: 0, pill: false, shadow: false },
+    motion: { fast: 0.12, reveal: 0.5, page: 0.4, stagger: 0.04, ease: "steps(3, end)", easeReveal: "steps(6, end)" },
+    heroes: ["wordmark", "framed-object"],
+    stories: ["product", "world", "chapters"],
+  },
+  {
+    id: "puntos",
+    source: "repo",
+    label: "Matriz de puntos",
+    note: "Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color.",
+    sectors: "Hardware, audio, gadgets, relojes, transporte, señalética",
+    refs: ["DOTMATRIX (/demo/th-dotmatrix)", "Almíbar Barrio (/sitios/almibar-barrio)"],
+    variant: "minimal",
+    tokens: { bg: "#000000", fg: "#e6e6e6", mut: "#8c8c8c", acc: "#ff3b3b", acc2: "#e6e6e6", card: "#0d0d0d", ln: "rgba(230,230,230,0.14)", r: 6, font: f.plexMono, display: f.doto, accentFont: f.doto },
+    fonts: { display: f.doto, body: f.plexMono, accent: f.doto, mono: f.plexMono },
+    type: { brand: "clamp(3.5rem, 14vw, 13rem)", h1: "clamp(2.25rem, 5vw, 4.5rem)", h2: "clamp(1.5rem, 2.6vw, 2.5rem)", body: "0.875rem", label: "0.75rem", weight: 800, lineHeight: 1, tracking: -0.02, upper: false, labelUpper: true, labelTracking: 0.1, bodyLineHeight: 1.6 },
+    space: { margin: "max(24px, calc((100vw - 1100px) / 2))", gutter: "16px", cols: 12, section: "clamp(80px, 9vw, 140px)", header: "56px", measure: "34em" },
+    surface: { radius: 6, pill: true, shadow: false },
+    motion: { fast: 0.2, reveal: 0.8, page: 0.5, stagger: 0.04, ease: E.standard, easeReveal: E.quartOut },
+    heroes: ["product-center", "dark-data"],
+    stories: ["object", "product"],
+  },
+  {
+    id: "papel",
+    source: "repo",
+    label: "Estudio en papel",
+    note: "Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante.",
+    sectors: "Estudios de arquitectura y diseño, consultoras, cerámica, oficios, portfolios",
+    refs: ["Alzado (/sitios/alzado)", "Estudio (/sitios/estudio)", "Barro (/sitios/barro)", "Plano (/sitios/plano)"],
+    variant: "minimal",
+    tokens: { bg: "#f2efe9", fg: "#121110", mut: "#625d54", acc: "#b9501d", acc2: "#121110", card: "#e8e4dc", ln: "rgba(18,17,16,0.14)", r: 6, font: f.inter, display: f.interTight, accentFont: f.geistMono },
+    fonts: { display: f.interTight, body: f.inter, accent: f.geistMono, mono: f.geistMono },
+    type: { brand: "clamp(4rem, 15vw, 14rem)", h1: "clamp(2.25rem, 5vw, 4.75rem)", h2: "clamp(2rem, 3.2vw, 3rem)", body: "1rem", label: "0.75rem", weight: 500, lineHeight: 1.02, tracking: -0.035, upper: false, labelUpper: true, labelTracking: 0.06, bodyLineHeight: 1.55 },
+    space: { margin: "clamp(20px, 2.8vw, 40px)", gutter: "20px", cols: 12, section: "clamp(96px, 11vw, 168px)", header: "64px", measure: "30em" },
+    surface: { radius: 6, pill: true, shadow: false },
+    motion: { fast: 0.3, reveal: 1, page: 0.7, stagger: 0.06, ease: E.quintOut, easeReveal: E.quintOut },
+    heroes: ["asym-editorial", "framed-object"],
+    stories: ["chapters", "index"],
+  },
 ];
+
+/**
+ * Las once reglas con las que `refs:probe --guides` mide cada guía (docs/16 §2): los rangos de las webs premiadas. La
+ * lógica está en `scripts/probe-refs.mts`; aquí, el nombre de cada regla (el mismo texto en los dos sitios).
+ */
+export const GUIDE_RULES = [
+  "familias ≤ 3",
+  "titular 3–8 vw, marca 12–18 vw o de borde a borde ≤ 50 vw",
+  "interlineado del titular 0,8–1",
+  "peso del titular 300–500 (o condensada/lúdica)",
+  "tracking del titular 0 a −5 %",
+  "texto 14–20 px",
+  "interlineado del texto 1,3–1,6",
+  "margen lateral 10–80 px o contenido centrado (escritorio)",
+  "margen lateral 8–29 px (móvil)",
+  "titular móvil 8–16 vw (marca hasta 50)",
+  "sombras ≤ 2 (salvo lúdico o sombra dura)",
+] as const;
+
+/**
+ * Excepciones medidas: rasgos de una familia que salen de los rangos de las premiadas generalistas y son justo lo que la
+ * hace reconocible. Cada una lleva su medida y la web donde se midió (docs/16 §5.1b); sin eso sería un fallo.
+ */
+export const GUIDE_EXCEPTIONS: Record<string, { rule: (typeof GUIDE_RULES)[number]; why: string }[]> = {
+  salon: [
+    { rule: "interlineado del titular 0,8–1", why: "Il Colorista: Cormorant 200 a 1,11" },
+    { rule: "texto 14–20 px", why: "Il Colorista: Karla 200 a 24 px" },
+  ],
+  autor: [{ rule: "margen lateral 10–80 px o contenido centrado (escritorio)", why: "Surfing Academy: 120 px" }],
+  marca: [{ rule: "interlineado del texto 1,3–1,6", why: "Peppa Sauce: texto de cartel a 1,2 (36 px)" }],
+  terminal: [{ rule: "peso del titular 300–500 (o condensada/lúdica)", why: "CIPHERGRID y MYCEL: JetBrains Mono a 800; la mono fina no se lee como titular" }],
+  puntos: [{ rule: "peso del titular 300–500 (o condensada/lúdica)", why: "DOTMATRIX y Almíbar Barrio: Doto a 800; con menos peso los puntos no se juntan en letras" }],
+};
 
 export type StyleGuideId = (typeof STYLE_GUIDES)[number]["id"];
 

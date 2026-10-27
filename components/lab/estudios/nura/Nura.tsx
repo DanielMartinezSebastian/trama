@@ -75,7 +75,7 @@ export default function Nura() {
             <span className="nu-barra" aria-hidden><i /></span>
             <a href="#arte">&amp; Arte</a>
           </div>
-          <span>Calle del Espíritu Santo 12, MAD</span>
+          <a href="#reservar" className="nu-calle">Calle del Espíritu Santo 12, MAD</a>
         </div>
         <div className="nu-manifiesto">
           <p className="nu-titulo">Creativo, auténtico y con alma</p>

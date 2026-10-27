@@ -87,6 +87,13 @@ la sonda de estilos y la tira del original. Informe en `.refs3d/pares/oficio/par
 - Un botón blanco con texto que hereda el color sale blanco sobre blanco en las secciones oscuras: en neobrutalismo, el
   color del botón se fija.
 
+## Segunda iteración (27-10-2026)
+
+- El par daba un titular móvil de 11,2 vw frente a 7,7. Era la «C» girada del logo: la sonda calculaba la escala con
+  la caja, que crece al girar. Ahora la sonda usa las matrices de transformación y la réplica ya coincide.
+- Hover: los enlaces de la cabecera cambian a naranja y una raya crece debajo; las redes se rellenan de amarillo.
+- El par sube a **11 de 12**. Solo queda la letra: Magic Brush es de pago y Permanent Marker es la libre más cercana.
+
 ## Siguiente
 
 - La escena de los pollitos (Lottie en el original) como animación CSS.

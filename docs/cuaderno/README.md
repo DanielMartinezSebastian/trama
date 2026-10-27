@@ -3,13 +3,14 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-35 fichas.
+36 fichas.
 
 ## Fichas
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
 | 2026-10-27 | [concepto-guias-de-sector](concepto-guias-de-sector.md) · Siete guías de estilo de sector, de las familias del cuaderno | pieza | hecho | peluquería, barbería, gimnasio, academia, producto, agencia |  | `/guias` |
+| 2026-10-27 | [concepto-guias-del-repo](concepto-guias-del-repo.md) · Las guías de estilo sacadas del repo | concepto | hecho |  | terminal de neón, arcade pixel, matriz de puntos, estudio en papel | `/guias` |
 | 2026-10-27 | [herramienta-cuaderno](herramienta-cuaderno.md) · El cuaderno del laboratorio | herramienta | hecho |  |  | `/lab/cuaderno` |
 | 2026-10-27 | [herramienta-probe-par](herramienta-probe-par.md) · refs:probe con par, paleta, radios, curvas y hover | herramienta | hecho |  |  | `/lab/cine/archivo/.refs3d/pares` |
 | 2026-10-27 | [pieza-antonio](pieza-antonio.md) · Antonio en el kit, y las letras propias de cada réplica | pieza | hecho | gimnasio, barbería | club de alto contraste, barbería de carácter | `/componentes` |
@@ -109,6 +110,36 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: cercano, lúdico, personal
 - Patrones: autor como marca fija, billete troquelado, cifras, formulario de contacto, ilustración de línea, preguntas frecuentes, primera clase gratis, principios con foto, programas por convocatoria, sombra dura desplazada, testimonios, vlogs
 
+### arcade pixel
+
+- Fichas: [concepto-guias-del-repo](concepto-guias-del-repo.md)
+- Colores: `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
+- Letras: JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono, Inter Tight, Inter
+- Tipografía: 
+- Paleta: 
+- Tono: 
+- Patrones: 
+
+### estudio en papel
+
+- Fichas: [concepto-guias-del-repo](concepto-guias-del-repo.md)
+- Colores: `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
+- Letras: JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono, Inter Tight, Inter
+- Tipografía: 
+- Paleta: 
+- Tono: 
+- Patrones: 
+
+### matriz de puntos
+
+- Fichas: [concepto-guias-del-repo](concepto-guias-del-repo.md)
+- Colores: `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
+- Letras: JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono, Inter Tight, Inter
+- Tipografía: 
+- Paleta: 
+- Tono: 
+- Patrones: 
+
 ### producto de marca
 
 - Fichas: [replica-abuela-rosa](replica-abuela-rosa.md)
@@ -118,6 +149,16 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: dos tintas, fondo oscuro
 - Tono: con humor, descarado, familiar
 - Patrones: cinta de compra fija, lo que no, marcos de etiqueta, origen y familia, palabras gigantes con ilustración, producto fijo, sello circular
+
+### terminal de neón
+
+- Fichas: [concepto-guias-del-repo](concepto-guias-del-repo.md)
+- Colores: `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
+- Letras: JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono, Inter Tight, Inter
+- Tipografía: 
+- Paleta: 
+- Tono: 
+- Patrones: 
 
 ## Patrones que van juntos
 
@@ -165,7 +206,7 @@ gimnasio (12) · peluquería (12) · academia (7) · barbería (6) · agencia (5
 
 ### Familia de estilo (`guia`)
 
-club de alto contraste (7) · barbería de carácter (5) · salón editorial claro (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · producto de marca (1)
+club de alto contraste (7) · barbería de carácter (5) · salón editorial claro (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · arcade pixel (1) · estudio en papel (1) · matriz de puntos (1) · producto de marca (1) · terminal de neón (1)
 
 ### Tono (`tono`)
 
@@ -189,7 +230,7 @@ cinta que corre (8) · scroll suavizado (4) · subrayado que crece (4) · texto 
 
 ### Piezas del kit (`piezas`)
 
-TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · FullscreenMenu (4) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · RollLink (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · ProductCard (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · GuideFrame (1) · guides (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
+TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · FullscreenMenu (4) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · RollLink (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · GuideFrame (2) · ProductCard (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · guides (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 

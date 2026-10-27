@@ -166,7 +166,7 @@ se ven en `/guias` y se aplican con `GuideFrame`.
 | **G15 Producto de marca** (`marca`) | dos tintas: azul noche `#141329` + crema `#FEEEE2` | Archivo 800 + Space Grotesk en mayúsculas | 13 vw (marca 17 vw), 800, 0,85, −3 % | margen 16–36, radio 28, píldoras | 0,25 s | Peppa Sauce |
 
 `npm run refs:probe -- --guides <base>` da **15/15 dentro de rango**. Tres rasgos de sector salen de los rangos de las
-premiadas generalistas y se aceptan como **excepciones medidas**, con su web (`EXCEPCIONES` en `scripts/probe-refs.mts`):
+premiadas generalistas y se aceptan como **excepciones medidas**, con su web (`GUIDE_EXCEPTIONS` en `lib/ui/guides.ts`, que lee la sonda):
 
 | Guía | Excepción | Web |
 |---|---|---|
@@ -176,6 +176,22 @@ premiadas generalistas y se aceptan como **excepciones medidas**, con su web (`E
 
 Además, el club y el producto de marca entran en la excepción de peso del titular (condensadas gruesas). Club y barbería
 admiten un titular de hasta 11,5 vw; la escuela y la academia de autor, la sombra dura.
+
+### 5.1c Las cuatro guías del repo (27-10-2026, docs/54)
+
+Salen del propio repo. `refs:probe --repo` mide todas sus webs, landings y réplicas y les asigna la guía más afín. Las
+páginas con una afinidad menor de 0,25 mostraban una estética propia de Trama que no tenía guía. Los valores salen de
+esas páginas.
+
+| Guía (`id`) | Tintas | Letra | Titular | Espacio y superficie | Movimiento | Páginas medidas |
+|---|---|---|---|---|---|---|
+| **G16 Terminal de neón** (`terminal`) | negro violeta `#08020F` + magenta `#FF2FD0` + verde `#67E38A` | JetBrains Mono en todo | 4,4 vw, 800, 1, −2 %, mayúsculas | contenido centrado a 1100, radio 4 | 0,15 s en `steps(4)` | CIPHERGRID, MYCEL, Kernel Log |
+| **G17 Arcade pixel** (`pixel`) | ciruela `#140B26` y `#2B1E2A` + amarillo `#FFCC4D` | Silkscreen + Space Mono | 4,4 vw, 400, 1 | centrado a 1160, sin radio | 0,12 s en `steps(3)` | Pixelforge, Hamaca, MINIMAL |
+| **G18 Matriz de puntos** (`puntos`) | negro + gris `#E6E6E6` + rojo `#FF3B3B` | Doto 800 + IBM Plex Mono | 5 vw, 800, 1, −2 % | centrado a 1100, píldoras | 0,2 s | DOTMATRIX, Almíbar Barrio |
+| **G19 Estudio en papel** (`papel`) | papel `#F2EFE9` + tinta `#121110` + óxido `#B9501D` | Inter Tight 500 + Inter; Geist Mono en etiquetas | 5 vw, 500, 1,02, −3,5 % | margen 20–40, radio 6, filetes | 0,3 s `quint.out` | Alzado, Estudio, Barro, Plano |
+
+Terminal y puntos llevan el titular a 800. Esa es la excepción medida de las dos (`GUIDE_EXCEPTIONS`): con menos peso,
+la mono no se lee como titular y los puntos de Doto no forman letras.
 
 ### 5.2 Fuentes: de las premiadas a libres
 
@@ -243,6 +259,10 @@ Hecho F1–F4, con las decisiones de §7: `/guias` es pública, Fontshare entra 
 
 **27-10-2026:** siete guías más, de los estudios por sector (§5.1b), con Antonio en `lib/ui/fonts.ts`. `/guias` las
 enseña con sus composiciones y relatos, y `refs:probe --guides` da 15/15 dentro de rango.
+
+**27-10-2026 (2):** cuatro guías del repo (§5.1c) y una hoja de estilo por guía en `/guias/<id>`. El índice de
+`/guias` agrupa las guías por origen y clasifica el repo entero por guía (docs/54). Las reglas y las excepciones viven
+en `lib/ui/guides.ts` (`GUIDE_RULES`, `GUIDE_EXCEPTIONS`) y la sonda las lee de ahí.
 
 **Pendiente:**
 - **F5:** `NavBar layout="split3"`, cinta con ventana de imagen como pieza del kit, `HoldButton`, `BeforeAfter` definitivo (hoy hay una versión mínima en `components/site/guias/parts.tsx`) y calidad por GPU.

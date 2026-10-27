@@ -116,6 +116,9 @@ inflarían.
 - **Patrones que van juntos**: parejas de `patrones` que aparecen en dos obras o más.
 - **Parecidas**: obras con tres etiquetas o más en común, sin contar piezas.
 
+Las familias alimentan las hojas de estilo de `/guias/<id>` (docs/54): una ficha entra en la hoja de su guía cuando su
+etiqueta `guia` es el nombre de la guía en minúsculas («salón editorial claro», «terminal de neón»…).
+
 ## 3. `refs:probe` ampliado
 
 Lo de siempre (docs/16 F4) y, desde el 27-10-2026:
@@ -128,6 +131,7 @@ Lo de siempre (docs/16 F4) y, desde el 27-10-2026:
 | **Hover** | Hasta 12 enlaces y botones del primer pantallazo: estilo calculado del elemento, sus hijos y `::before`/`::after` antes y 600 ms después; `translate`, `scale` y `rotate` cuentan como `transform` | Saber qué gesto tiene cada botón sin mirarlo uno a uno |
 | **Mayúsculas** | Por `text-transform` o porque el texto está escrito en mayúsculas | Antes daba «no» a un titular escrito en mayúsculas |
 | **Margen** | Solo con lo que se ve (`checkVisibility`, sin `inert` ni `aria-hidden`) | Un menú cerrado contaba como margen |
+| **Repo entero** (`--repo <base>`) | Mide las webs y landings de `CATALOG.md`, las réplicas y las guías, y calcula la afinidad de cada página con cada guía (`scripts/guias-afinidad.mts`) | Clasificar el repo por guía y encontrar estéticas sin guía; escribe `components/site/guias/repo.json` (docs/54) |
 
 ### 3.0 Lo que aprendió la sonda al medir las 16 réplicas
 
@@ -144,6 +148,8 @@ Cada fallo se arregló en la herramienta, no en la lectura:
 | Una página pesada colgaba la sonda más de 20 minutos | Oficio (Honhar) | límite por página (`--limite`, 180 s), cierre que no espera y salida al terminar |
 | Aceptar «Explore programs» sacaba la sonda de la página | Oficio (Honhar) | ver la primera fila |
 | Se comparaba un titular que no existe (escena, foto) | Oficio, Nura, Núcleo | sin texto de 24 px o más en la primera pantalla del original, el titular es informativo |
+| Una letra girada del logo (la «C» de Oficio) salía como titular de 11 vw | Oficio | la escala pintada sale de las matrices `transform` y `scale` del elemento y sus antepasados, no de la caja, que crece al girar |
+| Una raya que crece en un hijo y la misma raya en `::after` contaban como gestos distintos | Oficio | al comparar el hover no cuenta si la propiedad está en un hijo o en un pseudoelemento |
 | El «titular» era un enlace del menú cerrado | Núcleo (Core Atelier) | el titular se busca solo entre lo visible (`checkVisibility` con opacidad) |
 | 9999 («sin dato») se comparaba como un número | Q47 | el margen sin tres bloques alineados no se compara |
 
@@ -258,8 +264,8 @@ sola pasada con la sonda definitiva (`.refs3d/pares/resumen.tsv`). Cada iteraci�
 | Patrón | Don Barber | 12/17 | **15/17** | gótica más ligera (Antonio 400), cinta dentro de la portada |
 | Melena | Hair Me Up | 10/20 | **15/20** | DM Serif y Lora, final en melocotón, subrayado que crece |
 | Núcleo | Core Atelier | 14/20 | **13/14** | Crimson Pro y Albert Sans, Lenis; el titular dejó de compararse (menú cerrado) |
-| Oficio | Honhar | — | **9/12** | brocha con espaciado abierto (no condensada); el final completo |
-| Nura | ALICE | 6/11 | **8/11** | 8 px al borde, filas de 348 px; `TeamSection rowLink` |
+| Oficio | Honhar | — | **9/12** → 11/12 | brocha con espaciado abierto (no condensada); el final completo |
+| Nura | ALICE | 6/11 | **8/11** → 10/11 | 8 px al borde, filas de 348 px; `TeamSection rowLink` |
 
 **Siete réplicas eran media web** (Impulso, Cita, Vive, Talla, Lobo, Remada, Oficio): el largo de página del par lo
 delató en todas. Lo que queda en ✗ es sobre todo la letra cuando la del original es de pago; está anotado en cada ficha.
@@ -281,4 +287,6 @@ Ficha común en [pieza-hovers-de-enlace](cuaderno/pieza-hovers-de-enlace.md) y [
 
 - Medir el movimiento por scroll en las que lo tienen (Rendezvous, Essor, Il Colorista, Peppa Sauce) con
   `cine:capture` + `cine:compare`.
-- Con las familias del cuaderno, escribir las guías de docs/16 (E10).
+- ~~Con las familias del cuaderno, escribir las guías de docs/16 (E10).~~ Hecho: siete guías de sector y cuatro del
+  repo, cada una con su hoja en `/guias/<id>` (docs/54).
+- Volver a medir con `refs:probe --repo` cada vez que entre una web, una réplica o una guía.

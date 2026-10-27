@@ -153,8 +153,13 @@
 }
 /* hover de Honhar: los enlaces de la cabecera y las redes cambian de color y se atenúan; margen 42 px */
 .of-head nav a, .of-redes a, .of-pie a { transition: color 0.2s, opacity 0.2s, border-color 0.2s; border-bottom: 1px solid transparent; }
-.of-head nav a:hover { opacity: 0.6; border-color: currentColor; }
-.of-redes a:hover, .of-pie a:hover { color: #fff; opacity: 0.7; }
+.of-head nav a { position: relative; }
+.of-head nav a::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px; background: currentColor; transition: width 0.3s; }
+.of-head nav a:hover { color: #e07a00; }
+.of-head nav a:hover::after { width: 100%; }
+.of-redes a { transition: background-color 0.2s, color 0.2s, opacity 0.2s; }
+.of-redes a:hover { background: #ffaf2e; color: #000 !important; opacity: 0.85; }
+.of-pie a:hover { color: #e07a00; opacity: 0.7; }
 .of-head, .of-presencia, .of-mentor, .of-sinlimite, .of-lema, .of-pie { padding-inline: 42px; }
 @media (max-width: 760px) { .of-head, .of-presencia, .of-mentor, .of-sinlimite, .of-lema, .of-pie { padding-inline: 16px; } }
 @media (max-width: 760px) { .of-presencia, .of-mentor, .of-sinlimite { padding-block: 56px; } .of-lema { min-height: 0; padding-block: 56px; } }

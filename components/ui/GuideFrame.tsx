@@ -2,7 +2,7 @@ import { createElement, type CSSProperties, type ReactNode } from "react";
 import { guide, guideToStyle, type StyleGuide } from "@/lib/ui/guides";
 
 export type GuideFrameProps = {
-  /** id de una guía de `STYLE_GUIDES` (`lujo`, `monocromo`, `tecnico`, `nocturno`, `electrico`, `rotulo`, `calido`, `ludico`) o una guía propia */
+  /** id de una guía de `STYLE_GUIDES` (`lujo`, `monocromo`, `tecnico`, `nocturno`, `electrico`, `rotulo`, `calido`, `ludico`, `salon`, `barberia`, `club`, `boutique`, `autor`, `escuela`, `marca`, `terminal`, `pixel`, `puntos`, `papel`; hoja de cada una en /guias/<id>) o una guía propia */
   guide?: string | StyleGuide;
   as?: "div" | "main" | "section" | "article";
   className?: string;

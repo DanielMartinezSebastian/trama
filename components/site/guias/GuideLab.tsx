@@ -74,7 +74,7 @@ export default function Page() {
 
 /**
  * Laboratorio de /guias: elige guía, composición y relato y mira el resultado en vivo, o compara la misma composición en las
- * quince guías y el mismo relato en sus diez estructuras (miniaturas de las páginas /guias/ver y /guias/relato).
+ * diecinueve guías y el mismo relato en sus diez estructuras (miniaturas de las páginas /guias/ver y /guias/relato).
  */
 export default function GuideLab() {
   const [g, setG] = useState(STYLE_GUIDES[0].id);

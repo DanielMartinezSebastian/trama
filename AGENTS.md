@@ -39,6 +39,9 @@ más un sitio que la enseña. Dos tipos de tarea:
    Para un **negocio de un sector** (peluquería, barbería, gimnasio, estudio boutique, academia, producto de marca,
    agencia), parte de «Recetas por sector» de `CATALOG.md`: guía de estilo, orden de secciones con sus piezas, llamada
    fija y lo que no hay que olvidar, medido en las réplicas del laboratorio.
+   Para el **estilo** (colores, letra, escala, espacio, movimiento), elige una de las 19 guías con `GuideFrame` y abre su
+   hoja en `/guias/<id>`: valores medidos, contraste, componentes con la guía, páginas del repo afines y código
+   (`docs/54-guias-de-estilo-del-repo.md`).
 4. **Pasa siempre las props de texto**: los defaults son copy de demostración (escuela de surf…). Pasa `""` para
    ocultar un texto opcional.
 5. Tema = tokens CSS `--bg --fg --mut --acc --acc2 --card --ln --r` en un contenedor; estilo = prop `variant`
