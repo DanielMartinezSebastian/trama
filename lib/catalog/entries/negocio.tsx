@@ -5,6 +5,7 @@ import ActionBar from "@/components/ui/ActionBar";
 import AppointmentList from "@/components/ui/AppointmentList";
 import BookingFlow from "@/components/ui/BookingFlow";
 import CohortList from "@/components/ui/CohortList";
+import EnrollmentFlow from "@/components/ui/EnrollmentFlow";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
 import MenuList from "@/components/ui/MenuList";
