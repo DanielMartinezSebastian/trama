@@ -1,57 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Marquee from "@/components/ui/Marquee";
-import "./patron.css";
+import { NOTICIAS } from "./data";
+import { patronHref, usePatron } from "./marco";
 
 /*
- * Patrón Barber & Groom: réplica de Don Barber & Groom (docs/50 §3.2). Gótica condensada enorme para los servicios y los
+ * Portada de Patrón Barber & Groom: réplica de Don Barber & Groom (docs/50 §3.2); el menú lateral, la bolsa, el pie y
+ * las demás páginas están en Sitio.tsx (docs/56). Gótica condensada enorme para los servicios y los
  * títulos, ancha y pequeña para el texto; azul gris, topo y hueso; una cinta que corre (Marquee), el dueño con su nombre
  * gigante sobre el retrato, «shop in shop», servicios con el óvalo en el centro, noticias y un menú en panel lateral con
  * la foto de portada a la izquierda. Botones en óvalo de contorno.
  */
 
-const NOTICIAS = [
-  { cat: "Salud masculina", titulo: "Reflexología para el estrés, la ansiedad y el cansancio", fecha: "25 ene", img: `/img/inspiraciones/patron/blog-reflexologia.webp` },
-  { cat: "Moda y estilo", titulo: "Lo básico bien hecho: la camisa blanca", fecha: "16 dic", img: `/img/inspiraciones/patron/blog-camisa.webp` },
-  { cat: "Moda y estilo", titulo: "Los accesorios de este invierno", fecha: "25 oct", img: `/img/inspiraciones/patron/blog-accesorios.webp` },
-];
 
 export default function Patron() {
-  const [menu, setMenu] = useState(false);
-  useEffect(() => {
-    if (!menu) return;
-    const k = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
-    addEventListener("keydown", k);
-    return () => removeEventListener("keydown", k);
-  }, [menu]);
+  const { menu, abrirMenu, bolsa, abrirBolsa } = usePatron();
 
   return (
-    <div className="pt">
+    <>
       <section className="pt-portada" id="inicio">
         <div className="pt-foto">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={`/img/inspiraciones/patron/local.webp`} alt="El local: madera, latón y azulejo" />
-          <a href="#inicio" className="pt-logo">PATRÓN<small>Barber<br />&amp; Groom</small></a>
+          <a href={patronHref()} className="pt-logo">PATRÓN<small>Barber<br />&amp; Groom</small></a>
           <div className="pt-servicios">
             <span>Servicios a medida</span>
-            <a href="#servicios">Barbería</a>
-            <a href="#servicios">Lista de precios</a>
-            <a href="#servicios">Cuidado y spa</a>
-            <a href="#servicios">Manos y pies</a>
+            <a href={patronHref("servicios#barberia")}>Barbería</a>
+            <a href={patronHref("servicios")}>Lista de precios</a>
+            <a href={patronHref("servicios#spa")}>Cuidado y spa</a>
+            <a href={patronHref("servicios#manos")}>Manos y pies</a>
           </div>
         </div>
         <div className="pt-lado">
           <nav className="pt-nav" aria-label="Accesos">
-            <a href="#contacto">Reservar</a>
-            <a href="#contacto">+34 910 000 000</a>
-            <span><b>ES</b> EN</span>
-            <button type="button" className="pt-burger" aria-label="Abrir el menú" aria-expanded={menu} onClick={() => setMenu(true)}><i /><i /><i /></button>
+            <a href={patronHref("reservar")}>Reservar</a>
+            <a href="tel:+34910000000">+34 910 000 000</a>
+            <button type="button" className="pt-bolsa" onClick={abrirBolsa}>Bolsa ({bolsa})</button>
+            <button type="button" className="pt-burger" aria-label="Abrir el menú" aria-expanded={menu} onClick={abrirMenu}><i /><i /><i /></button>
           </nav>
           <figure className="pt-producto">
             <figcaption>Patrón · productos<br />para hombre</figcaption>
             <div className="pt-libro"><b>PATRÓN</b><small>de la cabeza<br />a los pies</small></div>
-            <a href="#tienda">Saber más</a>
+            <a href={patronHref("tienda")}>Saber más</a>
           </figure>
           {/* en Don Barber la cinta corre al pie de la columna derecha, dentro de la primera pantalla */}
           <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta pt-cinta--portada" />
@@ -65,7 +55,7 @@ export default function Patron() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`/img/inspiraciones/patron/dueno.webp`} alt="Julián Aranda, dueño y maestro barbero" />
         <p className="pt-chico">Dueño · maestro barbero</p>
-        <a href="#equipo" className="pt-ovalo">El equipo</a>
+        <a href={patronHref("equipo")} className="pt-ovalo">El equipo</a>
       </section>
 
       <section className="pt-marcas" id="tienda">
@@ -74,6 +64,7 @@ export default function Patron() {
         <h2>SHOP IN SHOP</h2>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`/img/inspiraciones/patron/tienda.webp`} alt="La tienda dentro de la barbería" />
+        <a href={patronHref("tienda")} className="pt-ovalo">Ver la tienda</a>
       </section>
 
       <section className="pt-serv" id="servicios">
@@ -83,23 +74,23 @@ export default function Patron() {
           <article>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/img/inspiraciones/patron/servicio-barberia.webp`} alt="" />
-            <a href="#servicios">Cuidado y spa</a>
+            <a href={patronHref("servicios#spa")}>Cuidado y spa</a>
             <p>Depilación y tratamientos para cara y cuerpo, pensados para la piel del hombre.</p>
           </article>
           <article className="pt-serv__central">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/img/inspiraciones/patron/servicio-afeitado.webp`} alt="" />
-            <a href="#servicios">Barbería</a>
+            <a href={patronHref("servicios#barberia")}>Barbería</a>
             <p>Los mejores servicios de corte y afeitado en el centro de Madrid.</p>
           </article>
           <article>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/img/inspiraciones/patron/servicio-manicura.webp`} alt="" />
-            <a href="#servicios">Manos y pies</a>
+            <a href={patronHref("servicios#manos")}>Manos y pies</a>
             <p>Tratamientos de lujo para él en una sala propia.</p>
           </article>
         </div>
-        <a href="#servicios" className="pt-ovalo">Todos los servicios</a>
+        <a href={patronHref("servicios")} className="pt-ovalo">Todos los servicios</a>
       </section>
 
       <section className="pt-noticias">
@@ -107,48 +98,18 @@ export default function Patron() {
         <h2>NOTICIAS</h2>
         <div className="pt-noticias__fila">
           {NOTICIAS.map((n) => (
-            <article key={n.titulo}>
+            <a key={n.slug} href={patronHref(`noticias/${n.slug}`)} className="pt-noticia">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={n.img} alt="" loading="lazy" />
               <small>{n.cat}</small>
               <p>{n.titulo}</p>
               <time>{n.fecha}</time>
-            </article>
+            </a>
           ))}
         </div>
-        <a href="#inicio" className="pt-ovalo">Todas las noticias</a>
+        <a href={patronHref("noticias")} className="pt-ovalo">Todas las noticias</a>
       </section>
 
-      <footer className="pt-pie" id="contacto">
-        <div className="pt-pie__datos">
-          <p>Calle de Almagro 23<br />28010 Madrid</p>
-          <p>Facebook<br />YouTube<br />Instagram</p>
-          <p>T. +34 910 000 000<br />E. hola@patron.example</p>
-        </div>
-        <a href="#contacto" className="pt-boletin">BOLETÍN</a>
-      </footer>
-      <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta pt-cinta--pie" />
-
-      <div className={`pt-menu ${menu ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Menú" aria-hidden={!menu} inert={!menu}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/img/inspiraciones/patron/menu-foto.webp`} alt="" className="pt-menu__foto" />
-        <div className="pt-menu__panel">
-          <button type="button" className="pt-ovalo pt-cerrar" onClick={() => setMenu(false)}>Salir</button>
-          <nav aria-label="Principal" onClick={() => setMenu(false)}>
-            <a href="#inicio" className="pt-menu__activo">Inicio</a>
-            <a href="#equipo">Perfil</a>
-            <span><a href="#equipo">Historia</a><a href="#equipo">Galería</a><a href="#equipo">El equipo</a></span>
-            <a href="#servicios">Servicios</a>
-            <a href="#inicio">Noticias</a>
-            <a href="#contacto">Contacto</a>
-          </nav>
-          <figure className="pt-menu__tarjeta">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/img/inspiraciones/patron/menu-familia.webp`} alt="" />
-            <figcaption><i>Mantente impecable</i></figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

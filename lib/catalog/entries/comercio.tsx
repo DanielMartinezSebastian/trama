@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import CartDrawer from "@/components/ui/CartDrawer";
+import CheckoutFlow from "@/components/ui/CheckoutFlow";
 import FilterBar from "@/components/ui/FilterBar";
 import OptionPicker from "@/components/ui/OptionPicker";
 import PriceTag from "@/components/ui/PriceTag";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductGallery from "@/components/ui/ProductGallery";
 import QuantityStepper from "@/components/ui/QuantityStepper";
-import type { CartLine } from "@/lib/commerce/cart";
+import { useCart, type CartLine } from "@/lib/commerce/cart";
 import { potteryArt } from "@/lib/sites/art";
 import type { CatalogEntry } from "../schema";
 
@@ -216,4 +217,46 @@ export const comercio: CatalogEntry[] = [
       </div>
     ),
   },
+  {
+    id: "checkout-flow",
+    component: "CheckoutFlow",
+    path: "@/components/ui/CheckoutFlow",
+    name: "Cierre del pedido",
+    category: "formularios",
+    styles: EDITORIAL,
+    description: "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
+    stageHeight: 640,
+    notes: [
+      "Las líneas vienen de useCart (como CartDrawer): `lines`, `onQty` y `onClear`. Pon su página en el `checkoutHref` del carrito.",
+      "Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.",
+      "Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56.",
+    ],
+    props: [
+      { key: "delivery", label: "Entrega", type: "select", default: "both", options: ["both", "shipping", "pickup"], labels: { both: "envío o recogida", shipping: "solo envío", pickup: "solo recogida" } },
+      { key: "freeShippingFrom", label: "Envío gratis desde", type: "number", default: 50, min: 0, max: 200, step: 5 },
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <CheckoutDemo key={String(p.delivery)} delivery={p.delivery as never} free={p.freeShippingFrom as number} />
+      </div>
+    ),
+  },
 ];
+
+function CheckoutDemo({ delivery, free }: { delivery: "both" | "shipping" | "pickup"; free: number }) {
+  const cart = useCart("trama:catalogo:pedido");
+  const llenar = () => {
+    cart.add({ id: "taza", title: "Taza Alba", price: 18, meta: "Esmalte azul" }, 2);
+    cart.add({ id: "plato", title: "Plato hondo", price: 24, meta: "Crudo" });
+  };
+  return (
+    <>
+      {!cart.lines.length && (
+        <button type="button" className="ui-button ui-s ui-s--editorial" onClick={llenar} style={{ marginBottom: 16 }}>
+          Llenar la bolsa de ejemplo
+        </button>
+      )}
+      <CheckoutFlow lines={cart.lines} onQty={cart.setQty} onClear={cart.clear} delivery={delivery} freeShippingFrom={free} pickups={[{ id: "taller", name: "Taller", address: "Calle del Barro 4" }]} shopHref="#checkout-flow" orderPrefix="DEM" />
+    </>
+  );
+}

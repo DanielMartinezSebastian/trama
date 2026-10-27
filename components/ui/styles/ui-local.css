@@ -303,3 +303,22 @@ html:has(.ui-actionbar--fixed.ui-actionbar--always) { scroll-padding-bottom: cal
   .ui-book__summary { position: static; order: -1; }
 }
 @media (prefers-reduced-motion: reduce) { .ui-book__step, .ui-book__ok span { animation: none; } }
+
+/* ---------- Cierre de pedido (CheckoutFlow), docs/56: reutiliza los pasos, elecciones y avisos de BookingFlow ---------- */
+.ui-checkout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 32px); align-items: start; color: var(--fg); }
+.ui-checkout__main { min-width: 0; padding: clamp(18px, 3vw, 30px); display: grid; gap: 24px; }
+.ui-checkout--done { grid-template-columns: minmax(0, 720px); }
+.ui-checkout--done h2 { margin: 0; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.05; }
+.ui-checkout--done p { margin: 0; }
+.ui-checkout__fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ui-checkout__sum ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.ui-checkout__sum li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--ln); }
+.ui-checkout__sum li > span { grid-column: 1 / -1; display: grid; gap: 2px; }
+.ui-checkout__sum li small { color: var(--mut); }
+.ui-checkout__sum li > b { justify-self: end; }
+.ui-checkout__linea { display: flex; justify-content: space-between; gap: 12px; }
+.ui-checkout__total { padding-top: 10px; border-top: 1px solid var(--ln); font-size: 20px; color: var(--fg) !important; }
+@media (max-width: 760px) {
+  .ui-checkout { grid-template-columns: 1fr; }
+  .ui-checkout__sum { order: -1; position: static; }
+}

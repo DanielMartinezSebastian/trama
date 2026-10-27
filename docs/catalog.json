@@ -181,6 +181,7 @@
         "otp-input",
         "quantity-stepper",
         "option-picker",
+        "checkout-flow",
         "date-picker",
         "booking-flow",
         "appointment-list"
@@ -13905,6 +13906,47 @@
       ],
       "example": "import CartDrawer from \"@/components/ui/CartDrawer\";\n\n<CartDrawer />",
       "preview": "/componentes#cart-drawer"
+    },
+    {
+      "id": "checkout-flow",
+      "name": "Cierre del pedido",
+      "component": "CheckoutFlow",
+      "import": "import CheckoutFlow from \"@/components/ui/CheckoutFlow\";",
+      "category": "formularios",
+      "styles": [
+        "editorial",
+        "minimal",
+        "solid"
+      ],
+      "description": "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
+      "props": [
+        {
+          "key": "delivery",
+          "type": "select",
+          "default": "both",
+          "label": "Entrega",
+          "options": [
+            "both",
+            "shipping",
+            "pickup"
+          ]
+        },
+        {
+          "key": "freeShippingFrom",
+          "type": "number",
+          "default": 50,
+          "label": "Envío gratis desde",
+          "min": 0,
+          "max": 200
+        }
+      ],
+      "notes": [
+        "Las líneas vienen de useCart (como CartDrawer): `lines`, `onQty` y `onClear`. Pon su página en el `checkoutHref` del carrito.",
+        "Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.",
+        "Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56."
+      ],
+      "example": "import CheckoutFlow from \"@/components/ui/CheckoutFlow\";\n\n<CheckoutFlow />",
+      "preview": "/componentes#checkout-flow"
     },
     {
       "id": "blueprint-frame",

@@ -1658,6 +1658,19 @@ Círculos de color (con su nombre accesible) o chips de texto. Botones de radio 
 | `kind` | `swatch` · `chip` | "swatch" |
 | `label` | text | "Esmalte" |
 
+### Cierre del pedido — `CheckoutFlow`
+
+El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.
+
+| prop | tipo | default |
+|---|---|---|
+| `delivery` | `both` · `shipping` · `pickup` | "both" |
+| `freeShippingFrom` | number 0–200 | 50 |
+
+- Las líneas vienen de useCart (como CartDrawer): `lines`, `onQty` y `onClear`. Pon su página en el `checkoutHref` del carrito.
+- Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.
+- Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56.
+
 ### Selector de fecha y hueco — `DatePicker`
 
 Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), con antelación mínima, días cerrados, festivos y los huecos del día elegido. Cuadrícula ARIA con teclado completo (flechas, Inicio/Fin, RePág/AvPág). Valores en ISO: «2026-10-24» o «2026-10-24/2026-10-27».

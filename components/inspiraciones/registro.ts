@@ -7,6 +7,7 @@
 
 import { PAGINAS as citaPaginas } from "./cita/data";
 import { PAGINAS as matizPaginas } from "./matiz/data";
+import { PAGINAS as patronPaginas } from "./patron/data";
 
 export type Replica = {
   slug: string;
@@ -43,7 +44,7 @@ export const REPLICAS: Replica[] = [
   { slug: "cita", nombre: "Cita Barbers", ref: "Rendezvous", url: "https://www.myrendezvous.ca/", ficha: "§3.2", sector: "peluquería", firma: "naranja, serif con cursiva y palabras gigantes", hecha: true, guia: "barberia", acento: "#ff622b", scroll: "snappy", paginas: citaPaginas, transicion: "wipe" },
   { slug: "melena", nombre: "Melena", ref: "Hair Me Up", url: "https://hairmeup.pl", ficha: "§3.2", sector: "peluquería", firma: "arco melocotón y palabras de fondo; salón, tienda y academia", hecha: true, guia: "salon", acento: "#f4b39a" },
   { slug: "raiz", nombre: "Raíz", ref: "Marco Ambrosi", url: "https://www.marcoambrosi.salon/", ficha: "§3.2", sector: "peluquería", firma: "oscuro y cobre, antes y después", hecha: true, guia: "barberia", acento: "#b87333" },
-  { slug: "patron", nombre: "Patrón", ref: "Don Barber & Groom", url: "https://don-barber.gr/en", ficha: "§3.2", sector: "peluquería", firma: "gótica condensada, cinta y la familia", hecha: true, guia: "barberia", acento: "#c9a227" },
+  { slug: "patron", nombre: "Patrón", ref: "Don Barber & Groom", url: "https://don-barber.gr/en", ficha: "§3.2", sector: "peluquería", firma: "gótica condensada, cinta y la familia", hecha: true, guia: "barberia", acento: "#c9a227", paginas: patronPaginas, transicion: "slide" },
   { slug: "nucleo", nombre: "Núcleo", ref: "Core Atelier Pilates", url: "https://coreatelierpilates.com/", ficha: "§3.4", sector: "gimnasio", firma: "acordeón de aparatos con la foto fija", hecha: true, guia: "boutique", acento: "#744c32", scroll: "snappy" },
   { slug: "impulso", nombre: "Impulso", ref: "Essor Fitness", url: "https://coachsportifecublens.com/", ficha: "§3.4", sector: "gimnasio", firma: "negro absoluto y titular a todo el ancho", hecha: true, guia: "club", acento: "#f2f2f2", scroll: "snappy" },
   { slug: "vive", nombre: "Vive", ref: "FIT AND YOU", url: "https://fit-and-you.webflow.io/", ficha: "§3.4", sector: "gimnasio", firma: "condensada naranja, damero y tarjetas ladeadas", hecha: true, guia: "club", acento: "#ff6a1a" },
