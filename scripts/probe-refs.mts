@@ -39,7 +39,7 @@ if (par && !par.every((u) => /^https?:\/\//.test(u ?? ""))) {
 }
 const HOVER = !flag("--no-hover");
 /** botones de avisos de cookies que se aceptan antes de medir (no los de «entrar» o «explorar» del cine: navegan) */
-const COOKIES = /^(accept|accept all|accept cookies|accepter|tout accepter|aceptar|aceptar todo|acepto|accetta|accetta tutti|accetto|akzeptieren|alle akzeptieren|aceitar|agree|i agree|allow|allow all|got it|ok|okay|entendido|zustimmen)\b/i;
+const COOKIES = /^(accept|accept all|accept cookies|accepter|tout accepter|aceptar|aceptar todo|acepto|accetta|accetta tutti|accetto|akzeptieren|alle akzeptieren|aceitar|agree|i agree|allow|allow all|got it|ok|okay|entendido|zustimmen|zaakceptuj|zaakceptuj wszystkie|akceptuj|accepteren|alles accepteren|acceptera|godkänn|hyväksy)\b/i;
 // tiempo máximo por página y tamaño (escritorio o móvil), en ms: `--limite 240`
 const LIMITE = Number(opt("--limite", "180")) * 1000;
 const WAIT = Number(opt("--wait", guidesBase ? "2500" : "7000"));
@@ -104,7 +104,9 @@ function probe() {
   const biggest = [...seen]
     .filter((el) => {
       const r = el.getBoundingClientRect();
-      return r.width > 4 && r.height > 4 && r.top < H && r.bottom > 0;
+      // un menú cerrado (opacidad 0) no es el titular aunque esté en la primera pantalla (Core Atelier: «careers»)
+      const visible = (el as Element & { checkVisibility?: (o: object) => boolean }).checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) ?? true;
+      return visible && r.width > 4 && r.height > 4 && r.top < H && r.bottom > 0 && r.left < W && r.right > 0;
     })
     .map((el) => ({ el, cs: getComputedStyle(el) }))
     .map((x) => ({ ...x, pintado: parseFloat(x.cs.fontSize) * ((x.el as HTMLElement).offsetWidth > 0 ? x.el.getBoundingClientRect().width / (x.el as HTMLElement).offsetWidth : 1) }))

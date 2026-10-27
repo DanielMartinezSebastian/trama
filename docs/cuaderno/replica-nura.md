@@ -18,7 +18,7 @@ patrones: [collage de fotos, equipo en filas, reserva por persona, barra inferio
 movimiento: [desenfoque al bajar]
 piezas: [GradientField, TeamSection]
 piezas-nuevas: [TeamSection]
-relacionados: [estudio-peluqueria, pieza-team-section, demo-hebra]
+relacionados: [estudio-peluqueria, pieza-team-section, demo-hebra, herramienta-probe-par]
 ---
 
 ## Concepto
@@ -49,6 +49,32 @@ fotos y los cuadros. Las fotos del collage se desenfocan y se funden al bajar.
 - `RetroShapes` necesita lienzo propio. Para «arte» generativo dentro de una tarjeta basta `GradientField`.
 - Una sola letra a 14 px aguanta una web entera si el contraste y el espaciado son buenos.
 
+## Iteración con el par (27-10-2026)
+
+`npm run refs:probe -- --par https://www.alicehairart.se/ http://localhost:3020/lab/estudios/nura --nombre nura`, la
+sonda de estilos y los bordes izquierdos de la réplica. Informe en `.refs3d/pares/nura/par.md`.
+
+- **Antes, 6 de 11 medidas válidas.** La primera pantalla de ALICE es un collage sin titular, así que el titular no se
+  compara.
+  - **Margen**: ALICE pega todo a **8 px** del borde, y la réplica iba a 12.
+  - **Equipo**: las filas van a todo el ancho, de 348 px de alto sobre #dedede, y cada fila **entera es un enlace** con el
+    nombre que se subraya al pasar.
+  - **Barra fija**: once elementos con hover; los seis accesos de la barra de abajo se rellenan (fondo y una raya que
+    crece).
+- **Corregido**: márgenes de 8 px, filas de 348 px (520 en móvil), los hovers de la barra, el nombre, «ver todo» y el
+  botón del formulario.
+- **Después, 7 de 11.** Quedan:
+  - la letra (Px Grotesk es de pago);
+  - el margen medido, que sale a 224 px porque en la réplica la biografía va en la segunda columna y el enlace es un
+    botón, mientras que en ALICE la fila entera es el enlace pegado al borde;
+  - el número de hovers (4 frente a 11).
+
+## Aprendido en la iteración
+
+- `TeamSection layout="rows"` no permite que la fila entera sea el enlace (`rowLink`). En las peluquerías con reserva por
+  persona es lo natural: toda la fila lleva a reservar con esa persona.
+
 ## Siguiente
 
-Medir el par y probar el conmutador con barra como variante de `Tabs` o `SegmentedControl`.
+- Valorar `TeamSection rowLink`: la fila entera como enlace, con el nombre subrayado al pasar.
+- El conmutador «Hair / & Art» con la barra que se rellena.

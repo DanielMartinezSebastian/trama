@@ -71,3 +71,32 @@
   .me-pildora--fija { flex: 1; }
 }
 .me-curso .me-pildora { justify-self: center; }
+
+/* medidas de Hair Me Up con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-melena.md): DM Serif Display
+   y Lora, las del original (libres, cargadas en la réplica); titular 125 px (8,7 vw)/1 sin tracking; las frases de sección
+   a 64 px/1,28 y la de la academia a 48 px; servicios a 56 px/1,4; texto 16/1,6; botones en Lora 600 a 16 px, 55 px de
+   alto; la navegación con un subrayado que crece (::after) y las píldoras que cambian de fondo y suben; el final en
+   melocotón con el boletín */
+.me { --display: var(--me-dm), var(--font-gloock), serif; --me-txt: var(--me-lora), var(--font-newsreader), serif; }
+.me-hero h1 { font-size: 8.7vw; letter-spacing: 0; }
+.me-sobre .ui-sh h2, .me-embajada .ui-sh h2, .me-blog .ui-sh h2 { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.28; letter-spacing: 0; }
+.me-academia .ui-sh h2 { font-size: clamp(30px, 3.3vw, 48px); line-height: 1.28; letter-spacing: 0; }
+.me-servicios h2 { font-size: clamp(34px, 3.9vw, 56px); line-height: 1.4; }
+.me-pildora { min-height: 55px; padding: 0 26px; font: 600 16px/1.2 var(--me-txt); transition: background-color 0.25s, translate 0.25s; }
+.me-pildora:hover { background: #7d3210; translate: 0 -2px; }
+.me-head nav { font-size: 16px; }
+.me-head nav a { position: relative; }
+.me-head nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
+.me-head nav a:hover::after { width: 100%; }
+.me-nota { transition: transform 0.25s; }
+.me-nota:hover { transform: translateX(-4px); }
+.me-pie { display: grid; grid-template-columns: 1fr; gap: 60px; padding: 100px 4vw 160px; background: #ffd5bf; color: var(--fg); }
+.me-pie__boletin { display: grid; gap: 16px; max-width: 30em; }
+.me-pie__boletin h2, .me-pie__boletin h3 { margin: 0; font: 400 clamp(38px, 4.4vw, 64px)/1.28 var(--display); }
+.me-pie__boletin p { margin: 0; font-size: 20px; }
+.me-pie__datos { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 30px; }
+.me-pie__datos nav { display: grid; gap: 6px; }
+@media (max-width: 760px) {
+  .me-hero h1 { font-size: 16vw; }
+  .me-pie__datos { grid-template-columns: 1fr; }
+}

@@ -2,7 +2,11 @@
 
 import BeforeAfter from "@/components/ui/BeforeAfter";
 import TestimonialSection from "@/components/ui/TestimonialSection";
+import { Outfit } from "next/font/google";
 import "./raiz.css";
+
+// Outfit, la sans fina del original, es libre: se carga en la réplica (docs/cuaderno/replica-raiz.md)
+const outfit = Outfit({ weight: ["300", "500"], subsets: ["latin"], variable: "--rz-outfit", display: "swap" });
 
 /*
  * Raíz Concept Salon: réplica de Marco Ambrosi (docs/50 §3.2), un salón especialista en extensiones. Oscuro con cobre,
@@ -51,7 +55,7 @@ const Whatsapp = ({ texto = "Reserva por WhatsApp" }: { texto?: string }) => (
 
 export default function Raiz() {
   return (
-    <div className="rz">
+    <div className={`rz ${outfit.variable}`}>
       <header className="rz-head">
         <a href="#inicio" className="rz-logo"><span aria-hidden>R</span><b>Raíz<small>Concept Salon</small></b></a>
         <nav aria-label="Principal">

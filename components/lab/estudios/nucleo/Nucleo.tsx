@@ -3,7 +3,14 @@
 import { useState } from "react";
 import ClassSchedule, { type ScheduleBooking } from "@/components/ui/ClassSchedule";
 import FeatureExplorer from "@/components/ui/FeatureExplorer";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import { Albert_Sans, Crimson_Pro } from "next/font/google";
 import "./nucleo.css";
+
+// Minion Pro (de pago) → Crimson Pro, su alternativa libre más cercana; Albert Sans, la del original, es libre. Se cargan
+// en la réplica, no en el kit (docs/cuaderno/replica-nucleo.md)
+const crimson = Crimson_Pro({ subsets: ["latin"], style: ["normal", "italic"], variable: "--nc-crimson", display: "swap" });
+const albert = Albert_Sans({ subsets: ["latin"], variable: "--nc-albert", display: "swap" });
 
 /*
  * Núcleo, estudio de pilates: réplica de Core Atelier Pilates (docs/50 §3.4). Rosa empolvado, marrón y casi negro; serif
@@ -30,7 +37,8 @@ const CLASES = "08:00|Reformer|50|Reformer|Todos|Inés|Estudio 1|3|2|1,2,3,4,5\n
 export default function Nucleo() {
   const [reservas, setReservas] = useState<ScheduleBooking[]>([]);
   return (
-    <div className="nc">
+    <div className={`nc ${crimson.variable} ${albert.variable}`}>
+      <SmoothScroll />
       <header className="nc-head">
         <a href="#inicio" className="nc-logo">núcleo</a>
         <nav aria-label="Principal">

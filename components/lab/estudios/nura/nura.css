@@ -88,3 +88,23 @@
   .nu-pie { grid-template-columns: 1fr; padding-top: 80px; }
   .nu-barra-fija { grid-template-columns: auto auto; font-size: 10px; }
 }
+
+/* medidas de ALICE con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-nura.md): todo a 8 px del borde;
+   el equipo en filas a todo el ancho de 348 px sobre #dedede, con el nombre que se subraya al pasar; la barra fija de
+   abajo con cada acceso que se rellena (fondo y una raya que crece); en móvil, filas más altas como el original */
+.nu-hero, .nu-equipo, .nu-arte, .nu-pie { padding-inline: 8px; }
+.nu-barra-fija { padding-inline: 8px; }
+.nu-equipo .ui-team__row { min-height: 348px; background: #dedede; margin-bottom: 0; border-bottom: 2px solid #f5f5f5; transition: background-color 0.2s; }
+.nu-equipo .ui-team__row:hover strong, .nu-equipo .ui-team__row:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+.nu-barra-fija a { position: relative; padding: 2px 6px; transition: background-color 0.2s, color 0.2s; }
+.nu-barra-fija a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: currentColor; transition: width 0.35s; }
+.nu-barra-fija a:hover { background: #fff; color: #000; }
+.nu-barra-fija a:hover::after { width: 100%; }
+.nu-vertodo { transition: background-color 0.2s; }
+.nu-vertodo:hover { background: #111; color: #f5f5f5; }
+.nu-form button { transition: background-color 0.2s; }
+.nu-form button:hover { background: #000; }
+@media (max-width: 760px) {
+  .nu-equipo .ui-team__row { min-height: 520px; }
+  .nu-hero { min-height: 150svh; }
+}

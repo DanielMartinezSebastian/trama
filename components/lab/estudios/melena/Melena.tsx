@@ -4,7 +4,12 @@ import Carousel from "@/components/ui/Carousel";
 import LogoCloud from "@/components/ui/LogoCloud";
 import ProductCard from "@/components/ui/ProductCard";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { DM_Serif_Display, Lora } from "next/font/google";
 import "./melena.css";
+
+// las letras de Hair Me Up son libres: se cargan en la réplica, no en el kit (docs/cuaderno/replica-melena.md)
+const dmSerif = DM_Serif_Display({ weight: "400", style: ["normal", "italic"], subsets: ["latin", "latin-ext"], variable: "--me-dm", display: "swap" });
+const lora = Lora({ subsets: ["latin", "latin-ext"], variable: "--me-lora", display: "swap" });
 
 /*
  * Melena: réplica de Hair Me Up (docs/50 §3.2). Salón, tienda y academia en una sola web: arco melocotón detrás del nombre,
@@ -28,7 +33,7 @@ const CURSOS = [
 
 export default function Melena() {
   return (
-    <div className="me">
+    <div className={`me ${dmSerif.variable} ${lora.variable}`}>
       <header className="me-head">
         <a href="#inicio" className="me-sello" aria-label="Melena, inicio"><span>m</span></a>
         <nav aria-label="Principal">
@@ -107,13 +112,22 @@ export default function Melena() {
         <LogoCloud label="" brands="RITUAL, OLEA, BRUMA, NÁCAR, SALVIA, ÁMBAR" variant="minimal" />
       </section>
 
+      {/* el final de Hair Me Up, en melocotón: «mantente al día» con el boletín y el pie */}
       <footer className="me-pie" id="contacto">
-        <div><strong>Melena</strong><p>Gran Vía 31 · Calle del Arenal 9<br />Madrid</p></div>
-        <div><p>hola@melena.example<br />910 000 000</p></div>
-        <form onSubmit={(e) => e.preventDefault()} className="me-boletin">
-          <label>Boletín<input type="email" placeholder="tu correo" /></label>
-          <button type="submit" className="me-pildora">Apuntarme</button>
-        </form>
+        <div className="me-pie__boletin">
+          <h2>Mantente al día con nosotras</h2>
+          <h3>Boletín</h3>
+          <p>Apúntate al boletín y recibe primero las novedades, las promociones y los cursos de la academia.</p>
+          <form onSubmit={(e) => e.preventDefault()} className="me-boletin">
+            <label><span className="ui-sr">Correo</span><input type="email" placeholder="tu correo" /></label>
+            <button type="submit" className="me-pildora">Apuntarme</button>
+          </form>
+        </div>
+        <div className="me-pie__datos">
+          <div><strong>Melena</strong><p>Gran Vía 31 · Calle del Arenal 9<br />Madrid</p></div>
+          <div><p>hola@melena.example<br />910 000 000</p></div>
+          <nav aria-label="Pie"><a href="#equipo">Conócenos</a><a href="#servicios">Precios</a><a href="#blog">Blog</a><a href="#academia">Academia</a><a href="#tienda">Tienda</a></nav>
+        </div>
       </footer>
 
       <a href="#contacto" className="me-nota" aria-label="Nota 5,0: ver opiniones">

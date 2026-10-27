@@ -82,3 +82,33 @@
   .rz-razones, .rz-tarjetas, .rz-compara, .rz-ad, .rz-rejilla, .rz-pie { grid-template-columns: 1fr; }
   .rz-clips { grid-template-columns: 1fr 1fr; }
 }
+
+/* medidas de Marco Ambrosi con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-raiz.md): Playfair 600 con
+   +0,2 % (titular 69 px/1,08, secciones 46 px, tarjetas 19–22 px); Outfit 300 a 19/17/15 px con interlineado 1,65; margen
+   154 px (contenido de 1132); más aire entre secciones; la navegación con subrayado que crece y los botones que suben */
+.rz { --rz-sans: var(--rz-outfit), var(--font-manrope), sans-serif; font-size: 15px; }
+.rz h1, .rz h2, .rz h3 { font-weight: 600; letter-spacing: 0.002em; line-height: 1.08; }
+.rz-hero h1 { font-size: 69px; }
+.rz h2 { font-size: 46px; }
+.rz h3 { font-size: 21px; }
+.rz-hero p { font-size: 19px; }
+.rz-intro, .rz-intro p { font-size: 17px; }
+.rz-head, .rz-hero, .rz-resenas, .rz-pie { padding-inline: max(24px, calc((100vw - 1132px) / 2)); }
+.rz-porque, .rz-servicios, .rz-antes, .rz-trabajos, .rz-movimiento { padding-block: 130px; padding-inline: max(24px, calc((100vw - 1132px) / 2)); }
+.rz-head nav a { position: relative; transition: color 0.2s; }
+.rz-head nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px; background: var(--acc); transition: width 0.3s; }
+.rz-head nav a:hover { color: var(--fg); }
+.rz-head nav a:hover::after { width: 100%; }
+.rz-wa, .rz-borde { min-height: 58px; padding-inline: 28px; font-size: 16px; font-weight: 500; transition: transform 0.25s, color 0.2s, border-color 0.2s; }
+.rz-wa:hover, .rz-borde:hover { transform: translateY(-2px); }
+.rz-borde:hover { border-color: var(--acc); color: var(--acc) !important; }
+@media (max-width: 760px) {
+  .rz-hero h1 { font-size: 40px; }
+  .rz h2 { font-size: 32px; }
+  .rz-porque, .rz-servicios, .rz-antes, .rz-trabajos, .rz-movimiento { padding-block: 80px; }
+}
+.rz p { font-size: 15px; }
+.rz-tarjeta p, .rz-compara p, .rz-servicios p { max-width: 29em; }
+.rz .rz-hero p { font-size: 19px; color: #c3c8cc; }
+.rz .rz-intro, .rz .rz-intro p { font-size: 17px; }
+.rz-head nav { color: #c3c8cc; }

@@ -56,3 +56,19 @@
 .nc-aparatos .ui-fexp__body p { padding: 0 0 18px 24px; font-size: 15px; color: #fff; }
 .nc-intro h1 { position: relative; z-index: 1; }
 .nc-aparatos .ui-fexp { align-items: start; }
+
+/* medidas de Core Atelier con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-nucleo.md): Minion Pro →
+   Crimson Pro y Albert Sans (las dos cargadas en la réplica); titulares 80 px (5,6 vw)/0,85 a −1 %, secciones 70 px/0,86;
+   texto 18/1,39 a +0,8 %; botones en píldora de 40 px en Albert Sans 500 a 16 px; «Entrar» con un subrayado que crece y
+   la flecha que se desplaza; Lenis */
+.nc { --display: var(--nc-crimson), var(--font-cormorant-garamond), serif; --nc-sans: var(--nc-albert), var(--font-inter), sans-serif; font-size: 18px; line-height: 1.39; letter-spacing: 0.008em; }
+.nc h1 { font-size: 5.6vw; line-height: 0.85; letter-spacing: -0.01em; }
+.nc h2 { font-size: clamp(44px, 4.9vw, 70px); line-height: 0.86; letter-spacing: -0.01em; }
+.nc-entrar { position: relative; padding-right: 18px; }
+.nc-entrar::before { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
+.nc-entrar::after { content: "→"; position: absolute; right: 0; transition: transform 0.3s; }
+.nc-entrar:hover::before { width: calc(100% - 18px); }
+.nc-entrar:hover::after { transform: translateX(4px); }
+.nc-head nav { font-size: 16px; }
+@media (max-width: 760px) { .nc h1 { font-size: 14.1vw; } }
+.nc p { font-size: 18px; line-height: 1.39; }

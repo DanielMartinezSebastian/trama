@@ -14,11 +14,11 @@ guia: [academia de autor]
 tono: [cercano, personal, lúdico]
 paleta: [fondo claro, dos acentos]
 tipografia: [minúsculas, títulos entre paréntesis]
-patrones: [autor como marca fija, ilustración de línea, programas por convocatoria, billete troquelado, principios con foto, cifras, primera clase gratis, sombra dura desplazada, testimonios]
-movimiento: [trazo que se dibuja]
-piezas: [CohortList, LineDraw]
+patrones: [autor como marca fija, ilustración de línea, programas por convocatoria, billete troquelado, principios con foto, cifras, primera clase gratis, sombra dura desplazada, testimonios, vlogs, preguntas frecuentes, formulario de contacto]
+movimiento: [trazo que se dibuja, scroll suavizado]
+piezas: [CohortList, LineDraw, FAQSection, ContactForm, SmoothScroll]
 piezas-nuevas: [CohortList]
-relacionados: [estudio-academia, pieza-cohort-list, replica-oficio]
+relacionados: [estudio-academia, pieza-cohort-list, replica-oficio, herramienta-probe-par]
 ---
 
 ## Concepto
@@ -53,6 +53,31 @@ paréntesis y asteriscos, garabatos a mano y viajes por convocatoria.
 - La convocatoria (destino, nivel, fechas por mes, estado) se repetía en las tres academias. Merecía pieza: `CohortList`.
 - El avatar fijo no debe tapar el contenido en móvil. La réplica lo encoge a 46 px y lo arrima a la esquina (27-10-2026).
 
+## Iteración con el par (27-10-2026)
+
+`npm run refs:probe -- --par https://surfing.academy/ http://localhost:3020/lab/estudios/remada --nombre remada`, la sonda
+de estilos y la tira del original. Informe en `.refs3d/pares/remada/par.md`.
+
+- **Antes, 6 de 16 medidas cerca, y 5,5 pantallas frente a 13,9.** Faltaba la segunda mitad de la web:
+  - los vlogs;
+  - «freedom, humor, friendship», con fotos sueltas y un trazo;
+  - las preguntas frecuentes;
+  - «contacts» gigante con el formulario sobre naranja;
+  - el pie con la navegación y los destinos.
+- **Otras diferencias**:
+  - Hauora va en peso **400 sin tracking** (titular de 100 px, 6,9 vw), y la réplica usaba 600 con −3 %;
+  - los destinos van a 45 px;
+  - el margen es de 120 px (34 en móvil);
+  - el original usa Lenis.
+- **Corregido**: el final completo con `FAQSection`, `ContactForm` y `LineDraw`; las medidas; `SmoothScroll`; y el avatar
+  fijo más pequeño en móvil.
+- **Después, 15 de 16.** Solo queda la letra (Hauora es de pago; Onest la sustituye).
+
+## Aprendido en la iteración
+
+- La academia de autor alarga la web con contenido personal (vlogs, fotos de grupo, preguntas): la marca es la persona y
+  su comunidad. En la plantilla de academia de autor, ese tramo es obligatorio.
+
 ## Siguiente
 
-Medir el par.
+- La tarjeta verde de «mi misión» con la foto de la ola.
