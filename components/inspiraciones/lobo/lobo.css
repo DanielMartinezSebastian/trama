@@ -114,3 +114,33 @@
 .lb-hero__txt p { max-width: 27em; }
 .lb-boton { border: 1px solid transparent; }
 .lb-boton:hover { color: var(--acc) !important; border-color: currentColor; }
+
+/* ---------- varias páginas (docs/56) ---------- */
+.lb-bolsa { margin-left: auto; border: 0; background: none; color: #fff; font: 400 18px var(--lb-cond); cursor: pointer; }
+.lb-bolsa:hover { text-decoration: underline; }
+.lb-pie a:hover, .lb-menu a:hover { text-decoration: underline; }
+.lb-aviso { margin: 12px 0 0; padding: 12px 16px; border-left: 6px solid; border-image: var(--lb-grad) 1; background: #f3f3f3; }
+.lb-aviso a { text-decoration: underline; }
+
+.lb-pag { display: grid; gap: 40px; align-content: start; min-height: 100svh; padding: 50px 6vw 120px; }
+.lb-pag__cab { display: grid; gap: 14px; }
+.lb-pag__cab .lb-sub { margin: 0; text-align: left; }
+.lb-pag__cab p { margin: 0; max-width: 40em; }
+.lb-volver { justify-self: start; font: 400 20px var(--lb-cond); }
+.lb-volver:hover { text-decoration: underline; }
+.lb-ficha { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 5vw; align-items: start; }
+.lb-ficha img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.15); }
+.lb-ficha > div { display: grid; gap: 18px; justify-items: start; }
+.lb-ficha p { margin: 0; max-width: 34em; }
+.lb-precio { font: 400 34px var(--lb-cond); }
+.lb-pasos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.lb-pasos li { display: grid; gap: 8px; padding: 18px; background: #000; color: #fff; }
+.lb-pasos b { font: 400 40px var(--lb-cond); background: var(--lb-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lb-flujo { --ui-book-top: 80px; }
+.lb-flujo legend, .lb-flujo h2, .lb-flujo h3 { font-family: var(--lb-cond); font-weight: 400; text-transform: uppercase; }
+.lb-contacto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5vw; }
+@media (max-width: 760px) {
+  .lb-ficha, .lb-contacto, .lb-pasos { grid-template-columns: 1fr; }
+  .lb-pag { padding: 40px 16px 100px; }
+}
+.lb-pista { margin: 0 0 12px; font-size: 14px; color: #555; }
