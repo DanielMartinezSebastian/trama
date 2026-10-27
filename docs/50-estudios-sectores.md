@@ -163,8 +163,18 @@ el kit si es versátil (E12). Fotos provisionales del repo hasta que lleguen las
   3 estudios, las 16 réplicas, las 4 demos reformadas y las 7 piezas (27-10-2026).
 - [x] **E14b · `refs:probe` ampliado**: paleta por superficie, radios, curvas, hover y modo `--par` (docs/53 §3).
 - [x] **E14c · Q47 frente a K72**: de 10 a 19 de 20 medidas; `FullscreenMenu triggerHover="fill"` (docs/53 §4).
-- [ ] **E14d · Par y ficha de las otras 15 réplicas**, una a una, en este orden (de más a menos lejos a ojo): Abuela Rosa,
-  Matiz, Impulso, Cita, Vive, Talla, Patrón, Lobo, Oficio, Ahora, Remada, Melena, Raíz, Nura, Núcleo.
+- [x] **E14d · Par y ficha de las otras 15 réplicas** (27-10-2026): medidas, corregidas y anotadas en su ficha; tabla
+  final en docs/53 §4b.
+  - Siete réplicas eran **media web** y se completaron hasta el final del original: Impulso, Cita, Vive, Talla, Lobo,
+    Remada y Oficio.
+  - Las letras libres de cada original se cargan en su réplica.
+  - La sonda ganó siete arreglos por el camino (docs/53 §3).
+- [x] **E14g · Kit**, de lo que se repitió al medir:
+  - `NavBar linkHover="underline"`;
+  - `RollLink fade`;
+  - `TeamSection rowLink`;
+  - `FullscreenMenu triggerHover="fill"`;
+  - la letra Antonio.
 - [ ] **E14e · Movimiento por scroll** en las que lo tienen (Rendezvous, Essor, Il Colorista, Peppa Sauce): `cine:capture`
   + `cine:compare` sobre el par.
 - [ ] **E14f · Páginas internas**: un par por página que importe (la de trabajo de K72, la carta de Il Colorista).

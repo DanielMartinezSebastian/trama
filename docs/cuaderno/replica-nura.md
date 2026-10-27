@@ -74,7 +74,11 @@ sonda de estilos y los bordes izquierdos de la réplica. Informe en `.refs3d/par
 - `TeamSection layout="rows"` no permite que la fila entera sea el enlace (`rowLink`). En las peluquerías con reserva por
   persona es lo natural: toda la fila lleva a reservar con esa persona.
 
+## Después de ampliar el kit (27-10-2026)
+
+`TeamSection rowLink` (nuevo): la fila entera es el enlace de reserva y el nombre se subraya al pasar. Con él, el margen
+coincide (8 px) y el par sube a **8 de 11**.
+
 ## Siguiente
 
-- Valorar `TeamSection rowLink`: la fila entera como enlace, con el nombre subrayado al pasar.
 - El conmutador «Hair / & Art» con la barra que se rellena.

@@ -65,6 +65,9 @@ y la sonda de estilos. Informe en `.refs3d/pares/ahora/par.md`.
 - **Después, 18 de 19.** El largo de página no es comparable: la sonda mide FLA en 7,3 pantallas y el par en 22,4, porque
   la web no se desplaza bien con la rueda sintética (ya se vio en el estudio, docs/50 §3.6). La réplica tiene 8,4.
 
+Segunda medida, con la sonda que solo mira lo visible: el titular de FLA entra palabra a palabra y va a −5 % con
+interlineado 1 (10,8 vw en móvil), y la navegación cambia de color y saca un borde al pasar. Corregido: **19 de 20**.
+
 ## Aprendido en la iteración
 
 - Un tracking negativo constante en todos los tamaños (−2 % en el texto, −8 % en el titular) es lo que hace reconocible

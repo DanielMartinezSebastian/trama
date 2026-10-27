@@ -108,3 +108,4 @@
   .nu-equipo .ui-team__row { min-height: 520px; }
   .nu-hero { min-height: 150svh; }
 }
+.nu-equipo .ui-team__row--link .ui-team__link { display: inline-flex; }

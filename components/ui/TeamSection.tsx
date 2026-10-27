@@ -36,6 +36,9 @@ export type TeamSectionProps = {
   align?: "center" | "left";
   /** texto del enlace de cada persona («Reservar», «Instagram»); "" = sin enlaces */
   linkLabel?: string;
+  /** con layout="rows": la fila entera es el enlace de la persona y su nombre se subraya al pasar (ALICE: toda la fila lleva
+   * a reservar con esa estilista; docs/cuaderno/replica-nura.md) */
+  rowLink?: boolean;
   /** tamaño del titular de la cabecera (`SectionHeader`) */
   titleSize?: "md" | "giant";
   /** palabra de fondo de la cabecera (`SectionHeader`); "" = sin ella */
@@ -58,7 +61,7 @@ const initials = (name: string) =>
  * Cabecera de sección + perfiles del equipo. Con foto (marco y tratamiento a elegir) o, si falta, el avatar de iniciales;
  * biografía y un enlace por persona para reservar con ella. En rejilla, en carrusel, en filas o en muro.
  */
-export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, members, layout = "grid", perView = 3, autoplay = 0, shape = "portrait", photoTone = "color", align = "center", linkLabel = "Reservar", titleSize = "md", backdrop = "", variant = "glass", className = "" }: TeamSectionProps) {
+export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, members, layout = "grid", perView = 3, autoplay = 0, shape = "portrait", photoTone = "color", align = "center", linkLabel = "Reservar", rowLink = false, titleSize = "md", backdrop = "", variant = "glass", className = "" }: TeamSectionProps) {
   const list: TeamMember[] =
     members ??
     people
@@ -100,6 +103,22 @@ export default function TeamSection({ kicker = "El equipo", title = "Quién te v
         {linkLabel} <span aria-hidden>→</span>
       </a>
     );
+    if (rows && rowLink && href) {
+      // la fila entera es el enlace: dentro no puede haber otro, así que la etiqueta se pinta como texto
+      return (
+        <a key={name + i} className="ui-team__row ui-team__row--link" href={href}>
+          <div className="ui-team__who">
+            <strong>{name}</strong>
+            {role && <span className="ui-team__role">{role}</span>}
+          </div>
+          <div className="ui-team__about">
+            {bio && <p>{bio}</p>}
+            {linkLabel && <span className="ui-team__link">{linkLabel} <span aria-hidden>→</span></span>}
+          </div>
+          {media}
+        </a>
+      );
+    }
     return rows ? (
       <div key={name + i} className="ui-team__row">
         <div className="ui-team__who">

@@ -118,3 +118,9 @@
   .ah-intro, .ah-proximos, .ah-logos { padding-block: 80px; }
   .ah-grupo { height: 60svh; }
 }
+/* segunda medida (sonda con titular solo visible): el titular de FLA va a −5 % e interlineado 1 (10,8 vw en móvil) y la
+   navegación cambia de color y saca un borde inferior al pasar */
+.ah-hero h1 { letter-spacing: -0.05em; line-height: 1; }
+.ah-head nav a { border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.ah-head nav a:hover { color: #000; border-color: currentColor; }
+@media (max-width: 760px) { .ah-hero h1 { font-size: 10.8vw; } }

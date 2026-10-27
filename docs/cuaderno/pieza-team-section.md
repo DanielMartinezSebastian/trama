@@ -18,7 +18,7 @@ patrones: [equipo con fotos, equipo en filas, retratos B/N, muro de profesores, 
 movimiento: []
 piezas: [TeamSection]
 piezas-nuevas: [TeamSection]
-relacionados: [estudio-peluqueria, estudio-academia, replica-matiz, replica-nura, replica-ahora, demo-hebra, demo-esparta]
+relacionados: [estudio-peluqueria, estudio-academia, replica-matiz, replica-nura, replica-ahora, demo-hebra, demo-esparta, herramienta-probe-par]
 ---
 
 ## Concepto
@@ -36,6 +36,8 @@ Cinco de seis salones enseñan al equipo con fotos, en blanco y negro en cuatro.
 - `photoTone`: `color`, `mono` o `mono-hover`.
 - `layout`: `grid`, `carousel`, `rows` o `wall`.
 - `linkLabel`, `titleSize` y `backdrop`.
+- `rowLink` (27-10-2026, de medir el par de ALICE): con `layout="rows"`, la fila entera es el enlace de la persona y
+  el nombre se subraya al pasar.
 
 ## Aprendido
 

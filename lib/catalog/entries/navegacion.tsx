@@ -56,6 +56,7 @@ export const navegacion: CatalogEntry[] = [
       { key: "layout", label: "Disposición", type: "select", default: "classic", options: ["classic", "left", "right", "center", "split", "stacked", "minimal"], labels: { classic: "clásica (marca · enlaces · acciones)", left: "enlaces junto a la marca", right: "enlaces junto a las acciones", center: "enlaces centrados", split: "marca en el centro", stacked: "dos filas (búsqueda arriba, secciones abajo)", minimal: "mínima (marca + menú)" } },
       { key: "slots", label: "Piezas a medida (sustituye a la disposición)", type: "text", default: "", hint: "brand links search actions spacer menu · | nueva fila · / columnas" },
       { key: "shape", label: "Forma de la barra", type: "select", default: "island", options: ["island", "full", "contained", "floating", "transparent", "underline"], labels: { island: "tarjeta", full: "de borde a borde", contained: "de borde a borde, contenido centrado", floating: "píldora flotante", transparent: "transparente", underline: "solo línea inferior" } },
+      { key: "linkHover", label: "Enlaces al pasar", type: "select", default: "color", options: ["color", "underline"], labels: { color: "cambian de color", underline: "raya que crece" } },
       { key: "size", label: "Densidad", type: "select", default: "md", options: ["sm", "md", "lg"] },
       { key: "bleed", label: "Ocupar el ancho de la ventana", type: "boolean", default: false, hint: "sale de los márgenes de su contenedor" },
       { key: "search", label: "Búsqueda", type: "select", default: "bar", options: ["none", "bar", "inline", "button", "command"], labels: { none: "sin búsqueda", bar: "barra de búsqueda", inline: "campo compacto", button: "icono → paleta", command: "botón ⌘K → paleta" } },
@@ -90,6 +91,7 @@ export const navegacion: CatalogEntry[] = [
             layout={p.layout as never}
             slots={p.slots as string}
             shape={p.shape as never}
+            linkHover={p.linkHover as never}
             size={p.size as never}
             bleed={p.bleed as boolean}
             search={p.search as never}

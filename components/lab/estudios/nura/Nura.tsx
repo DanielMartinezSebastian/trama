@@ -94,6 +94,7 @@ export default function Nura() {
           photoTone="mono"
           shape="portrait"
           linkLabel="Reservar"
+          rowLink
           variant="minimal"
           members={[
             { name: "Nuria Vidal", role: "@nuria.nura", bio: "Fundadora del estudio. Más de diez años en todo tipo de cortes y colores, especialista en estilos personales hechos a la medida de cada clienta.", photo: "/img/hebra/equipo/alba.webp", href: "#reservar" },

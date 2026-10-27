@@ -73,7 +73,7 @@ export default function Lobo() {
         <div className="lb-hero__txt">
           <h1>ARTES MARCIALES.<br />DESDE VALLECAS.<br />CON CARIÑO.</h1>
           <p>Ven a entrenar con nosotros en el corazón de Vallecas. Te espera una comunidad estupenda con entrenadores que saben. Juntos sacamos lo mejor de ti.</p>
-          <RollLink href="#clases" label="Ver las clases" className="lb-boton" />
+          <RollLink fade href="#clases" label="Ver las clases" className="lb-boton" />
         </div>
         <i className="lb-franja" aria-hidden />
       </section>
@@ -96,7 +96,7 @@ export default function Lobo() {
         <div>
           <h2>CLASE DE PRUEBA</h2>
           <p>Reserva una clase de prueba gratis o apúntate a uno de nuestros cursos de iniciación. En la página de la clase de prueba te contamos cómo funciona.</p>
-          <RollLink href="#horario" label="Más sobre la prueba" className="lb-boton" />
+          <RollLink fade href="#horario" label="Más sobre la prueba" className="lb-boton" />
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`${F}tecnica.webp`} alt="" loading="lazy" />
@@ -107,7 +107,7 @@ export default function Lobo() {
         <h2 className="lb-sub">SOBRE NOSOTROS</h2>
         <p>Abrimos en 2010 y desde entonces estamos en la plaza de Vallecas. Empezamos como gimnasio de MMA y con los años nos hemos convertido en la casa de muchos deportes de combate, con foco en MMA, BJJ y Muay Thai.</p>
         <p>Siete días a la semana, el equipo y la comunidad llenan más de 140 clases, y en los tatamis grandes hay sitio para entrenar por tu cuenta o hacer sparring con amigos.</p>
-        <RollLink href="#nosotros" label="Saber más" className="lb-boton lb-boton--negro" />
+        <RollLink fade href="#nosotros" label="Saber más" className="lb-boton lb-boton--negro" />
         <ul className="lb-federaciones" aria-label="Federaciones"><li>FEDERACIÓN DE MUAY THAI</li><li>LIGA MMA</li><li>COPA BJJ</li></ul>
         <LogoCloud label="Nuestros socios" brands="Federación Madrileña, GEMMAF, AMMAG" variant="minimal" className="lb-socios" />
       </section>
@@ -126,7 +126,7 @@ export default function Lobo() {
               </div>
               <small>{e.dia}</small>
               <p>{e.texto}</p>
-              <RollLink href="#eventos" label="Más información" className="lb-boton" />
+              <RollLink fade href="#eventos" label="Más información" className="lb-boton" />
             </article>
           ))}
         </div>
@@ -144,7 +144,7 @@ export default function Lobo() {
           <p>¿Tienes dudas sobre el gimnasio, las clases, la clase de prueba o la cuota? Mira nuestras preguntas frecuentes o escríbenos.</p>
           <FAQSection kicker="" title="" layout="stack" presentation="lines" align="left" defaultOpen={-1} variant="minimal" className="lb-faq__lista"
             items={"¿Necesito experiencia?|No. Cada disciplina tiene grupos de inicio.\n¿Qué me llevo a la clase de prueba?|Ropa cómoda, agua y ganas; los guantes te los dejamos.\n¿Puedo congelar la cuota?|Sí, hasta dos meses al año por lesión o viaje."} />
-          <p className="lb-faq__botones"><RollLink href="#contacto" label="Escríbenos" className="lb-boton" /><RollLink href="#contacto" label="E-mail" className="lb-boton" /><RollLink href="#contacto" label="Colaboraciones" className="lb-boton" /></p>
+          <p className="lb-faq__botones"><RollLink fade href="#contacto" label="Escríbenos" className="lb-boton" /><RollLink fade href="#contacto" label="E-mail" className="lb-boton" /><RollLink fade href="#contacto" label="Colaboraciones" className="lb-boton" /></p>
         </div>
         <div className="lb-mapa" aria-label="Mapa: Plaza de Vallecas 5"><i aria-hidden /></div>
       </section>
@@ -157,7 +157,7 @@ export default function Lobo() {
             <ProductCard key={t.title} {...t} meta="Lobo Gym" ratio="1 / 1" href="#tienda" variant="minimal" />
           ))}
         </div>
-        <RollLink href="#tienda" label="A la tienda" className="lb-boton lb-boton--negro" />
+        <RollLink fade href="#tienda" label="A la tienda" className="lb-boton lb-boton--negro" />
       </section>
 
       <footer className="lb-pie">

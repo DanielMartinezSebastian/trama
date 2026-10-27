@@ -65,6 +65,14 @@ html.lenis, html.lenis body { height: auto; }
 .ui-roll--down .ui-roll__in { transform: translateY(-50%); }
 .ui-roll:is(:hover, :focus-visible) .ui-roll__in { transform: translateY(-50%); }
 .ui-roll--down:is(:hover, :focus-visible) .ui-roll__in { transform: none; }
+/* fade: la copia que sale se funde y la que entra aparece */
+.ui-roll--fade .ui-roll__in > span { transition: opacity var(--dur-m) var(--ease-out); }
+.ui-roll--fade .ui-roll__in > span:last-child, .ui-roll--fade.ui-roll--down .ui-roll__in > span:first-child { opacity: 0; }
+.ui-roll--fade.ui-roll--down .ui-roll__in > span:last-child { opacity: 1; }
+.ui-roll--fade:is(:hover, :focus-visible) .ui-roll__in > span:first-child { opacity: 0; }
+.ui-roll--fade:is(:hover, :focus-visible) .ui-roll__in > span:last-child { opacity: 1; }
+.ui-roll--fade.ui-roll--down:is(:hover, :focus-visible) .ui-roll__in > span:first-child { opacity: 1; }
+.ui-roll--fade.ui-roll--down:is(:hover, :focus-visible) .ui-roll__in > span:last-child { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .ui-roll__in { transition: none; transform: none !important; } }
 
 /* ---------- FitText ---------- */

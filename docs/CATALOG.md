@@ -740,12 +740,13 @@ Efectos de sonido de 8 bits sintetizados en el navegador (lib/ui/sfx: moneda, go
 
 ### Enlace que rueda — `RollLink`
 
-Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.
+Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar (el «rolling text» de Essor, Fenriz o K72). Con fade, la palabra que sale se funde. Solo CSS.
 
 | prop | tipo | default |
 |---|---|---|
 | `label` | text | "Ver proyectos" |
 | `direction` | `up` · `down` | "up" |
+| `fade` | boolean | false |
 | `href` | text | "#" |
 
 ### Cursor de página con estados — `CustomCursor`
@@ -1313,6 +1314,7 @@ Barra de navegación completa: siete disposiciones (o piezas en el orden que qui
 | `layout` | `classic` · `left` · `right` · `center` · `split` · `stacked` · `minimal` | "classic" |
 | `slots` | text | "" |
 | `shape` | `island` · `full` · `contained` · `floating` · `transparent` · `underline` | "island" |
+| `linkHover` | `color` · `underline` | "color" |
 | `size` | `sm` · `md` · `lg` | "md" |
 | `bleed` | boolean | false |
 | `search` | `none` · `bar` · `inline` · `button` · `command` | "bar" |
@@ -2519,6 +2521,7 @@ Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avat
 | `photoTone` | `color` · `mono` · `mono-hover` | "color" |
 | `align` | `center` · `left` | "center" |
 | `linkLabel` | text | "Reservar" |
+| `rowLink` | boolean | false |
 | `titleSize` | `md` · `giant` | "md" |
 | `backdrop` | text | "" |
 | `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "glass" |

@@ -129,6 +129,24 @@ Lo de siempre (docs/16 F4) y, desde el 27-10-2026:
 | **Mayúsculas** | Por `text-transform` o porque el texto está escrito en mayúsculas | Antes daba «no» a un titular escrito en mayúsculas |
 | **Margen** | Solo con lo que se ve (`checkVisibility`, sin `inert` ni `aria-hidden`) | Un menú cerrado contaba como margen |
 
+### 3.0 Lo que aprendió la sonda al medir las 16 réplicas
+
+Cada fallo se arregló en la herramienta, no en la lectura:
+
+| Fallo | Dónde salió | Arreglo |
+|---|---|---|
+| El hover del original era el del aviso de cookies | Il Colorista | acepta los avisos antes de medir; solo los de cookies (en varios idiomas) y solo en botones o enlaces que no navegan |
+| Un color de `color-mix` se leía como negro | Matiz | lee `color(srgb …)` en 0–1 |
+| La base de la paleta era el `body` de la página anfitriona, tapado | Matiz | la base es el fondo opaco más profundo que cubre la página |
+| Con Lenis, `scrollTo(0, 0)` no volvía arriba | Impulso | vuelve con la rueda y espera a que se asiente |
+| Framer escribe el titular a 397 px y lo encoge con `transform` | Impulso | mide el tamaño pintado; el interlineado y el tracking, con el declarado |
+| «Inter Display» e «inter display» contaban como dos familias | Impulso | junta las familias sin distinguir mayúsculas |
+| Una página pesada colgaba la sonda más de 20 minutos | Oficio (Honhar) | límite por página (`--limite`, 180 s), cierre que no espera y salida al terminar |
+| Aceptar «Explore programs» sacaba la sonda de la página | Oficio (Honhar) | ver la primera fila |
+| Se comparaba un titular que no existe (escena, foto) | Oficio, Nura, Núcleo | sin texto de 24 px o más en la primera pantalla del original, el titular es informativo |
+| El «titular» era un enlace del menú cerrado | Núcleo (Core Atelier) | el titular se busca solo entre lo visible (`checkVisibility` con opacidad) |
+| 9999 («sin dato») se comparaba como un número | Q47 | el margen sin tres bloques alineados no se compara |
+
 ### 3.1 El modo par
 
 ```bash
@@ -179,14 +197,48 @@ Lo que no mide el par, y se mira con otras herramientas:
 
 La ficha está en [replica-q47](cuaderno/replica-q47.md).
 
+## 4b. Las 16 réplicas medidas (E14d, 27-10-2026)
+
+«Antes» es la primera medida de cada par, con la sonda de ese momento. «Después» es la medida final de las 16, en una
+sola pasada con la sonda definitiva (`.refs3d/pares/resumen.tsv`). Cada iteración está detallada en su ficha.
+
+| Réplica | Referencia | Antes | Después | Lo principal de la iteración |
+|---|---|---|---|---|
+| Q47 | K72 | 10/20 | **18/18** | titular ligero (300), botón de menú que se rellena (`triggerHover`), móvil |
+| Abuela Rosa | Peppa Sauce | 12/17 | **16/16** | las dos letras son estrechas; texto de tarjeta a 36 px |
+| Lobo | Fenriz | 11/20 | **20/20** | media web: bandas de foto, socios, preguntas, tienda, pie; Antonio; `RollLink fade` |
+| Raíz | Marco Ambrosi | 12/20 | **19/20** | Outfit, columna de 1132 px, subrayado que crece |
+| Impulso | Essor | 10/20 | **19/20** | media web (5 frente a 26 pantallas): nueve secciones, titulares que cruzan fijados, Lenis, `RollLink` |
+| Ahora | Future London Academy | 10/19 | **19/20** | tracking negativo constante; escala |
+| Cita | Rendezvous | 10/20 | **18/20** | el final en negro (preguntas, reserva, pie con foto); escala 124/340 px |
+| Talla | Skulpt | 11/20 | **18/20** | Antonio, oferta con foto fija, contacto en bloque curvo |
+| Vive | FIT AND YOU | 8/17 | **16/17** | Antonio (al kit), el final (mapa, «pon tu forma física primero», pie), hovers de la isla |
+| Matiz | Il Colorista | 13/20 | **16/19** | escala (texto a 24 px), mosaico de 350 px, cabecera de 138 px |
+| Remada | Surfing Academy | 6/16 | **15/16** | media web: vlogs, collage, preguntas, contacto, pie; Lenis |
+| Patrón | Don Barber | 12/17 | **15/17** | gótica más ligera (Antonio 400), cinta dentro de la portada |
+| Melena | Hair Me Up | 10/20 | **15/20** | DM Serif y Lora, final en melocotón, subrayado que crece |
+| Núcleo | Core Atelier | 14/20 | **13/14** | Crimson Pro y Albert Sans, Lenis; el titular dejó de compararse (menú cerrado) |
+| Oficio | Honhar | — | **9/12** | brocha con espaciado abierto (no condensada); el final completo |
+| Nura | ALICE | 6/11 | **8/11** | 8 px al borde, filas de 348 px; `TeamSection rowLink` |
+
+**Siete réplicas eran media web** (Impulso, Cita, Vive, Talla, Lobo, Remada, Oficio): el largo de página del par lo
+delató en todas. Lo que queda en ✗ es sobre todo la letra cuando la del original es de pago; está anotado en cada ficha.
+
 ## 5. Piezas que salen de medir pares
 
+Ficha común en [pieza-hovers-de-enlace](cuaderno/pieza-hovers-de-enlace.md) y [pieza-antonio](cuaderno/pieza-antonio.md).
+
 - `FullscreenMenu triggerHover="fill"`: el relleno del acento que baja sobre el botón y pasa el contenido al color del
-  fondo (K72). Es versátil para cualquier cabecera con un botón de menú en caja.
+  fondo (K72).
+- `NavBar linkHover="underline"`: la raya que crece bajo los enlaces. Sale en tres webs: Hair Me Up, Marco Ambrosi y
+  Core Atelier.
+- `RollLink fade`: el texto que rueda y se funde (Fenriz; el rodar solo, en Essor y K72).
+- `TeamSection rowLink`: la fila entera como enlace de la persona (ALICE).
+- **Antonio** en `lib/ui/fonts.ts`: condensada libre de varios pesos para el «club de alto contraste» y la «barbería de
+  carácter». Las letras propias de una sola web se cargan en su réplica.
 
 ## 6. Siguiente
 
-- Pasar el par a las otras 15 réplicas (E14 de docs/50) y cerrar sus fichas con el resultado.
 - Medir el movimiento por scroll en las que lo tienen (Rendezvous, Essor, Il Colorista, Peppa Sauce) con
   `cine:capture` + `cine:compare`.
 - Con las familias del cuaderno, escribir las guías de docs/16 (E10).

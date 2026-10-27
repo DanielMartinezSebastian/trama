@@ -547,6 +547,10 @@ a.ui-button { text-decoration: none; }
 .ui-nav__item:not(.ui-nav__item--mega) { position: relative; }
 .ui-nav__link { position: relative; display: inline-flex; align-items: center; gap: 6px; font: inherit; text-transform: inherit; letter-spacing: inherit; color: var(--mut); background: none; border: 0; padding: 8px 12px; cursor: pointer; border-radius: calc(var(--s-r) - 2px); white-space: nowrap; text-decoration: none; transition: color 0.15s, background 0.15s; }
 .ui-nav__link:hover, .ui-nav__trigger[aria-expanded="true"] { color: var(--fg); }
+/* linkHover="underline": una raya que crece de izquierda a derecha bajo el texto */
+.ui-nav--hover-underline .ui-nav__links .ui-nav__link::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)); }
+.ui-nav--hover-underline .ui-nav__links .ui-nav__link:is(:hover, :focus-visible, [data-current])::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .ui-nav--hover-underline .ui-nav__link::after { transition: none; } }
 :is(.ui-nav__link, .ui-nav__mitem, .ui-nav__icon-btn, .ui-nav__search-btn):focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .ui-nav__link[data-current] { color: var(--fg); background: color-mix(in srgb, var(--acc) 20%, transparent); }
 .ui-s--outline .ui-nav__link[data-current], .ui-s--minimal .ui-nav__link[data-current] { background: none; box-shadow: inset 0 -2px 0 var(--acc); border-radius: 0; }
@@ -1511,6 +1515,10 @@ a.ui-crumbs__link { text-decoration: none; }
 .ui-team__photo--oval { border-radius: 999px; }
 .ui-team--mono .ui-team__photo img, .ui-team--mono-hover .ui-team__photo img { filter: grayscale(1) contrast(1.05); }
 .ui-team--mono-hover .ui-team__card:hover img, .ui-team--mono-hover .ui-team__row:hover img { filter: none; scale: 1.03; }
+/* rowLink: la fila entera es el enlace; el nombre se subraya al pasar */
+.ui-team__row--link { color: inherit; text-decoration: none; cursor: pointer; }
+.ui-team__row--link:is(:hover, :focus-visible) .ui-team__who strong { text-decoration: underline; text-underline-offset: 0.15em; }
+.ui-team__row--link:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .ui-team--left { justify-items: stretch; text-align: left; }
 .ui-team--left .ui-team__grid { max-width: none; }
 .ui-team--left .ui-team__card { justify-items: start; text-align: left; }

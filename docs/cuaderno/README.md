@@ -3,7 +3,7 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-32 fichas.
+34 fichas.
 
 ## Fichas
 
@@ -11,8 +11,10 @@
 |---|---|---|---|---|---|---|
 | 2026-10-27 | [herramienta-cuaderno](herramienta-cuaderno.md) · El cuaderno del laboratorio | herramienta | hecho |  |  | `/lab/cuaderno` |
 | 2026-10-27 | [herramienta-probe-par](herramienta-probe-par.md) · refs:probe con par, paleta, radios, curvas y hover | herramienta | hecho |  |  | `/lab/cine/archivo/.refs3d/pares` |
+| 2026-10-27 | [pieza-antonio](pieza-antonio.md) · Antonio en el kit, y las letras propias de cada réplica | pieza | hecho | gimnasio, barbería | club de alto contraste, barbería de carácter | `/componentes` |
 | 2026-10-27 | [pieza-cohort-list](pieza-cohort-list.md) · CohortList, programas por convocatoria | pieza | hecho | academia |  | `/componentes` |
 | 2026-10-27 | [pieza-fullscreen-menu](pieza-fullscreen-menu.md) · FullscreenMenu con filetes, marquesina y escalera | pieza | hecho | peluquería, agencia |  | `/componentes` |
+| 2026-10-27 | [pieza-hovers-de-enlace](pieza-hovers-de-enlace.md) · Hovers de enlace medidos — NavBar linkHover, RollLink fade y el botón de menú que se rellena | pieza | hecho | peluquería, gimnasio, agencia |  | `/componentes` |
 | 2026-10-27 | [pieza-page-transition-stairs](pieza-page-transition-stairs.md) · PageTransition en escalera | pieza | hecho | agencia |  | `/componentes` |
 | 2026-10-27 | [pieza-shape-mosaic](pieza-shape-mosaic.md) · ShapeMosaic, mosaico de formas con fotos que se disuelven | pieza | hecho | peluquería | salón editorial claro | `/componentes` |
 | 2026-10-27 | [pieza-team-section](pieza-team-section.md) · TeamSection con fotos, formas, filas y muro | pieza | hecho | peluquería, academia |  | `/componentes` |
@@ -56,16 +58,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: enérgico (4), seguro (2), cercano, comercial, con humor, de barrio, descarado, documental
 - Patrones: cinta de cifras (2), cinta de texto (2), clase de prueba gratis (2), disciplinas en tarjetas de retrato (2), horario de clases (2), mapa de clubes (2), píldoras de contorno (2), planes con conmutador (2), preguntas frecuentes (2), bandas de foto, barra 3D, barra del proyecto en vista
 
-### salón editorial claro
-
-- Fichas: [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
-- Colores: `#ffffff` `#2b2b2b` `#f5a490` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#963e13` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
-- Letras: Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
-- Tipografía: serif con cursiva (2), serif fina (2), grotesca en mayúsculas, minúsculas, una sola letra
-- Paleta: fondo claro (3), pastel cálido (3), fondo oscuro, grises con grano
-- Tono: cálido (3), editorial (3), artesanal, artístico, comercial, sobrio
-- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos, logos de marcas
-
 ### barbería de carácter
 
 - Fichas: [replica-cita](replica-cita.md), [replica-patron](replica-patron.md), [replica-raiz](replica-raiz.md), [demo-esparta](demo-esparta.md)
@@ -75,6 +67,16 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: fondo claro (3), apagada (2), acento metálico, acento único saturado, fondo oscuro
 - Tono: clásico (2), urbano (2), especialista, familiar, lujo discreto, seguro
 - Patrones: botones en óvalo (2), cinta de texto (2), menú lateral (2), reseñas (2), titular con palabra en cursiva (2), antes y después, app con QR, blog, clips verticales, comparación, el dueño como marca, equipo con fotos
+
+### salón editorial claro
+
+- Fichas: [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
+- Colores: `#ffffff` `#2b2b2b` `#f5a490` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#963e13` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
+- Letras: Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
+- Tipografía: serif con cursiva (2), serif fina (2), grotesca en mayúsculas, minúsculas, una sola letra
+- Paleta: fondo claro (3), pastel cálido (3), fondo oscuro, grises con grano
+- Tono: cálido (3), editorial (3), artesanal, artístico, comercial, sobrio
+- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos, logos de marcas
 
 ### escuela amarilla
 
@@ -158,11 +160,11 @@ Las etiquetas usadas, por campo y por número de fichas. Antes de inventar una, 
 
 ### Sector (`sector`)
 
-peluquería (10) · gimnasio (9) · academia (6) · barbería (4) · agencia (3) · producto (1)
+gimnasio (11) · peluquería (11) · academia (6) · barbería (5) · agencia (4) · producto (1)
 
 ### Familia de estilo (`guia`)
 
-club de alto contraste (6) · salón editorial claro (5) · barbería de carácter (4) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · producto de marca (1)
+club de alto contraste (7) · barbería de carácter (5) · salón editorial claro (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · producto de marca (1)
 
 ### Tono (`tono`)
 
@@ -174,7 +176,7 @@ fondo claro (10) · fondo oscuro (7) · acento único saturado (5) · pastel cá
 
 ### Tipografía (`tipografia`)
 
-titular gigante (10) · serif con cursiva (6) · condensada en mayúsculas (4) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · espaciado abierto (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
+titular gigante (10) · serif con cursiva (6) · condensada en mayúsculas (5) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · espaciado abierto (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
 
 ### Patrones (`patrones`)
 
@@ -182,20 +184,21 @@ horario de clases (6) · cinta de texto (5) · equipo con fotos (5) · testimoni
 
 ### Movimiento (`movimiento`)
 
-cinta que corre (8) · scroll suavizado (4) · subrayado que crece (3) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · texto que rueda (2) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · menú que cae (1) · palabras que asoman (1) · producto fijo (1) · titular que cruza (1) · vídeos que se suceden (1)
+cinta que corre (8) · scroll suavizado (4) · subrayado que crece (4) · texto que rueda (3) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · menú que cae (1) · palabras que asoman (1) · producto fijo (1) · relleno que baja (1) · titular que cruza (1) · vídeos que se suceden (1)
 
 ### Piezas del kit (`piezas`)
 
-TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · FullscreenMenu (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · ProductCard (2) · RollLink (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · GradientField (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
+TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · FullscreenMenu (4) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · RollLink (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · ProductCard (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
-TeamSection (7) · ClassSchedule (5) · CohortList (4) · SectionHeader (4) · FullscreenMenu (3) · ShapeMosaic (2) · viewTransitions (2)
+TeamSection (7) · ClassSchedule (5) · CohortList (4) · FullscreenMenu (4) · SectionHeader (4) · ShapeMosaic (2) · viewTransitions (2) · fonts (1) · NavBar (1) · RollLink (1)
 
 ## Fichas parecidas
 
 Con tres etiquetas o más en común (sin contar piezas).
 
+- [pieza-antonio](pieza-antonio.md): replica-lobo (3), replica-talla (3), replica-vive (3), demo-forja (3)
 - [pieza-fullscreen-menu](pieza-fullscreen-menu.md): replica-q47 (4), replica-matiz (3)
 - [pieza-shape-mosaic](pieza-shape-mosaic.md): replica-matiz (5), replica-melena (3), demo-hebra (3)
 - [pieza-team-section](pieza-team-section.md): replica-matiz (3), replica-nura (3), demo-esparta (3), demo-hebra (3)

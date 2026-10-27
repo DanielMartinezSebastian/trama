@@ -37,6 +37,7 @@ Fotogramas del menú de K72 cada 100–150 ms, en `.refs3d/webs/k72-ca-en/nav/`.
 - `rules`.
 - `linkHover="marquee"`, con `marquee` e `images` en cada enlace.
 - `reveal="stairs"`.
+- `triggerHover="fill"` (27-10-2026, del par de K72): el relleno del acento que baja sobre el botón.
 
 ## Aprendido
 

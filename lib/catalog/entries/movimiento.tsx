@@ -106,16 +106,17 @@ export const movimiento: CatalogEntry[] = [
     name: "Enlace que rueda",
     category: "interaccion",
     styles: ["minimal", "solid", "outline", "terminal"],
-    description: "Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.",
+    description: "Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar (el «rolling text» de Essor, Fenriz o K72). Con fade, la palabra que sale se funde. Solo CSS.",
     stageHeight: 200,
     props: [
       { key: "label", label: "Texto", type: "text", default: "Ver proyectos" },
       { key: "direction", label: "Dirección", type: "select", default: "up", options: ["up", "down"] },
+      { key: "fade", label: "Fundido", type: "boolean", default: false },
       { key: "href", label: "Enlace (vacío = botón)", type: "text", default: "#" },
     ],
     render: (p) => (
       <div className="ui-center" style={{ fontSize: 28, fontWeight: 700 }}>
-        <RollLink label={(p.label as string) || " "} direction={p.direction as never} href={(p.href as string) || undefined} />
+        <RollLink label={(p.label as string) || " "} direction={p.direction as never} fade={p.fade as boolean} href={(p.href as string) || undefined} />
       </div>
     ),
   },

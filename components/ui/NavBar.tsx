@@ -43,6 +43,9 @@ export type NavBarProps = {
   /** forma de la barra: full = de borde a borde · contained = de borde a borde con el contenido centrado · floating = píldora ·
    * island = tarjeta con el radio de la variante (por defecto) · transparent = sin fondo (lo gana al bajar con sticky) · underline = solo una línea inferior */
   shape?: "full" | "contained" | "floating" | "island" | "transparent" | "underline";
+  /** al pasar por un enlace: color = solo cambia de color · underline = además, una raya que crece de izquierda a derecha bajo
+   * el texto (Hair Me Up, Marco Ambrosi, Core Atelier: docs/cuaderno, el hover de navegación más repetido) */
+  linkHover?: "color" | "underline";
   /** ocupa el ancho de la ventana aunque su contenedor sea más estrecho (para barras de borde a borde dentro de un layout con márgenes) */
   bleed?: boolean;
   /** @deprecated usa `shape="floating"` */
@@ -189,6 +192,7 @@ export default function NavBar({
   linksAlign = "center",
   menuStyle = "auto",
   openOn = "hover",
+  linkHover = "color",
   search = "none",
   searchPlaceholder = "Buscar…",
   searchItems = "",
@@ -568,6 +572,7 @@ export default function NavBar({
     sticky && "ui-nav--sticky",
     scrolled && "ui-nav--scrolled",
     hidden && "ui-nav--hidden",
+    linkHover === "underline" && "ui-nav--hover-underline",
     vcls(variant),
     className,
   ]

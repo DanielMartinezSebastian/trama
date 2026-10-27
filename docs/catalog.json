@@ -4976,6 +4976,16 @@
           ]
         },
         {
+          "key": "linkHover",
+          "type": "select",
+          "default": "color",
+          "label": "Enlaces al pasar",
+          "options": [
+            "color",
+            "underline"
+          ]
+        },
+        {
           "key": "size",
           "type": "select",
           "default": "md",
@@ -9436,6 +9446,12 @@
           "label": "Texto del enlace"
         },
         {
+          "key": "rowLink",
+          "type": "boolean",
+          "default": false,
+          "label": "Fila entera como enlace (filas)"
+        },
+        {
           "key": "titleSize",
           "type": "select",
           "default": "md",
@@ -11280,7 +11296,7 @@
         "outline",
         "terminal"
       ],
-      "description": "Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar. Solo CSS.",
+      "description": "Enlace o botón cuyo texto sube y es sustituido por una copia igual al pasar el puntero o enfocar (el «rolling text» de Essor, Fenriz o K72). Con fade, la palabra que sale se funde. Solo CSS.",
       "props": [
         {
           "key": "label",
@@ -11297,6 +11313,12 @@
             "up",
             "down"
           ]
+        },
+        {
+          "key": "fade",
+          "type": "boolean",
+          "default": false,
+          "label": "Fundido"
         },
         {
           "key": "href",

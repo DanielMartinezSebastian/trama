@@ -400,13 +400,14 @@ export const secciones: CatalogEntry[] = [
       { key: "photoTone", label: "Tratamiento", type: "select", default: "color", options: ["color", "mono", "mono-hover"], hint: "mono-hover: blanco y negro que se colorea al pasar" },
       { key: "align", label: "Alineación", type: "select", default: "center", options: ["center", "left"] },
       { key: "linkLabel", label: "Texto del enlace", type: "text", default: "Reservar" },
+      { key: "rowLink", label: "Fila entera como enlace (filas)", type: "boolean", default: false },
       { key: "titleSize", label: "Titular", type: "select", default: "md", options: ["md", "giant"] },
       { key: "backdrop", label: "Palabra de fondo", type: "text", default: "" },
       variantProp("glass"),
     ],
     render: (p) => (
       <div className="ui-center ui-center--top" style={{ padding: 0, justifyItems: "stretch" }}>
-        <TeamSection kicker={p.kicker as string} title={p.title as string} people={p.people as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} shape={p.shape as never} photoTone={p.photoTone as never} align={p.align as never} linkLabel={p.linkLabel as string} titleSize={p.titleSize as never} backdrop={p.backdrop as string} variant={p.variant as never} />
+        <TeamSection kicker={p.kicker as string} title={p.title as string} people={p.people as string} layout={p.layout as never} perView={p.perView as number} autoplay={p.autoplay as number} shape={p.shape as never} photoTone={p.photoTone as never} align={p.align as never} linkLabel={p.linkLabel as string} rowLink={p.rowLink as boolean} titleSize={p.titleSize as never} backdrop={p.backdrop as string} variant={p.variant as never} />
       </div>
     ),
   },
