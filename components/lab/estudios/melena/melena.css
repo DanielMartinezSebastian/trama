@@ -1,0 +1,73 @@
+/* Melena (réplica de Hair Me Up, docs/50 §3.2): blanco con melocotón #feede4 y #ffd5bf, botones teja #963e13 con sombra,
+   texto #2c2c2c; serif de titulares con cursiva para el énfasis y una serif de texto. */
+.me {
+  --bg: #ffffff; --fg: #2c2c2c; --mut: #6d6d6d; --acc: #e9875a; --acc2: #963e13; --card: #feede4; --ln: #d9cfc9; --r: 0px;
+  --display: var(--font-gloock), var(--font-playfair-display), serif;
+  --me-txt: var(--font-newsreader), serif;
+  background: var(--bg); color: var(--fg); font: 400 16px/1.6 var(--me-txt); overflow-x: clip;
+}
+.me a { color: inherit; text-decoration: none; }
+.me-pildora { display: inline-flex; align-items: center; gap: 8px; justify-self: start; padding: 10px 20px; border-radius: 999px; background: var(--acc2); color: #fff !important; font: 600 13px var(--me-txt); box-shadow: 0 6px 16px color-mix(in srgb, var(--acc2) 35%, transparent); }
+.me-etiqueta { margin: 0 0 18px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #a7a7a7; }
+
+.me-head { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 4vw; padding: 14px 4vw; background: color-mix(in srgb, #fff 92%, transparent); border-bottom: 1px solid var(--ln); }
+.me-sello { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--fg); font: 400 22px var(--display); }
+.me-head nav { display: flex; gap: 22px; margin-left: auto; font-size: 13px; }
+.me-redes { letter-spacing: 0.6em; font-size: 14px; }
+.me-head .me-pildora { box-shadow: none; }
+
+.me-hero { position: relative; display: grid; align-content: start; justify-items: start; min-height: 100svh; padding: 120px 4vw 80px; }
+.me-arco { position: absolute; left: 12vw; top: 60px; width: min(400px, 30vw); height: 560px; border-radius: 999px 999px 0 0; background: var(--card); }
+.me-bienvenida { position: relative; margin: 30px 0 0 calc(12vw + 70px); font: 400 22px var(--display); }
+.me-hero h1 { position: relative; margin: 6px 0 0 4vw; font: 400 clamp(64px, 8vw, 128px)/1 var(--display); letter-spacing: -0.02em; }
+.me-linea { position: relative; width: 1px; height: 150px; margin: 24px 0 0 calc(12vw + 120px); background: var(--acc); }
+.me-redondo { position: relative; display: grid; place-items: center; width: 140px; height: 140px; margin: -20px 0 0 calc(12vw + 50px); border-radius: 50%; border: 1px solid var(--acc); background: #fff; text-align: center; font: 400 15px/1.2 var(--display); }
+.me-pildora--equipo { position: relative; margin-top: 30px; }
+
+.me-servicios { padding: 80px 4vw; }
+.me-servicios ol { list-style: none; margin: 0 0 30px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.me-servicios li { border-top: 1px solid var(--ln); padding-top: 18px; }
+.me-servicios li span { font-size: 12px; color: var(--acc); }
+.me-servicios li h2 { margin: 18px 0 0; font: 400 clamp(32px, 3.4vw, 52px) var(--display); }
+
+.me-sobre, .me-tienda, .me-academia, .me-blog { display: grid; gap: 20px; padding: 80px 4vw; }
+.me-sh { width: 100%; }
+.me-sh h2 { max-width: 16ch; font-size: clamp(32px, 3.6vw, 56px) !important; line-height: 1.15 !important; }
+.me-sh .ui-sh__word { color: color-mix(in srgb, var(--acc) 14%, transparent); font-family: var(--display); }
+
+.me-embajada { display: grid; gap: 22px; padding: 60px 4vw; background: var(--card); }
+.me-productos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.me-productos .ui-pcard__title, .me-productos h3 { font-family: var(--display); }
+
+.me-academia__cab { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.me-aka { display: grid; margin: 0; font: italic 400 clamp(90px, 12vw, 190px)/0.8 var(--font-playfair-display), serif; color: var(--acc); }
+.me-aka span:nth-child(2) { margin-left: -0.6em; }
+.me-cursos { max-width: 900px; justify-self: center; width: 100%; }
+.me-curso { display: grid; justify-items: center; gap: 12px; padding: 40px 60px; text-align: center; }
+.me-curso h3 { margin: 0; font: 400 26px var(--display); }
+.me-curso p { margin: 0; color: var(--mut); }
+
+.me-pie { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 30px; padding: 60px 4vw 140px; background: #2c2c2c; color: #f4ebe6; }
+.me-pie strong { font: 400 30px var(--display); }
+.me-boletin { display: grid; gap: 10px; }
+.me-boletin label { display: grid; gap: 6px; font-size: 12px; }
+.me-boletin input { padding: 10px; border: 1px solid #6b6b6b; background: transparent; color: inherit; font: inherit; }
+
+/* lo fijo: la nota en una pestaña vertical a la derecha y una píldora de reserva por salón abajo */
+.me-nota { position: fixed; right: 0; top: 30vh; z-index: 30; display: grid; justify-items: center; gap: 4px; padding: 12px 6px; background: #fff; border: 1px solid var(--ln); border-right: 0; box-shadow: -4px 4px 16px rgb(0 0 0 / 0.08); }
+.me-nota b { color: #f0a020; }
+.me-nota span { writing-mode: vertical-rl; rotate: 180deg; font-size: 11px; }
+.me-reservas { position: fixed; left: max(260px, 22vw); bottom: 18px; z-index: 30; display: flex; gap: 10px; }
+.me-pildora--fija { display: grid; padding: 10px 22px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.2; }
+.me-pildora--fija b { font-size: 13px; text-transform: none; letter-spacing: 0; }
+
+@media (max-width: 760px) {
+  .me-head nav, .me-redes { display: none; }
+  .me-arco { left: 8vw; width: 60vw; height: 420px; }
+  .me-bienvenida, .me-linea, .me-redondo { margin-left: 22vw; }
+  .me-servicios ol, .me-productos { grid-template-columns: 1fr 1fr; }
+  .me-academia__cab, .me-pie { grid-template-columns: 1fr; }
+  .me-reservas { left: 12px; right: 12px; }
+  .me-pildora--fija { flex: 1; }
+}
+.me-curso .me-pildora { justify-self: center; }
