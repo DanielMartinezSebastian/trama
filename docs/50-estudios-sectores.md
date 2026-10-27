@@ -122,7 +122,7 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
   - [x] `PageTransition kind="stairs"` (K72, §3.9) (27-10-2026).
   - [x] `FullscreenMenu` con `rules`, `linkHover="marquee"` y `reveal="stairs"` (Il Colorista y K72) (27-10-2026).
   - [x] `ShapeMosaic` (nueva, Il Colorista): al reproducir Matiz se vio que la firma pedía la pieza; versátil para cualquier mosaico geométrico con fotos (27-10-2026).
-  - [x] `FullscreenMenu`: filetes que se dibujan y subida escalonada (Il Colorista) y columnas verticales (Skulpt).
+  - [~] Menú en columnas verticales con la palabra girada (Skulpt): hecho dentro de la réplica Talla, no en el kit; pasarlo a `FullscreenMenu` si se repite.
   - [ ] `PageTransition` con marca en el centro (Il Colorista).
   - [x] `FeatureExplorer` cubre el acordeón que cambia la foto fija (Core Atelier): usado en Núcleo.
 
