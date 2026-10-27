@@ -66,7 +66,7 @@ function paginasRepo(base: string): Target[] {
   const cat = readFileSync("docs/CATALOG.md", "utf8");
   const out: Target[] = [];
   for (const m of cat.matchAll(/^### (.+?) — `(\/(?:sitios|demo)\/[a-z0-9-]+)`$/gm)) out.push({ url: base + m[2], label: m[2], tipo: m[2].startsWith("/sitios") ? "web" : "landing", titulo: m[1] });
-  const reg = existsSync("components/lab/estudios/registro.ts") ? readFileSync("components/lab/estudios/registro.ts", "utf8") : "";
+  const reg = existsSync("components/inspiraciones/registro.ts") ? readFileSync("components/inspiraciones/registro.ts", "utf8") : "";
   for (const m of reg.matchAll(/slug: "([^"]+)", nombre: "([^"]+)", ref: "([^"]+)"/g)) out.push({ url: `${base}/lab/estudios/${m[1]}`, label: `/lab/estudios/${m[1]}`, tipo: "replica", titulo: `${m[2]} (réplica de ${m[3]})` });
   return out;
 }

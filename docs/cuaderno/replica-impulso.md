@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://coachsportifecublens.com/]
 fichas: [docs/50 §3.4 E3b]
-ruta: /lab/estudios/impulso
-codigo: [components/lab/estudios/impulso/Impulso.tsx, components/lab/estudios/impulso/impulso.css]
+ruta: /inspiraciones/impulso
+codigo: [components/inspiraciones/impulso/Impulso.tsx, components/inspiraciones/impulso/impulso.css]
 colores: [#000000, #ffffff, #999999, #bbbbbb]
 fuentes: [Inter Tight, Inter]
 sector: [gimnasio]

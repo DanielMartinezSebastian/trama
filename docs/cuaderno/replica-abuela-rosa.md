@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.peppasauce.love/]
 fichas: [docs/50 §3.8]
-ruta: /lab/estudios/abuela-rosa
-codigo: [components/lab/estudios/abuela-rosa/AbuelaRosa.tsx, components/lab/estudios/abuela-rosa/abuela-rosa.css]
+ruta: /inspiraciones/abuela-rosa
+codigo: [components/inspiraciones/abuela-rosa/AbuelaRosa.tsx, components/inspiraciones/abuela-rosa/abuela-rosa.css]
 colores: [#141329, #feeee2, #8f93b8, #e8612c]
 fuentes: [Archivo]
 sector: [producto]

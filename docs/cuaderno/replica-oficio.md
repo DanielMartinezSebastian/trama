@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://honhar.in/]
 fichas: [docs/50 §3.6 E6]
-ruta: /lab/estudios/oficio
-codigo: [components/lab/estudios/oficio/Oficio.tsx, components/lab/estudios/oficio/oficio.css]
+ruta: /inspiraciones/oficio
+codigo: [components/inspiraciones/oficio/Oficio.tsx, components/inspiraciones/oficio/oficio.css]
 colores: [#ffcc00, #000000, #ffffff, #3a2500]
 fuentes: [Permanent Marker, Montserrat]
 sector: [academia]

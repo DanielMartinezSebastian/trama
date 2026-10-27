@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://fit-and-you.webflow.io/]
 fichas: [docs/50 §3.4 E3d]
-ruta: /lab/estudios/vive
-codigo: [components/lab/estudios/vive/Vive.tsx, components/lab/estudios/vive/vive.css]
+ruta: /inspiraciones/vive
+codigo: [components/inspiraciones/vive/Vive.tsx, components/inspiraciones/vive/vive.css]
 colores: [#000000, #ffffff, #fb5607]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]

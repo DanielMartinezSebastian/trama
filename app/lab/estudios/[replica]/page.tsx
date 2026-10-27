@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Cargador from "@/components/lab/estudios/Cargador";
-import { REPLICAS, replica } from "@/components/lab/estudios/registro";
+import Cargador from "@/components/inspiraciones/Cargador";
+import { REPLICAS, replica } from "@/components/inspiraciones/registro";
 
 /* Réplica de una web estudiada (docs/50 §2 E13): marca inventada, estética y estructura de la referencia, piezas del kit. */
 

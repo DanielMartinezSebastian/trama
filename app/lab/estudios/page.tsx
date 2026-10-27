@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Desplazable from "@/components/lab/cine/Desplazable";
-import { REPLICAS } from "@/components/lab/estudios/registro";
+import { REPLICAS } from "@/components/inspiraciones/registro";
 import "@/components/lab/cine/panel/panel.css";
 
 /* Índice de las réplicas de los estudios por sector (docs/50 §2 E13), con la referencia y sus capturas al lado. */
@@ -43,7 +43,7 @@ export default function Page() {
         {REPLICAS.map((r) => (
           <li key={r.slug} style={{ border: "1px solid color-mix(in srgb, currentColor 20%, transparent)", borderRadius: 10, overflow: "hidden", display: "grid" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/lab/cine/archivo/.refs3d/webs/${CAPTURAS[r.slug]}`} alt={`Capturas de ${r.ref}`} loading="lazy" style={{ width: "100%", aspectRatio: "16 / 10", objectFit: "cover", objectPosition: "top" }} />
+            {CAPTURAS[r.slug] ? <img src={`/lab/cine/archivo/.refs3d/webs/${CAPTURAS[r.slug]}`} alt={`Capturas de ${r.ref}`} loading="lazy" style={{ width: "100%", aspectRatio: "16 / 10", objectFit: "cover", objectPosition: "top" }} /> : null}
             <div style={{ padding: 14, display: "grid", gap: 6 }}>
               <small style={{ opacity: 0.6, textTransform: "uppercase", letterSpacing: "0.08em" }}>{r.sector} · {r.ficha}</small>
               <strong style={{ fontSize: 20 }}>{r.nombre}</strong>

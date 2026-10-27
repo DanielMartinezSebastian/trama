@@ -5,8 +5,8 @@ tipo: réplica
 estado: en curso
 referencias: [https://k72.ca/en]
 fichas: [docs/50 §3.9]
-ruta: /lab/estudios/q47
-codigo: [components/lab/estudios/q47/Q47.tsx, components/lab/estudios/q47/q47.css]
+ruta: /inspiraciones/q47
+codigo: [components/inspiraciones/q47/Q47.tsx, components/inspiraciones/q47/q47.css]
 colores: [#000000, #ffffff, #d3fd50, #9a9a9a]
 fuentes: [Inter Tight, Inter]
 sector: [agencia]

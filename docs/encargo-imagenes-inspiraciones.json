@@ -1,0 +1,1607 @@
+{
+ "estilo": {
+  "matiz": "Atelier de color en Madrid (inspirado en Il Colorista). Fotografía editorial luminosa, fondos crema y salmón (#F5A490), luz natural suave, color de pelo cuidado (cobrizos, rubios miel, castaños). Mujeres y hombres de 25 a 60 años.",
+  "nura": "Peluquería y sala de arte en Malasaña (inspirado en ALICE Hair & Art). Mezcla de fotos en blanco y negro con grano y fotos a color apagado, encuadres de revista, fondo gris claro. Estilistas jóvenes, ambiente de estudio con obra colgada.",
+  "cita": "Cadena de barberías urbanas de Madrid (inspirado en Rendezvous). Cálido y urbano: madera, azulejo, latón, luz de tarde; acento naranja (#FF622B) en algún objeto. Hombres diversos de 20 a 60 años, retratos de calle.",
+  "melena": "Salón, tienda y academia (inspirado en Hair Me Up). Bodegones de producto de pelo sin marca sobre fondo melocotón (#F4B39A) con sombras suaves, estilo catálogo limpio.",
+  "raiz": "Salón de extensiones, oscuro y cobre (inspirado en Marco Ambrosi). Fondos casi negros, luz de estudio lateral, reflejos cobrizos. Melenas largas, antes y después de la misma persona de espaldas.",
+  "patron": "Barbería de lujo familiar (inspirado en Don Barber & Groom). Madera oscura, latón, cuero, azulejo verde; luz cálida y contrastada; tono clásico y masculino; paleta crema, negro y oro.",
+  "nucleo": "Estudio boutique de pilates (inspirado en Core Atelier). Rosa empolvado (#F7E7DE) y marrón (#744C32), suelo de madera clara, luz natural, aparatos de pilates (reformer, silla, torre, barril). Mujeres de 30 a 55 años.",
+  "impulso": "Coach personal en Chamberí (inspirado en Essor). Fondo negro absoluto, fotografía muy contrastada, entrenador con polo negro, estudio privado pequeño y cuidado. Retratos cercanos y gestos de técnica.",
+  "vive": "Club de fitness premium (inspirado en FIT AND YOU). Oscuro con acento naranja (#FF6A1A), luces lineales en el techo, spa, socios sonrientes, energía de club.",
+  "talla": "Gimnasio de barrio con carácter (inspirado en Skulpt). Industrial: hormigón, metal negro, acento lima (#CEF952) en algún detalle; luz de nave; coaches de barrio y café de máquina.",
+  "lobo": "Gimnasio de artes marciales (inspirado en Fenriz). Blanco y negro muy contrastado, grano de película, sudor y movimiento: muay thai, BJJ, MMA, boxeo. Producto de merchandising negro sobre gris, sin logos.",
+  "remada": "Academia de surf de autor (inspirado en Surfing Academy). Fotografía de viaje soleada y saturada: olas tubulares, piscinas de olas, playas tropicales, surfistas de todas las edades, tono cercano. Acento naranja (#FF4F28).",
+  "ahora": "Escuela de diseño y negocio en Madrid (inspirado en Future London Academy). Talleres con post-its y pizarras, gente de pie trabajando, retratos de profesores de 30 a 60 años sobre fondo neutro; acento amarillo (#FFE32B) en algún objeto.",
+  "oficio": "Instituto de formación práctica (inspirado en Honhar). Alumnos jóvenes aprendiendo oficios digitales y de comercio en aulas reales; fotos en blanco y negro con contraste, retratos de testimonio.",
+  "abuela-rosa": "Salsa picante artesanal (inspirado en Peppa Sauce). Ilustración de dos tintas: crema (#FEEEE2) sobre azul noche (#141329).",
+  "q47": "Agencia creativa (inspirado en K72). Fotogramas de campañas publicitarias de cine: dirección de arte fuerte, color con intención, producto o personaje protagonista, encuadre panorámico.",
+  "cenit": "Estudio de experiencias 3D (inspirado en Lusion). Renders 3D limpios y luminosos: objetos de cristal, metal y plástico suave, fondos claros azulados o degradados, aspecto de portfolio de estudio digital.",
+  "brasa": "Diseñador de producto y web 3D (inspirado en Meer Mohsin). Negro y rojo intenso, retrato dramático con luz roja, maquetas de webs y apps sobre fondo oscuro."
+ },
+ "imagenes": {
+  "matiz": [
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-ondas.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Melena ondulada con reflejos miel, de espaldas, sobre fondo crema",
+    "provisional": "/img/hebra/trabajo-ondas.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-rizo.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Rizo natural brillante en primer plano",
+    "provisional": "/img/hebra/rizos.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-balayage.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Balayage cobrizo pintado a mano, detalle del mechón",
+    "provisional": "/img/hebra/trabajo-balayage.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-rizo-definido.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Melena rizada definida, castaño cálido",
+    "provisional": "/img/hebra/trabajo-rizo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-pixie.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Corte pixie con textura, rubio ceniza",
+    "provisional": "/img/hebra/trabajo-corte-corto.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/mosaico-pincel.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Pincel aplicando tinte salmón sobre un mechón",
+    "provisional": "/img/hebra/color.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/servicio-tratamiento.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Colorista consultando una carta de colores con una clienta",
+    "provisional": "/img/hebra/color.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/servicio-rizo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Corte en seco de un pelo rizado",
+    "provisional": "/img/hebra/rizos.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/servicio-brillo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Lavacabezas con baño de brillo y masaje, luz suave",
+    "provisional": "/img/hebra/salon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-talento.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Equipo de coloristas riendo en el salón",
+    "provisional": "/img/hebra/trabajo-balayage.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-rubio.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Rubio miel luminoso, retrato de perfil",
+    "provisional": "/img/hebra/trabajo-ondas.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-mechas.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mechas pintadas al aire sin papel",
+    "provisional": "/img/hebra/salon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-castano.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Castaño chocolate con brillo, de espaldas",
+    "provisional": "/img/hebra/trabajo-rizo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-armocromia.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Telas de colores junto al rostro de una clienta",
+    "provisional": "/img/hebra/color.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-nutrir.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mascarilla nutritiva aplicada con las manos",
+    "provisional": "/img/hebra/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-color-perfecto.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Muestrario de mechones de colores sobre mesa crema",
+    "provisional": "/img/hebra/trabajo-corte-corto.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/blog-amoniaco.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Cuencos de tinte y pinceles sobre una bandeja",
+    "provisional": "/img/hebra/rizos.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/equipo-marcos.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de colorista de unos 35 años, camisa clara",
+    "provisional": "/img/hebra/equipo/leo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/equipo-lidia.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de encargada especialista en rubios, unos 40 años",
+    "provisional": "/img/hebra/equipo/vera.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/matiz/equipo-alba.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de estilista de corte, unos 28 años",
+    "provisional": "/img/hebra/equipo/alba.webp"
+   }
+  ],
+  "nura": [
+   {
+    "archivo": "/img/inspiraciones/nura/collage-pixie.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Pixie oscuro con textura, a color apagado",
+    "provisional": "/img/hebra/trabajo-corte-corto.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/collage-secado.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Estilista secando una melena con cepillo, blanco y negro",
+    "provisional": "/img/esparta/navaja.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/collage-bol.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Estilista sosteniendo un bol de color, blanco y negro",
+    "provisional": "/img/hebra/equipo/vera.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/collage-platino.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Corte rubio platino recto, a color",
+    "provisional": "/img/hebra/trabajo-balayage.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/collage-cepillo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Estilista peinando a una clienta, blanco y negro",
+    "provisional": "/img/hebra/equipo/leo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/collage-rizo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Melena rizada en el sillón, a color",
+    "provisional": "/img/hebra/trabajo-rizo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/equipo-nuria.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de la fundadora, unos 38 años, blanco y negro, fondo gris",
+    "provisional": "/img/hebra/equipo/alba.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/equipo-vera.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de estilista especialista en rubios, blanco y negro, fondo gris",
+    "provisional": "/img/hebra/equipo/vera.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nura/equipo-leo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato de estilista de corte, unos 30 años, blanco y negro, fondo gris",
+    "provisional": "/img/hebra/equipo/leo.webp"
+   }
+  ],
+  "cita": [
+   {
+    "archivo": "/img/inspiraciones/cita/local-malasana.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Hombre con camisa clara frente a una fachada de piedra de Malasaña",
+    "provisional": "/img/retratos/06-man-with-crossed-arms-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/local-chamberi.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Hombre de pelo canoso junto a un ventanal de barbería",
+    "provisional": "/img/retratos/07-gray-haired-man-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/local-lavapies.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Joven con barba en una calle de Lavapiés",
+    "provisional": "/img/retratos/08-the-misadventures-of-an-ill-spent-youth-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/local-salamanca.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Hombre elegante en la puerta de una barbería de barrio señorial",
+    "provisional": "/img/esparta/equipo/ivan.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/local-chueca.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Hombre sonriente con degradado recién hecho en una calle de Chueca",
+    "provisional": "/img/esparta/equipo/hugo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/resena-samir.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato en blanco y negro de un cliente de unos 30 años",
+    "provisional": "/img/esparta/navaja.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/resena-ezequiel.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato en blanco y negro de un cliente de unos 45 años",
+    "provisional": "/img/esparta/sillon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/resena-marcos.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato en blanco y negro de un cliente joven con degradado",
+    "provisional": "/img/esparta/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/blog-afeitado.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Nuca recién afeitada con toalla caliente",
+    "provisional": "/img/esparta/navaja.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/blog-barba-canas.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Barbero arreglando una barba con canas",
+    "provisional": "/img/esparta/equipo/bruno.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/blog-pomada.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Tarros de pomada sin etiqueta sobre una repisa de madera",
+    "provisional": "/img/esparta/barba.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/video-barbero.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Barbero con máquina en penumbra cálida, madera y azulejo",
+    "provisional": "/img/esparta/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/reserva-local.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Interior de barbería con sillones en fila y luz de tarde",
+    "provisional": "/img/esparta/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/cita/pie-sillon.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Sillón de barbero clásico vacío, cuero y latón",
+    "provisional": "/img/esparta/sillon.webp"
+   }
+  ],
+  "melena": [
+   {
+    "archivo": "/img/inspiraciones/melena/producto-serum.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Frasco cuentagotas de sérum ámbar sin marca sobre fondo melocotón",
+    "provisional": "/img/objetos/05-rustic-tulip-vase-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/melena/producto-laca.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Bote de laca mate sin marca sobre fondo melocotón",
+    "provisional": "/img/objetos/06-joanna-kosinska-2016-10-30-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/melena/producto-balsamo.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Tubo de bálsamo pequeño sin marca sobre fondo melocotón",
+    "provisional": "/img/objetos/02-suhyeon-choi-2017-01-19-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/melena/producto-champu.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Botella de champú con dosificador sin marca sobre fondo melocotón",
+    "provisional": "/img/objetos/01-wood-table-in-front-of-white-wall-unsplash.jpg"
+   }
+  ],
+  "raiz": [
+   {
+    "archivo": "/img/inspiraciones/raiz/antes-1.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mujer de espaldas con media melena corta, fondo oscuro",
+    "provisional": "/img/hebra/trabajo-corte-corto.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/despues-1.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "La misma mujer de espaldas con melena larga en ondas suaves",
+    "provisional": "/img/hebra/trabajo-ondas.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/antes-2.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mujer de espaldas con pelo fino a la altura del hombro",
+    "provisional": "/img/hebra/rizos.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/despues-2.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "La misma mujer con extensiones largas y volumen",
+    "provisional": "/img/hebra/trabajo-balayage.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/antes-3.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mujer de espaldas con color apagado y puntas abiertas",
+    "provisional": "/img/hebra/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/despues-3.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "La misma mujer con castaño cobrizo y movimiento",
+    "provisional": "/img/hebra/trabajo-rizo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-ondas.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Melena larga en ondas, luz cobre",
+    "provisional": "/img/hebra/trabajo-ondas.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-balayage.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Balayage caramelo difuminado",
+    "provisional": "/img/hebra/trabajo-balayage.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-rizo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Melena rizada en la puerta del salón, de noche",
+    "provisional": "/img/hebra/rizos.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-estudio.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Estilista estudiando el pelo de una clienta en el sillón",
+    "provisional": "/img/hebra/color.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-corte.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Tijeras cortando puntas, primer plano",
+    "provisional": "/img/hebra/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/galeria-salon.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Salón oscuro con espejos y luz cálida",
+    "provisional": "/img/hebra/salon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/proceso-peinado.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Peinado final en ondas, retrato de perfil",
+    "provisional": "/img/hebra/color.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/proceso-sillon.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Clienta en el sillón con la capa puesta",
+    "provisional": "/img/hebra/corte.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/proceso-manos.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Manos colocando extensiones en una melena",
+    "provisional": "/img/hebra/trabajo-rizo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/proceso-salon.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Pasillo del salón con tocadores iluminados",
+    "provisional": "/img/hebra/salon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/raiz/portada.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Melena larga castaña ondulada en penumbra cobre, de espaldas",
+    "provisional": "/img/hebra/trabajo-ondas.webp"
+   }
+  ],
+  "patron": [
+   {
+    "archivo": "/img/inspiraciones/patron/blog-reflexologia.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Masaje de manos relajante en la barbería",
+    "provisional": "/img/esparta/navaja.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/blog-camisa.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Camisa blanca planchada colgada en una percha de madera",
+    "provisional": "/img/esparta/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/blog-accesorios.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Reloj, gemelos y cartera de cuero sobre madera oscura",
+    "provisional": "/img/esparta/sillon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/local.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Barbería de lujo: madera oscura, latón y azulejo verde, luz cálida",
+    "provisional": "/img/esparta/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/dueno.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Barbero calvo con barba gris, unos 55 años, fondo azul gris",
+    "provisional": "/img/esparta/equipo/bruno.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/tienda.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Estantería de madera con productos de barbería sin marca",
+    "provisional": "/img/esparta/sillon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/servicio-barberia.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Barbero recortando una barba en el sillón",
+    "provisional": "/img/esparta/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/servicio-afeitado.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Afeitado clásico con navaja y toalla caliente",
+    "provisional": "/img/esparta/navaja.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/servicio-manicura.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Manicura masculina en una mesa de madera",
+    "provisional": "/img/esparta/sillon.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/menu-foto.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Rincón de la barbería con sillón y espejo dorado",
+    "provisional": "/img/esparta/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/patron/menu-familia.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Padre e hijo barberos en la puerta del local",
+    "provisional": "/img/esparta/equipo/hugo.webp"
+   }
+  ],
+  "nucleo": [
+   {
+    "archivo": "/img/inspiraciones/nucleo/aparato-reformer.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Mujer en un reformer de pilates, estudio con suelo de madera",
+    "provisional": "/img/cadencia/movilidad.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/aparato-silla.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Ejercicio en la silla de pilates (wunda chair)",
+    "provisional": "/img/cadencia/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/aparato-torre.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Estiramiento en el barril de pilates junto a la torre",
+    "provisional": "/img/cadencia/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/aparato-eleccion.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Instructora corrigiendo la postura de una alumna",
+    "provisional": "/img/cadencia/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/sesion-privada.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Sesión uno a uno con instructora en el reformer",
+    "provisional": "/img/cadencia/equipo/ines.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/sesion-pareja.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos amigas en reformers contiguos",
+    "provisional": "/img/cadencia/equipo/nico.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/sesion-trio.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Tres alumnas en clase privada de pilates",
+    "provisional": "/img/cadencia/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/estudio.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Estudio de pilates con suelo de madera, reformers en fila y luz natural",
+    "provisional": "/img/cadencia/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/detalle.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Detalle de pies sobre la barra del reformer",
+    "provisional": "/img/cadencia/movilidad.webp"
+   }
+  ],
+  "impulso": [
+   {
+    "archivo": "/img/inspiraciones/impulso/menu-estudio.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Estudio privado pequeño con rack y luz cenital",
+    "provisional": "/img/forja/sala.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/menu-tomas.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenador de unos 35 años con polo negro",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/menu-cristina.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Nutricionista de unos 40 años, retrato sobrio",
+    "provisional": "/img/forja/equipo/ines.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/menu-mision.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Apretón de manos entre coach y cliente",
+    "provisional": "/img/cadencia/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-1.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Clienta haciendo peso muerto con el coach",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-2.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Cliente sonriente tras una sesión",
+    "provisional": "/img/cadencia/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-3.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Coach marcando la técnica de una sentadilla",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-4.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Sprint en bici de aire",
+    "provisional": "/img/cadencia/cardio.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-5.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Press de banca con ayuda",
+    "provisional": "/img/forja/pesado.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-6.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Estiramiento asistido en el suelo",
+    "provisional": "/img/cadencia/movilidad.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-7.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Cliente descansando con una toalla al cuello",
+    "provisional": "/img/forja/recovery.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/diploma.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenador sosteniendo su diploma enmarcado",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/coach.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenador sonriente con polo negro, fondo negro",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/servicio-personal.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Sesión uno a uno en el estudio privado",
+    "provisional": "/img/cadencia/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/servicio-pareja.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Pareja entrenando con el coach",
+    "provisional": "/img/cadencia/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/servicio-grupo.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Grupo de cuatro en una sala privada",
+    "provisional": "/img/cadencia/cardio.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/servicio-nutricion.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Plato equilibrado y libreta de plan de comidas",
+    "provisional": "/img/cadencia/movilidad.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/servicio-distancia.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Videollamada de entrenamiento en un portátil",
+    "provisional": "/img/cadencia/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/manifiesto-a.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Cliente concentrado entre series",
+    "provisional": "/img/cadencia/equipo/nico.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/manifiesto-b.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Clienta celebrando un récord personal",
+    "provisional": "/img/forja/equipo/ines.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/reto-tecnica.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Coach corrigiendo la técnica de una sentadilla",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/reto-detalle.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Manos con magnesio agarrando la barra",
+    "provisional": "/img/cadencia/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/contacto.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenador en la puerta del estudio, de noche",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-8.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Entrada del estudio privado",
+    "provisional": "/img/cadencia/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/impulso/fama-9.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Sala del estudio con la luz apagada al cerrar",
+    "provisional": "/img/forja/sala.webp"
+   }
+  ],
+  "vive": [
+   {
+    "archivo": "/img/inspiraciones/vive/bonus-agua.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Socio sonriente con botella y toalla del club",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/bonus-puntos.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Socia entrenando con mancuernas, sonriente",
+    "provisional": "/img/forja/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/bonus-amigo.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Dos amigos chocando la mano en el club",
+    "provisional": "/img/cadencia/equipo/ines.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/bonus-plazos.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Socio en la recepción del club",
+    "provisional": "/img/cadencia/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/portada-sala.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Sala del club con luces lineales en el techo, oscura",
+    "provisional": "/img/forja/sala.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/damero-personal.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Entrenador personal guiando un ejercicio con TRX",
+    "provisional": "/img/cadencia/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/damero-clase.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Clase de pilates en grupo con luz cálida",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/damero-club.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Recepción del club, materiales oscuros y neón naranja",
+    "provisional": "/img/cadencia/local.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/membresia-spa.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Zona de spa con sauna y bancos de madera",
+    "provisional": "/img/forja/recovery.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/clases-fondo.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Sala de peso libre en penumbra, oscura",
+    "provisional": "/img/forja/pesado.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/mapa-club.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fachada del club de noche con luz naranja",
+    "provisional": "/img/forja/sala.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/vive/primero-foto.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Socia corriendo en la cinta, primer plano",
+    "provisional": "/img/cadencia/fuerza.webp"
+   }
+  ],
+  "talla": [
+   {
+    "archivo": "/img/inspiraciones/talla/menu-fitness.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Sala de fitness industrial con máquinas",
+    "provisional": "/img/forja/sala.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/menu-personal.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Coach de barrio corrigiendo una sentadilla",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/menu-grupo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Clase en grupo con kettlebells",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/menu-hyrox.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Empuje de trineo en una pista de césped artificial",
+    "provisional": "/img/forja/cardio.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/portada-sala.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Gimnasio industrial de barrio: hormigón, metal negro, un detalle lima",
+    "provisional": "/img/forja/sala.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/coaches.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos coaches de barrio sonrientes con los brazos cruzados",
+    "provisional": "/img/cadencia/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/maquinaria.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Fila de máquinas de fuerza negras",
+    "provisional": "/img/forja/fuerza.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/talla/cafe.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Café saliendo de una máquina espresso en la barra del gimnasio",
+    "provisional": "/img/cadencia/local.webp"
+   }
+  ],
+  "lobo": [
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-muay-thai.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Patada de muay thai al saco, blanco y negro",
+    "provisional": "/img/forja/cardio.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-bjj.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos luchadores de BJJ en el tatami, blanco y negro",
+    "provisional": "/img/forja/movilidad.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-mma.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Luchador de MMA con guantes abiertos, blanco y negro",
+    "provisional": "/img/forja/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-boxeo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Boxeadora golpeando las manoplas, blanco y negro",
+    "provisional": "/img/forja/equipo/nico.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-fitness.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenamiento con cuerdas de batalla, blanco y negro",
+    "provisional": "/img/forja/pesado.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/disciplina-recuperacion.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Luchador vendándose las manos en el banco, blanco y negro",
+    "provisional": "/img/forja/recovery.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/tienda-camiseta.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Camiseta negra lisa doblada sobre fondo gris",
+    "provisional": "/img/forja/equipo/nico.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/tienda-sudadera.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Sudadera negra con capucha sobre fondo gris",
+    "provisional": "/img/forja/equipo/dani.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/tienda-gorra.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Gorra negra lisa sobre fondo gris",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/tienda-bolsa.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Bolsa de deporte negra sobre fondo gris",
+    "provisional": "/img/forja/pesado.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/portada.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Clase de artes marciales en grupo, blanco y negro con grano",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/prueba.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Entrenador sujetando el saco a un alumno, blanco y negro",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/banda-1.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Fila de sacos de boxeo colgados, blanco y negro",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/banda-2.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Pies descalzos sobre el tatami, blanco y negro",
+    "provisional": "/img/forja/tecnica.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/cartel.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos luchadores frente a frente antes de un combate, blanco y negro",
+    "provisional": "/img/forja/cardio.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/banda-3.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Guantes colgados en la pared del gimnasio, blanco y negro",
+    "provisional": "/img/forja/movilidad.webp"
+   }
+  ],
+  "remada": [
+   {
+    "archivo": "/img/inspiraciones/remada/viaje-mentawai.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Ola tubular de agua turquesa en islas tropicales",
+    "provisional": "/video/costa/01-olas-islandia.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/viaje-corea.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Piscina de olas artificial con surfistas y edificios al fondo",
+    "provisional": "/video/oceano/01-arrecife.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/viaje-hainan.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Piscina de olas junto a palmeras y un hotel",
+    "provisional": "/video/costa/03-playa-tunez.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/viaje-gland.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Ola larga rompiendo junto a la selva en Java",
+    "provisional": "/video/costa/02-costa-oregon.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/vlog-mentawai.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Surfistas en barca camino del pico, islas Mentawai",
+    "provisional": "/video/costa/01-olas-islandia.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/vlog-gland.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Cabañas de surf en la selva de Java",
+    "provisional": "/video/costa/02-costa-oregon.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/vlog-corea.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Alumna saliendo de la piscina de olas con la tabla",
+    "provisional": "/video/oceano/01-arrecife.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-1.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Surfista de unos 40 años sonriendo en la playa",
+    "provisional": "/video/costa/03-playa-tunez.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-2.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Surfista joven con el pelo mojado",
+    "provisional": "/img/retratos/03-pixie-cut-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-3.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Pareja de surfistas con las tablas",
+    "provisional": "/video/oceano/03-delfines-hawai.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-4.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Surfista de unos 60 años con traje de neopreno",
+    "provisional": "/video/costa/01-olas-islandia.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-5.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Grupo de alumnos riendo en la orilla",
+    "provisional": "/video/ciudad/03-budapest.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-6.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Niña con tabla de espuma en la orilla",
+    "provisional": "/video/costa/02-costa-oregon.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/amigo-7.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Surfista sentado en la tabla esperando la ola",
+    "provisional": "/video/oceano/01-arrecife.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/autora.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Surfista con gafas de sol sonriendo, fondo naranja",
+    "provisional": "/img/retratos/03-pixie-cut-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/billete.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Surfista en una ola al atardecer",
+    "provisional": "/video/costa/01-olas-islandia.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/metodo-video.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Instructora grabando con el móvil a un alumno en la ola",
+    "provisional": "/video/oceano/03-delfines-hawai.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/metodo-pasos.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Clase en la arena practicando el take-off",
+    "provisional": "/video/costa/02-costa-oregon.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/metodo-surfskate.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Surfskate en una rampa junto a la playa",
+    "provisional": "/video/oceano/02-tiburon-puntas-negras.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/metodo-campamento.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Campamento de surf con tablas junto a la casa",
+    "provisional": "/video/costa/03-playa-tunez.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/remada/video.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Surfista remando hacia el pico, vista desde el agua",
+    "provisional": "/video/costa/03-playa-tunez.jpg"
+   }
+  ],
+  "ahora": [
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-alan.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesor de unos 45 años, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/06-man-with-crossed-arms-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-simon.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesor de unos 60 años con canas, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/07-gray-haired-man-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-manuel.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesor de unos 38 años con gafas, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/12-summer-2016-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-dora.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesora de unos 50 años, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/05-the-perfect-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-clara.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesora de unos 35 años, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/01-a-friend-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-oscar.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesor de unos 42 años, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/09-shadow-obscures-male-face-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/profe-ines.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Profesora de unos 33 años con el pelo corto, retrato sobre fondo neutro",
+    "provisional": "/img/retratos/03-pixie-cut-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/a-medida.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Taller de empresa con post-its en la pared y gente de pie",
+    "provisional": "/img/eventos/03-front-row-audience-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/testimonio-vicky.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Directora creativa de unos 40 años, retrato cálido",
+    "provisional": "/img/retratos/04-black-and-white-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/testimonio-andres.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Fundador de estudio de unos 35 años, retrato cálido",
+    "provisional": "/img/retratos/11-shadowed-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/intro-taller.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Clase en un taller luminoso con pizarras y post-its amarillos",
+    "provisional": "/img/estudio/02-winter-workspace-2-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/promocion.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Una promoción de alumnos celebrando el final del curso",
+    "provisional": "/img/eventos/05-sold-out-concert-in-montreal-unsplash.jpg"
+   }
+  ],
+  "oficio": [
+   {
+    "archivo": "/img/inspiraciones/oficio/fila-alumno.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumno con los brazos cruzados frente al aula, blanco y negro",
+    "provisional": "/img/retratos/06-man-with-crossed-arms-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/masterclass.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Masterclass en un aula llena, blanco y negro",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/testimonio-1.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumna joven hablando a cámara, blanco y negro",
+    "provisional": "/img/retratos/04-black-and-white-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/testimonio-2.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumno joven con su portátil, blanco y negro",
+    "provisional": "/img/retratos/08-the-misadventures-of-an-ill-spent-youth-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/testimonio-3.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumna en su primer trabajo en una tienda, blanco y negro",
+    "provisional": "/img/retratos/02-portrait-of-adolescence-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/testimonio-4.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumno en el negocio familiar, blanco y negro",
+    "provisional": "/img/retratos/10-feeling-blue-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/testimonio-5.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Alumna sonriente con su diploma, blanco y negro",
+    "provisional": "/img/retratos/11-shadowed-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/eventos.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Charla de Oficio en un evento de empresa, blanco y negro",
+    "provisional": "/img/forja/grupo.webp"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/mentores.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Equipo de mentores de pie en el aula, blanco y negro",
+    "provisional": "/img/cadencia/grupo.webp"
+   }
+  ],
+  "abuela-rosa": [
+   {
+    "archivo": "/img/inspiraciones/abuela-rosa/abuela.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato ilustrado de una abuela sonriente con delantal, línea crema sobre azul noche",
+    "provisional": "/img/retratos/07-gray-haired-man-portrait-unsplash.jpg"
+   }
+  ],
+  "q47": [
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-banco.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: ejecutiva corriendo entre rascacielos de noche",
+    "provisional": "/video/ciudad/01-rascacielos-noche.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-lana.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: madejas de lana gigantes en un salón",
+    "provisional": "/img/objetos/05-rustic-tulip-vase-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-quesos.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: queso desenvolviéndose sobre una mesa de madera",
+    "provisional": "/img/pasteleria/02-pexels-photo-132694.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-hockey.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: jugadores de hockey sobre hielo en la grada",
+    "provisional": "/img/deporte/05-road-bike-race-on-sunny-day-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-paisajes.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: coche en un paisaje panorámico de acantilados",
+    "provisional": "/video/costa/02-costa-oregon.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/trabajo-ventana.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: gato junto a un árbol de Navidad tras una ventana",
+    "provisional": "/video/ciudad/03-budapest.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/menu-trabajo-1.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: producto sobre fondo azul intenso",
+    "provisional": "/video/costa/01-olas-islandia.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/menu-trabajo-2.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Fotograma: cartel publicitario en una calle de noche",
+    "provisional": "/video/ciudad/02-avenida-noche.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/menu-agencia.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "El equipo de la agencia en su estudio",
+    "provisional": "/video/ciudad/03-budapest.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/menu-contacto.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Máquina de fax antigua sobre un escritorio",
+    "provisional": "/video/oceano/01-arrecife.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/menu-blog.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Ilustración de una cara en un póster",
+    "provisional": "/video/costa/03-playa-tunez.jpg"
+   }
+  ],
+  "cenit": [
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-sora.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: grano de arroz de cristal flotando junto a una interfaz de chat, fondo azul claro",
+    "provisional": "/img/objetos/01-wood-table-in-front-of-white-wall-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-atlas.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: figura humana de cintas en movimiento sobre fondo verde suave",
+    "provisional": "/img/naturaleza/02-lush-green-pine-forest-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-delta.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: cubo de código translúcido sobre un escritorio minimalista",
+    "provisional": "/img/estudio/04-workspace-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-roble.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: hoja de roble de metal pulido con raíces de luz",
+    "provisional": "/img/naturaleza/01-root-covered-path-through-green-forest-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-trueque.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: dos esferas de cristal intercambiando partículas, fondo lila",
+    "provisional": "/img/arquitectura/02-glass-dome-with-criss-cross-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-maquina.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: coche deportivo de juguete en un paisaje de nubes, estilo ilustración",
+    "provisional": "/img/deporte/01-old-arc-de-triomphe-photograph-with-cars-unsplas.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-humano.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: rostro humano sintético de porcelana con luz suave",
+    "provisional": "/img/eventos/03-front-row-audience-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-fusion.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: gafas de realidad mixta flotando en una habitación difusa",
+    "provisional": "/img/ciudad/03-colorful-asian-street-market-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-orbita.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: galería de arte virtual con cuadros flotando en órbita",
+    "provisional": "/img/interiores/03-pictures-on-wall-with-table-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-festival.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: escenario de festival con formas de neón y público estilizado",
+    "provisional": "/img/eventos/02-concert-photos-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-chucu.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: tren de juguete recorriendo una isla en miniatura al atardecer",
+    "provisional": "/img/verano/01-positano-s-sunset-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/proyecto-refresco.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Render 3D: lata de refresco sin marca estallando en burbujas de colores",
+    "provisional": "/img/gastronomia/02-fresh-bread-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/cenit/astronauta.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Astronauta flotando en el espacio negro, iluminado de lado, sin insignias",
+    "provisional": "/img/espacio/04-nasa-astronaut-is-pictured-during-a-spacewalk-is.jpg"
+   }
+  ],
+  "brasa": [
+   {
+    "archivo": "/img/inspiraciones/brasa/retrato.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Retrato dramático de un diseñador de unos 30 años, de frente, luz lateral, fondo negro (la página lo vira a rojo)",
+    "provisional": "/img/retratos/11-shadowed-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/avatar.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "El mismo diseñador, retrato pequeño de busto",
+    "provisional": "/img/retratos/04-black-and-white-portrait-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/capitulo-legado.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Escritorio oscuro con boceto, tableta gráfica y monitor con una web 3D",
+    "provisional": "/img/estudio/01-gadgets-on-a-desk-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/capitulo-uiux.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Pantallas de una app con flujos de UX sobre fondo oscuro",
+    "provisional": "/img/estudio/03-wacom-cintiq-22hd-workspace-2-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/capitulo-web3d.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Monitor mostrando una escena 3D en WebGL, habitación a oscuras",
+    "provisional": "/img/estudio/05-london-united-kingdom-unsplash-6u0qevcogqu.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/proyecto-codice.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Maqueta de una web de estudio de código, oscura con acentos rojos",
+    "provisional": "/img/estudio/04-workspace-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/proyecto-norte.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Maqueta de una web de fondo de inversión, sobria y elegante",
+    "provisional": "/img/estudio/02-winter-workspace-2-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/proyecto-amarra.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Maqueta de una web de náutica con un barco en 3D",
+    "provisional": "/img/estudio/01-gadgets-on-a-desk-unsplash.jpg"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/proyecto-charla.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Maqueta de una app de mensajería clara y luminosa en un móvil",
+    "provisional": "/img/estudio/03-wacom-cintiq-22hd-workspace-2-unsplash.jpg"
+   }
+  ]
+ }
+}

@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://coreatelierpilates.com/]
 fichas: [docs/50 §3.4 E3a]
-ruta: /lab/estudios/nucleo
-codigo: [components/lab/estudios/nucleo/Nucleo.tsx, components/lab/estudios/nucleo/nucleo.css]
+ruta: /inspiraciones/nucleo
+codigo: [components/inspiraciones/nucleo/Nucleo.tsx, components/inspiraciones/nucleo/nucleo.css]
 colores: [#f7e7de, #25140c, #7c5a48, #744c32]
 fuentes: [Crimson Pro, Albert Sans]
 sector: [gimnasio]

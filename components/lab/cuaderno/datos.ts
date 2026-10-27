@@ -42,7 +42,7 @@ export type Ficha = {
   referencias: string[];
   /** dónde está el estudio largo (docs/50 §3.9…) */
   fichas: string[];
-  /** ruta local donde se ve (/lab/estudios/q47, /sitios/hebra…) */
+  /** ruta donde se ve (/inspiraciones/q47, /sitios/hebra…) */
   ruta: string;
   /** código del ejercicio */
   codigo: string[];

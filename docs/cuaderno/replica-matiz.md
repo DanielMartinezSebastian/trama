@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://ilcolorista.salon/]
 fichas: [docs/50 §3.1]
-ruta: /lab/estudios/matiz
-codigo: [components/lab/estudios/matiz/Matiz.tsx, components/lab/estudios/matiz/matiz.css]
+ruta: /inspiraciones/matiz
+codigo: [components/inspiraciones/matiz/Matiz.tsx, components/inspiraciones/matiz/matiz.css]
 colores: [#ffffff, #2b2b2b, #f5a490, #f8c4b6, #1e1e1e]
 fuentes: [Cormorant Garamond, Manrope]
 sector: [peluquería]

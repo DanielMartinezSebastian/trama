@@ -3019,144 +3019,6 @@ Archivo: `components/landings/minimal/FacetaLanding.tsx`
 
 Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.
 
-## Recetas por sector
-
-Para montar la web de un negocio: la guía de estilo de su familia (`GuideFrame guide="…"`, docs/16 §5.1b), las secciones en el orden que se repite en las webs estudiadas (docs/50 §3) con las piezas que las montan, la llamada fija y lo que se olvida al hacerlo de memoria (lo que delató el par medido, docs/53 §4b). Hecho en las réplicas de `/lab/estudios/<slug>` (solo en local) y en las webs completas de `/sitios`. Datos en `lib/catalog/sectores.ts`.
-
-### Peluquería y color, estética — guía `salon` (Salón editorial claro)
-
-Un salón que vende oficio y calma: el equipo y los trabajos son el producto.
-
-1. cabecera con la navegación que se subraya: `NavBar`
-2. portada: titular fino y mosaico o collage de trabajos: `ShapeMosaic`, `ImageReveal`
-3. manifiesto corto: `SectionHeader`
-4. carta de servicios en paquetes con lo que incluyen y el precio: `MenuList`, `PricingSection`
-5. equipo en filas: la fila entera lleva a reservar con esa persona: `TeamSection`
-6. trabajos y antes y después: `ImageGallery`, `BeforeAfter`
-7. reseñas con nota: `TestimonialSection`
-8. horario y locales: `OpeningHours`
-9. noticias o tienda: `ArticlesSection`, `ProductCard`
-10. pie: `Footer`
-
-- **Llamada fija**: Reservar (una píldora por local si hay varios), fija abajo con ActionBar.
-- **No olvidar**: texto grande y ligero (24 px en Il Colorista), no 14; consulta inicial gratis si luego reservas; las palabras de fondo de cada sección (SectionHeader backdrop).
-- **Visto en**: `/lab/estudios/matiz` · `/lab/estudios/nura` · `/lab/estudios/melena` · `/sitios/hebra`
-
-### Barbería, oficio con carácter — guía `barberia` (Barbería de carácter)
-
-Un local con personalidad de barrio o de cadena: letrero, cinta que corre y el equipo como familia.
-
-1. portada partida: servicios en condensada gigante sobre la foto del local: `Hero`
-2. cinta de texto que corre: `Marquee`
-3. palabras gigantes que suben al entrar: «Locales», «Clientes»: `Reveal`
-4. locales en tarjetas de retrato con su horario: `OpeningHours`
-5. el equipo en óvalos B/N con reserva por barbero: `TeamSection`
-6. carta en la pared, sin suscripciones: `PricingSection`
-7. reseñas: `TestimonialSection`
-8. la app con su QR: `DeviceMockup`, `QRCode`
-9. final en negro: preguntas en dos columnas y reserva: `FAQSection`, `CTASection`
-
-- **Llamada fija**: Reservar o descargar la app, arriba a la derecha (se rellena al pasar).
-- **No olvidar**: el final en negro con preguntas y reserva: es donde cierran la venta; la gótica condensada es ligera (400), no Anton; botones en óvalo de contorno.
-- **Visto en**: `/lab/estudios/cita` · `/lab/estudios/patron` · `/lab/estudios/raiz` · `/sitios/esparta`
-
-### Gimnasio, artes marciales, entrenador personal — guía `club` (Club de alto contraste)
-
-Un club que vende energía y comunidad; la llamada es la clase de prueba gratis, no «reservar».
-
-1. portada: lema en condensada gigante y foto o vídeo B/N: `Hero`
-2. cintas blancas finas entre secciones: `Marquee`
-3. disciplinas: tarjetas de retrato con el nombre encima o lista de nombres gigantes: `ImageGallery`, `ProjectList`
-4. titulares que cruzan la pantalla con la sección fijada: `PinnedSection`
-5. cinta de cifras: `Marquee`, `StatsSection`
-6. horario de clases con plazas y lista de espera: `ClassSchedule`
-7. planes con mes/año: `PricingSection`
-8. equipo: `TeamSection`
-9. preguntas, contacto y mapa: `FAQSection`, `ContactForm`, `OpeningHours`
-10. pie con lema: `Footer`
-
-- **Llamada fija**: Clase de prueba gratis, fija y con el texto que rueda (RollLink).
-- **No olvidar**: la web entera es larga (11–26 pantallas): tarifas, preguntas, muro de fotos, contacto; Antonio 700 a −6 %, no Anton; bandas de foto B/N a sangre entre secciones; scroll suavizado (SmoothScroll) como Essor.
-- **Visto en**: `/lab/estudios/vive` · `/lab/estudios/talla` · `/lab/estudios/lobo` · `/lab/estudios/impulso` · `/sitios/forja`
-
-### Pilates, yoga, estudio privado — guía `boutique` (Estudio boutique)
-
-Un estudio pequeño y cuidado, con reserva y cuenta de cliente.
-
-1. portada con foto a sangre y titular en serifa con media frase en cursiva: `Hero`
-2. acordeón de aparatos o clases que cambia la foto fija de al lado: `FeatureExplorer`
-3. sesiones privadas en tres tarjetas: `PricingSection`
-4. horario y reserva: `ClassSchedule`
-5. pie: `Footer`
-
-- **Llamada fija**: Reservar clase (entrar con la cuenta), con subrayado que crece.
-- **No olvidar**: scroll suavizado (SmoothScroll); texto a 18 px con algo de tracking positivo.
-- **Visto en**: `/lab/estudios/nucleo` · `/sitios/cadencia`
-
-### Academia, escuela, formación profesional — guía `escuela` (Escuela amarilla)
-
-Programas por convocatoria con prueba social; tres páginas: portada, catálogo con filtros y ficha de programa.
-
-1. portada con la promesa y la próxima convocatoria: `Hero`
-2. sellos de valoración y cifras en recuadros: `LogoCloud`, `StatsSection`
-3. programas por convocatoria con estado y fechas: `CohortList`
-4. método en tres o cuatro principios: `FeatureGrid`
-5. profesorado en muro: `TeamSection`
-6. testimonios en vídeo o retrato B/N: `TestimonialSection`
-7. masterclass gratis antes de cada curso: `CTASection`
-8. logos de empresas y boletín: `LogoCloud`, `ContactForm`
-9. ficha de programa: temario y solicitud por pasos: `Accordion`, `Stepper`
-
-- **Llamada fija**: Inscríbete / solicita plaza en la próxima convocatoria.
-- **No olvidar**: el final: presencia en eventos, «sé mentor», el lema y el pie con mapa; la letra va siempre apretada (−2 a −8 %); sombra dura desplazada en los botones.
-- **Visto en**: `/lab/estudios/ahora` · `/lab/estudios/oficio`
-
-### Academia de autor, coaching, viajes guiados — guía `autor` (Academia de autor)
-
-La marca es una persona y su comunidad: su retrato fijo, su voz y sus convocatorias.
-
-1. portada en minúsculas con un dibujo de línea: `LineDraw`
-2. viajes o cursos por convocatoria: `CohortList`
-3. sobre mí y los principios del método: `FeatureGrid`
-4. cifras de la comunidad: `StatsSection`
-5. primera clase regalada: `CTASection`
-6. opiniones: `TestimonialSection`
-7. vlogs y fotos de grupo: `ArticlesSection`, `ImageGallery`
-8. preguntas y contacto: `FAQSection`, `ContactForm`
-
-- **Llamada fija**: Escríbeme (chat flotante) y la primera clase gratis.
-- **No olvidar**: la segunda mitad personal: vlogs, comunidad, preguntas, contacto; el retrato fijo no debe tapar el contenido en móvil; SmoothScroll.
-- **Visto en**: `/lab/estudios/remada`
-
-### Producto de consumo de marca — guía `marca` (Producto de marca)
-
-Un solo producto vendido con origen, maridajes y tono; la compra va fuera.
-
-1. el producto fijo en el centro mientras pasa la página: `ObjectStage`
-2. cinta de compra fija: `Marquee`
-3. tarjetas con marco de etiqueta: historia, sello y picor: `SectionHeader`
-4. origen en un marco ancho con cinta: `Marquee`
-5. maridajes y lo que no, en palabras gigantes con ilustración: `FitText`
-6. compra: `CTASection`
-
-- **Llamada fija**: Comprar, en la cinta fija de arriba.
-- **No olvidar**: dos tintas y nada más: el color lo pone el producto; texto de cartel a 36 px (2,5 vw) en las tarjetas; las dos letras son estrechas.
-- **Visto en**: `/lab/estudios/abuela-rosa`
-
-### Agencia creativa, estudio, portfolio — guía `club` (Club de alto contraste)
-
-La navegación es la firma: portada de una pantalla, menú y transición propios.
-
-1. portada sin scroll con reel de vídeo y un vídeo dentro del titular: `VideoPlayer`
-2. menú a pantalla completa en escalera con filas que giran a marquesina: `FullscreenMenu`
-3. transición entre páginas en escalera: `PageTransition`
-4. hora local: `LocalTime`
-5. trabajo en rejilla con la barra del proyecto en vista: `ProjectList`, `ImageGallery`
-
-- **Llamada fija**: Las dos píldoras gigantes (trabajo, agencia).
-- **No olvidar**: el titular es ligero (300), no medio; el botón de menú se rellena al pasar (triggerHover="fill").
-- **Visto en**: `/lab/estudios/q47`
-
 ### Esparta · barbería de carácter — `/sitios/esparta`
 
 Barbería de barrio con fotografías de corte y barba, navegación lateral, ticket del ritual, carta de servicios y reserva con profesional y agenda persistente.
@@ -3420,3 +3282,166 @@ Expedición de ficción en tres capítulos: una señal, un descenso y un hallazg
 Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
 
 `Button` ×2 · `ScrollProgress` · `Hero` · `Footer`
+
+## Inspiraciones
+
+Webs premiadas estudiadas en el laboratorio y rehechas con el kit (`/inspiraciones/<slug>`, `components/inspiraciones/<slug>/`): marca, textos e imágenes propios, la estructura y la estética de la original. Cada una sigue una guía de estilo (su hoja en `/guias/<guía>`). Ábrelas para copiar estructura cuando el usuario cite la web original o un sector parecido.
+
+| Inspiración | Basada en | Sector | Guía | Lo que la hace reconocible |
+|---|---|---|---|---|
+| [Matiz](/inspiraciones/matiz) · `components/inspiraciones/matiz/` | Il Colorista | peluquería | `salon` | mosaico de formas salmón con fotos que se disuelven en color |
+| [Nura](/inspiraciones/nura) · `components/inspiraciones/nura/` | ALICE Hair & Art | peluquería | `salon` | collage suelto que se desenfoca y una sola letra en mayúsculas |
+| [Cita Barbers](/inspiraciones/cita) · `components/inspiraciones/cita/` | Rendezvous | peluquería | `barberia` | naranja, serif con cursiva y palabras gigantes |
+| [Melena](/inspiraciones/melena) · `components/inspiraciones/melena/` | Hair Me Up | peluquería | `salon` | arco melocotón y palabras de fondo; salón, tienda y academia |
+| [Raíz](/inspiraciones/raiz) · `components/inspiraciones/raiz/` | Marco Ambrosi | peluquería | `barberia` | oscuro y cobre, antes y después |
+| [Patrón](/inspiraciones/patron) · `components/inspiraciones/patron/` | Don Barber & Groom | peluquería | `barberia` | gótica condensada, cinta y la familia |
+| [Núcleo](/inspiraciones/nucleo) · `components/inspiraciones/nucleo/` | Core Atelier Pilates | gimnasio | `boutique` | acordeón de aparatos con la foto fija |
+| [Impulso](/inspiraciones/impulso) · `components/inspiraciones/impulso/` | Essor Fitness | gimnasio | `club` | negro absoluto y titular a todo el ancho |
+| [Vive](/inspiraciones/vive) · `components/inspiraciones/vive/` | FIT AND YOU | gimnasio | `club` | condensada naranja, damero y tarjetas ladeadas |
+| [Talla](/inspiraciones/talla) · `components/inspiraciones/talla/` | Skulpt Fitness | gimnasio | `club` | lima, bordes curvos y menú en columnas verticales |
+| [Lobo](/inspiraciones/lobo) · `components/inspiraciones/lobo/` | Fenriz Gym | gimnasio | `club` | B/N con un degradado de marca |
+| [Remada](/inspiraciones/remada) · `components/inspiraciones/remada/` | Surfing Academy | academia | `autor` | minúsculas, ilustración de línea y viajes por convocatoria |
+| [Ahora](/inspiraciones/ahora) · `components/inspiraciones/ahora/` | Future London Academy | academia | `escuela` | amarillo, muro de profesores y tarjetas solapadas |
+| [Oficio](/inspiraciones/oficio) · `components/inspiraciones/oficio/` | Honhar | academia | `escuela` | neobrutalismo amarillo y programas por promoción |
+| [Abuela Rosa](/inspiraciones/abuela-rosa) · `components/inspiraciones/abuela-rosa/` | Peppa Sauce | producto | `marca` | el bote fijo y dos tintas |
+| [Q47](/inspiraciones/q47) · `components/inspiraciones/q47/` | K72 | agencia | `club` | menú de filas con marquesina y transición en escalera |
+| [Cénit](/inspiraciones/cenit) · `components/inspiraciones/cenit/` | Lusion | estudio creativo | `monocromo` | racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla |
+| [Brasa](/inspiraciones/brasa) · `components/inspiraciones/brasa/` | Meer Mohsin | estudio creativo | `electrico` | retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes |
+
+## Recetas por sector
+
+Para montar la web de un negocio: la guía de estilo de su familia (`GuideFrame guide="…"`, docs/16 §5.1b), las secciones en el orden que se repite en las webs estudiadas (docs/50 §3) con las piezas que las montan, la llamada fija y lo que se olvida al hacerlo de memoria (lo que delató el par medido, docs/53 §4b). Hecho en las inspiraciones de `/inspiraciones/<slug>` (webs premiadas rehechas con el kit, `components/inspiraciones/`) y en las webs completas de `/sitios`. Datos en `lib/catalog/sectores.ts`.
+
+### Peluquería y color, estética — guía `salon` (Salón editorial claro)
+
+Un salón que vende oficio y calma: el equipo y los trabajos son el producto.
+
+1. cabecera con la navegación que se subraya: `NavBar`
+2. portada: titular fino y mosaico o collage de trabajos: `ShapeMosaic`, `ImageReveal`
+3. manifiesto corto: `SectionHeader`
+4. carta de servicios en paquetes con lo que incluyen y el precio: `MenuList`, `PricingSection`
+5. equipo en filas: la fila entera lleva a reservar con esa persona: `TeamSection`
+6. trabajos y antes y después: `ImageGallery`, `BeforeAfter`
+7. reseñas con nota: `TestimonialSection`
+8. horario y locales: `OpeningHours`
+9. noticias o tienda: `ArticlesSection`, `ProductCard`
+10. pie: `Footer`
+
+- **Llamada fija**: Reservar (una píldora por local si hay varios), fija abajo con ActionBar.
+- **No olvidar**: texto grande y ligero (24 px en Il Colorista), no 14; consulta inicial gratis si luego reservas; las palabras de fondo de cada sección (SectionHeader backdrop).
+- **Visto en**: `/inspiraciones/matiz` · `/inspiraciones/nura` · `/inspiraciones/melena` · `/sitios/hebra`
+
+### Barbería, oficio con carácter — guía `barberia` (Barbería de carácter)
+
+Un local con personalidad de barrio o de cadena: letrero, cinta que corre y el equipo como familia.
+
+1. portada partida: servicios en condensada gigante sobre la foto del local: `Hero`
+2. cinta de texto que corre: `Marquee`
+3. palabras gigantes que suben al entrar: «Locales», «Clientes»: `Reveal`
+4. locales en tarjetas de retrato con su horario: `OpeningHours`
+5. el equipo en óvalos B/N con reserva por barbero: `TeamSection`
+6. carta en la pared, sin suscripciones: `PricingSection`
+7. reseñas: `TestimonialSection`
+8. la app con su QR: `DeviceMockup`, `QRCode`
+9. final en negro: preguntas en dos columnas y reserva: `FAQSection`, `CTASection`
+
+- **Llamada fija**: Reservar o descargar la app, arriba a la derecha (se rellena al pasar).
+- **No olvidar**: el final en negro con preguntas y reserva: es donde cierran la venta; la gótica condensada es ligera (400), no Anton; botones en óvalo de contorno.
+- **Visto en**: `/inspiraciones/cita` · `/inspiraciones/patron` · `/inspiraciones/raiz` · `/sitios/esparta`
+
+### Gimnasio, artes marciales, entrenador personal — guía `club` (Club de alto contraste)
+
+Un club que vende energía y comunidad; la llamada es la clase de prueba gratis, no «reservar».
+
+1. portada: lema en condensada gigante y foto o vídeo B/N: `Hero`
+2. cintas blancas finas entre secciones: `Marquee`
+3. disciplinas: tarjetas de retrato con el nombre encima o lista de nombres gigantes: `ImageGallery`, `ProjectList`
+4. titulares que cruzan la pantalla con la sección fijada: `PinnedSection`
+5. cinta de cifras: `Marquee`, `StatsSection`
+6. horario de clases con plazas y lista de espera: `ClassSchedule`
+7. planes con mes/año: `PricingSection`
+8. equipo: `TeamSection`
+9. preguntas, contacto y mapa: `FAQSection`, `ContactForm`, `OpeningHours`
+10. pie con lema: `Footer`
+
+- **Llamada fija**: Clase de prueba gratis, fija y con el texto que rueda (RollLink).
+- **No olvidar**: la web entera es larga (11–26 pantallas): tarifas, preguntas, muro de fotos, contacto; Antonio 700 a −6 %, no Anton; bandas de foto B/N a sangre entre secciones; scroll suavizado (SmoothScroll) como Essor.
+- **Visto en**: `/inspiraciones/vive` · `/inspiraciones/talla` · `/inspiraciones/lobo` · `/inspiraciones/impulso` · `/sitios/forja`
+
+### Pilates, yoga, estudio privado — guía `boutique` (Estudio boutique)
+
+Un estudio pequeño y cuidado, con reserva y cuenta de cliente.
+
+1. portada con foto a sangre y titular en serifa con media frase en cursiva: `Hero`
+2. acordeón de aparatos o clases que cambia la foto fija de al lado: `FeatureExplorer`
+3. sesiones privadas en tres tarjetas: `PricingSection`
+4. horario y reserva: `ClassSchedule`
+5. pie: `Footer`
+
+- **Llamada fija**: Reservar clase (entrar con la cuenta), con subrayado que crece.
+- **No olvidar**: scroll suavizado (SmoothScroll); texto a 18 px con algo de tracking positivo.
+- **Visto en**: `/inspiraciones/nucleo` · `/sitios/cadencia`
+
+### Academia, escuela, formación profesional — guía `escuela` (Escuela amarilla)
+
+Programas por convocatoria con prueba social; tres páginas: portada, catálogo con filtros y ficha de programa.
+
+1. portada con la promesa y la próxima convocatoria: `Hero`
+2. sellos de valoración y cifras en recuadros: `LogoCloud`, `StatsSection`
+3. programas por convocatoria con estado y fechas: `CohortList`
+4. método en tres o cuatro principios: `FeatureGrid`
+5. profesorado en muro: `TeamSection`
+6. testimonios en vídeo o retrato B/N: `TestimonialSection`
+7. masterclass gratis antes de cada curso: `CTASection`
+8. logos de empresas y boletín: `LogoCloud`, `ContactForm`
+9. ficha de programa: temario y solicitud por pasos: `Accordion`, `Stepper`
+
+- **Llamada fija**: Inscríbete / solicita plaza en la próxima convocatoria.
+- **No olvidar**: el final: presencia en eventos, «sé mentor», el lema y el pie con mapa; la letra va siempre apretada (−2 a −8 %); sombra dura desplazada en los botones.
+- **Visto en**: `/inspiraciones/ahora` · `/inspiraciones/oficio`
+
+### Academia de autor, coaching, viajes guiados — guía `autor` (Academia de autor)
+
+La marca es una persona y su comunidad: su retrato fijo, su voz y sus convocatorias.
+
+1. portada en minúsculas con un dibujo de línea: `LineDraw`
+2. viajes o cursos por convocatoria: `CohortList`
+3. sobre mí y los principios del método: `FeatureGrid`
+4. cifras de la comunidad: `StatsSection`
+5. primera clase regalada: `CTASection`
+6. opiniones: `TestimonialSection`
+7. vlogs y fotos de grupo: `ArticlesSection`, `ImageGallery`
+8. preguntas y contacto: `FAQSection`, `ContactForm`
+
+- **Llamada fija**: Escríbeme (chat flotante) y la primera clase gratis.
+- **No olvidar**: la segunda mitad personal: vlogs, comunidad, preguntas, contacto; el retrato fijo no debe tapar el contenido en móvil; SmoothScroll.
+- **Visto en**: `/inspiraciones/remada`
+
+### Producto de consumo de marca — guía `marca` (Producto de marca)
+
+Un solo producto vendido con origen, maridajes y tono; la compra va fuera.
+
+1. el producto fijo en el centro mientras pasa la página: `ObjectStage`
+2. cinta de compra fija: `Marquee`
+3. tarjetas con marco de etiqueta: historia, sello y picor: `SectionHeader`
+4. origen en un marco ancho con cinta: `Marquee`
+5. maridajes y lo que no, en palabras gigantes con ilustración: `FitText`
+6. compra: `CTASection`
+
+- **Llamada fija**: Comprar, en la cinta fija de arriba.
+- **No olvidar**: dos tintas y nada más: el color lo pone el producto; texto de cartel a 36 px (2,5 vw) en las tarjetas; las dos letras son estrechas.
+- **Visto en**: `/inspiraciones/abuela-rosa`
+
+### Agencia creativa, estudio, portfolio — guía `club` (Club de alto contraste)
+
+La navegación es la firma: portada de una pantalla, menú y transición propios.
+
+1. portada sin scroll con reel de vídeo y un vídeo dentro del titular: `VideoPlayer`
+2. menú a pantalla completa en escalera con filas que giran a marquesina: `FullscreenMenu`
+3. transición entre páginas en escalera: `PageTransition`
+4. hora local: `LocalTime`
+5. trabajo en rejilla con la barra del proyecto en vista: `ProjectList`, `ImageGallery`
+
+- **Llamada fija**: Las dos píldoras gigantes (trabajo, agencia).
+- **No olvidar**: el titular es ligero (300), no medio; el botón de menú se rellena al pasar (triggerHover="fill").
+- **Visto en**: `/inspiraciones/q47`

@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.marcoambrosi.salon/]
 fichas: [docs/50 §3.2 E2e]
-ruta: /lab/estudios/raiz
-codigo: [components/lab/estudios/raiz/Raiz.tsx, components/lab/estudios/raiz/raiz.css]
+ruta: /inspiraciones/raiz
+codigo: [components/inspiraciones/raiz/Raiz.tsx, components/inspiraciones/raiz/raiz.css]
 colores: [#141618, #f2f0ed, #9aa0a6, #e0b183, #c98e58]
 fuentes: [Playfair Display, Outfit]
 sector: [peluquería]

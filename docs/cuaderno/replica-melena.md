@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://hairmeup.pl]
 fichas: [docs/50 §3.2 E2c]
-ruta: /lab/estudios/melena
-codigo: [components/lab/estudios/melena/Melena.tsx, components/lab/estudios/melena/melena.css]
+ruta: /inspiraciones/melena
+codigo: [components/inspiraciones/melena/Melena.tsx, components/inspiraciones/melena/melena.css]
 colores: [#ffffff, #2c2c2c, #feede4, #ffd5bf, #e9875a, #963e13]
 fuentes: [DM Serif Display, Lora]
 sector: [peluquería]

@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://surfing.academy/]
 fichas: [docs/50 §3.6 E4]
-ruta: /lab/estudios/remada
-codigo: [components/lab/estudios/remada/Remada.tsx, components/lab/estudios/remada/remada.css]
+ruta: /inspiraciones/remada
+codigo: [components/inspiraciones/remada/Remada.tsx, components/inspiraciones/remada/remada.css]
 colores: [#ededed, #17191a, #ff4f28, #39be91]
 fuentes: [Onest, Inter, Playfair Display]
 sector: [academia]

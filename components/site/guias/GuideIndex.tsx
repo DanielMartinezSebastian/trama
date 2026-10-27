@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { leerCuaderno } from "@/components/lab/cuaderno/datos";
 import { STYLE_GUIDES } from "@/lib/ui/guides";
-import { REPO } from "./fuentes";
+import { REPLICAS } from "@/components/inspiraciones/registro";
+import { REPO, rutaPublica } from "./fuentes";
 import { nombreLetra } from "./GuideSheet";
 
 /*
@@ -28,7 +29,7 @@ export default function GuideIndex() {
         <div className="gi-fuentes">
           <div><b>{STYLE_GUIDES.length}</b><p>guías, cada una con su hoja de estilo: color, letra, escala, espacio, movimiento, componentes y código</p></div>
           <div><b>{cuenta("web") + cuenta("landing")}</b><p>webs y landings del repo medidas con <code>refs:probe --repo</code> y asignadas a su guía más afín</p></div>
-          <div><b>{cuenta("replica")}</b><p>réplicas de webs reales medidas contra su original (<code>--par</code>)</p></div>
+          <div><b>{REPLICAS.length}</b><p>inspiraciones: webs premiadas rehechas con Trama, medidas contra su original (<code>--par</code>) y asignadas a una guía</p></div>
           <div><b>{fichas}</b><p>fichas del cuaderno del laboratorio: patrones, tono y gestos de cada familia</p></div>
         </div>
       </section>
@@ -50,7 +51,7 @@ export default function GuideIndex() {
                   <strong>{g.label}</strong>
                   <p>{g.note}</p>
                   <small>
-                    {nombreLetra(g.fonts.display)} + {nombreLetra(g.fonts.body)} · {porGuia(g.id)} páginas del repo
+                    {nombreLetra(g.fonts.display)} + {nombreLetra(g.fonts.body)} · {porGuia(g.id)} páginas del repo{REPLICAS.some((r) => r.guia === g.id) ? ` · ${REPLICAS.filter((r) => r.guia === g.id).length} inspiraciones` : ""}
                   </small>
                 </Link>
               ))}
@@ -63,7 +64,7 @@ export default function GuideIndex() {
         <h2 id="gi-repo">El repo por guías</h2>
         <p className="gs-nota">
           Cada web, landing y réplica del repo medida en el navegador y comparada con las guías medidas igual: fondo, acento,
-          letra y escala del titular, texto y superficies (medida del {REPO.fecha || "—"}). Las réplicas solo existen en local.
+          letra y escala del titular, texto y superficies (medida del {REPO.fecha || "—"}).
         </p>
         <table className="gs-tabla gs-tabla--repo">
           <thead>
@@ -80,8 +81,8 @@ export default function GuideIndex() {
               const g = STYLE_GUIDES.find((x) => x.id === a?.guia);
               return (
                 <tr key={p.ruta}>
-                  <td>{p.tipo === "replica" ? <code>{p.titulo ?? p.ruta}</code> : <Link href={p.ruta}>{p.titulo ?? p.ruta}</Link>}</td>
-                  <td>{p.tipo}</td>
+                  <td><Link href={rutaPublica(p)}>{p.titulo ?? p.ruta}</Link></td>
+                  <td>{p.tipo === "replica" ? "inspiración" : p.tipo}</td>
                   <td>{g ? <Link href={`/guias/${g.id}`}>{g.label}</Link> : "—"} {a ? <small>({a.afinidad.toFixed(2)})</small> : null}</td>
                   <td><small>{resto.map((x) => `${STYLE_GUIDES.find((y) => y.id === x.guia)?.label ?? x.guia} ${x.afinidad.toFixed(2)}`).join(" · ")}</small></td>
                 </tr>

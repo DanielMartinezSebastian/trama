@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.myrendezvous.ca/]
 fichas: [docs/50 §3.2 E2b]
-ruta: /lab/estudios/cita
-codigo: [components/lab/estudios/cita/Cita.tsx, components/lab/estudios/cita/cita.css]
+ruta: /inspiraciones/cita
+codigo: [components/inspiraciones/cita/Cita.tsx, components/inspiraciones/cita/cita.css]
 colores: [#ffffff, #000000, #ff622b]
 fuentes: [Playfair Display, Inter, Space Mono, IBM Plex Mono]
 sector: [barbería]

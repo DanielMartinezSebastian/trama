@@ -20,22 +20,22 @@
 | 2026-10-27 | [pieza-page-transition-stairs](pieza-page-transition-stairs.md) · PageTransition en escalera | pieza | hecho | agencia |  | `/componentes` |
 | 2026-10-27 | [pieza-shape-mosaic](pieza-shape-mosaic.md) · ShapeMosaic, mosaico de formas con fotos que se disuelven | pieza | hecho | peluquería | salón editorial claro | `/componentes` |
 | 2026-10-27 | [pieza-team-section](pieza-team-section.md) · TeamSection con fotos, formas, filas y muro | pieza | hecho | peluquería, academia |  | `/componentes` |
-| 2026-10-27 | [replica-abuela-rosa](replica-abuela-rosa.md) · Abuela Rosa, réplica de Peppa Sauce | réplica | hecho | producto | producto de marca | `/lab/estudios/abuela-rosa` |
-| 2026-10-27 | [replica-ahora](replica-ahora.md) · Ahora, réplica de Future London Academy | réplica | hecho | academia | escuela amarilla | `/lab/estudios/ahora` |
-| 2026-10-27 | [replica-cita](replica-cita.md) · Cita Barbers, réplica de Rendezvous | réplica | hecho | barbería | barbería de carácter | `/lab/estudios/cita` |
-| 2026-10-27 | [replica-impulso](replica-impulso.md) · Impulso, réplica de Essor Fitness | réplica | hecho | gimnasio | club de alto contraste | `/lab/estudios/impulso` |
-| 2026-10-27 | [replica-lobo](replica-lobo.md) · Lobo Gym, réplica de Fenriz Gym | réplica | hecho | gimnasio | club de alto contraste | `/lab/estudios/lobo` |
-| 2026-10-27 | [replica-matiz](replica-matiz.md) · Matiz, réplica de Il Colorista | réplica | hecho | peluquería | salón editorial claro | `/lab/estudios/matiz` |
-| 2026-10-27 | [replica-melena](replica-melena.md) · Melena, réplica de Hair Me Up | réplica | hecho | peluquería | salón editorial claro | `/lab/estudios/melena` |
-| 2026-10-27 | [replica-nucleo](replica-nucleo.md) · Núcleo, réplica de Core Atelier Pilates | réplica | hecho | gimnasio | estudio boutique | `/lab/estudios/nucleo` |
-| 2026-10-27 | [replica-nura](replica-nura.md) · Nura, réplica de ALICE Hair & Art | réplica | hecho | peluquería | salón editorial claro | `/lab/estudios/nura` |
-| 2026-10-27 | [replica-oficio](replica-oficio.md) · Oficio, réplica de Honhar | réplica | hecho | academia | escuela amarilla | `/lab/estudios/oficio` |
-| 2026-10-27 | [replica-patron](replica-patron.md) · Patrón, réplica de Don Barber & Groom | réplica | hecho | barbería | barbería de carácter | `/lab/estudios/patron` |
-| 2026-10-27 | [replica-q47](replica-q47.md) · Q47, réplica de K72 | réplica | en curso | agencia | club de alto contraste | `/lab/estudios/q47` |
-| 2026-10-27 | [replica-raiz](replica-raiz.md) · Raíz, réplica de Marco Ambrosi | réplica | hecho | peluquería | barbería de carácter | `/lab/estudios/raiz` |
-| 2026-10-27 | [replica-remada](replica-remada.md) · Remada, réplica de Surfing Academy | réplica | hecho | academia | academia de autor | `/lab/estudios/remada` |
-| 2026-10-27 | [replica-talla](replica-talla.md) · Talla, réplica de Skulpt Fitness | réplica | hecho | gimnasio | club de alto contraste | `/lab/estudios/talla` |
-| 2026-10-27 | [replica-vive](replica-vive.md) · Vive Club, réplica de FIT AND YOU | réplica | hecho | gimnasio | club de alto contraste | `/lab/estudios/vive` |
+| 2026-10-27 | [replica-abuela-rosa](replica-abuela-rosa.md) · Abuela Rosa, réplica de Peppa Sauce | réplica | hecho | producto | producto de marca | `/inspiraciones/abuela-rosa` |
+| 2026-10-27 | [replica-ahora](replica-ahora.md) · Ahora, réplica de Future London Academy | réplica | hecho | academia | escuela amarilla | `/inspiraciones/ahora` |
+| 2026-10-27 | [replica-cita](replica-cita.md) · Cita Barbers, réplica de Rendezvous | réplica | hecho | barbería | barbería de carácter | `/inspiraciones/cita` |
+| 2026-10-27 | [replica-impulso](replica-impulso.md) · Impulso, réplica de Essor Fitness | réplica | hecho | gimnasio | club de alto contraste | `/inspiraciones/impulso` |
+| 2026-10-27 | [replica-lobo](replica-lobo.md) · Lobo Gym, réplica de Fenriz Gym | réplica | hecho | gimnasio | club de alto contraste | `/inspiraciones/lobo` |
+| 2026-10-27 | [replica-matiz](replica-matiz.md) · Matiz, réplica de Il Colorista | réplica | hecho | peluquería | salón editorial claro | `/inspiraciones/matiz` |
+| 2026-10-27 | [replica-melena](replica-melena.md) · Melena, réplica de Hair Me Up | réplica | hecho | peluquería | salón editorial claro | `/inspiraciones/melena` |
+| 2026-10-27 | [replica-nucleo](replica-nucleo.md) · Núcleo, réplica de Core Atelier Pilates | réplica | hecho | gimnasio | estudio boutique | `/inspiraciones/nucleo` |
+| 2026-10-27 | [replica-nura](replica-nura.md) · Nura, réplica de ALICE Hair & Art | réplica | hecho | peluquería | salón editorial claro | `/inspiraciones/nura` |
+| 2026-10-27 | [replica-oficio](replica-oficio.md) · Oficio, réplica de Honhar | réplica | hecho | academia | escuela amarilla | `/inspiraciones/oficio` |
+| 2026-10-27 | [replica-patron](replica-patron.md) · Patrón, réplica de Don Barber & Groom | réplica | hecho | barbería | barbería de carácter | `/inspiraciones/patron` |
+| 2026-10-27 | [replica-q47](replica-q47.md) · Q47, réplica de K72 | réplica | en curso | agencia | club de alto contraste | `/inspiraciones/q47` |
+| 2026-10-27 | [replica-raiz](replica-raiz.md) · Raíz, réplica de Marco Ambrosi | réplica | hecho | peluquería | barbería de carácter | `/inspiraciones/raiz` |
+| 2026-10-27 | [replica-remada](replica-remada.md) · Remada, réplica de Surfing Academy | réplica | hecho | academia | academia de autor | `/inspiraciones/remada` |
+| 2026-10-27 | [replica-talla](replica-talla.md) · Talla, réplica de Skulpt Fitness | réplica | hecho | gimnasio | club de alto contraste | `/inspiraciones/talla` |
+| 2026-10-27 | [replica-vive](replica-vive.md) · Vive Club, réplica de FIT AND YOU | réplica | hecho | gimnasio | club de alto contraste | `/inspiraciones/vive` |
 | 2026-10-26 | [demo-cadencia](demo-cadencia.md) · Cadencia reformada como estudio boutique | demo | hecho | gimnasio | estudio boutique | `/sitios/cadencia` |
 | 2026-10-26 | [demo-esparta](demo-esparta.md) · Esparta reformada como barbería de carácter | demo | hecho | barbería | barbería de carácter | `/sitios/esparta` |
 | 2026-10-26 | [demo-forja](demo-forja.md) · Forja reformada como club de alto contraste | demo | hecho | gimnasio | club de alto contraste | `/sitios/forja` |

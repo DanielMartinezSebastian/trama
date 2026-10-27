@@ -2,7 +2,7 @@
  * Recetas por sector (docs/50 E11): para montar la web de un negocio con el kit. Cada receta une la guía de estilo de su
  * familia (`STYLE_GUIDES`, docs/16 §5.1b), el orden de secciones que se repite en las webs estudiadas (docs/50 §3), las
  * piezas que lo cubren, la llamada fija, lo que no hay que olvidar (lo que faltaba en las réplicas al medirlas, docs/53
- * §4b) y dónde verlo hecho: réplicas en /lab/estudios (solo local) y webs completas en /sitios. `npm run catalog` lo
+ * §4b) y dónde verlo hecho: inspiraciones en /inspiraciones/<slug> y webs completas en /sitios. `npm run catalog` lo
  * escribe en CATALOG.md y comprueba que cada pieza exista en el catálogo y cada guía en STYLE_GUIDES.
  */
 
@@ -19,7 +19,7 @@ export type RecetaSector = {
   llamada: string;
   /** lo que se olvida al replicar de memoria y el par delató */
   noOlvidar: string[];
-  /** réplicas del laboratorio (slug de /lab/estudios) y webs completas (/sitios/<slug>) */
+  /** inspiraciones (slug de /inspiraciones) y webs completas (/sitios/<slug>) */
   replicas: string[];
   webs: string[];
 };

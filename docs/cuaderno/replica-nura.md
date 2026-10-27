@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.alicehairart.se/]
 fichas: [docs/50 §3.2 E2a]
-ruta: /lab/estudios/nura
-codigo: [components/lab/estudios/nura/Nura.tsx, components/lab/estudios/nura/nura.css]
+ruta: /inspiraciones/nura
+codigo: [components/inspiraciones/nura/Nura.tsx, components/inspiraciones/nura/nura.css]
 colores: [#f5f5f5, #121212, #5c5c5c, #dedede]
 fuentes: [Geist, Inter]
 sector: [peluquería]

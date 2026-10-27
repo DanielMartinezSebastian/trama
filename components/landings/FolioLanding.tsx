@@ -85,6 +85,8 @@ const TOKENS: CSSProperties = {
   "--card": "rgba(255,255,255,0.55)",
   "--ln": "rgba(36,29,20,0.16)",
   "--r": "3px",
+  // tema claro fijado a mano (sin tokensToStyle): sin brillos de color alrededor de letras oscuras (guía §8.0)
+  "--glow": 0,
   fontFamily: 'var(--font-jetbrains-mono), ui-monospace, "Cascadia Code", Consolas, monospace',
 } as CSSProperties;
 

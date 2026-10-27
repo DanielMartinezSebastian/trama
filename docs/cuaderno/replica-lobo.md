@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.fenriz-gym.com/]
 fichas: [docs/50 §3.4 E3f]
-ruta: /lab/estudios/lobo
-codigo: [components/lab/estudios/lobo/Lobo.tsx, components/lab/estudios/lobo/lobo.css]
+ruta: /inspiraciones/lobo
+codigo: [components/inspiraciones/lobo/Lobo.tsx, components/inspiraciones/lobo/lobo.css]
 colores: [#e8e8e8, #1c1c1c, #ffd53d, #f5a623, #e2452b, #7a3fbf, #2251d1]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]

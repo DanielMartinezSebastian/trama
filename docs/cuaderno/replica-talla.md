@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://www.skulptfitness.nl]
 fichas: [docs/50 §3.4 E3e]
-ruta: /lab/estudios/talla
-codigo: [components/lab/estudios/talla/Talla.tsx, components/lab/estudios/talla/talla.css]
+ruta: /inspiraciones/talla
+codigo: [components/inspiraciones/talla/Talla.tsx, components/inspiraciones/talla/talla.css]
 colores: [#f5f5f5, #202020, #cef952]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]

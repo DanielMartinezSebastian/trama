@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Inter_Tight } from "next/font/google";
 import Desplazable from "@/components/lab/cine/Desplazable";
-import LusionWeb from "@/components/lab/cine/piezas/LusionWeb";
+import Cenit from "@/components/inspiraciones/cenit/Cenit";
 
 /*
- * Réplica de la portada de lusion.co (docs/43): la web entera con piezas del kit, no solo el racimo de cruces del banco
- * (/lab/cine/lusion, que sigue midiendo el racimo con cine:vuelta). Aeonik es de pago: Inter Tight en su lugar; la
- * monoespaciada es la de la referencia (IBM Plex Mono).
+ * Banco de la réplica de lusion.co (docs/43): la inspiración Cénit (/inspiraciones/cenit) a pantalla completa, para
+ * compararla con la original con cine:capture y refs:probe. El racimo de cruces solo sigue en /lab/cine/lusion.
  */
-const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-lw" });
-const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-lw-mono" });
 
 export const metadata: Metadata = { title: "Lusion (réplica) · Trama", robots: { index: false, follow: false } };
 
 export default function Page() {
   return (
-    <main className={`${sans.variable} ${mono.variable}`}>
+    <main>
       <Desplazable />
-      <LusionWeb />
+      <Cenit />
     </main>
   );
 }

@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://don-barber.gr/en]
 fichas: [docs/50 §3.2 E2f]
-ruta: /lab/estudios/patron
-codigo: [components/lab/estudios/patron/Patron.tsx, components/lab/estudios/patron/patron.css]
+ruta: /inspiraciones/patron
+codigo: [components/inspiraciones/patron/Patron.tsx, components/inspiraciones/patron/patron.css]
 colores: [#eceae0, #000000, #7e929c, #757171]
 fuentes: [Antonio, Archivo, Playfair Display]
 sector: [barbería]

@@ -1,4 +1,5 @@
 import { leerCuaderno, type Ficha } from "@/components/lab/cuaderno/datos";
+import { REPLICAS, type Replica } from "@/components/inspiraciones/registro";
 import { RECETAS_SECTOR, type RecetaSector } from "@/lib/catalog/sectores";
 import { GUIDE_EXCEPTIONS, STYLE_GUIDES, type StyleGuide } from "@/lib/ui/guides";
 import repo from "./repo.json";
@@ -8,6 +9,7 @@ import repo from "./repo.json";
  *   - su medida en el navegador y las páginas del repo más afines (repo.json, de `refs:probe --repo`);
  *   - las fichas del cuaderno de su familia (docs/cuaderno): patrones, tono, paleta, tipografía y movimiento que se repiten;
  *   - su receta de sector (lib/catalog/sectores.ts);
+ *   - las inspiraciones que la siguen (components/inspiraciones/registro.ts, /inspiraciones/<slug>);
  *   - las excepciones medidas (GUIDE_EXCEPTIONS) y los gestos del kit que corresponden a su movimiento.
  * Solo en servidor (lee docs/cuaderno con fs).
  */
@@ -34,6 +36,9 @@ export type PaginaRepo = {
 };
 
 export const REPO = repo as unknown as { fecha: string; base: string; paginas: PaginaRepo[]; fallidas: string[] };
+
+/** la ruta pública de una página medida: las réplicas del laboratorio se publican como inspiraciones */
+export const rutaPublica = (p: PaginaRepo) => (p.tipo === "replica" ? p.ruta.replace("/lab/estudios/", "/inspiraciones/") : p.ruta);
 
 /** el gesto del kit que da cada movimiento del cuaderno */
 export const GESTOS_KIT: Record<string, string> = {
@@ -76,6 +81,7 @@ export type DatosGuia = {
   piezas: [string, number][];
   colores: string[];
   receta: RecetaSector | undefined;
+  inspiraciones: Replica[];
   excepciones: { rule: string; why: string }[];
 };
 
@@ -102,6 +108,7 @@ export function datosDeGuia(id: string): DatosGuia | null {
     piezas: todo("piezas"),
     colores: [...new Set(fichas.flatMap((f) => f.colores))],
     receta: RECETAS_SECTOR.find((r) => r.guia === id),
+    inspiraciones: REPLICAS.filter((r) => r.guia === id),
     excepciones: GUIDE_EXCEPTIONS[id] ?? [],
   };
 }

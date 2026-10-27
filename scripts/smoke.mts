@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { chromium } from "playwright";
 import { chromiumPath } from "./chromium-path.mts";
+import { sombrasOscuras } from "./sombras-navegador.mts";
 
 const args = process.argv.slice(2);
 const input = args[0];
@@ -15,16 +16,20 @@ mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: chromiumPath() });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+  // tsx envuelve las funciones con nombre en __name(), que la página no tiene
+  await page.addInitScript("window.__name = (f) => f");
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
   const response = await page.goto(url.href, { waitUntil: "networkidle", timeout: 60000 });
   const status = response?.status() ?? 0;
   await page.screenshot({ path: resolve(out, "pagina.png"), fullPage: true });
-  const result = { url: url.href, status, title: await page.title(), errors };
+  // guía §8.0: ninguna sombra oscura sobre fondo claro, medida con lo que resuelve el navegador
+  const sombras = await sombrasOscuras(page);
+  const result = { url: url.href, status, title: await page.title(), errors, sombras };
   writeFileSync(resolve(out, "resultado.json"), JSON.stringify(result, null, 2));
   console.log(JSON.stringify({ ...result, out }, null, 2));
-  process.exitCode = status >= 200 && status < 400 && !errors.length ? 0 : 1;
+  process.exitCode = status >= 200 && status < 400 && !errors.length && !sombras.length ? 0 : 1;
 } finally {
   await browser.close();
 }

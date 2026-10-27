@@ -5,8 +5,8 @@ tipo: réplica
 estado: hecho
 referencias: [https://futurelondonacademy.co.uk/]
 fichas: [docs/50 §3.6 E5]
-ruta: /lab/estudios/ahora
-codigo: [components/lab/estudios/ahora/Ahora.tsx, components/lab/estudios/ahora/ahora.css]
+ruta: /inspiraciones/ahora
+codigo: [components/inspiraciones/ahora/Ahora.tsx, components/inspiraciones/ahora/ahora.css]
 colores: [#ffffff, #1a1a1a, #ffe32b, #f1f1f1]
 fuentes: [Space Grotesk, Inter]
 sector: [academia]

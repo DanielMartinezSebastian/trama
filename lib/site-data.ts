@@ -1,6 +1,8 @@
 import catalogJson from "@/docs/catalog.json";
 import { demos, type DemoMeta } from "@/lib/demos";
 import { sites } from "@/lib/sites";
+import { REPLICAS } from "@/components/inspiraciones/registro";
+import { STYLE_GUIDES } from "@/lib/ui/guides";
 import type { DemoGroup } from "@/components/site/DemosIndex";
 import type { HomeData } from "@/components/site/HomePage";
 
@@ -43,6 +45,18 @@ export function demoGroups(): DemoGroup[] {
       label: "Webs completas",
       blurb: "Sitios de varias páginas con navegación, estado compartido (carrito, suscripción, chat) y contenido propio.",
       items: sites.map((s) => ({ href: `/sitios/${s.slug}`, title: s.title, blurb: s.blurb, meta: `${s.tag} · ${s.routes.length} páginas`, accent: s.accent })),
+    },
+    {
+      id: "inspiraciones",
+      label: "Inspiraciones",
+      blurb: "Webs premiadas estudiadas en el laboratorio y rehechas con Trama: marca, textos e imágenes propios, la estructura y la estética de la original. Cada una sigue una guía de estilo.",
+      items: REPLICAS.map((r) => ({
+        href: `/inspiraciones/${r.slug}`,
+        title: r.nombre,
+        blurb: `Basada en ${r.ref}: ${r.firma}.`,
+        meta: `${r.sector} · guía ${STYLE_GUIDES.find((g) => g.id === r.guia)?.label.toLowerCase() ?? r.guia}`,
+        accent: r.acento,
+      })),
     },
     { id: "tematicas", label: "Landings temáticas", blurb: "Landings de 300vh con cards de efectos ASCII y fondos que cambian de escena, anteriores al kit.", items: of("landing").filter((d) => !isKit(d)).map(item) },
     { id: "scroll", label: "Scroll", blurb: "Páginas de 300vh donde el scroll (GSAP ScrollTrigger) mueve el fondo: base para héroes y secciones.", items: of("scroll").map(item) },

@@ -11,7 +11,7 @@ import RollLink from "@/components/ui/RollLink";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import { GUIDE_RULES, guideToStyle } from "@/lib/ui/guides";
-import { GESTOS_KIT, contraste, type DatosGuia } from "./fuentes";
+import { GESTOS_KIT, contraste, rutaPublica, type DatosGuia } from "./fuentes";
 import { HEROES, STORIES } from "./content";
 
 /*
@@ -68,7 +68,7 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
           Para: {g.sectors}. Sale de: {g.refs.join(", ")}.
         </p>
         <nav className="gs-indice" aria-label="Secciones de la hoja">
-          {[["color", "Color"], ["tipo", "Tipografía"], ["espacio", "Espacio y superficie"], ["movimiento", "Movimiento"], ["kit", "Componentes"], ["familia", "Familia y patrones"], ["receta", "Receta"], ["repo", "En el repo"], ["reglas", "Reglas"], ["codigo", "Código"]].map(([id, l]) => (
+          {[["color", "Color"], ["tipo", "Tipografía"], ["espacio", "Espacio y superficie"], ["movimiento", "Movimiento"], ["kit", "Componentes"], ["familia", "Familia y patrones"], ["receta", "Receta"], ["repo", "Inspiraciones y repo"], ["reglas", "Reglas"], ["codigo", "Código"]].map(([id, l]) => (
             <a key={id} href={`#${id}`}>{l}</a>
           ))}
         </nav>
@@ -309,10 +309,27 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
         )}
       </Seccion>
 
-      <Seccion id="repo" n="08" titulo="En el repo">
+      <Seccion id="repo" n="08" titulo="Inspiraciones y páginas del repo">
+        <p className="gs-nota">
+          Inspiraciones: webs premiadas estudiadas en el laboratorio y rehechas con Trama siguiendo esta guía, con su marca, sus
+          textos y sus imágenes (docs/55).
+        </p>
+        {d.inspiraciones.length ? (
+          <div className="gi-rejilla">
+            {d.inspiraciones.map((r) => (
+              <Link key={r.slug} href={`/inspiraciones/${r.slug}`} className="gi-guia" style={{ ["--acc" as string]: r.acento }}>
+                <small>Inspiración · {r.sector}</small>
+                <strong>{r.nombre}</strong>
+                <p>Basada en {r.ref}: {r.firma}.</p>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="gs-nota">Ninguna inspiración sigue esta guía todavía.</p>
+        )}
         <p className="gs-nota">
           Páginas del repo cuya guía más afín es esta, medidas con <code>refs:probe --repo</code>: afinidad de 0 a 1 al comparar fondo,
-          acento, letra y escala del titular, texto y superficies. Las réplicas del laboratorio solo existen en local.
+          acento, letra y escala del titular, texto y superficies.
         </p>
         {d.afines.length ? (
           <table className="gs-tabla gs-tabla--repo">
@@ -328,8 +345,8 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
             <tbody>
               {d.afines.map(({ p, afinidad }) => (
                 <tr key={p.ruta}>
-                  <td>{p.tipo === "replica" ? <code>{p.ruta}</code> : <Link href={p.ruta}>{p.titulo ?? p.ruta}</Link>}</td>
-                  <td>{p.tipo}</td>
+                  <td><Link href={rutaPublica(p)}>{p.titulo ?? p.ruta}</Link></td>
+                  <td>{p.tipo === "replica" ? "inspiración" : p.tipo}</td>
                   <td>{afinidad.toFixed(2)}</td>
                   <td>{p.medidas.titular ? `${p.medidas.titular.letra} · ${p.medidas.titular.vw} vw · ${p.medidas.titular.peso}` : "—"}</td>
                   <td><span className="gs-muestras">{p.medidas.paleta.slice(0, 5).map(([c], i) => <i key={`${c}-${i}`} title={c} style={{ background: c }} />)}</span></td>
