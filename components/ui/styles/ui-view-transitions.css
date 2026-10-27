@@ -90,11 +90,13 @@
 ::view-transition-new(.ui-vt-stack-up),
 ::view-transition-new(.ui-vt-stack-down),
 ::view-transition-new(.ui-vt-blinds),
+::view-transition-new(.ui-vt-stairs),
 ::view-transition-new(.ui-vt-pixelate),
 ::view-transition-new(.ui-vt-scanline),
 ::view-transition-new(.ui-vt-iris),
 ::view-transition-new(.ui-vt-terminal) { background: var(--ui-vt-page, var(--bg)); }
 ::view-transition-old(.ui-vt-blinds),
+::view-transition-old(.ui-vt-stairs),
 ::view-transition-old(.ui-vt-pixelate),
 ::view-transition-old(.ui-vt-iris) { animation: ui-vt-hold var(--ui-vt-d) linear both; }
 
@@ -271,6 +273,36 @@
   mask-image: linear-gradient(to bottom, #000 var(--ui-vt-k), transparent var(--ui-vt-k));
   -webkit-mask-size: 100% 28px;
   mask-size: 100% 28px;
+}
+
+/* ---------- stairs: cinco columnas que bajan en escalera desde la derecha (K72, docs/50 §3.9) ---------- */
+@property --ui-vt-s0 { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@property --ui-vt-s1 { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@property --ui-vt-s2 { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@property --ui-vt-s3 { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@property --ui-vt-s4 { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@keyframes ui-vt-s0 { to { --ui-vt-s0: 100%; } }
+@keyframes ui-vt-s1 { to { --ui-vt-s1: 100%; } }
+@keyframes ui-vt-s2 { to { --ui-vt-s2: 100%; } }
+@keyframes ui-vt-s3 { to { --ui-vt-s3: 100%; } }
+@keyframes ui-vt-s4 { to { --ui-vt-s4: 100%; } }
+::view-transition-new(.ui-vt-stairs) {
+  --ui-vt-sd: calc(var(--ui-vt-d) * 0.56);
+  --ui-vt-se: cubic-bezier(0.76, 0, 0.24, 1);
+  animation:
+    ui-vt-s4 var(--ui-vt-sd) var(--ui-vt-se) 0s both,
+    ui-vt-s3 var(--ui-vt-sd) var(--ui-vt-se) calc(var(--ui-vt-d) * 0.11) both,
+    ui-vt-s2 var(--ui-vt-sd) var(--ui-vt-se) calc(var(--ui-vt-d) * 0.22) both,
+    ui-vt-s1 var(--ui-vt-sd) var(--ui-vt-se) calc(var(--ui-vt-d) * 0.33) both,
+    ui-vt-s0 var(--ui-vt-sd) var(--ui-vt-se) calc(var(--ui-vt-d) * 0.44) both;
+  -webkit-mask-image: linear-gradient(#000 var(--ui-vt-s0), transparent var(--ui-vt-s0)), linear-gradient(#000 var(--ui-vt-s1), transparent var(--ui-vt-s1)), linear-gradient(#000 var(--ui-vt-s2), transparent var(--ui-vt-s2)), linear-gradient(#000 var(--ui-vt-s3), transparent var(--ui-vt-s3)), linear-gradient(#000 var(--ui-vt-s4), transparent var(--ui-vt-s4));
+  mask-image: linear-gradient(#000 var(--ui-vt-s0), transparent var(--ui-vt-s0)), linear-gradient(#000 var(--ui-vt-s1), transparent var(--ui-vt-s1)), linear-gradient(#000 var(--ui-vt-s2), transparent var(--ui-vt-s2)), linear-gradient(#000 var(--ui-vt-s3), transparent var(--ui-vt-s3)), linear-gradient(#000 var(--ui-vt-s4), transparent var(--ui-vt-s4));
+  -webkit-mask-size: 20.5% 100%;
+  mask-size: 20.5% 100%;
+  -webkit-mask-position: 0 0, 25% 0, 50% 0, 75% 0, 100% 0;
+  mask-position: 0 0, 25% 0, 50% 0, 75% 0, 100% 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 /* ---------- pixelate: disolución por bloques de 12 px en tramado ordenado 2×2 (4 pasos, sin parpadeo) ---------- */

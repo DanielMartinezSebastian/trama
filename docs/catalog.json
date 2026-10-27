@@ -3783,6 +3783,7 @@
             "scan",
             "stack",
             "blinds",
+            "stairs",
             "pixelate",
             "scanline",
             "glitch",
@@ -3870,6 +3871,7 @@
             "scan",
             "stack",
             "blinds",
+            "stairs",
             "pixelate",
             "scanline",
             "glitch",
@@ -16618,7 +16620,7 @@
         {
           "component": "Button",
           "id": "button",
-          "uses": 19
+          "uses": 17
         },
         {
           "component": "Hero",
@@ -16646,6 +16648,11 @@
           "uses": 1
         },
         {
+          "component": "TeamSection",
+          "id": "team-section",
+          "uses": 1
+        },
+        {
           "component": "Chart",
           "id": "chart",
           "uses": 1
@@ -16656,6 +16663,11 @@
           "uses": 1
         },
         {
+          "component": "ClassSchedule",
+          "id": "class-schedule",
+          "uses": 1
+        },
+        {
           "component": "ActionBar",
           "id": "action-bar",
           "uses": 1
@@ -16663,6 +16675,11 @@
         {
           "component": "QRCode",
           "id": "qr-code",
+          "uses": 1
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
           "uses": 1
         }
       ]
@@ -16820,6 +16837,11 @@
         {
           "component": "PricingSection",
           "id": "pricing-section",
+          "uses": 1
+        },
+        {
+          "component": "TeamSection",
+          "id": "team-section",
           "uses": 1
         },
         {

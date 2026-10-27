@@ -128,6 +128,7 @@ invierte la que toque. Todas cubren la ventana entera con `PageTransition` y la 
 | `scan` | Una línea brillante del color `tone` (con halo suave) recorre la ventana una vez: detrás ya está la nueva, delante sigue la vieja. Sin apagado ni encendido CRT. `down` (por defecto) de arriba abajo, `up` de abajo arriba; `left`/`right` barren en horizontal con la línea en vertical. |
 | `stack` | Una pila de 5 barras de grandes a pequeñas (`--acc`, `--acc2` y su mezcla, separadas por el fondo) entra escalonada tapando la vieja; con la nueva ya debajo, las barras se comprimen hasta juntarse y salen todas por el lado de `direction`. Dura 1,6 veces `pace`. |
 | `blinds` | Persianas horizontales de 28 px que se abren sobre la página vieja. |
+| `stairs` | Cinco columnas que bajan en escalera desde la derecha, cada una con retraso, como en K72 (docs/50 §3.9). Luce más con `pace="slow"`. |
 | `pixelate` | Disolución por bloques de 12 px en tramado ordenado 2×2: cuatro pasos, como un dither de pixel art. |
 | `scanline` | CRT: la vieja se deshace en líneas de barrido y la nueva se enciende desde una línea horizontal. |
 | `glitch` | La nueva entra por franjas que crecen, con saltos laterales y separación RGB (`--acc` / `--acc2`). |
@@ -380,7 +381,7 @@ con `style={tokensToStyle(…)}`), repite en `:root` al menos el acento y el fon
 ```
 
 `--ui-vt-page` (por defecto `--bg`) es el color de fondo de la página: queda debajo de la animación de la raíz y hace
-opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `pixelate`, `scanline`, `iris`,
+opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `stairs`, `pixelate`, `scanline`, `iris`,
 `terminal`); en `stack`, además, es el color de los huecos entre barras.
 
 ## Accesibilidad y soporte

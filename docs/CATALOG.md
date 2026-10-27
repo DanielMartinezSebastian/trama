@@ -846,7 +846,7 @@ Envuelve contenido (`children`), p. ej.: `{/* contenido de la página */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
 | `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
@@ -867,7 +867,7 @@ Envuelve contenido (`children`), p. ej.: `{/* el elemento que entra o sale */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
 | `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
@@ -2980,7 +2980,7 @@ Cuaderno de entrenamiento oscuro: una sesión explicada en tres capítulos 3D, f
 
 Carpeta: `components/sites/forja/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
 
-`Button` ×19 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ActionBar` · `QRCode`
+`Button` ×17 · `Hero` ×2 · `Modal` ×2 · `TextField` · `FAQSection` · `PricingSection` · `TeamSection` · `Chart` · `OpeningHours` · `ClassSchedule` · `ActionBar` · `QRCode` · `Marquee`
 
 ### Hebra · un buen día de pelo — `/sitios/hebra`
 
@@ -2996,7 +2996,7 @@ Club social de movimiento con planificador de frecuencia semanal, clases reserva
 
 Carpeta: `components/sites/cadencia/` · 5 páginas: El club · Horario y reservas · Planes · Espacio y equipo · Mi ritmo
 
-`Button` ×16 · `Hero` ×2 · `Modal` ×2 · `Marquee` · `SectionHeader` · `TextField` · `FAQSection` · `PricingSection` · `Chart` · `OpeningHours` · `ClassSchedule` · `ActionBar` · `QRCode`
+`Button` ×16 · `Hero` ×2 · `Modal` ×2 · `Marquee` · `SectionHeader` · `TextField` · `FAQSection` · `PricingSection` · `TeamSection` · `Chart` · `OpeningHours` · `ClassSchedule` · `ActionBar` · `QRCode`
 
 ### Kernel Log · blog de tecnología — `/sitios/kernel-log`
 
