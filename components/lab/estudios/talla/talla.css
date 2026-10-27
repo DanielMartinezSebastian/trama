@@ -1,0 +1,79 @@
+/* Talla (réplica de Skulpt Fitness, docs/50 §3.4): #f5f5f5 y #202020, lima #cef952; condensada gruesa en mayúsculas
+   (Pilat Condensed → Anton) para los titulares y una sans neutra; bordes de sección curvos. */
+.tl {
+  --bg: #f5f5f5; --fg: #202020; --mut: #555; --acc: #cef952; --acc2: #202020; --card: #fff; --ln: #cef952; --r: 0px;
+  --tl-cond: var(--font-anton), sans-serif;
+  --tl-sans: var(--font-inter), sans-serif;
+  background: var(--bg); color: var(--fg); font: 400 18px/1.5 var(--tl-sans); overflow-x: clip;
+}
+.tl a { color: inherit; text-decoration: none; }
+.tl h1, .tl h2, .tl h3 { margin: 0; font-family: var(--tl-cond); font-weight: 400; line-height: 0.95; text-transform: uppercase; }
+
+.tl-head { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 16px; padding: 14px 16px; }
+.tl-logo { margin-right: auto; font: 400 44px/0.9 var(--tl-cond); letter-spacing: -0.02em; transform: scaleY(1.2); transform-origin: top left; }
+.tl-prueba { padding: 8px 18px; border-radius: 999px; background: var(--acc); font: 400 15px var(--tl-cond); }
+.tl-menu-btn { border: 0; background: none; font: 600 14px var(--tl-sans); cursor: pointer; color: inherit; }
+
+.tl-hero { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 40px; min-height: 80svh; padding: 0 16px; }
+.tl-hero h1 { font-size: clamp(60px, 7vw, 110px); }
+.tl-hero p { max-width: 380px; font-size: 14px; }
+.tl-flecha { position: absolute; right: 16px; bottom: 30px; display: grid; place-items: center; width: 110px; height: 110px; border-radius: 50%; background: var(--acc); font-size: 26px; }
+.tl-foto { margin: 0 16px; overflow: hidden; border-radius: 0 0 50% 50% / 0 0 14% 14%; }
+.tl-foto img { display: block; width: 100%; height: 80svh; object-fit: cover; }
+
+.tl-oscuro { background: var(--acc2); color: #f5f5f5; }
+.tl-oscuro h2 { display: grid; gap: 6px; padding: 140px 16px 60px; font-size: clamp(54px, 6vw, 96px); }
+.tl-oscuro h2 span:nth-child(1) { margin-left: 8%; }
+.tl-oscuro h2 span:nth-child(2) { margin-left: 24%; }
+.tl-ventajas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 40px 16px 60px; }
+.tl-ventajas figure { margin: 0; }
+.tl-ventajas img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.tl-ventajas figcaption { margin-top: 10px; font: 400 30px var(--tl-cond); }
+.tl-cinta { padding-block: 10px; background: var(--acc2); color: var(--acc); font: 400 clamp(46px, 5.4vw, 86px)/1 var(--tl-cond) !important; }
+.tl-incluye { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 80px 16px 160px 30%; border-radius: 0 0 50% 50% / 0 0 18% 18%; }
+.tl-incluye p { margin: 0; font-size: 15px; }
+.tl-incluye ul { margin: 0; padding-left: 18px; font-size: 14px; }
+.tl-incluye li::marker { color: var(--acc); }
+
+.tl-oferta { display: grid; padding: 100px 16px 100px 8%; }
+.tl-oferta a { display: grid; padding: 18px 0; border-bottom: 2px solid var(--acc); font: 400 clamp(46px, 5vw, 80px)/1 var(--tl-cond); }
+.tl-oferta small { font: 400 22px var(--tl-cond); }
+
+.tl-planes { display: grid; gap: 30px; padding: 60px 16px 100px; }
+.tl-planes h2 { font-size: clamp(60px, 6vw, 100px); }
+.tl-planes h3 { margin-top: 40px; font-size: 40px; text-align: center; }
+.tl-precios .ui-price { border: 1.5px solid #c7c7c7 !important; background: #fff !important; }
+.tl-precios .ui-price h3, .tl-precios .ui-price__name { font-family: var(--tl-cond); font-size: 34px; text-transform: uppercase; }
+.tl-precios .ui-button { background: var(--acc) !important; color: var(--fg) !important; border-radius: 999px; font-family: var(--tl-cond); border: 0 !important; }
+.tl-hyrox { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 700px; justify-self: center; width: 100%; }
+.tl-hyrox article { display: grid; gap: 8px; padding: 22px; border: 1.5px solid #c7c7c7; background: #fff; }
+.tl-hyrox b { font: 400 30px var(--tl-cond); }
+.tl-hyrox p { margin: 0; font-size: 14px; }
+.tl-hyrox span { font: 400 26px var(--tl-cond); }
+
+.tl-pie { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 60px 16px; background: var(--acc2); color: #f5f5f5; font-size: 14px; }
+
+/* menú: tres columnas con la palabra girada, separadas por filetes lima, y la columna de datos */
+.tl-menu { position: fixed; inset: 0; z-index: 60; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 1.4fr; grid-template-rows: auto 1fr; background: var(--bg); clip-path: inset(0 0 100% 0); visibility: hidden; transition: clip-path 0.6s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.6s; }
+.tl-menu.is-open { clip-path: inset(0); visibility: visible; transition-delay: 0s; }
+.tl-menu > .tl-logo { grid-column: 1 / -1; padding: 14px 16px; }
+.tl-menu nav { display: contents; }
+.tl-menu nav a { display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px; border-right: 1.5px solid var(--acc); }
+.tl-menu nav a span { writing-mode: vertical-rl; rotate: 180deg; font: 400 clamp(60px, 6vw, 96px)/1 var(--tl-cond); transition: color 0.2s; }
+.tl-menu nav a:hover span { color: #8cae1f; }
+.tl-menu__datos { display: grid; align-content: center; gap: 22px; padding: 30px; font-size: 13px; }
+.tl-menu__datos p { margin: 0; }
+.tl-menu__cerrar { position: absolute; top: 18px; right: 16px; }
+
+@media (max-width: 760px) {
+  .tl-prueba { display: none; }
+  .tl-hero, .tl-incluye, .tl-pie, .tl-hyrox { grid-template-columns: 1fr; }
+  .tl-incluye { padding-left: 16px; }
+  .tl-ventajas { grid-template-columns: 1fr; }
+  .tl-menu { grid-template-columns: repeat(3, 1fr); }
+  .tl-menu__datos { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .tl-menu { transition: none; } }
+.tl-precios .ui-price, .tl-precios .ui-price * { color: var(--fg); }
+.tl-precios .ui-price li::marker, .tl-precios .ui-price svg { color: #8cae1f; }
+.tl-pie { --fg: #f5f5f5; --mut: #a9a9a9; --ln: #3a3a3a; }
