@@ -1,18 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import ClassSchedule, { type ScheduleBooking } from "@/components/ui/ClassSchedule";
 import FeatureExplorer from "@/components/ui/FeatureExplorer";
-import { Albert_Sans, Crimson_Pro } from "next/font/google";
-import "./nucleo.css";
-
-// Minion Pro (de pago) → Crimson Pro, su alternativa libre más cercana; Albert Sans, la del original, es libre. Se cargan
-// en la réplica, no en el kit (docs/cuaderno/replica-nucleo.md)
-const crimson = Crimson_Pro({ subsets: ["latin"], style: ["normal", "italic"], variable: "--nc-crimson", display: "swap" });
-const albert = Albert_Sans({ subsets: ["latin"], variable: "--nc-albert", display: "swap" });
+import { nucleoHref } from "./enlaces";
+import { Horario } from "./Horario";
 
 /*
- * Núcleo, estudio de pilates: réplica de Core Atelier Pilates (docs/50 §3.4). Rosa empolvado, marrón y casi negro; serif
+ * Portada de Núcleo, estudio de pilates: réplica de Core Atelier Pilates (docs/50 §3.4); cabecera, pie y demás páginas en
+ * Sitio.tsx (docs/56). Rosa empolvado, marrón y casi negro; serif
  * con la mitad del titular en cursiva y una sans limpia; los aparatos en un acordeón que cambia la foto de al lado
  * (FeatureExplorer), las sesiones privadas en tres tarjetas y el horario con reserva (ClassSchedule).
  */
@@ -30,24 +24,10 @@ const PRIVADAS = [
   { img: `/img/inspiraciones/nucleo/sesion-trio.webp`, titulo: "en trío", texto: "Sesiones privadas para tres, ideales para empresas pequeñas o amigas que comparten la práctica." },
 ];
 
-const CLASES = "08:00|Reformer|50|Reformer|Todos|Inés|Estudio 1|3|2|1,2,3,4,5\n09:30|Silla de estabilidad|50|Silla|Intermedio|Nico|Estudio 2|3|3|1,3,5\n12:00|Torre y barril|50|Torre|Todos|Inés|Estudio 1|3|1|2,4\n18:30|Reformer al atardecer|50|Reformer|Inicio|Dani|Estudio 1|3|2|1,2,3,4,5\n10:00|A elección de Núcleo|55|Reformer|Todos|Nico|Estudio 2|3|0|6,0";
 
 export default function Nucleo() {
-  const [reservas, setReservas] = useState<ScheduleBooking[]>([]);
   return (
-    <div className={`nc ${crimson.variable} ${albert.variable}`}>
-      <header className="nc-head">
-        <a href="#inicio" className="nc-logo">núcleo</a>
-        <nav aria-label="Principal">
-          <a href="#estudio">Estudio</a>
-          <a href="#clases">Clases</a>
-          <a href="#reservar">Reservar ▾</a>
-          <a href="#tienda">Tienda</a>
-          <a href="#eventos">Eventos</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-        <a href="#reservar" className="nc-entrar">Entrar</a>
-      </header>
+    <>
 
       <section className="nc-hero" id="inicio">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,6 +60,7 @@ export default function Nucleo() {
               <img src={p.img} alt="" loading="lazy" />
               <h3>sesiones <em>{p.titulo}</em></h3>
               <p>{p.texto}</p>
+              <a href={nucleoHref(`privadas?sesion=${p.titulo === "privadas" ? "privada" : p.titulo === "en pareja" ? "pareja" : "trio"}`)} className="nc-entrar">Reservar</a>
             </article>
           ))}
         </div>
@@ -88,14 +69,9 @@ export default function Nucleo() {
       <section className="nc-reserva" id="reservar">
         <h2>tu clase <em>te espera</em></h2>
         <p>Necesitas un bono para reservar. La primera clase de prueba va por nuestra cuenta.</p>
-        <ClassSchedule classes={CLASES} startOffset={1} bookings={reservas} onBook={(c, date, waitlist) => setReservas((r) => [...r, { classId: c.id, date, waitlist }])} filters="category" bookLabel="Reservar" waitlistLabel="En espera" fullLabel="Completa" variant="minimal" className="nc-horario" />
+        <Horario />
       </section>
 
-      <footer className="nc-pie" id="contacto">
-        <strong>núcleo</strong>
-        <p>Calle de Jorge Juan 18 · Madrid<br />hola@nucleo.example</p>
-        <p>Trabaja con nosotras · Prensa · Eventos</p>
-      </footer>
-    </div>
+    </>
   );
 }

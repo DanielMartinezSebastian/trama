@@ -1684,6 +1684,29 @@ Solicitud de plaza en un curso, programa o viaje por convocatorias: elegir convo
 - `cohorts`: label, dates, status (open, few, soon, closed) y seats. Las soon y closed piden lista de espera, sin pago.
 - Para probar el pago: 4242 4242 4242 4242. Ver /inspiraciones/melena/academia y docs/56.
 
+### Alta de socio — `MembershipFlow`
+
+Alta en un plan de gimnasio, estudio o club en pasos: plan, datos (con fecha de nacimiento para la edad mínima) y pago del primer mes con matrícula opcional (simulado, con validación de tarjeta). Confirma con el pase de socio en QR y guarda el plan con useMembership (lib/commerce/membership), que comparten MemberArea y la reserva de clases.
+
+| prop | tipo | default |
+|---|---|---|
+| `signupFee` | number 0–100 | 0 |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- Con ClassSchedule: `onBook` llama a `useMembership().book` y `bookings` lee sus plazas. Ver /inspiraciones/nucleo (bonos, clases y mi cuenta) y docs/56.
+- Para probar el pago: 4242 4242 4242 4242.
+
+### Mi cuenta de socio — `MemberArea`
+
+La cuenta de un socio: el plan con su pase en QR (o una invitación a darse de alta), las plazas reservadas y las listas de espera por fecha (anular hasta cutoffHours antes) y la baja del plan con confirmación. Lee useMembership.
+
+| prop | tipo | default |
+|---|---|---|
+| `cutoffHours` | number 0–24 | 2 |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- Date de alta en la ficha de MembershipFlow y el plan aparece aquí (comparten `storageKey`).
+
 ### Selector de fecha y hueco — `DatePicker`
 
 Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), con antelación mínima, días cerrados, festivos y los huecos del día elegido. Cuadrícula ARIA con teclado completo (flechas, Inicio/Fin, RePág/AvPág). Valores en ISO: «2026-10-24» o «2026-10-24/2026-10-27».

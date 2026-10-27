@@ -8,6 +8,8 @@ import CohortList from "@/components/ui/CohortList";
 import EnrollmentFlow from "@/components/ui/EnrollmentFlow";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
+import MemberArea from "@/components/ui/MemberArea";
+import MembershipFlow from "@/components/ui/MembershipFlow";
 import MenuList from "@/components/ui/MenuList";
 import OpeningHours from "@/components/ui/OpeningHours";
 import QRCode from "@/components/ui/QRCode";
@@ -157,6 +159,43 @@ export const negocio: CatalogEntry[] = [
           storageKey="trama:catalogo:solicitudes"
           variant={p.variant as never}
         />
+      </div>
+    ),
+  },
+  {
+    id: "membership-flow",
+    component: "MembershipFlow",
+    path: "@/components/ui/MembershipFlow",
+    name: "Alta de socio",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Alta en un plan de gimnasio, estudio o club en pasos: plan, datos (con fecha de nacimiento para la edad mínima) y pago del primer mes con matrícula opcional (simulado, con validación de tarjeta). Confirma con el pase de socio en QR y guarda el plan con useMembership (lib/commerce/membership), que comparten MemberArea y la reserva de clases.",
+    stageHeight: 620,
+    props: [
+      { key: "signupFee", label: "Matrícula", type: "number", default: 0, min: 0, max: 100, step: 5 },
+      variantProp("minimal"),
+    ],
+    notes: ["Con ClassSchedule: `onBook` llama a `useMembership().book` y `bookings` lee sus plazas. Ver /inspiraciones/nucleo (bonos, clases y mi cuenta) y docs/56.", "Para probar el pago: 4242 4242 4242 4242."],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <MembershipFlow key={String(p.signupFee)} plans={[{ id: "basico", name: "Básico", price: 29, features: ["Sala libre"] }, { id: "club", name: "Club", price: 49, features: ["Sala y clases"], highlight: true }, { id: "total", name: "Total", price: 69, features: ["Todo y spa"] }]} signupFee={p.signupFee as number} storageKey="trama:catalogo:socio" club="Club de ejemplo" variant={p.variant as never} />
+      </div>
+    ),
+  },
+  {
+    id: "member-area",
+    component: "MemberArea",
+    path: "@/components/ui/MemberArea",
+    name: "Mi cuenta de socio",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "La cuenta de un socio: el plan con su pase en QR (o una invitación a darse de alta), las plazas reservadas y las listas de espera por fecha (anular hasta cutoffHours antes) y la baja del plan con confirmación. Lee useMembership.",
+    stageHeight: 520,
+    props: [{ key: "cutoffHours", label: "Horas antes en que ya no se anula", type: "number", default: 2, min: 0, max: 24, step: 1 }, variantProp("minimal")],
+    notes: ["Date de alta en la ficha de MembershipFlow y el plan aparece aquí (comparten `storageKey`)."],
+    render: (p) => (
+      <div style={{ width: "min(100%, 680px)", padding: 16 }}>
+        <MemberArea classes={[]} storageKey="trama:catalogo:socio" club="Club de ejemplo" plansHref="#membership-flow" scheduleHref="#class-schedule" cutoffHours={p.cutoffHours as number} variant={p.variant as never} />
       </div>
     ),
   },

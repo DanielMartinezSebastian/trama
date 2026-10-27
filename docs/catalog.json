@@ -183,6 +183,8 @@
         "option-picker",
         "checkout-flow",
         "enrollment-flow",
+        "membership-flow",
+        "member-area",
         "date-picker",
         "booking-flow",
         "appointment-list"
@@ -15086,6 +15088,111 @@
       ],
       "example": "import EnrollmentFlow from \"@/components/ui/EnrollmentFlow\";\n\n<EnrollmentFlow />",
       "preview": "/componentes#enrollment-flow"
+    },
+    {
+      "id": "membership-flow",
+      "name": "Alta de socio",
+      "component": "MembershipFlow",
+      "import": "import MembershipFlow from \"@/components/ui/MembershipFlow\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Alta en un plan de gimnasio, estudio o club en pasos: plan, datos (con fecha de nacimiento para la edad mínima) y pago del primer mes con matrícula opcional (simulado, con validación de tarjeta). Confirma con el pase de socio en QR y guarda el plan con useMembership (lib/commerce/membership), que comparten MemberArea y la reserva de clases.",
+      "props": [
+        {
+          "key": "signupFee",
+          "type": "number",
+          "default": 0,
+          "label": "Matrícula",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Con ClassSchedule: `onBook` llama a `useMembership().book` y `bookings` lee sus plazas. Ver /inspiraciones/nucleo (bonos, clases y mi cuenta) y docs/56.",
+        "Para probar el pago: 4242 4242 4242 4242."
+      ],
+      "example": "import MembershipFlow from \"@/components/ui/MembershipFlow\";\n\n<MembershipFlow />",
+      "preview": "/componentes#membership-flow"
+    },
+    {
+      "id": "member-area",
+      "name": "Mi cuenta de socio",
+      "component": "MemberArea",
+      "import": "import MemberArea from \"@/components/ui/MemberArea\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "La cuenta de un socio: el plan con su pase en QR (o una invitación a darse de alta), las plazas reservadas y las listas de espera por fecha (anular hasta cutoffHours antes) y la baja del plan con confirmación. Lee useMembership.",
+      "props": [
+        {
+          "key": "cutoffHours",
+          "type": "number",
+          "default": 2,
+          "label": "Horas antes en que ya no se anula",
+          "min": 0,
+          "max": 24
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Date de alta en la ficha de MembershipFlow y el plan aparece aquí (comparten `storageKey`)."
+      ],
+      "example": "import MemberArea from \"@/components/ui/MemberArea\";\n\n<MemberArea />",
+      "preview": "/componentes#member-area"
     },
     {
       "id": "cohort-list",

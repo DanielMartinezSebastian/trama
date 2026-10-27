@@ -322,3 +322,14 @@ html:has(.ui-actionbar--fixed.ui-actionbar--always) { scroll-padding-bottom: cal
   .ui-checkout { grid-template-columns: 1fr; }
   .ui-checkout__sum { order: -1; position: static; }
 }
+
+/* ---------- Socio: alta (MembershipFlow) y mi cuenta (MemberArea), docs/56 ---------- */
+.ui-member { display: grid; gap: 22px; color: var(--fg); }
+.ui-member__pase { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.ui-member__pase p { margin: 0; max-width: 32em; color: var(--mut); }
+.ui-member__reservas { display: grid; gap: 14px; }
+.ui-member__reservas > h3 { margin: 0; font-size: clamp(20px, 2.2vw, 28px); }
+.ui-member__fecha { display: grid; gap: 6px; font-size: 14px; color: var(--mut); }
+.ui-member__fecha input { padding: 10px 12px; border: 1px solid var(--ln); border-radius: var(--s-r, 0); background: var(--bg); color: var(--fg); font: inherit; color-scheme: light dark; }
+.ui-member__fecha input:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.ui-book__options button span + span { font-size: 12px; }
