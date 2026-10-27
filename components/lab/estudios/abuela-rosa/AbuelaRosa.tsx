@@ -48,7 +48,7 @@ export default function AbuelaRosa() {
           <span className="ar-sello__anillo">
             <svg viewBox="0 0 200 200" aria-hidden>
               <defs><path id="ar-circ" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0" /></defs>
-              <text><textPath href="#ar-circ">ABUELA ROSA · MOJO PICÓN QUE ARDE · ABUELA ROSA ·</textPath></text>
+              <text><textPath href="#ar-circ">ABUELA ROSA ✦ MOJO PICÓN ✦ QUE ARDE ✦</textPath></text>
             </svg>
           </span>
         </article>

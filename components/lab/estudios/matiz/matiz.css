@@ -102,3 +102,57 @@ html[data-fsm-open] .mz-head { color: #fff; }
 .mz-menulist .ui-menu__name { font: 400 18px var(--mz-sans); }
 .mz-menulist .ui-menu__price { font: 400 16px var(--mz-sans); }
 .mz-menulist .ui-menu__head h3 { font-weight: 300; font-size: 34px; color: #7b7b7b; }
+
+/* medidas de Il Colorista con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-matiz.md): cabecera de 138 px
+   con el logo en caja grande; titular 72 px (5 vw) Cormorant 200/1,11 a media pantalla; mosaico de celdas grandes (~350 px)
+   que se sale por la derecha; texto Karla 200 a 24 px/1,58 (aquí Manrope 200); titulares de sección Karla 200 a 110 px;
+   nombres del equipo Cormorant 60 px */
+.mz-head { height: 138px; padding: 0 24px; gap: 22px; }
+.mz-logo { padding: 4px 12px 7px; font-size: 30px; background: #000; }
+.mz-social { gap: 16px; font-size: 16px; }
+.mz-head .ui-fsm__btn { font-size: 16px; }
+.mz-hero { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); gap: 3vw; padding: 138px 0 0 0; overflow: hidden; }
+.mz-hero h1 { font-size: 5vw; font-weight: 200; line-height: 1.11; }
+.mz-mosaic { --sm-gap: 16px; width: 125%; }
+.mz-firma { font-size: 24px; line-height: 1.58; font-weight: 200; color: #1f1f1f; }
+.mz-manifiesto h2 { font-size: clamp(54px, 7.6vw, 110px); font-weight: 200; line-height: 1; }
+.mz-links { font-size: 20px; }
+.mz-trat__ficha { font-size: 24px; line-height: 1.58; max-width: 340px; }
+.mz-team .ui-sh h2 { font-size: clamp(56px, 7.6vw, 110px); font-weight: 200; color: #414141; }
+.mz-team .ui-team__card strong { font-size: clamp(36px, 4.2vw, 60px); }
+.mz-team .ui-team__role { font-size: 16px; letter-spacing: 0; }
+.mz-news__card h3 { font-size: 24px; font-weight: 200; color: #1f1f1f; }
+.mz-news__card small, .mz-news__card a { font-size: 13px; }
+.mz-foot { font-size: 18px; font-weight: 200; }
+.mz-social a:hover, .mz-links a:hover, .mz-news__card a:hover, .mz-foot a:hover { color: var(--acc); }
+@media (max-width: 760px) {
+  .mz-head { height: 90px; padding: 0 16px; }
+  .mz-logo { font-size: 24px; }
+  .mz-social { display: none; }
+  .mz-hero { padding: 90px 0 0; }
+  .mz-hero h1 { font-size: 12vw; text-align: right; padding-right: 16px; }
+  .mz-mosaic { width: 140%; }
+  .mz-firma, .mz-trat__ficha, .mz-news__card h3 { font-size: 18px; }
+  .mz-foot { font-size: 15px; }
+}
+/* en el original el mosaico geométrico va entero sobre el gris #f4f4f4 que sigue en el manifiesto */
+.mz-geo { margin-top: 0; padding: 0 0 40px; background: var(--card); }
+.mz { --fg: #1f1f1f; --mut: #868686; }
+/* mosaico de la portada: tres columnas de ~350 px que se salen por la derecha; el logo baja a ~113 px (cabecera de 138) */
+.mz-mosaic { width: 160%; --sm-gap: 20px; }
+.mz-head { align-items: flex-end; padding-bottom: 12px; }
+@media (max-width: 760px) {
+  .mz-head { height: 90px; padding-bottom: 14px; }
+  .mz-hero { grid-template-columns: 1fr; gap: 40px; }
+  .mz-mosaic { width: 100%; --sm-cols: 2 !important; padding: 0 16px; }
+}
+.mz-hero { height: 100svh; min-height: 0; align-items: start; }
+.mz-hero h1 { align-self: center; margin-top: -60px; }
+.mz-mosaic { margin-top: 16px; }
+@media (max-width: 760px) {
+  .mz-hero { height: auto; }
+  .mz-hero h1 { margin-top: 30px; }
+}
+.mz-hero { grid-template-rows: calc(100svh - 138px); }
+.mz-hero h1 { margin-top: 0; }
+@media (max-width: 760px) { .mz-hero { grid-template-rows: none; } }

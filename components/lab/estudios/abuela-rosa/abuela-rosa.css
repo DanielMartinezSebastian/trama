@@ -64,3 +64,54 @@
   .ar-fila b { font-size: 18vw; }
   .ar-fila svg, .ar-fila small:last-of-type { display: none; }
 }
+
+/* medidas de Peppa Sauce con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-abuela-rosa.md): las dos letras
+   son estrechas (Obviously en su corte condensado y Vulf Sans), así que Archivo va a wdth 62, no ancha; el texto de las
+   tarjetas es grande (36 px/1,2 = 2,5 vw) en tarjetas de 288 px; títulos de tarjeta 50 px/0,94; palabras gigantes
+   245 px/0,82 (−2,9 %) y 187 px/0,85 (−3,8 %); en móvil, el sello arriba a todo el ancho y las otras dos en dos columnas */
+.ar { font-variation-settings: "wdth" 62; font-size: 2.5vw; line-height: 1.2; font-weight: 500; }
+.ar h2 { font-variation-settings: "wdth" 62; font-weight: 800; }
+.ar-cinta { font-size: 34px !important; font-variation-settings: "wdth" 62; font-weight: 800 !important; }
+.ar-tripticos { grid-template-columns: 288px 1fr 288px; padding: 30px 36px; min-height: 100svh; }
+.ar-tripticos h2 { font-size: 3.5vw; line-height: 0.94; }
+.ar-marco p { font-size: 2.5vw; line-height: 1.2; }
+.ar-fuego b { font-size: 4.5vw; line-height: 0.73; font-variation-settings: "wdth" 62; }
+.ar-gigante { font-size: 17vw; line-height: 0.82; letter-spacing: -0.029em; font-variation-settings: "wdth" 62; }
+.ar-ancho p { max-width: 864px; }
+.ar-fila b, .ar-todo b { font-variation-settings: "wdth" 62; }
+.ar-fila b { font-size: clamp(110px, 20vw, 320px); }
+.ar-todo b { font-size: clamp(200px, 38vw, 640px); }
+.ar-fila small, .ar-todo small { font-size: 22px; font-variation-settings: "wdth" 62; }
+.ar-final .ar-gigante { font-size: 13vw; line-height: 0.85; letter-spacing: -0.038em; }
+.ar-marco__cinta { font-size: 22px !important; font-variation-settings: "wdth" 62; }
+@media (max-width: 760px) {
+  .ar { font-size: 15px; }
+  .ar-tripticos { grid-template-columns: 1fr 1fr; padding: 16px; gap: 10px; }
+  .ar-tripticos > :nth-child(2) { grid-column: 1 / -1; order: -1; min-height: 70svh; }
+  .ar-tripticos h2 { font-size: 26px; }
+  .ar-marco { padding: 30px 12px; }
+  .ar-marco p { font-size: 15px; }
+  .ar-fuego b { font-size: 30px; }
+  .ar-gigante { font-size: 22vw; }
+  .ar-cinta { font-size: 24px !important; }
+}
+.ar-marco p, .ar-ancho p { font-variation-settings: "wdth" 88; font-weight: 500; }
+.ar-fila b, .ar-todo b { font-weight: 800; }
+.ar-ancho { margin: 30px 36px; }
+.ar-bote { width: clamp(170px, 17vw, 260px); }
+@media (max-width: 760px) {
+  .ar-bote { width: 120px; left: 50%; right: auto; translate: -50% -50%; top: 46%; }
+  .ar-ancho { margin: 16px; }
+}
+/* dos letras como el original: titulares estrechos (Archivo wdth 62, 700–800) y texto en una grotesca normal (Vulf Sans →
+   Space Grotesk 400, mayúsculas); títulos de tarjeta sin tracking; texto a 36 px del borde */
+.ar-fuego b { font-weight: 700; }
+.ar-tripticos h2 { letter-spacing: 0; font-weight: 700; }
+.ar-marco p, .ar-ancho p { font-family: var(--font-space-grotesk), sans-serif; font-variation-settings: normal; font-weight: 400; }
+.ar-tripticos { padding-inline: 12px; }
+.ar-tripticos .ar-marco { padding-inline: 22px; }
+@media (max-width: 760px) {
+  .ar-tripticos { padding-inline: 10px; }
+  .ar-tripticos .ar-marco { padding-inline: 11px; }
+}
+.ar-sello__anillo svg { font: 800 27px var(--ar-f); font-variation-settings: "wdth" 62; letter-spacing: 0.02em; overflow: visible; }

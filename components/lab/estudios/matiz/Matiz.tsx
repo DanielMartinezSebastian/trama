@@ -102,7 +102,7 @@ export default function Matiz() {
 
       <section className="mz-hero" id="inicio">
         <h1>Atelier de color<br />en Ruzafa</h1>
-        <ShapeMosaic items={PORTADA} columns={4} drift={90} className="mz-mosaic" />
+        <ShapeMosaic items={PORTADA} columns={3} drift={90} className="mz-mosaic" />
       </section>
       <section className="mz-geo" aria-hidden>
         <ShapeMosaic items={GEOMETRIA} columns={4} drift={140} dissolve={false} />

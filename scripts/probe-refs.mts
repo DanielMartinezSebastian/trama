@@ -23,6 +23,7 @@ import { join } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
 import { STYLE_GUIDES } from "../lib/ui/guides";
 import { chromiumPath } from "./chromium-path.mts";
+import { AVISO } from "./cine/navegador.mts";
 
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(name);
@@ -103,11 +104,15 @@ function probe() {
       return r.width > 4 && r.height > 4 && r.top < H && r.bottom > 0;
     })
     .map((el) => ({ el, cs: getComputedStyle(el) }))
-    .sort((a, b) => parseFloat(b.cs.fontSize) - parseFloat(a.cs.fontSize))
+    .map((x) => ({ ...x, pintado: parseFloat(x.cs.fontSize) * ((x.el as HTMLElement).offsetWidth > 0 ? x.el.getBoundingClientRect().width / (x.el as HTMLElement).offsetWidth : 1) }))
+    .sort((a, b) => b.pintado - a.pintado)
     .slice(0, 3)
     .map(({ el, cs }) => {
-      const s = parseFloat(cs.fontSize);
-      return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / s || 0), ls: r1((parseFloat(cs.letterSpacing) / s) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily) };
+      // tamaño pintado: Framer y otros escriben el titular grande y lo encogen con transform (397 px a 0,52)
+      const he = el as HTMLElement;
+      const escala = he.offsetWidth > 0 ? el.getBoundingClientRect().width / he.offsetWidth : 1;
+      const s = parseFloat(cs.fontSize) * (escala > 0.05 && escala < 20 ? escala : 1);
+      return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || 0), ls: r1((parseFloat(cs.letterSpacing) / parseFloat(cs.fontSize)) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily) };
     });
   // texto: el tamaño más repetido entre los párrafos largos (un párrafo con estilo de titular no cuenta)
   const paras = [...document.querySelectorAll("p")].filter((e) => (e.textContent?.trim().length ?? 0) > 60 && e.getBoundingClientRect().width > 0 && parseFloat(getComputedStyle(e).fontSize) <= 24);
@@ -133,14 +138,22 @@ function probe() {
   const tintas: Record<string, number> = {};
   const radios: Record<string, number> = {};
   const curvas: Record<string, number> = {};
+  // rgb()/rgba() en 0–255; color(srgb r g b / a) —lo que da color-mix— en 0–1
   const hex = (c: string) => {
     const m = c.match(/[\d.]+/g);
     if (!m || m.length < 3 || (m.length > 3 && Number(m[3]) < 0.5)) return null;
-    return "#" + m.slice(0, 3).map((x) => Math.round(Number(x)).toString(16).padStart(2, "0")).join("");
+    const k = c.startsWith("color(") ? 255 : 1;
+    return "#" + m.slice(0, 3).map((x) => Math.min(255, Math.round(Number(x) * k)).toString(16).padStart(2, "0")).join("");
   };
   const docW = document.documentElement.clientWidth;
-  const bodyBg = hex(getComputedStyle(document.body).backgroundColor) ?? hex(getComputedStyle(document.documentElement).backgroundColor) ?? "#ffffff";
-  inc(fondos, bodyBg, docW * document.documentElement.scrollHeight * 0.2);
+  // la base: el fondo opaco más profundo que cubre la página entera (en una página montada dentro de otra, el body queda tapado)
+  const docH = document.documentElement.scrollHeight;
+  const cubre = [document.documentElement, document.body, ...document.body.querySelectorAll("body > *, body > * > *, body > * > * > *")].filter((e) => {
+    const r = e.getBoundingClientRect();
+    return r.width >= docW * 0.95 && r.height >= docH * 0.9 && hex(getComputedStyle(e).backgroundColor);
+  });
+  const bodyBg = cubre.length ? hex(getComputedStyle(cubre[cubre.length - 1]).backgroundColor)! : "#ffffff";
+  inc(fondos, bodyBg, docW * docH * 0.2);
   document.querySelectorAll("body *").forEach((el) => {
     const cs = getComputedStyle(el);
     if (cs.boxShadow !== "none") shadows++;
@@ -152,11 +165,13 @@ function probe() {
     }
     if (cs.position === "fixed" && el.getBoundingClientRect().height > 0) fixed.push(el.tagName.toLowerCase());
     if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) return;
+    // lo que no se ve no pinta: un menú cerrado o una capa recortada no cuentan en la paleta
+    if (!((el as Element & { checkVisibility?: (o: object) => boolean }).checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) ?? true) || el.closest("[inert], [aria-hidden=true]")) return;
     const r = el.getBoundingClientRect();
     const area = Math.max(0, Math.min(r.right, docW) - Math.max(r.left, 0)) * Math.max(0, r.height);
     if (area < 400) return;
     const bg = hex(cs.backgroundColor);
-    if (bg) inc(fondos, bg, area);
+    if (bg && !cubre.includes(el)) inc(fondos, bg, area);
     const rad = parseFloat(cs.borderTopLeftRadius);
     if (rad > 0 && (bg || cs.borderTopStyle !== "none" || el.tagName === "IMG" || el.tagName === "VIDEO")) inc(radios, rad >= Math.min(r.width, r.height) / 2 - 1 ? "píldora" : `${Math.round(rad)}`);
   });
@@ -173,7 +188,7 @@ function probe() {
     pageVh: r1(document.documentElement.scrollHeight / H),
     libs,
     fonts: [...new Set([...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/["']/g, "")))].slice(0, 10),
-    families: top(fams, 5).filter(([, n]) => n > 50).map(([f]) => f),
+    families: [...new Map(top(fams, 6).filter(([, n]) => n > 50).map(([f]) => [f.toLowerCase(), f])).values()].slice(0, 5),
     typeScale: top(sizes, 8).map(([s, n]) => [Number(s), Math.round((n / Math.max(chars, 1)) * 100)]),
     biggest,
     body: pcs ? { size: r1(parseFloat(pcs.fontSize)), lh: r1(parseFloat(pcs.lineHeight) / parseFloat(pcs.fontSize) || 0), measureEm: Math.round(p!.getBoundingClientRect().width / parseFloat(pcs.fontSize)) } : null,
@@ -255,14 +270,34 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
   try {
     await page.goto(t.url, { waitUntil: "domcontentloaded", timeout: 45000 });
     await page.waitForTimeout(WAIT);
+    // avisos de cookies o de edad: se aceptan antes de medir (si no, sus botones salen en el hover y tapan las capturas)
+    for (let vuelta = 0; vuelta < 2; vuelta++) {
+      const n = await page.evaluate((re) => {
+        const aviso = new RegExp(re, "i");
+        const bs = [...document.querySelectorAll("button, a, [role=button]")].filter((e) => (e as HTMLElement).offsetParent !== null && aviso.test((e.textContent || "").trim()));
+        bs.slice(0, 1).forEach((e) => (e as HTMLElement).click());
+        return bs.length;
+      }, AVISO.source);
+      if (!n) break;
+      await page.waitForTimeout(900);
+    }
     if (SHOTS) await page.screenshot({ path: join(OUT, `${slug}_${tag}.jpg`), type: "jpeg", quality: 60 });
     for (let i = 0; i < 6; i++) {
       await page.mouse.wheel(0, vp.height * 0.9);
       await page.waitForTimeout(400);
     }
     if (SHOTS && tag === "desk") await page.screenshot({ path: join(OUT, `${slug}_${tag}_scroll.jpg`), type: "jpeg", quality: 60 });
+    // de vuelta arriba también con la rueda: con un scroll suavizado (Lenis) `scrollTo` solo no basta, la página vuelve
+    // a su objetivo en el siguiente fotograma
+    for (let i = 0; i < 8; i++) await page.mouse.wheel(0, -vp.height * 1.2);
+    await page.waitForTimeout(2500);
     await page.evaluate(() => scrollTo(0, 0));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(800);
+    // si aún no está arriba (suavizado lento), una vuelta más
+    if ((await page.evaluate(() => scrollY)) > 4) {
+      for (let i = 0; i < 4; i++) await page.mouse.wheel(0, -vp.height * 2);
+      await page.waitForTimeout(2500);
+    }
     const d = (await page.evaluate(probe)) as Data;
     if (HOVER && tag === "desk") d.hover = await hovers(page);
     return d;
@@ -366,7 +401,7 @@ function informePar(o: Data, r: Data, om: Data | null, rm: Data | null) {
   f("Movimiento", "curvas", o.easings.join(", "), r.easings.join(", "), null);
   f("Movimiento", "librerías", Object.entries(o.libs).filter(([, v]) => v).map(([k, v]) => (v === true ? k : `${k} ${v}`)).join(", "), Object.entries(r.libs).filter(([, v]) => v).map(([k, v]) => (v === true ? k : `${k} ${v}`)).join(", "), null);
   f("Movimiento", "scroll suavizado (Lenis)", o.libs.lenis, r.libs.lenis, o.libs.lenis === r.libs.lenis);
-  f("Hover", "elementos que cambian", o.hover.length, r.hover.length, o.hover.length === 0 ? r.hover.length === 0 : r.hover.length >= o.hover.length / 2);
+  f("Hover", "elementos que cambian", o.hover.length, r.hover.length, o.hover.length === 0 ? null : r.hover.length >= o.hover.length / 2);
   const tipos = (d: Data) => [...new Set(d.hover.flatMap((h) => h.cambia.map((c) => c.replace(/^hijo /, ""))))];
   const faltan = tipos(o).filter((t) => !tipos(r).includes(t));
   f("Hover", "propiedades que cambian", tipos(o).join(", "), tipos(r).join(", "), faltan.length === 0);
