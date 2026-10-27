@@ -1,0 +1,94 @@
+/* Patrón (réplica de Don Barber & Groom, docs/50 §3.2): gótica condensada a 100 px para títulos y servicios (Anton), ancha
+   y pequeña en mayúsculas para el texto; azul gris #7e929c, topo #757171 y hueso #eceae0; botones en óvalo de contorno. */
+.pt {
+  --bg: #ffffff; --fg: #000000; --mut: #555; --acc: #7e929c; --acc2: #757171; --card: #eceae0; --ln: #000; --r: 0px;
+  --pt-cond: var(--font-anton), sans-serif;
+  --pt-ancha: var(--font-archivo), sans-serif;
+  background: var(--bg); color: var(--fg); font: 400 11px/1.6 var(--pt-ancha); font-variation-settings: "wdth" 125; text-transform: uppercase; letter-spacing: 0.02em; overflow-x: clip;
+}
+.pt a { color: inherit; text-decoration: none; }
+.pt h2 { margin: 0; font: 400 clamp(64px, 9vw, 140px)/0.9 var(--pt-ancha); font-variation-settings: "wdth" 125; letter-spacing: -0.02em; }
+.pt-chico { margin: 0; font-size: 11px; text-align: center; }
+.pt-chico b { font-weight: 400; font-size: 12px; }
+.pt-chico span { display: block; max-width: 420px; margin: 6px auto 0; font-size: 9px; }
+.pt-ovalo { display: inline-grid; place-items: center; padding: 18px 36px; border: 1px solid currentColor; border-radius: 50%; font-size: 10px; background: none; color: inherit; cursor: pointer; font-family: inherit; text-transform: uppercase; }
+
+.pt-portada { display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+.pt-foto { position: relative; overflow: hidden; color: #f2e9d0; }
+.pt-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) saturate(1.1); }
+.pt-logo { position: absolute; left: 30px; top: 28px; display: flex; gap: 8px; align-items: flex-end; font: 400 46px/0.8 var(--pt-cond); letter-spacing: 0.02em; color: #d8c08a !important; }
+.pt-logo small { font: 400 8px/1.1 var(--pt-ancha); }
+.pt-servicios { position: absolute; left: 30px; bottom: 70px; display: grid; }
+.pt-servicios span { margin-bottom: 8px; font-size: 12px; }
+.pt-servicios a { font: 400 clamp(46px, 5.6vw, 92px)/0.86 var(--pt-cond); color: #f2e9d0; transition: color 0.2s; }
+.pt-servicios a:hover { color: #d8c08a; }
+.pt-lado { display: grid; grid-template-rows: auto 1fr; background: var(--card); }
+.pt-nav { display: flex; justify-content: flex-end; align-items: center; gap: 36px; padding: 26px 30px; font-size: 10px; }
+.pt-nav b { font-weight: 700; }
+.pt-burger { display: grid; gap: 4px; width: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+.pt-burger i { height: 1.5px; background: var(--fg); }
+.pt-producto { display: grid; justify-items: center; align-content: center; gap: 18px; margin: 0; text-align: center; font-size: 12px; font-weight: 700; }
+.pt-libro { display: grid; place-items: center; align-content: center; gap: 14px; width: 190px; aspect-ratio: 3 / 4; background: #2a2a2a; color: #eee; box-shadow: 0 18px 40px rgb(0 0 0 / 0.25); }
+.pt-libro b { font: 400 34px var(--pt-cond); letter-spacing: 0.04em; }
+.pt-libro small { font-size: 9px; }
+.pt-producto a { font-size: 10px; }
+.pt-cinta { padding-block: 10px; font: 400 clamp(26px, 2.6vw, 40px) var(--pt-ancha); font-variation-settings: "wdth" 125; background: var(--card); }
+.pt-cinta--pie { background: #fff; }
+
+.pt-familia { display: grid; justify-items: center; gap: 16px; padding: 120px 20px 100px; background: var(--acc); }
+.pt-chico--ancho { max-width: 480px; font-size: 9px; }
+.pt-familia h2 { position: relative; z-index: 1; margin-top: 60px; text-align: center; font-size: clamp(64px, 8vw, 128px); }
+.pt-familia img { width: min(380px, 70vw); aspect-ratio: 4 / 5; object-fit: cover; margin-top: -0.9em; filter: grayscale(0.3); }
+.pt-familia .pt-ovalo { margin-top: 30px; }
+
+.pt-marcas { display: grid; justify-items: center; gap: 30px; padding: 120px 20px; background: var(--card); }
+.pt-marcas ul { list-style: none; display: flex; gap: clamp(30px, 8vw, 120px); margin: 0; padding: 0; font: 700 24px var(--font-playfair-display), serif; text-transform: none; letter-spacing: 0.1em; }
+.pt-marcas h2 { margin-top: 60px; font-size: clamp(56px, 6vw, 96px); }
+.pt-marcas img { width: min(760px, 90vw); aspect-ratio: 16 / 10; object-fit: cover; margin-top: -0.5em; }
+
+.pt-serv { display: grid; justify-items: center; gap: 20px; padding: 120px 20px; background: var(--acc2); color: #fff; }
+.pt-serv h2 { margin-top: 30px; color: #f4f1e8; }
+.pt-serv__fila { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; gap: 40px; width: min(1200px, 100%); margin-top: 10px; }
+.pt-serv article { display: grid; justify-items: center; gap: 12px; text-align: center; }
+.pt-serv article img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.pt-serv__central img { aspect-ratio: 4 / 5 !important; border-radius: 50%; width: 82% !important; }
+.pt-serv article a { font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.pt-serv article p { margin: 0; max-width: 32ch; font-size: 9px; }
+
+.pt-noticias { display: grid; justify-items: center; gap: 20px; padding: 120px 20px; background: #f6f6f6; }
+.pt-noticias h2 { margin-top: 30px; }
+.pt-noticias__fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; width: min(1100px, 100%); }
+.pt-noticias article { display: grid; justify-items: center; gap: 6px; text-align: center; }
+.pt-noticias img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.pt-noticias small { margin-top: 10px; font-size: 9px; font-weight: 700; }
+.pt-noticias p { margin: 0; font-size: 10px; }
+
+.pt-pie { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; padding: 60px 30px 30px; }
+.pt-pie__datos { display: flex; gap: 60px; font-size: 9px; }
+.pt-pie__datos p { margin: 0; }
+.pt-boletin { font: 400 30px var(--pt-cond); text-decoration: underline !important; text-underline-offset: 6px; }
+
+/* menú: panel topo a la derecha y la foto de portada a la izquierda */
+.pt-menu { position: fixed; inset: 0; z-index: 60; display: grid; grid-template-columns: 1fr 1fr; visibility: hidden; transition: visibility 0s linear 0.6s; }
+.pt-menu.is-open { visibility: visible; transition-delay: 0s; }
+.pt-menu__foto { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); opacity: 0; transition: opacity 0.5s; }
+.pt-menu.is-open .pt-menu__foto { opacity: 1; }
+.pt-menu__panel { position: relative; display: grid; justify-items: center; align-content: center; gap: 40px; background: #a39d96; color: #fff; translate: 100% 0; transition: translate 0.6s cubic-bezier(0.7, 0, 0.2, 1); }
+.pt-menu.is-open .pt-menu__panel { translate: 0 0; }
+.pt-cerrar { position: absolute; top: 24px; right: 30px; padding: 10px 18px; }
+.pt-menu nav { display: grid; justify-items: center; gap: 14px; text-align: center; font-size: 13px; font-weight: 700; }
+.pt-menu nav span { display: grid; font-weight: 400; font-size: 10px; margin-top: -8px; }
+.pt-menu__activo { color: #e0a96d; }
+.pt-menu__tarjeta { position: relative; width: 240px; margin: 0; }
+.pt-menu__tarjeta img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; filter: grayscale(1) brightness(0.6); }
+.pt-menu__tarjeta figcaption { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; font: italic 400 30px var(--font-playfair-display), serif; text-transform: none; }
+
+@media (max-width: 760px) {
+  .pt-portada, .pt-menu { grid-template-columns: 1fr; }
+  .pt-foto { min-height: 80svh; }
+  .pt-menu__foto { display: none; }
+  .pt-serv__fila, .pt-noticias__fila { grid-template-columns: 1fr; margin-top: 0; }
+  .pt-pie, .pt-pie__datos { flex-direction: column; }
+  .pt-nav { gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .pt-menu__panel, .pt-menu__foto { transition: none; } }
