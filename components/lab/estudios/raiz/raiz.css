@@ -1,0 +1,84 @@
+/* Raíz (réplica de Marco Ambrosi, docs/50 §3.2): fondos #141618 / #1a1d20, tarjetas #202428 con borde fino, texto
+   #9aa0a6 y #f2f0ed, acento cobre #e0b183; serif de titulares con cursiva cobre y sans fina para el texto. */
+.rz {
+  --bg: #141618; --fg: #f2f0ed; --mut: #9aa0a6; --acc: #e0b183; --acc2: #c98e58; --card: #202428; --ln: #2f343a; --r: 12px;
+  --display: var(--font-playfair-display), serif;
+  --rz-sans: var(--font-manrope), sans-serif;
+  background: var(--bg); color: var(--mut); font: 300 15px/1.65 var(--rz-sans); overflow-x: clip;
+}
+.rz a { color: inherit; text-decoration: none; }
+.rz h1, .rz h2, .rz h3 { color: var(--fg); font-family: var(--display); font-weight: 500; }
+.rz h1 em, .rz h2 em { color: var(--acc); font-style: italic; }
+.rz-kicker { margin: 0; font: 600 10px var(--rz-sans); letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); }
+.rz-intro { max-width: 560px; margin: 0 auto; }
+.rz-wa { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 999px; background: var(--acc); color: #1a1208 !important; font: 600 13px var(--rz-sans); box-shadow: 0 8px 26px color-mix(in srgb, var(--acc) 30%, transparent); }
+.rz-borde { display: inline-flex; padding: 11px 20px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--fg) 40%, transparent); color: var(--fg) !important; font: 600 13px var(--rz-sans); }
+
+.rz-head { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 30px; padding: 14px 5vw; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); }
+.rz-logo { display: flex; align-items: center; gap: 10px; }
+.rz-logo span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--acc); color: #1a1208; font: 600 16px var(--display); }
+.rz-logo b { display: grid; color: var(--fg); font: 600 15px/1.1 var(--display); }
+.rz-logo small { font: 500 8px var(--rz-sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--mut); }
+.rz-head nav { display: flex; gap: 26px; margin-left: auto; font-size: 13px; color: var(--fg); }
+
+.rz-hero { position: relative; display: grid; align-items: center; min-height: 92svh; padding: 0 5vw; overflow: hidden; }
+.rz-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rz-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(20 22 24 / 0.92) 0 30%, rgb(20 22 24 / 0.25) 70%, rgb(20 22 24 / 0.5)); }
+.rz-hero__txt { position: relative; z-index: 1; display: grid; gap: 18px; max-width: 520px; color: var(--fg); }
+.rz-raya { width: 50px; height: 1px; background: var(--acc); }
+.rz-hero h1 { margin: 0; font-size: clamp(40px, 4.6vw, 70px); line-height: 1.05; }
+.rz-botones { display: flex; gap: 16px; flex-wrap: wrap; }
+.rz-scroll { position: absolute; z-index: 1; left: 50%; bottom: 24px; translate: -50% 0; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; }
+
+.rz-porque, .rz-servicios, .rz-antes, .rz-trabajos, .rz-movimiento { display: grid; gap: 22px; padding: 100px 5vw; text-align: center; }
+.rz-servicios, .rz-trabajos { background: #1a1d20; }
+.rz h2 { margin: 0; font-size: clamp(30px, 3.2vw, 48px); line-height: 1.12; }
+.rz-sellos { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.rz-sellos div { display: grid; grid-template-columns: auto 1fr; gap: 0 12px; padding: 14px 18px; border: 1px solid color-mix(in srgb, var(--acc) 45%, transparent); border-radius: var(--r); text-align: left; background: color-mix(in srgb, var(--acc) 6%, transparent); }
+.rz-sellos span { grid-row: span 2; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--acc); color: var(--acc); }
+.rz-sellos b { color: var(--fg); font-weight: 600; font-size: 13px; }
+.rz-sellos small { font-size: 11px; }
+.rz-razones, .rz-tarjetas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 1100px; margin: 20px auto 0; width: 100%; text-align: left; }
+.rz-razones article, .rz-tarjetas article { display: grid; align-content: start; gap: 10px; padding: 24px; border: 1px solid var(--ln); border-radius: var(--r); background: var(--card); }
+.rz-razones span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--acc) 12%, transparent); color: var(--acc); }
+.rz-razones h3, .rz-tarjetas h3 { margin: 0; font-size: 20px; }
+.rz-razones p, .rz-tarjetas p { margin: 0; font-size: 13px; }
+.rz-compara { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 900px; margin: 30px auto 0; width: 100%; text-align: left; }
+.rz-compara article { padding: 24px; border: 1px solid var(--ln); border-radius: var(--r); }
+.rz-compara__si { border-color: color-mix(in srgb, var(--acc) 50%, transparent) !important; background: color-mix(in srgb, var(--acc) 7%, transparent); }
+.rz-compara ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; font-size: 13px; }
+.rz-no li::before { content: "✕  "; color: #b0645a; }
+.rz-si li::before { content: "✓  "; color: var(--acc); }
+.rz-tarjetas article:last-child { grid-column: 1 / -1; }
+.rz-num { font: italic 14px var(--display); color: var(--acc); }
+.rz-desde { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; }
+.rz-desde small { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+.rz-desde b { font: 500 22px var(--display); color: var(--acc); }
+
+.rz-ad, .rz-rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 1100px; margin: 10px auto 0; width: 100%; text-align: left; }
+.rz-ad figure, .rz-rejilla figure { margin: 0; }
+.rz-ad img { width: 100%; height: 100%; object-fit: cover; }
+.rz-ad .ui-ba { border-radius: var(--r); overflow: hidden; }
+.rz-ad figcaption, .rz-rejilla figcaption, .rz-clips figcaption { margin-top: 10px; font-size: 12px; }
+.rz-rejilla figure { position: relative; border-radius: var(--r); overflow: hidden; }
+.rz-rejilla img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
+.rz-rejilla figcaption { position: absolute; left: 12px; bottom: 10px; color: var(--fg); }
+.rz-clips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 1100px; margin: 10px auto 0; width: 100%; }
+.rz-clips figure { position: relative; margin: 0; border-radius: var(--r); overflow: hidden; }
+.rz-clips img { width: 100%; aspect-ratio: 9 / 13; object-fit: cover; display: block; filter: brightness(0.75); }
+.rz-play { position: absolute; left: 50%; top: 45%; translate: -50% -50%; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: rgb(255 255 255 / 0.18); backdrop-filter: blur(6px); color: #fff; }
+.rz-clips figcaption { position: absolute; left: 12px; bottom: 10px; margin: 0; color: var(--fg); }
+.rz-ig { justify-self: center; }
+.rz-resenas { padding: 100px 5vw; }
+
+.rz-pie { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; padding: 100px 5vw; background: #0f1112; }
+.rz-pie > div:first-child { display: grid; gap: 18px; justify-items: start; }
+.rz-pie .rz-intro { margin: 0; }
+.rz-datos { display: grid; gap: 14px; color: var(--fg); }
+.rz-datos p { margin: 0; }
+
+@media (max-width: 760px) {
+  .rz-head nav { display: none; }
+  .rz-razones, .rz-tarjetas, .rz-compara, .rz-ad, .rz-rejilla, .rz-pie { grid-template-columns: 1fr; }
+  .rz-clips { grid-template-columns: 1fr 1fr; }
+}
