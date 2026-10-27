@@ -110,3 +110,40 @@
 }
 @media (prefers-reduced-motion: reduce) { .rm-boton { transition: none; } }
 @media (max-width: 760px) { .rm-avatar { left: 12px; top: 10px; width: 46px; } .rm-avatar img { width: 46px; height: 46px; border-width: 3px; } .rm-avatar span { font-size: 14px; } }
+
+/* medidas de Surfing Academy con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-remada.md): Hauora 400 a
+   100 px (6,9 vw)/1 sin tracking; destinos a 45 px; margen 120 px (34 en móvil); Lenis; y el final que faltaba: vlogs,
+   «libertad, humor, amistad» con fotos sueltas y un trazo, preguntas, «contacto» gigante con el formulario y el pie */
+.rm h1 { font-size: 6.9vw; font-weight: 400; line-height: 1; letter-spacing: 0; }
+.rm .ui-cohort__title, .rm .ui-cohort h3 { font-size: 45px; font-weight: 400; line-height: 1; letter-spacing: 0; }
+.rm-viajes, .rm-nucleo, .rm-online, .rm-opiniones, .rm-vlogs, .rm-amigos, .rm-faq, .rm-contacto, .rm-pie { padding-inline: 120px; }
+.rm-vlogs { display: grid; gap: 30px; padding-block: 120px; }
+.rm-vlogs h2, .rm-amigos h2 { font-size: 40px; font-weight: 400; }
+.rm-vlogs article { display: grid; grid-template-columns: 0.9fr 1fr; gap: 30px; align-items: start; padding-top: 20px; border-top: 1px solid var(--ln); }
+.rm-vlogs img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.rm-vlogs article div { display: flex; justify-content: space-between; font-size: 22px; }
+.rm-vlogs small { font-size: 12px; color: var(--mut); }
+.rm-amigos { padding-block: 120px; }
+.rm-amigos__fotos { position: relative; height: 120svh; }
+.rm-amigo { position: absolute; width: 11vw; aspect-ratio: 4 / 3; object-fit: cover; }
+.rm-amigo--0 { left: 0; top: 4%; } .rm-amigo--1 { left: 16%; top: 0; width: 7vw; aspect-ratio: 3 / 4; } .rm-amigo--2 { left: 32%; top: 8%; }
+.rm-amigo--3 { right: 20%; top: 2%; } .rm-amigo--4 { right: 0; top: 14%; width: 14vw; } .rm-amigo--5 { left: 4%; bottom: 6%; width: 14vw; } .rm-amigo--6 { right: 6%; bottom: 0; }
+.rm-amigos__fotos p { position: absolute; left: 50%; top: 46%; translate: -50% -50%; width: 22em; margin: 0; font-size: 15px; text-align: center; }
+.rm-amigos__trazo { position: absolute !important; inset: 20% 10% !important; width: auto !important; height: auto !important; pointer-events: none; }
+.rm-faq { padding-block: 120px; --ln: #c9c9c9; }
+.rm-faq .ui-sh h2 { font-size: 40px; font-weight: 400; text-transform: lowercase; }
+.rm-contacto { position: relative; padding-block: 100px; overflow: hidden; }
+.rm-contacto h2 { font-size: 20vw; font-weight: 600; line-height: 0.8; letter-spacing: -0.06em; }
+.rm-contacto__cuerpo { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; margin-top: 30px; }
+.rm-contacto__form { padding: 30px; background: var(--acc); color: #fff; --fg: #fff; --mut: #ffe2da; --ln: rgba(255, 255, 255, 0.5); --acc: #17191a; }
+.rm-pie { display: grid; grid-template-columns: 1fr 1fr auto; gap: 30px; padding-block: 60px 30px; border-top: 1px solid var(--ln); font-size: 13px; }
+.rm-pie nav { display: grid; gap: 4px; }
+.rm-pie small { grid-column: 1 / -1; color: var(--mut); }
+@media (max-width: 760px) {
+  .rm h1 { font-size: 9.5vw; }
+  .rm .ui-cohort__title, .rm .ui-cohort h3 { font-size: 28px; }
+  .rm-viajes, .rm-nucleo, .rm-online, .rm-opiniones, .rm-vlogs, .rm-amigos, .rm-faq, .rm-contacto, .rm-pie { padding-inline: 34px; }
+  .rm-vlogs article, .rm-contacto__cuerpo, .rm-pie { grid-template-columns: 1fr; }
+  .rm-amigo { width: 30vw !important; }
+  .rm-amigos__fotos p { width: 80%; }
+}

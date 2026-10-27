@@ -23,7 +23,6 @@ import { join } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
 import { STYLE_GUIDES } from "../lib/ui/guides";
 import { chromiumPath } from "./chromium-path.mts";
-import { AVISO } from "./cine/navegador.mts";
 
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(name);
@@ -39,12 +38,16 @@ if (par && !par.every((u) => /^https?:\/\//.test(u ?? ""))) {
   process.exit(1);
 }
 const HOVER = !flag("--no-hover");
+/** botones de avisos de cookies que se aceptan antes de medir (no los de «entrar» o «explorar» del cine: navegan) */
+const COOKIES = /^(accept|accept all|accept cookies|accepter|tout accepter|aceptar|aceptar todo|acepto|accetta|accetta tutti|accetto|akzeptieren|alle akzeptieren|aceitar|agree|i agree|allow|allow all|got it|ok|okay|entendido|zustimmen)\b/i;
+// tiempo máximo por página y tamaño (escritorio o móvil), en ms: `--limite 240`
+const LIMITE = Number(opt("--limite", "180")) * 1000;
 const WAIT = Number(opt("--wait", guidesBase ? "2500" : "7000"));
 const parNombre = par ? opt("--nombre", par[0].replace(/^https?:\/\/(www\.)?/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 40)) : "";
 const OUT = opt("--out", par ? join(".refs3d", "pares", parNombre) : join(".refs", new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")));
 const SHOTS = !flag("--no-shots");
 const MOBILE = !flag("--no-mobile");
-const skip = new Set(["--guides", "--out", "--wait", "--nombre"].flatMap((k) => (argv.includes(k) ? [argv[argv.indexOf(k) + 1]] : [])));
+const skip = new Set(["--guides", "--out", "--wait", "--nombre", "--limite"].flatMap((k) => (argv.includes(k) ? [argv[argv.indexOf(k) + 1]] : [])));
 
 type Target = { url: string; label: string; guide?: (typeof STYLE_GUIDES)[number] };
 const targets: Target[] = par
@@ -267,17 +270,32 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
   await ctx.addInitScript({ content: "window.__name = (f) => f;" });
   const page = await ctx.newPage();
   const slug = t.label.replace(/[^a-z0-9]+/gi, "_").slice(0, 48);
+  // tiempo máximo por página: una web pesada (Honhar) dejó la sonda colgada más de 20 minutos; al pasarlo se cierra el
+  // contexto y la medida sale como error en vez de bloquear la serie
+  let reloj: ReturnType<typeof setTimeout> | undefined;
+  const limite = new Promise<never>((_, no) => (reloj = setTimeout(() => no(new Error(`más de ${LIMITE / 1000} s midiendo la página`)), LIMITE)));
   try {
+    return await Promise.race([medir(), limite]);
+  } catch (e) {
+    return { error: (e as Error).message.split("\n")[0] };
+  } finally {
+    clearTimeout(reloj);
+    // sin esperar más de 5 s: cerrar un contexto con la página colgada también se cuelga
+    await Promise.race([ctx.close().catch(() => {}), new Promise((r) => setTimeout(r, 5000))]);
+  }
+
+  async function medir() {
     await page.goto(t.url, { waitUntil: "domcontentloaded", timeout: 45000 });
     await page.waitForTimeout(WAIT);
     // avisos de cookies o de edad: se aceptan antes de medir (si no, sus botones salen en el hover y tapan las capturas)
     for (let vuelta = 0; vuelta < 2; vuelta++) {
       const n = await page.evaluate((re) => {
         const aviso = new RegExp(re, "i");
-        const bs = [...document.querySelectorAll("button, a, [role=button]")].filter((e) => (e as HTMLElement).offsetParent !== null && aviso.test((e.textContent || "").trim()));
+        // solo botones o enlaces que no navegan: «Explore programs» de Honhar sacaba la sonda de la página
+        const bs = [...document.querySelectorAll("button, [role=button], a:not([href]), a[href^='#'], a[href^='javascript']")].filter((e) => (e as HTMLElement).offsetParent !== null && aviso.test((e.textContent || "").trim()));
         bs.slice(0, 1).forEach((e) => (e as HTMLElement).click());
         return bs.length;
-      }, AVISO.source);
+      }, COOKIES.source);
       if (!n) break;
       await page.waitForTimeout(900);
     }
@@ -301,10 +319,6 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
     const d = (await page.evaluate(probe)) as Data;
     if (HOVER && tag === "desk") d.hover = await hovers(page);
     return d;
-  } catch (e) {
-    return { error: (e as Error).message.split("\n")[0] };
-  } finally {
-    await ctx.close();
   }
 }
 
@@ -348,7 +362,7 @@ await Promise.all(
     }
   }),
 );
-await browser.close();
+await Promise.race([browser.close().catch(() => {}), new Promise((r) => setTimeout(r, 10000))]);
 writeFileSync(join(OUT, "datos.json"), JSON.stringify(results, null, 1));
 
 /** ΔE (CIE76) entre dos colores hex: < 5 casi igual, < 12 de la misma familia */
@@ -371,7 +385,8 @@ function informePar(o: Data, r: Data, om: Data | null, rm: Data | null) {
   const filas: Fila[] = [];
   const f = (grupo: string, medida: string, a: unknown, b: unknown, cerca: boolean | null) => filas.push({ grupo, medida, original: String(a ?? "—"), replica: String(b ?? "—"), cerca });
   const rel = (a: number, b: number, tol: number) => Math.abs(a - b) <= tol * Math.max(Math.abs(a), 1e-6);
-  const ho = o.biggest[0], hr = r.biggest[0];
+  // sin titular en la primera pantalla del original (una escena o un vídeo; lo mayor es la navegación) no hay qué comparar
+  const ho = o.biggest[0] && o.biggest[0].size >= 24 ? o.biggest[0] : undefined, hr = ho ? r.biggest[0] : undefined;
   f("Titular", "tamaño (vw)", ho?.vw, hr?.vw, ho && hr ? rel(ho.vw, hr.vw, 0.15) : null);
   f("Titular", "peso", ho?.weight, hr?.weight, ho && hr ? Math.abs(ho.weight - hr.weight) <= 100 : null);
   f("Titular", "interlineado", ho?.lh, hr?.lh, ho && hr ? Math.abs(ho.lh - hr.lh) <= 0.08 : null);
@@ -406,7 +421,7 @@ function informePar(o: Data, r: Data, om: Data | null, rm: Data | null) {
   const faltan = tipos(o).filter((t) => !tipos(r).includes(t));
   f("Hover", "propiedades que cambian", tipos(o).join(", "), tipos(r).join(", "), faltan.length === 0);
   if (om && rm) {
-    f("Móvil", "titular (vw)", om.biggest[0]?.vw, rm.biggest[0]?.vw, om.biggest[0] && rm.biggest[0] ? rel(om.biggest[0].vw, rm.biggest[0].vw, 0.2) : null);
+    f("Móvil", "titular (vw)", om.biggest[0]?.vw, rm.biggest[0]?.vw, om.biggest[0] && om.biggest[0].size >= 24 && rm.biggest[0] ? rel(om.biggest[0].vw, rm.biggest[0].vw, 0.2) : null);
     f("Móvil", "margen lateral (px)", mg(om.margin), mg(rm.margin), cmpMg(om.margin, rm.margin, 6));
     f("Móvil", "largo de página (pantallas)", om.pageVh, rm.pageVh, rel(om.pageVh, rm.pageVh, 0.3));
   }
@@ -481,3 +496,6 @@ if (par) {
 } else {
   console.log(`\nDatos en ${join(OUT, "datos.json")}`);
 }
+
+// un navegador con una página colgada puede dejar el proceso vivo: se sale al terminar
+process.exit(process.exitCode ?? 0);

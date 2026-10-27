@@ -95,3 +95,26 @@
   .ah-insta { grid-template-columns: repeat(3, 1fr); }
   .ah-pie__fila { flex-direction: column; }
 }
+
+/* medidas de FLA con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-ahora.md): OnyFuture (→ Space
+   Grotesk) siempre apretada; titular 6,7 vw/0,9 a −8 %; secciones 66 px (4,6 vw)/0,97 a −6 %; tarjetas 40 px a −5 %;
+   entradilla 28/1,14 a −3 %; texto 18/1,34 a −2 % en columnas de 28 em; margen 36 px; el formato de los cursos en gris
+   #999; más aire entre secciones (el original es mucho más largo) */
+.ah { font-size: 18px; line-height: 1.34; letter-spacing: -0.02em; }
+.ah-hero h1 { font-size: 6.7vw; line-height: 0.9; letter-spacing: -0.08em; }
+.ah h2 { font-size: 4.6vw; line-height: 0.97; letter-spacing: -0.06em; }
+.ah-intro h2 { font-size: 28px; line-height: 1.14; letter-spacing: -0.03em; text-transform: none; }
+.ah-solapadas h3 { font-size: 40px; line-height: 1; letter-spacing: -0.05em; }
+.ah p { font-size: 18px; line-height: 1.34; max-width: 28em; }
+.ah-head, .ah-intro, .ah-proximos, .ah-logos, .ah-pie { padding-inline: 36px; }
+.ah-intro, .ah-proximos, .ah-logos { padding-block: 140px; }
+.ah-lista span { color: #999; }
+.ah-grupo { height: 110svh; object-fit: cover; width: 100%; }
+.ah * { box-shadow: none !important; }
+@media (max-width: 760px) {
+  .ah-hero h1 { font-size: 13vw; }
+  .ah h2 { font-size: 9vw; }
+  .ah-head, .ah-intro, .ah-proximos, .ah-logos, .ah-pie { padding-inline: 16px; }
+  .ah-intro, .ah-proximos, .ah-logos { padding-block: 80px; }
+  .ah-grupo { height: 60svh; }
+}

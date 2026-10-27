@@ -1,7 +1,10 @@
 "use client";
 
 import CohortList, { type CohortProgram } from "@/components/ui/CohortList";
+import ContactForm from "@/components/ui/ContactForm";
+import FAQSection from "@/components/ui/FAQSection";
 import LineDraw from "@/components/ui/LineDraw";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 import "./remada.css";
 
 /*
@@ -25,9 +28,17 @@ const NUCLEO = [
   { t: "un campamento con todo", d: "Dos sesiones al día, práctica constante y decenas de olas: una semana vale más que meses sueltos en casa." },
 ];
 
+const VLOGS = [
+  { t: "#vlog islas mentawai", f: "diciembre 17", img: `${V}costa/01-olas-islandia.jpg` },
+  { t: "#vlog g-land, java", f: "diciembre 24", img: `${V}costa/02-costa-oregon.jpg` },
+  { t: "#vlog corea del sur", f: "enero 03", img: `${V}oceano/01-arrecife.jpg` },
+];
+const AMIGOS = [`${V}costa/03-playa-tunez.jpg`, "/img/retratos/03-pixie-cut-unsplash.jpg", `${V}oceano/03-delfines-hawai.jpg`, `${V}costa/01-olas-islandia.jpg`, `${V}ciudad/03-budapest.jpg`, `${V}costa/02-costa-oregon.jpg`, `${V}oceano/01-arrecife.jpg`];
+
 export default function Remada() {
   return (
     <div className="rm">
+      <SmoothScroll />
       <div className="rm-cinta-top"><span><b>es</b> en</span></div>
       <a href="#sobre-mi" className="rm-avatar" aria-label="Lucía Mar, sobre mí">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -140,6 +151,57 @@ export default function Remada() {
           ))}
         </div>
       </section>
+
+      <section className="rm-vlogs" id="vlogs">
+        <h2>(vlogs)</h2>
+        {VLOGS.map((v) => (
+          <article key={v.t}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={v.img} alt="" loading="lazy" />
+            <div><b>{v.t}</b><small>{v.f}</small></div>
+          </article>
+        ))}
+      </section>
+
+      <section className="rm-amigos">
+        <h2><span className="rm-naranja">*</span>libertad, humor, amistad</h2>
+        <div className="rm-amigos__fotos">
+          {AMIGOS.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" loading="lazy" className={`rm-amigo rm-amigo--${i}`} />
+          ))}
+          <p>el ambiente de un viaje de surf lo hacen las personas: buena gente, humor y ganas de aprender. eso es lo que buscamos en cada viaje.</p>
+          <LineDraw shape="signature" trigger="inview" duration={1.6} tone="fg" strokeWidth={2} className="rm-amigos__trazo" />
+        </div>
+      </section>
+
+      <section className="rm-faq">
+        <FAQSection kicker="" title="faq." layout="split" presentation="lines" align="left" defaultOpen={-1} variant="minimal" className="rm-faq__lista"
+          items={"¿qué tan rápido veré progreso?|en la primera semana ya notas cambios: el vídeo te enseña qué corregir y lo practicas al día siguiente.\n¿qué tipo de gente viene a los viajes?|de todo: desde quien empieza hasta quien lleva años; agrupamos por nivel.\n¿es para mí si soy principiante?|sí, los destinos con ola artificial son perfectos para empezar.\n¿qué garantías hay de que haya olas?|elegimos spots constantes y fechas de temporada; si un día no hay olas, hay surfskate y análisis.\n¿cómo es un día normal en el viaje?|dos sesiones de agua, análisis de vídeo y surfskate al atardecer.\n¿qué incluye el programa?|alojamiento, traslados, sesiones guiadas, vídeo y análisis."} />
+      </section>
+
+      <section className="rm-contacto" id="contacto">
+        <h2>contacto</h2>
+        <div className="rm-contacto__cuerpo">
+          <p>instagram <b>@luciamar.surf</b><br />telegram <b>@luciamar</b></p>
+          <div className="rm-contacto__form">
+            <ContactForm title="déjame tus datos y te escribo pronto" subtitle="" submitLabel="enviar →" successMessage="¡gracias! te escribo enseguida." variant="minimal" />
+          </div>
+        </div>
+      </section>
+
+      <footer className="rm-pie">
+        <nav aria-label="Pie">
+          <b>navegación</b>
+          <a href="#viajes">calendario de viajes</a><a href="#sobre-mi">sobre mí</a><a href="#online">clases en línea</a><a href="#opiniones">opiniones</a><a href="#vlogs">vlogs</a><a href="#contacto">contacto</a>
+        </nav>
+        <nav aria-label="Viajes">
+          <b>viajes</b>
+          <a href="#viajes">mentawai, playground</a><a href="#viajes">corea del sur</a><a href="#viajes">china, hainan</a><a href="#viajes">java, g-land</a>
+        </nav>
+        <a href="#inicio" className="rm-pie__arriba">volver arriba ↑</a>
+        <small>política de privacidad · © 2026 remada</small>
+      </footer>
 
       <a href="#opiniones" className="rm-chat" aria-label="Escríbeme">💬</a>
     </div>

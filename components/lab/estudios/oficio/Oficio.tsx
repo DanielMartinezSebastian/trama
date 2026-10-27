@@ -1,7 +1,13 @@
 "use client";
 
 import CohortList, { type CohortProgram } from "@/components/ui/CohortList";
+import { Montserrat, Permanent_Marker } from "next/font/google";
 import "./oficio.css";
+
+// letras propias de esta réplica, no del kit: Magic Brush (de pago) → Permanent Marker, rotulador de trazo seco con el
+// espaciado abierto de Honhar; Montserrat como el original (docs/cuaderno/replica-oficio.md)
+const brocha = Permanent_Marker({ weight: "400", subsets: ["latin"], variable: "--of-marker", display: "swap" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--of-montserrat", display: "swap" });
 
 /*
  * Oficio, instituto de formación práctica: réplica de Honhar (docs/50 §3.6). Neobrutalismo amarillo: recuadros con borde,
@@ -23,7 +29,7 @@ const TALLERES: CohortProgram[] = [
 
 export default function Oficio() {
   return (
-    <div className="of">
+    <div className={`of ${brocha.variable} ${montserrat.variable}`}>
       <header className="of-head">
         <a href="#inicio" className="of-logo">OFI<span>C</span>IO</a>
         <nav aria-label="Principal"><a href="#programas">Programas ▾</a><a href="#movimiento">Movimiento</a><a href="#mentores">Mentores</a><a href="#historias">Historias</a><a href="#resultados">Resultados</a></nav>
@@ -125,11 +131,50 @@ export default function Oficio() {
         <a href="#programas" className="of-boton">Fórmate con Oficio →</a>
       </section>
 
+      {/* el final de Honhar: la presencia en eventos (en negro), «sé mentor», «aprendizaje sin límites», el lema con las dos
+          señales y el pie oscuro con el mapa */}
+      <section className="of-presencia">
+        <div>
+          <small>Nos movemos</small>
+          <h2>HEMOS ESTADO PRESENTES EN</h2>
+          <ul><li>Foro de Empleo Digital, Madrid (2025)</li><li>Semana del Emprendimiento, Valencia (2025)</li><li>Congreso de Marketing, Sevilla (2024)</li><li>Feria de Formación Profesional, Bilbao (2024)</li></ul>
+          <a href="#contacto" className="of-boton">Invítanos a tu evento →</a>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/img/forja/grupo.webp" alt="" loading="lazy" />
+      </section>
+
+      <section className="of-mentor">
+        <div>
+          <h2>SÉ MENTOR EN OFICIO</h2>
+          <ul><li>Nos gusta formar a quien forma a otros</li><li>Mezclamos creatividad y método</li><li>Traemos lo mejor del sector a clase</li><li>Compartimos lo que aprendemos</li></ul>
+          <a href="#contacto" className="of-boton">Empieza tu curso con Oficio →</a>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/img/cadencia/grupo.webp" alt="El equipo de mentores de Oficio" loading="lazy" />
+      </section>
+
+      <section className="of-sinlimite">
+        <h2>APRENDIZAJE SIN LÍMITES</h2>
+        <div>
+          <article><h3>SOMOS DISTINTOS</h3><ul><li>100 % aprendizaje práctico</li><li>Atención uno a uno</li><li>Aprendizaje estructurado</li><li>Debates en grupo</li><li>Preparación de entrevistas</li><li>Contactos del sector</li><li>Charlas de emprendedores</li></ul><a href="#contacto" className="of-boton">Síguenos en LinkedIn →</a></article>
+          <article className="of-sinlimite__negra"><h3>NOS HACEMOS OÍR</h3><p>Lo que pasa en clase lo contamos en redes: proyectos, visitas y alumnos que ya trabajan.</p><a href="#contacto" className="of-boton">Síguenos en Instagram →</a></article>
+        </div>
+      </section>
+
+      <section className="of-lema" aria-label="Nuestro lema">
+        <p className="of-lema__frase">NO REPARTIMOS TEORÍA, REPARTIMOS <mark>OFICIO</mark>.</p>
+        <span className="of-lema__fondo" aria-hidden>Inscríbete</span>
+        <span className="of-senal of-senal--izq">PROFESORES: PARA ENSEÑAR OFICIO</span>
+        <span className="of-senal of-senal--der">ALUMNOS: PARA APRENDERLO</span>
+      </section>
+
       <footer className="of-pie">
-        <p>Nos movemos</p>
-        <h2>HEMOS ESTADO EN</h2>
-        <ul><li>NasSummit, Bilbao</li><li>Tiecon 2023, Valencia</li><li>Conferencia de afiliados, Málaga</li><li>Pecfest 2024, Sevilla</li></ul>
-        <a href="#inicio" className="of-boton">Invítanos a tu evento →</a>
+        <div className="of-pie__mapa" aria-label="Mapa: Calle del Oficio 12, Madrid"><i aria-hidden /></div>
+        <div><b>OFICIO</b><a href="#historia">Nuestra historia</a><a href="#contacto">Sé mentor</a><a href="#programas">Inscríbete</a></div>
+        <div><b>LEGAL</b><a href="#inicio">Condiciones</a><a href="#inicio">Privacidad</a><a href="#inicio">Trae a un amigo</a></div>
+        <div id="contacto"><b>CONTACTO</b><span>Cursos e inscripciones: 910 000 000</span><span>Colaboraciones y eventos: 910 000 001</span><span>Empresas y centros: hola@oficio.example</span></div>
+        <small>© 2026 Oficio · Calle del Oficio 12, Madrid</small>
       </footer>
     </div>
   );

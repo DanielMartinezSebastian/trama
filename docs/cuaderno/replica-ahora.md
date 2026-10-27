@@ -18,7 +18,7 @@ patrones: [letra gigante de líneas, muro de profesores, tarjetas solapadas, lis
 movimiento: [trazo que se dibuja]
 piezas: [LineDraw, TeamSection]
 piezas-nuevas: [TeamSection]
-relacionados: [estudio-academia, pieza-team-section, replica-oficio]
+relacionados: [estudio-academia, pieza-team-section, replica-oficio, herramienta-probe-par]
 ---
 
 ## Concepto
@@ -50,6 +50,26 @@ Una escuela de diseño y negocio:
 
 - El muro denso de retratos se repite en academias y equipos grandes: pasó a `TeamSection` como disposición.
 
+## Iteración con el par (27-10-2026)
+
+`npm run refs:probe -- --par https://futurelondonacademy.co.uk/ http://localhost:3020/lab/estudios/ahora --nombre ahora`
+y la sonda de estilos. Informe en `.refs3d/pares/ahora/par.md`.
+
+- **Antes, 10 de 19 medidas cerca.** Las secciones estaban todas, pero la escala y el apretado no:
+  - OnyFuture va **siempre apretada**: titular a 6,7 vw/0,9 con −8 %, secciones a 66 px con −6 %, tarjetas a 40 px con
+    −5 % y texto a 18/1,34 con −2 %;
+  - la réplica iba a −3 % y con el texto a 12 px;
+  - el margen es de 36 px;
+  - el formato de los cursos va en gris #999.
+- **Corregido**: las medidas, más aire entre secciones, la foto del grupo más alta y sin sombras.
+- **Después, 18 de 19.** El largo de página no es comparable: la sonda mide FLA en 7,3 pantallas y el par en 22,4, porque
+  la web no se desplaza bien con la rueda sintética (ya se vio en el estudio, docs/50 §3.6). La réplica tiene 8,4.
+
+## Aprendido en la iteración
+
+- Un tracking negativo constante en todos los tamaños (−2 % en el texto, −8 % en el titular) es lo que hace reconocible
+  una letra de marca como OnyFuture. Al sustituirla, hay que copiar el tracking además del tamaño.
+
 ## Siguiente
 
-Medir el par.
+- El hover de las tarjetas solapadas, que se separan.

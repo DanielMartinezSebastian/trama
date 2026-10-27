@@ -101,3 +101,63 @@
   .of-videos { grid-template-columns: 1fr 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .of-pollito { animation: none; } .of-boton { transition: none; } }
+
+/* medidas de Honhar con la sonda (27-10-2026, docs/cuaderno/replica-oficio.md): la brocha va con el espaciado ABIERTO
+   (Magic Brush, del 2 al 8,7 %), no condensada; titular de 60 px/1,3; secciones de 64 px/1; tarjetas de 34 px/1,1;
+   texto Montserrat a 20 px; botones con borde de 2 px y radio de 8 px, en brocha a 20–24 px con el 5–6 % */
+.of { --of-brocha: var(--of-marker), var(--font-anton), sans-serif; --of-sans: var(--of-montserrat), var(--font-manrope), sans-serif; font-size: 18px; }
+.of h1, .of h2, .of h3 { font-weight: 400; letter-spacing: 0.02em; }
+.of-titular h1 { font-size: 60px; line-height: 1.3; }
+.of h2 { font-size: 64px; line-height: 1; letter-spacing: 0.009em; }
+.of-prensa h2 { font-size: 40px; line-height: 1.1; }
+.of .ui-cohort h3, .of .ui-cohort__title { font-family: var(--of-brocha); font-size: 34px; line-height: 1.1; letter-spacing: 0.035em; text-transform: uppercase; }
+.of p { font-size: 20px; line-height: 1.5; }
+.of-boton { padding: 20px 30px; border-radius: 8px; font: 400 22px/1.2 var(--of-brocha); letter-spacing: 0.05em; text-transform: none; }
+@media (max-width: 760px) {
+  .of-titular h1 { font-size: 34px; }
+  .of h2 { font-size: 38px; }
+  .of p { font-size: 17px; }
+}
+
+/* el final de Honhar (27-10-2026): presencia en negro con foto, «sé mentor» con foto del equipo, dos tarjetas (blanca y
+   negra), el lema con las dos señales de flecha sobre «Inscríbete» en contorno gigante, y el pie oscuro con mapa */
+.of-presencia, .of-mentor { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 100px 4vw; }
+.of-presencia { background: #000; color: #fff; }
+.of-presencia h2, .of-mentor h2 { text-align: left; font-size: 48px; }
+.of-presencia ul, .of-mentor ul { display: grid; gap: 10px; padding-left: 20px; font-size: 18px; }
+.of-presencia img, .of-mentor img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: grayscale(1); border: 2px solid #000; }
+.of-presencia .of-boton, .of-mentor .of-boton { justify-self: start; }
+.of-presencia > div, .of-mentor > div { display: grid; gap: 22px; }
+.of-sinlimite { padding: 100px 4vw; }
+.of-sinlimite > div { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+.of-sinlimite article { display: grid; align-content: start; gap: 18px; padding: 32px; border: 2px solid #000; border-radius: 10px; background: #fff; box-shadow: 6px 6px 0 #000; }
+.of-sinlimite h3 { font-size: 30px; }
+.of-sinlimite ul { display: grid; gap: 10px; margin: 0; padding-left: 20px; font-size: 18px; }
+.of-sinlimite__negra { background: #000 !important; color: #fff; }
+.of-lema { position: relative; min-height: 90svh; padding: 100px 4vw; overflow: hidden; }
+.of-lema__frase { margin: 0; text-align: center; font: 400 44px/1.1 var(--of-brocha); letter-spacing: 0.02em; }
+.of-lema__fondo { position: absolute; left: 4vw; top: 30%; font: 800 17vw/1 var(--of-sans); color: transparent; -webkit-text-stroke: 2px rgb(0 0 0 / 0.18); white-space: nowrap; }
+.of-senal { position: absolute; padding: 18px 70px 18px 40px; background: #fff; border: 2px solid #000; font: 400 22px var(--of-brocha); letter-spacing: 0.04em; clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 50%, calc(100% - 40px) 100%, 0 100%); }
+.of-senal--izq { left: 6vw; top: 52%; rotate: -10deg; background: #000; color: #ffcc00; padding: 18px 40px 18px 70px; clip-path: polygon(40px 0, 100% 0, 100% 100%, 40px 100%, 0 50%); }
+.of-senal--der { right: 8vw; top: 68%; rotate: -8deg; }
+.of-pie { grid-template-columns: 1.4fr 1fr 1fr 1.4fr; align-items: start; gap: 30px; padding: 60px 4vw 30px; font-size: 14px; }
+.of-pie > div { display: grid; gap: 8px; }
+.of-pie b { color: #ffcc00; }
+.of-pie__mapa { position: relative; min-height: 220px; border-radius: 8px; background: #1d1d1d; background-image: radial-gradient(#3a3a3a 1.5px, transparent 1.6px); background-size: 10px 10px; }
+.of-pie__mapa i { position: absolute; left: 46%; top: 38%; width: 14px; height: 14px; border-radius: 50%; background: #ffcc00; box-shadow: 0 0 0 6px rgb(255 204 0 / 0.3); }
+.of-pie small { grid-column: 1 / -1; color: #888; }
+@media (max-width: 760px) {
+  .of-presencia, .of-mentor, .of-sinlimite > div, .of-pie { grid-template-columns: 1fr; }
+  .of-lema__frase { font-size: 28px; }
+  .of-senal { font-size: 15px; position: relative; display: block; left: auto; right: auto; top: auto; margin-top: 40px; }
+}
+/* hover de Honhar: los enlaces de la cabecera y las redes cambian de color y se atenúan; margen 42 px */
+.of-head nav a, .of-redes a, .of-pie a { transition: color 0.2s, opacity 0.2s, border-color 0.2s; border-bottom: 1px solid transparent; }
+.of-head nav a:hover { opacity: 0.6; border-color: currentColor; }
+.of-redes a:hover, .of-pie a:hover { color: #fff; opacity: 0.7; }
+.of-head, .of-presencia, .of-mentor, .of-sinlimite, .of-lema, .of-pie { padding-inline: 42px; }
+@media (max-width: 760px) { .of-head, .of-presencia, .of-mentor, .of-sinlimite, .of-lema, .of-pie { padding-inline: 16px; } }
+@media (max-width: 760px) { .of-presencia, .of-mentor, .of-sinlimite { padding-block: 56px; } .of-lema { min-height: 0; padding-block: 56px; } }
+.of .of-boton { color: #000 !important; }
+.of .of-lema__frase { font-size: 44px; line-height: 1.1; max-width: none; }
+@media (max-width: 760px) { .of .of-lema__frase { font-size: 28px; } }

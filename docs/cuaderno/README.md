@@ -80,8 +80,8 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 
 - Fichas: [replica-ahora](replica-ahora.md), [replica-oficio](replica-oficio.md)
 - Colores: `#ffffff` `#1a1a1a` `#ffe32b` `#f1f1f1` `#ffcc00` `#000000` `#3a2500`
-- Letras: Space Grotesk, Inter, Anton, Manrope
-- Tipografía: brocha, condensada en mayúsculas, grotesca en mayúsculas, letra de contorno, una sola letra
+- Letras: Space Grotesk, Inter, Permanent Marker, Montserrat
+- Tipografía: brocha, espaciado abierto, grotesca en mayúsculas, letra de contorno, una sola letra
 - Paleta: amarillo y negro (2), fondo claro
 - Tono: enérgico (2), comercial, editorial, institucional, lúdico
 - Patrones: testimonios (2), boletín, cifras, lanzamos pronto, letra gigante de líneas, lista de cursos a todo el ancho, muro de logos, muro de profesores, neobrutalismo, palabras tachadas, pizarra con personajes, primera clase gratis
@@ -173,7 +173,7 @@ fondo claro (10) · fondo oscuro (7) · acento único saturado (5) · pastel cá
 
 ### Tipografía (`tipografia`)
 
-titular gigante (10) · serif con cursiva (6) · condensada en mayúsculas (5) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
+titular gigante (10) · serif con cursiva (6) · condensada en mayúsculas (4) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · espaciado abierto (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
 
 ### Patrones (`patrones`)
 
@@ -207,7 +207,7 @@ Con tres etiquetas o más en común (sin contar piezas).
 - [replica-melena](replica-melena.md): demo-hebra (6), replica-matiz (5), replica-raiz (4), replica-nucleo (3), replica-nura (3)
 - [replica-nucleo](replica-nucleo.md): demo-cadencia (7), replica-matiz (3), replica-melena (3), demo-hebra (3)
 - [replica-nura](replica-nura.md): demo-hebra (6), replica-ahora (4), replica-matiz (4), replica-melena (3)
-- [replica-oficio](replica-oficio.md): replica-remada (7), replica-ahora (5), replica-vive (3)
+- [replica-oficio](replica-oficio.md): replica-remada (7), replica-ahora (5)
 - [replica-patron](replica-patron.md): demo-esparta (11), replica-abuela-rosa (4), replica-cita (4), replica-talla (4), replica-impulso (3)
 - [replica-q47](replica-q47.md): replica-impulso (5), replica-abuela-rosa (4), replica-vive (4), replica-cita (3), replica-talla (3)
 - [replica-raiz](replica-raiz.md): replica-cita (4), replica-melena (4), demo-hebra (3)
