@@ -32,7 +32,7 @@ export async function auditarInteraccion(page: Page, base: string, max = 80): Pr
 
   // botones
   const n = await page.evaluate(() => {
-    const bs = [...document.querySelectorAll<HTMLElement>("button, [role='button'], summary")].filter((b) => b.getClientRects().length && !(b as HTMLButtonElement).disabled && getComputedStyle(b).visibility !== "hidden" && !b.closest("[inert], [aria-hidden='true']") && !((b as HTMLButtonElement).type === "submit" && b.closest("form")));
+    const bs = [...document.querySelectorAll<HTMLElement>("button, [role='button'], summary")].filter((b) => b.getClientRects().length && !(b as HTMLButtonElement).disabled && b.getAttribute("aria-disabled") !== "true" && getComputedStyle(b).visibility !== "hidden" && !b.closest("[inert], [aria-hidden='true']") && !((b as HTMLButtonElement).type === "submit" && b.closest("form")));
     bs.forEach((b, i) => b.setAttribute("data-auditar", String(i)));
     return bs.length;
   });
@@ -64,7 +64,7 @@ export async function auditarInteraccion(page: Page, base: string, max = 80): Pr
     if (despues && despues.url !== inicio) {
       await page.goto(inicio, { waitUntil: "networkidle" }).catch(() => {});
       await page.evaluate(() => {
-        const bs = [...document.querySelectorAll<HTMLElement>("button, [role='button'], summary")].filter((b) => b.getClientRects().length && !(b as HTMLButtonElement).disabled && getComputedStyle(b).visibility !== "hidden" && !b.closest("[inert], [aria-hidden='true']") && !((b as HTMLButtonElement).type === "submit" && b.closest("form")));
+        const bs = [...document.querySelectorAll<HTMLElement>("button, [role='button'], summary")].filter((b) => b.getClientRects().length && !(b as HTMLButtonElement).disabled && b.getAttribute("aria-disabled") !== "true" && getComputedStyle(b).visibility !== "hidden" && !b.closest("[inert], [aria-hidden='true']") && !((b as HTMLButtonElement).type === "submit" && b.closest("form")));
         bs.forEach((b, i) => b.setAttribute("data-auditar", String(i)));
       });
     } else {

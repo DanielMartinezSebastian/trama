@@ -122,6 +122,44 @@ export const negocio: CatalogEntry[] = [
     ),
   },
   {
+    id: "enrollment-flow",
+    component: "EnrollmentFlow",
+    path: "@/components/ui/EnrollmentFlow",
+    name: "Solicitud de plaza",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Solicitud de plaza en un curso, programa o viaje por convocatorias: elegir convocatoria (las completas o próximas pasan a lista de espera), los datos con nivel y una pregunta, y la señal para reservar la plaza con pago simulado (validación de tarjeta). Confirma con número de solicitud y la guarda en este navegador. Va con CohortList en la ficha del programa.",
+    stageHeight: 640,
+    props: [
+      { key: "deposit", label: "Señal para reservar (0 = sin pago)", type: "number", default: 60, min: 0, max: 300, step: 10 },
+      { key: "question", label: "Pregunta abierta", type: "text", default: "¿Qué te gustaría aprender?" },
+      variantProp("minimal"),
+    ],
+    notes: [
+      "`cohorts`: label, dates, status (open, few, soon, closed) y seats. Las soon y closed piden lista de espera, sin pago.",
+      "Para probar el pago: 4242 4242 4242 4242. Ver /inspiraciones/melena/academia y docs/56.",
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <EnrollmentFlow
+          key={String(p.deposit)}
+          program="Taller de cerámica: torno desde cero"
+          cohorts={[
+            { label: "Noviembre", dates: "martes y jueves", status: "few", seats: 2 },
+            { label: "Enero", dates: "sábados por la mañana", status: "open", seats: 8 },
+            { label: "Marzo", dates: "por confirmar", status: "soon" },
+          ]}
+          price={180}
+          deposit={p.deposit as number}
+          levels={["Nunca he tocado barro", "Ya he hecho algo"]}
+          question={p.question as string}
+          storageKey="trama:catalogo:solicitudes"
+          variant={p.variant as never}
+        />
+      </div>
+    ),
+  },
+  {
     id: "cohort-list",
     component: "CohortList",
     path: "@/components/ui/CohortList",

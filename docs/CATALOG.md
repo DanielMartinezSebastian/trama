@@ -1671,6 +1671,19 @@ El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en t
 - Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.
 - Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56.
 
+### Solicitud de plaza — `EnrollmentFlow`
+
+Solicitud de plaza en un curso, programa o viaje por convocatorias: elegir convocatoria (las completas o próximas pasan a lista de espera), los datos con nivel y una pregunta, y la señal para reservar la plaza con pago simulado (validación de tarjeta). Confirma con número de solicitud y la guarda en este navegador. Va con CohortList en la ficha del programa.
+
+| prop | tipo | default |
+|---|---|---|
+| `deposit` | number 0–300 | 60 |
+| `question` | text | "¿Qué te gustaría aprender?" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- `cohorts`: label, dates, status (open, few, soon, closed) y seats. Las soon y closed piden lista de espera, sin pago.
+- Para probar el pago: 4242 4242 4242 4242. Ver /inspiraciones/melena/academia y docs/56.
+
 ### Selector de fecha y hueco — `DatePicker`
 
 Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), con antelación mínima, días cerrados, festivos y los huecos del día elegido. Cuadrícula ARIA con teclado completo (flechas, Inicio/Fin, RePág/AvPág). Valores en ISO: «2026-10-24» o «2026-10-24/2026-10-27».

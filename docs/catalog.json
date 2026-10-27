@@ -182,6 +182,7 @@
         "quantity-stepper",
         "option-picker",
         "checkout-flow",
+        "enrollment-flow",
         "date-picker",
         "booking-flow",
         "appointment-list"
@@ -15026,6 +15027,65 @@
       ],
       "example": "import ClassSchedule from \"@/components/ui/ClassSchedule\";\n\n<ClassSchedule />",
       "preview": "/componentes#class-schedule"
+    },
+    {
+      "id": "enrollment-flow",
+      "name": "Solicitud de plaza",
+      "component": "EnrollmentFlow",
+      "import": "import EnrollmentFlow from \"@/components/ui/EnrollmentFlow\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Solicitud de plaza en un curso, programa o viaje por convocatorias: elegir convocatoria (las completas o próximas pasan a lista de espera), los datos con nivel y una pregunta, y la señal para reservar la plaza con pago simulado (validación de tarjeta). Confirma con número de solicitud y la guarda en este navegador. Va con CohortList en la ficha del programa.",
+      "props": [
+        {
+          "key": "deposit",
+          "type": "number",
+          "default": 60,
+          "label": "Señal para reservar (0 = sin pago)",
+          "min": 0,
+          "max": 300
+        },
+        {
+          "key": "question",
+          "type": "text",
+          "default": "¿Qué te gustaría aprender?",
+          "label": "Pregunta abierta"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "`cohorts`: label, dates, status (open, few, soon, closed) y seats. Las soon y closed piden lista de espera, sin pago.",
+        "Para probar el pago: 4242 4242 4242 4242. Ver /inspiraciones/melena/academia y docs/56."
+      ],
+      "example": "import EnrollmentFlow from \"@/components/ui/EnrollmentFlow\";\n\n<EnrollmentFlow />",
+      "preview": "/componentes#enrollment-flow"
     },
     {
       "id": "cohort-list",

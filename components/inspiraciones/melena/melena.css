@@ -100,3 +100,69 @@
   .me-hero h1 { font-size: 16vw; }
   .me-pie__datos { grid-template-columns: 1fr; }
 }
+
+/* ---------- varias páginas (docs/56): cabecera con bolsa y menú del móvil, y páginas interiores ---------- */
+.me-head .ui-fsm__btn--burger { display: none; }
+.me-bolsa { padding: 0; border: 0; background: none; color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
+.me-bolsa:hover { color: var(--acc2); }
+.me-nav a[aria-current="page"] { color: var(--acc2); }
+.me-servicios li a { display: block; transition: color 0.25s; }
+.me-servicios li a:hover h2 { color: var(--acc2); }
+.me-enlace { justify-self: start; border-bottom: 1px solid currentColor; font-size: 15px; }
+.me-enlace:hover { color: var(--acc2); }
+.me-ok { margin: 0; font-size: 15px; }
+.me-boletin small { color: #ffd5bf; }
+
+.me-pag { display: grid; gap: 50px; padding: 60px 4vw 160px; align-content: start; min-height: 100svh; }
+.me-pag__cab h2 { max-width: 20ch; }
+.me-texto { margin: 0; max-width: 40em; font-size: 18px; line-height: 1.7; }
+.me-texto--grande { font-size: 22px; }
+
+.me-equipo { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 40px 24px; }
+.me-equipo li { display: grid; gap: 8px; align-content: start; }
+.me-equipo__inicial { display: grid; place-items: center; width: 120px; aspect-ratio: 1; border-radius: 999px 999px 0 0; background: var(--card); font: 400 64px var(--display); color: var(--acc2); }
+.me-equipo h2 { margin: 6px 0 0; font: 400 34px var(--display); }
+.me-equipo p { margin: 0; }
+.me-opiniones .ui-sh h2 { font-family: var(--display); }
+
+.me-precios { scroll-margin-top: 100px; }
+.me-precios h2 { margin: 0 0 14px; font: 400 clamp(36px, 4vw, 56px) var(--display); }
+.me-precios ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ln); }
+.me-precios li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 28px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--ln); }
+.me-precios li > span:first-child { display: grid; gap: 2px; }
+.me-precios b { font: 400 22px var(--display); }
+.me-precios small { color: var(--mut); font-size: 14px; }
+
+.me-producto { display: grid; gap: 12px; }
+.me-producto .me-pildora { justify-self: stretch; justify-content: center; }
+.me-ficha__rejilla { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5vw; align-items: center; }
+.me-ficha__rejilla img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--card); }
+.me-ficha__rejilla > div { display: grid; gap: 18px; justify-items: start; }
+.me-ficha h1 { margin: 0; font: 400 clamp(40px, 4.4vw, 68px)/1.05 var(--display); }
+.me-ficha__precio { margin: 0; font-size: 22px; }
+.me-ficha__precio s { color: var(--mut); font-size: 16px; }
+
+.me-cursos-lista, .me-blog-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--ln); }
+.me-cursos-lista li { display: grid; gap: 10px; justify-items: start; padding: 34px 0; border-bottom: 1px solid var(--ln); }
+.me-cursos-lista h2, .me-blog-lista h2 { margin: 0; font: 400 clamp(28px, 3vw, 44px)/1.1 var(--display); }
+.me-cursos-lista p, .me-blog-lista p { margin: 0; }
+.me-blog-lista li { border-bottom: 1px solid var(--ln); }
+.me-blog-lista a { display: grid; gap: 8px; padding: 30px 0; }
+.me-blog-lista a:hover h2 { color: var(--acc2); }
+.me-blog-lista small { color: var(--mut); }
+.me-temario { max-width: 760px; }
+.me-post { max-width: 820px; }
+.me-post h1 { margin: 0; font: 400 clamp(40px, 5vw, 76px)/1.05 var(--display); }
+
+.me-flujo { --ui-book-top: 100px; }
+.me-flujo legend, .me-flujo h2, .me-flujo .ui-book__summary h3 { font-family: var(--display); font-weight: 400; }
+.me-flujo .ui-book__summary { background: var(--card); border-top-color: var(--acc2); }
+
+@media (max-width: 760px) {
+  .me-head .ui-fsm__btn--burger { display: inline-flex; }
+  .me-head > .me-pildora, .me-bolsa { display: none; }
+  .me-pag { padding: 40px 16px 160px; gap: 40px; }
+  .me-precios li { grid-template-columns: 1fr auto; }
+  .me-precios .me-enlace { grid-column: 1 / -1; }
+  .me-ficha__rejilla { grid-template-columns: 1fr; }
+}

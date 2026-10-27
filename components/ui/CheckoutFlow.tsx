@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cardError } from "@/lib/commerce/card";
 import type { CartLine } from "@/lib/commerce/cart";
 import { money } from "@/lib/commerce/money";
 import Button from "./Button";
@@ -34,26 +35,6 @@ export type CheckoutFlowProps = {
   onOrder?: (o: CheckoutOrder) => void;
   variant?: Variant;
   className?: string;
-};
-
-/** Luhn: el número de una tarjeta de prueba (4242 4242 4242 4242) pasa; uno tecleado al azar, casi nunca */
-const luhn = (n: string) => {
-  const d = n.replace(/\D/g, "");
-  if (d.length < 13 || d.length > 19) return false;
-  let s = 0;
-  for (let i = 0; i < d.length; i++) {
-    let x = Number(d[d.length - 1 - i]);
-    if (i % 2) x = x * 2 > 9 ? x * 2 - 9 : x * 2;
-    s += x;
-  }
-  return s % 10 === 0;
-};
-const caduca = (v: string) => {
-  const m = /^(\d{2})\s*\/\s*(\d{2})$/.exec(v.trim());
-  if (!m) return false;
-  const mes = Number(m[1]);
-  const fin = new Date(2000 + Number(m[2]), mes, 1);
-  return mes >= 1 && mes <= 12 && fin.getTime() > Date.now();
 };
 
 /**
@@ -136,11 +117,9 @@ export default function CheckoutFlow({
   const pagar = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (pago === "card") {
-      if (tarjeta.holder.trim().length < 2) return setError("Escribe el nombre que aparece en la tarjeta.");
-      if (!luhn(tarjeta.number)) return setError("El número de tarjeta no es válido. Para probar: 4242 4242 4242 4242.");
-      if (!caduca(tarjeta.exp)) return setError("La caducidad va como MM/AA y tiene que ser futura.");
-      if (!/^\d{3,4}$/.test(tarjeta.cvc.trim())) return setError("El CVC son los tres números del dorso.");
+    if (pago === "card" || entrega === "shipping") {
+      const e = cardError(tarjeta);
+      if (e) return setError(e);
     }
     const o: CheckoutOrder = { code: `${orderPrefix}-${String(1000 + ((Date.now() / 1000) % 9000) | 0)}`, total, delivery: entrega, place: entrega === "pickup" ? punto : undefined, name: datos.name.trim(), email: datos.email.trim() };
     setHecho(o);
