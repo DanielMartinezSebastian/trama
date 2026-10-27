@@ -1,0 +1,58 @@
+/* Núcleo (réplica de Core Atelier Pilates, docs/50 §3.4): rosa empolvado #f7e7de, marrón #744c32 y casi negro #25140c;
+   serif con media frase en cursiva (Minion → Cormorant) y una sans limpia; etiquetas en mayúsculas de 13 px. */
+.nc {
+  --bg: #f7e7de; --fg: #25140c; --mut: #7c5a48; --acc: #744c32; --acc2: #25140c; --card: #fbf1ec; --ln: color-mix(in srgb, #25140c 25%, transparent); --r: 0px;
+  --display: var(--font-cormorant-garamond), serif;
+  --nc-sans: var(--font-inter), sans-serif;
+  background: var(--bg); color: var(--fg); font: 400 17px/1.45 var(--nc-sans); overflow-x: clip;
+}
+.nc a { color: inherit; text-decoration: none; }
+.nc h1, .nc h2, .nc h3 { margin: 0; font-family: var(--display); font-weight: 400; letter-spacing: -0.01em; line-height: 0.95; }
+.nc em { font-style: italic; }
+
+.nc-head { position: absolute; inset: 0 0 auto; z-index: 10; display: flex; align-items: center; gap: 40px; padding: 18px 22px; color: #fff; }
+.nc-logo { font: 400 26px var(--display); }
+.nc-head nav { display: flex; gap: 26px; margin: 0 auto; font-size: 13px; }
+.nc-entrar { font-size: 13px; border-bottom: 1px solid currentColor; }
+
+.nc-hero img { display: block; width: 100%; height: 62svh; object-fit: cover; }
+.nc-intro { position: relative; padding: 50px 22px 0; }
+.nc-intro h1 { font-size: clamp(80px, 9vw, 150px); }
+.nc-intro__fila { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 30px; align-items: start; margin-top: -10px; }
+.nc-intro__fila p { margin: 40px 0 0; font-size: 15px; max-width: 46ch; }
+.nc-intro__fila img { width: 100%; height: 420px; object-fit: cover; margin-top: -40px; }
+
+.nc-semi { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 100px 22px; background: var(--acc); color: #fff; }
+.nc-semi h2 { font-size: clamp(54px, 5.6vw, 92px); }
+.nc-semi__txt p { margin: 14px 0 0; font-size: 15px; }
+.nc-aparatos { --fg: #fff; --mut: rgb(255 255 255 / 0.65); --ln: rgb(255 255 255 / 0.35); --acc: #fff; }
+
+.nc-privadas { padding: 100px 22px; background: var(--acc2); color: #fff; }
+.nc-privadas h2 { font-size: clamp(54px, 5.6vw, 92px); margin-bottom: 40px; }
+.nc-privadas__fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.nc-privadas img { width: 100%; aspect-ratio: 3 / 2.6; object-fit: cover; }
+.nc-privadas h3 { margin-top: 16px; font-size: 30px; }
+.nc-privadas p { margin: 8px 0 0; font-size: 13px; max-width: 42ch; opacity: 0.85; }
+
+.nc-reserva { display: grid; gap: 18px; padding: 100px 22px; }
+.nc-reserva h2 { font-size: clamp(54px, 5.6vw, 92px); }
+.nc-reserva > p { margin: 0; font-size: 14px; color: var(--mut); }
+.nc-horario { max-width: 1100px; }
+
+.nc-pie { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 60px 22px; background: var(--acc); color: #fff; font-size: 13px; }
+.nc-pie strong { font: 400 40px var(--display); }
+
+@media (max-width: 760px) {
+  .nc-head nav { display: none; }
+  .nc-intro__fila, .nc-privadas__fila, .nc-pie { grid-template-columns: 1fr; }
+  .nc-intro__fila img { margin-top: 0; height: 300px; }
+}
+/* el acordeón como filas con filete y etiquetas en mayúsculas (Core Atelier) */
+.nc-aparatos .ui-fexp__list { gap: 0; justify-items: stretch; }
+.nc-aparatos .ui-fexp__item, .nc-aparatos .ui-fexp__item[data-on] { width: 100%; background: none; border: 0; border-bottom: 1px solid rgb(255 255 255 / 0.35); border-radius: 0; box-shadow: none; backdrop-filter: none; }
+.nc-aparatos .ui-fexp__pill { padding: 14px 0 10px 24px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase !important; color: rgb(255 255 255 / 0.6); }
+.nc-aparatos .ui-fexp__item[data-on] .ui-fexp__pill { color: #fff; }
+.nc-aparatos .ui-fexp__plus { display: none; }
+.nc-aparatos .ui-fexp__body p { padding: 0 0 18px 24px; font-size: 15px; color: #fff; }
+.nc-intro h1 { position: relative; z-index: 1; }
+.nc-aparatos .ui-fexp { align-items: start; }
