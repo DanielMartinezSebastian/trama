@@ -2,6 +2,10 @@
 
 import { useState, type CSSProperties } from "react";
 import ClassSchedule from "@/components/ui/ClassSchedule";
+import FAQSection from "@/components/ui/FAQSection";
+import LogoCloud from "@/components/ui/LogoCloud";
+import ProductCard from "@/components/ui/ProductCard";
+import RollLink from "@/components/ui/RollLink";
 import "./lobo.css";
 
 /*
@@ -20,6 +24,21 @@ const DISCIPLINAS = [
   { n: "Fitness", img: `${F}pesado.webp` },
   { n: "Recuperación", img: `${F}recovery.webp` },
 ];
+/** banda de foto a sangre en B/N entre secciones, como las de Fenriz */
+const Banda = ({ src }: { src: string }) => (
+  <div className="lb-banda" aria-hidden>
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img src={src} alt="" loading="lazy" />
+  </div>
+);
+
+const TIENDA = [
+  { title: "Camiseta Lobo", price: 25, image: `${F}equipo/nico.webp` },
+  { title: "Sudadera Lobo", price: 55, image: `${F}equipo/dani.webp` },
+  { title: "Gorra Lobo", price: 20, image: `${F}tecnica.webp` },
+  { title: "Bolsa de deporte", price: 45, image: `${F}pesado.webp` },
+];
+
 const EVENTOS = [
   { dia: "Sábados", titulo: "Sparring de boxeo con Luciano", texto: "Sparring de boxeo para gente con experiencia.", tono: "#4b1fd1" },
   { dia: "Domingos", titulo: "Sparring de Muay Thai", texto: "Sparring de Muay Thai para avanzados.", tono: "#c7a400" },
@@ -54,7 +73,7 @@ export default function Lobo() {
         <div className="lb-hero__txt">
           <h1>ARTES MARCIALES.<br />DESDE VALLECAS.<br />CON CARIÑO.</h1>
           <p>Ven a entrenar con nosotros en el corazón de Vallecas. Te espera una comunidad estupenda con entrenadores que saben. Juntos sacamos lo mejor de ti.</p>
-          <a href="#clases" className="lb-boton">Ver las clases</a>
+          <RollLink href="#clases" label="Ver las clases" className="lb-boton" />
         </div>
         <i className="lb-franja" aria-hidden />
       </section>
@@ -77,19 +96,22 @@ export default function Lobo() {
         <div>
           <h2>CLASE DE PRUEBA</h2>
           <p>Reserva una clase de prueba gratis o apúntate a uno de nuestros cursos de iniciación. En la página de la clase de prueba te contamos cómo funciona.</p>
-          <a href="#horario" className="lb-boton">Más sobre la prueba</a>
+          <RollLink href="#horario" label="Más sobre la prueba" className="lb-boton" />
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`${F}tecnica.webp`} alt="" loading="lazy" />
       </section>
 
+      <Banda src={`${F}grupo.webp`} />
       <section className="lb-nosotros" id="nosotros">
         <h2 className="lb-sub">SOBRE NOSOTROS</h2>
         <p>Abrimos en 2010 y desde entonces estamos en la plaza de Vallecas. Empezamos como gimnasio de MMA y con los años nos hemos convertido en la casa de muchos deportes de combate, con foco en MMA, BJJ y Muay Thai.</p>
         <p>Siete días a la semana, el equipo y la comunidad llenan más de 140 clases, y en los tatamis grandes hay sitio para entrenar por tu cuenta o hacer sparring con amigos.</p>
-        <a href="#nosotros" className="lb-boton lb-boton--negro">Saber más</a>
+        <RollLink href="#nosotros" label="Saber más" className="lb-boton lb-boton--negro" />
         <ul className="lb-federaciones" aria-label="Federaciones"><li>FEDERACIÓN DE MUAY THAI</li><li>LIGA MMA</li><li>COPA BJJ</li></ul>
+        <LogoCloud label="Nuestros socios" brands="Federación Madrileña, GEMMAF, AMMAG" variant="minimal" className="lb-socios" />
       </section>
+      <Banda src={`${F}tecnica.webp`} />
 
       <section className="lb-eventos" id="eventos">
         <h2 className="lb-sub">EVENTOS</h2>
@@ -104,7 +126,7 @@ export default function Lobo() {
               </div>
               <small>{e.dia}</small>
               <p>{e.texto}</p>
-              <a href="#eventos" className="lb-boton">Más información</a>
+              <RollLink href="#eventos" label="Más información" className="lb-boton" />
             </article>
           ))}
         </div>
@@ -115,11 +137,39 @@ export default function Lobo() {
         <ClassSchedule classes={HORARIO} layout="week" filters="category" variant="minimal" className="lb-semana" />
       </section>
 
+      <Banda src={`${F}movilidad.webp`} />
+      <section className="lb-faq" id="contacto">
+        <div>
+          <h2 className="lb-sub lb-sub--izq">PREGUNTAS Y CONTACTO</h2>
+          <p>¿Tienes dudas sobre el gimnasio, las clases, la clase de prueba o la cuota? Mira nuestras preguntas frecuentes o escríbenos.</p>
+          <FAQSection kicker="" title="" layout="stack" presentation="lines" align="left" defaultOpen={-1} variant="minimal" className="lb-faq__lista"
+            items={"¿Necesito experiencia?|No. Cada disciplina tiene grupos de inicio.\n¿Qué me llevo a la clase de prueba?|Ropa cómoda, agua y ganas; los guantes te los dejamos.\n¿Puedo congelar la cuota?|Sí, hasta dos meses al año por lesión o viaje."} />
+          <p className="lb-faq__botones"><RollLink href="#contacto" label="Escríbenos" className="lb-boton" /><RollLink href="#contacto" label="E-mail" className="lb-boton" /><RollLink href="#contacto" label="Colaboraciones" className="lb-boton" /></p>
+        </div>
+        <div className="lb-mapa" aria-label="Mapa: Plaza de Vallecas 5"><i aria-hidden /></div>
+      </section>
+
+      <section className="lb-tienda" id="tienda">
+        <h2 className="lb-sub">TIENDA</h2>
+        <p>Ropa y material del Lobo: entrena con la camiseta del barrio.</p>
+        <div className="lb-tienda__rejilla">
+          {TIENDA.map((t) => (
+            <ProductCard key={t.title} {...t} meta="Lobo Gym" ratio="1 / 1" href="#tienda" variant="minimal" />
+          ))}
+        </div>
+        <RollLink href="#tienda" label="A la tienda" className="lb-boton lb-boton--negro" />
+      </section>
+
       <footer className="lb-pie">
         <i className="lb-franja" aria-hidden />
-        <div><strong className="lb-logo">LOBO</strong><p>Plaza de Vallecas 5<br />28031 Madrid</p></div>
-        <div><p>Lunes a domingo<br />07:00 – 23:00</p></div>
-        <div><p>hola@lobo.example<br />Instagram · YouTube</p></div>
+        <strong className="lb-logo">LOBO</strong>
+        <div className="lb-pie__cols">
+          <div><b>DIRECCIÓN</b><p>Lobo Gym<br />Plaza de Vallecas 5<br />28031 Madrid</p></div>
+          <div><b>HORARIO</b><p>L-V 07:00 – 23:00<br />Sábado 10:00 – 20:00<br />Domingo 10:00 – 17:00</p></div>
+          <div><b>SÍGUENOS</b><p>Instagram · Facebook · YouTube</p></div>
+        </div>
+        <nav aria-label="Pie"><a href="#clases">Clases</a><a href="#eventos">Eventos</a><a href="#horario">Precios</a><a href="#horario">Horario</a><a href="#nosotros">Sobre nosotros</a><a href="#tienda">Tienda</a></nav>
+        <small>Aviso legal · Privacidad · © 2026 Lobo Gym</small>
       </footer>
     </div>
   );

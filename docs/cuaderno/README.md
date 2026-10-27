@@ -50,11 +50,11 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 
 - Fichas: [replica-impulso](replica-impulso.md), [replica-lobo](replica-lobo.md), [replica-q47](replica-q47.md), [replica-talla](replica-talla.md), [replica-vive](replica-vive.md), [demo-forja](demo-forja.md)
 - Colores: `#000000` `#ffffff` `#999999` `#bbbbbb` `#e8e8e8` `#1c1c1c` `#ffd53d` `#f5a623` `#e2452b` `#7a3fbf` `#2251d1` `#d3fd50` `#9a9a9a` `#f5f5f5` `#202020` `#cef952` `#fb5607` `#f16538` `#141515` `#34302a`
-- Letras: Inter Tight, Inter, Anton, Archivo, IBM Plex Mono
+- Letras: Inter Tight, Inter, Antonio, Anton, Archivo, IBM Plex Mono
 - Tipografía: titular gigante (5), condensada en mayúsculas (4), espaciado negativo (2), grotesca apretada, grotesca en mayúsculas, máquina de escribir, sans fina
 - Paleta: acento único saturado (4), blanco y negro (3), fondo oscuro (3), degradado de marca, fondo claro
 - Tono: enérgico (4), seguro (2), cercano, comercial, con humor, de barrio, descarado, documental
-- Patrones: cinta de cifras (2), cinta de texto (2), clase de prueba gratis (2), disciplinas en tarjetas de retrato (2), horario de clases (2), píldoras de contorno (2), planes con conmutador (2), barra 3D, barra del proyecto en vista, bordes de sección curvos, carteles a duotono, círculo de llamada
+- Patrones: cinta de cifras (2), cinta de texto (2), clase de prueba gratis (2), disciplinas en tarjetas de retrato (2), horario de clases (2), mapa de clubes (2), píldoras de contorno (2), planes con conmutador (2), preguntas frecuentes (2), bandas de foto, barra 3D, barra del proyecto en vista
 
 ### salón editorial claro
 
@@ -70,7 +70,7 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 
 - Fichas: [replica-cita](replica-cita.md), [replica-patron](replica-patron.md), [replica-raiz](replica-raiz.md), [demo-esparta](demo-esparta.md)
 - Colores: `#ffffff` `#000000` `#ff622b` `#eceae0` `#7e929c` `#757171` `#141618` `#f2f0ed` `#9aa0a6` `#e0b183` `#c98e58` `#eee8db` `#1f2e3a`
-- Letras: Playfair Display, Inter, Space Mono, IBM Plex Mono, Anton, Archivo, Manrope, Instrument Serif
+- Letras: Playfair Display, Inter, Space Mono, IBM Plex Mono, Antonio, Archivo, Manrope, Anton, Instrument Serif
 - Tipografía: titular gigante (3), gótica condensada (2), serif con cursiva (2), grotesca ancha, máquina de escribir
 - Paleta: fondo claro (3), apagada (2), acento metálico, acento único saturado, fondo oscuro
 - Tono: clásico (2), urbano (2), especialista, familiar, lujo discreto, seguro
@@ -124,6 +124,7 @@ Parejas de patrones que aparecen en dos fichas o más.
 |---|---|---|
 | reseñas | titular con palabra en cursiva | [replica-cita](replica-cita.md), [replica-raiz](replica-raiz.md) |
 | disciplinas en tarjetas de retrato | horario de clases | [replica-lobo](replica-lobo.md), [demo-forja](demo-forja.md) |
+| menú lateral | tienda | [replica-lobo](replica-lobo.md), [replica-patron](replica-patron.md) |
 | equipo con fotos | retratos B/N | [replica-matiz](replica-matiz.md), [demo-esparta](demo-esparta.md) |
 | reserva fija | servicios numerados | [replica-melena](replica-melena.md), [replica-raiz](replica-raiz.md) |
 | collage de fotos | equipo en filas | [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md) |
@@ -176,15 +177,15 @@ titular gigante (10) · serif con cursiva (6) · condensada en mayúsculas (5) �
 
 ### Patrones (`patrones`)
 
-horario de clases (6) · cinta de texto (5) · equipo con fotos (5) · testimonios (5) · cinta de cifras (4) · programas por convocatoria (4) · reserva por persona (4) · reserva propia (4) · retratos B/N (4) · carta de servicios (3) · cifras (3) · clase de prueba gratis (3) · disciplinas en tarjetas de retrato (3) · equipo en filas (3) · lista gigante de nombres (3) · menú a pantalla completa (3) · menú lateral (3) · muro de profesores (3) · noticias en rejilla (3) · palabra de fondo (3) · palabra gigante de sección (3) · planes con conmutador (3) · primera clase gratis (3) · reserva fija (3) · sombra dura desplazada (3) · tienda (3) · titular con palabra en cursiva (3) · botones en óvalo (2) · collage de fotos (2) · mosaico de formas (2) · píldoras de contorno (2) · reseñas (2) · sello circular (2) · sellos de valoración (2) · servicios numerados (2) · academia (1) · acordeón con foto fija (1) · antes y después (1) · app con QR (1) · arco detrás del titular (1) · autor como marca fija (1) · barra 3D (1) · barra del proyecto en vista (1) · barra inferior fija (1) · billete troquelado (1) · blog (1) · boletín (1) · bordes de sección curvos (1) · carrusel de tratamientos (1) · carteles a duotono (1) · cinta de compra fija (1) · círculo de llamada (1) · clips verticales (1) · comparación (1) · consulta gratis (1) · damero de fotos y círculos (1) · diplomas (1) · el dueño como marca (1) · enlaces con corchetes (1) · fichas numeradas (1) · filas numeradas (1) · foto a sangre (1) · foto fija (1) · franja de degradado (1) · frase con humor (1) · hora local (1) · horario de apertura (1) · ilustración de línea (1) · lanzamos pronto (1) · letra gigante de líneas (1) · lista de cursos a todo el ancho (1) · lo que no (1) · locales en tarjetas (1) · logos de marcas (1) · logos de socios (1) · manifiesto con retratos (1) · marcos de etiqueta (1) · menú en columnas verticales (1) · menú en isla (1) · muro de la fama (1) · muro de logos (1) · neobrutalismo (1) · nota con estrellas (1) · oferta numerada (1) · origen y familia (1) · palabras gigantes con ilustración (1) · palabras tachadas (1) · pestaña de reseñas fija (1) · pizarra con personajes (1) · portada partida (1) · portada sin scroll (1) · preguntas frecuentes (1) · principios con foto (1) · producto fijo (1) · prueba social (1) · razones en tarjetas (1) · recuadros con borde (1) · reel de vídeo (1) · rejilla de proyectos (1) · rejilla de trabajos (1) · reserva externa (1) · reserva por salón (1) · reserva por WhatsApp (1) · sala de exposición (1) · servicios con óvalo central (1) · talleres (1) · tarifas en tarjetas (1) · tarjetas de sesión (1) · tarjetas ladeadas (1) · tarjetas solapadas (1) · tira de instagram (1) · titular a todo el ancho (1) · titular gigante (1) · ventajas con foto (1) · vídeo en el titular (1) · vídeo que crece (1)
+horario de clases (6) · cinta de texto (5) · equipo con fotos (5) · testimonios (5) · cinta de cifras (4) · programas por convocatoria (4) · reserva por persona (4) · reserva propia (4) · retratos B/N (4) · tienda (4) · carta de servicios (3) · cifras (3) · clase de prueba gratis (3) · disciplinas en tarjetas de retrato (3) · equipo en filas (3) · lista gigante de nombres (3) · menú a pantalla completa (3) · menú lateral (3) · muro de profesores (3) · noticias en rejilla (3) · palabra de fondo (3) · palabra gigante de sección (3) · planes con conmutador (3) · preguntas frecuentes (3) · primera clase gratis (3) · reserva fija (3) · sombra dura desplazada (3) · titular con palabra en cursiva (3) · botones en óvalo (2) · collage de fotos (2) · mapa de clubes (2) · mosaico de formas (2) · píldoras de contorno (2) · reseñas (2) · sello circular (2) · sellos de valoración (2) · servicios numerados (2) · academia (1) · acordeón con foto fija (1) · antes y después (1) · app con QR (1) · arco detrás del titular (1) · autor como marca fija (1) · bandas de foto (1) · barra 3D (1) · barra del proyecto en vista (1) · barra inferior fija (1) · billete troquelado (1) · blog (1) · boletín (1) · bordes de sección curvos (1) · carrusel de tratamientos (1) · carteles a duotono (1) · cinta de compra fija (1) · círculo de llamada (1) · clips verticales (1) · comparación (1) · consulta gratis (1) · damero de fotos y círculos (1) · diplomas (1) · el dueño como marca (1) · enlaces con corchetes (1) · fichas numeradas (1) · filas numeradas (1) · final en negro (1) · formulario de contacto (1) · foto a sangre (1) · foto en el titular (1) · foto fija (1) · franja de degradado (1) · frase con humor (1) · hora local (1) · horario de apertura (1) · ilustración de línea (1) · lanzamos pronto (1) · letra gigante de líneas (1) · lista con foto fija (1) · lista de cursos a todo el ancho (1) · lo que no (1) · locales en tarjetas (1) · logos de marcas (1) · logos de socios (1) · manifiesto con retratos (1) · marcos de etiqueta (1) · menú en columnas verticales (1) · menú en isla (1) · muro de la fama (1) · muro de logos (1) · neobrutalismo (1) · nota con estrellas (1) · oferta numerada (1) · origen y familia (1) · palabras gigantes con ilustración (1) · palabras tachadas (1) · pestaña de reseñas fija (1) · pie con foto (1) · pie con lema (1) · pizarra con personajes (1) · portada partida (1) · portada sin scroll (1) · principios con foto (1) · producto fijo (1) · prueba social (1) · razones en tarjetas (1) · recuadros con borde (1) · reel de vídeo (1) · rejilla de proyectos (1) · rejilla de trabajos (1) · reserva externa (1) · reserva por salón (1) · reserva por WhatsApp (1) · sala de exposición (1) · servicios con óvalo central (1) · talleres (1) · tarifas en tarjetas (1) · tarjetas de sesión (1) · tarjetas ladeadas (1) · tarjetas solapadas (1) · tira de instagram (1) · titular a todo el ancho (1) · titular gigante (1) · ventajas con foto (1) · vídeo en el titular (1) · vídeo que crece (1)
 
 ### Movimiento (`movimiento`)
 
-cinta que corre (8) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · menú que cae (1) · palabras que asoman (1) · producto fijo (1) · scroll suavizado (1) · texto que rueda (1) · titular que cruza (1) · vídeos que se suceden (1)
+cinta que corre (8) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · scroll suavizado (2) · texto que rueda (2) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · menú que cae (1) · palabras que asoman (1) · producto fijo (1) · titular que cruza (1) · vídeos que se suceden (1)
 
 ### Piezas del kit (`piezas`)
 
-TeamSection (8) · Marquee (7) · PricingSection (7) · ClassSchedule (5) · SectionHeader (4) · CohortList (3) · FAQSection (3) · FullscreenMenu (3) · LineDraw (3) · OpeningHours (3) · QRCode (3) · ActionBar (2) · Chart (2) · DatePicker (2) · LogoCloud (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · GradientField (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · ProductCard (1) · ProjectList (1) · RollLink (1) · ScrollExpand (1) · SmoothScroll (1) · viewTransitions (1)
+TeamSection (8) · Marquee (7) · PricingSection (7) · ClassSchedule (5) · FAQSection (5) · SectionHeader (4) · CohortList (3) · FullscreenMenu (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · ActionBar (2) · Chart (2) · DatePicker (2) · ProductCard (2) · RollLink (2) · ShapeMosaic (2) · SmoothScroll (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · ContactForm (1) · DeviceMockup (1) · FeatureExplorer (1) · GradientField (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
@@ -199,9 +200,9 @@ Con tres etiquetas o más en común (sin contar piezas).
 - [pieza-team-section](pieza-team-section.md): replica-matiz (3), replica-nura (3), demo-esparta (3), demo-hebra (3)
 - [replica-abuela-rosa](replica-abuela-rosa.md): replica-patron (4), replica-q47 (4), replica-impulso (3), replica-talla (3), replica-vive (3)
 - [replica-ahora](replica-ahora.md): replica-oficio (5), replica-nura (4), replica-remada (4)
-- [replica-cita](replica-cita.md): demo-esparta (5), replica-patron (4), replica-raiz (4), replica-impulso (3), replica-q47 (3)
-- [replica-impulso](replica-impulso.md): replica-vive (7), demo-forja (6), replica-q47 (5), replica-talla (5), replica-lobo (4)
-- [replica-lobo](replica-lobo.md): demo-forja (7), replica-impulso (4), replica-talla (4), replica-vive (4)
+- [replica-cita](replica-cita.md): replica-impulso (5), demo-esparta (5), replica-patron (4), replica-raiz (4), replica-q47 (3)
+- [replica-impulso](replica-impulso.md): replica-vive (7), replica-lobo (6), demo-forja (6), replica-cita (5), replica-q47 (5)
+- [replica-lobo](replica-lobo.md): demo-forja (7), replica-impulso (6), replica-vive (5), replica-talla (4)
 - [replica-matiz](replica-matiz.md): demo-hebra (7), replica-melena (5), replica-nura (4), replica-nucleo (3), demo-esparta (3)
 - [replica-melena](replica-melena.md): demo-hebra (6), replica-matiz (5), replica-raiz (4), replica-nucleo (3), replica-nura (3)
 - [replica-nucleo](replica-nucleo.md): demo-cadencia (7), replica-matiz (3), replica-melena (3), demo-hebra (3)
@@ -212,7 +213,7 @@ Con tres etiquetas o más en común (sin contar piezas).
 - [replica-raiz](replica-raiz.md): replica-cita (4), replica-melena (4), demo-hebra (3)
 - [replica-remada](replica-remada.md): replica-oficio (7), replica-ahora (4)
 - [replica-talla](replica-talla.md): replica-vive (7), demo-forja (6), replica-impulso (5), replica-lobo (4), replica-patron (4)
-- [replica-vive](replica-vive.md): demo-forja (8), replica-impulso (7), replica-talla (7), demo-cadencia (5), replica-lobo (4)
+- [replica-vive](replica-vive.md): demo-forja (8), replica-impulso (7), replica-talla (7), replica-lobo (5), demo-cadencia (5)
 - [demo-cadencia](demo-cadencia.md): replica-nucleo (7), replica-vive (5), demo-forja (5), demo-hebra (4), replica-impulso (3)
 - [demo-esparta](demo-esparta.md): replica-patron (11), replica-cita (5), replica-talla (4), demo-forja (4), replica-impulso (3)
 - [demo-forja](demo-forja.md): replica-vive (8), replica-lobo (7), replica-impulso (6), replica-talla (6), demo-cadencia (5)

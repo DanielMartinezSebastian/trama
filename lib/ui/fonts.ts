@@ -57,13 +57,15 @@ export const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geis
 /**
  * Fuentes de las guías de estilo (`lib/ui/guides.ts`, docs/16 §5.2): alternativas libres (OFL) a las familias que más se repiten en
  * las webs premiadas. Anton = condensada deportiva (Brier de Lando Norris, Anton de Nick Ho); Mona Sans = grotesca variable de Lando
- * Norris; Onest = geométrica con carácter (Google Sans, Aeonik); Archivo con eje de anchura = extendida para chips (Monument
+ * Norris; Antonio = condensada variable 100–700 (FIT AND YOU, y alternativa con pesos a Pilat Condensed o Kenyan Coffee:
+ * docs/cuaderno/replica-vive.md); Onest = geométrica con carácter (Google Sans, Aeonik); Archivo con eje de anchura = extendida para chips (Monument
  * Extended); Gloock = serifa display de contraste (Canela, Editorial New); Martian Mono = mono técnica (PP Supply, Proto Mono).
  * Sin precarga. Switzer y General Sans (Fontshare) no viven aquí: su licencia no deja redistribuir los archivos (ver guides.ts).
  */
-import { Anton, Archivo, Gloock, Martian_Mono, Mona_Sans, Onest } from "next/font/google";
+import { Anton, Antonio, Archivo, Gloock, Martian_Mono, Mona_Sans, Onest } from "next/font/google";
 
 export const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap", preload: false });
+export const antonio = Antonio({ subsets: ["latin"], variable: "--font-antonio", display: "swap", preload: false });
 export const monaSans = Mona_Sans({ subsets: ["latin"], variable: "--font-mona-sans", display: "swap", preload: false });
 export const onest = Onest({ subsets: ["latin"], variable: "--font-onest", display: "swap", preload: false });
 export const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap", preload: false });
@@ -141,7 +143,7 @@ export const rubikBrokenFax = Rubik_Broken_Fax({ weight: "400", subsets: ["latin
 export const fontVariables = [
   inter, manrope, spaceGrotesk, syne, fraunces, instrumentSerif, jetbrainsMono, spaceMono,
   interTight, instrumentSans, geist, schibstedGrotesk, bricolageGrotesque, newsreader, bodoniModa, cormorantGaramond, playfairDisplay, geistMono,
-  anton, monaSans, onest, archivo, gloock, martianMono,
+  anton, antonio, monaSans, onest, archivo, gloock, martianMono,
   ibmPlexMono, shareTechMono, majorMonoDisplay,
   pressStart2P, vt323, geistPixel, jersey25, pixelifySans, dotGothic16,
   silkscreen, bitcountSingle, jersey10, doto, tiny5, bitcountPropSingle,

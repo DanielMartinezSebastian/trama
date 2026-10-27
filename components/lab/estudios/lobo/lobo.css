@@ -69,3 +69,48 @@
   .lb-prueba, .lb-carteles, .lb-pie { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .lb-menu, .lb-disc img { transition: none; } }
+
+/* medidas de Fenriz con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-lobo.md): Kenyan Coffee 700 →
+   Antonio 700; titular 120 px (8,4 vw)/1; secciones 90 px; disciplinas 55 px; texto Roboto 300 a 16/1,4 (Inter 300);
+   margen 144 px (10 vw); bandas de foto B/N a sangre entre secciones; socios, preguntas y contacto con mapa, tienda y el
+   pie oscuro centrado */
+.lb { --lb-cond: var(--font-antonio), var(--font-anton), sans-serif; font-size: 16px; line-height: 1.4; }
+.lb h1, .lb h2, .lb h3 { font-weight: 700; text-transform: uppercase; }
+.lb-hero h1 { font-size: 8.4vw; line-height: 1; }
+.lb-sub { font-size: 90px; line-height: 1; }
+.lb-hero, .lb-prueba, .lb-faq { padding-inline: 10vw; }
+.lb p { font-size: 16px; line-height: 1.4; }
+.lb-boton { font-size: 14px; padding: 14px 20px; transition: background-color 0.2s, color 0.2s, transform 0.2s; }
+.lb-boton:hover { background: #000; color: #fff !important; transform: translateY(-2px); }
+.lb-banda { height: 70svh; overflow: hidden; }
+.lb-banda img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); }
+.lb-socios { margin-top: 60px; }
+.lb-faq { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; padding-block: 120px; background: #1c1c1c; color: #e8e8e8; --fg: #e8e8e8; --mut: #aaa; --ln: rgba(255, 255, 255, 0.2); }
+.lb-sub--izq { text-align: left; }
+.lb-faq__botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.lb-mapa { position: relative; min-height: 360px; background: #eee; background-image: linear-gradient(115deg, transparent 47%, #fff 47% 50%, transparent 50%), linear-gradient(25deg, transparent 60%, #fff 60% 62%, transparent 62%), linear-gradient(#e4e4e4 1px, transparent 1px), linear-gradient(90deg, #e4e4e4 1px, transparent 1px); background-size: auto, auto, 40px 40px, 40px 40px; }
+.lb-mapa i { position: absolute; left: 52%; top: 44%; width: 18px; height: 18px; border-radius: 50% 50% 50% 0; background: #1c1c1c; rotate: -45deg; }
+.lb-tienda { display: grid; justify-items: center; gap: 30px; padding: 120px 10vw; text-align: center; }
+.lb-tienda__rejilla { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; width: 100%; text-align: left; }
+.lb-pie { display: grid; justify-items: center; gap: 30px; padding: 0 10vw 40px; background: #1c1c1c; color: #e8e8e8; text-align: center; }
+.lb-pie .lb-franja { justify-self: stretch; }
+.lb-pie__cols { display: grid; grid-template-columns: repeat(3, auto); gap: 60px; text-align: left; font-size: 14px; }
+.lb-pie nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; font: 700 13px var(--lb-sans); text-transform: uppercase; }
+.lb-pie small { color: #888; font-size: 12px; }
+@media (max-width: 760px) {
+  .lb-hero h1 { font-size: 13vw; }
+  .lb-sub { font-size: 15vw; }
+  .lb-hero, .lb-prueba, .lb-faq, .lb-tienda, .lb-pie { padding-inline: 16px; }
+  .lb-faq { grid-template-columns: 1fr; }
+  .lb-tienda__rejilla { grid-template-columns: 1fr 1fr; }
+  .lb-pie__cols { grid-template-columns: 1fr; gap: 20px; }
+  .lb-banda { height: 40svh; }
+}
+.lb-boton:hover { background: #fff; color: #000 !important; transform: none; }
+.lb-boton--negro:hover { background: #000; color: #fff !important; }
+.lb-hero__txt { max-width: none; }
+.lb-hero h1 { white-space: nowrap; }
+@media (max-width: 760px) { .lb-hero h1 { white-space: normal; } }
+.lb-hero__txt p { max-width: 27em; }
+.lb-boton { border: 1px solid transparent; }
+.lb-boton:hover { color: var(--acc) !important; border-color: currentColor; }

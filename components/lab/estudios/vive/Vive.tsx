@@ -106,17 +106,45 @@ export default function Vive() {
           kicker="Membresías"
           title="ELIGE TU PLAN"
           subtitle="Sin matrícula. Acceso a los cuatro clubes."
-          plans={"Básico|50 €|/ mes|no|Sala sin entrenador;Vestuarios|Para empezar\nClub|90 €|/ mes|si|Sala;Clases en grupo;Spa una vez al mes|El más elegido\nPremium|120 €|/ mes|no|Todo lo anterior;Estudio exclusivo;Spa sin límite|Para ir a por todas\nPersonal|150 €|/ mes|no|Todo lo anterior;4 sesiones de entrenador personal|A tu medida"}
+          plans={"[1] Básico|50 €|/ mes|no|Sala sin entrenador;Vestuarios;Acceso a los cuatro clubes|Para empezar\n[2] Club|90 €|/ mes|no|Sala;Clases en grupo;Spa una vez al mes|El más elegido\n[3] Todo incluido|120 €|/ mes|si|Todo lo anterior;Estudio exclusivo;Spa sin límite|Para ir a por todas\n[4] Exclusivo|150 €|/ mes|no|Todo lo anterior;4 sesiones de entrenador personal|A tu medida"}
           variant="minimal"
-          cta="Únete [+]"
+          cta="Compra [+]"
+          badge=""
+          highlight="invert"
           className="vv-precios"
         />
       </section>
 
-      <footer className="vv-pie" id="clubes">
-        <div><b>4 CLUBES</b><p>Castellana · Retiro · Arganzuela · Pozuelo</p></div>
-        <div><p>De 6:00 a 23:00 · todos los días</p><p>© 2026 Vive Club. Todos los derechos reservados.</p></div>
-        <a href="#planes" className="vv-unete">Únete [+]</a>
+      {/* el final de FIT AND YOU: el club más cercano en un mapa, «pon tu forma física primero» con una foto en la línea,
+          el círculo «únete» y el pie «tú tienes el control» */}
+      <section className="vv-mapa" id="clubes">
+        <h2>ENCUENTRA<br />TU CLUB<br />MÁS CERCANO</h2>
+        <div className="vv-mapa__plano" aria-label="Mapa de los cuatro clubes">
+          {[[22, 30], [48, 58], [64, 26], [78, 70]].map(([x, y], i) => (
+            <i key={i} style={{ left: `${x}%`, top: `${y}%` }} aria-hidden />
+          ))}
+          <div className="vv-mapa__ficha">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${F}sala.webp`} alt="" />
+            <p><b>VIVE CASTELLANA</b><br />Paseo de la Castellana 120, Madrid<br />castellana@vive.example</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="vv-primero">
+        <h2>PON TU <span className="vv-primero__foto" style={{ backgroundImage: `url(${C}fuerza.webp)` }} aria-hidden /> FORMA<br />FÍSICA PRIMERO <span className="vv-naranja">HOY</span></h2>
+        <a href="#planes" className="vv-bola vv-bola--fin">ÚNETE [+]</a>
+      </section>
+
+      <footer className="vv-pie">
+        <div className="vv-pie__nav">
+          <a href="#inicio" className="vv-logo">VIVE<span>●</span></a>
+          <nav aria-label="Pie"><a href="#clases">Clases</a><a href="#ventajas">Ventajas</a><a href="#planes">Membresías</a><a href="#clubes">Clubes</a></nav>
+          <nav aria-label="Redes"><a href="#inicio">TikTok</a><a href="#inicio">Facebook</a><a href="#inicio">Instagram</a></nav>
+          <a href="#inicio" className="vv-arriba" aria-label="Volver arriba">↑</a>
+        </div>
+        <p className="vv-pie__lema">TÚ TIENES EL CONTROL</p>
+        <div className="vv-pie__legal"><span>Castellana · Retiro · Arganzuela · Pozuelo · de 6:00 a 23:00</span><span>© 2026 Vive Club</span></div>
       </footer>
     </div>
   );

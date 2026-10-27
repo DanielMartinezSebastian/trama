@@ -77,3 +77,46 @@
 .tl-precios .ui-price, .tl-precios .ui-price * { color: var(--fg); }
 .tl-precios .ui-price li::marker, .tl-precios .ui-price svg { color: #8cae1f; }
 .tl-pie { --fg: #f5f5f5; --mut: #a9a9a9; --ln: #3a3a3a; }
+
+/* medidas de Skulpt con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-talla.md): Pilat Condensed 800 →
+   Antonio 700 (Anton es de un solo peso); titular 122 px (8,5 vw)/1; ventajas 49 px; oferta 98 px; texto 22/1,5 en
+   columnas de 21 em, tarjetas 18/1,4; el botón «prueba gratis» en píldora grande con 5 % de espaciado; sin sombras; al
+   final, el bloque oscuro curvo con la cinta lima y el formulario */
+.tl { --tl-cond: var(--font-antonio), var(--font-anton), sans-serif; }
+.tl h1, .tl h2, .tl h3, .tl-logo, .tl-prueba, .tl-cinta { font-weight: 700 !important; }
+.tl-hero h1 { font-size: 8.5vw; line-height: 1; }
+.tl-hero p { font-size: 22px; line-height: 1.5; max-width: 21em; }
+.tl-ventajas figcaption { font-size: 49px; line-height: 1.2; }
+.tl-oferta h3, .tl-oferta b { font-size: 6.8vw; line-height: 1; }
+.tl-oscuro p { font-size: 22px; line-height: 1.5; max-width: 33em; }
+.tl-planes p, .tl-hyrox p { font-size: 18px; line-height: 1.4; }
+.tl-prueba { padding: 18px 34px; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; transition: background-color 0.2s, color 0.2s; }
+.tl-prueba:hover { background: var(--acc2); color: var(--acc) !important; }
+.tl * { box-shadow: none !important; }
+.tl-contacto { margin-top: 80px; padding: 70px 0 90px; border-radius: 50% 50% 0 0 / 60px 60px 0 0; background: var(--acc2); color: #f5f5f5; }
+.tl-contacto__cinta { color: var(--acc); font: 700 clamp(46px, 5vw, 80px)/1 var(--tl-cond) !important; text-transform: uppercase; }
+.tl-contacto__cuerpo { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; padding: 60px 24px 0; }
+.tl-contacto__cuerpo p { max-width: 21em; font-size: 22px; line-height: 1.5; }
+.tl-form { --fg: #f5f5f5; --mut: #aaa; --ln: rgba(255, 255, 255, 0.3); --acc: #cef952; --bg: #202020; }
+.tl-form h2 { font-size: 32px !important; }
+@media (max-width: 760px) {
+  .tl-hero h1 { font-size: 13vw; }
+  .tl-contacto__cuerpo { grid-template-columns: 1fr; gap: 30px; padding-inline: 16px; }
+  .tl-oferta h3, .tl-oferta b { font-size: 12vw; }
+}
+/* oferta como la de Skulpt: filas de 98 px (6,8 vw) con mucho aire y, a la derecha, la foto del servicio con su número */
+.tl-oferta { grid-template-columns: 1.3fr 0.7fr; gap: 40px; align-items: start; padding: 140px 24px 160px 8%; }
+.tl-oferta__lista { display: grid; }
+.tl-oferta a { padding: 70px 0 26px; font: 700 6.8vw/1 var(--tl-cond); color: #9a9a9a; transition: color 0.2s; }
+.tl-oferta a.is-on, .tl-oferta a:hover { color: var(--fg); }
+.tl-oferta small { font-weight: 700; color: inherit; }
+.tl-oferta__foto { position: sticky; top: 120px; margin: 0; }
+.tl-oferta__foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1); animation: tl-entra 0.4s ease; }
+@keyframes tl-entra { from { opacity: 0.3; } }
+.tl-oferta__foto b { position: absolute; right: 10px; bottom: -6px; font: 700 7vw/1 var(--tl-cond); color: #fff; }
+.tl-planes .ui-pricing li, .tl-planes .ui-pricing p, .tl-contacto__cuerpo p { font-size: 18px; line-height: 1.4; }
+@media (max-width: 760px) {
+  .tl-oferta { grid-template-columns: 1fr; padding: 80px 16px; }
+  .tl-oferta a { font-size: 12vw; padding-top: 30px; }
+  .tl-oferta__foto { position: static; }
+}

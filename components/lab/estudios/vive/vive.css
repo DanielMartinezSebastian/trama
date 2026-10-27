@@ -85,3 +85,57 @@
 @media (prefers-reduced-motion: reduce) { .vv-cifras__pista { animation: none; } }
 .vv-precios .ui-pricing__grid { max-width: none; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 760px) { .vv-precios .ui-pricing__grid { grid-template-columns: 1fr; } }
+
+/* medidas de FIT AND YOU con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-vive.md): Antonio 700 en
+   mayúsculas a 158 px (11 vw)/0,94 con −6 % (Anton tiene un solo peso y no la iguala); margen 17 px; la isla con los
+   enlaces en Antonio 16 px 700 que se vuelven píldora al pasar, y «únete [+]» que se rellena y crece; planes en tarjetas
+   oscuras con la esquina doblada en naranja; al final, el mapa, «pon tu forma física primero» y el pie */
+.vv { --vv-cond: var(--font-antonio), var(--font-anton), sans-serif; }
+.vv h1, .vv h2, .vv h3 { font-weight: 700; letter-spacing: -0.06em; line-height: 0.94; }
+.vv-hero h1, .vv-memb h2, .vv-clases h2, .vv-ventajas h2, .vv-primero h2, .vv-mapa h2 { font-size: 11vw; }
+.vv-cifras { font-family: var(--vv-cond); font-weight: 700; letter-spacing: -0.06em; }
+.vv-head { padding: 16px 17px; }
+.vv-isla { gap: 0; padding: 4px; font: 700 16px/1.2 var(--vv-cond); }
+.vv-isla a { padding: 9px 18px; border: 1px solid transparent; border-radius: 1px; transition: background-color 0.25s, color 0.25s, border-radius 0.25s; }
+.vv-isla a:hover { background: #fff; color: #000; border-radius: 999px; }
+.vv-unete { padding: 9px 14px; border: 1px solid transparent; border-radius: 100px; font: 700 16px var(--vv-cond); letter-spacing: -0.02em; text-transform: uppercase; transition: background-color 0.25s, padding 0.25s, color 0.25s; }
+.vv-unete:hover { background: var(--acc); color: #fff !important; padding-inline: 24px; }
+.vv-logo { font-weight: 700; }
+
+.vv-precios .ui-pricing__grid > * { position: relative; background: #1b1b1b; border: 0; clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%); }
+.vv-precios .ui-pricing__grid > *::after { content: ""; position: absolute; top: 0; right: 0; width: 28px; height: 28px; background: linear-gradient(225deg, transparent 50%, var(--acc) 50%); }
+.vv-precios .ui-pricing__grid > [data-highlight], .vv-precios .ui-pricing__grid > .is-highlight { background: #fff; color: #000; }
+
+.vv-mapa { display: grid; grid-template-columns: 0.8fr 1.6fr; gap: 20px; padding: 80px 17px; }
+.vv-mapa h2 { font-size: 5vw !important; }
+.vv-mapa__plano { position: relative; min-height: 70svh; border-radius: 6px; background: #111 radial-gradient(circle at 30% 40%, #1d1d1d, transparent 60%); background-image: linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px); background-size: 48px 48px; overflow: hidden; }
+.vv-mapa__plano i { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 8px rgb(251 86 7 / 0.25); translate: -50% -50%; }
+.vv-mapa__ficha { position: absolute; left: 24px; bottom: 24px; display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; max-width: 420px; padding: 12px; background: #1b1b1b; font-size: 12px; }
+.vv-mapa__ficha img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.vv-mapa__ficha p { margin: 0; }
+
+.vv-primero { display: grid; gap: 60px; justify-items: center; padding: 120px 17px 160px; }
+.vv-primero h2 { text-align: center; }
+.vv-primero__foto { display: inline-block; width: 1.6em; height: 0.78em; vertical-align: -0.04em; background-size: cover; background-position: center; filter: grayscale(1); }
+.vv-bola--fin { position: static !important; width: 280px; height: 280px; }
+
+.vv-pie { display: grid; gap: 30px; padding: 30px 17px 24px; border-top: 1px solid var(--ln); }
+.vv-pie__nav { display: grid; grid-template-columns: auto 1fr auto auto; gap: 30px; align-items: center; }
+.vv-pie__nav nav { display: flex; gap: 22px; font: 700 14px var(--vv-cond); text-transform: uppercase; }
+.vv-arriba { display: grid; place-items: center; width: 54px; height: 54px; background: var(--acc); font-size: 22px; }
+.vv-pie__lema { margin: 0; font: 700 6vw/0.9 var(--vv-cond); letter-spacing: -0.06em; }
+.vv-pie__legal { display: flex; justify-content: space-between; font-size: 11px; color: var(--mut); }
+@media (max-width: 760px) {
+  .vv-hero h1, .vv-memb h2, .vv-clases h2, .vv-ventajas h2, .vv-primero h2 { font-size: 15vw; }
+  .vv-mapa { grid-template-columns: 1fr; }
+  .vv-mapa h2 { font-size: 12vw !important; }
+  .vv-pie__nav { grid-template-columns: 1fr auto; }
+  .vv-pie__nav nav { flex-wrap: wrap; gap: 10px 16px; }
+  .vv-pie__lema { font-size: 13vw; }
+  .vv-bola--fin { width: 200px; height: 200px; }
+}
+.vv-isla a:hover { border-color: #fff; }
+.vv-unete:hover { border-color: var(--acc); }
+@media (max-width: 760px) { .vv-head, .vv-mapa, .vv-primero, .vv-pie, .vv-planes, .vv-clases, .vv-memb { padding-inline: 21px; } }
+/* el plan destacado es blanco con texto negro, como en el original (el relleno oscuro común lo había apagado) */
+.vv-precios .ui-price--hl { --fg: #000; --mut: #555; --bg: #fff; --acc: #fb5607; background: #fff !important; color: #000; }

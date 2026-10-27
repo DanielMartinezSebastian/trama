@@ -92,3 +92,29 @@
   .pt-nav { gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .pt-menu__panel, .pt-menu__foto { transition: none; } }
+
+/* medidas de Don Barber con refs:probe --par (27-10-2026, docs/cuaderno/replica-patron.md): la gótica condensada de Don
+   (PF Grand Gothik Compressed) es más ligera que Anton: Antonio 500 en blanco, 6,9 vw/0,8 (17,9 vw en móvil); la cinta
+   corre al pie de la columna derecha dentro de la primera pantalla; margen de 44 px */
+.pt { --pt-cond: var(--font-antonio), var(--font-anton), sans-serif; }
+.pt-servicios { left: 44px; }
+.pt-servicios a { font-size: 6.9vw; line-height: 0.8; font-weight: 500; color: #fff; }
+.pt-logo { left: 44px; font-weight: 500; }
+.pt-lado { position: relative; }
+.pt-cinta--portada { position: absolute; left: 0; right: 0; bottom: 0; background: none; }
+@media (max-width: 760px) {
+  .pt-servicios { left: 20px; }
+  .pt-servicios a { font-size: 17.9vw; }
+  .pt-logo { left: 20px; }
+  .pt-cinta--portada { position: static; }
+}
+/* los servicios en español son más largos que en inglés: una línea cada uno, sin montarse (Antonio tiene más altura de
+   ascendentes que la gótica de Don); la cinta en negro como la de Don */
+.pt-servicios a { font-size: 5.3vw; line-height: 0.92; font-weight: 600; white-space: nowrap; letter-spacing: -0.01em; }
+.pt-cinta--portada { color: #000; font-size: 2.2vw !important; }
+@media (max-width: 760px) { .pt-servicios a { font-size: 12.4vw; } }
+.pt-servicios a { font-size: 6.6vw; line-height: 0.85; font-weight: 400; letter-spacing: 0; }
+@media (max-width: 760px) { .pt-servicios a { font-size: 15vw; white-space: normal; line-height: 0.88; } }
+.pt-servicios a { line-height: 0.82; }
+/* Antonio tiene las mayúsculas más altas que la gótica de Don: a 0,8 se montan; 0,92 es su equivalente visual */
+.pt-servicios a { line-height: 0.92; }

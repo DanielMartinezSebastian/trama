@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ContactForm from "@/components/ui/ContactForm";
 import Marquee from "@/components/ui/Marquee";
 import OpeningHours from "@/components/ui/OpeningHours";
 import PricingSection from "@/components/ui/PricingSection";
@@ -16,7 +17,15 @@ import "./talla.css";
 const F = "/img/forja/";
 const C = "/img/cadencia/";
 
+const OFERTA = [
+  { t: "FITNESS", img: "/img/forja/sala.webp" },
+  { t: "ENTRENAMIENTO PERSONAL", img: "/img/forja/tecnica.webp" },
+  { t: "CLASES EN GRUPO", img: "/img/forja/grupo.webp" },
+  { t: "HYROX", img: "/img/forja/cardio.webp" },
+];
+
 export default function Talla() {
+  const [of, setOf] = useState(0);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
     if (!menu) return;
@@ -74,9 +83,16 @@ export default function Talla() {
       </section>
 
       <section className="tl-oferta">
-        {["FITNESS", "ENTRENAMIENTO PERSONAL", "CLASES EN GRUPO"].map((o, i) => (
-          <a key={o} href="#planes"><small>0{i + 1}</small>{o}</a>
-        ))}
+        <div className="tl-oferta__lista">
+          {OFERTA.map((o, i) => (
+            <a key={o.t} href="#planes" onPointerEnter={() => setOf(i)} onFocus={() => setOf(i)} className={of === i ? "is-on" : ""}><small>0{i + 1}</small>{o.t}</a>
+          ))}
+        </div>
+        <figure className="tl-oferta__foto" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img key={OFERTA[of].img} src={OFERTA[of].img} alt="" />
+          <b>0{of + 1}</b>
+        </figure>
       </section>
 
       <section className="tl-planes" id="planes">
@@ -100,6 +116,18 @@ export default function Talla() {
         <div className="tl-hyrox">
           <article><b>HYROX BÁSICO</b><p>Entrena en grupos pequeños con nuestros coaches para tu primera carrera.</p><span>40 € / mes</span></article>
           <article><b>HYROX PREMIUM</b><p>Grupo pequeño, plan individual y sesión mensual de técnica.</p><span>58 € / mes</span></article>
+        </div>
+      </section>
+
+      {/* el final de Skulpt: sección oscura de borde curvo con la cinta lima «¿quieres saber más?» y el formulario */}
+      <section className="tl-contacto" id="contacto">
+        <Marquee variant="minimal" text="¿QUIERES SABER MÁS?" separator=" " rows={1} duration={22} className="tl-contacto__cinta" />
+        <div className="tl-contacto__cuerpo">
+          <div>
+            <p>¿Te apetece pasarte o quieres preguntar algo? Escríbenos y te contamos todo lo que quieras saber, sin compromiso.</p>
+            <a href="#planes" className="tl-prueba">Clase de prueba gratis</a>
+          </div>
+          <ContactForm title="Escríbenos para saber más" subtitle="" submitLabel="Enviar" successMessage="Gracias, te escribimos pronto." variant="minimal" className="tl-form" />
         </div>
       </section>
 

@@ -86,3 +86,47 @@
   .ci-locales__rejilla, .ci-papel__rejilla { grid-template-columns: 1fr 1fr; }
   .ci-resena { grid-template-columns: 1fr; }
 }
+
+/* medidas de Rendezvous con refs:probe --par y la sonda (27-10-2026, docs/cuaderno/replica-cita.md): titular 124 px
+   (8,6 vw)/0,95 a −5,2 %; frase en cursiva 300 a 140 px (9,7 vw)/0,95, −6,3 %; gigantes en cursiva 340 px (23,6 vw)/0,8,
+   −6,1 %; locales en cursiva 40 px; reseñas 20/1,2 con el nombre en naranja cursiva; datos en máquina de escribir 16 px
+   300; al final, todo en negro: preguntas en dos columnas, «reserva ya o desde la app» y el pie con foto */
+.ci-hero h1 { max-width: 17ch; font-size: 8.6vw; line-height: 0.95; letter-spacing: -0.052em; }
+.ci-placer h2 { font-size: 9.7vw; font-weight: 300; line-height: 0.95; letter-spacing: -0.063em; }
+.ci-gigante { font-size: 23.6vw; line-height: 0.8; letter-spacing: -0.061em; }
+.ci-frase h2 { font-size: 8.6vw; line-height: 0.95; letter-spacing: -0.052em; }
+.ci-locales h3, .ci-local h3, .ci-local strong { font-size: 40px; font-style: italic; }
+.ci-maquina { font-size: 16px; font-weight: 300; }
+.ci-clientes p { font-size: 20px; line-height: 1.2; font-weight: 500; }
+
+.ci-negro { --fg: #fff; --bg: #000; --ln: rgba(255, 255, 255, 0.25); --mut: #aaa; background: #000; color: #fff; padding: 80px 28px 120px; }
+.ci-negro .ci-gigante { text-align: center; }
+.ci-faq { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
+.ci-faq .ui-sh h2 { font: italic 500 32px var(--ci-serif); text-transform: none; letter-spacing: 0; }
+.ci-faq .ui-sh__line { display: none; }
+.ci-reserva { display: grid; justify-items: center; gap: 24px; margin-top: 160px; text-align: center; }
+.ci-reserva h2 { margin: 0; font: 400 15vw/0.85 var(--ci-serif); letter-spacing: -0.06em; }
+.ci-reserva p { max-width: 520px; margin: 0; }
+.ci-negro .ci-boton { background: var(--acc); color: #000 !important; }
+.ci-pie { position: relative; display: grid; align-content: end; gap: 20px; min-height: 100svh; padding: 28px; background: #000; color: #fff; overflow: hidden; }
+.ci-pie > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.ci-pie > * { position: relative; }
+.ci-pie p { margin: 0; font: italic 400 7vw/0.95 var(--ci-serif); letter-spacing: -0.05em; text-align: right; }
+.ci-pie nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; text-transform: uppercase; }
+@media (max-width: 760px) {
+  .ci-hero h1 { font-size: 10.5vw; }
+  .ci-placer h2 { font-size: 12vw; }
+  .ci-faq { grid-template-columns: 1fr; gap: 30px; }
+  .ci-negro { padding-inline: 16px; }
+  .ci-pie p { font-size: 13vw; }
+}
+/* «Download app» se rellena de negro al pasar; las reseñas y las respuestas van a 20/1,2 en columnas estrechas */
+.ci-app { padding: 6px 12px; border: 1px solid transparent; border-radius: 999px; transition: background-color 0.25s, color 0.25s, border-color 0.25s; }
+.ci-app:hover { background: #000; color: var(--acc) !important; border-color: #000; }
+.ci-faq p, .ci-clientes p { font-size: 20px; line-height: 1.2; }
+.ci-clientes p { max-width: 15em; }
+.ci-faq p { max-width: 22em; }
+.ci-resena blockquote { margin: 0; }
+.ci-resena blockquote p { margin: 0; font: 500 20px/1.2 var(--ci-sans); max-width: 15em; }
+.ci .ci-faq p { font-size: 20px !important; line-height: 1.2 !important; max-width: 15em; }
+.ci-hero { min-height: 84svh; }

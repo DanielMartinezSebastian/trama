@@ -38,8 +38,8 @@ export default function Patron() {
             <span>Servicios a medida</span>
             <a href="#servicios">Barbería</a>
             <a href="#servicios">Lista de precios</a>
-            <a href="#servicios">Cuidado y bienestar</a>
-            <a href="#servicios">Manicura y pedicura</a>
+            <a href="#servicios">Cuidado y spa</a>
+            <a href="#servicios">Manos y pies</a>
           </div>
         </div>
         <div className="pt-lado">
@@ -54,9 +54,10 @@ export default function Patron() {
             <div className="pt-libro"><b>PATRÓN</b><small>de la cabeza<br />a los pies</small></div>
             <a href="#tienda">Saber más</a>
           </figure>
+          {/* en Don Barber la cinta corre al pie de la columna derecha, dentro de la primera pantalla */}
+          <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta pt-cinta--portada" />
         </div>
       </section>
-      <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta" />
 
       <section className="pt-familia" id="equipo">
         <p className="pt-chico">Cuidado y bienestar<br /><b>La familia</b></p>
@@ -83,7 +84,7 @@ export default function Patron() {
           <article>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${E}local.webp`} alt="" />
-            <a href="#servicios">Cuidado y bienestar</a>
+            <a href="#servicios">Cuidado y spa</a>
             <p>Depilación y tratamientos para cara y cuerpo, pensados para la piel del hombre.</p>
           </article>
           <article className="pt-serv__central">
@@ -95,7 +96,7 @@ export default function Patron() {
           <article>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${E}sillon.webp`} alt="" />
-            <a href="#servicios">Manicura y pedicura</a>
+            <a href="#servicios">Manos y pies</a>
             <p>Tratamientos de lujo para él en una sala propia.</p>
           </article>
         </div>

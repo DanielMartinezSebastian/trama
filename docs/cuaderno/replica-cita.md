@@ -14,11 +14,11 @@ guia: [barbería de carácter]
 tono: [urbano, seguro]
 paleta: [fondo claro, acento único saturado]
 tipografia: [serif con cursiva, máquina de escribir, titular gigante]
-patrones: [vídeo que crece, palabra gigante de sección, locales en tarjetas, reseñas, app con QR, titular con palabra en cursiva, blog]
-movimiento: [crecer con el scroll, palabras que asoman]
-piezas: [ScrollExpand, DeviceMockup, QRCode]
+patrones: [vídeo que crece, palabra gigante de sección, locales en tarjetas, reseñas, app con QR, titular con palabra en cursiva, blog, preguntas frecuentes, final en negro, pie con foto]
+movimiento: [crecer con el scroll, palabras que asoman, scroll suavizado]
+piezas: [ScrollExpand, DeviceMockup, QRCode, FAQSection, SmoothScroll]
 piezas-nuevas: []
-relacionados: [estudio-peluqueria, demo-esparta]
+relacionados: [estudio-peluqueria, demo-esparta, herramienta-probe-par]
 ---
 
 ## Concepto
@@ -53,6 +53,35 @@ Una cadena de barberías con voz de revista:
 - Tres letras con papeles claros (titular, texto, datos) dan carácter sin desordenar.
 - La app de la marca se resuelve entera con piezas del kit.
 
+## Iteración con el par (27-10-2026)
+
+`npm run refs:probe -- --par https://www.myrendezvous.ca/ http://localhost:3020/lab/estudios/cita --nombre cita`, la sonda
+de estilos y la tira del original. Informe en `.refs3d/pares/cita/par.md`.
+
+- **Antes, 10 de 20 medidas cerca.** Faltaba el final de la web y la escala se quedaba corta:
+  - el original cierra **en negro**: preguntas frecuentes en dos columnas («Services & Conditions», «Booking &
+    Cancellation»), «Book now… or via app» gigante y el pie con una foto a sangre («Meet your best self at Rendezvous»);
+  - el titular va a **124 px** (8,6 vw)/0,95 con −5,2 %, y la réplica iba a 6,4 vw;
+  - la frase en cursiva 300 va a 140 px con −6,3 %;
+  - los gigantes en cursiva, a **340 px** (23,6 vw)/0,8 con −6,1 %;
+  - las reseñas y las respuestas, a 20/1,2 en columnas estrechas (15 em).
+- **Corregido**:
+  - el final en negro, con dos `FAQSection` en filas, la reserva gigante y el pie con foto;
+  - las medidas;
+  - `SmoothScroll` (Lenis, como el original);
+  - el botón «Descarga la app» se rellena al pasar, como el del original;
+  - la portada deja asomar el vídeo.
+- **Después, 18 de 20.** Quedan la letra (GT Super y GT Walsheim son de pago; Playfair e Inter las sustituyen) y las
+  sombras del móvil de la app.
+
+## Aprendido en la iteración
+
+- El final de una web (preguntas, reserva, pie) es lo primero que se olvida al replicar de memoria, y es donde estas webs
+  cierran la venta. El largo de página del par lo delata.
+- La trampa de los heredocs de Bash con Python volvió: `\n` acabó en salto de línea real dentro de una cadena. Los
+  scripts de edición se escriben en un archivo.
+
 ## Siguiente
 
-Medir el par y estudiar el ritmo con `cine:ritmo`, para decidir si el kit necesita un suavizado de scroll opcional.
+- La tarjeta naranja con el horario que se abre en cada local («+»).
+- El vídeo en la portada móvil, con «Download app» debajo.

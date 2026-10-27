@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import DeviceMockup from "@/components/ui/DeviceMockup";
+import FAQSection from "@/components/ui/FAQSection";
 import QRCode from "@/components/ui/QRCode";
 import ScrollExpand from "@/components/ui/ScrollExpand";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 import "./cita.css";
 
 /*
@@ -36,6 +38,7 @@ export default function Cita() {
   const [r, setR] = useState(0);
   return (
     <div className="ci">
+      <SmoothScroll />
       <header className="ci-head">
         <a href="#inicio" className="ci-logo" aria-label="Cita Barbers, inicio">
           <span>CITA</span>
@@ -91,7 +94,7 @@ export default function Cita() {
               <img src={x.img} alt="" loading="lazy" />
               <figcaption>
                 <em className="ci-naranja">{x.nombre}</em>
-                <blockquote>«{x.texto}»</blockquote>
+                <blockquote><p>«{x.texto}»</p></blockquote>
               </figcaption>
             </figure>
           ))}
@@ -137,11 +140,32 @@ export default function Cita() {
         </div>
       </section>
 
+      {/* en negro, como el final de Rendezvous: preguntas en dos columnas, reserva y el pie con foto */}
+      <section className="ci-negro">
+        <h2 className="ci-gigante"><em>Preguntas</em></h2>
+        <div className="ci-faq">
+          <FAQSection kicker="" title="Servicios y condiciones" layout="stack" presentation="lines" align="left" defaultOpen={-1} variant="minimal"
+            items={"¿Atendéis sin cita?|Si hay un sillón libre, sí; con la app te aseguras la hora.\n¿Los precios son iguales en todos los locales?|Sí, la carta es la misma en los cinco.\n¿Hay un tiempo mínimo entre citas?|No, pero para mantener un degradado recomendamos volver cada tres semanas.\n¿Me lavan el pelo?|Sí, el lavado va incluido en el corte."} />
+          <FAQSection kicker="" title="Reserva y cancelación" layout="stack" presentation="lines" align="left" defaultOpen={-1} variant="minimal"
+            items={"¿Qué es el kit de Cita?|Un neceser con cera, peine y aceite de barba que regalamos con el bono de diez cortes.\n¿Qué pasa si no me presento?|La segunda vez sin avisar pedimos una señal para reservar.\n¿Puedo cambiar la cita?|Hasta dos horas antes, desde la app y sin coste.\n¿Cómo cancelo?|En la app, en «Mis citas», o llamando al local."} />
+        </div>
+        <div className="ci-reserva">
+          <h2><em>Reserva ya</em></h2>
+          <a href="#app" className="ci-boton">Reservar ↗</a>
+          <h2><em>o desde la app</em></h2>
+          <p className="ci-maquina">También puedes seguir los mismos pasos en la web. Si ya has reservado con nosotros, tus datos y tu historial te esperan en la app.</p>
+        </div>
+      </section>
+
       <footer className="ci-pie">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/img/esparta/sillon.webp" alt="" />
+        <p><em>Sé tu mejor versión</em><br /><em>en Cita</em></p>
+        <nav aria-label="Pie">
+          <a href="#inicio">Instagram</a><a href="#inicio">Facebook</a><a href="#inicio">LinkedIn</a><a href="#inicio">YouTube</a>
+          <a href="#inicio">Política de privacidad</a><a href="#inicio">Condiciones</a><a href="#app">Descarga la app ↗</a>
+        </nav>
         <span className="ci-maquina">© Cita Barbers · Madrid</span>
-        <a href="#inicio">Política de privacidad</a>
-        <a href="#locales">Trabaja con nosotros</a>
-        <a href="#inicio">Instagram</a>
       </footer>
     </div>
   );
