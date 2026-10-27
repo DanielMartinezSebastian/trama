@@ -13,6 +13,7 @@ const PAGINAS: Record<string, ComponentType> = {
   raiz: dynamic(() => import("./raiz/Raiz")),
   patron: dynamic(() => import("./patron/Patron")),
   nucleo: dynamic(() => import("./nucleo/Nucleo")),
+  impulso: dynamic(() => import("./impulso/Impulso")),
 };
 
 export const replicaLista = (slug: string) => slug in PAGINAS;

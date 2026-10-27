@@ -56,7 +56,7 @@ export default function Patron() {
           </figure>
         </div>
       </section>
-      <Marquee text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta" />
+      <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta" />
 
       <section className="pt-familia" id="equipo">
         <p className="pt-chico">Cuidado y bienestar<br /><b>La familia</b></p>
@@ -127,7 +127,7 @@ export default function Patron() {
         </div>
         <a href="#contacto" className="pt-boletin">BOLETÍN</a>
       </footer>
-      <Marquee text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta pt-cinta--pie" />
+      <Marquee variant="minimal" text="BIENVENIDO AL MUNDO DE PATRÓN" separator="     " rows={1} duration={30} className="pt-cinta pt-cinta--pie" />
 
       <div className={`pt-menu ${menu ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Menú" aria-hidden={!menu} inert={!menu}>
         {/* eslint-disable-next-line @next/next/no-img-element */}

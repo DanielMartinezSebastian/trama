@@ -1,0 +1,75 @@
+/* Impulso (réplica de Essor Fitness, docs/50 §3.4): negro absoluto y blanco, grises #999 y #bbb; una sans de display muy
+   apretada (Inter Display 600, espaciado −8 px a 208 px) y botones en píldora de contorno. */
+.im {
+  --bg: #000; --fg: #fff; --mut: #999; --acc: #fff; --acc2: #bbb; --card: #111; --ln: #333; --r: 0px;
+  --im-f: var(--font-inter-tight), var(--font-inter), sans-serif;
+  background: var(--bg); color: var(--fg); font: 500 15px/1.3 var(--im-f); overflow-x: clip;
+}
+.im a { color: inherit; text-decoration: none; }
+.im-pildora { display: inline-flex; padding: 6px 14px; border: 1.5px solid currentColor; border-radius: 999px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.01em; }
+
+.im-head { display: grid; grid-template-columns: 1fr 1.2fr 1.2fr auto; align-items: center; gap: 20px; padding: 14px 14px; font-size: 11px; line-height: 1.3; }
+.im-logo { font-size: 15px; font-weight: 600; }
+.im-head__nav, .im-head__datos { display: grid; }
+.im-head__nav nav, .im-head__datos span { color: var(--mut); }
+
+.im-hero { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; padding: 40px 14px 0; }
+.im-hero h1 { margin: 0; font-size: clamp(30px, 3vw, 44px); font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; }
+.im-diploma { position: relative; width: min(280px, 30vw); margin: 0; }
+.im-diploma img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 6px; }
+.im-diploma figcaption { position: absolute; left: 10px; right: 10px; bottom: 10px; font-size: 10px; text-align: center; }
+.im-cinta { margin-top: 20px; background: #fff; color: #000; font-size: 11px; font-weight: 600; padding-block: 3px; }
+.im-cinta--fina { margin-top: 30px; }
+.im-marca { margin: 10px 0 0; padding: 0 10px; font-size: clamp(90px, 15vw, 230px); font-weight: 600; line-height: 0.85; letter-spacing: -0.045em; white-space: nowrap; border-bottom: 1px solid var(--ln); padding-bottom: 20px; }
+.im-nota { display: flex; justify-content: space-between; padding: 14px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--ln); }
+
+.im-promesa { display: grid; grid-template-columns: 0.6fr 1.4fr; gap: 20px; padding: 0 14px 60px; }
+.im-promesa > img { width: 100%; aspect-ratio: 3 / 4.6; object-fit: cover; }
+.im-promesa > div { display: grid; align-content: start; gap: 18px; }
+.im-promesa p { margin: 0; font-size: clamp(22px, 2.2vw, 34px); line-height: 1.12; letter-spacing: -0.02em; }
+.im-promesa .im-pildora { justify-self: start; }
+.im-logos .ui-logos__row, .im-logos ul { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.im-logos li, .im-logos span { display: grid; place-items: center; min-height: 80px; border: 1px solid var(--ln); }
+
+.im-etiquetas { display: flex; justify-content: space-between; padding: 30px 14px 10px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--ln); }
+.im-cruza { overflow: hidden; border-bottom: 1px solid var(--ln); }
+.im-cruza h2 { margin: 0; padding: 10px 0 20px; font-size: clamp(90px, 12vw, 190px); font-weight: 600; line-height: 0.95; letter-spacing: -0.045em; white-space: nowrap; will-change: translate; }
+
+.im-estudio { display: grid; gap: 20px; padding: 30px 14px 80px; }
+.im-estudio > p { margin: 0; max-width: 520px; font-size: 15px; color: #ddd; }
+.im-estudio > p b { color: #fff; }
+.im-estudio .im-pildora { justify-self: start; }
+.im-fichas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 30px; }
+.im-ficha { margin: 0; }
+.im-ficha:nth-child(even) { margin-top: 120px; }
+.im-ficha__marco { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #1c1c1c; }
+.im-ficha__marco img { position: absolute; inset: 20%; width: 60%; height: 60%; object-fit: cover; transition: inset 0.7s cubic-bezier(0.7, 0, 0.2, 1), width 0.7s cubic-bezier(0.7, 0, 0.2, 1), height 0.7s cubic-bezier(0.7, 0, 0.2, 1); }
+.im-ficha:hover .im-ficha__marco img { inset: 0; width: 100%; height: 100%; }
+.im-ficha figcaption { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; }
+
+.im-etiqueta { margin: 0; padding: 0 14px; font-size: 10px; text-transform: uppercase; }
+.im-servicios__titulo { margin: 0; padding: 0 14px; font-size: clamp(80px, 11vw, 170px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+.im-servicios { padding: 40px 14px 80px 30%; }
+.im-lista { --fg: #fff; --mut: #999; --ln: #333; }
+
+.im-manifiesto { position: relative; display: grid; place-items: center; min-height: 90svh; padding: 60px 14px; }
+.im-manifiesto img { position: absolute; width: min(280px, 22vw); aspect-ratio: 3 / 4; object-fit: cover; }
+.im-manifiesto__a { left: 6%; top: 10%; }
+.im-manifiesto__b { right: 6%; bottom: 8%; }
+.im-manifiesto p { position: relative; z-index: 1; max-width: 900px; margin: 0; font-size: clamp(30px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.03em; mix-blend-mode: difference; }
+
+.im-pie { display: flex; justify-content: space-between; align-items: center; padding: 20px 14px; border-top: 1px solid var(--ln); font-size: 11px; }
+
+@media (max-width: 760px) {
+  .im-head { grid-template-columns: 1fr auto; }
+  .im-head__nav, .im-head__datos { display: none; }
+  .im-hero, .im-promesa { grid-template-columns: 1fr; }
+  .im-fichas { grid-template-columns: 1fr 1fr; }
+  .im-servicios { padding-left: 14px; }
+  .im-nota, .im-etiquetas { flex-direction: column; gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { .im-ficha__marco img { transition: none; } }
+.im-cinta { font-family: var(--im-f) !important; text-transform: none; font-weight: 600; }
+.im-marca { font-size: clamp(80px, 13.4vw, 210px); }
+.im-lista .ui-plist__t { font-size: clamp(24px, 2.4vw, 36px); font-weight: 600; letter-spacing: -0.02em; }
+.im-lista .ui-plist__m { font-size: 10px; text-transform: uppercase; color: var(--mut); }
