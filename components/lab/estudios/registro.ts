@@ -33,7 +33,7 @@ export const REPLICAS: Replica[] = [
   { slug: "ahora", nombre: "Ahora", ref: "Future London Academy", url: "https://futurelondonacademy.co.uk/", ficha: "§3.6", sector: "academia", firma: "amarillo, muro de profesores y tarjetas solapadas", hecha: true },
   { slug: "oficio", nombre: "Oficio", ref: "Honhar", url: "https://honhar.in/", ficha: "§3.6", sector: "academia", firma: "neobrutalismo amarillo y programas por promoción", hecha: true },
   { slug: "abuela-rosa", nombre: "Abuela Rosa", ref: "Peppa Sauce", url: "https://www.peppasauce.love/", ficha: "§3.8", sector: "producto", firma: "el bote fijo y dos tintas", hecha: true },
-  { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: false },
+  { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: true },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);
