@@ -1384,7 +1384,7 @@ a.ui-button { text-decoration: none; }
 .ui-steps__item:not(:last-child)::after { content: ""; width: 28px; height: 1px; background: var(--ln); margin-left: 8px; }
 .ui-steps__mark { flex: none; width: 24px; height: 24px; display: grid; place-content: center; border-radius: 50%; background: var(--s-bg); border: var(--s-bd); font-size: 11px; font-weight: 700; color: var(--mut); }
 .ui-steps__item.is-current { color: var(--fg); font-weight: 700; }
-.ui-steps__item.is-current .ui-steps__mark { color: var(--bg); background: var(--acc); border-color: var(--acc); }
+.ui-steps__item.is-current .ui-steps__mark { color: var(--bg); background: var(--acc); border-color: var(--acc); text-shadow: none; /* relleno: sin halo (guía §8.0) */ }
 .ui-steps__item.is-done .ui-steps__mark { color: var(--acc); border-color: var(--acc); }
 .ui-steps__item.is-done:not(:last-child)::after { background: var(--acc); }
 

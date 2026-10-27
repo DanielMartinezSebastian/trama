@@ -1,15 +1,13 @@
 "use client";
 
 import BeforeAfter from "@/components/ui/BeforeAfter";
+import ImageGallery from "@/components/ui/ImageGallery";
 import TestimonialSection from "@/components/ui/TestimonialSection";
-import { Outfit } from "next/font/google";
-import "./raiz.css";
-
-// Outfit, la sans fina del original, es libre: se carga en la réplica (docs/cuaderno/replica-raiz.md)
-const outfit = Outfit({ weight: ["300", "500"], subsets: ["latin"], variable: "--rz-outfit", display: "swap" });
+import { TECNICAS, WHATSAPP } from "./data";
+import { raizHref } from "./enlaces";
 
 /*
- * Raíz Concept Salon: réplica de Marco Ambrosi (docs/50 §3.2), un salón especialista en extensiones. Oscuro con cobre,
+ * Portada de Raíz Concept Salon: réplica de Marco Ambrosi (docs/50 §3.2); cabecera, pie y demás páginas en Sitio.tsx (docs/56), un salón especialista en extensiones. Oscuro con cobre,
  * titulares en serif y texto en sans fina; por qué con un profesional, la comparación «lo barato / lo bien hecho», los
  * servicios con «desde», el antes y el después con tirador (BeforeAfter), los trabajos, el salón en movimiento y las
  * reseñas (TestimonialSection). La reserva es un botón de WhatsApp.
@@ -20,13 +18,6 @@ const RAZONES = [
   { icono: "⇅", titulo: "El peso se reparte", texto: "Mechones demasiado pesados o mal colocados tiran. La tracción continua debilita el anclaje y los cabellos de alrededor." },
   { icono: "◐", titulo: "El color se funde, no se pega", texto: "Un mechón comprado casi nunca coincide con el tuyo. Matizamos extensión y pelo natural juntos para que la unión desaparezca." },
   { icono: "✓", titulo: "Quitarlas cuenta tanto como ponerlas", texto: "Es el momento de más riesgo. Hecho por quien las puso, el pelo queda como antes: sin nudos ni roturas." },
-];
-const SERVICIOS = [
-  { titulo: "Extensiones por ultrasonido", texto: "Aplicación mechón a mechón con queratina activada por ultrasonido: la solución más duradera para pelo fino.", desde: 115 },
-  { titulo: "Extensiones adhesivas", texto: "Bandas finas e invisibles, aplicación rápida: dura hasta cuatro meses. Ideal para probar volumen y largo.", desde: 115 },
-  { titulo: "Extensiones cosidas", texto: "Cortinas cosidas a una trenza fina y pegada: sin pegamento ni calor. Volumen pleno y uniforme.", desde: 340 },
-  { titulo: "Infoltimento", texto: "Media cabeza para dar cuerpo donde hace falta, sin cambiar el largo. Perfecto para pelo fino.", desde: 115 },
-  { titulo: "Color y balayage", texto: "Degradado y matiz pensados para fundir extensión y pelo natural en un solo color.", desde: 40 },
 ];
 const ANTES_DESPUES = [
   { antes: `/img/inspiraciones/raiz/antes-1.webp`, despues: `/img/inspiraciones/raiz/despues-1.webp`, pie: "Corte y peinado, ondas suaves" },
@@ -48,24 +39,13 @@ const CLIPS = [
   { img: `/img/inspiraciones/raiz/proceso-salon.webp`, pie: "Dentro del salón" },
 ];
 
-const Whatsapp = ({ texto = "Reserva por WhatsApp" }: { texto?: string }) => (
-  <a href="#contacto" className="rz-wa"><span aria-hidden>✆</span>{texto}</a>
+export const Whatsapp = ({ texto = "Reserva por WhatsApp" }: { texto?: string }) => (
+  <a href={WHATSAPP()} target="_blank" rel="noopener noreferrer" className="rz-wa"><span aria-hidden>✆</span>{texto}</a>
 );
 
 export default function Raiz() {
   return (
-    <div className={`rz ${outfit.variable}`}>
-      <header className="rz-head">
-        <a href="#inicio" className="rz-logo"><span aria-hidden>R</span><b>Raíz<small>Concept Salon</small></b></a>
-        <nav aria-label="Principal">
-          <a href="#porque">Por qué nosotros</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#antes">Antes y después</a>
-          <a href="#resenas">Reseñas</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-        <Whatsapp />
-      </header>
+    <>
 
       <section className="rz-hero" id="inicio">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -75,7 +55,7 @@ export default function Raiz() {
           <p className="rz-kicker">Especialista en extensiones · Valencia</p>
           <h1>Pelo más largo,<br />más lleno. <em>Tuyo.</em></h1>
           <p>Extensiones aplicadas a tu medida por Raquel: efecto natural, color estudiado sobre ti. Se ve el resultado, no la extensión.</p>
-          <div className="rz-botones"><Whatsapp /><a href="#trabajos" className="rz-borde">Ver los trabajos</a></div>
+          <div className="rz-botones"><a href={raizHref("consulta")} className="rz-wa"><span aria-hidden>✆</span>Pide tu consulta</a><a href={raizHref("trabajos")} className="rz-borde">Ver los trabajos</a></div>
         </div>
         <span className="rz-scroll">Baja</span>
       </section>
@@ -103,13 +83,13 @@ export default function Raiz() {
         <h2>Los servicios de extensiones</h2>
         <p className="rz-intro">Tres técnicas de aplicación: ultrasonido, adhesivas y cosidas. Todo parte de una consulta en el salón: método, largo y color se deciden juntos.</p>
         <div className="rz-tarjetas">
-          {SERVICIOS.map((s, i) => (
-            <article key={s.titulo}>
+          {TECNICAS.map((s, i) => (
+            <a key={s.id} href={raizHref(`servicios/${s.id}`)} className="rz-tarjeta">
               <span className="rz-num">{String(i + 1).padStart(2, "0")}</span>
               <h3>{s.titulo}</h3>
               <p>{s.texto}</p>
               <div className="rz-desde"><small>Desde</small><b>{s.desde} €</b></div>
-            </article>
+            </a>
           ))}
         </div>
       </section>
@@ -152,18 +132,9 @@ export default function Raiz() {
 
       <section className="rz-movimiento">
         <h2>El salón en movimiento</h2>
-        <p className="rz-intro">Cuatro clips grabados en un día de trabajo. Toca para oírlos.</p>
-        <div className="rz-clips">
-          {CLIPS.map((c) => (
-            <figure key={c.pie}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={c.img} alt="" loading="lazy" />
-              <span className="rz-play" aria-hidden>▶</span>
-              <figcaption>{c.pie}</figcaption>
-            </figure>
-          ))}
-        </div>
-        <a href="#contacto" className="rz-borde rz-ig">Más trabajos en Instagram</a>
+        <p className="rz-intro">Cuatro momentos de un día de trabajo. Pasa con las flechas y amplía con doble clic.</p>
+        <ImageGallery className="rz-galeria" layout="fade" ratio="4/3" zoom loop variant="minimal" images={CLIPS.map((c) => `${c.img}|${c.pie}|`).join("\n")} />
+        <a href={raizHref("trabajos")} className="rz-borde rz-ig">Ver todos los trabajos</a>
       </section>
 
       <div id="resenas">
@@ -179,10 +150,6 @@ export default function Raiz() {
         />
       </div>
 
-      <footer className="rz-pie" id="contacto">
-        <div><h2>Pide tu consulta</h2><p className="rz-intro">Escríbenos por WhatsApp con una foto de tu pelo con luz natural. Te contestamos el mismo día.</p><Whatsapp texto="Escribir por WhatsApp" /></div>
-        <div className="rz-datos"><p>Calle del Doctor Sumsi 14<br />46005 Valencia</p><p>Martes a sábado<br />9:30 – 19:30</p><p>hola@raiz.example</p></div>
-      </footer>
-    </div>
+    </>
   );
 }
