@@ -27,7 +27,7 @@ const portada = (load: () => Promise<{ default: ComponentType }>) => {
 
 const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   matiz: sitio(() => import("./matiz/Sitio")),
-  nura: portada(() => import("./nura/Nura")),
+  nura: sitio(() => import("./nura/Sitio")),
   cita: sitio(() => import("./cita/Sitio")),
   melena: sitio(() => import("./melena/Sitio")),
   raiz: sitio(() => import("./raiz/Sitio")),

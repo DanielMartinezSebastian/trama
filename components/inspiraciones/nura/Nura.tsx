@@ -5,10 +5,12 @@ import GradientField from "@/components/ui/GradientField";
 import TeamSection from "@/components/ui/TeamSection";
 import { trackScroll } from "@/lib/motion/progress";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
-import "./nura.css";
+import { ESTILISTAS, OBRAS, type Obra as ObraDatos } from "./data";
+import { nuraHref } from "./enlaces";
 
 /*
- * Nura, pelo y arte: réplica de ALICE Hair & Art (docs/50 §3.2). Una sola letra en mayúsculas pequeñas para todo, grises
+ * Portada de Nura, pelo y arte: réplica de ALICE Hair & Art (docs/50 §3.2); el pie, la barra fija y las demás páginas,
+ * en Sitio.tsx (docs/56). Una sola letra en mayúsculas pequeñas para todo, grises
  * con grano, un collage de fotos sueltas que se desenfocan al bajar, el equipo en filas con su reserva y una sala que
  * expone arte: aquí, obras generativas hechas con GradientField, el fondo de degradado de Trama.
  */
@@ -22,24 +24,21 @@ const COLLAGE = [
   { src: "/img/inspiraciones/nura/collage-rizo.webp", x: 84, y: 52, w: 13, alt: "Rizo definido" },
 ];
 
-const OBRAS: { titulo: string; tecnica: string; pieza: "mesh" | "ribbon" | "beams"; tonos: [string, string, string] }[] = [
-  { titulo: "Siesta en el desierto", tecnica: "campo de degradado", pieza: "mesh", tonos: ["#ffb800", "#ff3b1f", "#1c2bd9"] },
-  { titulo: "Cactus azul", tecnica: "campo de degradado", pieza: "ribbon", tonos: ["#2a4dff", "#ff6a00", "#ffd400"] },
-  { titulo: "Nudo de verano", tecnica: "haces de luz", pieza: "beams", tonos: ["#ff2d6f", "#ffe600", "#1a1a6e"] },
-  { titulo: "Colinas", tecnica: "campo de degradado", pieza: "beams", tonos: ["#2fbf4a", "#ffcc00", "#e2462b"] },
-  { titulo: "Anillos de sol", tecnica: "cinta", pieza: "ribbon", tonos: ["#ff7a00", "#00a3ff", "#2b0f4c"] },
-  { titulo: "Mediodía", tecnica: "campo de degradado", pieza: "mesh", tonos: ["#00c2a8", "#ff4fa3", "#ffe14d"] },
-];
 
-function Obra({ o }: { o: (typeof OBRAS)[number] }) {
+/** una obra de la sala: su lienzo generativo con los tonos de la obra; enlaza a su ficha */
+export function Obra({ o, grande = false }: { o: ObraDatos; grande?: boolean }) {
   const tokens = { "--bg": o.tonos[2], "--fg": "#fff", "--acc": o.tonos[0], "--acc2": o.tonos[1] } as CSSProperties;
+  const lienzo = (
+    <div className="nu-obra__lienzo">
+      <GradientField kind={o.pieza} speed={0.4} intensity={1} grain />
+    </div>
+  );
+  if (grande) return <div className="nu-obra nu-obra--grande" style={tokens}>{lienzo}</div>;
   return (
-    <figure className="nu-obra" style={tokens}>
-      <div className="nu-obra__lienzo">
-        <GradientField kind={o.pieza} speed={0.4} intensity={1} grain />
-      </div>
-      <figcaption>{o.titulo} · {o.tecnica}</figcaption>
-    </figure>
+    <a href={nuraHref(`arte/${o.slug}`)} className="nu-obra" style={tokens}>
+      {lienzo}
+      <span className="nu-obra__pie">{o.titulo} · {o.tecnica}{o.vendida ? " · vendida" : ""}</span>
+    </a>
   );
 }
 
@@ -57,7 +56,7 @@ export default function Nura() {
   }, [reduced]);
 
   return (
-    <div className="nu">
+    <>
       <section className="nu-hero" ref={hero}>
         <div className="nu-collage" aria-hidden>
           {COLLAGE.map((c) => (
@@ -71,11 +70,11 @@ export default function Nura() {
             <span>La mezcla justa de peluquería<br />y arte en un estudio de Malasaña</span>
           </div>
           <div className="nu-conmuta" aria-label="Secciones">
-            <a href="#pelo">Pelo</a>
+            <a href={nuraHref("pelo")}>Pelo</a>
             <span className="nu-barra" aria-hidden><i /></span>
-            <a href="#arte">&amp; Arte</a>
+            <a href={nuraHref("arte")}>&amp; Arte</a>
           </div>
-          <a href="#reservar" className="nu-calle">Calle del Espíritu Santo 12, MAD</a>
+          <a href={nuraHref("info")} className="nu-calle">Calle del Espíritu Santo 12, MAD</a>
         </div>
         <div className="nu-manifiesto">
           <p className="nu-titulo">Creativo, auténtico y con alma</p>
@@ -96,51 +95,22 @@ export default function Nura() {
           linkLabel="Reservar"
           rowLink
           variant="minimal"
-          members={[
-            { name: "Nuria Vidal", role: "@nuria.nura", bio: "Fundadora del estudio. Más de diez años en todo tipo de cortes y colores, especialista en estilos personales hechos a la medida de cada clienta.", photo: "/img/inspiraciones/nura/equipo-nuria.webp", href: "#reservar" },
-            { name: "Vera", role: "@veracolors", bio: "Diez años en el oficio. Conocida por su precisión con los rubios, las extensiones y los secados que te dejan imparable.", photo: "/img/inspiraciones/nura/equipo-vera.webp", href: "#reservar" },
-            { name: "Leo", role: "@leo_cuts", bio: "Cortes atrevidos y de moda o clásicos que no pasan. Ideal si buscas un cambio grande o algo que dure. Experto en corte, color y tendencias.", photo: "/img/inspiraciones/nura/equipo-leo.webp", href: "#reservar" },
-          ]}
+          members={ESTILISTAS.map((e) => ({ name: e.name, role: e.ig, bio: e.bio, photo: e.photo, href: nuraHref(`reservar?estilista=${encodeURIComponent(e.name)}`) }))}
         />
       </section>
 
       <section className="nu-arte" id="arte">
         <div className="nu-arte__cab">
           <span>/ Exposición actual</span>
-          <a href="#arte" className="nu-vertodo">Ver todo <i aria-hidden>▶</i></a>
+          <a href={nuraHref("arte")} className="nu-vertodo">Ver todo <i aria-hidden>▶</i></a>
         </div>
         <div className="nu-sala">
           {OBRAS.map((o) => (
-            <Obra key={o.titulo} o={o} />
+            <Obra key={o.slug} o={o} />
           ))}
         </div>
       </section>
 
-      <footer className="nu-pie" id="reservar">
-        <strong className="nu-pie__marca">N U R A</strong>
-        <form className="nu-form" onSubmit={(e) => e.preventDefault()}>
-          <span>Pelo &nbsp; &amp; Arte</span>
-          <p>Para consultas del salón o sobre arte y exposiciones: hola@nura.example o el formulario.</p>
-          <label>Nombre<input name="nombre" autoComplete="name" /></label>
-          <label>Correo<input name="correo" type="email" autoComplete="email" /></label>
-          <label>Tu mensaje<textarea name="mensaje" rows={4} /></label>
-          <button type="submit">Enviar</button>
-        </form>
-        <div className="nu-pie__col">
-          <span>Calle del Espíritu Santo 12, MAD</span>
-          <span className="nu-pie__mut">Reservar</span>
-          <a href="#pelo">Nuria Vidal</a>
-          <a href="#pelo">Vera</a>
-          <a href="#pelo">Leo</a>
-        </div>
-      </footer>
-
-      <nav className="nu-barra-fija" aria-label="Accesos">
-        <a href="#reservar">Info</a>
-        <a href="#reservar">hola@nura.example</a>
-        <a href="#arte">@nurapeloyarte</a>
-        <a href="#">Arriba ↑</a>
-      </nav>
-    </div>
+    </>
   );
 }

@@ -120,3 +120,59 @@
 .nu-conmuta a { padding: 2px 6px; transition: background-color 0.2s, color 0.2s; }
 .nu-conmuta a:hover { background: #121212; color: #f5f5f5; }
 .nu-pie__col a:hover, .nu-calle:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- varias páginas (docs/56) ---------- */
+.nu-obra { display: block; color: inherit; }
+.nu-obra .nu-obra__lienzo { transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.nu-obra:hover .nu-obra__lienzo { scale: 0.97; }
+.nu-obra__pie { display: block; margin-top: 8px; font-size: 10px; }
+.nu-obra:hover .nu-obra__pie { text-decoration: underline; text-underline-offset: 3px; }
+.nu-obra--grande .nu-obra__lienzo { aspect-ratio: 4 / 5; }
+.nu-form [role="alert"] { margin: 0; font-size: 11px; color: #b3261e; }
+
+.nu-arriba { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 24px; padding: 14px 8px; background: color-mix(in srgb, var(--bg) 92%, transparent); }
+.nu-arriba__marca { font-size: 18px; letter-spacing: 0.32em; }
+.nu-arriba__nav { display: flex; gap: 18px; margin-left: auto; font-size: 12px; font-weight: 600; }
+.nu-arriba__nav a { padding: 2px 6px; transition: background-color 0.2s, color 0.2s; }
+.nu-arriba__nav a:hover, .nu-arriba__nav a[aria-current="page"] { background: #121212; color: #f5f5f5; }
+.nu-arriba .ui-fsm__btn--burger { display: none; margin-left: auto; }
+
+.nu-pag { display: grid; gap: 50px; align-content: start; min-height: 100svh; padding: 50px 8px 160px; }
+.nu-pag__cab { display: grid; gap: 18px; max-width: 760px; }
+.nu-pag__cab h1 { margin: 0; font-size: 13px; font-weight: 400; letter-spacing: 0.1em; }
+.nu-pag__cab p { margin: 0; max-width: 46ch; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; line-height: 1.3; }
+.nu-volver { justify-self: start; font-size: 12px; }
+.nu-volver:hover { text-decoration: underline; }
+.nu-lista { list-style: none; margin: 0; padding: 0; display: grid; }
+.nu-lista li { display: grid; grid-template-columns: 1.2fr 2fr 1fr auto; gap: 16px; padding: 14px 6px; background: #dedede; border-bottom: 2px solid #f5f5f5; font-size: 12px; font-weight: 600; }
+.nu-lista__mut { color: var(--mut); font-weight: 400; }
+.nu-lista a, .nu-estilistas a, .nu-enlace { padding: 2px 6px; justify-self: start; transition: background-color 0.2s, color 0.2s; }
+.nu-lista a:hover, .nu-estilistas a:hover, .nu-enlace:hover { background: #121212; color: #f5f5f5; }
+.nu-estilistas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.nu-estilistas li { display: grid; gap: 6px; align-content: start; font-size: 12px; font-weight: 600; }
+.nu-estilistas img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1); }
+.nu-estilistas p { margin: 0; font-size: 12px; line-height: 1.3; letter-spacing: 0.05em; }
+.nu-sala--pag { row-gap: 40px; }
+.nu-nota { margin: 0; font-size: 11px; color: var(--mut); }
+.nu-ficha { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5vw; align-items: start; }
+.nu-ficha__txt { display: grid; gap: 14px; justify-items: start; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; }
+.nu-ficha__txt h1 { margin: 0; font-size: 22px; font-weight: 400; letter-spacing: 0.1em; }
+.nu-ficha__txt p { margin: 0; max-width: 40ch; }
+.nu-ficha .nu-vertodo { border: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+.nu-pide { max-width: 420px; animation: nu-entra 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes nu-entra { from { opacity: 0; translate: 0 10px; } }
+.nu-flujo { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 15px; --ui-book-top: 70px; }
+.nu-flujo .ui-book__summary { background: #dedede; border-top-color: #121212; }
+.nu-info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5vw; text-transform: none; letter-spacing: 0; font-size: 14px; }
+.nu-info p { margin: 0; line-height: 1.6; }
+
+@media (max-width: 760px) {
+  .nu-arriba__nav { display: none; }
+  .nu-arriba .ui-fsm__btn--burger { display: inline-flex; }
+  .nu-lista li { grid-template-columns: 1fr auto; }
+  .nu-lista li > .nu-lista__mut { grid-column: 1 / -1; }
+  .nu-estilistas, .nu-ficha, .nu-info { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .nu-pide { animation: none; } }
+.nu-ficha .nu-obra, .nu-ficha .nu-obra:nth-child(n) { grid-column: auto; margin-top: 0; }
+.nu-ficha .nu-vertodo { color: var(--fg); padding: 6px 12px; }

@@ -10,6 +10,7 @@ import { PAGINAS as matizPaginas } from "./matiz/data";
 import { PAGINAS as patronPaginas } from "./patron/data";
 import { PAGINAS as melenaPaginas } from "./melena/data";
 import { PAGINAS as raizPaginas } from "./raiz/data";
+import { PAGINAS as nuraPaginas } from "./nura/data";
 
 export type Replica = {
   slug: string;
@@ -42,7 +43,7 @@ export const paginaDe = (r: Replica, ruta: string[]) => rutasDe(r).find((p) => p
 
 export const REPLICAS: Replica[] = [
   { slug: "matiz", nombre: "Matiz", ref: "Il Colorista", url: "https://ilcolorista.salon/", ficha: "§3.1", sector: "peluquería", firma: "mosaico de formas salmón con fotos que se disuelven en color", hecha: true, guia: "salon", acento: "#f5a490", paginas: matizPaginas, transicion: "fade" },
-  { slug: "nura", nombre: "Nura", ref: "ALICE Hair & Art", url: "https://www.alicehairart.se/", ficha: "§3.2", sector: "peluquería", firma: "collage suelto que se desenfoca y una sola letra en mayúsculas", hecha: true, guia: "salon", acento: "#121212" },
+  { slug: "nura", nombre: "Nura", ref: "ALICE Hair & Art", url: "https://www.alicehairart.se/", ficha: "§3.2", sector: "peluquería", firma: "collage suelto que se desenfoca y una sola letra en mayúsculas", hecha: true, guia: "salon", acento: "#121212", paginas: nuraPaginas, transicion: "fade" },
   { slug: "cita", nombre: "Cita Barbers", ref: "Rendezvous", url: "https://www.myrendezvous.ca/", ficha: "§3.2", sector: "peluquería", firma: "naranja, serif con cursiva y palabras gigantes", hecha: true, guia: "barberia", acento: "#ff622b", scroll: "snappy", paginas: citaPaginas, transicion: "wipe" },
   { slug: "melena", nombre: "Melena", ref: "Hair Me Up", url: "https://hairmeup.pl", ficha: "§3.2", sector: "peluquería", firma: "arco melocotón y palabras de fondo; salón, tienda y academia", hecha: true, guia: "salon", acento: "#f4b39a", paginas: melenaPaginas, transicion: "fade" },
   { slug: "raiz", nombre: "Raíz", ref: "Marco Ambrosi", url: "https://www.marcoambrosi.salon/", ficha: "§3.2", sector: "peluquería", firma: "oscuro y cobre, antes y después", hecha: true, guia: "barberia", acento: "#b87333", paginas: raizPaginas, transicion: "fade" },
