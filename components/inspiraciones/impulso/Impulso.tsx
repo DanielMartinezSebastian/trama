@@ -10,7 +10,8 @@ import RollLink from "@/components/ui/RollLink";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import { trackScroll } from "@/lib/motion/progress";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
-import "./impulso.css";
+import { SERVICIOS } from "./data";
+import { impulsoHref } from "./enlaces";
 
 /*
  * Impulso Coaching: réplica de Essor Fitness (docs/50 §3.4, par medido en docs/cuaderno/replica-impulso.md). Negro absoluto
@@ -18,6 +19,8 @@ import "./impulso.css";
  * secciones (Marquee), titulares gigantes que cruzan la pantalla mientras la sección queda fijada, fichas con la foto
  * nítida dentro de su versión desenfocada, servicios en filas numeradas (ProjectList), el manifiesto con retratos, los
  * diplomas, el reto, el muro de la fama, testimonios, tarifas en seis tarjetas, preguntas frecuentes y contacto.
+  *
+ * Esta es la portada; la cabecera, el pie y las demás páginas están en Sitio.tsx (docs/56).
  */
 
 
@@ -48,10 +51,10 @@ const Cinta = ({ texto, className = "" }: { texto: string; className?: string })
 );
 
 const FICHAS = [
-  { n: "01", titulo: "El estudio", img: `/img/inspiraciones/impulso/menu-estudio.webp` },
-  { n: "02", titulo: "Tomás Lluch", img: `/img/inspiraciones/impulso/menu-tomas.webp` },
-  { n: "03", titulo: "Cristina Bayo", img: `/img/inspiraciones/impulso/menu-cristina.webp` },
-  { n: "04", titulo: "Nuestra misión", img: `/img/inspiraciones/impulso/menu-mision.webp` },
+  { n: "01", titulo: "El estudio", img: `/img/inspiraciones/impulso/menu-estudio.webp`, ancla: "estudio" },
+  { n: "02", titulo: "Tomás Lluch", img: `/img/inspiraciones/impulso/menu-tomas.webp`, ancla: "tomas" },
+  { n: "03", titulo: "Cristina Bayo", img: `/img/inspiraciones/impulso/menu-cristina.webp`, ancla: "cristina" },
+  { n: "04", titulo: "Nuestra misión", img: `/img/inspiraciones/impulso/menu-mision.webp`, ancla: "mision" },
 ];
 
 const DIPLOMAS = [
@@ -64,16 +67,7 @@ const FAMA = [`/img/inspiraciones/impulso/fama-1.webp`, `/img/inspiraciones/impu
 
 export default function Impulso() {
   return (
-    <div className="im">
-      <header className="im-head">
-        <a href="#inicio" className="im-logo">Impulso Fitness</a>
-        <div className="im-head__nav">
-          <b>Coach deportivo • Entrenador personal</b>
-          <nav aria-label="Principal"><RollLink label="Inicio" href="#inicio" /> • <RollLink label="Equipo" href="#equipo" /> • <RollLink label="Servicios" href="#servicios" /> • <RollLink label="Contacto" href="#contacto" /></nav>
-        </div>
-        <div className="im-head__datos"><b>+34 600 000 000 • hola@impulso.example</b><span>Calle de Ponzano 41 · 28003 Madrid</span></div>
-        <RollLink href="#contacto" label="Empiezo" className="im-pildora" />
-      </header>
+    <>
 
       <section className="im-hero" id="inicio">
         <h1>Coaching deportivo<br />&amp; nutricional<br />en Chamberí</h1>
@@ -95,7 +89,7 @@ export default function Impulso() {
         <img src={`/img/inspiraciones/impulso/coach.webp`} alt="Tomás, el entrenador, con el polo del estudio" />
         <div>
           <p>Mejora tu salud y tu rendimiento con un entrenador personal privado en Chamberí, titulado y reconocido por las aseguradoras.</p>
-          <RollLink href="#contacto" label="Pasa a la acción" className="im-pildora" />
+          <RollLink href={impulsoHref("reservar?servicio=prueba")} label="Pasa a la acción" className="im-pildora" />
           <Cinta texto="Entrenamiento personal · Nuestros colaboradores · Seguimiento a distancia ·" className="im-cinta--fina" />
           <LogoCloud label="" brands="TheMeal, Clínica Alba, asca, qualitop, Mutua Sur, Q Vida" variant="outline" className="im-logos" />
         </div>
@@ -105,16 +99,16 @@ export default function Impulso() {
       <Cruza texto="Estudio privado de alto nivel en Chamberí" />
       <section className="im-estudio" id="equipo">
         <p>En nuestro estudio privado de Chamberí entrenas en un espacio solo para ti. Te dejamos <b>material de alta gama</b> de musculación y cardio, base de un <b>programa a medida</b> según tus objetivos y tus necesidades.</p>
-        <RollLink href="#contacto" label="Pide tu sesión de prueba" className="im-pildora" />
+        <RollLink href={impulsoHref("reservar?servicio=prueba")} label="Pide tu sesión de prueba" className="im-pildora" />
         <div className="im-fichas">
           {FICHAS.map((f) => (
-            <figure key={f.n} className="im-ficha">
+            <a key={f.n} href={impulsoHref(`equipo#${f.ancla}`)} className="im-ficha">
               <div className="im-ficha__marco" style={{ backgroundImage: `url(${f.img})` }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={f.img} alt="" loading="lazy" />
               </div>
-              <figcaption><span>{f.titulo}</span><span>({f.n})</span></figcaption>
-            </figure>
+              <span className="im-ficha__pie"><span>{f.titulo}</span><span>({f.n})</span></span>
+            </a>
           ))}
         </div>
       </section>
@@ -124,13 +118,7 @@ export default function Impulso() {
       <Cinta texto="Máquinas de cardio modernas · Material de musculación de alta gama · Consulta inicial ·" />
       <section className="im-servicios">
         <ProjectList
-          items={[
-            { title: "Entrenamiento personal", meta: "Un coach privado en Chamberí solo para ti", image: `/img/inspiraciones/impulso/servicio-personal.webp` },
-            { title: "Entrenamiento en pareja", meta: "Coaching a dos: eficaz y motivador", image: `/img/inspiraciones/impulso/servicio-pareja.webp` },
-            { title: "Grupo pequeño", meta: "Grupos de 3 a 5 en una sala privada", image: `/img/inspiraciones/impulso/servicio-grupo.webp` },
-            { title: "Nutrición", meta: "Tu plan de comidas a medida", image: `/img/inspiraciones/impulso/servicio-nutricion.webp` },
-            { title: "Seguimiento a distancia", meta: "Programa y seguimiento en línea", image: `/img/inspiraciones/impulso/servicio-distancia.webp` },
-          ]}
+          items={SERVICIOS.map((x) => ({ title: x.titulo, meta: x.meta, image: x.img, href: impulsoHref(`servicios/${x.id}`) }))}
           className="im-lista"
         />
       </section>
@@ -141,7 +129,7 @@ export default function Impulso() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`/img/inspiraciones/impulso/manifiesto-b.webp`} alt="" className="im-manifiesto__b" />
         <p>En Impulso te proponemos un entrenamiento personal y un acompañamiento nutricional a medida en nuestro estudio privado de 70 m² en Chamberí.</p>
-        <RollLink href="#tarifas" label="Empieza tu transformación" className="im-pildora" />
+        <RollLink href={impulsoHref("tarifas")} label="Empieza tu transformación" className="im-pildora" />
       </section>
 
       <section className="im-diplomas" aria-labelledby="im-diplomas">
@@ -166,7 +154,7 @@ export default function Impulso() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`/img/inspiraciones/impulso/reto-detalle.webp`} alt="" />
         <p>Doce semanas, tres sesiones a la semana y un plan de comidas que puedas cumplir. Al final medimos juntos lo que ha cambiado.</p>
-        <RollLink href="#contacto" label="Me apunto" className="im-pildora" />
+        <RollLink href={impulsoHref("reto")} label="Me apunto" className="im-pildora" />
       </section>
 
       <section className="im-bienestar">
@@ -214,8 +202,9 @@ export default function Impulso() {
           marker="check"
           badge=""
           variant="minimal"
-          cta="Reservar"
+          cta="Ver tarifas"
           className="im-precios"
+          ctaHref={impulsoHref("tarifas")}
           plans={"Coach privado|95 €|/ sesión|no|12 sesiones · 95 € la sesión;24 sesiones · 90 € la sesión;36 sesiones · 85 € la sesión\nDuo Training|120 €|/ sesión|no|12 sesiones · 120 € la sesión;24 sesiones · 110 € la sesión;Para dos personas\nPack Impulso|1.950 €|/ 3 meses|si|32 sesiones;Plan nutricional incluido;Seguimiento a distancia\nNutrición|90 €|/ consulta|no|Análisis detallado;Evaluación del estado de salud;Plan nutricional a medida\nConsulta|65 €|/ consulta|no|Ajuste del plan;Motivación y apoyo;Revisión de resultados\nSeguimiento a distancia|A medida||no|Programa personalizado;Vídeos de ejercicios;Explicación de los ejercicios"}
         />
       </section>
@@ -249,11 +238,6 @@ export default function Impulso() {
         </div>
       </section>
 
-      <footer className="im-pie">
-        <span>+34 600 000 000</span>
-        <RollLink href="#contacto" label="Me apunto al reto" className="im-pildora" />
-        <span>hola@impulso.example</span>
-      </footer>
-    </div>
+    </>
   );
 }

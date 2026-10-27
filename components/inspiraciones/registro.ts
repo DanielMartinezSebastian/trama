@@ -12,6 +12,7 @@ import { PAGINAS as melenaPaginas } from "./melena/data";
 import { PAGINAS as raizPaginas } from "./raiz/data";
 import { PAGINAS as nuraPaginas } from "./nura/data";
 import { PAGINAS as nucleoPaginas } from "./nucleo/data";
+import { PAGINAS as impulsoPaginas } from "./impulso/data";
 
 export type Replica = {
   slug: string;
@@ -50,7 +51,7 @@ export const REPLICAS: Replica[] = [
   { slug: "raiz", nombre: "Raíz", ref: "Marco Ambrosi", url: "https://www.marcoambrosi.salon/", ficha: "§3.2", sector: "peluquería", firma: "oscuro y cobre, antes y después", hecha: true, guia: "barberia", acento: "#b87333", paginas: raizPaginas, transicion: "fade" },
   { slug: "patron", nombre: "Patrón", ref: "Don Barber & Groom", url: "https://don-barber.gr/en", ficha: "§3.2", sector: "peluquería", firma: "gótica condensada, cinta y la familia", hecha: true, guia: "barberia", acento: "#c9a227", paginas: patronPaginas, transicion: "slide" },
   { slug: "nucleo", nombre: "Núcleo", ref: "Core Atelier Pilates", url: "https://coreatelierpilates.com/", ficha: "§3.4", sector: "gimnasio", firma: "acordeón de aparatos con la foto fija", hecha: true, guia: "boutique", acento: "#744c32", scroll: "snappy", paginas: nucleoPaginas, transicion: "fade" },
-  { slug: "impulso", nombre: "Impulso", ref: "Essor Fitness", url: "https://coachsportifecublens.com/", ficha: "§3.4", sector: "gimnasio", firma: "negro absoluto y titular a todo el ancho", hecha: true, guia: "club", acento: "#f2f2f2", scroll: "snappy" },
+  { slug: "impulso", nombre: "Impulso", ref: "Essor Fitness", url: "https://coachsportifecublens.com/", ficha: "§3.4", sector: "gimnasio", firma: "negro absoluto y titular a todo el ancho", hecha: true, guia: "club", acento: "#f2f2f2", scroll: "snappy", paginas: impulsoPaginas, transicion: "slide" },
   { slug: "vive", nombre: "Vive", ref: "FIT AND YOU", url: "https://fit-and-you.webflow.io/", ficha: "§3.4", sector: "gimnasio", firma: "condensada naranja, damero y tarjetas ladeadas", hecha: true, guia: "club", acento: "#ff6a1a" },
   { slug: "talla", nombre: "Talla", ref: "Skulpt Fitness", url: "https://www.skulptfitness.nl", ficha: "§3.4", sector: "gimnasio", firma: "lima, bordes curvos y menú en columnas verticales", hecha: true, guia: "club", acento: "#cef952" },
   { slug: "lobo", nombre: "Lobo", ref: "Fenriz Gym", url: "https://www.fenriz-gym.com/", ficha: "§3.4", sector: "gimnasio", firma: "B/N con un degradado de marca", hecha: true, guia: "club", acento: "#e2462b" },
