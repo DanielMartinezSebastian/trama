@@ -105,11 +105,19 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
 
 ### Cierre
 
-- [ ] **E10 · Guías de estilo nuevas** en docs/16 (una por familia: salón, gimnasio, academia, producto de marca), con
-  sus tokens y un ejemplo con piezas del kit.
-- [ ] **E11 · Modelos por sector**: recetas en `CATALOG.md` («Landings de referencia» o «Webs completas») para
-  peluquería, gimnasio y academia, montadas con Secciones del kit; o, si las demos de la otra sesión ya lo cubren,
-  mejorarlas con lo aprendido.
+- [x] **E10 · Guías de estilo nuevas** (27-10-2026): siete guías de sector en `STYLE_GUIDES` (salón editorial claro,
+  barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de
+  marca). Los valores salen de los pares medidos. Se ven con sus composiciones y relatos en `/guias` y dan 15/15 en
+  `refs:probe --guides`, con tres excepciones medidas (docs/16 §5.1b).
+- [x] **E11 · Modelos por sector** (27-10-2026): «Recetas por sector» en `CATALOG.md`, generadas desde
+  `lib/catalog/sectores.ts`. Hay ocho recetas: salón, barbería, club, estudio boutique, escuela, academia de autor,
+  producto de marca y agencia. Cada una lleva:
+  - su guía de estilo;
+  - el orden de secciones con las piezas que las montan;
+  - la llamada fija;
+  - lo que no hay que olvidar, que es lo que delató el par;
+  - dónde verla hecha.
+  `npm run catalog` comprueba que existan las piezas, las guías, las réplicas y las webs. AGENTS.md la cita.
 - [~] **E12 · Piezas nuevas o ampliadas** que salgan de las síntesis, con la lista de versatilidad de docs/36 §1,
   catálogo y docs/README.
   - [x] `TeamSection`: foto con marco (`shape`: portrait, square, circle, oval), tratamiento (`photoTone`: color, mono,
@@ -175,8 +183,13 @@ el kit si es versátil (E12). Fotos provisionales del repo hasta que lleguen las
   - `TeamSection rowLink`;
   - `FullscreenMenu triggerHover="fill"`;
   - la letra Antonio.
-- [ ] **E14e · Movimiento por scroll** en las que lo tienen (Rendezvous, Essor, Il Colorista, Peppa Sauce): `cine:capture`
-  + `cine:compare` sobre el par.
+- [x] **E14e · Movimiento por scroll** (27-10-2026, docs/53 §3.2): cuándo entra cada texto, comparado por posición.
+  - Peppa Sauce: 3 % de error medio.
+  - Essor: 2 %.
+  - Rendezvous: 5 %, y se añadió que los gigantes suben al entrar.
+  - Il Colorista: no medible, porque su página sale con opacidad 0 para el gancho del DOM.
+  - Las herramientas ganaron `--emparejar posicion`, `--avisos`, que se salte la espera de una escena que no existe y
+    dos arreglos en `dom.js`.
 - [ ] **E14f · Páginas internas**: un par por página que importe (la de trabajo de K72, la carta de Il Colorista).
 
 ## 3. Conclusiones por web

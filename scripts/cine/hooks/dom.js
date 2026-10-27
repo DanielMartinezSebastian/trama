@@ -77,7 +77,8 @@
       if (e === b || b.contains(e) || e.contains(b)) break;
       const t = e.tagName;
       const fondo = getComputedStyle(e).backgroundColor;
-      const alfa = /rgba([^)]*,s*([d.]+))/.exec(fondo);
+      // (la expresión había perdido sus barras al escribirse desde un script: nunca coincidía, 27-10-2026)
+      const alfa = /rgba\([^)]*,\s*([\d.]+)\)/.exec(fondo);
       // un lienzo no cuenta: puede ser transparente donde no pinta (lo decide el análisis con los píxeles)
       const opaco = t === "IMG" || t === "VIDEO" || (fondo !== "transparent" && (!alfa || parseFloat(alfa[1]) > 0.5) && fondo !== "rgba(0, 0, 0, 0)");
       if (opaco && parseFloat(getComputedStyle(e).opacity) > 0.3) {
@@ -120,6 +121,9 @@
           const m = /blur\(([\d.]+)px\)/.exec(ce.filter || "");
           if (m) blur = Math.max(blur, parseFloat(m[1]));
         }
+        // un panel cerrado (el de preferencias de cookies de Il Colorista) no es candidato aunque sus letras caigan sobre
+        // píxeles del mismo color: opacidad efectiva 0, o dentro de algo oculto, inerte o hidden
+        if (op === 0 || b.closest("[aria-hidden='true'], [inert], [hidden]")) continue;
         if (cs.overflow === "hidden" || cs.overflowY === "hidden") clip = clip || 0.5;
         const txt = (b.textContent || "").replace(/\s+/g, " ").trim().slice(0, 48);
         // la caja real de las letras (se mueven con su transform): un bloque cuyas letras están fuera de su máscara no se

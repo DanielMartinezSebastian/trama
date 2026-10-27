@@ -1,7 +1,7 @@
 /**
  * Comparación de dos capturas (docs/26 §5): la referencia y su recreación en el banco, capturadas igual con `cine:capture`.
  *
- *   npm run cine:compare -- <captura-referencia> <captura-banco> [--out carpeta]
+ *   npm run cine:compare -- <captura-referencia> <captura-banco> [--out carpeta] [--emparejar posicion]
  *
  * Mide, por progreso normalizado del reloj (segundos o scroll de 0 a 1):
  *   - cámara: error de posición (en % del tamaño de la escena), de fov y de dirección; la forma del avance (easing);
@@ -210,10 +210,12 @@ const dinamica = (() => {
 /*
  * Texto: las apariciones de la referencia emparejadas con las del banco por su texto (sin mayúsculas ni espacios). El
  * momento se compara en fracción del recorrido (scroll máximo o duración), para que dos páginas de largo distinto se
- * puedan comparar; faltar un texto cuenta como error completo.
+ * puedan comparar; faltar un texto cuenta como error completo. Con `--emparejar posicion` (réplicas traducidas, docs/53
+ * §3.2) cada aparición se empareja con la del banco más cercana en el recorrido y de cuerpo parecido, aunque diga otra
+ * cosa: lo que se compara es cuándo y cómo entra cada texto, no qué dice.
  */
 const texto = (() => {
-  type Ap = { texto: string; entra: number; scrollEntra: number | null; como: string[]; dura: number; curva: string | null };
+  type Ap = { texto: string; entra: number; scrollEntra: number | null; como: string[]; dura: number; curva: string | null; cuerpo?: number };
   const leer = (d: string): Ap[] => (existsSync(join(d, "relato.json")) ? JSON.parse(readFileSync(join(d, "relato.json"), "utf8")) : []);
   // --tramo-scroll a-b: solo las apariciones de la referencia que entran en ese tramo de scroll (la sección estudiada; el
   // resto de la página no está en el banco)
@@ -226,10 +228,28 @@ const texto = (() => {
   // para las dos (las páginas pueden tener largos distintos)
   const maxRef = Math.max(...ref.ms.map((m) => m.scroll?.max ?? 0));
   const frac = (c: Cap, a: Ap) => (maxRef > 0 && a.scrollEntra != null ? a.scrollEntra / maxRef : a.entra / Math.max(1e-6, c.ms[c.ms.length - 1]?.t ?? 1));
+  const porPosicion = opt("--emparejar", "texto") === "posicion";
+  const usadas = new Set<Ap>();
+  // por posición: la aparición libre del banco que entra más cerca en el recorrido (≤ 12 %) con un cuerpo parecido (el
+  // logaritmo de la razón de cuerpos pesa la mitad que la distancia; más de 1,6 veces de diferencia no empareja)
+  const cercana = (a: Ap) => {
+    let mejor: Ap | undefined, coste = Infinity;
+    for (const x of rb) {
+      if (usadas.has(x)) continue;
+      const d = Math.abs(frac(ref, a) - frac(ban, x));
+      const talla = Math.abs(Math.log((x.cuerpo || 16) / (a.cuerpo || 16)));
+      // un titular no se empareja con un dato pequeño: como mucho 1,6 veces de diferencia de cuerpo
+      if (d > 0.12 || talla > Math.log(1.6)) continue;
+      const c = d + 0.5 * talla;
+      if (c < coste) (coste = c), (mejor = x);
+    }
+    return mejor;
+  };
   const filas = ra.map((a) => {
-    const b = rb.find((x) => norm(x.texto) === norm(a.texto));
-    if (!b) return { texto: a.texto, falta: true, dMomento: 1, dDura: 1, como: false };
-    return { texto: a.texto, falta: false, dMomento: Math.abs(frac(ref, a) - frac(ban, b)), dDura: Math.abs(a.dura - b.dura) / Math.max(0.5, a.dura, b.dura), como: a.como.join("+") === b.como.join("+") };
+    const b = porPosicion ? cercana(a) : rb.find((x) => norm(x.texto) === norm(a.texto));
+    if (!b) return { texto: a.texto, con: "", falta: true, dMomento: 1, dDura: 1, como: false };
+    usadas.add(b);
+    return { texto: a.texto, con: porPosicion ? b.texto : "", falta: false, dMomento: Math.abs(frac(ref, a) - frac(ban, b)), dDura: Math.abs(a.dura - b.dura) / Math.max(0.5, a.dura, b.dura), como: a.como.join("+") === b.como.join("+"), comoRef: a.como.join("+"), comoBan: b.como.join("+") };
   });
   const n = filas.length;
   const faltan = filas.filter((f) => f.falta).length;
@@ -523,7 +543,7 @@ const md = [
   ``,
   imagen ? `## Imagen\n\n- Luminancia ${imagen.dLuma >= 0 ? "+" : ""}${imagen.dLuma.toFixed(3)} · recorte ${(imagen.dRecorte * 100).toFixed(2)} pt · contraste ${imagen.dContraste.toFixed(3)} · saturación ${imagen.dSaturacion.toFixed(3)} · viñeta ${imagen.dVineta.toFixed(3)} · ΔE de la paleta ${imagen.deltaE.toFixed(1)}\n` : `## Imagen\n\n- Sin datos: ejecuta \`cine:analyze\` en las dos capturas.\n`,
   texto
-    ? `## Texto\n\n- ${texto.apariciones} apariciones en la referencia · faltan ${texto.faltan} · momento ${Math.round(texto.errorMomento * 100)} % del recorrido · duración ${Math.round(texto.errorDuracion * 100)} % · entran distinto ${Math.round(texto.comoDistinto * 100)} %\n\n| Texto | Momento | Duración | Cómo |\n|---|---|---|---|\n${texto.filas.map((f) => `| ${f.texto.slice(0, 36)} | ${f.falta ? "falta" : Math.round(f.dMomento * 100) + " %"} | ${f.falta ? "—" : Math.round(f.dDura * 100) + " %"} | ${f.falta ? "—" : f.como ? "igual" : "distinto"} |`).join("\n")}\n`
+    ? `## Texto\n\n- ${texto.apariciones} apariciones en la referencia · faltan ${texto.faltan} · momento ${Math.round(texto.errorMomento * 100)} % del recorrido · duración ${Math.round(texto.errorDuracion * 100)} % · entran distinto ${Math.round(texto.comoDistinto * 100)} %\n\n| Texto | Momento | Duración | Cómo |\n|---|---|---|---|\n${texto.filas.map((f) => `| ${f.texto.slice(0, 36)}${f.con ? ` ↔ ${f.con.slice(0, 30)}` : ""} | ${f.falta ? "falta" : Math.round(f.dMomento * 100) + " %"} | ${f.falta ? "—" : Math.round(f.dDura * 100) + " %"} | ${f.falta ? "—" : f.como ? "igual" : `distinto (${"comoRef" in f ? f.comoRef : ""} → ${"comoBan" in f ? f.comoBan : ""})`} |`).join("\n")}\n`
     : "",
   dinamica
     ? `## Dinámica de ${dinamica.pieza}\n\n| Serie | Error | Máximo ref | Máximo banco |\n|---|---|---|---|\n${(["velocidad", "guinada", "cabeceo", "altura"] as const).map((k) => `| ${k} | ${Math.round((dinamica.errores as Record<string, number>)[k] * 100)} % | ${dinamica.maximos[k][0].toFixed(2)} | ${dinamica.maximos[k][1].toFixed(2)} |`).join("\n")}\n`

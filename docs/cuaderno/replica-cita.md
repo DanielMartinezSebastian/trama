@@ -81,6 +81,13 @@ de estilos y la tira del original. Informe en `.refs3d/pares/cita/par.md`.
 - La trampa de los heredocs de Bash con Python volvió: `\n` acabó en salto de línea real dentro de una cadena. Los
   scripts de edición se escriben en un archivo.
 
+## Movimiento por scroll (E14e, 27-10-2026)
+
+`cine:capture --drive scroll` de las dos y `cine:compare --emparejar posicion` (docs/53 §3.2): los textos entran en el
+mismo punto del recorrido (5 % de error medio). Rendezvous hace **subir** sus titulares y gigantes al entrar, y Cita solo
+los hacía aparecer: ahora suben con `Reveal` (deslizamiento hacia arriba). El titular de la portada aún se mide como
+«aparece», porque el `Reveal` de montaje termina antes de empezar la grabación; en el original la subida llega más tarde.
+
 ## Siguiente
 
 - La tarjeta naranja con el horario que se abre en cada local («+»).

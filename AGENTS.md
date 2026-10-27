@@ -36,6 +36,9 @@ más un sitio que la enseña. Dos tipos de tarea:
    «Landings de referencia» de `CATALOG.md` y abre el archivo de la landing solo para copiar estructura. Para una web
    de varias páginas (blog, tienda con carrito, servicios con chatbot, fabricante, portfolio minimalista) parte de
    «Webs completas de referencia» (`/sitios/<slug>`, `components/sites/`; ver `docs/03-webs-completas.md`).
+   Para un **negocio de un sector** (peluquería, barbería, gimnasio, estudio boutique, academia, producto de marca,
+   agencia), parte de «Recetas por sector» de `CATALOG.md`: guía de estilo, orden de secciones con sus piezas, llamada
+   fija y lo que no hay que olvidar, medido en las réplicas del laboratorio.
 4. **Pasa siempre las props de texto**: los defaults son copy de demostración (escuela de surf…). Pasa `""` para
    ocultar un texto opcional.
 5. Tema = tokens CSS `--bg --fg --mut --acc --acc2 --card --ln --r` en un contenedor; estilo = prop `variant`

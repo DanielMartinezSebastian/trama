@@ -27,6 +27,8 @@
  *   --espera 8                    segundos de tiempo real antes de empezar (con --clock-later): pantallas de carga y
  *                                 cargadores que cuentan con el reloj y se atascan con el virtual
  *   --assets                      descarga los recursos 3D (GLB, HDR, KTX2…) a la carpeta de la captura, solo para estudio
+ *   --avisos                      acepta los avisos de cookies antes de grabar (webs normales: si no, el aviso sale en
+ *                                 el relato y tapa la página; docs/53 §3.3)
  *   --slug nombre --out carpeta   salida (por defecto .refs3d/<slug>/<fecha>)
  *
  * Salida: timeline.jsonl (un estado por fotograma), inventario.json (escena completa al principio, en medio y al final),
@@ -39,7 +41,7 @@ import { join, resolve } from "node:path";
 import { chromium } from "playwright";
 import { chromiumPath } from "../chromium-path.mts";
 import { fichaDesdeCaptura, type Inventario, type Muestra } from "./lib.mts";
-import { MOVIL } from "./navegador.mts";
+import { MOVIL, aceptarCookies } from "./navegador.mts";
 
 const argv = process.argv.slice(2);
 const flag = (n: string) => argv.includes(n);
@@ -153,7 +155,13 @@ while (Date.now() - t0 < 60_000) {
     stableSince = Date.now();
   }
   if (n > 0 && Date.now() - stableSince > 1500) break;
+  // una web sin lienzo (DOM) no va a tener escena: a los 3 s se sigue en vez de esperar el plazo entero
+  if (n === 0 && Date.now() - t0 > 3000 && !(await page.evaluate(() => document.querySelector("canvas")))) break;
   await page.waitForTimeout(250);
+}
+if (flag("--avisos")) {
+  const n = await aceptarCookies(page, 8000);
+  if (n) console.log(`  avisos de cookies aceptados: ${n}`);
 }
 await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 console.log(`  escena lista: ${last} ${last === 1 ? "(dibujos en la API gráfica)" : "mallas"} (${((Date.now() - t0) / 1000).toFixed(1)} s)`);

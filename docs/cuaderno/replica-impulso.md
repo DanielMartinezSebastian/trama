@@ -97,6 +97,12 @@ La sonda mejoró al medir este par:
 - El kit ya tenía `SmoothScroll` y `RollLink`. Antes de copiar un gesto, hay que buscarlo por su efecto («rueda»,
   «suaviza») y no por su nombre en la web original.
 
+## Movimiento por scroll (E14e, 27-10-2026)
+
+Con `cine:compare --emparejar posicion` (docs/53 §3.2), los textos entran en el mismo punto del recorrido que en Essor
+(**2 %** de error medio), con los titulares que cruzan fijados. Solo la nota de estrellas sube en el original y aparece
+en la réplica.
+
 ## Siguiente
 
 - La pestaña fija «Honors» de la izquierda es de Awwwards: no se replica.

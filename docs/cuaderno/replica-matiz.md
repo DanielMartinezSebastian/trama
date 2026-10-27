@@ -89,6 +89,18 @@ La sonda mejoró al medir este par:
 - La medida se puede equivocar de forma convincente: un 12 % de «negro» resultó ser un color mal leído y el fondo de la
   página anfitriona. Antes de corregir la réplica, hay que buscar qué elemento da cada valor.
 
+## Movimiento por scroll (E14e, 27-10-2026)
+
+**No medible con las herramientas actuales.** El relato del original salió primero lleno del panel de cookies, y después,
+al filtrar lo invisible, vacío.
+- Las herramientas ganaron tres arreglos con esta web:
+  - `--avisos`, que espera al aviso que sale con temporizador y lo pulsa con un clic real;
+  - `dom.js` descarta los bloques con opacidad efectiva 0 o dentro de algo oculto;
+  - el análisis borra el relato anterior si el nuevo sale vacío.
+- Pero en Il Colorista todos los bloques salen con opacidad efectiva 0 aunque se vean, probablemente por la envoltura de
+  su librería de transiciones (Highway).
+- Queda para una sonda propia de esa web.
+
 ## Siguiente
 
 - La transición entre páginas con la marca en el centro (E12).

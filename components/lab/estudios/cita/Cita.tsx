@@ -4,6 +4,7 @@ import { useState } from "react";
 import DeviceMockup from "@/components/ui/DeviceMockup";
 import FAQSection from "@/components/ui/FAQSection";
 import QRCode from "@/components/ui/QRCode";
+import Reveal from "@/components/ui/Reveal";
 import ScrollExpand from "@/components/ui/ScrollExpand";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import "./cita.css";
@@ -48,7 +49,9 @@ export default function Cita() {
       </header>
 
       <section className="ci-hero" id="inicio">
-        <h1>Barberías de Madrid <em>especializadas en los cortes cortos más actuales</em></h1>
+        <Reveal kind="slide" direction="up" distance={60} trigger="mount" duration={0.9}>
+          <h1>Barberías de Madrid <em>especializadas en los cortes cortos más actuales</em></h1>
+        </Reveal>
       </section>
       <ScrollExpand length={1.6} from={{ width: "11vw", height: "7vw" }} offset={{ x: "0vw", y: "-30vh" }} inset={20} radius={[4, 14]} className="ci-reel" overlay={<span className="ci-play" aria-hidden>▶</span>}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -57,11 +60,11 @@ export default function Cita() {
 
       <section className="ci-placer">
         <p className="ci-maquina">No va solo de cortarse el pelo. Va de regalarse un rato a uno mismo en mitad de una semana con prisas.</p>
-        <h2><em>Va del gusto de sentirse bien</em></h2>
+        <Reveal kind="slide" direction="up" distance={60} duration={0.9}><h2><em>Va del gusto de sentirse bien</em></h2></Reveal>
       </section>
 
       <section className="ci-locales" id="locales">
-        <h2 className="ci-gigante"><em>Locales</em><sup>5</sup></h2>
+        <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante"><em>Locales</em><sup>5</sup></h2></Reveal>
         <div className="ci-locales__rejilla">
           {LOCALES.map((l) => (
             <details key={l.nombre} className="ci-local">
@@ -78,11 +81,11 @@ export default function Cita() {
       </section>
 
       <section className="ci-frase">
-        <h2>Cuando te ves bien, <em>te sientes</em> <em className="ci-naranja">bien</em></h2>
+        <Reveal kind="slide" direction="up" distance={60} duration={0.9}><h2>Cuando te ves bien, <em>te sientes</em> <em className="ci-naranja">bien</em></h2></Reveal>
       </section>
 
       <section className="ci-clientes">
-        <h2 className="ci-gigante ci-gigante--asoma"><em>Clientes</em></h2>
+        <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante ci-gigante--asoma"><em>Clientes</em></h2></Reveal>
         <div className="ci-resenas">
           <div className="ci-flechas">
             <button type="button" aria-label="Anterior" onClick={() => setR((r + RESENAS.length - 1) % RESENAS.length)}>←</button>
@@ -102,7 +105,7 @@ export default function Cita() {
       </section>
 
       <section className="ci-app-sec" id="app">
-        <h2 className="ci-gigante ci-gigante--asoma"><em>Nuestra app</em></h2>
+        <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante ci-gigante--asoma"><em>Nuestra app</em></h2></Reveal>
         <div className="ci-app-grid">
           <ol className="ci-pasos">
             <li><b>1</b>Cambia o anula tu cita sin llamar por teléfono.</li>
@@ -128,7 +131,7 @@ export default function Cita() {
       </section>
 
       <section className="ci-papel">
-        <h2 className="ci-gigante"><em>Papel</em></h2>
+        <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante"><em>Papel</em></h2></Reveal>
         <div className="ci-papel__rejilla">
           {PAPEL.map((p) => (
             <article key={p.titulo}>
@@ -142,7 +145,7 @@ export default function Cita() {
 
       {/* en negro, como el final de Rendezvous: preguntas en dos columnas, reserva y el pie con foto */}
       <section className="ci-negro">
-        <h2 className="ci-gigante"><em>Preguntas</em></h2>
+        <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante"><em>Preguntas</em></h2></Reveal>
         <div className="ci-faq">
           <FAQSection kicker="" title="Servicios y condiciones" layout="stack" presentation="lines" align="left" defaultOpen={-1} variant="minimal"
             items={"¿Atendéis sin cita?|Si hay un sillón libre, sí; con la app te aseguras la hora.\n¿Los precios son iguales en todos los locales?|Sí, la carta es la misma en los cinco.\n¿Hay un tiempo mínimo entre citas?|No, pero para mantener un degradado recomendamos volver cada tres semanas.\n¿Me lavan el pelo?|Sí, el lavado va incluido en el corte."} />

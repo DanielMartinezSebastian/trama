@@ -61,6 +61,48 @@ export async function botones(page: Page) {
   );
 }
 
+/** botones de avisos de cookies (solo cookies: los de «entrar» o «explorar» de AVISO navegan en una web normal); lo usan
+ * refs:probe y cine:capture --avisos */
+export const COOKIES = /^(accept|accept all|accept cookies|accepter|tout accepter|aceptar|aceptar todo|acepto|accetta|accetta tutti|accetto|akzeptieren|alle akzeptieren|aceitar|agree|i agree|allow|allow all|got it|ok|okay|entendido|zustimmen|zaakceptuj|zaakceptuj wszystkie|akceptuj|accepteren|alles accepteren|acceptera|godkänn|hyväksy)\b/i;
+
+/**
+ * Pulsa los avisos de cookies visibles: solo botones o enlaces que no navegan, de verdad visibles (lo que hay en su centro es
+ * el botón: el «Accetta tutti» del panel de preferencias oculto de Il Colorista tiene `offsetParent` y no se ve) y con un clic de ratón
+ * real en su centro (algunas librerías de consentimiento no atienden a `click()`). Devuelve cuántos pulsó.
+ */
+export async function aceptarCookies(page: Page, esperaMs = 0) {
+  let total = 0;
+  // hay avisos que salen con un temporizador (Il Colorista): se espera a que aparezcan hasta `esperaMs`
+  const hasta = Date.now() + esperaMs;
+  for (let vuelta = 0; vuelta < 3; vuelta++) {
+    const punto = await page.evaluate((re) => {
+      const aviso = new RegExp(re, "i");
+      const b = [...document.querySelectorAll("button, [role=button], a:not([href]), a[href^='#'], a[href^='javascript']")].find((e) => {
+        const r = e.getBoundingClientRect();
+        if (!(r.width > 0 && r.height > 0 && r.top < innerHeight && r.bottom > 0 && aviso.test((e.textContent || "").trim()))) return false;
+        // visible de verdad = lo que hay en su centro es él (checkVisibility falla con avisos que entran con un fundido)
+        const centro = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        return !!centro && (centro === e || e.contains(centro));
+      });
+      if (!b) return null;
+      const r = b.getBoundingClientRect();
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+    }, COOKIES.source);
+    if (!punto) {
+      if (total === 0 && Date.now() < hasta) {
+        vuelta--;
+        await page.waitForTimeout(400);
+        continue;
+      }
+      break;
+    }
+    await page.mouse.click(punto.x, punto.y);
+    total++;
+    await page.waitForTimeout(900);
+  }
+  return total;
+}
+
 /** avisos que hay que pasar para ver la escena: cookies, edad, «entrar», sonido */
 export const AVISO = /^(enter|entrer|entrar|entra|accept|accepter|aceptar|accetta|accetto|akzeptieren|alle akzeptieren|aceitar|agree|ok|yes|oui|sí|start|explore|begin|continue|discover|i agree|allow|got it|enter site|enter experience)\b/i;
 

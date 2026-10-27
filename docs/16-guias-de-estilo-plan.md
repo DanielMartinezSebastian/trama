@@ -149,6 +149,34 @@ Cada guía fija **tinta + papel (+ acento)**, **par tipográfico**, **escala**, 
 | **G7 Editorial cálido** | crema `#FDFBEF` + tinta verde o marrón | serifa display (Gloock / Fraunces) + grotesca (Work Sans / Inter) | 16 vw marca, 300, mayúsculas | margen 48–64 | `ScatterText`, telón de color | C8, C1 · R7, R1 | Belgrade Arbor, Akaru, David Whyte, Iventions | `bosque` / `editorial` |
 | **G8 Lúdico** | pareja de vivos o pastel (lila + rosa, azul + amarillo) | redondeada (Nunito / Bricolage) + pixel o mono | 10–12 vw | libre | juego, pegatinas, sonido opcional | C6 · R9, R6 | Ponpon Mania, Bruno Simon, Lacoste, Hamaca | `piscina` |
 
+### 5.1b Las siete guías de sector (27-10-2026, docs/50 E10)
+
+Salen de las familias del cuaderno del laboratorio (`docs/cuaderno`, docs/53). Sus valores vienen de los pares medidos
+con `refs:probe --par` contra las webs de referencia, no de la memoria. Están en `STYLE_GUIDES` como las ocho primeras:
+se ven en `/guias` y se aplican con `GuideFrame`.
+
+| Guía (`id`) | Tintas | Par tipográfico (libre) | Titular | Espacio y superficie | Movimiento | Referencias medidas |
+|---|---|---|---|---|---|---|
+| **G9 Salón editorial claro** (`salon`) | blanco y `#F4F4F4` + salmón `#F5A490` | Cormorant fina + Manrope ligera | 5 vw, 300, 1,1, sin tracking | margen 24, cabecera 138, sin radio | revelado 1 s `expo.out` | Il Colorista, ALICE, Hair Me Up |
+| **G10 Barbería de carácter** (`barberia`) | hueso `#ECEAE0` + negro + naranja `#FF622B` | Antonio en mayúsculas + Archivo; Playfair para la cursiva | 8,6 vw, 400, 0,9; gigantes a 23,6 vw | margen 16–44, botones en óvalo | 0,25 s `quart.out` | Rendezvous, Don Barber, Marco Ambrosi |
+| **G11 Club de alto contraste** (`club`) | negro + blanco + lima `#CEF952` | Antonio 700 en mayúsculas + Inter | 11 vw, 700, 0,94, −6 % | margen 17–24, píldoras | 0,15 s easeOutCubic (el relleno de K72), texto que rueda | FIT AND YOU, Essor, Skulpt, Fenriz, K72 |
+| **G12 Estudio boutique** (`boutique`) | rosa empolvado `#F7E7DE` + marrón `#744C32` | Cormorant con cursiva + Inter | 5,6 vw, 400, 0,86, −1 % | margen 20–32, píldoras | revelado 1,1 s | Core Atelier |
+| **G13 Academia de autor** (`autor`) | gris `#EDEDED` + naranja `#FF4F28` + verde `#39BE91` | Onest en minúsculas | 6,9 vw, 400, 1, sin tracking | margen hasta 120, sombra dura | 0,2 s | Surfing Academy |
+| **G14 Escuela amarilla** (`escuela`) | blanco + amarillo `#FFE32B` + negro | Space Grotesk en mayúsculas, siempre apretada | 6,7 vw, 500, 0,97, −5 % | margen 16–36, radio 8, sombra dura | 0,15 s | Future London Academy, Honhar |
+| **G15 Producto de marca** (`marca`) | dos tintas: azul noche `#141329` + crema `#FEEEE2` | Archivo 800 + Space Grotesk en mayúsculas | 13 vw (marca 17 vw), 800, 0,85, −3 % | margen 16–36, radio 28, píldoras | 0,25 s | Peppa Sauce |
+
+`npm run refs:probe -- --guides <base>` da **15/15 dentro de rango**. Tres rasgos de sector salen de los rangos de las
+premiadas generalistas y se aceptan como **excepciones medidas**, con su web (`EXCEPCIONES` en `scripts/probe-refs.mts`):
+
+| Guía | Excepción | Web |
+|---|---|---|
+| salón | interlineado del titular 1,1 y texto a 24 px | Il Colorista |
+| academia de autor | margen de 120 px | Surfing Academy |
+| producto de marca | texto de cartel a interlineado 1,2 | Peppa Sauce |
+
+Además, el club y el producto de marca entran en la excepción de peso del titular (condensadas gruesas). Club y barbería
+admiten un titular de hasta 11,5 vw; la escuela y la academia de autor, la sombra dura.
+
 ### 5.2 Fuentes: de las premiadas a libres
 
 Trama solo usa fuentes libres (`lib/ui/fonts.ts`). Lo que ya está cubre G2, G4 y parte de G1, G3 y G7. Faltan:
@@ -212,6 +240,9 @@ Hecho F1–F4, con las decisiones de §7: `/guias` es pública, Fontshare entra 
 - **Chips fuera de la pantalla en móvil.** El bloque de código ensanchaba la columna del grid: `minmax(0, 1fr)` (guía §10).
 - **El sondeo y tsx.** Las funciones que Playwright serializa llevan el `__name()` de esbuild; el script lo define en la página con `addInitScript`.
 - **Titulares mal medidos.** El titular se mide en el primer pantallazo (no la marca del pie), el texto por la moda de los párrafos de hasta 24 px y el margen como el menor desplazamiento que se repite.
+
+**27-10-2026:** siete guías más, de los estudios por sector (§5.1b), con Antonio en `lib/ui/fonts.ts`. `/guias` las
+enseña con sus composiciones y relatos, y `refs:probe --guides` da 15/15 dentro de rango.
 
 **Pendiente:**
 - **F5:** `NavBar layout="split3"`, cinta con ventana de imagen como pieza del kit, `HoldButton`, `BeforeAfter` definitivo (hoy hay una versión mínima en `components/site/guias/parts.tsx`) y calidad por GPU.

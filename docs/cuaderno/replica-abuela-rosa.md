@@ -83,6 +83,12 @@ y la sonda de estilos. Informe en `.refs3d/pares/abuela-rosa/par.md`.
 - El tamaño dominante del texto (el 92 % de los caracteres a 36 px) define la página más que los titulares: con texto
   pequeño, la réplica parecía otra web.
 
+## Movimiento por scroll (E14e, 27-10-2026)
+
+Con `cine:compare --emparejar posicion` (docs/53 §3.2), cada maridaje entra en el mismo punto del recorrido que en Peppa
+Sauce (EGG/HUEVO, CHICKEN/POLLO, STEAK/FILETE, MINT/CEREALES: 0 %), con un **3 %** de error medio en las doce
+apariciones. Tres textos entran de otra forma (suben frente a aparecen).
+
 ## Siguiente
 
 - Cinta vertical en los lados del marco («WTF IS PEPPA SAUCE»).

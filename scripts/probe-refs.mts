@@ -3,7 +3,7 @@
  * rejillas, superficies, elementos fijos y movimiento, en escritorio (1440×900) y móvil (390×844), con capturas.
  *
  *   npm run refs:probe -- https://ejemplo.com https://otra.com        → .refs/<fecha>/datos.json + capturas
- *   npm run refs:probe -- --guides http://localhost:3000               → mide las 8 guías de /guias y las compara con los
+ *   npm run refs:probe -- --guides http://localhost:3000               → mide las guías de /guias y las compara con los
  *                                                                          rangos de las webs premiadas (docs/16 §2)
  *   npm run refs:probe -- --par <url-original> <url-réplica> [--nombre q47]
  *                                                                      → mide las dos y escribe par.md con las diferencias
@@ -23,6 +23,7 @@ import { join } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
 import { STYLE_GUIDES } from "../lib/ui/guides";
 import { chromiumPath } from "./chromium-path.mts";
+import { aceptarCookies } from "./cine/navegador.mts";
 
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(name);
@@ -38,8 +39,6 @@ if (par && !par.every((u) => /^https?:\/\//.test(u ?? ""))) {
   process.exit(1);
 }
 const HOVER = !flag("--no-hover");
-/** botones de avisos de cookies que se aceptan antes de medir (no los de «entrar» o «explorar» del cine: navegan) */
-const COOKIES = /^(accept|accept all|accept cookies|accepter|tout accepter|aceptar|aceptar todo|acepto|accetta|accetta tutti|accetto|akzeptieren|alle akzeptieren|aceitar|agree|i agree|allow|allow all|got it|ok|okay|entendido|zustimmen|zaakceptuj|zaakceptuj wszystkie|akceptuj|accepteren|alles accepteren|acceptera|godkänn|hyväksy)\b/i;
 // tiempo máximo por página y tamaño (escritorio o móvil), en ms: `--limite 240`
 const LIMITE = Number(opt("--limite", "180")) * 1000;
 const WAIT = Number(opt("--wait", guidesBase ? "2500" : "7000"));
@@ -289,18 +288,8 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
   async function medir() {
     await page.goto(t.url, { waitUntil: "domcontentloaded", timeout: 45000 });
     await page.waitForTimeout(WAIT);
-    // avisos de cookies o de edad: se aceptan antes de medir (si no, sus botones salen en el hover y tapan las capturas)
-    for (let vuelta = 0; vuelta < 2; vuelta++) {
-      const n = await page.evaluate((re) => {
-        const aviso = new RegExp(re, "i");
-        // solo botones o enlaces que no navegan: «Explore programs» de Honhar sacaba la sonda de la página
-        const bs = [...document.querySelectorAll("button, [role=button], a:not([href]), a[href^='#'], a[href^='javascript']")].filter((e) => (e as HTMLElement).offsetParent !== null && aviso.test((e.textContent || "").trim()));
-        bs.slice(0, 1).forEach((e) => (e as HTMLElement).click());
-        return bs.length;
-      }, COOKIES.source);
-      if (!n) break;
-      await page.waitForTimeout(900);
-    }
+    // avisos de cookies: se aceptan antes de medir (si no, sus botones salen en el hover y tapan las capturas)
+    await aceptarCookies(page);
     if (SHOTS) await page.screenshot({ path: join(OUT, `${slug}_${tag}.jpg`), type: "jpeg", quality: 60 });
     for (let i = 0; i < 6; i++) {
       await page.mouse.wheel(0, vp.height * 0.9);
@@ -324,25 +313,42 @@ async function measure(browser: Browser, t: Target, vp: { width: number; height:
   }
 }
 
+/** guías de titular condensado (docs/50 E10): el titular puede ir entre 8,5 y 11,5 vw */
+const CONDENSADAS = ["electrico", "club", "barberia"];
+
+/**
+ * Excepciones medidas de las guías de sector (docs/50 E10): rasgos de su familia que salen de los rangos de las premiadas
+ * generalistas, cada uno con la web donde se midió. La regla se da por buena para esa guía.
+ */
+const EXCEPCIONES: Record<string, string[]> = {
+  salon: ["interlineado del titular 0,8–1", "texto 14–20 px"], // Il Colorista: Cormorant a 1,11 y texto a 24 px
+  autor: ["margen lateral 10–80 px o contenido centrado (escritorio)"], // Surfing Academy: 120 px
+  marca: ["interlineado del texto 1,3–1,6"], // Peppa Sauce: texto de cartel a 1,2
+};
+
 /** Rangos de las webs premiadas (docs/16 §2). Cada regla devuelve null si cumple o el motivo si no. */
 function check(d: Data, m: Data | null, g: Target["guide"]) {
   const h = d.biggest[0];
   const rules: [string, string | null][] = [
     ["familias ≤ 3", d.families.length <= 3 ? null : `${d.families.length}: ${d.families.join(", ")}`],
     // dos escalones medidos: titular 3–8 vw y marca 12–18 vw; una marca de borde a borde llega a 23–49 vw (Siena Film Foundation)
-    ["titular 3–8 vw, marca 12–18 vw o de borde a borde ≤ 50 vw", h && ((h.vw >= 3 && h.vw <= 8.5) || (h.vw >= 11.5 && h.vw <= 50)) ? null : `${h?.vw} vw`],
+    // las condensadas de los estudios por sector (club, barbería) llevan el titular a 8,6–11 vw (FIT AND YOU, Rendezvous)
+    ["titular 3–8 vw, marca 12–18 vw o de borde a borde ≤ 50 vw", h && ((h.vw >= 3 && h.vw <= 8.5) || (h.vw >= 11.5 && h.vw <= 50) || (CONDENSADAS.includes(g?.id ?? "") && h.vw <= 11.5)) ? null : `${h?.vw} vw`],
     ["interlineado del titular 0,8–1", h && h.lh >= 0.78 && h.lh <= 1.05 ? null : `${h?.lh}`],
-    ["peso del titular 300–500 (o condensada/lúdica)", h && ((h.weight >= 300 && h.weight <= 520) || ["electrico", "ludico"].includes(g?.id ?? "")) ? null : `${h?.weight}`],
+    ["peso del titular 300–500 (o condensada/lúdica)", h && ((h.weight >= 300 && h.weight <= 520) || ["electrico", "ludico", "club", "marca"].includes(g?.id ?? "")) ? null : `${h?.weight}`],
     ["tracking del titular 0 a −5 %", h && h.ls <= 0.5 && h.ls >= -5.5 ? null : `${h?.ls} %`],
     // sin párrafos largos (p. ej. un relato de mapa o de juego) la regla no aplica
-    ["texto 14–20 px", !d.body || (d.body.size >= 14 && d.body.size <= 20.5) ? null : `${d.body.size} px`],
+    // producto de marca: el texto va a tamaño de cartel (Peppa Sauce, 36 px a 1440)
+    ["texto 14–20 px", !d.body || (d.body.size >= 14 && d.body.size <= 20.5) || (g?.id === "marca" && d.body.size <= 26) ? null : `${d.body.size} px`],
     ["interlineado del texto 1,3–1,6", !d.body || (d.body.lh >= 1.28 && d.body.lh <= 1.62) ? null : `${d.body.lh}`],
     ["margen lateral 10–80 px o contenido centrado (escritorio)", (d.margin >= 10 && d.margin <= 80) || g?.space.margin.startsWith("max(") ? null : `${d.margin} px`],
     ["margen lateral 8–29 px (móvil)", !m || (m.margin >= 8 && m.margin <= 29) ? null : `${m?.margin} px`],
     ["titular móvil 8–16 vw (marca hasta 50)", !m || (m.biggest[0] && m.biggest[0].vw >= 7.5 && m.biggest[0].vw <= 50) ? null : `${m?.biggest[0]?.vw} vw`],
-    ["sombras ≤ 2 (salvo lúdico)", d.surfaces.shadows <= 2 || g?.id === "ludico" ? null : `${d.surfaces.shadows}`],
+    // sombra dura desplazada en la escuela amarilla y la academia de autor (Honhar, Surfing Academy)
+    ["sombras ≤ 2 (salvo lúdico o sombra dura)", d.surfaces.shadows <= 2 || ["ludico", "escuela", "autor"].includes(g?.id ?? "") ? null : `${d.surfaces.shadows}`],
   ];
-  return rules.map(([rule, why]) => ({ rule, ok: why === null, got: why }));
+  const exentas = EXCEPCIONES[g?.id ?? ""] ?? [];
+  return rules.map(([rule, why]) => ({ rule, ok: why === null || exentas.includes(rule), got: why === null ? null : exentas.includes(rule) ? `${why} (excepción medida)` : why }));
 }
 
 mkdirSync(OUT, { recursive: true });

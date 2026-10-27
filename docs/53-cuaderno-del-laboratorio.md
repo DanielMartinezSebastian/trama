@@ -184,6 +184,46 @@ Lo que no mide el par, y se mira con otras herramientas:
 - el menú abierto y las transiciones (fotogramas con Playwright, como en `.refs3d/webs/k72-ca-en/nav/`);
 - las páginas internas (otro par con sus URL).
 
+### 3.2 El movimiento por scroll de un par (E14e)
+
+El par de `refs:probe` mira la página quieta. Para saber **cuándo y cómo entra cada texto** al bajar se usan las
+herramientas de cine, con tres ampliaciones para webs sin 3D y réplicas traducidas:
+
+```bash
+C="--drive scroll --steps 40 --wheel 120 --frames-per-step 6 --cola 1.5 --every 2 --clock-later --espera 6 --avisos"
+npm run cine:capture -- <original> $C --out .refs3d/movimiento/<ref>
+npm run cine:capture -- http://localhost:3020/lab/estudios/<réplica> $C --out .refs3d/movimiento/<réplica>
+npm run cine:analyze -- .refs3d/movimiento/<ref>        # y lo mismo con la réplica: relato.json
+npm run cine:compare -- .refs3d/movimiento/<ref> .refs3d/movimiento/<réplica> --emparejar posicion
+```
+
+| Ampliación | Por qué |
+|---|---|
+| `cine:compare --emparejar posicion` | el relato se emparejaba por texto literal, y una réplica traducida salía «falta» en todo; ahora cada texto se empareja con el más cercano en el recorrido (≤ 12 %) y de cuerpo parecido (≤ 1,6 veces) |
+| `cine:capture --avisos` | el aviso de cookies salía en el relato de Il Colorista y tapaba la página |
+| sin escena, sin espera | una web sin lienzo esperaba 60 s a una escena 3D que no llega; ahora sigue a los 3 s |
+
+La lista de avisos de cookies es una sola (`COOKIES` y `aceptarCookies` en `scripts/cine/navegador.mts`) y la usan las
+dos herramientas. Para que acepte de verdad:
+- solo pulsa un botón que esté de verdad en pantalla (lo que hay en su centro es él), con un clic de ratón real;
+- en la captura, espera hasta 8 s al aviso que sale con temporizador.
+
+**Resultados (E14e):**
+
+| Par | Error medio del momento de entrada | Lo que salió |
+|---|---|---|
+| Abuela Rosa / Peppa Sauce | 3 % | los maridajes entran en el mismo punto; tres textos suben en el original |
+| Impulso / Essor | 2 % | los titulares que cruzan, en su sitio |
+| Cita / Rendezvous | 5 % | Rendezvous sube sus gigantes al entrar: añadido con `Reveal` |
+| Matiz / Il Colorista | — | no medible: el gancho del DOM ve la página con opacidad 0 |
+
+Arreglos en `scripts/cine/hooks/dom.js`:
+- la expresión que leía la transparencia del fondo había perdido sus barras y nunca coincidía;
+- descarta los bloques con opacidad efectiva 0 o dentro de algo oculto, inerte o `hidden`.
+
+`cine:analyze` borra el relato anterior si el nuevo sale vacío: antes se quedaba el viejo, y la comparación leía datos de
+otra captura.
+
 ## 4. Primer ejercicio completo: Q47 frente a K72
 
 | Medida | K72 | Q47 antes | Q47 después |

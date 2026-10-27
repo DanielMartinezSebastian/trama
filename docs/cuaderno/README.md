@@ -3,12 +3,13 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-34 fichas.
+35 fichas.
 
 ## Fichas
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
+| 2026-10-27 | [concepto-guias-de-sector](concepto-guias-de-sector.md) · Siete guías de estilo de sector, de las familias del cuaderno | pieza | hecho | peluquería, barbería, gimnasio, academia, producto, agencia |  | `/guias` |
 | 2026-10-27 | [herramienta-cuaderno](herramienta-cuaderno.md) · El cuaderno del laboratorio | herramienta | hecho |  |  | `/lab/cuaderno` |
 | 2026-10-27 | [herramienta-probe-par](herramienta-probe-par.md) · refs:probe con par, paleta, radios, curvas y hover | herramienta | hecho |  |  | `/lab/cine/archivo/.refs3d/pares` |
 | 2026-10-27 | [pieza-antonio](pieza-antonio.md) · Antonio en el kit, y las letras propias de cada réplica | pieza | hecho | gimnasio, barbería | club de alto contraste, barbería de carácter | `/componentes` |
@@ -160,7 +161,7 @@ Las etiquetas usadas, por campo y por número de fichas. Antes de inventar una, 
 
 ### Sector (`sector`)
 
-gimnasio (11) · peluquería (11) · academia (6) · barbería (5) · agencia (4) · producto (1)
+gimnasio (12) · peluquería (12) · academia (7) · barbería (6) · agencia (5) · producto (2)
 
 ### Familia de estilo (`guia`)
 
@@ -188,11 +189,11 @@ cinta que corre (8) · scroll suavizado (4) · subrayado que crece (4) · texto 
 
 ### Piezas del kit (`piezas`)
 
-TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · FullscreenMenu (4) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · RollLink (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · ProductCard (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
+TeamSection (8) · Marquee (7) · PricingSection (7) · FAQSection (6) · ClassSchedule (5) · FullscreenMenu (4) · SectionHeader (4) · SmoothScroll (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · OpeningHours (3) · QRCode (3) · RollLink (3) · ActionBar (2) · Chart (2) · ContactForm (2) · DatePicker (2) · ProductCard (2) · ShapeMosaic (2) · Stepper (2) · TestimonialSection (2) · BeforeAfter (1) · Carousel (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · GuideFrame (1) · guides (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · ScrollExpand (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
-TeamSection (7) · ClassSchedule (5) · CohortList (4) · FullscreenMenu (4) · SectionHeader (4) · ShapeMosaic (2) · viewTransitions (2) · fonts (1) · NavBar (1) · RollLink (1)
+TeamSection (7) · ClassSchedule (5) · CohortList (4) · FullscreenMenu (4) · SectionHeader (4) · ShapeMosaic (2) · viewTransitions (2) · fonts (1) · guides (1) · NavBar (1) · RollLink (1)
 
 ## Fichas parecidas
 

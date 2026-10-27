@@ -49,6 +49,10 @@ if (relato.length) {
   (auto.medidas as Record<string, unknown>).relato = relato;
   writeFileSync(join(OUT, "relato.json"), JSON.stringify(relato, null, 1));
   console.log(`  relato: ${relato.length} apariciones de texto`);
+} else if (existsSync(join(OUT, "relato.json"))) {
+  // un relato de una captura anterior no puede quedarse: cine:compare lo leería como si fuera de esta
+  rmSync(join(OUT, "relato.json"));
+  console.log("  relato: ninguna aparición de texto (se borra el relato anterior)");
 }
 // la cadena de render leída de la API gráfica (docs/34 §2), en tres momentos: cambia cuando cambia la escena
 const conGl = timeline.filter((m) => m.gl && m.gl.pasadas.length);

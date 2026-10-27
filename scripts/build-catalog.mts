@@ -10,6 +10,8 @@ import { CATEGORIES, STYLES, defaultsOf, snippet, type PropSpec } from "@/lib/ca
 import { catalog } from "@/lib/catalog/catalog";
 import { demos } from "@/lib/demos";
 import { sites } from "@/lib/sites";
+import { RECETAS_SECTOR } from "@/lib/catalog/sectores";
+import { STYLE_GUIDES } from "@/lib/ui/guides";
 import { closure, kitComponents } from "./kit-lib.mts";
 
 const CHECK = process.argv.includes("--check");
@@ -207,6 +209,28 @@ md.push(
   "Sitios de varias páginas (`/sitios/<slug>/…`) con navegación, estado compartido y contenido propio. Marco común en `components/sites/shared.tsx` (tema, enlaces sin recarga, cabecera de página) y registro en `lib/sites/index.ts`. Componentes del kit por número de usos.",
   "",
 );
+// ---------- Recetas por sector (docs/50 E11, lib/catalog/sectores.ts) ----------
+const replicasLab = existsSync("components/lab/estudios/registro.ts") ? [...readFileSync("components/lab/estudios/registro.ts", "utf8").matchAll(/slug: "([^"]+)"/g)].map((m) => m[1]) : [];
+for (const r of RECETAS_SECTOR) {
+  if (!STYLE_GUIDES.some((g) => g.id === r.guia)) errors.push(`receta ${r.id}: la guía «${r.guia}» no está en STYLE_GUIDES`);
+  for (const [, piezas] of r.secciones) for (const c of piezas) if (!byComponent.has(c)) errors.push(`receta ${r.id}: «${c}» no está en el catálogo`);
+  for (const w of r.webs) if (!sites.some((x) => x.slug === w)) errors.push(`receta ${r.id}: la web «${w}» no está en lib/sites`);
+  if (replicasLab.length) for (const x of r.replicas) if (!replicasLab.includes(x)) errors.push(`receta ${r.id}: la réplica «${x}» no está en components/lab/estudios/registro.ts`);
+}
+const recetasMd = [
+  "## Recetas por sector",
+  "",
+  "Para montar la web de un negocio: la guía de estilo de su familia (`GuideFrame guide=\"…\"`, docs/16 §5.1b), las secciones en el orden que se repite en las webs estudiadas (docs/50 §3) con las piezas que las montan, la llamada fija y lo que se olvida al hacerlo de memoria (lo que delató el par medido, docs/53 §4b). Hecho en las réplicas de `/lab/estudios/<slug>` (solo en local) y en las webs completas de `/sitios`. Datos en `lib/catalog/sectores.ts`.",
+  "",
+];
+for (const r of RECETAS_SECTOR) {
+  const g = STYLE_GUIDES.find((x) => x.id === r.guia);
+  recetasMd.push(`### ${r.sector} — guía \`${r.guia}\` (${g?.label ?? ""})`, "", r.cuando, "");
+  r.secciones.forEach(([que, piezas], i) => recetasMd.push(`${i + 1}. ${que}: ${piezas.map((c) => `\`${c}\``).join(", ")}`));
+  recetasMd.push("", `- **Llamada fija**: ${r.llamada}.`, `- **No olvidar**: ${r.noOlvidar.join("; ")}.`, `- **Visto en**: ${[...r.replicas.map((x) => `\`/lab/estudios/${x}\``), ...r.webs.map((w) => `\`/sitios/${w}\``)].join(" · ")}`, "");
+}
+md.push(...recetasMd);
+
 for (const w of siteRecipes) {
   md.push(`### ${w.title} — \`${w.url}\``, "", w.description, "", `Carpeta: \`${w.dir}/\` · ${w.pages.length} páginas: ${w.pages.map((p) => p.title).join(" · ")}`, "", w.components.map((c) => `\`${c.component}\`${c.uses > 1 ? ` ×${c.uses}` : ""}`).join(" · "), "");
 }
