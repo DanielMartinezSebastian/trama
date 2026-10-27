@@ -19,7 +19,7 @@ export type Replica = {
 
 export const REPLICAS: Replica[] = [
   { slug: "matiz", nombre: "Matiz", ref: "Il Colorista", url: "https://ilcolorista.salon/", ficha: "§3.1", sector: "peluquería", firma: "mosaico de formas salmón con fotos que se disuelven en color", hecha: true },
-  { slug: "nura", nombre: "Nura", ref: "ALICE Hair & Art", url: "https://www.alicehairart.se/", ficha: "§3.2", sector: "peluquería", firma: "collage suelto que se desenfoca y una sola letra en mayúsculas", hecha: false },
+  { slug: "nura", nombre: "Nura", ref: "ALICE Hair & Art", url: "https://www.alicehairart.se/", ficha: "§3.2", sector: "peluquería", firma: "collage suelto que se desenfoca y una sola letra en mayúsculas", hecha: true },
   { slug: "cita", nombre: "Cita Barbers", ref: "Rendezvous", url: "https://www.myrendezvous.ca/", ficha: "§3.2", sector: "peluquería", firma: "naranja, serif con cursiva y palabras gigantes", hecha: false },
   { slug: "melena", nombre: "Melena", ref: "Hair Me Up", url: "https://hairmeup.pl", ficha: "§3.2", sector: "peluquería", firma: "arco melocotón y palabras de fondo; salón, tienda y academia", hecha: false },
   { slug: "raiz", nombre: "Raíz", ref: "Marco Ambrosi", url: "https://www.marcoambrosi.salon/", ficha: "§3.2", sector: "peluquería", firma: "oscuro y cobre, antes y después", hecha: false },

@@ -7,6 +7,7 @@ import Desplazable from "@/components/lab/cine/Desplazable";
 /** Cada réplica se carga por separado: abrir una no descarga las otras quince. */
 const PAGINAS: Record<string, ComponentType> = {
   matiz: dynamic(() => import("./matiz/Matiz")),
+  nura: dynamic(() => import("./nura/Nura")),
 };
 
 export const replicaLista = (slug: string) => slug in PAGINAS;
