@@ -125,6 +125,33 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecha (con la fecha y el comm
   - [ ] `PageTransition` con marca en el centro (Il Colorista).
   - [ ] Comprobar si `FeatureExplorer` cubre el acordeón que cambia la foto fija (Core Atelier).
 
+### Réplicas (encargo del 27-10-2026)
+
+> «Completa y revisa todas las webs que añadimos a los estudios y reproduce su temática y estética en conjunto con
+> nuestros componentes; si no existen, valora recrearlos con nuestro estilo de Trama.»
+
+Cada web se reproduce entera en **`/lab/estudios/<slug>`** (`components/lab/estudios/`), con una marca inventada y
+textos propios en español, la estructura, el tono y la estética del original, y piezas del kit; lo que falte se crea en
+el kit si es versátil (E12). Fotos provisionales del repo hasta que lleguen las de Codex
+(`docs/encargo-imagenes-replicas.md`).
+
+- [ ] **E13a · Matiz** (Il Colorista): mosaico de formas (`ShapeMosaic`, nueva), carta de paquetes, menú con filetes.
+- [ ] **E13b · Nura** (ALICE): collage suelto que se desenfoca, una sola letra, equipo en filas.
+- [ ] **E13c · Cita** (Rendezvous): serif con cursiva, vídeo que crece, locales, palabras gigantes, app.
+- [ ] **E13d · Melena** (Hair Me Up): arco, palabras de fondo, servicios numerados, tienda, academia, reserva por salón.
+- [ ] **E13e · Raíz** (Marco Ambrosi): oscuro y cobre, antes y después, comparación, carta «desde», WhatsApp.
+- [ ] **E13f · Patrón** (Don Barber): gótica condensada, cinta, menú lateral, la familia, shop in shop.
+- [ ] **E13g · Núcleo** (Core Atelier): acordeón con foto fija, cursiva serif, sesiones privadas.
+- [ ] **E13h · Impulso** (Essor): negro, titular a todo el ancho, cintas, fichas numeradas.
+- [ ] **E13i · Vive** (FIT AND YOU): condensada naranja, damero, lista de clases gigante, cifras, tarjetas ladeadas.
+- [ ] **E13j · Talla** (Skulpt): lima, bordes curvos, planes mes/año, menú en columnas verticales.
+- [ ] **E13k · Lobo** (Fenriz): B/N con degradado de marca, disciplinas, eventos, horario.
+- [ ] **E13l · Remada** (Surfing Academy): minúsculas, ilustración, viajes por convocatoria (`CohortList`, nueva).
+- [ ] **E13m · Ahora** (Future London Academy): amarillo, muro de profesores, tarjetas solapadas, lista de cursos.
+- [ ] **E13n · Oficio** (Honhar): neobrutalismo amarillo, sellos, programas por promoción.
+- [ ] **E13o · Abuela Rosa** (Peppa Sauce): producto fijo, dos tintas, maridajes gigantes.
+- [ ] **E13p · Q47** (K72): portada sin scroll con reel, menú de filas con marquesina, escalera, catálogo.
+
 ## 3. Conclusiones por web
 
 ### 3.1 Il Colorista Salon — https://ilcolorista.salon/
