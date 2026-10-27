@@ -139,6 +139,7 @@
         "meta-table",
         "opening-hours",
         "class-schedule",
+        "cohort-list",
         "qr-code"
       ]
     },
@@ -14947,6 +14948,63 @@
       ],
       "example": "import ClassSchedule from \"@/components/ui/ClassSchedule\";\n\n<ClassSchedule />",
       "preview": "/componentes#class-schedule"
+    },
+    {
+      "id": "cohort-list",
+      "name": "Programas por convocatoria",
+      "component": "CohortList",
+      "import": "import CohortList from \"@/components/ui/CohortList\";",
+      "category": "datos",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Programas de academia, escuela o viajes con convocatorias: nivel, formato en chips, fechas de cada convocatoria, estado (plazas abiertas, últimas plazas, próximamente) y botón para solicitar plaza. En filas o en tarjetas.",
+      "props": [
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "rows",
+          "label": "Forma",
+          "options": [
+            "rows",
+            "cards"
+          ]
+        },
+        {
+          "key": "cta",
+          "type": "text",
+          "default": "Ver el programa",
+          "label": "Botón"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "example": "import CohortList from \"@/components/ui/CohortList\";\n\n<CohortList />",
+      "preview": "/componentes#cohort-list"
     },
     {
       "id": "menu-list",

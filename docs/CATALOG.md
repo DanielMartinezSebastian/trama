@@ -1272,6 +1272,16 @@ Clases de gimnasio, estudio o academia en los próximos días: filtro por discip
 - Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).
 - Los días se calculan en el navegador para no desajustar la hidratación.
 
+### Programas por convocatoria — `CohortList`
+
+Programas de academia, escuela o viajes con convocatorias: nivel, formato en chips, fechas de cada convocatoria, estado (plazas abiertas, últimas plazas, próximamente) y botón para solicitar plaza. En filas o en tarjetas.
+
+| prop | tipo | default |
+|---|---|---|
+| `layout` | `rows` · `cards` | "rows" |
+| `cta` | text | "Ver el programa" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
 ### Código QR — `QRCode`
 
 Código QR en SVG generado en el propio componente (sin dependencias ni servicios externos; modo byte UTF-8, versiones 1–10, niveles L/M/Q/H). Módulos cuadrados, en puntos (dot matrix) o redondeados, en el color del tema. Para la carta de cada mesa, el enlace de reserva o la ficha de una pieza en el escaparate.

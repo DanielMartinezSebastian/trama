@@ -224,3 +224,38 @@ html:has(.ui-actionbar--fixed.ui-actionbar--always) { scroll-padding-bottom: cal
   .ui-sched__row { grid-template-columns: 64px minmax(0, 1fr); }
   .ui-sched__act { grid-column: 2; justify-items: start; text-align: left; }
 }
+
+/* ---------- CohortList: programas por convocatoria (academias, viajes, cursos por promoción; docs/50 §3.7) ---------- */
+.ui-cohorts { display: grid; width: 100%; min-width: 0; font-family: var(--s-ff); }
+.ui-cohorts--rows { border-top: 1px solid var(--ln); }
+.ui-cohorts--cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+.ui-cohort { display: grid; gap: 14px; min-width: 0; }
+.ui-cohorts--rows .ui-cohort { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) auto; align-items: start; gap: 24px 32px; padding: 26px 0; border-bottom: 1px solid var(--ln); }
+.ui-cohorts--rows .ui-cohort:has(.ui-cohort__img) { grid-template-columns: minmax(140px, 0.6fr) minmax(0, 1.2fr) minmax(0, 1.2fr) auto; }
+.ui-cohorts--cards .ui-cohort { align-content: start; padding: 22px; }
+.ui-cohort__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: calc(var(--r, 12px) * 0.6); }
+.ui-cohort__main { display: grid; gap: 10px; justify-items: start; }
+.ui-cohort h3 { margin: 0; font-size: clamp(20px, 2vw, 28px); line-height: 1.1; }
+.ui-cohort p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--mut); }
+.ui-cohort__kicker { font-size: 11px; color: var(--mut); text-decoration: underline; text-underline-offset: 3px; }
+.ui-cohort__status { padding: 3px 9px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--acc); color: var(--bg); }
+.ui-cohort__status--few { background: color-mix(in srgb, var(--acc) 70%, var(--fg)); }
+.ui-cohort__status--soon { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--ln); }
+.ui-cohort__status--soon::before { content: "● "; color: var(--acc); }
+.ui-cohort__status--closed { background: var(--ln); color: var(--mut); }
+.ui-cohort__levels, .ui-cohort__formats { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.ui-cohort__levels li { padding: 1px 6px; background: var(--fg); color: var(--bg); font-size: 11px; }
+.ui-cohort__formats li { padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 8%, transparent); font-size: 11px; }
+.ui-cohort__includes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 12px; }
+.ui-cohort__dates { display: flex; flex-wrap: wrap; gap: 14px 28px; margin: 0; }
+.ui-cohort__dates div { display: grid; gap: 4px; min-width: 130px; }
+.ui-cohort__dates dt { justify-self: start; padding: 1px 6px; background: var(--fg); color: var(--bg); font-size: 11px; }
+.ui-cohort__dates dd { margin: 0; font-size: 12px; font-variant-numeric: tabular-nums; }
+.ui-cohort__dates dd::before { content: "• "; }
+.ui-cohort__cta { justify-self: start; align-self: start; display: inline-flex; gap: 8px; padding: 10px 18px; background: var(--acc); color: var(--bg); font-size: 13px; font-weight: 700; text-decoration: none; border-radius: var(--s-r, 8px); box-shadow: 3px 3px 0 var(--fg); transition: translate 0.2s, box-shadow 0.2s; }
+.ui-cohort__cta:hover { translate: -2px -2px; box-shadow: 5px 5px 0 var(--fg); }
+.ui-cohort.is-soon .ui-cohort__cta { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
+@media (max-width: 760px) {
+  .ui-cohorts--rows .ui-cohort, .ui-cohorts--rows .ui-cohort:has(.ui-cohort__img) { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .ui-cohort__cta { transition: none; } }

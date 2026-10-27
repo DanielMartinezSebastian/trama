@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ActionBar from "@/components/ui/ActionBar";
+import CohortList from "@/components/ui/CohortList";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
 import MenuList from "@/components/ui/MenuList";
@@ -98,6 +99,26 @@ export const negocio: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: "min(100%, 860px)", padding: 16 }}>
         <ScheduleDemo classes={p.classes as string} layout={p.layout as never} daysAhead={p.daysAhead as number} filters={p.filters as never} bookLabel={p.bookLabel as string} variant={p.variant as never} />
+      </div>
+    ),
+  },
+  {
+    id: "cohort-list",
+    component: "CohortList",
+    path: "@/components/ui/CohortList",
+    name: "Programas por convocatoria",
+    category: "datos",
+    styles: ALL_STYLES,
+    description: "Programas de academia, escuela o viajes con convocatorias: nivel, formato en chips, fechas de cada convocatoria, estado (plazas abiertas, últimas plazas, próximamente) y botón para solicitar plaza. En filas o en tarjetas.",
+    stageHeight: 520,
+    props: [
+      { key: "layout", label: "Forma", type: "select", default: "rows", options: ["rows", "cards"], labels: { rows: "filas con fechas en columnas", cards: "tarjetas" } },
+      { key: "cta", label: "Botón", type: "text", default: "Ver el programa" },
+      variantProp("minimal"),
+    ],
+    render: (p) => (
+      <div style={{ width: "min(100%, 980px)", padding: 16 }}>
+        <CohortList layout={p.layout as never} cta={p.cta as string} variant={p.variant as never} />
       </div>
     ),
   },

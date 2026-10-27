@@ -29,7 +29,7 @@ export const REPLICAS: Replica[] = [
   { slug: "vive", nombre: "Vive", ref: "FIT AND YOU", url: "https://fit-and-you.webflow.io/", ficha: "§3.4", sector: "gimnasio", firma: "condensada naranja, damero y tarjetas ladeadas", hecha: true },
   { slug: "talla", nombre: "Talla", ref: "Skulpt Fitness", url: "https://www.skulptfitness.nl", ficha: "§3.4", sector: "gimnasio", firma: "lima, bordes curvos y menú en columnas verticales", hecha: true },
   { slug: "lobo", nombre: "Lobo", ref: "Fenriz Gym", url: "https://www.fenriz-gym.com/", ficha: "§3.4", sector: "gimnasio", firma: "B/N con un degradado de marca", hecha: true },
-  { slug: "remada", nombre: "Remada", ref: "Surfing Academy", url: "https://surfing.academy/", ficha: "§3.6", sector: "academia", firma: "minúsculas, ilustración de línea y viajes por convocatoria", hecha: false },
+  { slug: "remada", nombre: "Remada", ref: "Surfing Academy", url: "https://surfing.academy/", ficha: "§3.6", sector: "academia", firma: "minúsculas, ilustración de línea y viajes por convocatoria", hecha: true },
   { slug: "ahora", nombre: "Ahora", ref: "Future London Academy", url: "https://futurelondonacademy.co.uk/", ficha: "§3.6", sector: "academia", firma: "amarillo, muro de profesores y tarjetas solapadas", hecha: false },
   { slug: "oficio", nombre: "Oficio", ref: "Honhar", url: "https://honhar.in/", ficha: "§3.6", sector: "academia", firma: "neobrutalismo amarillo y programas por promoción", hecha: false },
   { slug: "abuela-rosa", nombre: "Abuela Rosa", ref: "Peppa Sauce", url: "https://www.peppasauce.love/", ficha: "§3.8", sector: "producto", firma: "el bote fijo y dos tintas", hecha: false },
