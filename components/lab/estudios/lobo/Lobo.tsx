@@ -25,9 +25,7 @@ const EVENTOS = [
   { dia: "Domingos", titulo: "Sparring de Muay Thai", texto: "Sparring de Muay Thai para avanzados.", tono: "#c7a400" },
   { dia: "Domingos", titulo: "Open mat de BJJ", texto: "Esterilla abierta de grappling y BJJ.", tono: "#1747c9" },
 ];
-const HORARIO = "07:00|Muay Thai inicio|60|Muay Thai|Inicio|Rocío|Tatami 1|20|12|1,3,5\n09:30|BJJ técnica|75|BJJ|Todos|Bruno|Tatami 2|16|9|2,4\n12:00|Fitness|45|Fitness|Todos|Dani|Sala|14|6|1,2,3,4,5\n18:00|MMA|90|MMA|Intermedio|Iván|Jaula|16|16|1,3,5\n19:30|Boxeo|60|Boxeo|Todos|Luciano|Ring|20|15|1,2,3,4,5\n20:30|Recuperación|45|Recuperación|Todos|Nico|Sala|12|3|2,4\n11:00|Open mat|120|BJJ|Avanzado|Bruno|Tatami 2|24|10|0
-10:00|Muay Thai sparring|90|Muay Thai|Avanzado|Rocío|Ring|20|8|6,0
-12:00|Boxeo en familia|60|Boxeo|Inicio|Luciano|Ring|20|11|6";
+const HORARIO = "07:00|Muay Thai inicio|60|Muay Thai|Inicio|Rocío|Tatami 1|20|12|1,3,5\n09:30|BJJ técnica|75|BJJ|Todos|Bruno|Tatami 2|16|9|2,4\n12:00|Fitness|45|Fitness|Todos|Dani|Sala|14|6|1,2,3,4,5\n18:00|MMA|90|MMA|Intermedio|Iván|Jaula|16|16|1,3,5\n19:30|Boxeo|60|Boxeo|Todos|Luciano|Ring|20|15|1,2,3,4,5\n20:30|Recuperación|45|Recuperación|Todos|Nico|Sala|12|3|2,4\n11:00|Open mat|120|BJJ|Avanzado|Bruno|Tatami 2|24|10|0\n10:00|Muay Thai sparring|90|Muay Thai|Avanzado|Rocío|Ring|20|8|6,0\n12:00|Boxeo en familia|60|Boxeo|Inicio|Luciano|Ring|20|11|6";
 
 export default function Lobo() {
   const [menu, setMenu] = useState(false);
