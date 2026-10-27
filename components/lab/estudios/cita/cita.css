@@ -1,0 +1,88 @@
+/* Cita Barbers (réplica de Rendezvous, docs/50 §3.2): naranja #ff622b, negro y blanco; una serif de titulares con la
+   cursiva para el énfasis, una sans para el texto y una máquina de escribir en mayúsculas para los datos. */
+.ci {
+  --bg: #ffffff; --fg: #000000; --mut: #555; --acc: #ff622b; --acc2: #000; --card: #f7f7f7; --ln: #000; --r: 6px;
+  --ci-serif: var(--font-playfair-display), serif;
+  --ci-sans: var(--font-inter), sans-serif;
+  --ci-mono: var(--font-ibm-plex-mono), var(--font-space-mono), monospace;
+  background: var(--bg); color: var(--fg); font: 500 18px/1.2 var(--ci-sans); overflow-x: clip;
+}
+.ci a { color: inherit; text-decoration: none; }
+.ci em { font-style: italic; }
+.ci-naranja { color: var(--acc); }
+.ci-maquina { font: 300 15px/1.25 var(--ci-mono); text-transform: uppercase; letter-spacing: 0; }
+
+.ci-head { position: fixed; inset: 0 0 auto; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; pointer-events: none; }
+.ci-head > * { pointer-events: auto; }
+.ci-logo { display: grid; justify-items: center; line-height: 0.9; }
+.ci-logo span { font: italic 700 26px var(--ci-serif); letter-spacing: -0.04em; }
+.ci-logo svg { width: 46px; }
+.ci-app { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+
+.ci-hero { display: grid; place-items: center; min-height: 92svh; padding: 120px 8vw 0; background: var(--acc); text-align: center; }
+.ci-hero h1 { margin: 0; max-width: 16ch; font: 400 clamp(46px, 6.4vw, 104px)/0.98 var(--ci-serif); letter-spacing: -0.03em; }
+.ci-reel { background: var(--acc); }
+.ci-reel img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.25) saturate(1.2) brightness(0.8); }
+.ci-play { display: grid; place-items: center; width: 100%; height: 100%; color: #fff; font-size: 18px; }
+
+.ci-placer { display: grid; grid-template-columns: 1fr 1.5fr; gap: 6vw; align-items: start; padding: 120px 6vw; background: var(--acc); }
+.ci-placer h2 { margin: 0; font: 400 clamp(52px, 7vw, 116px)/0.92 var(--ci-serif); letter-spacing: -0.03em; }
+
+.ci-gigante { margin: 0; font: 400 clamp(110px, 19vw, 300px)/0.82 var(--ci-serif); letter-spacing: -0.05em; }
+.ci-gigante sup { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-left: 10px; border-radius: 50%; background: var(--acc); color: #fff; font: 600 15px var(--ci-sans); vertical-align: top; letter-spacing: 0; }
+.ci-locales { padding: 80px 20px 120px; }
+.ci-locales .ci-gigante { text-align: center; }
+.ci-locales__rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 14px; margin-top: 40px; }
+.ci-local summary { list-style: none; cursor: pointer; display: grid; gap: 10px; }
+.ci-local summary::-webkit-details-marker { display: none; }
+.ci-local img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); }
+.ci-local summary span { display: flex; align-items: center; gap: 12px; font: italic 400 34px var(--ci-serif); }
+.ci-local summary b { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--acc); color: #fff; font: 400 22px var(--ci-sans); transition: rotate 0.3s; }
+.ci-local[open] summary b { rotate: 45deg; }
+.ci-local p { margin: 10px 0; }
+.ci-boton { display: inline-block; padding: 10px 18px; border-radius: 999px; background: var(--fg); color: #fff !important; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+
+.ci-frase { padding: 80px 6vw 140px; text-align: center; }
+.ci-frase h2 { margin: 0; font: 400 clamp(46px, 6.4vw, 104px)/1 var(--ci-serif); letter-spacing: -0.03em; }
+
+.ci-clientes { overflow: hidden; padding-bottom: 120px; }
+.ci-gigante--asoma { text-align: center; margin-bottom: -0.32em; position: relative; z-index: 1; }
+.ci-resenas { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; padding: 120px 6vw 0; background: #fff; }
+.ci-flechas { position: absolute; right: 6vw; top: 50px; display: flex; gap: 8px; }
+.ci-flechas button { width: 34px; height: 34px; border-radius: 50%; border: 0; background: #e8e8e8; cursor: pointer; }
+.ci-resena { display: grid; grid-template-columns: 0.8fr 1fr; gap: 24px; margin: 0; align-items: center; }
+.ci-resena img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: grayscale(1); border-radius: var(--r); }
+.ci-resena em { font: italic 400 24px var(--ci-serif); }
+.ci-resena blockquote { margin: 8px 0 0; font-size: 15px; font-weight: 500; line-height: 1.4; }
+
+.ci-app-sec { overflow: hidden; background: var(--acc); padding-bottom: 120px; }
+.ci-app-sec .ci-gigante--asoma { margin: 0; padding-top: 40px; }
+.ci-app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; padding: 60px 6vw; }
+.ci-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 60px; font-size: 16px; max-width: 320px; }
+.ci-pasos b { display: block; font: 400 34px var(--ci-serif); }
+.ci-movil { justify-self: center; width: min(320px, 70vw); }
+.ci-pantalla { display: grid; gap: 12px; align-content: start; height: 100%; padding: 50px 18px 18px; background: #fff; color: #000; font-size: 13px; }
+.ci-pantalla strong { font-size: 22px; line-height: 1.15; }
+.ci-pantalla strong span { color: var(--acc); }
+.ci-pantalla__chips { display: flex; gap: 8px; }
+.ci-pantalla__chips span { padding: 4px 10px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; }
+.ci-pantalla img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; }
+.ci-pantalla__boton { padding: 10px; border-radius: 10px; background: var(--acc); color: #fff; text-align: center; font-weight: 700; }
+.ci-descarga { display: grid; justify-items: center; gap: 30px; text-align: center; }
+.ci-descarga h2 { margin: 0; font: 400 clamp(90px, 13vw, 200px)/0.85 var(--ci-serif); letter-spacing: -0.04em; }
+.ci-qr { display: inline-block; vertical-align: middle; padding: 8px; background: #000; border-radius: 8px; }
+.ci-tiendas { display: flex; gap: 10px; }
+.ci-tiendas a { padding: 10px 18px; border-radius: 8px; background: #000; color: #fff !important; font-size: 14px; font-weight: 700; }
+
+.ci-papel { padding: 100px 20px; }
+.ci-papel__rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.ci-papel img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r); }
+.ci-papel h3 { margin: 12px 0 0; font: italic 400 24px/1.15 var(--ci-serif); }
+
+.ci-pie { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; padding: 30px 20px; background: #000; color: #fff; font-size: 13px; }
+
+@media (max-width: 760px) {
+  .ci-placer, .ci-app-grid, .ci-resenas { grid-template-columns: 1fr; }
+  .ci-locales__rejilla, .ci-papel__rejilla { grid-template-columns: 1fr 1fr; }
+  .ci-resena { grid-template-columns: 1fr; }
+}

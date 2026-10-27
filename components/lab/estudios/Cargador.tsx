@@ -8,6 +8,7 @@ import Desplazable from "@/components/lab/cine/Desplazable";
 const PAGINAS: Record<string, ComponentType> = {
   matiz: dynamic(() => import("./matiz/Matiz")),
   nura: dynamic(() => import("./nura/Nura")),
+  cita: dynamic(() => import("./cita/Cita")),
 };
 
 export const replicaLista = (slug: string) => slug in PAGINAS;
