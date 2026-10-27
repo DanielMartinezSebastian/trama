@@ -19,6 +19,7 @@ const PAGINAS: Record<string, ComponentType> = {
   lobo: dynamic(() => import("./lobo/Lobo")),
   remada: dynamic(() => import("./remada/Remada")),
   ahora: dynamic(() => import("./ahora/Ahora")),
+  oficio: dynamic(() => import("./oficio/Oficio")),
 };
 
 export const replicaLista = (slug: string) => slug in PAGINAS;
