@@ -1407,7 +1407,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio) y align="center" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1418,6 +1418,9 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `trigger` | `label` · `burger` | "label" |
 | `backdrop` | `solid` · `blur` | "solid" |
 | `align` | `start` · `center` | "start" |
+| `rules` | boolean | false |
+| `linkHover` | `color` · `marquee` | "color" |
+| `reveal` | `curtain` · `stairs` | "curtain" |
 
 ### Cabecera que se esconde al bajar — `HideOnScroll`
 
@@ -1985,6 +1988,17 @@ La marca como objeto 3D: un trazado SVG extruido que gira, se balancea, flota o 
 - Colores por tokens: `tone` (marca y caracteres) y `baseTone` (placa o aro, y el acento de `tint` gradient). `tint` scene conserva los colores de la escena en vez de monocromo.
 - Partículas: `charge` (0–1) hace que la marca suelte partículas de su superficie, y `explode` la deshace entera (`onExploded` avisa al terminar; al volver a false se recompone). Pasan por el mismo filtro, así que en ASCII se ven como caracteres. Para que tengan sitio, `fill` rellena el contenedor y `markSize` / `markPosition` colocan la marca dentro.
 - Decorativo por defecto (`aria-hidden`, sin eventos). `draggable` deja girarlo arrastrando, con inercia. Dibuja a `fps` solo mientras se mueve, y nada fuera de pantalla o dentro de un contenedor oculto.
+
+### Mosaico de formas — `ShapeMosaic`
+
+Rejilla de círculos y cuadrados en tres tonos del acento, con foto dentro de algunas formas. Al bajar, las columnas se desplazan en sentidos alternos y las fotos se disuelven en el color de su forma hasta dejar solo geometría (Il Colorista). Los tonos salen de --acc mezclado con --bg.
+
+| prop | tipo | default |
+|---|---|---|
+| `items` | text | "square\|2\ncircle\|0\|/img/hebra/trabajo-ondas.webp\|Melena ondulada\nsquare\|3\|/img/…" |
+| `columns` | number 2–8 | 4 |
+| `drift` | number 0–200 | 60 |
+| `dissolve` | boolean | true |
 
 ### Vídeo flotante que crece al pulsarlo — `FloatingVideo`
 

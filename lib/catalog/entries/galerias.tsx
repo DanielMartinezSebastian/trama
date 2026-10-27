@@ -11,6 +11,7 @@ import ImageGallery, { GALLERY_LAYOUTS } from "@/components/ui/ImageGallery";
 import Logo3D, { LOGO3D_MOTIONS, LOGO3D_STYLES } from "@/components/ui/Logo3D";
 import LogoCoin from "@/components/ui/LogoCoin";
 import FloatingVideo from "@/components/ui/FloatingVideo";
+import ShapeMosaic from "@/components/ui/ShapeMosaic";
 import VideoPlayer, { cloudinaryPoster } from "@/components/ui/VideoPlayer";
 import { vcls } from "@/components/ui/variants";
 import { DEVICES, DEVICE_FINISHES, DEVICE_PLATFORMS, DEVICE_POINTER_SIDES, deviceGeometry, type DeviceKind } from "@/lib/ui/devices";
@@ -484,6 +485,27 @@ export const galerias: CatalogEntry[] = [
           render={p.render as never}
           alt={p.alt as string}
         />
+      </div>
+    ),
+  },
+  {
+    id: "shape-mosaic",
+    component: "ShapeMosaic",
+    path: "@/components/ui/ShapeMosaic",
+    name: "Mosaico de formas",
+    category: "galerias",
+    styles: ALL_STYLES,
+    description: "Rejilla de círculos y cuadrados en tres tonos del acento, con foto dentro de algunas formas. Al bajar, las columnas se desplazan en sentidos alternos y las fotos se disuelven en el color de su forma hasta dejar solo geometría (Il Colorista). Los tonos salen de --acc mezclado con --bg.",
+    stageHeight: 520,
+    props: [
+      { key: "items", label: "Formas (forma|tono|foto|texto alternativo)", type: "text", multiline: true, default: "square|2\ncircle|0|/img/hebra/trabajo-ondas.webp|Melena ondulada\nsquare|3|/img/hebra/trabajo-balayage.webp|Balayage\ncircle|1\ncircle|3\nsquare|1|/img/hebra/trabajo-rizo.webp|Rizo definido\ncircle|2\nsquare|3|/img/hebra/trabajo-corte-corto.webp|Pixie", hint: "Tono 1 = acento, 2 = aclarado, 3 = muy claro, 0 = hueco" },
+      { key: "columns", label: "Columnas", type: "number", default: 4, min: 2, max: 8, step: 1 },
+      { key: "drift", label: "Deriva de las columnas (px)", type: "number", default: 60, min: 0, max: 200, step: 10 },
+      { key: "dissolve", label: "Las fotos se disuelven al bajar", type: "boolean", default: true },
+    ],
+    render: (p) => (
+      <div style={{ width: "min(100%, 720px)", padding: "40px 16px" }}>
+        <ShapeMosaic items={p.items as string} columns={p.columns as number} drift={p.drift as number} dissolve={p.dissolve as boolean} />
       </div>
     ),
   },

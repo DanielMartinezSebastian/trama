@@ -210,6 +210,7 @@
         "device-mockup-3d",
         "logo-coin",
         "logo-3d",
+        "shape-mosaic",
         "floating-video",
         "video-player",
         "audio-player",
@@ -7875,6 +7876,58 @@
       "preview": "/componentes#logo-3d"
     },
     {
+      "id": "shape-mosaic",
+      "name": "Mosaico de formas",
+      "component": "ShapeMosaic",
+      "import": "import ShapeMosaic from \"@/components/ui/ShapeMosaic\";",
+      "category": "galerias",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Rejilla de círculos y cuadrados en tres tonos del acento, con foto dentro de algunas formas. Al bajar, las columnas se desplazan en sentidos alternos y las fotos se disuelven en el color de su forma hasta dejar solo geometría (Il Colorista). Los tonos salen de --acc mezclado con --bg.",
+      "props": [
+        {
+          "key": "items",
+          "type": "text",
+          "default": "square|2\ncircle|0|/img/hebra/trabajo-ondas.webp|Melena ondulada\nsquare|3|/img/hebra/trabajo-balayage.webp|Balayage\ncircle|1\ncircle|3\nsquare|1|/img/hebra/trabajo-rizo.webp|Rizo definido\ncircle|2\nsquare|3|/img/hebra/trabajo-corte-corto.webp|Pixie",
+          "label": "Formas (forma|tono|foto|texto alternativo)",
+          "hint": "Tono 1 = acento, 2 = aclarado, 3 = muy claro, 0 = hueco"
+        },
+        {
+          "key": "columns",
+          "type": "number",
+          "default": 4,
+          "label": "Columnas",
+          "min": 2,
+          "max": 8
+        },
+        {
+          "key": "drift",
+          "type": "number",
+          "default": 60,
+          "label": "Deriva de las columnas (px)",
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "dissolve",
+          "type": "boolean",
+          "default": true,
+          "label": "Las fotos se disuelven al bajar"
+        }
+      ],
+      "example": "import ShapeMosaic from \"@/components/ui/ShapeMosaic\";\n\n<ShapeMosaic />",
+      "preview": "/componentes#shape-mosaic"
+    },
+    {
       "id": "floating-video",
       "name": "Vídeo flotante que crece al pulsarlo",
       "component": "FloatingVideo",
@@ -11518,7 +11571,7 @@
         "solid",
         "outline"
       ],
-      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio) y align=\"center\" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
+      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
       "props": [
         {
           "key": "brand",
@@ -11572,6 +11625,32 @@
           "options": [
             "start",
             "center"
+          ]
+        },
+        {
+          "key": "rules",
+          "type": "boolean",
+          "default": false,
+          "label": "Filetes"
+        },
+        {
+          "key": "linkHover",
+          "type": "select",
+          "default": "color",
+          "label": "Al pasar",
+          "options": [
+            "color",
+            "marquee"
+          ]
+        },
+        {
+          "key": "reveal",
+          "type": "select",
+          "default": "curtain",
+          "label": "Apertura",
+          "options": [
+            "curtain",
+            "stairs"
           ]
         }
       ],

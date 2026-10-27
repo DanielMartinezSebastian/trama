@@ -238,7 +238,7 @@ export const movimiento: CatalogEntry[] = [
     category: "navegacion",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio) y align=\"center\" (enlaces centrados en la tipografía de titulares). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
+      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
     stageHeight: 200,
     props: [
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
@@ -248,6 +248,9 @@ export const movimiento: CatalogEntry[] = [
       { key: "trigger", label: "Botón", type: "select", default: "label", options: ["label", "burger"], labels: { label: "[menu]", burger: "hamburguesa" } },
       { key: "backdrop", label: "Fondo", type: "select", default: "solid", options: ["solid", "blur"], labels: { solid: "sólido", blur: "vidrio" } },
       { key: "align", label: "Enlaces", type: "select", default: "start", options: ["start", "center"], labels: { start: "a la izquierda", center: "centrados" } },
+      { key: "rules", label: "Filetes", type: "boolean", default: false },
+      { key: "linkHover", label: "Al pasar", type: "select", default: "color", options: ["color", "marquee"], labels: { color: "color", marquee: "banda con marquesina" } },
+      { key: "reveal", label: "Apertura", type: "select", default: "curtain", options: ["curtain", "stairs"], labels: { curtain: "cortina", stairs: "escalera" } },
     ],
     render: (p) => (
       <div className="ui-center">
@@ -255,14 +258,17 @@ export const movimiento: CatalogEntry[] = [
           trigger={p.trigger as never}
           backdrop={p.backdrop as never}
           align={p.align as never}
+          rules={p.rules as boolean}
+          linkHover={p.linkHover as never}
+          reveal={p.reveal as never}
           brand={p.brand as string}
           openLabel={p.openLabel as string}
           closeLabel={p.closeLabel as string}
           note={p.note as string}
           links={[
-            { label: "Proyectos", href: "#", meta: "04" },
-            { label: "Estudio", href: "#", meta: "" },
-            { label: "Contacto", href: "#", meta: "" },
+            { label: "Proyectos", href: "#", meta: "04", marquee: "Lo que hemos hecho", images: ["/img/estudio/01-gadgets-on-a-desk-unsplash.jpg", "/img/estudio/04-workspace-unsplash.jpg"] },
+            { label: "Estudio", href: "#", meta: "", marquee: "Quiénes somos" },
+            { label: "Contacto", href: "#", meta: "", marquee: "Escríbenos" },
           ]}
           footer={[{ label: "Instagram", href: "#" }, { label: "hola@estudio.example", href: "#" }]}
         />

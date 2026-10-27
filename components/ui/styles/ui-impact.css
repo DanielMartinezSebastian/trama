@@ -140,3 +140,14 @@
 .ui-ba__toggle { justify-self: start; font: inherit; font-size: 14px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--fg); cursor: pointer; }
 .ui-ba__toggle:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .ui-ba--toggle .ui-ba__pane--after { transition: none; } }
+
+/* ---------- ShapeMosaic: círculos y cuadrados en tres tonos del acento; las fotos se disuelven al bajar (docs/50 §3.1) ---------- */
+.ui-shapes { --sm-p: 0.5; display: grid; grid-template-columns: repeat(var(--sm-cols, 4), minmax(0, 1fr)); gap: var(--sm-gap, 16px); width: 100%; min-width: 0; }
+.ui-shapes__cell { position: relative; display: block; aspect-ratio: 1; overflow: hidden; translate: 0 calc((var(--sm-p) - 0.5) * var(--sm-drift, 0px) * var(--sm-dir, 1)); }
+.ui-shapes__cell--circle { border-radius: 50%; }
+.ui-shapes__cell--t1 { background: var(--acc); }
+.ui-shapes__cell--t2, .ui-shapes__cell--t0:has(img) { background: color-mix(in srgb, var(--acc) 55%, var(--bg)); }
+.ui-shapes__cell--t3 { background: color-mix(in srgb, var(--acc) 24%, var(--bg)); }
+.ui-shapes__cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* cada foto se funde a su paso (--sm-k reparte el momento) entre el 40 % y el 85 % del recorrido */
+.ui-shapes.is-dissolving .ui-shapes__cell img { opacity: clamp(0, calc(1 - (var(--sm-p) - 0.4 - var(--sm-k, 0) * 0.2) * 4), 1); }

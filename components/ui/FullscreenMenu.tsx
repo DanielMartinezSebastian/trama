@@ -5,7 +5,16 @@ import { createPortal } from "react-dom";
 import { getLenis, lockScroll } from "@/lib/motion/lenis";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 
-export type FullscreenMenuLink = { label: string; href: string; /** texto pequeño a un lado (p. ej. «12 proyectos») */ meta?: string };
+export type FullscreenMenuLink = {
+  label: string;
+  href: string;
+  /** texto pequeño a un lado (p. ej. «12 proyectos») */
+  meta?: string;
+  /** con `linkHover="marquee"`: la frase que corre en la banda (por defecto, `meta` o la etiqueta) */
+  marquee?: string;
+  /** con `linkHover="marquee"`: fotos que aparecen en píldoras entre las frases */
+  images?: string[];
+};
 
 export type FullscreenMenuProps = {
   links: FullscreenMenuLink[];
@@ -27,6 +36,13 @@ export type FullscreenMenuProps = {
   backdrop?: "solid" | "blur";
   /** enlaces: start = a la izquierda, grotesca gruesa · center = centrados, en la tipografía de titulares (`--display`) */
   align?: "start" | "center";
+  /** filetes entre los enlaces, que se dibujan de izquierda a derecha al abrir (Il Colorista, docs/50 §3.1) */
+  rules?: boolean;
+  /** al pasar por un enlace: color = cambia al acento · marquee = la fila gira y se vuelve una banda del acento con una
+   * marquesina de su `marquee` o su `meta` y sus `images` (K72, docs/50 §3.9) */
+  linkHover?: "color" | "marquee";
+  /** cómo se abre: curtain = una cortina que baja · stairs = cinco columnas que bajan en escalera desde la derecha (K72) */
+  reveal?: "curtain" | "stairs";
   /** controlado desde fuera (opcional) */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -77,12 +93,13 @@ function inertAround(keep: Element, portal: Element | null) {
  *
  * Con `cover`, el menú llega hasta arriba aunque haya cabecera (la cabecera queda encima); con `backdrop="blur"` es de
  * vidrio; con `align="center"`, los enlaces van centrados en la tipografía de titulares; con `trigger="burger"`, el botón es
- * un icono. Un enlace a la página en la que ya estás (p. ej. «Inicio» en la portada) cierra el menú y sube al principio.
+ * un icono; con `rules`, filetes que se dibujan; con `linkHover="marquee"`, cada fila gira a una banda con marquesina; con
+ * `reveal="stairs"`, se abre en escalera. Un enlace a la página en la que ya estás (p. ej. «Inicio» en la portada) cierra el menú y sube al principio.
  *
  * Cierra con `Esc` y al elegir un enlace, pausa el scroll (sin que salte la página: ver `lockScroll`) y deja inerte el
  * resto de la página para que el teclado no llegue a lo que queda tapado. Se pinta en un portal con los tokens de tu tema.
  */
-export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", cover = false, backdrop = "solid", align = "start", open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
+export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", cover = false, backdrop = "solid", align = "start", rules = false, linkHover = "color", reveal = "curtain", open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
   const uid = useId();
   const [inner, setInner] = useState(false);
   const open = controlled ?? inner;
@@ -167,6 +184,9 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       data-cover={hosted && cover ? "" : undefined}
       data-backdrop={backdrop}
       data-align={align}
+      data-rules={rules ? "" : undefined}
+      data-hover={linkHover}
+      data-reveal={reveal}
       role="dialog"
       aria-modal={hosted ? undefined : true}
       aria-label={brand ? `Menú de ${brand}` : "Menú"}
@@ -174,6 +194,13 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       inert={!open}
       style={{ ...theme, ...(hosted ? { "--fsm-top": `${top}px` } : null) } as CSSProperties}
     >
+      {reveal === "stairs" && (
+        <span className="ui-fsm__stairs" aria-hidden>
+          {[0, 1, 2, 3, 4].map((k) => (
+            <i key={k} style={{ "--k": 4 - k } as CSSProperties} />
+          ))}
+        </span>
+      )}
       {!hosted && (
         <div className="ui-fsm__top">
           <span>{brand}</span>
@@ -182,7 +209,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       )}
       <nav className="ui-fsm__nav" aria-label="Principal">
         {links.map((l, i) => (
-          <div key={l.href + i} className="ui-fsm__item">
+          <div key={l.href + i} className="ui-fsm__item" style={{ "--i": i } as CSSProperties}>
             <a
               className="ui-fsm__link"
               href={l.href}
@@ -198,6 +225,23 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
               <span>{l.label}</span>
               {l.meta && <small>{l.meta}</small>}
             </a>
+            {linkHover === "marquee" && (
+              <span className="ui-fsm__band" aria-hidden>
+                <span className="ui-fsm__track">
+                  {Array.from({ length: 8 }, (_, k) => (
+                    <span key={k}>
+                      {l.marquee || l.meta || l.label}
+                      {l.images?.length ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={l.images[k % l.images.length]} alt="" loading="lazy" />
+                      ) : (
+                        <b />
+                      )}
+                    </span>
+                  ))}
+                </span>
+              </span>
+            )}
           </div>
         ))}
       </nav>
