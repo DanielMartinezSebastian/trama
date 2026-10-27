@@ -102,6 +102,7 @@ export default function Q47() {
         <FullscreenMenu
           brand="Q47"
           trigger="burger"
+          triggerHover="fill"
           cover
           reveal="stairs"
           linkHover="marquee"
@@ -123,11 +124,11 @@ export default function Q47() {
         <section className="q47-inicio">
           <Reel />
           <h1>
-            LA CHISPA PARA<br />
-            TODO <span className="q47-chip"><video src={`${V}costa/02-costa-oregon.mp4`} poster={`${V}costa/02-costa-oregon.jpg`} muted loop playsInline autoPlay aria-hidden /></span> LO<br />
-            <span className="q47-creativo">CREATIVO<LineDraw shape="circle" trigger="mount" duration={1.4} delay={0.4} color="#d3fd50" strokeWidth={2} fit="stretch" className="q47-elipse" /></span>
+            <span className="q47-linea">LA CHISPA PARA</span>
+            <span className="q47-linea">TODO <span className="q47-chip"><video src={`${V}costa/02-costa-oregon.mp4`} poster={`${V}costa/02-costa-oregon.jpg`} muted loop playsInline autoPlay aria-hidden /></span> LO</span>
+            <span className="q47-linea"><span className="q47-creativo">CREATIVO<LineDraw shape="circle" trigger="mount" duration={1.4} delay={0.4} color="#d3fd50" strokeWidth={2} fit="stretch" className="q47-elipse" /></span></span>
           </h1>
-          <p className="q47-texto">Q47 es una agencia que construye marcas desde todos los ángulos. Hoy, mañana y dentro de muchos años. Creemos que las mejores chispas saltan cuando se sale de la zona cómoda y el roce enciende las estrategias, las marcas y la comunicación con sentimiento de verdad. Somos transparentes y decimos lo que pensamos; y cuando creemos en algo, vamos con todo.</p>
+          <p className="q47-texto">Q47 es una agencia que construye marcas desde todos los ángulos. Hoy, mañana y dentro de muchos años. Las mejores chispas saltan cuando se sale de la zona cómoda y el roce enciende la estrategia, la marca y la comunicación con sentimiento de verdad. Decimos lo que pensamos y, cuando creemos en algo, vamos con todo.</p>
           <div className="q47-pildoras">
             <button type="button" className="q47-pildora q47-pildora--grande" onClick={() => a("trabajo")}>TRABAJO</button>
             <a href="#agencia" className="q47-pildora q47-pildora--grande">AGENCIA</a>

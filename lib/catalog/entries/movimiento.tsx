@@ -238,7 +238,7 @@ export const movimiento: CatalogEntry[] = [
     category: "navegacion",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
+      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), triggerHover=\"fill\" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
     stageHeight: 200,
     props: [
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
@@ -246,6 +246,7 @@ export const movimiento: CatalogEntry[] = [
       { key: "closeLabel", label: "Texto cerrar", type: "text", default: "close" },
       { key: "note", label: "Nota del pie", type: "text", default: "Madrid, ES" },
       { key: "trigger", label: "Botón", type: "select", default: "label", options: ["label", "burger"], labels: { label: "[menu]", burger: "hamburguesa" } },
+      { key: "triggerHover", label: "Botón al pasar", type: "select", default: "none", options: ["none", "fill"], labels: { none: "color", fill: "relleno que baja" } },
       { key: "backdrop", label: "Fondo", type: "select", default: "solid", options: ["solid", "blur"], labels: { solid: "sólido", blur: "vidrio" } },
       { key: "align", label: "Enlaces", type: "select", default: "start", options: ["start", "center"], labels: { start: "a la izquierda", center: "centrados" } },
       { key: "rules", label: "Filetes", type: "boolean", default: false },
@@ -256,6 +257,7 @@ export const movimiento: CatalogEntry[] = [
       <div className="ui-center">
         <FullscreenMenu
           trigger={p.trigger as never}
+          triggerHover={p.triggerHover as never}
           backdrop={p.backdrop as never}
           align={p.align as never}
           rules={p.rules as boolean}

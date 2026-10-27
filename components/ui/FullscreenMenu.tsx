@@ -30,6 +30,9 @@ export type FullscreenMenuProps = {
   /** el botón: label = `[menu]` / `[close]` (editorial) · burger = dos rayas que se cruzan en ✕ al abrir (los textos
    * quedan como nombre accesible) */
   trigger?: "label" | "burger";
+  /** el botón al pasar el ratón: none = cambia de color · fill = un relleno del acento baja desde arriba y el contenido pasa
+   * al color del fondo (el botón de K72, medido con `refs:probe --par`: 0,15 s, easeOutCubic; docs/53 §5) */
+  triggerHover?: "none" | "fill";
   /** con cabecera: el menú la cubre igualmente hasta arriba (la cabecera sigue encima, clicable) en vez de empezar debajo */
   cover?: boolean;
   /** fondo: solid = el del tema · blur = vidrio (el tema al 55 % y lo de detrás muy desenfocado) */
@@ -93,13 +96,13 @@ function inertAround(keep: Element, portal: Element | null) {
  *
  * Con `cover`, el menú llega hasta arriba aunque haya cabecera (la cabecera queda encima); con `backdrop="blur"` es de
  * vidrio; con `align="center"`, los enlaces van centrados en la tipografía de titulares; con `trigger="burger"`, el botón es
- * un icono; con `rules`, filetes que se dibujan; con `linkHover="marquee"`, cada fila gira a una banda con marquesina; con
+ * un icono (y con `triggerHover="fill"`, se rellena del acento al pasar); con `rules`, filetes que se dibujan; con `linkHover="marquee"`, cada fila gira a una banda con marquesina; con
  * `reveal="stairs"`, se abre en escalera. Un enlace a la página en la que ya estás (p. ej. «Inicio» en la portada) cierra el menú y sube al principio.
  *
  * Cierra con `Esc` y al elegir un enlace, pausa el scroll (sin que salte la página: ver `lockScroll`) y deja inerte el
  * resto de la página para que el teclado no llegue a lo que queda tapado. Se pinta en un portal con los tokens de tu tema.
  */
-export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", cover = false, backdrop = "solid", align = "start", rules = false, linkHover = "color", reveal = "curtain", open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
+export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", triggerHover = "none", cover = false, backdrop = "solid", align = "start", rules = false, linkHover = "color", reveal = "curtain", open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
   const uid = useId();
   const [inner, setInner] = useState(false);
   const open = controlled ?? inner;
@@ -258,7 +261,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
 
   return (
     <>
-      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} aria-label={trigger === "burger" ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); } set(!open); }}>
+      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} data-hover={triggerHover === "none" ? undefined : triggerHover} aria-label={trigger === "burger" ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); } set(!open); }}>
         {trigger === "burger" ? (
           <span className="ui-fsm__burger" aria-hidden><i /><i /></span>
         ) : (

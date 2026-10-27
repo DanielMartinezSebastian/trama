@@ -202,7 +202,7 @@ Hecho F1–F4, con las decisiones de §7: `/guias` es pública, Fontshare entra 
 | F1 | Las 8 guías como datos (`STYLE_GUIDES`, `guide()`, `guideToStyle()`), clases `ui-g-*` y el componente `GuideFrame` (ficha en `/componentes`, categoría Secciones; exportado por el paquete) | `lib/ui/guides.ts`, `components/ui/GuideFrame.tsx`, `components/ui/styles/ui-guides.css` |
 | F2 | Anton, Mona Sans, Onest, Archivo (con eje de anchura), Gloock y Martian Mono (Google, sin precarga, en `FONT_PRESETS`); Switzer y General Sans por la hoja oficial de Fontshare solo en `/guias` | `lib/ui/fonts.ts`, `components/site/guias/FontshareLink.tsx`, CSP en `next.config.ts` |
 | F3 | `/guias`: guía × composición (C1–C8) × relato (R1–R10) en vivo, comparador de las 8 guías y de los 10 relatos en miniaturas, y el código para copiar. Páginas sueltas `/guias/ver/<guía>/<composición>` (64) y `/guias/relato/<guía>/<relato>` (80) | `app/guias/`, `components/site/guias/` |
-| F4 | `npm run refs:probe -- <url…>` mide cualquier web; `npm run refs:probe -- --guides <base>` mide las 8 guías y las compara con §2 (11 reglas). Resultado: **8/8 guías dentro de rango** | `scripts/probe-refs.mts`, salida en `.refs/` (ignorada) |
+| F4 | `npm run refs:probe -- <url…>` mide cualquier web; `npm run refs:probe -- --guides <base>` mide las 8 guías y las compara con §2 (11 reglas). Resultado: **8/8 guías dentro de rango** | `scripts/probe-refs.mts`, salida en `.refs/` (ignorada). Ampliado el 27-10-2026 (docs/53 §3): paleta por superficie, radios, curvas, hover y `--par <original> <réplica>` |
 
 **Revisado con Playwright** (escritorio 1440 y móvil 390): las 8 composiciones y los 10 relatos, más el laboratorio con cambio de guía y comparador. Sin errores de consola y sin scroll horizontal.
 

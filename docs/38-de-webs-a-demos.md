@@ -55,9 +55,12 @@ Por orden; cada paso decide si hace falta el siguiente.
    3. sin three: `cine:flujo` para el movimiento;
    4. con grupos de cuerpos: `cine:conjunto`;
    5. `cine:vuelta --ruido` para saber cuánto varía.
-4. **Transiciones entre páginas**: el mapa mide la primera. Para estudiarla, capturar con `--clic` en el enlace y
+4. **Si se hace una réplica o una demo a partir de la web**: medir el par original/réplica con
+   `npm run refs:probe -- --par <original> <réplica>` e iterar hasta cerrar las ✗, y dejar la ficha del ejercicio en el
+   cuaderno del lab (`npm run lab:cuaderno -- --nueva <id>`, `/lab/cuaderno`). Método en docs/53.
+5. **Transiciones entre páginas**: el mapa mide la primera. Para estudiarla, capturar con `--clic` en el enlace y
    comparar con el flujo (eje de movimiento) o con el ritmo (docs/36 A3, pendiente).
-5. **Escenas complejas de WebGPU**:
+6. **Escenas complejas de WebGPU**:
    - el gancho de three ve las escenas de `WebGPURenderer` igual que las de WebGL;
    - `gl.js` cuenta los render pass, cada uno con su codificador;
    - `shaders.js` guarda el WGSL, con los nombres de las funciones si las dejaron: Hublot y Tidewater los dejan, y son

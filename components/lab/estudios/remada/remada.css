@@ -109,3 +109,4 @@
   .rm-flecha { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .rm-boton { transition: none; } }
+@media (max-width: 760px) { .rm-avatar { left: 12px; top: 10px; width: 46px; } .rm-avatar img { width: 46px; height: 46px; border-width: 3px; } .rm-avatar span { font-size: 14px; } }

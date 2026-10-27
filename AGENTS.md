@@ -20,6 +20,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Ejecuta `npm run doctor` para diagnosticar el entorno; `npm run doctor -- --cine --browser` comprueba también el navegador y los requisitos de cine.
 - Ejecuta `npm run verify` antes de entregar. El build va aparte y nunca se ejecuta junto al dev del mismo worktree. No detengas servidores ajenos.
 - Comprueba cambios visuales con `npm run smoke -- <url-local>` y las herramientas de cine cuando corresponda. Una captura no sustituye la revisión visual.
+- **Cuaderno del lab**: cada ejercicio (estudio de una web, réplica, demo, pieza nueva o ampliada, concepto, herramienta) deja su ficha en `docs/cuaderno/` (`npm run lab:cuaderno -- --nueva <id>`), con las etiquetas del vocabulario existente, y se regenera el índice con `npm run lab:cuaderno`. En réplicas, mide el par con `npm run refs:probe -- --par <original> <réplica>` antes de darla por buena. Método en `docs/53-cuaderno-del-laboratorio.md`; se lee en `/lab/cuaderno`.
 - Al cambiar de agente deja un registro por tarea con objetivo, rama, cambios, decisiones, comprobaciones y siguiente paso; plantilla en `docs/flujo-agentes.md`.
 
 Este repo es una **librería de componentes** para proyectos Next.js (ASCII, textmode, pixel art y secciones de landing)

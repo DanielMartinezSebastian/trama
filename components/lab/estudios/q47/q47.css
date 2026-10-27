@@ -71,3 +71,29 @@
 .q47-menu.ui-fsm[data-align="center"] .ui-fsm__nav { justify-items: stretch; }
 .q47-menu .ui-fsm__item { width: 100%; text-align: center; }
 @media (max-width: 760px) { .q47-inicio h1 { padding-top: 70px; } }
+
+/* medidas de K72 con refs:probe --par y la sonda de elementos (27-10-2026, docs/cuaderno/replica-q47.md):
+   margen de página 10 px; titular 9,5 vw peso 300 interlineado 0,87 con 0,2 em de aire sobre cada línea; párrafo 14/21
+   de 276 px con sangría de 70 px; píldoras de 7 vw peso 400 con borde de 3 px a 10 px del borde; hora a 20 px;
+   botón del menú 224 × 50 pegado a la esquina con el relleno lima que baja (FullscreenMenu triggerHover="fill") */
+.q47-head { padding: 10px; }
+.q47-head .ui-fsm__btn { width: 224px; height: 50px; margin: -10px -10px 0 0; padding-right: 26px; }
+.q47-inicio h1 { padding: 0 10px; font-size: 9.5vw; font-weight: 300; line-height: 0.867; letter-spacing: 0; }
+.q47-inicio h1 { margin-top: -0.04em; padding-top: 0; }
+.q47-inicio h1 .q47-linea { display: block; }
+.q47-texto { right: 10px; bottom: auto; top: 59%; width: 276px; font-size: 14px; line-height: 1.5; text-indent: 70px; }
+.q47-pildoras { bottom: 10px; }
+.q47-pildora--grande { font-size: 7vw !important; font-weight: 400 !important; line-height: 0.7; padding: 0.22em 0.3em 0; border-width: 3px; letter-spacing: 0; }
+.q47-hora { left: 10px; bottom: 18px; font-size: 20px; font-weight: 400; }
+@media (max-width: 760px) {
+  /* K72 en móvil: el titular baja a media pantalla, el párrafo debajo, las píldoras caben en el ancho y sin hora */
+  .q47-head { padding: 9px; }
+  .q47-head .ui-fsm__btn { width: 120px; height: 44px; margin: -9px -9px 0 0; }
+  .q47-inicio h1 { position: absolute !important; left: 0; right: 0; top: 52%; margin: 0; padding: 0 9px; font-size: 10.5vw; }
+  .q47-texto { display: block; right: 9px; top: 72%; width: auto; left: 25%; font-size: 11px; text-indent: 50px; }
+  .q47-pildoras { width: auto; bottom: 9px; gap: 6px; }
+  .q47-pildora--grande { font-size: 9vw !important; padding: 0.22em 0.3em 0; border-width: 2px; }
+  .q47-hora { display: none; }
+}
+.q47-head .ui-fsm__burger { width: 50px; }
+.q47-head .ui-fsm__btn[aria-expanded="false"] .ui-fsm__burger i + i { left: 48%; }

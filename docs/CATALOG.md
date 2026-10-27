@@ -1417,7 +1417,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), triggerHover="fill" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1426,6 +1426,7 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `closeLabel` | text | "close" |
 | `note` | text | "Madrid, ES" |
 | `trigger` | `label` · `burger` | "label" |
+| `triggerHover` | `none` · `fill` | "none" |
 | `backdrop` | `solid` · `blur` | "solid" |
 | `align` | `start` · `center` | "start" |
 | `rules` | boolean | false |

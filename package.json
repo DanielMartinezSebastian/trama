@@ -15,7 +15,7 @@
   "private": true,
   "scripts": {
     "doctor": "tsx scripts/doctor.mts",
-    "verify": "npm run typecheck && npm run catalog:check && npm run check:shadows && npm run cine:test",
+    "verify": "npm run typecheck && npm run catalog:check && npm run check:shadows && npm run cine:test && npm run lab:cuaderno -- --check",
     "smoke": "tsx scripts/smoke.mts",
     "cine:test": "tsx scripts/cine/base-url.test.mts",
     "dev": "next dev",
@@ -46,7 +46,8 @@
     "cine:web": "tsx scripts/cine/web.mts",
     "cine:sintesis": "tsx scripts/cine/sintesis.mts",
     "cine:rampa": "tsx scripts/cine/rampa.mts",
-    "cine:ritmo": "tsx scripts/cine/ritmo.mts"
+    "cine:ritmo": "tsx scripts/cine/ritmo.mts",
+    "lab:cuaderno": "tsx scripts/cuaderno.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

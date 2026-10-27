@@ -153,6 +153,22 @@ el kit si es versátil (E12). Fotos provisionales del repo hasta que lleguen las
 - [x] **E13o · Abuela Rosa** (Peppa Sauce): producto fijo, dos tintas, maridajes gigantes.
 - [x] **E13p · Q47** (K72): portada sin scroll con reel, menú de filas con marquesina, escalera, catálogo.
 
+### Iteración profunda en el lab (encargo del 27-10-2026)
+
+> «Itera los estudios: llévatelo al lab y comienza a analizarlo y replicarlo en profundidad para mejorar nuestra
+> librería y fuente de conocimientos.» Ampliar las herramientas existentes si aportan, documentado; anotar siempre los
+> ejercicios en el lab para encontrar relaciones y sacar hojas de estilo y patrones (docs/53).
+
+- [x] **E14a · Cuaderno del lab**: `docs/cuaderno/`, `npm run lab:cuaderno` (en `verify`), `/lab/cuaderno`; fichas de los
+  3 estudios, las 16 réplicas, las 4 demos reformadas y las 7 piezas (27-10-2026).
+- [x] **E14b · `refs:probe` ampliado**: paleta por superficie, radios, curvas, hover y modo `--par` (docs/53 §3).
+- [x] **E14c · Q47 frente a K72**: de 10 a 19 de 20 medidas; `FullscreenMenu triggerHover="fill"` (docs/53 §4).
+- [ ] **E14d · Par y ficha de las otras 15 réplicas**, una a una, en este orden (de más a menos lejos a ojo): Abuela Rosa,
+  Matiz, Impulso, Cita, Vive, Talla, Patrón, Lobo, Oficio, Ahora, Remada, Melena, Raíz, Nura, Núcleo.
+- [ ] **E14e · Movimiento por scroll** en las que lo tienen (Rendezvous, Essor, Il Colorista, Peppa Sauce): `cine:capture`
+  + `cine:compare` sobre el par.
+- [ ] **E14f · Páginas internas**: un par por página que importe (la de trabajo de K72, la carta de Il Colorista).
+
 ## 3. Conclusiones por web
 
 ### 3.1 Il Colorista Salon — https://ilcolorista.salon/

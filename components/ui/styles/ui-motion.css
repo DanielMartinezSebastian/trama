@@ -193,6 +193,11 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm__burger i + i { top: 10.5px; }
 .ui-fsm__btn[aria-expanded="true"] .ui-fsm__burger i { top: 6.25px; transform: rotate(45deg); }
 .ui-fsm__btn[aria-expanded="true"] .ui-fsm__burger i + i { transform: rotate(-45deg); }
+/* triggerHover="fill": el acento baja desde arriba y el contenido pasa al color del fondo (K72) */
+.ui-fsm__btn[data-hover="fill"] { position: relative; isolation: isolate; overflow: hidden; transition: color 0.15s var(--ease-out, cubic-bezier(0.215, 0.61, 0.355, 1)); }
+.ui-fsm__btn[data-hover="fill"]::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--acc); translate: 0 -101%; transition: translate 0.15s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.ui-fsm__btn[data-hover="fill"]:is(:hover, :focus-visible) { color: var(--bg); }
+.ui-fsm__btn[data-hover="fill"]:is(:hover, :focus-visible)::after { translate: 0 0; }
 /* cover: aunque haya cabecera, el menú llega hasta arriba (la cabecera queda encima) */
 .ui-fsm[data-host][data-cover] { top: 0; padding-top: calc(var(--fsm-top, 0px) + 8px); }
 /* backdrop="blur": vidrio muy desenfocado que se va haciendo opaco hacia abajo (el pie del menú se lee sobre fondo casi lleno) */
@@ -232,7 +237,7 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm[data-open] .ui-fsm__stairs i { scale: 1 1; transform-origin: top; transition-delay: calc(var(--k) * 0.07s); }
 .ui-fsm[data-reveal="stairs"] > :not(.ui-fsm__stairs) { opacity: 0; transition: opacity 0.25s linear; }
 .ui-fsm[data-reveal="stairs"][data-open] > :not(.ui-fsm__stairs) { opacity: 1; transition-delay: 0.45s; }
-@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link, .ui-fsm__burger i, .ui-fsm__stairs i, .ui-fsm__band, .ui-fsm[data-rules] .ui-fsm__item::after { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
+@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link, .ui-fsm__burger i, .ui-fsm__btn[data-hover]::after, .ui-fsm__stairs i, .ui-fsm__band, .ui-fsm[data-rules] .ui-fsm__item::after { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .ui-fsm__track { animation: none; } }
 
 /* ---------- LocalTime ---------- */
