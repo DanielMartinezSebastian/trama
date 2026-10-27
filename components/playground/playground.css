@@ -295,3 +295,23 @@
 .pg-preview-shell > iframe:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
 .pg-preview-shell:fullscreen { display: flex; flex-direction: column; height: 100dvh; padding: 16px; background: var(--bg); }
 .pg-preview-shell:fullscreen > iframe { flex: 1; height: 0; min-height: 0; }
+
+/* Skeleton: contenido y estados de carga comparten el mismo DOM y las mismas medidas. */
+.pg-skeleton-stage { grid-template-columns: minmax(0, 1fr); }
+.pg-skeleton-demo { width: 700px; max-width: 100%; min-width: 0; display: grid; gap: 20px; }
+.pg-skeleton-primitives { width: 700px; max-width: 100%; min-width: 0; display: grid; justify-items: center; }
+.pg-skeleton-demo__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.pg-skeleton-demo__bar p { margin: 0; color: var(--mut); font-size: 12px; }
+.pg-skeleton-demo__content { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; min-width: 0; }
+.pg-skeleton-card { width: 360px; max-width: 100%; min-width: 0; display: grid; gap: 18px; padding: 20px; border: 1px solid var(--ln); border-radius: var(--r); }
+.pg-skeleton-card__image { height: 144px; display: grid; place-items: center; border-radius: var(--r); background: var(--acc); color: var(--bg); font-size: 32px; font-weight: 800; letter-spacing: 0.14em; }
+.pg-skeleton-card h3, .pg-skeleton-article h3 { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -0.03em; }
+.pg-skeleton-card p, .pg-skeleton-article p { margin: 0; font-size: 14px; line-height: 1.65; }
+.pg-skeleton-demo__link { display: inline-block; justify-self: start; padding: 10px 14px; border: 1px solid var(--ln); border-radius: var(--r); text-decoration: none; color: var(--fg); font-size: 13px; }
+.pg-skeleton-article { width: 560px; max-width: 100%; min-width: 0; display: grid; gap: 16px; }
+.pg-skeleton-article h3 { font-size: clamp(26px, 3vw, 38px); }
+.pg-skeleton-article__image { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r); }
+.pg-skeleton-table { width: 100%; min-width: 0; overflow: auto; }
+.pg-skeleton-table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pg-skeleton-table caption { text-align: left; padding-bottom: 16px; color: var(--mut); }
+.pg-skeleton-table :is(th, td) { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--ln); }

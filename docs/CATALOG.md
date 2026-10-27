@@ -1714,13 +1714,27 @@ Anillo CSS o animaciones de texto: línea, braille, puntos, barra y bloques.
 
 ### Esqueleto de carga — `Skeleton`
 
-Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta, avatar o filas de tabla.
+Estado de carga que conserva el tamaño del texto o del elemento que sustituye. Se compone dentro del contenido real: imagen, título, párrafo y acción. También ofrece formas independientes y las plantillas de texto, tarjeta, avatar y tabla.
+
+Envuelve contenido (`children`), p. ej.: `El contenido marca el ritmo de la página`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `text` · `card` · `avatar` · `table` | "text" |
+| `loading` | boolean | true |
+| `kind` | `text` · `block` · `card` · `avatar` · `table` | "text" |
 | `lines` | number 1–6 | 3 |
+| `width` | text | "" |
+| `height` | text | "" |
+| `borderRadius` | text | "" |
+| `animation` | `shimmer` · `pulse` · `none` | "shimmer" |
 | `tone` | `fg` · `acc` · `acc2` · `mut` | "mut" |
+
+- Usa loading={loading} en cada pieza de tu contenido, dentro de su tipografía y maquetación reales. Al pasar a false se devuelve el hijo original sin envoltorios adicionales.
+- El contenido de ejemplo permite reservar espacio; no se deducen datos que aún no existen. Si no conoces el tamaño, usa kind="block" con width y height o reserva una proporción estable para la imagen.
+- Con un hijo HTML se conserva el mismo nodo; los componentes propios deben propagar className, style, inert, aria-hidden y tabIndex a su raíz. Una tarjeta entera envuelta se convierte en un solo bloque: envuelve sus piezas para representar su estructura.
+- Los hijos se montan durante la carga. Para medios pesados o componentes con efectos, usa una forma independiente en el fallback en vez de montar el contenido anticipadamente.
+- Mientras carga, la pieza es decorativa y no interactiva. Marca la región que carga con aria-busy y ofrece un estado accesible fuera de ella; la animación se desactiva con movimiento reducido.
+- kind y lines se aplican sin children. width, height y borderRadius también permiten ajustar la pieza cargando: deben coincidir con la caja del contenido final para evitar saltos. Las plantillas son aproximaciones, no un análisis automático del contenido.
 
 ### Tecla (atajo) — `Kbd`
 

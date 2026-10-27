@@ -6517,21 +6517,32 @@
       "import": "import Skeleton from \"@/components/ui/Skeleton\";",
       "category": "feedback",
       "styles": [
-        "minimal",
+        "glass",
+        "solid",
+        "outline",
         "neon",
-        "terminal",
         "retro",
-        "dotmatrix"
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
       ],
-      "description": "Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta, avatar o filas de tabla.",
+      "description": "Estado de carga que conserva el tamaño del texto o del elemento que sustituye. Se compone dentro del contenido real: imagen, título, párrafo y acción. También ofrece formas independientes y las plantillas de texto, tarjeta, avatar y tabla.",
       "props": [
+        {
+          "key": "loading",
+          "type": "boolean",
+          "default": true,
+          "label": "Contenido en carga"
+        },
         {
           "key": "kind",
           "type": "select",
           "default": "text",
-          "label": "Tipo",
+          "label": "Tipo de forma",
           "options": [
             "text",
+            "block",
             "card",
             "avatar",
             "table"
@@ -6544,6 +6555,35 @@
           "label": "Líneas / filas",
           "min": 1,
           "max": 6
+        },
+        {
+          "key": "width",
+          "type": "text",
+          "default": "",
+          "label": "Anchura (CSS, vacío = automática)"
+        },
+        {
+          "key": "height",
+          "type": "text",
+          "default": "",
+          "label": "Altura (CSS, vacío = automática)"
+        },
+        {
+          "key": "borderRadius",
+          "type": "text",
+          "default": "",
+          "label": "Radio (CSS, vacío = original)"
+        },
+        {
+          "key": "animation",
+          "type": "select",
+          "default": "shimmer",
+          "label": "Animación",
+          "options": [
+            "shimmer",
+            "pulse",
+            "none"
+          ]
         },
         {
           "key": "tone",
@@ -6559,7 +6599,15 @@
           ]
         }
       ],
-      "example": "import Skeleton from \"@/components/ui/Skeleton\";\n\n<Skeleton\n  lines={3}\n/>",
+      "notes": [
+        "Usa loading={loading} en cada pieza de tu contenido, dentro de su tipografía y maquetación reales. Al pasar a false se devuelve el hijo original sin envoltorios adicionales.",
+        "El contenido de ejemplo permite reservar espacio; no se deducen datos que aún no existen. Si no conoces el tamaño, usa kind=\"block\" con width y height o reserva una proporción estable para la imagen.",
+        "Con un hijo HTML se conserva el mismo nodo; los componentes propios deben propagar className, style, inert, aria-hidden y tabIndex a su raíz. Una tarjeta entera envuelta se convierte en un solo bloque: envuelve sus piezas para representar su estructura.",
+        "Los hijos se montan durante la carga. Para medios pesados o componentes con efectos, usa una forma independiente en el fallback en vez de montar el contenido anticipadamente.",
+        "Mientras carga, la pieza es decorativa y no interactiva. Marca la región que carga con aria-busy y ofrece un estado accesible fuera de ella; la animación se desactiva con movimiento reducido.",
+        "kind y lines se aplican sin children. width, height y borderRadius también permiten ajustar la pieza cargando: deben coincidir con la caja del contenido final para evitar saltos. Las plantillas son aproximaciones, no un análisis automático del contenido."
+      ],
+      "example": "import Skeleton from \"@/components/ui/Skeleton\";\n\n<Skeleton>\n  El contenido marca el ritmo de la página\n</Skeleton>",
       "preview": "/componentes#skeleton"
     },
     {

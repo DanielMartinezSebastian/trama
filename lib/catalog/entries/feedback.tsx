@@ -5,6 +5,7 @@ import Badge from "@/components/ui/Badge";
 import Progress from "@/components/ui/Progress";
 import Skeleton from "@/components/ui/Skeleton";
 import Spinner from "@/components/ui/Spinner";
+import SkeletonDemo from "@/components/playground/SkeletonDemo";
 import type { CatalogEntry } from "../schema";
 import { ALL_STYLES, intentProp, toneProp, variantProp } from "./shared";
 
@@ -106,17 +107,32 @@ export const feedback: CatalogEntry[] = [
     path: "@/components/ui/Skeleton",
     name: "Esqueleto de carga",
     category: "feedback",
-    styles: ["minimal", "neon", "terminal", "retro", "dotmatrix"],
-    description: "Placeholder con barrido animado mientras carga el contenido real: texto, tarjeta, avatar o filas de tabla.",
-    stageHeight: 220,
+    styles: ALL_STYLES,
+    description: "Estado de carga que conserva el tamaño del texto o del elemento que sustituye. Se compone dentro del contenido real: imagen, título, párrafo y acción. También ofrece formas independientes y las plantillas de texto, tarjeta, avatar y tabla.",
+    stageHeight: 620,
+    children: (p) => p.demo === "primitives" ? undefined : "El contenido marca el ritmo de la página",
+    notes: [
+      "Usa loading={loading} en cada pieza de tu contenido, dentro de su tipografía y maquetación reales. Al pasar a false se devuelve el hijo original sin envoltorios adicionales.",
+      "El contenido de ejemplo permite reservar espacio; no se deducen datos que aún no existen. Si no conoces el tamaño, usa kind=\"block\" con width y height o reserva una proporción estable para la imagen.",
+      "Con un hijo HTML se conserva el mismo nodo; los componentes propios deben propagar className, style, inert, aria-hidden y tabIndex a su raíz. Una tarjeta entera envuelta se convierte en un solo bloque: envuelve sus piezas para representar su estructura.",
+      "Los hijos se montan durante la carga. Para medios pesados o componentes con efectos, usa una forma independiente en el fallback en vez de montar el contenido anticipadamente.",
+      "Mientras carga, la pieza es decorativa y no interactiva. Marca la región que carga con aria-busy y ofrece un estado accesible fuera de ella; la animación se desactiva con movimiento reducido.",
+      "kind y lines se aplican sin children. width, height y borderRadius también permiten ajustar la pieza cargando: deben coincidir con la caja del contenido final para evitar saltos. Las plantillas son aproximaciones, no un análisis automático del contenido.",
+    ],
     props: [
-      { key: "kind", label: "Tipo", type: "select", default: "text", options: ["text", "card", "avatar", "table"] },
-      { key: "lines", label: "Líneas / filas", type: "number", default: 3, min: 1, max: 6, step: 1, when: (p) => p.kind === "text" || p.kind === "table" },
+      { key: "demo", label: "Ejemplo", type: "select", default: "card", options: ["card", "article", "table", "primitives"], labels: { card: "Tarjeta con contenido real", article: "Artículo y fotografía", table: "Tabla por celdas", primitives: "Formas independientes" }, noCode: true },
+      { key: "loading", label: "Contenido en carga", type: "boolean", default: true },
+      { key: "kind", label: "Tipo de forma", type: "select", default: "text", options: ["text", "block", "card", "avatar", "table"], when: (p) => p.demo === "primitives" },
+      { key: "lines", label: "Líneas / filas", type: "number", default: 3, min: 1, max: 6, step: 1, when: (p) => p.demo === "primitives" && (p.kind === "text" || p.kind === "table") },
+      { key: "width", label: "Anchura (CSS, vacío = automática)", type: "text", default: "", when: (p) => p.demo === "primitives" },
+      { key: "height", label: "Altura (CSS, vacío = automática)", type: "text", default: "", when: (p) => p.demo === "primitives" && (p.kind === "avatar" || p.kind === "block") },
+      { key: "borderRadius", label: "Radio (CSS, vacío = original)", type: "text", default: "" },
+      { key: "animation", label: "Animación", type: "select", default: "shimmer", options: ["shimmer", "pulse", "none"], labels: { shimmer: "Barrido", pulse: "Pulso", none: "Sin animación" } },
       toneProp("mut"),
     ],
     render: (p) => (
-      <div className="ui-center">
-        <Skeleton kind={p.kind as never} lines={p.lines as number} tone={p.tone as never} />
+      <div className="ui-center pg-skeleton-stage">
+        {p.demo === "primitives" ? <div className="pg-skeleton-primitives"><Skeleton kind={p.kind as never} lines={p.lines as number} tone={p.tone as never} loading={p.loading as boolean} width={(p.width as string) || undefined} height={(p.height as string) || undefined} borderRadius={(p.borderRadius as string) || undefined} animation={p.animation as never} /></div> : <SkeletonDemo layout={p.demo as never} loading={p.loading as boolean} tone={p.tone as never} borderRadius={(p.borderRadius as string) || undefined} animation={p.animation as never} />}
       </div>
     ),
   },
