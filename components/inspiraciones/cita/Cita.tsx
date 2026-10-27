@@ -6,22 +6,16 @@ import FAQSection from "@/components/ui/FAQSection";
 import QRCode from "@/components/ui/QRCode";
 import Reveal from "@/components/ui/Reveal";
 import ScrollExpand from "@/components/ui/ScrollExpand";
-import SmoothScroll from "@/components/ui/SmoothScroll";
-import "./cita.css";
+import { ARTICULOS, LOCALES } from "./data";
+import { citaHref } from "./enlaces";
 
 /*
- * Cita Barbers: réplica de Rendezvous (docs/50 §3.2). Naranja y negro, serif de titulares con la cursiva para el énfasis,
+ * Portada de Cita Barbers: réplica de Rendezvous (docs/50 §3.2); la cabecera, el pie y las demás páginas están en
+ * Sitio.tsx (docs/56). Naranja y negro, serif de titulares con la cursiva para el énfasis,
  * datos en máquina de escribir; un vídeo que crece con el scroll (ScrollExpand), «Locales» y «Clientes» como palabras
  * gigantes, los locales en retratos con «+», reseñas en B/N, la app en un móvil (DeviceMockup) y «Descárgala» con su QR.
  */
 
-const LOCALES = [
-  { nombre: "Malasaña", img: "/img/inspiraciones/cita/local-malasana.webp", dir: "Calle del Pez 21", horas: "L–V 9:00–21:00 · S 9:00–19:00" },
-  { nombre: "Chamberí", img: "/img/inspiraciones/cita/local-chamberi.webp", dir: "Calle de Fuencarral 140", horas: "L–S 10:00–20:00" },
-  { nombre: "Lavapiés", img: "/img/inspiraciones/cita/local-lavapies.webp", dir: "Calle del Ave María 9", horas: "L–V 10:00–21:00" },
-  { nombre: "Salamanca", img: "/img/inspiraciones/cita/local-salamanca.webp", dir: "Calle de Goya 33", horas: "L–S 9:00–20:00" },
-  { nombre: "Chueca", img: "/img/inspiraciones/cita/local-chueca.webp", dir: "Calle de Hortaleza 70", horas: "L–D 10:00–20:00" },
-];
 
 const RESENAS = [
   { nombre: "Samir", img: "/img/inspiraciones/cita/resena-samir.webp", texto: "He ido tres veces al de Chamberí y cada visita ha sido excepcional. Hugo es un barbero increíble: su técnica es de primera y el trato, de lujo." },
@@ -29,25 +23,12 @@ const RESENAS = [
   { nombre: "Marcos", img: "/img/inspiraciones/cita/resena-marcos.webp", texto: "Reservé desde la app en dos minutos, me avisaron un día antes y salí con el degradado que llevaba meses buscando." },
 ];
 
-const PAPEL = [
-  { titulo: "Granos tras el afeitado: cómo evitarlos en la nuca", img: "/img/inspiraciones/cita/blog-afeitado.webp" },
-  { titulo: "Guía para cuidar la barba con canas", img: "/img/inspiraciones/cita/blog-barba-canas.webp" },
-  { titulo: "Pomada, cera o pasta: cuál te va", img: "/img/inspiraciones/cita/blog-pomada.webp" },
-];
 
 export default function Cita() {
   const [r, setR] = useState(0);
+  const [tienda, setTienda] = useState("");
   return (
-    <div className="ci">
-      <SmoothScroll />
-      <header className="ci-head">
-        <a href="#inicio" className="ci-logo" aria-label="Cita Barbers, inicio">
-          <span>CITA</span>
-          <svg viewBox="0 0 60 22" aria-hidden><path d="M2 20 L30 6 M58 20 L30 6 M18 4 a4 4 0 1 0 0.1 0 M42 4 a4 4 0 1 0 0.1 0" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
-        </a>
-        <a href="#app" className="ci-app">Descarga la app ↗</a>
-      </header>
-
+    <>
       <section className="ci-hero" id="inicio">
         <Reveal kind="slide" direction="up" distance={60} trigger="mount" duration={0.9}>
           <h1>Barberías de Madrid <em>especializadas en los cortes cortos más actuales</em></h1>
@@ -67,14 +48,17 @@ export default function Cita() {
         <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante"><em>Locales</em><sup>5</sup></h2></Reveal>
         <div className="ci-locales__rejilla">
           {LOCALES.map((l) => (
-            <details key={l.nombre} className="ci-local">
+            <details key={l.id} className="ci-local">
               <summary>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={l.img} alt="" loading="lazy" />
-                <span><em>{l.nombre}</em><b aria-hidden>+</b></span>
+                <span><em>{l.name}</em><b aria-hidden>+</b></span>
               </summary>
-              <p className="ci-maquina">{l.dir}<br />{l.horas}</p>
-              <a href="#app" className="ci-boton">Reservar</a>
+              <p className="ci-maquina">{l.address}<br />Metro {l.metro}</p>
+              <div className="ci-local__acciones">
+                <a href={citaHref(`reservar?local=${l.id}`)} className="ci-boton">Reservar</a>
+                <a href={citaHref(`locales/${l.id}`)} className="ci-enlace">Ver el local →</a>
+              </div>
             </details>
           ))}
         </div>
@@ -126,19 +110,27 @@ export default function Cita() {
         </div>
         <div className="ci-descarga">
           <h2><em>Descárgala</em><br /><em>ya</em> <QRCode value="https://cita.example/app" codeSize={110} tone="fg" contrast="theme" quiet={1} className="ci-qr" /></h2>
-          <div className="ci-tiendas"><a href="#app">Google Play</a><a href="#app">App Store</a></div>
+          <div className="ci-tiendas">
+            <button type="button" onClick={() => setTienda("Google Play")}>Google Play</button>
+            <button type="button" onClick={() => setTienda("App Store")}>App Store</button>
+          </div>
+          {tienda && (
+            <p className="ci-aviso" role="status">
+              La app de Cita es de demostración y no está en {tienda}. <a href={citaHref("reservar")}>Reserva en la web →</a>
+            </p>
+          )}
         </div>
       </section>
 
       <section className="ci-papel">
         <Reveal kind="slide" direction="up" distance={80} duration={0.9}><h2 className="ci-gigante"><em>Papel</em></h2></Reveal>
         <div className="ci-papel__rejilla">
-          {PAPEL.map((p) => (
-            <article key={p.titulo}>
+          {ARTICULOS.map((p) => (
+            <a key={p.slug} href={citaHref(`revista/${p.slug}`)} className="ci-articulo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={p.img} alt="" loading="lazy" />
               <h3>{p.titulo}</h3>
-            </article>
+            </a>
           ))}
         </div>
       </section>
@@ -154,22 +146,12 @@ export default function Cita() {
         </div>
         <div className="ci-reserva">
           <h2><em>Reserva ya</em></h2>
-          <a href="#app" className="ci-boton">Reservar ↗</a>
+          <a href={citaHref("reservar")} className="ci-boton">Reservar ↗</a>
           <h2><em>o desde la app</em></h2>
           <p className="ci-maquina">También puedes seguir los mismos pasos en la web. Si ya has reservado con nosotros, tus datos y tu historial te esperan en la app.</p>
         </div>
       </section>
 
-      <footer className="ci-pie">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/img/inspiraciones/cita/pie-sillon.webp" alt="" />
-        <p><em>Sé tu mejor versión</em><br /><em>en Cita</em></p>
-        <nav aria-label="Pie">
-          <a href="#inicio">Instagram</a><a href="#inicio">Facebook</a><a href="#inicio">LinkedIn</a><a href="#inicio">YouTube</a>
-          <a href="#inicio">Política de privacidad</a><a href="#inicio">Condiciones</a><a href="#app">Descarga la app ↗</a>
-        </nav>
-        <span className="ci-maquina">© Cita Barbers · Madrid</span>
-      </footer>
-    </div>
+    </>
   );
 }

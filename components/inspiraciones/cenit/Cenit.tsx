@@ -6,7 +6,6 @@ import CrossCluster from "@/components/ui/CrossCluster";
 import LineDraw from "@/components/ui/LineDraw";
 import FloatingVideo from "@/components/ui/FloatingVideo";
 import ScrollExpand from "@/components/ui/ScrollExpand";
-import SmoothScroll from "@/components/ui/SmoothScroll";
 
 // la de la referencia (Aeonik) es de pago: Inter Tight; la monoespaciada sí es la suya (IBM Plex Mono)
 const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-lw", display: "swap" });
@@ -74,8 +73,7 @@ export default function Cenit() {
   return (
     <div className={`lw ${sans.variable} ${mono.variable}`}>
       <style>{CSS}</style>
-      {/* la sensación de la referencia: scroll virtual con inercia larga (docs/42) */}
-      <SmoothScroll feel="cinematic" syncGsap={false} />
+      {/* la sensación de la referencia, scroll virtual con inercia larga (docs/42), la pone el marco (registro: scroll "cinematic") */}
 
       <header className="lw-head">
         <a className="lw-logo" href="#" aria-label="Cénit">

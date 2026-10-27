@@ -7,7 +7,6 @@ import Marquee from "@/components/ui/Marquee";
 import PricingSection from "@/components/ui/PricingSection";
 import ProjectList from "@/components/ui/ProjectList";
 import RollLink from "@/components/ui/RollLink";
-import SmoothScroll from "@/components/ui/SmoothScroll";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import { trackScroll } from "@/lib/motion/progress";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
@@ -66,7 +65,6 @@ const FAMA = [`/img/inspiraciones/impulso/fama-1.webp`, `/img/inspiraciones/impu
 export default function Impulso() {
   return (
     <div className="im">
-      <SmoothScroll />
       <header className="im-head">
         <a href="#inicio" className="im-logo">Impulso Fitness</a>
         <div className="im-head__nav">

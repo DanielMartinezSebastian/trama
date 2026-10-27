@@ -86,7 +86,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- Páginas con scroll (300vh) ---------- */
-html.scrollable {
+html:is(.scrollable, :has([data-inspiracion-scroll])) {
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -97,19 +97,19 @@ html.scrollable {
    scrollea, pero sí pasa a ser el ancestro respecto al que se calcula `position: sticky`, y las cabeceras fijas de
    las landings (NavBar) dejaban de pegarse y se iban con la página. `clip` recorta el desborde horizontal sin crear
    contenedor de scroll; el viewport (html) es el único que scrollea. */
-html.scrollable body {
+html:is(.scrollable, :has([data-inspiracion-scroll])) body {
   height: auto;
   overflow-x: clip;
   overflow-y: visible;
 }
 /* Firefox ya queda cubierto arriba (scrollbar-width/-color); Chrome, Edge y Safari solo respetan
    los pseudo-elementos ::-webkit-scrollbar-*, así que hacen falta también para que se vea igual. */
-html.scrollable::-webkit-scrollbar, html.scrollable body::-webkit-scrollbar { width: 10px; }
-html.scrollable::-webkit-scrollbar-track, html.scrollable body::-webkit-scrollbar-track { background: transparent; }
-html.scrollable::-webkit-scrollbar-thumb, html.scrollable body::-webkit-scrollbar-thumb {
+html:is(.scrollable, :has([data-inspiracion-scroll]))::-webkit-scrollbar, html:is(.scrollable, :has([data-inspiracion-scroll])) body::-webkit-scrollbar { width: 10px; }
+html:is(.scrollable, :has([data-inspiracion-scroll]))::-webkit-scrollbar-track, html:is(.scrollable, :has([data-inspiracion-scroll])) body::-webkit-scrollbar-track { background: transparent; }
+html:is(.scrollable, :has([data-inspiracion-scroll]))::-webkit-scrollbar-thumb, html:is(.scrollable, :has([data-inspiracion-scroll])) body::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.25); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
 }
-html.scrollable::-webkit-scrollbar-thumb:hover, html.scrollable body::-webkit-scrollbar-thumb:hover { background: var(--accent, rgba(255, 255, 255, 0.5)); }
+html:is(.scrollable, :has([data-inspiracion-scroll]))::-webkit-scrollbar-thumb:hover, html:is(.scrollable, :has([data-inspiracion-scroll])) body::-webkit-scrollbar-thumb:hover { background: var(--accent, rgba(255, 255, 255, 0.5)); }
 .scroll-spacer { height: 300vh; }
 
 .landing {

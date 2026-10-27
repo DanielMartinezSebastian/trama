@@ -3,7 +3,6 @@
 import { useState } from "react";
 import ClassSchedule, { type ScheduleBooking } from "@/components/ui/ClassSchedule";
 import FeatureExplorer from "@/components/ui/FeatureExplorer";
-import SmoothScroll from "@/components/ui/SmoothScroll";
 import { Albert_Sans, Crimson_Pro } from "next/font/google";
 import "./nucleo.css";
 
@@ -37,7 +36,6 @@ export default function Nucleo() {
   const [reservas, setReservas] = useState<ScheduleBooking[]>([]);
   return (
     <div className={`nc ${crimson.variable} ${albert.variable}`}>
-      <SmoothScroll />
       <header className="nc-head">
         <a href="#inicio" className="nc-logo">núcleo</a>
         <nav aria-label="Principal">

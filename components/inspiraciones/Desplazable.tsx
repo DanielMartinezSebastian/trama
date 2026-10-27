@@ -1,12 +1,4 @@
-"use client";
-
-import { useEffect } from "react";
-
-/** el sitio fija html y body (overflow: hidden); las inspiraciones se desplazan como las landings */
+/** Activa el scroll con el contenido, antes de que ViewTransition capture la página nueva. */
 export default function Desplazable() {
-  useEffect(() => {
-    document.documentElement.classList.add("scrollable");
-    return () => document.documentElement.classList.remove("scrollable");
-  }, []);
-  return null;
+  return <span hidden data-inspiracion-scroll="" />;
 }

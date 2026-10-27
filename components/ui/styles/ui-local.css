@@ -259,3 +259,47 @@ html:has(.ui-actionbar--fixed.ui-actionbar--always) { scroll-padding-bottom: cal
   .ui-cohorts--rows .ui-cohort, .ui-cohorts--rows .ui-cohort:has(.ui-cohort__img) { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .ui-cohort__cta { transition: none; } }
+
+/* ---------- Reserva de cita (BookingFlow) y Mis citas (AppointmentList), docs/56 ---------- */
+.ui-book { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 32px); align-items: start; color: var(--fg); }
+.ui-book__main { min-width: 0; padding: clamp(18px, 3vw, 30px); display: grid; gap: 24px; }
+.ui-book__step { display: grid; gap: 24px; animation: ui-book-entra 0.35s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both; }
+@keyframes ui-book-entra { from { opacity: 0; translate: 0 8px; } }
+.ui-book__group { border: 0; margin: 0; padding: 0; display: grid; gap: 12px; min-width: 0; }
+.ui-book__group legend { padding: 0; margin-bottom: 12px; font-family: var(--font-display, inherit); font-size: clamp(20px, 2.2vw, 28px); line-height: 1.1; }
+.ui-book__options { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+.ui-book__options button, .ui-book__choices button { display: flex; gap: 10px; align-items: center; text-align: left; min-height: 48px; padding: 14px 16px; border: 1px solid var(--ln); border-radius: var(--s-r, 0); background: var(--bg); color: var(--fg); font: inherit; cursor: pointer; transition: border-color 0.2s, background-color 0.2s, translate 0.2s; }
+.ui-book__options button { flex-direction: column; align-items: flex-start; gap: 6px; }
+.ui-book__options button:hover, .ui-book__choices button:hover { border-color: color-mix(in srgb, var(--acc) 60%, var(--ln)); translate: 0 -1px; }
+.ui-book__options button[aria-pressed="true"], .ui-book__choices button[aria-pressed="true"] { border-color: var(--acc); box-shadow: inset 0 0 0 1px var(--acc); }
+.ui-book__options button:focus-visible, .ui-book__choices button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.ui-book__options span, .ui-book__choices small { color: var(--mut); font-size: 13px; }
+.ui-book__choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.ui-book__choices button > span { display: grid; gap: 2px; }
+.ui-book__choices img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.ui-book__actions, .ui-appts__actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.ui-book__form { max-width: 520px; }
+.ui-book__note { margin: 0; color: var(--mut); font-size: 13px; line-height: 1.5; }
+.ui-book__error { margin: 0; color: var(--bad); font-size: 14px; }
+.ui-book__summary { position: sticky; top: calc(var(--ui-book-top, 96px)); padding: clamp(18px, 2.4vw, 28px); display: grid; gap: 8px; border-top: 3px solid var(--acc); }
+.ui-book__summary h3 { margin: 0; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.1; }
+.ui-book__summary p, .ui-book__summary small { margin: 0; color: var(--mut); }
+.ui-book__summary p:first-of-type { color: var(--fg); }
+.ui-book__kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc) !important; }
+.ui-book--done { grid-template-columns: minmax(0, 720px); }
+.ui-book--done h2 { margin: 0; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.05; }
+.ui-book--done p { margin: 0; }
+.ui-book__ok { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; color: var(--acc); }
+.ui-book__ok span { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--acc); color: var(--bg); animation: ui-book-ok 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes ui-book-ok { from { scale: 0.4; opacity: 0; } }
+.ui-appts { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; color: var(--fg); }
+.ui-appts__item, .ui-appts--empty { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 8px; }
+.ui-appts h3 { margin: 0; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.1; }
+.ui-appts p, .ui-appts small { margin: 0; color: var(--mut); }
+.ui-appts__when { color: var(--acc) !important; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+.ui-appts__note { color: var(--mut); font-size: 13px; }
+@media (max-width: 760px) {
+  .ui-book { grid-template-columns: 1fr; }
+  .ui-book__summary { position: static; order: -1; }
+}
+@media (prefers-reduced-motion: reduce) { .ui-book__step, .ui-book__ok span { animation: none; } }

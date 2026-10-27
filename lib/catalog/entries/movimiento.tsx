@@ -163,6 +163,7 @@ export const movimiento: CatalogEntry[] = [
     notes: [
       "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
       "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.",
+      "Anclas (`<a href=\"#precios\">`): salto animado con expo.out (de 0,6 a 1,4 s según la distancia) que descuenta la cabecera fija, escribe el #ancla y pasa el foco a la sección. Funciona también en táctil y con enabled={false} (solo anclas, scroll nativo); con «reducir movimiento», salta sin animar. Opciones: anchors={{ offset, duration, easing }}; scrollToAnchor() de @/lib/motion/anchors para hacerlo desde código.",
     ],
     props: [
       { key: "lerp", label: "Inercia", type: "number", default: 0.1, min: 0.03, max: 0.3, step: 0.01 },

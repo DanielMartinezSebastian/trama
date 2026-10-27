@@ -778,6 +778,7 @@ Scroll con inercia de toda la página, sincronizado con ScrollTrigger. No pinta 
 
 - Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.
 - En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.
+- Anclas (`<a href="#precios">`): salto animado con expo.out (de 0,6 a 1,4 s según la distancia) que descuenta la cabecera fija, escribe el #ancla y pasa el foco a la sección. Funciona también en táctil y con enabled={false} (solo anclas, scroll nativo); con «reducir movimiento», salta sin animar. Opciones: anchors={{ offset, duration, easing }}; scrollToAnchor() de @/lib/motion/anchors para hacerlo desde código.
 
 ### Botón circular (también dentro de un titular) — `CircleButton`
 
@@ -1672,6 +1673,33 @@ Calendario en línea para un día (cita, encargo, recogida) o un rango (hotel), 
 - La demo: domingos cerrados, encargo desde mañana y huecos con disponibilidad que cambia por día (slots como función).
 - `min` y `max` aceptan una fecha ISO o días desde hoy: `min={2}` = 48 h de antelación.
 - Para pedidos rápidos (recoger hoy o mañana): shortcuts={4} calendar="collapsed" — los próximos días disponibles como botones y el calendario solo si se pide (ver /sitios/almibar/pedido).
+
+### Reserva de cita — `BookingFlow`
+
+Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al calendario». Los huecos dependen de la duración del servicio, del cierre de cada día y de las citas ya guardadas, y un resumen al lado sigue la elección. Guarda en localStorage con useAppointments (lib/commerce/booking); no envía nada.
+
+| prop | tipo | default |
+|---|---|---|
+| `staffLabel` | text | "¿Con quién?" |
+| `anyStaffLabel` | text | "Me da igual" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- Datos: `services` (id, name, minutes, price, description), `staff` (name, role, photo, `services` que hace, `places` donde trabaja) y `places` opcional. Huecos: `times`, `closedDays`, `closesAt` ({ 6: "14:00" }), `min` y `max`.
+- Desde una carta o una ficha: `initialService`, `initialStaff` e `initialPlace` (de `?servicio=`); reprogramar con `editId` (de `?editar=`, el enlace «Cambiar» de AppointmentList).
+- Misma `storageKey` en BookingFlow y AppointmentList. Ver /inspiraciones/cita/reservar (cinco locales) y docs/56.
+
+### Mis citas — `AppointmentList`
+
+Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación. Dentro de cutoffHours los cambios se cierran, como en una agenda real. Con la lista vacía, una invitación a reservar.
+
+| prop | tipo | default |
+|---|---|---|
+| `cutoffHours` | number 0–72 | 24 |
+| `emptyTitle` | text | "Aún no tienes citas" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- Reserva una cita en la ficha de BookingFlow y aparece aquí (comparten `storageKey`).
+- `bookHref` es la página de la reserva; «Cambiar» le añade `?editar=<id>`.
 
 ## Feedback (`feedback`)
 

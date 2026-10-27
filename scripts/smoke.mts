@@ -3,10 +3,13 @@ import { resolve } from "node:path";
 import { chromium } from "playwright";
 import { chromiumPath } from "./chromium-path.mts";
 import { sombrasOscuras } from "./sombras-navegador.mts";
+import { auditarInteraccion } from "./auditar-interaccion.mts";
 
 const args = process.argv.slice(2);
 const input = args[0];
-if (!input || !/^https?:\/\//.test(input)) throw new Error("Uso: npm run smoke -- http://localhost:3005/ruta [--out carpeta]");
+if (!input || !/^https?:\/\//.test(input)) throw new Error("Uso: npm run smoke -- http://localhost:3005/ruta [--out carpeta] [--auditar]");
+// --auditar: además, enlaces muertos o rotos y botones sin efecto (docs/56 §2.5)
+const auditar = args.includes("--auditar");
 const url = new URL(input);
 if (!["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) throw new Error("smoke solo admite servidores locales");
 const outIndex = args.indexOf("--out");
@@ -26,10 +29,11 @@ try {
   await page.screenshot({ path: resolve(out, "pagina.png"), fullPage: true });
   // guía §8.0: ninguna sombra oscura sobre fondo claro, medida con lo que resuelve el navegador
   const sombras = await sombrasOscuras(page);
-  const result = { url: url.href, status, title: await page.title(), errors, sombras };
+  const muertos = auditar ? await auditarInteraccion(page, url.origin) : [];
+  const result = { url: url.href, status, title: await page.title(), errors, sombras, ...(auditar ? { muertos } : {}) };
   writeFileSync(resolve(out, "resultado.json"), JSON.stringify(result, null, 2));
   console.log(JSON.stringify({ ...result, out }, null, 2));
-  process.exitCode = status >= 200 && status < 400 && !errors.length && !sombras.length ? 0 : 1;
+  process.exitCode = status >= 200 && status < 400 && !errors.length && !sombras.length && !muertos.length ? 0 : 1;
 } finally {
   await browser.close();
 }

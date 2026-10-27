@@ -4,7 +4,6 @@ import CohortList, { type CohortProgram } from "@/components/ui/CohortList";
 import ContactForm from "@/components/ui/ContactForm";
 import FAQSection from "@/components/ui/FAQSection";
 import LineDraw from "@/components/ui/LineDraw";
-import SmoothScroll from "@/components/ui/SmoothScroll";
 import "./remada.css";
 
 /*
@@ -37,7 +36,6 @@ const AMIGOS = [`/img/inspiraciones/remada/amigo-1.webp`, "/img/inspiraciones/re
 export default function Remada() {
   return (
     <div className="rm">
-      <SmoothScroll />
       <div className="rm-cinta-top"><span><b>es</b> en</span></div>
       <a href="#sobre-mi" className="rm-avatar" aria-label="Lucía Mar, sobre mí">
         {/* eslint-disable-next-line @next/next/no-img-element */}

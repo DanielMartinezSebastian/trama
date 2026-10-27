@@ -2,7 +2,6 @@ import { Ruthie, Stack_Sans_Headline } from "next/font/google";
 import ChapterStage from "@/components/ui/ChapterStage";
 import TornPaper from "@/components/ui/TornPaper";
 import ProjectReel from "@/components/ui/ProjectReel";
-import SmoothScroll from "@/components/ui/SmoothScroll";
 import Relato from "./Relato";
 import Portada from "./Portada";
 
@@ -28,8 +27,7 @@ const CAPITULOS = [
 export default function Brasa() {
   return (
     <main className={`${ruthie.variable} ${stack.variable}`} style={{ background: "#000", color: "#fff", ["--bg" as string]: "#000", ["--fg" as string]: "#f2f2f2", ["--acc" as string]: "#990000", ["--mut" as string]: "#8a7a7a" }}>
-      {/* la sensación de Quilate (docs/42): inercia larga; las piezas del relato la leen de la página */}
-      <SmoothScroll feel="cinematic" syncGsap={false} />
+      {/* la sensación de Quilate (docs/42), inercia larga, la pone el marco (registro: scroll "cinematic") */}
       <Relato />
       <Portada />
       {/* el relato se fija a los 3 291 px, como en la referencia, sea cual sea el alto de la portada (100vh) */}

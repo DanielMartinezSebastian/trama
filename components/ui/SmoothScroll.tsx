@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { setLenis } from "@/lib/motion/lenis";
+import { installAnchorScroll, type AnchorScrollOptions } from "@/lib/motion/anchors";
 import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 import { SCROLL_FEELS, type ScrollFeelName } from "@/lib/motion/scroll-feel";
 
@@ -16,8 +17,13 @@ export type SmoothScrollProps = {
   lerp?: number;
   /** multiplica la distancia de cada vuelta de la rueda */
   wheelMultiplier?: number;
-  /** enlaces `#ancla` con desplazamiento suave */
-  anchors?: boolean;
+  /**
+   * enlaces `#ancla` de la misma página con desplazamiento animado (expo.out, de 0,6 a 1,4 s según la distancia) que
+   * descuenta la cabecera fija. Funciona también sin el scroll suave (pantallas táctiles, `enabled={false}`); con «reducir
+   * movimiento» salta sin animar. Acepta `{ offset, duration, easing }` (`offset: "auto"` mide la cabecera; es el valor
+   * por defecto) o `false` para no tocar los enlaces
+   */
+  anchors?: boolean | AnchorScrollOptions;
   /** sincroniza Lenis con el reloj de GSAP y avisa a ScrollTrigger (necesario si hay animaciones ligadas al scroll) */
   syncGsap?: boolean;
   /** apaga el scroll suave sin quitar el componente (p. ej. según el tamaño de pantalla) */
@@ -42,6 +48,16 @@ export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wh
       if (html.dataset.scrollFeel === feel) delete html.dataset.scrollFeel;
     };
   }, [feel]);
+  // las anclas, con o sin Lenis: en el móvil el scroll suave no se activa, pero el salto a una sección sí se anima
+  const anchorRef = useRef<AnchorScrollOptions>({});
+  anchorRef.current = typeof anchors === "object" ? anchors : {};
+  const anchorsOn = anchors !== false;
+  useEffect(() => {
+    if (!anchorsOn) return;
+    // las opciones se leen en cada clic: cambiarlas no reinstala el escuchador
+    const opts = new Proxy({} as AnchorScrollOptions, { get: (_, k) => anchorRef.current[k as keyof AnchorScrollOptions] });
+    return installAnchorScroll(opts);
+  }, [anchorsOn]);
   useEffect(() => {
     if (!enabled) return;
     if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;
@@ -54,7 +70,8 @@ export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wh
         syncGsap ? Promise.all([import("gsap"), import("gsap/ScrollTrigger")]) : Promise.resolve(null),
       ]);
       if (disposed) return;
-      const lenis = new Lenis({ lerp, wheelMultiplier, anchors, autoRaf: !gsapMods });
+      // las anclas las lleva installAnchorScroll (con la cabecera descontada), no Lenis
+      const lenis = new Lenis({ lerp, wheelMultiplier, anchors: false, autoRaf: !gsapMods });
       setLenis(lenis);
       cleanups.push(() => {
         lenis.destroy();
@@ -75,7 +92,7 @@ export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wh
       disposed = true;
       cleanups.reverse().forEach((f) => f());
     };
-  }, [lerp, wheelMultiplier, anchors, syncGsap, enabled]);
+  }, [lerp, wheelMultiplier, syncGsap, enabled]);
 
   return null;
 }

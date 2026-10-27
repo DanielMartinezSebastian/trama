@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import ActionBar from "@/components/ui/ActionBar";
+import AppointmentList from "@/components/ui/AppointmentList";
+import BookingFlow from "@/components/ui/BookingFlow";
 import CohortList from "@/components/ui/CohortList";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
@@ -12,6 +14,23 @@ import type { CatalogEntry } from "../schema";
 import { ALL_STYLES, toneProp, variantProp } from "./shared";
 
 /** Negocio local: las piezas funcionales que piden restauración, comercio, salud y fitness (docs/11 §5 y docs/17). */
+
+/** carta y equipo de ejemplo para la reserva de cita (una barbería) */
+const SERVICES_DEMO = [
+  { id: "corte", name: "Corte", minutes: 30, price: 22, description: "Corte, lavado y peinado." },
+  { id: "corte-barba", name: "Corte y barba", minutes: 50, price: 32, description: "Corte, arreglo de barba y aceite." },
+  { id: "afeitado", name: "Afeitado clásico", minutes: 35, price: 20, description: "Navaja, toalla caliente y bálsamo." },
+];
+const STAFF_DEMO = [
+  { name: "Hugo", role: "Degradados", places: ["centro"] },
+  { name: "Iván", role: "Clásico y navaja", places: ["centro", "norte"] },
+  { name: "Bruno", role: "Barba y canas", places: ["norte"], services: ["corte-barba", "afeitado"] },
+];
+const PLACES_DEMO = [
+  { id: "centro", name: "Centro", address: "Calle Mayor 1" },
+  { id: "norte", name: "Norte", address: "Avenida de la Paz 40" },
+];
+const CITAS_DEMO = "trama:catalogo:citas";
 
 const HOURS = "L-V|07:30-14:00 17:00-20:30\nS|08:00-14:30\nD|cerrado";
 const MENU =
@@ -165,6 +184,53 @@ export const negocio: CatalogEntry[] = [
     render: (p) => (
       <div style={{ width: `min(100%, ${p.months === "2" ? 640 : 380}px)`, padding: 16 }}>
         <DateDemo key={`${p.mode}-${p.months}-${p.slots}-${p.shortcuts}-${p.calendar}`} mode={p.mode as never} months={Number(p.months) as 1 | 2} slots={p.slots as boolean} shortcuts={p.shortcuts as number} calendar={p.calendar as never} />
+      </div>
+    ),
+  },
+  {
+    id: "booking-flow",
+    component: "BookingFlow",
+    path: "@/components/ui/BookingFlow",
+    name: "Reserva de cita",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al calendario». Los huecos dependen de la duración del servicio, del cierre de cada día y de las citas ya guardadas, y un resumen al lado sigue la elección. Guarda en localStorage con useAppointments (lib/commerce/booking); no envía nada.",
+    stageHeight: 760,
+    props: [
+      { key: "places", label: "Varios locales", type: "boolean", default: false, noCode: true },
+      { key: "staffLabel", label: "Título de la elección de profesional", type: "text", default: "¿Con quién?" },
+      { key: "anyStaffLabel", label: "Opción «me da igual»", type: "text", default: "Me da igual" },
+      variantProp("minimal"),
+    ],
+    notes: [
+      "Datos: `services` (id, name, minutes, price, description), `staff` (name, role, photo, `services` que hace, `places` donde trabaja) y `places` opcional. Huecos: `times`, `closedDays`, `closesAt` ({ 6: \"14:00\" }), `min` y `max`.",
+      "Desde una carta o una ficha: `initialService`, `initialStaff` e `initialPlace` (de `?servicio=`); reprogramar con `editId` (de `?editar=`, el enlace «Cambiar» de AppointmentList).",
+      "Misma `storageKey` en BookingFlow y AppointmentList. Ver /inspiraciones/cita/reservar (cinco locales) y docs/56.",
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <BookingFlow key={String(p.places)} services={SERVICES_DEMO} staff={STAFF_DEMO} places={p.places ? PLACES_DEMO : []} storageKey={CITAS_DEMO} staffLabel={p.staffLabel as string} anyStaffLabel={p.anyStaffLabel as string} variant={p.variant as never} business="Barbería de ejemplo" />
+      </div>
+    ),
+  },
+  {
+    id: "appointment-list",
+    component: "AppointmentList",
+    path: "@/components/ui/AppointmentList",
+    name: "Mis citas",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación. Dentro de cutoffHours los cambios se cierran, como en una agenda real. Con la lista vacía, una invitación a reservar.",
+    stageHeight: 420,
+    props: [
+      { key: "cutoffHours", label: "Horas antes en que se cierran los cambios", type: "number", default: 24, min: 0, max: 72, step: 1 },
+      { key: "emptyTitle", label: "Título sin citas", type: "text", default: "Aún no tienes citas" },
+      variantProp("minimal"),
+    ],
+    notes: ["Reserva una cita en la ficha de BookingFlow y aparece aquí (comparten `storageKey`).", "`bookHref` es la página de la reserva; «Cambiar» le añade `?editar=<id>`."],
+    render: (p) => (
+      <div style={{ width: "min(100%, 640px)", padding: 16 }}>
+        <AppointmentList services={SERVICES_DEMO} places={PLACES_DEMO} storageKey={CITAS_DEMO} bookHref="#booking-flow" cutoffHours={p.cutoffHours as number} emptyTitle={p.emptyTitle as string} variant={p.variant as never} />
       </div>
     ),
   },

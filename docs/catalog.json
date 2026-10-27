@@ -181,7 +181,9 @@
         "otp-input",
         "quantity-stepper",
         "option-picker",
-        "date-picker"
+        "date-picker",
+        "booking-flow",
+        "appointment-list"
       ]
     },
     {
@@ -11441,7 +11443,8 @@
       ],
       "notes": [
         "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
-        "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor."
+        "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.",
+        "Anclas (`<a href=\"#precios\">`): salto animado con expo.out (de 0,6 a 1,4 s según la distancia) que descuenta la cabecera fija, escribe el #ancla y pasa el foco a la sección. Funciona también en táctil y con enabled={false} (solo anclas, scroll nativo); con «reducir movimiento», salta sin animar. Opciones: anchors={{ offset, duration, easing }}; scrollToAnchor() de @/lib/motion/anchors para hacerlo desde código."
       ],
       "example": "import SmoothScroll from \"@/components/ui/SmoothScroll\";\n\n<SmoothScroll />",
       "preview": "/componentes#smooth-scroll"
@@ -15184,6 +15187,123 @@
       ],
       "example": "import DatePicker from \"@/components/ui/DatePicker\";\n\n<DatePicker />",
       "preview": "/componentes#date-picker"
+    },
+    {
+      "id": "booking-flow",
+      "name": "Reserva de cita",
+      "component": "BookingFlow",
+      "import": "import BookingFlow from \"@/components/ui/BookingFlow\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al calendario». Los huecos dependen de la duración del servicio, del cierre de cada día y de las citas ya guardadas, y un resumen al lado sigue la elección. Guarda en localStorage con useAppointments (lib/commerce/booking); no envía nada.",
+      "props": [
+        {
+          "key": "staffLabel",
+          "type": "text",
+          "default": "¿Con quién?",
+          "label": "Título de la elección de profesional"
+        },
+        {
+          "key": "anyStaffLabel",
+          "type": "text",
+          "default": "Me da igual",
+          "label": "Opción «me da igual»"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Datos: `services` (id, name, minutes, price, description), `staff` (name, role, photo, `services` que hace, `places` donde trabaja) y `places` opcional. Huecos: `times`, `closedDays`, `closesAt` ({ 6: \"14:00\" }), `min` y `max`.",
+        "Desde una carta o una ficha: `initialService`, `initialStaff` e `initialPlace` (de `?servicio=`); reprogramar con `editId` (de `?editar=`, el enlace «Cambiar» de AppointmentList).",
+        "Misma `storageKey` en BookingFlow y AppointmentList. Ver /inspiraciones/cita/reservar (cinco locales) y docs/56."
+      ],
+      "example": "import BookingFlow from \"@/components/ui/BookingFlow\";\n\n<BookingFlow />",
+      "preview": "/componentes#booking-flow"
+    },
+    {
+      "id": "appointment-list",
+      "name": "Mis citas",
+      "component": "AppointmentList",
+      "import": "import AppointmentList from \"@/components/ui/AppointmentList\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación. Dentro de cutoffHours los cambios se cierran, como en una agenda real. Con la lista vacía, una invitación a reservar.",
+      "props": [
+        {
+          "key": "cutoffHours",
+          "type": "number",
+          "default": 24,
+          "label": "Horas antes en que se cierran los cambios",
+          "min": 0,
+          "max": 72
+        },
+        {
+          "key": "emptyTitle",
+          "type": "text",
+          "default": "Aún no tienes citas",
+          "label": "Título sin citas"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Reserva una cita en la ficha de BookingFlow y aparece aquí (comparten `storageKey`).",
+        "`bookHref` es la página de la reserva; «Cambiar» le añade `?editar=<id>`."
+      ],
+      "example": "import AppointmentList from \"@/components/ui/AppointmentList\";\n\n<AppointmentList />",
+      "preview": "/componentes#appointment-list"
     },
     {
       "id": "action-bar",
