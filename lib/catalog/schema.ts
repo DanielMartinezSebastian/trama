@@ -35,6 +35,8 @@ export const STYLES: { id: StyleTag; label: string }[] = [
 type Base = {
   key: string;
   label: string;
+  /** Incluye siempre esta prop en el ejemplo, también cuando coincide con el valor del visor. */
+  required?: boolean;
   hint?: string;
   when?: (p: Values) => boolean;
   /** solo existe en el visor (no es una prop del componente): no aparece en el código de ejemplo */
@@ -62,6 +64,8 @@ export type CatalogEntry = {
   props: PropSpec[];
   /** altura mínima del escenario en px */
   stageHeight?: number;
+  /** Vista con ventana y scroll propios; inview añade recorrido antes y después del contenido. Solo del visor. */
+  preview?: "scroll" | "inview" | ((values: Values) => "scroll" | "inview" | undefined);
   notes?: string[];
   /** el componente usa una prop que dispara animaciones (`playKey`) */
   replayable?: boolean;
@@ -85,7 +89,7 @@ export function snippet(e: CatalogEntry, values: Values, extra: string[] = []): 
     else parts.push(`${spec.key}={${v}}`);
   }
   // Las props obligatorias (sin default útil) se muestran siempre
-  const required = e.props.filter((s) => (!s.when || s.when(values)) && !s.noCode && (s.key === "title" || s.key === "text" || s.key === "label" || s.key === "lines" || s.key === "value" || s.key === "content") && !parts.some((x) => x.startsWith(`${s.key}=`)));
+  const required = e.props.filter((s) => (!s.when || s.when(values)) && !s.noCode && (s.required || s.key === "title" || s.key === "text" || s.key === "label" || s.key === "lines" || s.key === "value" || s.key === "content") && !parts.some((x) => x.startsWith(`${s.key}=`)));
   for (const s of required) {
     const v = values[s.key];
     if (typeof v === "string") parts.unshift(v.includes("\n") ? `${s.key}={${JSON.stringify(v)}}` : `${s.key}=${JSON.stringify(v)}`);

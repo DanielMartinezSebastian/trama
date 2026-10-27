@@ -586,6 +586,13 @@ un componente:
      `variantProp("glass")` y `toneProp("acc")`.
    - `render(props, { replay })` que devuelve el componente con esas props (`replay` cambia al pulsar «Repetir animación»).
 4. Abrir `/componentes`: aparece solo, con controles, filtros, comparador de estilos y código.
+   Si depende del scroll o de la ventana, marca `preview: "scroll"` en su entrada: la demo se ejecuta en una página
+   con scroll propio, dentro de un iframe, sin modificar el comportamiento del kit. `preview: "inview"` añade recorrido
+   antes y después para observar entradas y salidas. Puede ser una función de las props, por ejemplo
+   `preview: (p) => p.trigger === "scroll" ? "inview" : undefined`. Es una opción del visor, no una prop del componente.
+   Renderiza un ejemplo real que responda a las props; no sustituyas la demo por un aviso ni fuerces un progreso manual.
+   El visor permite reiniciar, recorrer con rueda/tacto/teclado y ampliar la ventana; también ofrece «Probar con scroll»
+   para los componentes sin esa marca. La misma vista funciona en el comparador de estilos.
 5. Añadirlo a la tabla de categorías de `docs/README.md` y ejecutar `npm run catalog` (regenera `CATALOG.md` y
    `catalog.json`; `npm run catalog:check` falla si falta cualquiera de los dos pasos).
 

@@ -281,3 +281,17 @@
 /* AmbientLight: vídeo con su luz detrás (lib/catalog/entries/fondos.tsx) */
 .pg-amb { position: relative; width: min(620px, 100%); height: 340px; display: grid; place-items: center; overflow: hidden; border-radius: var(--r); background: var(--bg); isolation: isolate; }
 .pg-amb video { position: relative; z-index: 1; width: 58%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: calc(var(--r) * 0.6); }
+
+/* Ventana propia para las demostraciones que dependen del scroll de la pagina. */
+.pg__stage--page { overflow: visible; }
+.pg-preview-shell { min-width: 0; background: var(--bg); color: var(--fg); }
+.pg-preview-shell__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid var(--ln); }
+.pg-preview-shell__bar p { flex: 1 1 220px; margin: 0; font-size: 12px; line-height: 1.5; color: var(--mut); }
+.pg-preview-shell__bar .chip { font-size: 11px; border-radius: 0; background: var(--bg); backdrop-filter: none; }
+.pg-preview-shell__progress { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--ln); font-size: 11px; }
+.pg-preview-shell__progress input { flex: 1; min-width: 0; accent-color: var(--acc); }
+.pg-preview-shell__progress output { min-width: 5ch; text-align: right; font-variant-numeric: tabular-nums; }
+.pg-preview-shell > iframe { display: block; width: 100%; height: clamp(360px, 64svh, 620px); border: 0; background: var(--bg); }
+.pg-preview-shell > iframe:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+.pg-preview-shell:fullscreen { display: flex; flex-direction: column; height: 100dvh; padding: 16px; background: var(--bg); }
+.pg-preview-shell:fullscreen > iframe { flex: 1; height: 0; min-height: 0; }

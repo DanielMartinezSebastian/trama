@@ -363,6 +363,7 @@ export const transiciones: CatalogEntry[] = [
   },
   {
     id: "reveal",
+    preview: (p) => p.trigger !== "mount" ? "inview" : undefined,
     component: "Reveal",
     path: "@/components/ui/Reveal",
     name: "Revelado de contenido",

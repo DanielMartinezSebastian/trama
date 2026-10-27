@@ -275,6 +275,7 @@
       "label": "Overlays",
       "blurb": "Elementos que aparecen encima de la página: diálogos, notificaciones, ayuda.",
       "components": [
+        "link-preview",
         "modal",
         "toast",
         "tooltip",
@@ -10097,6 +10098,132 @@
       "preview": "/componentes#article"
     },
     {
+      "id": "link-preview",
+      "name": "Miniatura de enlace (LinkPreview)",
+      "component": "LinkPreview",
+      "import": "import LinkPreview from \"@/components/ui/LinkPreview\";",
+      "category": "overlays",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Miniatura de una página al pasar el cursor o enfocar su enlace con teclado. Vista en vivo o imagen estática, carga bajo demanda y tema heredado del disparador. Puede envolver un enlace propio, incluido next/link.",
+      "props": [
+        {
+          "key": "href",
+          "type": "text",
+          "default": "/demo/th-ciphergrid",
+          "label": "Destino"
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Ver página",
+          "label": "Texto del enlace"
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "default": "",
+          "label": "Pie de la miniatura"
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "live",
+          "label": "Contenido",
+          "options": [
+            "live",
+            "image"
+          ]
+        },
+        {
+          "key": "image",
+          "type": "text",
+          "default": "",
+          "label": "URL de la imagen"
+        },
+        {
+          "key": "width",
+          "type": "number",
+          "default": 360,
+          "label": "Anchura máxima (px)",
+          "min": 160,
+          "max": 720
+        },
+        {
+          "key": "delay",
+          "type": "number",
+          "default": 240,
+          "label": "Retardo (ms)",
+          "min": 0,
+          "max": 1000
+        },
+        {
+          "key": "viewportWidth",
+          "type": "number",
+          "default": 1280,
+          "label": "Resolución horizontal (px)",
+          "min": 320,
+          "max": 1920
+        },
+        {
+          "key": "viewportHeight",
+          "type": "number",
+          "default": 800,
+          "label": "Resolución vertical (px)",
+          "min": 320,
+          "max": 1440
+        },
+        {
+          "key": "loadingLabel",
+          "type": "text",
+          "default": "Cargando vista previa…",
+          "label": "Texto de carga"
+        },
+        {
+          "key": "errorLabel",
+          "type": "text",
+          "default": "Abre el enlace para ver la página",
+          "label": "Texto de error"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "outline",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "Con children se conserva el enlace original y sus eventos; sin children se crea un enlace HTML con href y label. No añade una parada de tabulador ni reemplaza la navegación.",
+        "La vista en vivo requiere que el destino permita iframes y que su origen esté autorizado por la CSP del proyecto. Para webs externas que no lo permitan, usa mode=\"image\" con una captura propia en image.",
+        "width es un máximo en píxeles. viewportWidth y viewportHeight definen la resolución del iframe y la proporción de la miniatura. title vacío oculta el pie.",
+        "Escape, scroll, cambio de tamaño, clic y pérdida de foco o hover cierran y descargan la vista, también durante el retardo. Solo se mantiene una miniatura activa. El hover táctil está desactivado.",
+        "El portal copia el tema al abrirse. Respeta movimiento reducido en su aparición; las animaciones dentro de la página en vivo dependen de esa página."
+      ],
+      "example": "import LinkPreview from \"@/components/ui/LinkPreview\";\n\n<LinkPreview\n  title=\"\"\n  label=\"Ver página\"\n  href=\"/demo/th-ciphergrid\"\n/>",
+      "preview": "/componentes#link-preview"
+    },
+    {
       "id": "modal",
       "name": "Modal",
       "component": "Modal",
@@ -11237,7 +11364,7 @@
       ],
       "notes": [
         "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
-        "No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio."
+        "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor."
       ],
       "example": "import SmoothScroll from \"@/components/ui/SmoothScroll\";\n\n<SmoothScroll />",
       "preview": "/componentes#smooth-scroll"
@@ -11529,7 +11656,7 @@
         }
       ],
       "notes": [
-        "Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.",
+        "Desplaza dentro de la demo o usa el control Recorrido para ver el texto encenderse y apagarse.",
         "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."
       ],
       "example": "import ScrubText from \"@/components/ui/ScrubText\";\n\n<ScrubText\n  text=\"Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir.\"\n/>",
@@ -11557,7 +11684,7 @@
         }
       ],
       "notes": [
-        "Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio."
+        "La cabecera se esconde al bajar y reaparece al subir dentro de la demo. No se esconde mientras uno de sus enlaces tiene el foco."
       ],
       "example": "import HideOnScroll from \"@/components/ui/HideOnScroll\";\n\n<HideOnScroll>\n  <nav>…tu cabecera…</nav>\n</HideOnScroll>",
       "preview": "/componentes#hide-on-scroll"
@@ -11592,7 +11719,7 @@
         }
       ],
       "notes": [
-        "Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio."
+        "La demo contiene tres secciones con data-section: el indicador cambia al cruzar el centro de la ventana. Si editas selector, debe seguir apuntando a esas secciones."
       ],
       "example": "import SectionIndex from \"@/components/ui/SectionIndex\";\n\n<SectionIndex />",
       "preview": "/componentes#section-index"
@@ -12810,7 +12937,7 @@
         }
       ],
       "notes": [
-        "Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.",
+        "Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza dentro de la demo o usa Recorrido para verla crecer.",
         "from y offset: tamaño y posición iniciales; inset y radius: el final.",
         "Con movimiento reducido, ya crecida."
       ],
@@ -14440,7 +14567,7 @@
         }
       ],
       "notes": [
-        "Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.",
+        "Desplaza dentro de la demo o usa Recorrido: cada sección ocupa una pantalla y cambia el tema al llegar a ella.",
         "Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.",
         "Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens."
       ],

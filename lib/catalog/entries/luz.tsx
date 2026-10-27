@@ -13,6 +13,7 @@ const PRESETS = Object.keys(LIGHT_PRESETS);
 export const luz: CatalogEntry[] = [
   {
     id: "light-scroll",
+    preview: (p) => !p.cue ? "scroll" : undefined,
     component: "LightScroll",
     path: "@/components/ui/LightScroll",
     name: "Luz que cambia según la finalidad de la sección",
@@ -32,9 +33,9 @@ export const luz: CatalogEntry[] = [
       { key: "duration", label: "Fundido (s)", type: "number", default: 0.9, min: 0, max: 3, step: 0.1 },
     ],
     render: (p) => (
-      <LightScroll cues={LIGHT_PRESETS} cue={(p.cue as string) || undefined} duration={p.duration as number} position="absolute" style={{ width: "100%", background: "#0e0c0a", color: "#efe7da", minHeight: 420 }}>
+        <LightScroll cues={LIGHT_PRESETS} cue={(p.cue as string) || undefined} duration={p.duration as number} position={p.cue ? "absolute" : "fixed"} style={{ width: "100%", background: "#0e0c0a", color: "#efe7da", minHeight: 420 }}>
         {(["vitrina", "honesta", "rasante"] as const).map((t) => (
-          <section key={t} data-light={t} style={{ minHeight: 420, display: "grid", placeItems: "center", textAlign: "center", padding: 24 }}>
+            <section key={t} data-light={t} style={{ minHeight: p.cue ? 420 : "100svh", display: "grid", placeItems: "center", textAlign: "center", padding: 24 }}>
             <div>
               <p style={{ margin: 0, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", opacity: 0.7 }}>data-light=&quot;{t}&quot;</p>
               <p style={{ margin: "8px 0 0", fontSize: 30 }}>{LIGHT_PRESETS[t].kelvin} K</p>

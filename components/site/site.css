@@ -206,6 +206,8 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 }
 .tr-empty { padding: 40px 0; font: 500 12px/1.5 var(--mono); color: var(--mut); }
 
+.tr-demo:focus-visible, .tr-release:focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; }
+
 /* ---------- Docs ---------- */
 .tr-docs {
   display: grid; grid-template-columns: 220px minmax(0, 1fr) 220px; gap: clamp(24px, 4vw, 56px); align-items: start;

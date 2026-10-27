@@ -1151,8 +1151,13 @@ function Engagement() {
 }
 
 /* ---------- taller: los servicios uno a uno, cada uno con su luz ---------- */
+const WORKSHOP_PHOTOS: Record<string, { src: string; alt: string }> = {
+  talla: { src: "/img/quilate/14-ajuste-talla.webp", alt: "Una alianza de oro sobre un mandril de acero durante el ajuste de talla" },
+  reparacion: { src: "/img/quilate/15-reparacion-cadena.webp", alt: "Reparación del cierre de una cadena de oro con pinzas y soplete de precisión" },
+  transformar: { src: "/img/quilate/16-transformar-herencia.webp", alt: "Una montura antigua, su zafiro recuperado y el boceto de un nuevo anillo en el banco del taller" },
+};
+
 function Workshop() {
-  const dull: RingSel = { ...DEFAULT_SOLITAIRE, metal: "amarillo" };
   return (
     <>
       <header className="ql-wrap ql-page" data-light="taller">
@@ -1171,13 +1176,16 @@ function Workshop() {
             </div>
             <div className="ql-service__media">
               {s.id === "limpieza" ? (
-                <BeforeAfter before={<RingFlat sel={dull} look="apagado" />} after={<RingFlat sel={dull} />} beforeLabel="Antes" afterLabel="Después" label="Comparar la pieza antes y después de limpiarla" ratio={1} />
+                <>
+                  <BeforeAfter before={<img src="/img/quilate/17-limpieza-antes.webp" alt="Solitario de oro con residuos en el diamante y las garras antes de la limpieza" loading="lazy" />} after={<img src="/img/quilate/18-limpieza-despues.webp" alt="El mismo solitario limpio, con las facetas visibles y el mismo encuadre e iluminación" loading="lazy" />} beforeLabel="Antes" afterLabel="Después" label="Comparar la pieza antes y después de limpiarla" ratio={1} />
+                  <p className="ql-chapter__light">Comparación ilustrativa · imágenes generadas para esta demo.</p>
+                </>
               ) : s.id === "grabado" ? (
                 <Engraving sel={{ ...DEFAULT_BAND, engraving: "A & M · 2027" }} />
               ) : s.id === "tasacion" ? (
                 <MetaTable label="Informe de tasación (ejemplo)" rows={ARCHIVE_SAMPLE.split("\n").slice(0, 5).map((l) => ({ k: l.split("|")[0], v: l.split("|")[1] }))} />
               ) : (
-                <img src={photo("joyeria", s.id === "talla" ? 5 : s.id === "reparacion" ? 1 : 6).src} alt="" loading="lazy" />
+                <img src={WORKSHOP_PHOTOS[s.id].src} alt={WORKSHOP_PHOTOS[s.id].alt} loading="lazy" />
               )}
             </div>
           </section>

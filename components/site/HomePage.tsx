@@ -2,6 +2,7 @@ import Link from "next/link";
 import Marquee from "@/components/ui/Marquee";
 import Reveal from "@/components/ui/Reveal";
 import HomeStage from "./HomeStage";
+import DemoPreviewLink from "./DemoPreviewLink";
 import InstallChip from "./InstallChip";
 import StartSteps from "./StartSteps";
 import VariantLab from "./VariantLab";
@@ -125,14 +126,14 @@ export default function HomePage({ data }: { data: HomeData }) {
           <ol className="tr-releases">
             {data.landings.map((l, i) => (
               <li key={l.slug}>
-                <Link href={`/demo/${l.slug}`} className="tr-release" style={{ ["--accent" as string]: l.accent }}>
+                <DemoPreviewLink href={`/demo/${l.slug}`} previewTitle={l.name} className="tr-release" style={{ ["--accent" as string]: l.accent }}>
                   <span className="tr-n">{pad(i + 1)}</span>
                   <span className="tr-release__name">{l.name}</span>
                   <span className="tr-release__meta">
                     {l.kind} · {l.lib}
                   </span>
                   <span className="tr-release__go">Ver →</span>
-                </Link>
+                </DemoPreviewLink>
               </li>
             ))}
           </ol>
@@ -154,14 +155,14 @@ export default function HomePage({ data }: { data: HomeData }) {
           <ol className="tr-releases tr-releases--sm">
             {data.sites.map((s, i) => (
               <li key={s.slug}>
-                <Link href={`/sitios/${s.slug}`} className="tr-release" style={{ ["--accent" as string]: s.accent }}>
+                <DemoPreviewLink href={`/sitios/${s.slug}`} previewTitle={s.name} className="tr-release" style={{ ["--accent" as string]: s.accent }}>
                   <span className="tr-n">{pad(i + 1)}</span>
                   <span className="tr-release__name">{s.name}</span>
                   <span className="tr-release__meta">
                     {s.tag} · {s.pages} páginas
                   </span>
                   <span className="tr-release__go">Ver →</span>
-                </Link>
+                </DemoPreviewLink>
               </li>
             ))}
           </ol>

@@ -584,6 +584,7 @@ export const galerias: CatalogEntry[] = [
   },
   {
     id: "audio-player",
+    preview: (p) => p.dock !== "none" ? "inview" : undefined,
     component: "AudioPlayer",
     path: "@/components/ui/AudioPlayer",
     name: "Reproductor de música",

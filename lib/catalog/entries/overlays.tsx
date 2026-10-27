@@ -6,6 +6,7 @@ import Drawer from "@/components/ui/Drawer";
 import Modal from "@/components/ui/Modal";
 import Toast from "@/components/ui/Toast";
 import Tooltip from "@/components/ui/Tooltip";
+import LinkPreview from "@/components/ui/LinkPreview";
 import type { CatalogEntry } from "../schema";
 import { ALL_STYLES, intentProp, variantProp } from "./shared";
 
@@ -15,6 +16,42 @@ import { ALL_STYLES, intentProp, variantProp } from "./shared";
  * cambia su `playKey`); Toast lanza sobre `sonner` — ver `components/ui/Toast.tsx`.
  */
 export const overlays: CatalogEntry[] = [
+  {
+    id: "link-preview",
+    component: "LinkPreview",
+    path: "@/components/ui/LinkPreview",
+    name: "Miniatura de enlace (LinkPreview)",
+    category: "overlays",
+    styles: ALL_STYLES,
+    description: "Miniatura de una página al pasar el cursor o enfocar su enlace con teclado. Vista en vivo o imagen estática, carga bajo demanda y tema heredado del disparador. Puede envolver un enlace propio, incluido next/link.",
+    stageHeight: 220,
+    notes: [
+      "Con children se conserva el enlace original y sus eventos; sin children se crea un enlace HTML con href y label. No añade una parada de tabulador ni reemplaza la navegación.",
+      "La vista en vivo requiere que el destino permita iframes y que su origen esté autorizado por la CSP del proyecto. Para webs externas que no lo permitan, usa mode=\"image\" con una captura propia en image.",
+      "width es un máximo en píxeles. viewportWidth y viewportHeight definen la resolución del iframe y la proporción de la miniatura. title vacío oculta el pie.",
+      "Escape, scroll, cambio de tamaño, clic y pérdida de foco o hover cierran y descargan la vista, también durante el retardo. Solo se mantiene una miniatura activa. El hover táctil está desactivado.",
+      "El portal copia el tema al abrirse. Respeta movimiento reducido en su aparición; las animaciones dentro de la página en vivo dependen de esa página.",
+    ],
+    props: [
+      { key: "href", label: "Destino", type: "text", default: "/demo/th-ciphergrid", required: true },
+      { key: "label", label: "Texto del enlace", type: "text", default: "Ver página" },
+      { key: "title", label: "Pie de la miniatura", type: "text", default: "" },
+      { key: "mode", label: "Contenido", type: "select", default: "live", options: ["live", "image"], labels: { live: "Página en vivo", image: "Imagen estática" } },
+      { key: "image", label: "URL de la imagen", type: "text", default: "", when: (p) => p.mode === "image" },
+      { key: "width", label: "Anchura máxima (px)", type: "number", default: 360, min: 160, max: 720, step: 20 },
+      { key: "delay", label: "Retardo (ms)", type: "number", default: 240, min: 0, max: 1000, step: 20 },
+      { key: "viewportWidth", label: "Resolución horizontal (px)", type: "number", default: 1280, min: 320, max: 1920, step: 80 },
+      { key: "viewportHeight", label: "Resolución vertical (px)", type: "number", default: 800, min: 320, max: 1440, step: 40 },
+      { key: "loadingLabel", label: "Texto de carga", type: "text", default: "Cargando vista previa…" },
+      { key: "errorLabel", label: "Texto de error", type: "text", default: "Abre el enlace para ver la página" },
+      variantProp("outline"),
+    ],
+    render: (p) => (
+      <div className="ui-center">
+        <LinkPreview href={p.href as string} label={p.label as string} title={p.title as string} mode={p.mode as never} image={p.image as string} width={p.width as number} delay={p.delay as number} viewportWidth={p.viewportWidth as number} viewportHeight={p.viewportHeight as number} loadingLabel={p.loadingLabel as string} errorLabel={p.errorLabel as string} variant={p.variant as never} />
+      </div>
+    ),
+  },
   {
     id: "modal",
     component: "Modal",

@@ -71,6 +71,7 @@ export const formulas: CatalogEntry[] = [
   },
   {
     id: "island-nav",
+    preview: (p) => p.hideOnScroll ? "scroll" : undefined,
     component: "IslandNav",
     path: "@/components/ui/IslandNav",
     name: "Navegación «isla»",
@@ -83,11 +84,10 @@ export const formulas: CatalogEntry[] = [
       { key: "hideOnScroll", label: "Esconder al bajar", type: "boolean", default: false },
       { key: "brandAlign", label: "Marca", type: "select", default: "balanced", options: ["balanced", "exact"], labels: { balanced: "columna central", exact: "centro exacto" } },
     ],
-    render: (p) => (
-      <Boxed h={140}>
-        <IslandNav hideOnScroll={p.hideOnScroll as boolean} brandAlign={p.brandAlign as never} leading={<button type="button" className="ui-fsm__btn">[menu]</button>} brand={<span>◐ Arbor</span>} trailing={<a href="#">Consultar →</a>} />
-      </Boxed>
-    ),
+      render: (p) => {
+        const nav = <IslandNav hideOnScroll={p.hideOnScroll as boolean} brandAlign={p.brandAlign as never} leading={<button type="button" className="ui-fsm__btn">[menu]</button>} brand={<span>◐ Arbor</span>} trailing={<a href="#">Consultar →</a>} />;
+        return p.hideOnScroll ? <div>{nav}{["Una isla sobre la página", "Baja y vuelve a subir", "La navegación te acompaña"].map((title) => <section key={title} className="pg-preview__section"><h2>{title}</h2></section>)}</div> : <Boxed h={140}>{nav}</Boxed>;
+      },
   },
   {
     id: "model-nav",
@@ -148,6 +148,7 @@ export const formulas: CatalogEntry[] = [
   },
   {
     id: "expanding-panels",
+    preview: (p) => p.mobileScroll ? "scroll" : undefined,
     component: "ExpandingPanels",
     path: "@/components/ui/ExpandingPanels",
     name: "Paneles que se expanden",
@@ -171,6 +172,7 @@ export const formulas: CatalogEntry[] = [
   },
   {
     id: "scatter-text",
+    preview: "inview",
     component: "ScatterText",
     path: "@/components/ui/ScatterText",
     name: "Texto que se dispersa con el scroll",
