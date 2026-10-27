@@ -58,6 +58,8 @@ export type ClassScheduleProps = {
   waitlistedLabel?: string;
   /** clase sin plazas */
   fullLabel?: string;
+  /** texto de una clase de hoy que ya ha empezado (no se puede reservar) */
+  startedLabel?: string;
   /** sin clases para el día y los filtros */
   emptyText?: string;
   /** texto del filtro «todas» */
@@ -98,7 +100,7 @@ const byTime = (a: ScheduleClass, b: ScheduleClass) => a.time.localeCompare(b.ti
  * libres, lista de espera y reservas hechas. No guarda nada: las reservas entran por `bookings` y salen por `onBook`.
  * En lista (un día) o en semana (columnas). Los días se calculan en el cliente.
  */
-export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7, startOffset = 0, layout = "list", filters = "both", bookings = [], availableOn, defaultCategory = "", bookedHref = "", bookedCta = "Ver mi reserva", freePlaces, onBook, bookLabel = "Reservar", waitlistLabel = "Lista de espera", bookedLabel = "Reservada", waitlistedLabel = "En lista de espera", fullLabel = "Completa", emptyText = "No hay clases con estos filtros este día.", allLabel = "Todas", locale = "es-ES", variant = "glass", className = "" }: ClassScheduleProps) {
+export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7, startOffset = 0, layout = "list", filters = "both", bookings = [], availableOn, defaultCategory = "", bookedHref = "", bookedCta = "Ver mi reserva", freePlaces, onBook, bookLabel = "Reservar", waitlistLabel = "Lista de espera", bookedLabel = "Reservada", waitlistedLabel = "En lista de espera", fullLabel = "Completa", startedLabel = "Ya empezó", emptyText = "No hay clases con estos filtros este día.", allLabel = "Todas", locale = "es-ES", variant = "glass", className = "" }: ClassScheduleProps) {
   const list = useMemo(() => (typeof classes === "string" ? parse(classes) : classes), [classes]);
   const [days, setDays] = useState<string[]>([]);
   const [day, setDay] = useState("");
@@ -119,11 +121,18 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
   const free = (c: ScheduleClass, date: string) => (freePlaces ? freePlaces(c, date) : Math.max(0, (c.capacity ?? Infinity) - (c.booked ?? 0)));
   const label = (date: string, o: Intl.DateTimeFormatOptions) => new Date(`${date}T12:00:00`).toLocaleDateString(locale, o);
 
+  // la hora de ahora, leída al montar (los días también se calculan en el cliente): una clase de hoy que ya empezó no se reserva
+  const [ahora, setAhora] = useState({ dia: "", hora: "" });
+  useEffect(() => {
+    const t = new Date();
+    setAhora({ dia: iso(t), hora: `${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}` });
+  }, []);
   const action = (c: ScheduleClass, date: string) => {
     const b = bookings.find((x) => x.classId === c.id && x.date === date);
     const n = free(c, date);
-    const state = b ? (b.waitlist ? waitlistedLabel : bookedLabel) : !Number.isFinite(n) ? "" : n === 0 ? fullLabel : `${n} ${n === 1 ? "plaza" : "plazas"}`;
-    return { b, n, state };
+    const started = date === ahora.dia && c.time <= ahora.hora;
+    const state = b ? (b.waitlist ? waitlistedLabel : bookedLabel) : started ? startedLabel : !Number.isFinite(n) ? "" : n === 0 ? fullLabel : `${n} ${n === 1 ? "plaza" : "plazas"}`;
+    return { b, n, state, started };
   };
 
   const filtros = filters !== "none" && (
@@ -168,9 +177,9 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
                 .filter((c) => on(c, d) && pass(c))
                 .sort(byTime)
                 .map((c) => {
-                  const { b, n, state } = action(c, d);
+                  const { b, n, state, started } = action(c, d);
                   return (
-                    <button key={c.id} type="button" className={`ui-sched__chip ui-surface ${b ? "is-booked" : n === 0 ? "is-full" : ""}`} onClick={() => !b && onBook?.(c, d, n === 0)} aria-label={`${c.name}, ${label(d, { weekday: "long" })} ${c.time}${state ? `, ${state}` : ""}`}>
+                    <button key={c.id} type="button" disabled={started && !b} className={`ui-sched__chip ui-surface ${b ? "is-booked" : n === 0 || started ? "is-full" : ""}`} onClick={() => !b && !started && onBook?.(c, d, n === 0)} aria-label={`${c.name}, ${label(d, { weekday: "long" })} ${c.time}${state ? `, ${state}` : ""}`}>
                       <time>{c.time}</time>
                       <strong>{c.name}</strong>
                       {state && <small>{state}</small>}
@@ -198,9 +207,9 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
       {today.length ? (
         <ol className="ui-sched__list">
           {today.map((c) => {
-            const { b, n, state } = action(c, day);
+            const { b, n, state, started } = action(c, day);
             return (
-              <li key={c.id} className={`ui-sched__row ${b ? "is-booked" : n === 0 ? "is-full" : ""}`}>
+              <li key={c.id} className={`ui-sched__row ${b ? "is-booked" : n === 0 || started ? "is-full" : ""}`}>
                 <div className="ui-sched__time">
                   <strong>{c.time}</strong>
                   {c.minutes && <small>{c.minutes} min</small>}
@@ -214,7 +223,7 @@ export default function ClassSchedule({ classes = DEFAULT_CLASSES, daysAhead = 7
                 <div className="ui-sched__act">
                   {state && <span>{state}</span>}
                   {b && bookedHref && <Button label={bookedCta} href={bookedHref} emphasis="primary" size="sm" variant={variant} />}
-                  {onBook && !b && <Button label={n === 0 ? waitlistLabel : bookLabel} onClick={() => onBook(c, day, n === 0)} emphasis={n === 0 ? "outline" : "primary"} size="sm" variant={variant} />}
+                  {onBook && !b && !started && <Button label={n === 0 ? waitlistLabel : bookLabel} onClick={() => onBook(c, day, n === 0)} emphasis={n === 0 ? "outline" : "primary"} size="sm" variant={variant} />}
                 </div>
               </li>
             );

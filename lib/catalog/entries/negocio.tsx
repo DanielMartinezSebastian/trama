@@ -117,7 +117,7 @@ export const negocio: CatalogEntry[] = [
       { key: "bookLabel", label: "Botón de reserva", type: "text", default: "Reservar" },
       variantProp("glass"),
     ],
-    notes: ["Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).", "Los días se calculan en el navegador para no desajustar la hidratación."],
+    notes: ["Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).", "Los días se calculan en el navegador para no desajustar la hidratación.", "Una clase de hoy cuya hora ya llegó sale como «Ya empezó» (startedLabel) y no se puede reservar.", "Con useMembership (lib/commerce/membership): bookings={socio.bookings} y onBook={(c, d, espera) => socio.book(c.id, d, espera)}; MemberArea las enseña y las anula."],
     render: (p) => (
       <div style={{ width: "min(100%, 860px)", padding: 16 }}>
         <ScheduleDemo classes={p.classes as string} layout={p.layout as never} daysAhead={p.daysAhead as number} filters={p.filters as never} bookLabel={p.bookLabel as string} variant={p.variant as never} />

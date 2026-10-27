@@ -139,3 +139,52 @@
 @media (max-width: 760px) { .vv-head, .vv-mapa, .vv-primero, .vv-pie, .vv-planes, .vv-clases, .vv-memb { padding-inline: 21px; } }
 /* el plan destacado es blanco con texto negro, como en el original (el relleno oscuro común lo había apagado) */
 .vv-precios .ui-price--hl { --fg: #000; --mut: #555; --bg: #fff; --acc: #fb5607; background: #fff !important; color: #000; }
+
+/* ---------- varias páginas (docs/56) ---------- */
+.vv-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.vv-isla a[aria-current="page"] { background: #fff; color: #000; border-radius: 999px; }
+.vv-pin { position: absolute; width: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 8px rgb(251 86 7 / 0.25); translate: -50% -50%; cursor: pointer; transition: box-shadow 0.3s, scale 0.3s; }
+.vv-pin span { position: absolute; left: 50%; top: -30px; translate: -50% 0; padding: 2px 8px; background: #000; color: #fff; font: 700 12px var(--vv-cond); white-space: nowrap; opacity: 0; transition: opacity 0.2s; }
+.vv-pin:hover span, .vv-pin:focus-visible span, .vv-pin[aria-pressed="true"] span { opacity: 1; }
+.vv-pin[aria-pressed="true"] { scale: 1.3; box-shadow: 0 0 0 12px rgb(251 86 7 / 0.35); }
+.vv-pin:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.vv-mapa__ficha { animation: vv-entra 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.vv-mapa__ficha > div { display: grid; gap: 8px; }
+.vv-mapa__ficha a:hover { color: var(--acc); }
+.vv-mas { font: 700 13px var(--vv-cond); }
+@keyframes vv-entra { from { opacity: 0; translate: 0 8px; } }
+
+.vv-pag { display: grid; gap: 40px; align-content: start; min-height: 100svh; padding: 40px 17px 120px; }
+.vv-pag__cab { display: grid; gap: 14px; }
+.vv-pag__cab h1 { margin: 0; font: 700 clamp(56px, 9vw, 150px)/0.86 var(--vv-cond); letter-spacing: -0.03em; text-transform: uppercase; }
+.vv-pag__cab p { margin: 0; max-width: 36em; color: var(--mut); }
+.vv-nota { margin: 0; }
+.vv-nota a, .vv-aviso a { color: var(--acc); }
+.vv-aviso { margin: 0; padding: 12px 16px; border-left: 3px solid var(--acc); background: #111; }
+.vv-mapa--pag { padding: 0; grid-template-columns: 1fr; }
+.vv-clubes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.vv-clubes button { display: grid; gap: 4px; width: 100%; padding: 16px; border: 1px solid var(--ln); background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer; transition: border-color 0.25s; }
+.vv-clubes button:hover, .vv-clubes button[aria-pressed="true"] { border-color: var(--acc); }
+.vv-clubes b { font: 700 22px var(--vv-cond); text-transform: uppercase; }
+.vv-clubes span { color: var(--mut); font-size: 14px; }
+.vv-ventajas-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 50px; }
+.vv-ventajas-lista li { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 5vw; align-items: center; scroll-margin-top: 90px; }
+.vv-ventajas-lista img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.vv-ventajas-lista div { display: grid; gap: 14px; }
+.vv-ventajas-lista h2 { margin: 0; font: 700 clamp(36px, 5vw, 76px)/0.9 var(--vv-cond); text-transform: uppercase; }
+.vv-ventajas-lista p { margin: 0; max-width: 32em; }
+.vv-invita { display: grid; gap: 12px; max-width: 420px; }
+.vv-invita label { display: grid; gap: 6px; font-size: 14px; color: var(--mut); }
+.vv-invita input { padding: 10px; border: 1px solid var(--ln); background: transparent; color: var(--fg); font: inherit; }
+.vv-invita input:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.vv-invita small { color: var(--acc); }
+.vv-invita button { justify-self: start; border: 0; background: none; color: var(--fg); cursor: pointer; }
+.vv-flujo { --ui-book-top: 90px; }
+.vv-flujo legend, .vv-flujo h2, .vv-flujo h3, .vv-cuenta h3 { font-family: var(--vv-cond); text-transform: uppercase; }
+
+@media (max-width: 760px) {
+  .vv-head .ui-fsm__btn--burger { display: inline-flex; }
+  .vv-head > .vv-unete { display: none; }
+  .vv-ventajas-lista li { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .vv-mapa__ficha { animation: none; } }

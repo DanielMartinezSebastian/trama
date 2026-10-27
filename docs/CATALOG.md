@@ -1273,6 +1273,8 @@ Clases de gimnasio, estudio o academia en los próximos días: filtro por discip
 
 - Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).
 - Los días se calculan en el navegador para no desajustar la hidratación.
+- Una clase de hoy cuya hora ya llegó sale como «Ya empezó» (startedLabel) y no se puede reservar.
+- Con useMembership (lib/commerce/membership): bookings={socio.bookings} y onBook={(c, d, espera) => socio.book(c.id, d, espera)}; MemberArea las enseña y las anula.
 
 ### Programas por convocatoria — `CohortList`
 

@@ -15025,7 +15025,9 @@
       ],
       "notes": [
         "Las reservas las guarda la web (estado, localStorage o servidor): pásalas en bookings y actualízalas en onBook(clase, fecha, espera).",
-        "Los días se calculan en el navegador para no desajustar la hidratación."
+        "Los días se calculan en el navegador para no desajustar la hidratación.",
+        "Una clase de hoy cuya hora ya llegó sale como «Ya empezó» (startedLabel) y no se puede reservar.",
+        "Con useMembership (lib/commerce/membership): bookings={socio.bookings} y onBook={(c, d, espera) => socio.book(c.id, d, espera)}; MemberArea las enseña y las anula."
       ],
       "example": "import ClassSchedule from \"@/components/ui/ClassSchedule\";\n\n<ClassSchedule />",
       "preview": "/componentes#class-schedule"
