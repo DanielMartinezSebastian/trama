@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import FullscreenMenu from "@/components/ui/FullscreenMenu";
-import MenuList, { type MenuSection } from "@/components/ui/MenuList";
+import MenuList from "@/components/ui/MenuList";
 import ShapeMosaic, { type ShapeMosaicItem } from "@/components/ui/ShapeMosaic";
 import TeamSection from "@/components/ui/TeamSection";
-import "./matiz.css";
+import { CARTA, NOTICIAS } from "./data";
+import { matizHref } from "./enlaces";
 
 /*
- * Matiz, atelier de color: réplica de Il Colorista (docs/50 §3.1). Mosaico de formas salmón con fotos que se disuelven en
+ * Portada de Matiz, atelier de color: réplica de Il Colorista (docs/50 §3.1); la cabecera, el pie y las demás páginas
+ * están en Sitio.tsx (docs/56). Mosaico de formas salmón con fotos que se disuelven en
  * color al bajar (ShapeMosaic), el manifiesto en gris, tratamientos en carrusel con su ficha, el equipo en círculos B/N,
  * noticias en rejilla, la carta como menú de paquetes con nombre y el menú oscuro con filetes que se dibujan.
  */
@@ -38,66 +39,34 @@ const TRATAMIENTOS = [
   { img: `/img/inspiraciones/matiz/servicio-brillo.webp`, nombre: "Ritual de brillo", texto: "Baño de color, masaje y acabado al aire." },
 ];
 
-const CARTA: MenuSection[] = [
-  { title: "Los rubios a medida", note: "Cada rubio tiene un nombre y una luz", items: [
-    { name: "Rubio Valencia", description: "Consulta + mechas al aire + matiz + reconstrucción + peinado", price: 169 },
-    { name: "Rubio Menorca", description: "Consulta + balayage + matiz + peinado", price: 145 },
-    { name: "Rubio Lisboa", description: "Consulta + iluminación de contorno + peinado", price: 98 },
-  ] },
-  { title: "Coloraciones", items: [
-    { name: "Castaño de otoño", description: "Consulta + color de raíz a puntas + baño de brillo + peinado", price: 92 },
-    { name: "Cobre", description: "Consulta + color + matiz cobrizo + peinado", price: 96 },
-  ] },
-  { title: "Bienestar", items: [
-    { name: "Pausa", description: "Diagnóstico del cuero cabelludo + masaje + tratamiento + peinado", price: 48 },
-  ] },
-  { title: "Corte", items: [
-    { name: "Corte de autor", description: "Consulta + lavado + corte + peinado", price: 55 },
-  ] },
-];
-
-const NOTICIAS = [
-  { img: `/img/inspiraciones/matiz/blog-talento.webp`, titulo: "Matiz busca talento" },
-  { img: `/img/inspiraciones/matiz/blog-rubio.webp`, titulo: "Mi rubio perfecto" },
-  { img: `/img/inspiraciones/matiz/blog-mechas.webp`, titulo: "El método de las mechas al aire" },
-  { img: `/img/inspiraciones/matiz/blog-castano.webp`, titulo: "Mi castaño perfecto" },
-  { img: `/img/inspiraciones/matiz/blog-armocromia.webp`, titulo: "Qué es la armocromía" },
-  { img: `/img/inspiraciones/matiz/blog-nutrir.webp`, titulo: "Colorear y nutrir" },
-  { img: `/img/inspiraciones/matiz/blog-color-perfecto.webp`, titulo: "El color perfecto existe" },
-  { img: `/img/inspiraciones/matiz/blog-amoniaco.webp`, titulo: "Amoniaco: ¿sí o no?" },
-];
+/** apuntarse al boletín o pedir la revista: un correo y la confirmación, sin enviar nada */
+function Suscripcion({ texto, accion, hecho }: { texto: string; accion: string; hecho: string }) {
+  const [abierto, setAbierto] = useState(false);
+  const [correo, setCorreo] = useState("");
+  const [ok, setOk] = useState(false);
+  const [error, setError] = useState("");
+  if (ok) return <div className="mz-revista__tarjeta"><p>{hecho}</p><p className="mz-nota" role="status">Enviado a {correo} (demostración: no sale nada).</p></div>;
+  return (
+    <div className="mz-revista__tarjeta">
+      <p>{texto}</p>
+      {abierto ? (
+        <form className="mz-suscribe" noValidate onSubmit={(e) => { e.preventDefault(); if (!/^\S+@\S+\.\S+$/.test(correo.trim())) return setError("Revisa el correo."); setOk(true); }}>
+          <label>tu correo<input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} autoComplete="email" autoFocus /></label>
+          <button type="submit">enviar</button>
+          {error && <small role="alert">{error}</small>}
+        </form>
+      ) : (
+        <button type="button" className="mz-enlace" onClick={() => setAbierto(true)}>{accion}</button>
+      )}
+    </div>
+  );
+}
 
 export default function Matiz() {
   const [t, setT] = useState(0);
   const tr = TRATAMIENTOS[t];
   return (
-    <div className="mz">
-      <header className="mz-head">
-        <a className="mz-logo" href="#inicio">Matiz</a>
-        <nav aria-label="Redes" className="mz-social">
-          <a href="#contacto">fb</a>
-          <a href="#contacto">ig</a>
-          <a href="#contacto">wa</a>
-        </nav>
-        <FullscreenMenu
-          brand="Matiz"
-          openLabel="menú"
-          closeLabel="cerrar"
-          trigger="label"
-          rules
-          cover
-          note="Calle de Sueca 18 · Valencia"
-          links={[
-            { label: "inicio", href: "#inicio" },
-            { label: "servicios", href: "#carta" },
-            { label: "método rostro a medida", href: "#metodo", meta: "ir al formulario" },
-            { label: "noticias", href: "#noticias" },
-            { label: "contacto", href: "#contacto" },
-          ]}
-          footer={[{ label: "Instagram", href: "#contacto" }, { label: "WhatsApp", href: "#contacto" }]}
-          className="mz-menu"
-        />
-      </header>
+    <>
 
       <section className="mz-hero" id="inicio">
         <h1>Atelier de color<br />en Ruzafa</h1>
@@ -110,7 +79,7 @@ export default function Matiz() {
       <section className="mz-manifiesto" id="metodo">
         <p className="mz-firma">Matiz Atelier<br />Cuando pienso en mi clienta ideal imagino<br />a una mujer que se cuida para sí misma,<br />que valora lo que la hace única.<br />Cada mujer tiene su color.</p>
         <h2>de aquí nace<br /><b>el método</b><br /><b>rostro a medida</b></h2>
-        <p className="mz-links"><a href="#metodo">descúbrelo ↗</a><a href="#contacto">pide cita ↗</a></p>
+        <p className="mz-links"><a href={matizHref("metodo")}>descúbrelo ↗</a><a href={matizHref("reservar?servicio=consulta")}>pide cita ↗</a></p>
       </section>
 
       <section className="mz-trat" aria-roledescription="carrusel" aria-label="Tratamientos">
@@ -119,6 +88,7 @@ export default function Matiz() {
         <div className="mz-trat__ficha">
           <strong>{tr.nombre}</strong>
           <span>{tr.texto}</span>
+          <a href={matizHref("servicios")}>ver la carta ↗</a>
         </div>
         <div className="mz-trat__flechas">
           <button type="button" aria-label="Anterior" onClick={() => setT((t + TRATAMIENTOS.length - 1) % TRATAMIENTOS.length)}>←</button>
@@ -132,29 +102,29 @@ export default function Matiz() {
         subtitle=""
         shape="circle"
         photoTone="mono"
-        linkLabel=""
+        linkLabel="pide cita"
         variant="minimal"
         className="mz-team"
         members={[
-          { name: "Marcos", role: "Colorista · Estilista", photo: "/img/inspiraciones/matiz/equipo-marcos.webp" },
-          { name: "Lidia", role: "Especialista en rubios · Encargada", photo: "/img/inspiraciones/matiz/equipo-lidia.webp" },
-          { name: "Alba", role: "Corte y textura", photo: "/img/inspiraciones/matiz/equipo-alba.webp" },
+          { name: "Marcos", role: "Colorista · Estilista", photo: "/img/inspiraciones/matiz/equipo-marcos.webp", href: matizHref("reservar?profesional=Marcos") },
+          { name: "Lidia", role: "Especialista en rubios · Encargada", photo: "/img/inspiraciones/matiz/equipo-lidia.webp", href: matizHref("reservar?profesional=Lidia") },
+          { name: "Alba", role: "Corte y textura", photo: "/img/inspiraciones/matiz/equipo-alba.webp", href: matizHref("reservar?profesional=Alba") },
         ]}
       />
 
       <section className="mz-news" id="noticias">
-        <article className="mz-news__card mz-news__card--brand">
+        <a href={matizHref(`noticias/${NOTICIAS[0].slug}`)} className="mz-news__card mz-news__card--brand">
           <span>Matiz</span>
-          <p>Matiz busca talento</p>
-        </article>
+          <p>{NOTICIAS[0].titulo}</p>
+        </a>
         {NOTICIAS.slice(1).map((n) => (
-          <article key={n.titulo} className="mz-news__card">
+          <a key={n.slug} href={matizHref(`noticias/${n.slug}`)} className="mz-news__card">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={n.img} alt="" loading="lazy" />
             <small>noticias</small>
             <h3>{n.titulo}</h3>
-            <a href="#noticias">leer</a>
-          </article>
+            <span className="mz-leer">leer</span>
+          </a>
         ))}
       </section>
 
@@ -166,30 +136,20 @@ export default function Matiz() {
           <h2>Carta<br />otoño – invierno<br />2026</h2>
         </div>
         <MenuList menu={CARTA} layout="list" filter={false} legend={false} nav={false} footnote="Consulta inicial 29 € · gratuita si después pides cita." variant="minimal" className="mz-menulist" />
+        <p className="mz-links mz-links--carta"><a href={matizHref("reservar")}>pide cita ↗</a><a href={matizHref("servicios")}>todos los servicios ↗</a></p>
       </section>
 
       <section className="mz-revista" aria-label="Revista y boletín">
         <div className="mz-revista__bloque">
           <span className="mz-revista__circulo" />
-          <div className="mz-revista__tarjeta">
-            <p>Matiz #7<br />Otoño – Invierno 2026</p>
-            <a href="#contacto">descarga la revista</a>
-          </div>
+          <Suscripcion texto="Matiz #7 · Otoño – Invierno 2026" accion="descarga la revista" hecho="Te mandamos la revista por correo." />
         </div>
         <div className="mz-revista__bloque mz-revista__bloque--b">
-          <div className="mz-revista__tarjeta">
-            <p>Entérate de las novedades y las ofertas</p>
-            <a href="#contacto">apúntate al boletín</a>
-          </div>
+          <Suscripcion texto="Entérate de las novedades y las ofertas" accion="apúntate al boletín" hecho="Ya estás en el boletín. Gracias." />
           <span className="mz-revista__circulo" />
         </div>
       </section>
 
-      <footer className="mz-foot" id="contacto">
-        <div><a href="#contacto">Privacidad</a> — <a href="#contacto">Cookies</a> — <a href="#contacto">Preferencias</a><br />hola@matiz.example<br />T. 960 000 000</div>
-        <div>Calle de Sueca 18<br />46006 Valencia</div>
-        <div>Todos los días<br />8:30 – 18:30</div>
-      </footer>
-    </div>
+    </>
   );
 }

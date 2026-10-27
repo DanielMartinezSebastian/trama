@@ -156,3 +156,91 @@ html[data-fsm-open] .mz-head { color: #fff; }
 .mz-hero { grid-template-rows: calc(100svh - 138px); }
 .mz-hero h1 { margin-top: 0; }
 @media (max-width: 760px) { .mz-hero { grid-template-rows: none; } }
+
+/* ---------- varias páginas (docs/56) ---------- */
+.mz-cita { margin-left: 8px; padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 14px; text-decoration: none; transition: background-color 0.25s, color 0.25s, border-color 0.25s; }
+.mz-cita:hover { background: var(--acc); border-color: var(--acc); color: #1f1f1f; }
+.mz-news a.mz-news__card { text-decoration: none; color: inherit; }
+.mz-news__card img { transition: scale 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.mz-news__card:hover img { scale: 1.04; }
+.mz-news__card { overflow: hidden; }
+.mz-leer { font-size: 13px; color: var(--mut); border-bottom: 1px solid currentColor; justify-self: start; }
+.mz-news__card:hover .mz-leer, .mz-news__card:hover h3 { color: var(--acc); }
+.mz-trat__ficha a { color: #fff; font-size: 16px; text-decoration: underline; text-underline-offset: 4px; }
+.mz-links--carta { justify-content: center; margin-top: 50px; }
+.mz-enlace { padding: 0; border: 0; border-bottom: 1px solid currentColor; background: none; color: inherit; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; justify-self: start; }
+.mz-enlace:hover { color: var(--acc); }
+.mz-revista__tarjeta .mz-enlace { color: #fff; font-size: 13px; }
+.mz-suscribe { display: grid; gap: 6px; font-size: 12px; }
+.mz-suscribe label { display: grid; gap: 4px; }
+.mz-suscribe input { padding: 6px 8px; border: 0; border-bottom: 1px solid #fff; background: transparent; color: #fff; font: inherit; font-size: 14px; }
+.mz-suscribe input:focus { outline: none; border-bottom-width: 2px; }
+.mz-suscribe button { justify-self: start; padding: 4px 12px; border: 1px solid #fff; border-radius: 999px; background: none; color: #fff; font: inherit; cursor: pointer; }
+.mz-suscribe small { color: #fff; }
+.mz-revista__tarjeta .mz-nota { color: #fff; font-size: 12px; }
+
+.mz-pag { min-height: 100svh; padding: 180px clamp(16px, 6vw, 90px) 120px; display: grid; gap: 60px; align-content: start; }
+.mz-pag__cab { display: grid; gap: 22px; max-width: 980px; }
+.mz-kicker { margin: 0; font-size: 16px; color: var(--mut); }
+.mz-pag__cab h1 { margin: 0; font: 200 clamp(56px, 8vw, 120px)/1 var(--mz-sans); letter-spacing: -0.01em; color: #414141; }
+.mz-entradilla { margin: 0; max-width: 30em; font-size: clamp(18px, 1.7vw, 24px); line-height: 1.58; font-weight: 200; }
+.mz-nota { margin: 0; color: var(--mut); font-size: 15px; }
+.mz-volver { justify-self: start; font-size: 15px; text-decoration: none; color: var(--mut); }
+.mz-volver:hover { color: var(--acc); }
+.mz-boton { justify-self: start; display: inline-block; padding: 14px 26px; border-radius: 999px; background: #1f1f1f; color: #fff !important; font-size: 16px; text-decoration: none; transition: background-color 0.25s, color 0.25s, translate 0.25s; }
+.mz-boton:hover { background: var(--acc); color: #1f1f1f !important; translate: 0 -2px; }
+
+.mz-servicios { display: grid; gap: 60px; max-width: 1080px; }
+.mz-servicios__grupo h2 { margin: 0 0 6px; font: 300 clamp(32px, 3.4vw, 48px)/1.1 var(--display); }
+.mz-servicios__grupo ul { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--ln); }
+.mz-servicios__grupo li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 28px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--ln); }
+.mz-servicios__grupo li > div { display: grid; gap: 4px; }
+.mz-servicios__grupo strong { font: 400 22px var(--mz-sans); }
+.mz-servicios__grupo li span { font-size: 16px; color: var(--mut); }
+.mz-precio { white-space: nowrap; }
+
+.mz-pag--metodo .mz-pag__cab h1 { font-family: var(--display); font-weight: 200; }
+.mz-metodo__formas { max-width: 640px; }
+.mz-pasos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 40px; }
+.mz-pasos b { display: block; font: 300 40px var(--display); color: var(--acc); }
+.mz-pasos h2 { margin: 6px 0 10px; font: 300 30px var(--mz-sans); }
+.mz-pasos p { margin: 0; font-size: 18px; line-height: 1.58; font-weight: 200; }
+.mz-cta { display: grid; justify-items: center; gap: 20px; padding: 70px 20px; background: #feeec2; text-align: center; }
+.mz-cta p { margin: 0; font-size: 18px; }
+.mz-cta .mz-boton { justify-self: center; }
+.mz-equipo h2 { margin: 0 0 30px; font: 200 clamp(40px, 5vw, 72px)/1 var(--mz-sans); color: #414141; }
+.mz-equipo ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 40px; }
+.mz-equipo li { display: grid; gap: 8px; }
+.mz-equipo img { width: 70%; aspect-ratio: 1; border-radius: 50%; object-fit: cover; filter: grayscale(1); }
+.mz-equipo strong { font: 300 34px var(--display); }
+.mz-equipo small { font-size: 14px; color: var(--mut); }
+.mz-equipo p { margin: 0; font-size: 17px; line-height: 1.5; font-weight: 200; }
+
+.mz-news--pag { padding: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 40px 18px; }
+.mz-news--pag p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--mut); }
+.mz-noticia { max-width: 1080px; }
+.mz-noticia .mz-pag__cab h1 { font-family: var(--display); font-size: clamp(44px, 6vw, 88px); }
+.mz-noticia__foto { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.mz-noticia__cuerpo { display: grid; gap: 24px; max-width: 34em; font-size: 20px; line-height: 1.6; font-weight: 200; }
+.mz-noticia__cuerpo p { margin: 0; }
+.mz-siguiente { display: grid; gap: 6px; padding-top: 30px; border-top: 1px solid var(--ln); text-decoration: none; }
+.mz-siguiente small { color: var(--mut); font-size: 14px; }
+.mz-siguiente span { font: 300 clamp(28px, 3vw, 40px) var(--display); }
+.mz-siguiente:hover span { color: var(--acc); }
+
+.mz-reserva { --ui-book-top: 160px; }
+.mz-reserva .ui-book__group legend, .mz-reserva .ui-book__summary h3, .mz-reserva h2 { font-family: var(--display); font-weight: 300; }
+.mz-reserva .ui-book__summary { background: #feeec2; border-top-color: var(--acc); }
+
+.mz-contacto { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 5vw; align-items: start; }
+.mz-contacto__datos { display: grid; gap: 24px; font-size: 18px; line-height: 1.6; }
+.mz-contacto__datos p { margin: 0; }
+.mz-redes h2, .mz-legal h2 { margin: 0 0 8px; font: 300 30px var(--display); }
+.mz-legal { max-width: 40em; padding-top: 40px; border-top: 1px solid var(--ln); font-size: 16px; line-height: 1.6; }
+
+@media (max-width: 760px) {
+  .mz-cita { display: none; }
+  .mz-pag { padding: 120px 16px 100px; gap: 44px; }
+  .mz-servicios__grupo li { grid-template-columns: 1fr; }
+  .mz-contacto { grid-template-columns: 1fr; }
+}

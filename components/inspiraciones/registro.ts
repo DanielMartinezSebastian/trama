@@ -6,6 +6,7 @@
  */
 
 import { PAGINAS as citaPaginas } from "./cita/data";
+import { PAGINAS as matizPaginas } from "./matiz/data";
 
 export type Replica = {
   slug: string;
@@ -37,7 +38,7 @@ export const rutasDe = (r: Replica) => [{ path: "", titulo: r.nombre }, ...(r.pa
 export const paginaDe = (r: Replica, ruta: string[]) => rutasDe(r).find((p) => p.path === ruta.join("/"));
 
 export const REPLICAS: Replica[] = [
-  { slug: "matiz", nombre: "Matiz", ref: "Il Colorista", url: "https://ilcolorista.salon/", ficha: "§3.1", sector: "peluquería", firma: "mosaico de formas salmón con fotos que se disuelven en color", hecha: true, guia: "salon", acento: "#f5a490" },
+  { slug: "matiz", nombre: "Matiz", ref: "Il Colorista", url: "https://ilcolorista.salon/", ficha: "§3.1", sector: "peluquería", firma: "mosaico de formas salmón con fotos que se disuelven en color", hecha: true, guia: "salon", acento: "#f5a490", paginas: matizPaginas, transicion: "fade" },
   { slug: "nura", nombre: "Nura", ref: "ALICE Hair & Art", url: "https://www.alicehairart.se/", ficha: "§3.2", sector: "peluquería", firma: "collage suelto que se desenfoca y una sola letra en mayúsculas", hecha: true, guia: "salon", acento: "#121212" },
   { slug: "cita", nombre: "Cita Barbers", ref: "Rendezvous", url: "https://www.myrendezvous.ca/", ficha: "§3.2", sector: "peluquería", firma: "naranja, serif con cursiva y palabras gigantes", hecha: true, guia: "barberia", acento: "#ff622b", scroll: "snappy", paginas: citaPaginas, transicion: "wipe" },
   { slug: "melena", nombre: "Melena", ref: "Hair Me Up", url: "https://hairmeup.pl", ficha: "§3.2", sector: "peluquería", firma: "arco melocotón y palabras de fondo; salón, tienda y academia", hecha: true, guia: "salon", acento: "#f4b39a" },
