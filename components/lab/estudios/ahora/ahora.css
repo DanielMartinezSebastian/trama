@@ -1,0 +1,97 @@
+/* Ahora (réplica de Future London Academy, docs/50 §3.6): amarillo #ffe32b, negro #1a1a1a y gris #f1f1f1; una sola letra
+   en mayúsculas (OnyFuture → Space Grotesk), la misma en contorno para el formato de los cursos. */
+.ah {
+  --bg: #fff; --fg: #1a1a1a; --mut: #6f6f6f; --acc: #ffe32b; --acc2: #1a1a1a; --card: #f1f1f1; --ln: #d9d9d9; --r: 0px;
+  --ah-f: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  background: var(--bg); color: var(--fg); font: 400 14px/1.4 var(--ah-f); overflow-x: clip;
+}
+.ah a { color: inherit; text-decoration: none; }
+.ah h1, .ah h2, .ah h3 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-height: 1; text-transform: uppercase; }
+
+.ah-head { position: absolute; inset: 0 0 auto; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; padding: 18px 20px; }
+.ah-logo { font: 600 14px/0.95 var(--ah-f); letter-spacing: 0.02em; }
+.ah-head nav { display: flex; gap: 30px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.ah-hero { position: relative; display: grid; align-items: center; height: 100svh; padding: 0 20px; background: var(--acc); overflow: hidden; }
+.ah-a { position: absolute; left: -10vw; top: -10vh; width: 120vh; height: 120vh; opacity: 1; }
+.ah-hero h1 { position: relative; font-size: clamp(48px, 5vw, 76px); }
+.ah-baja { position: absolute; left: 50%; bottom: 20px; font-size: 14px; }
+
+.ah-intro { display: grid; grid-template-columns: 1fr 1fr; }
+.ah-intro__txt { display: grid; align-content: start; gap: 18px; padding: 0 20px 60px 0; }
+.ah-intro__txt img { width: 100%; height: 300px; object-fit: cover; }
+.ah-intro__txt h2 { padding-left: 20px; font-size: 22px; text-transform: none; letter-spacing: -0.02em; line-height: 1.2; }
+.ah-intro__txt p { margin: 0 0 0 40%; font-size: 12px; }
+.ah-muro { display: grid; grid-template-columns: 1fr 1fr; background: var(--fg); color: #fff; }
+.ah-muro__cifra { display: grid; align-content: start; padding: 20px; }
+.ah-muro__cifra b { font-size: 46px; font-weight: 500; color: var(--acc); }
+.ah-muro__cifra span { color: var(--acc); font-size: 14px; }
+.ah-team { display: contents; }
+.ah-team .ui-sh { display: none; }
+.ah-team .ui-team__wall { display: contents; }
+.ah-team .ui-team__tile { aspect-ratio: 1 / 1.05; }
+.ah-muro__todos { display: grid; place-items: center; background: var(--acc); color: var(--fg) !important; font-size: 11px; text-transform: uppercase; }
+
+.ah-grupo { display: block; width: 100%; height: 70svh; object-fit: cover; }
+
+.ah-proximos { padding: 60px 20px 0; }
+.ah-proximos h2 { font-size: clamp(36px, 3.6vw, 56px); margin-bottom: 40px; }
+.ah-solapadas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ah-solapadas article { display: grid; align-content: start; gap: 14px; min-height: 360px; margin-right: -14%; padding: 18px; background: var(--acc); box-shadow: -6px -6px 0 #fff; }
+.ah-solapadas article:nth-child(2) { margin-top: 20px; }
+.ah-solapadas article:nth-child(3) { margin-top: 40px; margin-right: 0; }
+.ah-solapadas h3 { font-size: 30px; }
+.ah-solapadas p { margin: 0; font-size: 12px; max-width: 34ch; }
+.ah-solapadas img { width: 70%; aspect-ratio: 4 / 3; object-fit: cover; }
+.ah-solapadas ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: auto 0 0; padding: 0; }
+.ah-solapadas li { padding: 2px 6px; background: var(--fg); color: #fff; font-size: 10px; text-transform: uppercase; }
+.ah-solapadas li:first-child { background: #fff; color: var(--fg); }
+
+.ah-lista { list-style: none; margin: 60px 0 0; padding: 0; border-top: 1px solid var(--ln); }
+.ah-lista a { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--ln); }
+.ah-lista b { font-size: clamp(26px, 2.4vw, 36px); font-weight: 500; text-transform: uppercase; letter-spacing: -0.02em; }
+.ah-lista span { grid-row: 2; font-size: clamp(26px, 2.4vw, 36px); text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px #9a9a9a; letter-spacing: -0.02em; }
+.ah-lista i { grid-row: span 2; font-style: normal; font-size: 26px; transition: translate 0.3s; }
+.ah-lista a:hover i { translate: 8px 0; }
+.ah-lista__mas a { display: flex; gap: 12px; font-size: 26px; text-transform: uppercase; }
+.ah-lista__mas i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--acc); font-size: 14px; }
+
+.ah-testimonio { display: grid; grid-template-columns: 1.4fr 1fr; background: var(--fg); color: #fff; }
+.ah-testimonio > div { display: grid; align-content: space-between; gap: 30px; padding: 40px 20px; }
+.ah-testimonio blockquote { margin: 0; font-size: clamp(20px, 2vw, 28px); line-height: 1.25; }
+.ah-testimonio p { margin: 0; font-size: 12px; color: #aaa; }
+.ah-testimonio p b { color: #fff; }
+.ah-flechas { display: flex; gap: 22px; }
+.ah-flechas button { border: 0; background: none; color: var(--acc); font-size: 28px; cursor: pointer; }
+.ah-testimonio img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; filter: grayscale(1); }
+
+.ah-logos { padding: 80px 0 0; }
+.ah-logos h2 { padding: 0 20px 40px; font-size: clamp(36px, 3.6vw, 56px); }
+.ah-logos ul { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); margin: 0; padding: 0; border-top: 1px solid var(--ln); }
+.ah-logos li { display: grid; place-items: center; height: 120px; border-right: 1px solid var(--ln); border-bottom: 1px solid var(--ln); font-weight: 700; font-size: 18px; letter-spacing: 0.02em; color: #222; }
+
+.ah-pie { display: grid; gap: 30px; padding: 40px 20px 30px; background: var(--fg); color: var(--acc); }
+.ah-pie h2 { display: flex; justify-content: space-between; font-size: 28px; }
+.ah-insta { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.ah-insta span { display: grid; place-items: end start; aspect-ratio: 1; padding: 10px; background: var(--acc); color: var(--fg); font-size: 12px; font-weight: 600; }
+.ah-insta span.is-circulo { place-items: center; background: radial-gradient(circle, #fff6a8, var(--acc) 70%); font-size: 18px; text-align: center; }
+.ah-pie__fila { display: flex; gap: 60px; }
+.ah-pie h3 { font-size: 28px; color: var(--acc); }
+.ah-redes { display: flex; gap: 8px; }
+.ah-redes span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--acc); color: var(--fg); font-size: 11px; font-weight: 700; }
+.ah-pie form { display: grid; gap: 10px; max-width: 320px; color: #fff; }
+.ah-pie form p { margin: 0; font-size: 12px; }
+.ah-pie label { display: flex; border-bottom: 1px solid #555; }
+.ah-pie input { flex: 1; padding: 8px 0; border: 0; background: none; color: #fff; font: inherit; }
+.ah-pie label button { display: grid; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 50%; background: var(--acc); cursor: pointer; }
+.ah-pie small { color: #888; font-size: 10px; }
+
+@media (max-width: 760px) {
+  .ah-head nav { display: none; }
+  .ah-intro, .ah-testimonio, .ah-solapadas { grid-template-columns: 1fr; }
+  .ah-intro__txt p { margin-left: 20px; }
+  .ah-solapadas article { margin: 0 0 -20px; }
+  .ah-logos ul { grid-template-columns: repeat(3, 1fr); }
+  .ah-insta { grid-template-columns: repeat(3, 1fr); }
+  .ah-pie__fila { flex-direction: column; }
+}

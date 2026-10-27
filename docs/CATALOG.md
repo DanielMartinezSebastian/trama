@@ -2511,7 +2511,7 @@ Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avat
 | `kicker` | text | "El equipo" |
 | `title` | text | "Quién te va a enseñar" |
 | `people` | text | "Marta Solé\|Directora y monitora\|/img/retratos/03-pixie-cut-unsplash.jpg\|Doce años e…" |
-| `layout` | `grid` · `carousel` · `rows` | "grid" |
+| `layout` | `grid` · `carousel` · `rows` · `wall` | "grid" |
 | `perView` | number 1–4 | 3 |
 | `autoplay` | number 0–8 | 0 |
 | `shape` | `portrait` · `square` · `circle` · `oval` | "portrait" |

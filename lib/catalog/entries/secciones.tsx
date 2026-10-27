@@ -393,7 +393,7 @@ export const secciones: CatalogEntry[] = [
         default: "Marta Solé|Directora y monitora|/img/retratos/03-pixie-cut-unsplash.jpg|Doce años en el agua y una regla: nadie sale sin coger su ola.|#reservar\nEnzo Rial|Monitor de iniciación|/img/retratos/06-man-with-crossed-arms-unsplash.jpg|Paciencia infinita con el primer remo.|#reservar\nCarla Duque|Monitora y fotógrafa|/img/retratos/01-a-friend-unsplash.jpg|Te enseña y luego te lo enseña en foto.|#reservar",
         hint: "Sin foto, avatar de iniciales; sin enlace, sin botón",
       },
-      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "carousel", "rows"], hint: "carousel usa Swiper; rows es una fila por persona, como en los salones" },
+      { key: "layout", label: "Disposición", type: "select", default: "grid", options: ["grid", "carousel", "rows", "wall"], hint: "carousel usa Swiper; rows es una fila por persona, como en los salones; wall es un muro denso de retratos" },
       { key: "perView", label: "Visibles en pantalla ancha", type: "number", default: 3, min: 1, max: 4, step: 1, when: (p) => p.layout === "carousel" },
       { key: "autoplay", label: "Reproducción automática (s, 0 = manual)", type: "number", default: 0, min: 0, max: 8, step: 1, when: (p) => p.layout === "carousel" },
       { key: "shape", label: "Marco de la foto", type: "select", default: "portrait", options: ["portrait", "square", "circle", "oval"] },

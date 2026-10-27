@@ -22,8 +22,9 @@ export type TeamSectionProps = {
   people?: string;
   /** las mismas personas como datos; si se pasa, manda sobre `people` */
   members?: TeamMember[];
-  /** grid = rejilla · carousel = carrusel de Swiper · rows = una fila por persona (nombre, bio y foto), como en los salones */
-  layout?: "grid" | "carousel" | "rows";
+  /** grid = rejilla · carousel = carrusel de Swiper · rows = una fila por persona (nombre, bio y foto), como en los salones ·
+   * wall = muro denso de retratos a sangre con el nombre y el rol encima, sin huecos (profesorado de una academia) */
+  layout?: "grid" | "carousel" | "rows" | "wall";
   /** con layout="carousel": tarjetas visibles en pantallas anchas */
   perView?: number;
   /** con layout="carousel": segundos entre tarjetas (0 = manual) */
@@ -55,7 +56,7 @@ const initials = (name: string) =>
 
 /**
  * Cabecera de sección + perfiles del equipo. Con foto (marco y tratamiento a elegir) o, si falta, el avatar de iniciales;
- * biografía y un enlace por persona para reservar con ella. En rejilla, en carrusel o en filas.
+ * biografía y un enlace por persona para reservar con ella. En rejilla, en carrusel, en filas o en muro.
  */
 export default function TeamSection({ kicker = "El equipo", title = "Quién te va a enseñar", subtitle = "", people = DEFAULT_PEOPLE, members, layout = "grid", perView = 3, autoplay = 0, shape = "portrait", photoTone = "color", align = "center", linkLabel = "Reservar", titleSize = "md", backdrop = "", variant = "glass", className = "" }: TeamSectionProps) {
   const list: TeamMember[] =
@@ -67,6 +68,23 @@ export default function TeamSection({ kicker = "El equipo", title = "Quién te v
       .map(([name, role, photo, bio, href]) => ({ name, role, photo, bio, href }));
   const rows = layout === "rows";
   const cards = list.map(({ name, role, photo, bio, href }, i) => {
+    if (layout === "wall") {
+      const Tile = href ? "a" : "div";
+      return (
+        <Tile key={name + i} className="ui-team__tile" {...(href ? { href } : {})}>
+          {photo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={photo} alt="" loading="lazy" decoding="async" />
+          ) : (
+            <span className="ui-team__avatar" aria-hidden>{initials(name)}</span>
+          )}
+          <span className="ui-team__tile-txt">
+            <strong>{name}</strong>
+            {role && <span className="ui-team__role">{role}</span>}
+          </span>
+        </Tile>
+      );
+    }
     const media = photo ? (
       <span className={`ui-team__photo ui-team__photo--${shape}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -112,7 +130,7 @@ export default function TeamSection({ kicker = "El equipo", title = "Quién te v
           {cards}
         </Carousel>
       ) : (
-        <div className={rows ? "ui-team__rows" : "ui-team__grid"}>{cards}</div>
+        <div className={rows ? "ui-team__rows" : layout === "wall" ? "ui-team__wall" : "ui-team__grid"}>{cards}</div>
       )}
     </section>
   );

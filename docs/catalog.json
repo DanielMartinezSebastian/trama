@@ -9371,11 +9371,12 @@
           "type": "select",
           "default": "grid",
           "label": "Disposición",
-          "hint": "carousel usa Swiper; rows es una fila por persona, como en los salones",
+          "hint": "carousel usa Swiper; rows es una fila por persona, como en los salones; wall es un muro denso de retratos",
           "options": [
             "grid",
             "carousel",
-            "rows"
+            "rows",
+            "wall"
           ]
         },
         {
