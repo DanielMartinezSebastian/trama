@@ -1,16 +1,17 @@
 "use client";
 
 import Marquee from "@/components/ui/Marquee";
-import "./abuela-rosa.css";
+import { abuelaHref } from "./enlaces";
 
 /*
  * Abuela Rosa, mojo picante: réplica de Peppa Sauce (docs/50 §3.8). Dos tintas (azul noche y crema) como una serigrafía,
  * una grotesca ancha y gruesa; el bote se queda fijo en el centro mientras la página pasa por detrás, tarjetas con marco
  * de etiqueta antigua (estrellas, llamas, gotas y lunas en las esquinas), una cinta de compra fija (Marquee), los
- * maridajes en palabras gigantes y lo que no, con humor. El bote es CSS hasta que llegue la foto.
+ * maridajes en palabras gigantes y lo que no, con humor. El bote es CSS (y en la tienda, uno por sabor). Cabecera con la
+ * cinta, pie y demás páginas en Sitio.tsx (docs/56).
  */
 
-const Esquinas = () => (
+export const Esquinas = () => (
   <>
     <i className="ar-esq ar-esq--a" aria-hidden>✦</i>
     <i className="ar-esq ar-esq--b" aria-hidden>✶</i>
@@ -26,9 +27,7 @@ const Hoja = () => <svg viewBox="0 0 100 120" aria-hidden><path d="M50 6C20 30 1
 
 export default function AbuelaRosa() {
   return (
-    <div className="ar">
-      <Marquee variant="minimal" text="COMPRA YA" separator="  ✶  " rows={1} duration={18} className="ar-cinta" />
-
+    <>
       <div className="ar-bote" aria-hidden>
         <span className="ar-bote__tapon" />
         <span className="ar-bote__cuello"><b>ABUELA ROSA</b></span>
@@ -71,6 +70,7 @@ export default function AbuelaRosa() {
         <div className="ar-fila"><Huevo /><small>LO MEJOR<br />CON</small><b>HUEVO</b><small>LO MEJOR<br />CON</small><Huevo /></div>
         <div className="ar-fila"><Pollo /><small>VA GENIAL<br />CON</small><b>POLLO</b><small>VA GENIAL<br />CON</small><Pollo /></div>
         <div className="ar-fila"><Toro /><b>FILETE</b><small>Y CON<br />PAPAS</small><Toro /></div>
+        <a href={abuelaHref("recetas")} className="ar-mas">RECETAS CON MOJO →</a>
       </section>
 
       <section className="ar-tripticos">
@@ -88,6 +88,7 @@ export default function AbuelaRosa() {
           <Esquinas />
           <h2>HECHO A MORTERO</h2>
           <p>SIN ATAJOS. TODAVÍA A MORTERO, COMO SE HA HECHO LOS ÚLTIMOS CIEN AÑOS.</p>
+          <a href={abuelaHref("historia")} className="ar-mas">NUESTRA HISTORIA →</a>
         </article>
       </section>
 
@@ -112,9 +113,8 @@ export default function AbuelaRosa() {
 
       <section className="ar-final">
         <h2 className="ar-gigante">COMPRA<br />ESTA COSA</h2>
-        <a href="#comprar" className="ar-comprar" id="comprar">COMPRAR · 12 €</a>
-        <p>© 2026 ABUELA ROSA · PRIVACIDAD · CONDICIONES</p>
+        <a href={abuelaHref("tienda/mojo-picon")} className="ar-comprar" id="comprar">COMPRAR · 12 €</a>
       </section>
-    </div>
+    </>
   );
 }

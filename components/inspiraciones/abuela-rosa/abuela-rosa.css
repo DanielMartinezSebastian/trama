@@ -115,3 +115,75 @@
   .ar-tripticos .ar-marco { padding-inline: 11px; }
 }
 .ar-sello__anillo svg { font: 800 27px var(--ar-f); font-variation-settings: "wdth" 62; letter-spacing: 0.02em; overflow: visible; }
+
+/* páginas (docs/56): la cinta y la navegación fijas, la tienda con los botes por sabor, la ficha, recetas, historia, el
+   pedido en claro y el menú del móvil */
+.ar-head { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--fg); }
+.ar-head .ar-cinta { position: static; border-bottom: 1px solid var(--fg); }
+.ar-head__cinta { display: block; }
+.ar-head__fila { display: flex; align-items: center; gap: 30px; padding: 10px 20px; font-weight: 800; font-size: 14px; }
+.ar-logo { font-variation-settings: "wdth" 125; font-size: 18px; }
+.ar-head nav { display: flex; gap: 24px; margin-left: auto; }
+.ar-head nav a:hover, .ar-pie a:hover { color: var(--acc2); }
+.ar-bolsa { padding: 8px 16px; border: 1px solid var(--fg); border-radius: 999px; background: none; color: var(--fg); font: inherit; cursor: pointer; }
+.ar-bolsa:hover { background: var(--fg); color: var(--bg); }
+.ar-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.ar-mas { display: inline-flex; margin-top: 16px; border-bottom: 2px solid currentColor; font-weight: 800; }
+.ar-maridajes > .ar-mas { justify-self: center; }
+.ar-pie { display: grid; justify-items: center; gap: 14px; padding: 60px 16px 40px; border-top: 1px solid var(--fg); text-align: center; }
+.ar-pie nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; font-weight: 800; }
+.ar-pie p { margin: 0; font-size: 12px; }
+.ar-pie small { color: var(--mut); font-size: 11px; }
+.ar-pag { position: relative; z-index: 21; display: grid; gap: 40px; padding: 60px 4vw 120px; background: var(--bg); }
+.ar-pag > * { min-width: 0; }
+.ar-pag__cab { display: grid; justify-items: center; gap: 16px; text-align: center; }
+.ar-pag__cab .ar-gigante { font-size: 9vw; line-height: 0.85; }
+.ar-pag__cab p { max-width: 40em; margin: 0; }
+.ar-volver { font-weight: 800; }
+.ar-tienda { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.ar-producto, .ar-receta { display: grid; justify-items: center; align-content: start; gap: 12px; text-align: center; transition: translate 0.2s; }
+.ar-producto:hover, .ar-receta:hover { translate: 0 -4px; }
+.ar-producto h2, .ar-receta h2 { font-size: 26px; }
+.ar-receta { align-content: center; min-height: 260px; }
+.ar-receta span { color: var(--acc2); font-weight: 800; }
+.ar-bote.ar-bote--prod { position: relative; left: auto; right: auto; top: auto; translate: none; z-index: auto; width: min(150px, 60%); filter: drop-shadow(0 16px 20px rgb(0 0 0 / 0.4)); }
+.ar-bote--prod .ar-bote__cuerpo { background: var(--tinta); }
+.ar-bote--prod .ar-bote__etiqueta b { font-size: 16px; }
+.ar-llamas { display: inline-flex; gap: 4px; font-size: 14px; color: var(--mut); }
+.ar-llamas .is-on { color: var(--acc2); }
+.ar-ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.ar-ficha > * { min-width: 0; }
+.ar-ficha__bote { display: grid; place-items: center; min-height: 520px; }
+.ar-ficha__bote .ar-bote--prod { width: min(220px, 60%); }
+.ar-ficha__info { display: grid; gap: 18px; justify-items: start; }
+.ar-ficha__info h1 { margin: 0; font-size: clamp(40px, 5vw, 80px); font-weight: 800; font-variation-settings: "wdth" 120; line-height: 0.9; }
+.ar-ficha__info p { margin: 0; max-width: 34em; }
+.ar-ficha__precio { font-size: 32px; font-weight: 800; }
+.ar-ficha__info .ar-comprar { border: 0; cursor: pointer; font-family: inherit; }
+.ar-ficha__mas summary { cursor: pointer; font-weight: 800; }
+.ar-ficha__mas p { margin-top: 8px; font-size: 13px; }
+.ar-ficha__receta { display: grid; gap: 6px; }
+.ar-ficha__receta a, .ar-pag a.ar-comprar { color: var(--bg); }
+.ar-ficha__receta a { color: var(--acc2); }
+.ar-receta__lista { display: grid; gap: 14px; justify-items: start; }
+.ar-receta__lista ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.ar-receta__lista .ar-comprar { border: 0; cursor: pointer; font: inherit; font-weight: 900; font-size: 15px; }
+.ar-pasos { display: grid; gap: 18px; margin: 0; padding-left: 1.4em; font-size: 18px; }
+.ar-abuela img { width: 100%; }
+.ar-linea { display: grid; gap: 28px; margin: 0; padding: 0; list-style: none; }
+.ar-linea li { display: grid; gap: 6px; padding-bottom: 20px; border-bottom: 1px solid var(--fg); }
+.ar-linea b { color: var(--acc2); font-size: 22px; }
+.ar-linea h2 { font-size: 30px; }
+.ar-linea p { margin: 0; }
+.ar-centro { justify-self: center; }
+.ar-pag--claro { --bg: #feeee2; --fg: #141329; --mut: #4c4f73; --card: #fff; --ln: #141329; text-transform: none; }
+.ar-pag--claro .ar-pag__cab { text-transform: uppercase; }
+.ar-flujo { max-width: 1100px; width: 100%; justify-self: center; }
+@media (max-width: 760px) {
+  .ar-head nav { display: none; }
+  .ar-head .ui-fsm__btn--burger { display: inline-flex; }
+  .ar-bolsa { margin-left: auto; }
+  .ar-pag__cab .ar-gigante { font-size: 15vw; }
+  .ar-ficha { grid-template-columns: 1fr; }
+  .ar-ficha__bote { min-height: 380px; }
+}
