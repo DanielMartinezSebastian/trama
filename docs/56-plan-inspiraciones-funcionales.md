@@ -271,7 +271,7 @@ Bajan Impulso (17/20) y Raíz (17/20), pero no por la réplica: su CSS no ha cam
 - Marco Ambrosi pone el cuerpo a 15 px.
 Hay que ver si esas webs han cambiado antes de tocar la réplica.
 
-**Segundo encargo de imágenes** (28-10-2026, `docs/encargo-imagenes-inspiraciones-2.md` y `.json`): 33 huecos ya conectados en el código con provisionales recortadas. Cubre las fichas que repetían una foto ajena o no tenían foto:
+**Segundo encargo de imágenes**, entregado y revisado en escritorio y móvil (commits de Codex ae2c1d5 a b4cb57a) (28-10-2026, `docs/encargo-imagenes-inspiraciones-2.md` y `.json`): 33 huecos ya conectados en el código con provisionales recortadas. Cubre las fichas que repetían una foto ajena o no tenían foto:
 
 - el blog de Melena;
 - el spa de Patrón;
