@@ -1,0 +1,10 @@
+# Matiz: ViewTransition y ancho del viewport
+
+- Objetivo: resolver `Recoverable InvalidStateError: Transition was aborted because of invalid state. Viewport size changed` al navegar desde /demos a /inspiraciones/matiz.
+- Servidor y código afectado: C:/COMPARTIDO/trama-estudios, rama feat/cine-captura, commit ef85182; http://localhost:3020. Se conservaron los cambios locales previos. Este archivo de traspaso se guarda en el workspace principal C:/COMPARTIDO/trama.
+- Causa reproducida: Desplazable activaba la clase scrollable en useEffect. Entre la eliminación de SiteChrome y ese efecto, html recuperaba overflow:hidden; con scrollbar visible el ancho cambiaba de 1270 a 1280 px y abortaba la transición. Playwright oculta las barras por defecto: fue necesario ignoreDefaultArgs: ['--hide-scrollbars'] para reproducirlo.
+- Corrección en trama-estudios: components/inspiraciones/Desplazable.tsx renderiza un marcador oculto data-inspiracion-scroll; app/globals.css aplica las reglas existentes de scroll también mediante :has de ese marcador. El scroll queda aplicado con el commit del contenido y no depende de efectos ni limpieza imperativa de una clase global.
+- Validación: el mismo recorrido con scrollbar visible pasa de VT aborted (1270 → 1280) a VT ready (1270 → 1270). Smoke de Matiz: 200, sin errores ni sombras problemáticas. Revisión visual del viewport correcta.
+- Doctor, typecheck, check:shadows, cine:test y lab:cuaderno --check pasan. npm run verify se detiene en catalog:check por dos componentes previos sin ficha: AppointmentList y BookingFlow; no se modificaron para esta tarea.
+- Artefactos ignorados del workspace principal: .refs3d/check-matiz.mjs, .refs3d/matiz.png y .refs3d/smoke/matiz-transition/.
+- Build normal completo correcto: 703 páginas generadas, incluida /inspiraciones/matiz. Se ejecutó con el dev parado y después se restauró el servidor 3020 (proceso lanzador 21740). Advertencias de fuentes y trazado amplio del laboratorio preexistentes. Dos intentos previos de build filtrado no incluyeron las rutas dinámicas, por lo que no se usaron como validación; el build normal sí las incluye.
