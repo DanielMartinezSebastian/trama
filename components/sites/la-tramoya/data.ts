@@ -111,6 +111,18 @@ export const PAQUETES = [
   { t: "El patio", d: "Cócteles y tapeo bajo los naranjos antes de la función.", p: "desde 28 € / persona", img: `${I}sala-patio.webp` },
 ];
 
+/** la tira de la portada: una semana en la casa, de jueves a domingo, con la cocina y la sala entre función y función */
+export const GALERIA = [
+  { img: `${I}show-flamenco.webp`, forma: "alta", dia: "Jueves", t: "Bulerías a un metro de la mesa" },
+  { img: `${I}sala-patio.webp`, forma: "ancha", dia: "20:30", t: "Se abre el patio de los naranjos" },
+  { img: `${I}plato-atun.webp`, forma: "cuadrada", dia: "En la mesa", t: "Atún de almadraba encebollado" },
+  { img: `${I}show-copla.webp`, forma: "alta", dia: "Viernes", t: "Copla con piano y mantón" },
+  { img: `${I}barra-bodega.webp`, forma: "ancha", dia: "En la barra", t: "Fino de la bota, con venencia" },
+  { img: `${I}show-chirigota.webp`, forma: "alta", dia: "Sábado", t: "La chirigota no espera a febrero" },
+  { img: `${I}plato-tortillitas.webp`, forma: "cuadrada", dia: "Para picar", t: "Tortillitas de camarones" },
+  { img: `${I}show-guitarra.webp`, forma: "alta", dia: "Domingo", t: "Guitarra sola al mediodía" },
+];
+
 export const DIRECCION = "Carretera de La Barrosa, km 3 · 11130 Chiclana de la Frontera (Cádiz)";
 
 export const ROUTES = [

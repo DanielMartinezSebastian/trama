@@ -9,6 +9,7 @@ import ContactForm from "@/components/ui/ContactForm";
 import CookieBanner from "@/components/ui/CookieBanner";
 import EventLineup from "@/components/ui/EventLineup";
 import FullscreenMenu from "@/components/ui/FullscreenMenu";
+import HorizontalScroll from "@/components/ui/HorizontalScroll";
 import Marquee from "@/components/ui/Marquee";
 import OpeningHours from "@/components/ui/OpeningHours";
 import PageTransition from "@/components/ui/PageTransition";
@@ -22,7 +23,7 @@ import { takenTables, useShowBookings } from "@/lib/commerce/shows";
 import { phosphorRegular } from "@/lib/ui/icons-phosphor-regular";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
-import { CARTA, DIRECCION, ESPECTACULOS, EVENTOS, FUNCIONES, MENUS, MESAS, NOCHE, PAQUETES, SLUG, ZONAS, type Funcion } from "./data";
+import { CARTA, DIRECCION, ESPECTACULOS, EVENTOS, FUNCIONES, GALERIA, MENUS, MESAS, NOCHE, PAQUETES, SLUG, ZONAS, type Funcion } from "./data";
 import "./tramoya.css";
 
 // la letra de cartel de esta web (no del kit): una slab negra de feria y varietés
@@ -188,12 +189,30 @@ function Portada() {
           ))}
         </ol>
       </section>
-      <nav className="tr-barra" aria-label="Accesos">
-        <a href={href("cartelera")}>Cartelera</a>
-        <a href={href("reservar")}>Reservar mesa</a>
-        <a href={href("carta")}>La carta</a>
-        <a href={href("como-llegar")}>Cómo llegar</a>
-      </nav>
+      <section className="tr-galeria" aria-label="Una semana en La Tramoya">
+        <HorizontalScroll gap={20} minWidth={900} className="tr-tira">
+          <div className="tr-tira__intro">
+            <p className="tr-kicker">De jueves a domingo</p>
+            <h2>
+              Una semana
+              <br />
+              <em>en La Tramoya</em>
+            </h2>
+            <p>Baja y pasa por la casa: el escenario, el patio, la barra y lo que sale de la cocina entre función y función.</p>
+            <i className="tr-tira__progreso" aria-hidden />
+          </div>
+          {GALERIA.map((g) => (
+            <figure key={g.img} className={`tr-tira__foto tr-tira__foto--${g.forma}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={g.img} alt={g.t} loading="lazy" />
+              <figcaption>
+                <small>{g.dia}</small>
+                {g.t}
+              </figcaption>
+            </figure>
+          ))}
+        </HorizontalScroll>
+      </section>
 
       <section className="tr-sec" id="cartelera">
         <header className="tr-sec__cab">
@@ -261,6 +280,13 @@ function Portada() {
         </div>
         <SeatMap tables={MESAS} zones={ZONAS} taken={esta ? takenTables(esta.id, MESAS.map((m) => m.id), esta.status) : []} onChange={(m) => esta && router.push(`${href("reservar")}?funcion=${esta.id}&mesa=${m}`)} stage="Escenario" label="Plano de la sala: pulsa una mesa libre para reservarla" variant="minimal" className="tr-plano" />
       </section>
+
+      <nav className="tr-barra" aria-label="Accesos">
+        <a href={href("cartelera")}>Cartelera</a>
+        <a href={href("reservar")}>Reservar mesa</a>
+        <a href={href("carta")}>La carta</a>
+        <a href={href("como-llegar")}>Cómo llegar</a>
+      </nav>
 
       <section className="tr-sec tr-privados">
         {/* eslint-disable-next-line @next/next/no-img-element */}

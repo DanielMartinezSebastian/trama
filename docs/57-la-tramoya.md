@@ -47,6 +47,15 @@ noche:
 - abajo, una franja translúcida con las tres próximas funciones;
 - entre páginas, un fundido.
 
+Tras el héroe va «Una semana en La Tramoya», una tira con `HorizontalScroll`:
+- al bajar, la página desplaza en horizontal ocho fotos de la semana: los carteles de cada noche, el patio, la barra y dos
+  platos redondos;
+- el primer panel es el título, con una barra de progreso;
+- en el móvil, la tira es un carrusel con imán.
+
+Los cuatro accesos unidos (cartelera, reservar, carta y cómo llegar) bajan a después de la sala. En la portada, la barra
+inferior del móvil no sale mientras se ve el héroe.
+
 El tipo `curtain` sigue en el kit como opción.
 
 **La reserva** es lo que pide el negocio: noche → comensales y mesa en el plano → menú → datos → señal → entrada en QR.
