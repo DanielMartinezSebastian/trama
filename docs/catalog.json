@@ -11503,7 +11503,7 @@
       ],
       "notes": [
         "Colócalo una vez, en el marco de la web. Pausar desde un menú o modal: lockScroll() de @/lib/motion/lenis.",
-        "En el catálogo se activa dentro de una página independiente: el scroll suave no modifica los controles ni el menú del visor.",
+        "No está activo en el catálogo para no alterar su scroll; pruébalo en /sitios/estudio.",
         "Anclas (`<a href=\"#precios\">`): salto animado con expo.out (de 0,6 a 1,4 s según la distancia) que descuenta la cabecera fija, escribe el #ancla y pasa el foco a la sección. Funciona también en táctil y con enabled={false} (solo anclas, scroll nativo); con «reducir movimiento», salta sin animar. Opciones: anchors={{ offset, duration, easing }}; scrollToAnchor() de @/lib/motion/anchors para hacerlo desde código."
       ],
       "example": "import SmoothScroll from \"@/components/ui/SmoothScroll\";\n\n<SmoothScroll />",
@@ -11832,7 +11832,7 @@
         }
       ],
       "notes": [
-        "Desplaza dentro de la demo o usa el control Recorrido para ver el texto encenderse y apagarse.",
+        "Depende del scroll de la página: en el catálogo avanza al desplazar la ventana. Ver el efecto completo en /sitios/estudio.",
         "Dentro de un PinnedSection el párrafo no se mueve: usa scope=\".ui-pin\" y range={[a, b]} para que se encienda en ese tramo de la sección (portada de /sitios/plano)."
       ],
       "example": "import ScrubText from \"@/components/ui/ScrubText\";\n\n<ScrubText\n  text=\"Una web es un lugar, no un folleto. Cuidamos cómo se entra, cómo se recorre y qué se siente al salir.\"\n/>",
@@ -11860,7 +11860,7 @@
         }
       ],
       "notes": [
-        "La cabecera se esconde al bajar y reaparece al subir dentro de la demo. No se esconde mientras uno de sus enlaces tiene el foco."
+        "Va fijo arriba de la ventana; en el catálogo solo se muestra su uso. Ver en /sitios/estudio."
       ],
       "example": "import HideOnScroll from \"@/components/ui/HideOnScroll\";\n\n<HideOnScroll>\n  <nav>…tu cabecera…</nav>\n</HideOnScroll>",
       "preview": "/componentes#hide-on-scroll"
@@ -11895,7 +11895,7 @@
         }
       ],
       "notes": [
-        "La demo contiene tres secciones con data-section: el indicador cambia al cruzar el centro de la ventana. Si editas selector, debe seguir apuntando a esas secciones."
+        "Necesita secciones con data-section en la página; en el catálogo no hay ninguna. Ver en /sitios/estudio."
       ],
       "example": "import SectionIndex from \"@/components/ui/SectionIndex\";\n\n<SectionIndex />",
       "preview": "/componentes#section-index"
@@ -13113,7 +13113,7 @@
         }
       ],
       "notes": [
-        "Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza dentro de la demo o usa Recorrido para verla crecer.",
+        "Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.",
         "from y offset: tamaño y posición iniciales; inset y radius: el final.",
         "Con movimiento reducido, ya crecida."
       ],
@@ -14784,7 +14784,7 @@
         }
       ],
       "notes": [
-        "Desplaza dentro de la demo o usa Recorrido: cada sección ocupa una pantalla y cambia el tema al llegar a ella.",
+        "Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.",
         "Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.",
         "Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens."
       ],

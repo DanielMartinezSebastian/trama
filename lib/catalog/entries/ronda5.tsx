@@ -21,7 +21,6 @@ const FEATURE_ITEMS = [
 export const ronda5: CatalogEntry[] = [
   {
     id: "line-draw",
-    preview: (p) => p.trigger !== "mount" ? "inview" : undefined,
     component: "LineDraw",
     path: "@/components/ui/LineDraw",
     name: "Trazo que se dibuja (firma, subrayado, círculo)",
@@ -82,7 +81,6 @@ export const ronda5: CatalogEntry[] = [
   },
   {
     id: "theme-scroll",
-    preview: "scroll",
     component: "ThemeScroll",
     path: "@/components/ui/ThemeScroll",
     name: "Tema que cambia por sección",
@@ -92,7 +90,7 @@ export const ronda5: CatalogEntry[] = [
       "Contenedor cuyo tema cambia según la sección que cruza el centro de la ventana (oliva → hueso → negro en Lando Norris). Cada sección elige su tema con data-theme; cambian los tokens, así que todo lo de dentro (también una cabecera fija) cambia con ellos, y el fondo se funde.",
     stageHeight: 420,
     notes: [
-        "Desplaza dentro de la demo o usa Recorrido: cada sección ocupa una pantalla y cambia el tema al llegar a ella.",
+      "Depende del scroll de la página: en el catálogo, desplaza la ventana con la ficha a media altura. Ver /sitios/volt.",
       "Cada tema es parcial (bg, fg, mut, acc, acc2, card, ln): lo que no pongas se hereda.",
       "Elige colores que se lean en todos los temas: el contenido no cambia, solo sus tokens.",
     ],
@@ -104,7 +102,7 @@ export const ronda5: CatalogEntry[] = [
         style={{ width: "100%" }}
       >
         {["a", "b", "c"].map((t, i) => (
-            <section key={t} data-theme={t} style={{ minHeight: "100svh", display: "grid", placeItems: "center", fontSize: 32, fontWeight: 800 }}>
+          <section key={t} data-theme={t} style={{ minHeight: 260, display: "grid", placeItems: "center", fontSize: 32, fontWeight: 800 }}>
             <span>
               Sección {i + 1} <span style={{ color: "var(--acc)" }}>· tema {t}</span>
             </span>

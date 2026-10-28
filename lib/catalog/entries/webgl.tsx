@@ -109,7 +109,6 @@ export const webgl: CatalogEntry[] = [
   },
   {
     id: "type-field",
-    preview: (p) => p.trigger === "scroll" ? "inview" : undefined,
     component: "TypeField",
     path: "@/components/ui/TypeField",
     name: "Campo de letras con palabras escondidas",
@@ -334,7 +333,6 @@ export const webgl: CatalogEntry[] = [
   },
   {
     id: "project-reel",
-    preview: (p) => p.playback !== "manual" ? "scroll" : undefined,
     component: "ProjectReel",
     path: "@/components/ui/ProjectReel",
     name: "Reel de proyectos fijado al scroll",
@@ -345,14 +343,13 @@ export const webgl: CatalogEntry[] = [
     stageHeight: 520,
     notes: ["Sin progress se fija al scroll: ocupa ((proyectos − 1) · perProject + 1,4) pantallas.", "backdrop = 0 quita el fondo desenfocado."],
     props: [
-      { key: "playback", label: "Previsualización", type: "select", default: "scroll", options: ["scroll", "manual"], labels: { scroll: "Recorrido con scroll", manual: "Progreso manual" }, noCode: true },
-      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.35, min: 0, max: 1, step: 0.01, when: (p) => p.playback === "manual" },
+      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.35, min: 0, max: 1, step: 0.01 },
       { key: "backdrop", label: "Fondo desenfocado", type: "number", default: 0.55, min: 0, max: 1, step: 0.05 },
       { key: "counter", label: "Contador", type: "boolean", default: true },
     ],
     render: (p) => (
       <div style={{ width: "100%", ["--bg" as string]: "#050505", ["--fg" as string]: "#f2f2f2" }}>
-        <ProjectReel progress={p.playback === "manual" ? p.progress as number : undefined} backdrop={p.backdrop as number} counter={p.counter as boolean} height={500} />
+        <ProjectReel progress={p.progress as number} backdrop={p.backdrop as number} counter={p.counter as boolean} height={500} />
       </div>
     ),
   },
@@ -381,7 +378,6 @@ export const webgl: CatalogEntry[] = [
   },
   {
     id: "scroll-expand",
-    preview: "scroll",
     component: "ScrollExpand",
     path: "@/components/ui/ScrollExpand",
     name: "Tarjeta de medios que crece con el scroll",
@@ -390,7 +386,7 @@ export const webgl: CatalogEntry[] = [
     description:
       "Una tarjeta de medios (vídeo, imagen, lienzo 3D) que crece con el scroll de pequeña a pantalla completa mientras la sección se queda fija: el reel de lusion.co, que sale de una tarjeta del texto y acaba a sangre, o una tableta que se convierte en la escena. Llega inclinada como un plano en 3D y se endereza al crecer; encima, un titular o «PLAY REEL» que crece con ella. Todo se interpola en CSS desde un solo avance con la tubería de scroll del kit (meseta, curva y seguimiento amortiguado, docs/42). Sin WebGL.",
     stageHeight: 420,
-    notes: ["Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza dentro de la demo o usa Recorrido para verla crecer.", "from y offset: tamaño y posición iniciales; inset y radius: el final.", "Con movimiento reducido, ya crecida."],
+    notes: ["Ocupa (length + 1) pantallas de scroll: en el catálogo, desplaza la página para verla crecer.", "from y offset: tamaño y posición iniciales; inset y radius: el final.", "Con movimiento reducido, ya crecida."],
     props: [
       { key: "tilt", label: "Inclinación inicial (°)", type: "number", default: 14, min: 0, max: 30, step: 1 },
       { key: "inset", label: "Margen final (px)", type: "number", default: 24, min: 0, max: 80, step: 2 },
@@ -405,7 +401,6 @@ export const webgl: CatalogEntry[] = [
   },
   {
     id: "chapter-stage",
-    preview: (p) => p.playback !== "manual" ? "scroll" : undefined,
     component: "ChapterStage",
     path: "@/components/ui/ChapterStage",
     name: "Escenario por capítulos con fallo de señal",
@@ -416,14 +411,13 @@ export const webgl: CatalogEntry[] = [
     stageHeight: 540,
     notes: ["Requiere three y @react-three/fiber: se importa por subruta, trama-ui/ChapterStage.", "Sin progress se fija al scroll: ocupa (suma de perChapter + 1) pantallas.", "perChapter admite una duración por capítulo, en pantallas."],
     props: [
-      { key: "playback", label: "Previsualización", type: "select", default: "scroll", options: ["scroll", "manual"], labels: { scroll: "Recorrido con scroll", manual: "Progreso manual" }, noCode: true },
-      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.1, min: 0, max: 1, step: 0.01, when: (p) => p.playback === "manual" },
-      { key: "height", label: "Alto (px)", type: "number", default: 520, min: 320, max: 800, step: 10, when: (p) => p.playback === "manual" },
+      { key: "progress", label: "Progreso (modo controlado)", type: "number", default: 0.1, min: 0, max: 1, step: 0.01 },
+      { key: "height", label: "Alto (px)", type: "number", default: 520, min: 320, max: 800, step: 10 },
     ],
     render: (p) => (
       <div style={{ width: "100%" }}>
         <ChapterStage
-          progress={p.playback === "manual" ? p.progress as number : undefined}
+          progress={p.progress as number}
           height={p.height as number}
           chapters={[
             { word: "Legacy", label: "Tension", image: ART[0].src, items: ["Brand systems", "Art direction", "Motion"] },

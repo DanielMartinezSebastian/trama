@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { HOVERFX_EFFECTS, type HoverEffectKind } from "@/components/ui/HoverFX";
-import { ICON_WEIGHTS, type IconSetDef, type IconWeight } from "@/components/ui/Icon";
+import HoverFX, { HOVERFX_EFFECTS, type HoverEffectKind } from "@/components/ui/HoverFX";
+import { ICON_WEIGHTS, IconSet, type IconSetDef, type IconWeight } from "@/components/ui/Icon";
 import { lucide } from "@/lib/ui/icons-lucide";
 import { phosphor } from "@/lib/ui/icons-phosphor";
-import { PRESENCE_EFFECTS, type PresenceEffect } from "@/components/ui/Presence";
-import CatalogPreviewFrame from "./CatalogPreviewFrame";
-import PreviewEffects from "./PreviewEffects";
-import { previewMode, type PreviewEnvironment } from "./preview-protocol";
+import Presence, { PRESENCE_EFFECTS, type PresenceEffect } from "@/components/ui/Presence";
 import { VARIANTS } from "@/components/ui/variants";
 import { catalog, getEntry } from "@/lib/catalog/catalog";
 import { CATEGORIES, STYLES, defaultsOf, snippet, type CatalogEntry, type Category, type PropSpec, type StyleTag, type Values } from "@/lib/catalog/schema";
@@ -83,7 +80,6 @@ export default function Playground() {
   const [iconWeight, setIconWeight] = useState<IconWeight>("regular");
   const [compare, setCompare] = useState(false);
   const [scenario, setScenario] = useState(false);
-  const [pageViews, setPageViews] = useState<Record<string, boolean>>({});
   const [sel, setSel] = useState(catalog[0].id);
   const [store, setStore] = useState<Record<string, Values>>({});
   const [replay, setReplay] = useState(0);
@@ -175,12 +171,14 @@ export default function Playground() {
 
   // Los fondos ocupan todo el escenario: envolverlos en Presence/HoverFX (que se ajustan al
   // contenido salvo en modo `fill`) rompería su tamaño, así que el panel FX no se aplica a ellos.
-  const automaticPreview = entry ? previewMode(entry, values) : undefined;
-  const pagePreview = automaticPreview ?? (entry && pageViews[entry.id] ? "inview" : undefined);
-  const canWrapFx = entry ? entry.category !== "fondos" && !pagePreview : false;
-  const environment: PreviewEnvironment = { theme: stageStyle, iconFamily: iconFam, iconWeight, enter: animOn, enterEffect: animEffect, enterDuration: animDuration, hover: hoverOn, hoverEffect, hoverStrength };
+  const canWrapFx = entry ? entry.category !== "fondos" : false;
+  const fam = ICON_FAMILIES.find((f) => f.id === iconFam);
   const wrapFx = (node: ReactNode) => {
-    return <PreviewEffects environment={environment} canWrap={canWrapFx}>{node}</PreviewEffects>;
+    if (!canWrapFx) return <IconSet set={fam?.set} weight={iconWeight}>{node}</IconSet>;
+    let out = node;
+    if (hoverOn) out = <HoverFX effect={hoverEffect} strength={hoverStrength} fill>{out}</HoverFX>;
+    if (animOn) out = <Presence effect={animEffect} loop duration={animDuration} hold={1.4} fill>{out}</Presence>;
+    return <IconSet set={fam?.set} weight={iconWeight}>{out}</IconSet>;
   };
 
   return (
@@ -279,7 +277,6 @@ export default function Playground() {
           <p className="pg-fx__hint">
             {canWrapFx
               ? "Se aplican por encima de este componente, sin tocar su código: es la forma recomendada de dar entrada/salida y hover a cualquier pieza del catálogo."
-              : pagePreview ? "Esta demo conserva su recorrido de página. Los FX de envoltorio no se aplican para que puedas probar su movimiento original."
               : "Los fondos ocupan todo el escenario y no admiten este envoltorio (verás la escena sin cambios)."}
           </p>
         </section>
@@ -403,8 +400,7 @@ export default function Playground() {
                   </code>
                 </div>
                 <div className="pg__actions">
-                  {!automaticPreview && <button type="button" className={`chip ${pagePreview ? "chip--on" : ""}`} aria-pressed={Boolean(pagePreview)} onClick={() => setPageViews((current) => ({ ...current, [entry.id]: !current[entry.id] }))}>{pagePreview ? "Vista compacta" : "Probar con scroll"}</button>}
-                  {hasScenario(entry.category) && !pagePreview && (
+                  {hasScenario(entry.category) && (
                     <button
                       className={`chip ${scenario ? "chip--on" : ""}`}
                       onClick={() => setScenario((v) => { const next = !v; if (next) setCompare(false); return next; })}
@@ -437,14 +433,10 @@ export default function Playground() {
                     <div key={v} className="pg__cell" style={stageStyle}>
                       <span className="pg__cellname">{v}</span>
                       <div className="pg__cellstage" style={{ minHeight: entry.stageHeight ?? 260 }}>
-                        {pagePreview ? <CatalogPreviewFrame key={entry.id} name={`${entry.name} · ${v}`} config={{ ...environment, id: entry.id, values: { ...values, variant: v }, replay, mode: pagePreview }} /> : wrapFx(entry.render({ ...values, variant: v }, { replay }))}
+                        {wrapFx(entry.render({ ...values, variant: v }, { replay }))}
                       </div>
                     </div>
                   ))}
-                </div>
-              ) : pagePreview ? (
-                <div className="pg__stage pg__stage--page" style={stageStyle} data-entry={entry.id}>
-                  <CatalogPreviewFrame key={entry.id} name={entry.name} config={{ ...environment, id: entry.id, values, replay, mode: pagePreview }} />
                 </div>
               ) : scenario && SCENARIOS[entry.category] ? (
                 <div className="pg__stage ui-stage pg__stage--scenario" style={{ ...stageStyle, minHeight: 320 }} data-entry={entry.id}>

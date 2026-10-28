@@ -64,8 +64,6 @@ export type CatalogEntry = {
   props: PropSpec[];
   /** altura mínima del escenario en px */
   stageHeight?: number;
-  /** Vista con ventana y scroll propios; inview añade recorrido antes y después del contenido. Solo del visor. */
-  preview?: "scroll" | "inview" | ((values: Values) => "scroll" | "inview" | undefined);
   notes?: string[];
   /** el componente usa una prop que dispara animaciones (`playKey`) */
   replayable?: boolean;
