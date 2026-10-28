@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
@@ -13,6 +12,7 @@ import Reveal from "@/components/ui/Reveal";
 import { ARTICULOS, BARBEROS, LOCALES, SERVICIOS } from "./data";
 import { citaHref } from "./enlaces";
 import "./cita.css";
+import Portada from "./Cita";
 
 /*
  * Cita Barbers con varias páginas (docs/56): la portada (Cita.tsx) y locales con su ficha, tarifas, reservar (BookingFlow,
@@ -20,7 +20,6 @@ import "./cita.css";
  * con la navegación (en el móvil, el menú a pantalla completa), la barra de reservar fija abajo en el móvil y el pie.
  */
 
-const Portada = dynamic(() => import("./Cita"));
 const CLAVE = "trama:cita:citas";
 const NAV = [
   { label: "Locales", href: citaHref("locales") },

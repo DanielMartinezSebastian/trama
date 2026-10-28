@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Outfit } from "next/font/google";
@@ -15,6 +14,7 @@ import { EQUIPO, SERVICIOS, TECNICAS, TRABAJOS, WHATSAPP } from "./data";
 import { raizHref } from "./enlaces";
 import { Whatsapp } from "./Raiz";
 import "./raiz.css";
+import Portada from "./Raiz";
 
 // Outfit, la sans fina del original, es libre: se carga en la réplica (docs/cuaderno/replica-raiz.md)
 const outfit = Outfit({ weight: ["300", "500"], subsets: ["latin"], variable: "--rz-outfit", display: "swap" });
@@ -26,7 +26,6 @@ const outfit = Outfit({ weight: ["300", "500"], subsets: ["latin"], variable: "-
  * el pie con la consulta.
  */
 
-const Portada = dynamic(() => import("./Raiz"));
 const CITAS = "trama:raiz:citas";
 const HORARIO = "L|cerrado\nM-S|09:30-19:30\nD|cerrado";
 const NAV: [string, string][] = [["servicios", "Servicios"], ["trabajos", "Trabajos"], ["consulta", "Consulta"], ["mis-citas", "Mis citas"], ["contacto", "Contacto"]];

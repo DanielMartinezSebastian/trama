@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
@@ -17,6 +16,7 @@ import { money } from "@/lib/commerce/money";
 import { EQUIPO, NOTICIAS, PRODUCTOS, SALAS, SERVICIOS, type Producto } from "./data";
 import { PatronCtx, patronHref, usePatron } from "./marco";
 import "./patron.css";
+import Portada from "./Patron";
 
 /*
  * Patrón con varias páginas (docs/56): la portada (Patron.tsx) y servicios por sala, la familia, la tienda «shop in shop»
@@ -24,7 +24,6 @@ import "./patron.css";
  * el menú lateral que entra desde la derecha, la bolsa, la cinta y el pie; en las páginas interiores, una barra arriba.
  */
 
-const Portada = dynamic(() => import("./Patron"));
 const CITAS = "trama:patron:citas";
 const HORARIO = "L|cerrado\nM-V|10:00-21:00\nS|10:00-15:00\nD|cerrado";
 

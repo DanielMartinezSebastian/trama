@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { createContext, Suspense, useContext, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { DM_Serif_Display, Lora } from "next/font/google";
@@ -20,6 +19,7 @@ import { money } from "@/lib/commerce/money";
 import { BLOG, CATEGORIAS, CURSOS, EQUIPO, PRODUCTOS, SALONES, SERVICIOS } from "./data";
 import { melenaHref } from "./enlaces";
 import "./melena.css";
+import Portada from "./Melena";
 
 // las letras de Hair Me Up son libres: se cargan en la réplica, no en el kit (docs/cuaderno/replica-melena.md)
 const dmSerif = DM_Serif_Display({ weight: "400", style: ["normal", "italic"], subsets: ["latin", "latin-ext"], variable: "--me-dm", display: "swap" });
@@ -32,7 +32,6 @@ const lora = Lora({ subsets: ["latin", "latin-ext"], variable: "--me-lora", disp
  * reserva, la bolsa y el pie con el boletín.
  */
 
-const Portada = dynamic(() => import("./Melena"));
 const CITAS = "trama:melena:citas";
 const Bolsa = createContext<{ carrito: ReturnType<typeof useCart>; abrir: () => void } | null>(null);
 const useBolsa = () => useContext(Bolsa)!;

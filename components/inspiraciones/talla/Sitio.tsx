@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ClassSchedule from "@/components/ui/ClassSchedule";
@@ -12,6 +11,7 @@ import { useMembership } from "@/lib/commerce/membership";
 import { CLASES, CUOTAS, OFERTA } from "./data";
 import { tallaHref } from "./enlaces";
 import "./talla.css";
+import Portada from "./Talla";
 
 /*
  * Talla con varias páginas (docs/56): la portada (Talla.tsx) y la oferta con su ficha, el horario (clase de prueba gratis
@@ -19,7 +19,6 @@ import "./talla.css";
  * la cabecera con «clase de prueba gratis», el menú a pantalla completa en columnas con la palabra girada y el pie.
  */
 
-const Portada = dynamic(() => import("./Talla"));
 const SOCIO = "trama:talla:socio";
 
 function Menu({ abierto, cerrar }: { abierto: boolean; cerrar: () => void }) {

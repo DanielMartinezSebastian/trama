@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { createContext, Suspense, useContext, useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -18,6 +17,7 @@ import { CUOTAS, DISCIPLINAS, EVENTOS, HORARIO, TIENDA } from "./data";
 import { loboHref } from "./enlaces";
 import { HorarioLobo, SOCIO_LOBO } from "./HorarioLobo";
 import "./lobo.css";
+import Portada from "./Lobo";
 
 /*
  * Lobo con varias páginas (docs/56): la portada (Lobo.tsx) y clases con la ficha de cada disciplina, la clase de prueba,
@@ -25,7 +25,6 @@ import "./lobo.css";
  * y pedido, y contacto. El marco persiste: la cabecera negra con el menú que cae desde «MENÚ ≡», la bolsa y el pie.
  */
 
-const Portada = dynamic(() => import("./Lobo"));
 const Bolsa = createContext<{ carrito: ReturnType<typeof useCart>; abrir: () => void } | null>(null);
 const useBolsa = () => useContext(Bolsa)!;
 

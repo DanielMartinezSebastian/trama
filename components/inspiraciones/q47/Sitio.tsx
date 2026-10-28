@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -9,6 +8,7 @@ import FullscreenMenu from "@/components/ui/FullscreenMenu";
 import { BLOG, PETICIONES, PROYECTOS, SECTORES, SERVICIOS } from "./data";
 import { q47Href } from "./enlaces";
 import "./q47.css";
+import Portada from "./Q47";
 
 /*
  * Q47 con varias páginas (docs/56): la portada sin scroll (Q47.tsx) y el trabajo con filtro por sector y la barra que
@@ -17,7 +17,6 @@ import "./q47.css";
  * escalera; entre páginas, la escalera de PageTransition. Trabajo y blog van en blanco, como en K72.
  */
 
-const Portada = dynamic(() => import("./Q47"));
 const I = "/img/inspiraciones/q47/";
 const LINKS = [
   { label: "TRABAJO", href: q47Href("trabajo"), marquee: "LO QUE HACEMOS", images: [`${I}menu-trabajo-1.webp`, `${I}menu-trabajo-2.webp`] },

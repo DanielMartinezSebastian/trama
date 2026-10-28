@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { createContext, useContext, useState, type CSSProperties, type ReactNode } from "react";
 import CartDrawer from "@/components/ui/CartDrawer";
 import CheckoutFlow from "@/components/ui/CheckoutFlow";
@@ -14,6 +13,7 @@ import { Esquinas } from "./AbuelaRosa";
 import { HISTORIA, MOJOS, RECETAS, TAMANOS, type Mojo } from "./data";
 import { abuelaHref } from "./enlaces";
 import "./abuela-rosa.css";
+import Portada from "./AbuelaRosa";
 
 /*
  * Abuela Rosa con varias páginas (docs/56): la portada (AbuelaRosa.tsx) y la tienda con la ficha de cada mojo (tamaño,
@@ -22,7 +22,6 @@ import "./abuela-rosa.css";
  * marco persiste: la cinta «COMPRA YA» con la navegación (menú a pantalla completa en el móvil) y el pie.
  */
 
-const Portada = dynamic(() => import("./AbuelaRosa"));
 const Bolsa = createContext<{ carrito: ReturnType<typeof useCart>; abrir: () => void } | null>(null);
 const useBolsa = () => useContext(Bolsa)!;
 const NAV: [string, string][] = [

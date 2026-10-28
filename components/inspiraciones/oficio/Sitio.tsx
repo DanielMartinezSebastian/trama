@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Montserrat, Permanent_Marker } from "next/font/google";
 import { Suspense, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
@@ -12,6 +11,7 @@ import { money } from "@/lib/commerce/money";
 import { MENTORES, PROGRAMAS, SERVICIOS_COLABORA, SERVICIOS_MENTOR } from "./data";
 import { oficioHref } from "./enlaces";
 import "./oficio.css";
+import Portada from "./Oficio";
 
 // letras propias de esta réplica, no del kit: Magic Brush (de pago) → Permanent Marker, rotulador de trazo seco con el
 // espaciado abierto de Honhar; Montserrat como el original (docs/cuaderno/replica-oficio.md)
@@ -25,7 +25,6 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--of-montserrat",
  * persiste: la cabecera amarilla con «Inscríbete» (menú a pantalla completa en el móvil) y el pie negro con el mapa.
  */
 
-const Portada = dynamic(() => import("./Oficio"));
 const NAV: [string, string][] = [
   ["programas", "Programas"],
   ["#historia", "Movimiento"],

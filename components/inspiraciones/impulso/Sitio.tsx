@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import AppointmentList from "@/components/ui/AppointmentList";
@@ -16,6 +15,7 @@ import RollLink from "@/components/ui/RollLink";
 import { EQUIPO, PACKS, RETO, SERVICIOS, SESIONES } from "./data";
 import { impulsoHref } from "./enlaces";
 import "./impulso.css";
+import Portada from "./Impulso";
 
 /*
  * Impulso con varias páginas (docs/56): la portada (Impulso.tsx) y el equipo, los servicios con su ficha, tarifas,
@@ -24,7 +24,6 @@ import "./impulso.css";
  * móvil, el menú a pantalla completa) y el pie.
  */
 
-const Portada = dynamic(() => import("./Impulso"));
 const CITAS = "trama:impulso:citas";
 const SOCIO = "trama:impulso:socio";
 const NAV: [string, string][] = [["equipo", "Equipo"], ["servicios", "Servicios"], ["tarifas", "Tarifas"], ["reto", "Reto"], ["contacto", "Contacto"]];

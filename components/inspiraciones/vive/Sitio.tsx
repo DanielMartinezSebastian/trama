@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ClassSchedule from "@/components/ui/ClassSchedule";
@@ -12,6 +11,7 @@ import { CLASES, CLUBES, PLANES, VENTAJAS, ZONAS_DEL_PLAN } from "./data";
 import { viveHref } from "./enlaces";
 import { MapaClubes } from "./MapaClubes";
 import "./vive.css";
+import Portada from "./Vive";
 
 /*
  * Vive Club con varias páginas (docs/56): la portada (Vive.tsx) y clases (horario por zonas: cada plan reserva las suyas;
@@ -19,7 +19,6 @@ import "./vive.css";
  * amigo») y mi cuenta. El marco persiste: la cabecera con el menú en isla (en el móvil, a pantalla completa) y el pie.
  */
 
-const Portada = dynamic(() => import("./Vive"));
 const SOCIO = "trama:vive:socio";
 const NAV: [string, string][] = [["clases", "Clases"], ["ventajas", "Ventajas"], ["membresias", "Membresías"], ["clubes", "Clubes"]];
 

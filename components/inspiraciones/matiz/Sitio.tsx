@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
@@ -14,6 +13,7 @@ import ShapeMosaic from "@/components/ui/ShapeMosaic";
 import { CARTA, EQUIPO, NOTICIAS, SERVICIOS } from "./data";
 import { matizHref } from "./enlaces";
 import "./matiz.css";
+import Portada from "./Matiz";
 
 /*
  * Matiz con varias páginas (docs/56): la portada (Matiz.tsx) y servicios con la carta, el método rostro a medida, noticias
@@ -21,7 +21,6 @@ import "./matiz.css";
  * con el menú oscuro a pantalla completa (su estética en todos los tamaños) y el pie.
  */
 
-const Portada = dynamic(() => import("./Matiz"));
 const CLAVE = "trama:matiz:citas";
 const HORARIO = "L-D|08:30-18:30";
 

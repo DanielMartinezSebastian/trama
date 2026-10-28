@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useState, type FormEvent, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import BriefFlow from "@/components/ui/BriefFlow";
@@ -11,6 +10,7 @@ import { money } from "@/lib/commerce/money";
 import { CURSOS, DIARIO, PROFES, SERVICIOS_EMPRESA } from "./data";
 import { ahoraHref } from "./enlaces";
 import "./ahora.css";
+import Portada from "./Ahora";
 
 /*
  * Ahora con varias páginas (docs/56): la portada (Ahora.tsx) y los cursos con filtro por formato y su ficha (temario,
@@ -19,7 +19,6 @@ import "./ahora.css";
  * negro con el boletín.
  */
 
-const Portada = dynamic(() => import("./Ahora"));
 const NAV: [string, string][] = [
   ["cursos", "Cursos"],
   ["empresas", "A medida"],

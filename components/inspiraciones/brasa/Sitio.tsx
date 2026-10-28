@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import BriefFlow from "@/components/ui/BriefFlow";
@@ -10,6 +9,7 @@ import { BLOG, I, PETICIONES, SERVICIOS, TRABAJOS, TRAYECTORIA } from "./data";
 import { brasaHref } from "./enlaces";
 import { ruthie, stack } from "./fuentes";
 import "./brasa.css";
+import Portada from "./Brasa";
 
 /*
  * Brasa con varias páginas (docs/56): la portada (Brasa.tsx, la coreografía medida contra la original, intacta) y los
@@ -18,7 +18,6 @@ import "./brasa.css";
  * demás páginas, una cabecera sobria en negro y rojo. En el móvil, en todas, el menú a pantalla completa.
  */
 
-const Portada = dynamic(() => import("./Brasa"));
 const NAV: [string, string][] = [
   ["sobre-mi", "SOBRE MÍ"],
   ["servicios", "SERVICIOS"],

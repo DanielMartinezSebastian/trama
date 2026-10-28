@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { IBM_Plex_Mono, Inter_Tight } from "next/font/google";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
@@ -9,6 +8,7 @@ import { Pastilla } from "./Cenit";
 import { ETIQUETAS, PETICIONES, PROCESO, PROYECTOS } from "./data";
 import { cenitHref } from "./enlaces";
 import "./cenit.css";
+import Portada from "./Cenit";
 
 // la de la referencia (Aeonik) es de pago: Inter Tight; la monoespaciada sí es la suya (IBM Plex Mono)
 const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-lw", display: "swap" });
@@ -21,7 +21,6 @@ const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400"], variable: "--f
  * Escape, al pulsar fuera o al cambiar de página), y el pie «Trabajemos juntos».
  */
 
-const Portada = dynamic(() => import("./Cenit"));
 const NAV: [string, string][] = [
   ["", "Inicio"],
   ["estudio", "Estudio"],

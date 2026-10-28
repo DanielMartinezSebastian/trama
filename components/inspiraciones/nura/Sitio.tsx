@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, useState, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import AppointmentList from "@/components/ui/AppointmentList";
@@ -12,6 +11,7 @@ import { ARTISTA, ESTILISTAS, OBRAS, SERVICIOS } from "./data";
 import { nuraHref } from "./enlaces";
 import { Obra } from "./Nura";
 import "./nura.css";
+import Portada from "./Nura";
 
 /*
  * Nura con varias páginas (docs/56): la portada (Nura.tsx) y pelo (servicios y estilistas), arte (la exposición y la ficha
@@ -20,7 +20,6 @@ import "./nura.css";
  * abajo, cuyos accesos se rellenan al pasar.
  */
 
-const Portada = dynamic(() => import("./Nura"));
 const CITAS = "trama:nura:citas";
 const NAV: [string, string][] = [["pelo", "Pelo"], ["arte", "& Arte"], ["reservar", "Reservar"], ["mis-citas", "Mis citas"], ["info", "Info"]];
 

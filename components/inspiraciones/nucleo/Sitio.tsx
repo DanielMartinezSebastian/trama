@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Suspense, type ReactNode } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Albert_Sans, Crimson_Pro } from "next/font/google";
@@ -15,6 +14,7 @@ import { BONOS, CLASES, INSTRUCTORAS, PRIVADAS } from "./data";
 import { nucleoHref } from "./enlaces";
 import { Horario, SOCIO } from "./Horario";
 import "./nucleo.css";
+import Portada from "./Nucleo";
 
 // Minion Pro (de pago) → Crimson Pro, su alternativa libre más cercana; Albert Sans, la del original, es libre. Se cargan
 // en la réplica, no en el kit (docs/cuaderno/replica-nucleo.md)
@@ -27,7 +27,6 @@ const albert = Albert_Sans({ subsets: ["latin"], variable: "--nc-albert", displa
  * las privadas) y contacto. El marco persiste: la cabecera (menú a pantalla completa en el móvil) y el pie.
  */
 
-const Portada = dynamic(() => import("./Nucleo"));
 const CITAS = "trama:nucleo:privadas";
 const NAV: [string, string][] = [["estudio", "Estudio"], ["clases", "Clases"], ["bonos", "Bonos"], ["privadas", "Privadas"], ["contacto", "Contacto"]];
 

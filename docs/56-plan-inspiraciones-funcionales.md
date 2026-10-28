@@ -250,8 +250,16 @@ El registro (`registro.ts`) da las rutas y la transición. El cargador ya solo u
   `--font-sans`);
 - al quitar el envoltorio de una portada, hay que sustituir el final del archivo y no un `</div>` cualquiera;
 - en Git Bash, las rutas que empiezan por `/` se convierten en rutas de Windows (`MSYS_NO_PATHCONV=1`);
-- en `next dev`, Turbopack da 404 en los trozos que se cargan con `lazy()` dentro de un `next/dynamic` (Carousel,
-  CrossCluster, la escena de Brasa); en el build no pasa.
+- un `next/dynamic` dentro de un módulo que ya se carga en diferido hace que Turbopack anote un trozo que no emite, y la
+  página pide un `.js` que da 404, también en el build. Pasaba en las portadas de las inspiraciones
+  (`Portada = dynamic(…)` dentro del `Sitio`); ahora se importan directamente.
+
+**Revisión final** (28-10-2026):
+
+- el revisor de interacción, en las 235 páginas de las 18, sin enlaces muertos, botones sin efecto ni sombras
+  prohibidas;
+- `npm run verify`, `pkg:build` y `build` (907 páginas) pasan;
+- servido el build, ninguna portada pide un `.js` que dé 404.
 
 **Pendiente**: un segundo encargo de imágenes para Codex con las fichas nuevas que hoy reutilizan fotos:
 

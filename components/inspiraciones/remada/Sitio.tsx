@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import ChatWidget from "@/components/ui/ChatWidget";
 import CohortList from "@/components/ui/CohortList";
@@ -11,6 +10,7 @@ import { money } from "@/lib/commerce/money";
 import { VIAJES, VLOGS } from "./data";
 import { remadaHref } from "./enlaces";
 import "./remada.css";
+import Portada from "./Remada";
 
 /*
  * Remada con varias páginas (docs/56): la portada (Remada.tsx) y el calendario de viajes con la ficha de cada viaje y su
@@ -19,7 +19,6 @@ import "./remada.css";
  * móvil), el pie y el chat de Lucía (ChatWidget por reglas).
  */
 
-const Portada = dynamic(() => import("./Remada"));
 const NIVELES = ["principiante", "intermedio", "avanzado"];
 const NAV: [string, string][] = [
   ["viajes", "calendario de viajes"],
