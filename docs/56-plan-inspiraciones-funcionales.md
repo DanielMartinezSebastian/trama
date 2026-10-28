@@ -261,6 +261,16 @@ El registro (`registro.ts`) da las rutas y la transición. El cargador ya solo u
 - `npm run verify`, `pkg:build` y `build` (907 páginas) pasan;
 - servido el build, ninguna portada pide un `.js` que dé 404.
 
+**Pares medidos otra vez** (28-10-2026, `refs:probe --par` contra `/inspiraciones/<slug>`, ya con el marco y las fotos de
+Codex). Se quedan igual: Abuela Rosa, Ahora, Cita, Núcleo, Nura, Oficio, Patrón, Q47, Remada, Talla y Vive. Matiz
+(17/19) y Melena (16/20) suben uno. Lobo baja a 19/20 porque la sonda pasaba el ratón por «BOLSA (0)», que solo se
+subrayaba; con el mismo hover que sus enlaces vuelve a 20/20.
+
+Bajan Impulso (17/20) y Raíz (17/20), pero no por la réplica: su CSS no ha cambiado. La original mide ahora distinto:
+- Essor saca «Essor Fitness™» a 27,6 vw con un margen de 10 px;
+- Marco Ambrosi pone el cuerpo a 15 px.
+Hay que ver si esas webs han cambiado antes de tocar la réplica.
+
 **Segundo encargo de imágenes** (28-10-2026, `docs/encargo-imagenes-inspiraciones-2.md` y `.json`): 33 huecos ya conectados en el código con provisionales recortadas. Cubre las fichas que repetían una foto ajena o no tenían foto:
 
 - el blog de Melena;
