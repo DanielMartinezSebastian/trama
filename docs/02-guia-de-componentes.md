@@ -524,6 +524,15 @@ Objetivo `cinematic`:
 - **Páginas de servidor con islas.** El texto de una página va en un componente de servidor; las partes interactivas son
   componentes cliente pequeños dentro (portada de la web: `components/site/HomePage.tsx` con `HomeStage`, `StartSteps`,
   `VariantLab` e `InstallChip`).
+- **Skeleton dentro del contenido real.** Envuelve cada pieza que carga, en su tipografía y maquetación normales:
+  `<h2><Skeleton loading={loading}>{title}</Skeleton></h2>`. El hijo conocido conserva su caja y se devuelve intacto al
+  terminar. Marca la región con `aria-busy={loading}` y ofrece un estado de carga accesible fuera de ella. El skeleton
+  en sí queda oculto a lectores y no admite foco durante la carga.
+  Si aún no conoces el contenido o montar el hijo iniciaría peticiones/efectos costosos, reserva dimensiones estables
+  con `kind="block"`, `width` y `height` dentro del mismo layout y sustituye la forma por el contenido al terminar.
+  Las plantillas `text/card/avatar/table` son aproximaciones: no analizan una página ni predicen datos futuros.
+  Los componentes propios usados como hijos deben propagar `className`, `style`, `aria-hidden`, `inert` y `tabIndex`.
+  La demostración `/componentes#skeleton` compara ambos estados en tarjeta, artículo y tabla.
 
 ### 8.0 Sombras de texto: nunca oscuras sobre texto oscuro
 

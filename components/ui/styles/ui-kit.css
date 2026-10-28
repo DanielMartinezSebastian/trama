@@ -1469,16 +1469,25 @@ a.ui-crumbs__link { text-decoration: none; }
 .ui-code__ln { display: inline-block; width: 26px; margin-right: 12px; text-align: right; color: var(--mut); user-select: none; }
 
 /* ---------- Skeleton ---------- */
-.ui-skel { position: relative; overflow: hidden; background: color-mix(in srgb, var(--tone, var(--mut)) 18%, transparent); border-radius: 6px; }
-.ui-skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--tone, var(--mut)) 35%, transparent), transparent); transform: translateX(-100%); animation: ui-shimmer 1.6s ease-in-out infinite; }
-.ui-skel--line { height: 12px; }
+.ui-skel { --skel-base: color-mix(in srgb, var(--tone, var(--mut)) 22%, var(--bg)); --skel-highlight: color-mix(in srgb, var(--tone, var(--mut)) 38%, var(--bg)); --skel-image: linear-gradient(90deg, var(--skel-base) 30%, var(--skel-highlight) 50%, var(--skel-base) 70%); position: relative; overflow: hidden; background-color: var(--skel-base); background-image: var(--skel-image); background-size: 240% 100%; animation: ui-shimmer 1.6s ease-in-out infinite; }
+:where(.ui-skel:not(.ui-skel--content)) { border-radius: 6px; }
+.ui-skel--line { height: 1em; }
 .ui-skel--block { height: 120px; border-radius: 10px; }
 .ui-skel--avatar { width: 48px; height: 48px; border-radius: 50%; }
 .ui-skel--row { height: 34px; border-radius: 8px; }
-.ui-skel-lines, .ui-skel-table { display: grid; gap: 10px; width: 100%; max-width: 320px; }
-.ui-skel-card { display: grid; gap: 10px; width: 100%; max-width: 260px; }
-@keyframes ui-shimmer { to { transform: translateX(100%); } }
-@media (prefers-reduced-motion: reduce) { .ui-skel::after { animation: none; } }
+.ui-skel-lines, .ui-skel-table { display: grid; gap: 0.6em; width: 320px; max-width: 100%; min-width: 0; }
+.ui-skel-card { display: grid; gap: 10px; width: 260px; max-width: 100%; min-width: 0; }
+.ui-skel--standalone { width: 260px; max-width: 100%; }
+/* El hijo conserva su caja y estilo de texto, y deja de ser utilizable durante la carga. */
+.ui-skel--content { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; border-color: transparent !important; outline: none !important; box-shadow: none !important; background-color: var(--skel-base) !important; background-image: var(--skel-image) !important; background-size: 240% 100% !important; box-decoration-break: clone; -webkit-box-decoration-break: clone; pointer-events: none !important; user-select: none; }
+.ui-skel--content *, .ui-skel--content::before, .ui-skel--content::after { visibility: hidden !important; }
+.ui-skel--content:is(img, video, canvas) { object-position: -100000px -100000px !important; }
+.ui-skel--none, .ui-skel--pulse { background-image: none !important; }
+.ui-skel--none { animation: none; }
+.ui-skel--pulse { animation: ui-skel-pulse 1.6s ease-in-out infinite; }
+@keyframes ui-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@keyframes ui-skel-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .ui-skel { animation: none; background-image: none !important; } }
 
 /* ---------- FeatureGrid / TeamSection / LogoCloud / ArticlesSection ---------- */
 .ui-feats, .ui-team, .ui-articles { width: 100%; min-width: 0; display: grid; gap: 28px; justify-items: center; text-align: center; }
