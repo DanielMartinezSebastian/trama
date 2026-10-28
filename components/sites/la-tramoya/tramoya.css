@@ -274,3 +274,12 @@
 .tr-tira[data-native] .ui-hs__in { padding-top: 48px; }
 .tr-barra { border-top: 1px solid var(--fg); }
 @media (prefers-reduced-motion: reduce) { .tr-tira__foto img { transition: none; } }
+/* en el móvil la tira también avanza con el scroll (minWidth={1}); solo con movimiento reducido es un carrusel */
+@media (max-width: 760px) {
+  .tr-tira .ui-hs__in { padding-top: 72px; }
+  .tr-tira__intro { width: 80vw; }
+  .tr-tira__foto { height: 52svh; }
+  .tr-tira .tr-tira__foto--cuadrada { height: auto; }
+  .tr-tira .tr-tira__foto--cuadrada img { width: 62vw; }
+  .tr-tira__foto figcaption { font-size: 16px; }
+}

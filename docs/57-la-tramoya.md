@@ -51,7 +51,7 @@ Tras el héroe va «Una semana en La Tramoya», una tira con `HorizontalScroll`:
 - al bajar, la página desplaza en horizontal ocho fotos de la semana: los carteles de cada noche, el patio, la barra y dos
   platos redondos;
 - el primer panel es el título, con una barra de progreso;
-- en el móvil, la tira es un carrusel con imán.
+- en el móvil también avanza con el scroll (`minWidth={1}`); solo con «reducir movimiento» pasa a ser un carrusel con imán.
 
 Los cuatro accesos unidos (cartelera, reservar, carta y cómo llegar) bajan a después de la sala. En la portada, la barra
 inferior del móvil no sale mientras se ve el héroe.

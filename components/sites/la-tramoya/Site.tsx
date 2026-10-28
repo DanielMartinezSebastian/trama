@@ -190,7 +190,7 @@ function Portada() {
         </ol>
       </section>
       <section className="tr-galeria" aria-label="Una semana en La Tramoya">
-        <HorizontalScroll gap={20} minWidth={900} className="tr-tira">
+        <HorizontalScroll gap={20} minWidth={1} className="tr-tira">
           <div className="tr-tira__intro">
             <p className="tr-kicker">De jueves a domingo</p>
             <h2>
