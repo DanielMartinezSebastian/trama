@@ -6,6 +6,9 @@ renombrados de esta primera versión dejan el nombre antiguo como alias `@deprec
 
 ## Sin publicar
 
+- `Logo3D`: `explodeRest` (0–1, por defecto 0). Con un valor mayor que 0, al terminar el estallido las partículas no se
+  apagan: se quedan con ese brillo y flotan a la deriva por el lienzo, como un fondo; al volver `explode` a false
+  regresan y la marca se recompone. Con 0, todo sigue como antes.
 - `DeviceMockup` y `DeviceMockup3D`: prop `finish` con el color de la carcasa. `theme` (por defecto) lo saca del tema
   con `tone`, como hasta ahora; `black`, `graphite`, `silver`, `white`, `gold`, `blue` y `rose` son colores de aparato,
   iguales en cualquier tema. Vale para todos los dispositivos.

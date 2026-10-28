@@ -61,6 +61,8 @@ export type Logo3DProps = FxProps & {
   explode?: boolean;
   /** segundos que dura el estallido (y la recomposición) */
   explodeDuration?: number;
+  /** 0–1: brillo con el que quedan las partículas al terminar el estallido. > 0 = no se apagan: se quedan flotando a la deriva por el lienzo (un fondo de partículas) · 0 = se apagan */
+  explodeRest?: number;
   /** se llama cuando el estallido termina. Sin 3D (marca plana), enseguida */
   onExploded?: () => void;
   /** cuántas partículas (0 = ninguna: sin carga ni estallido) */
@@ -110,6 +112,7 @@ export default function Logo3D({
   charge = 0,
   explode = false,
   explodeDuration = 1.2,
+  explodeRest = 0,
   onExploded,
   particles = 1800,
   particleSize = 3,
@@ -206,6 +209,7 @@ export default function Logo3D({
                 charge={Math.max(0, Math.min(1, charge))}
                 explode={explode}
                 explodeDuration={explodeDuration}
+                explodeRest={Math.max(0, Math.min(1, explodeRest))}
                 particles={particles}
                 particleSize={particleSize}
                 onExploded={() => exploded.current?.()}

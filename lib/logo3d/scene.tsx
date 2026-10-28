@@ -38,6 +38,8 @@ export type LogoSceneProps = {
   /** true = la marca se deshace en partículas; al volver a false, se recompone */
   explode: boolean;
   explodeDuration: number;
+  /** 0–1: brillo con el que quedan las partículas tras el estallido (> 0 = flotan a la deriva en vez de apagarse) */
+  explodeRest: number;
   particles: number;
   /** tamaño de cada partícula en px CSS */
   particleSize: number;
@@ -202,7 +204,7 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t);
 };
 
-function Mark({ path, viewBox, strokeWidth, depth, bevel, base, renderStyle, fx, color, baseColor, motion, axis, speed, tilt, draggable, markSize, markX, markY, charge, explode, explodeDuration, particles, particleSize, onExploded, root, onReady }: LogoSceneProps) {
+function Mark({ path, viewBox, strokeWidth, depth, bevel, base, renderStyle, fx, color, baseColor, motion, axis, speed, tilt, draggable, markSize, markX, markY, charge, explode, explodeDuration, explodeRest, particles, particleSize, onExploded, root, onReady }: LogoSceneProps) {
   const camera = useThree((s) => s.camera);
   const gl = useThree((s) => s.gl);
   const width = useThree((s) => s.size.width);
@@ -413,7 +415,19 @@ function Mark({ path, viewBox, strokeWidth, depth, bevel, base, renderStyle, fx,
             x += dx * cs - dy * sn;
             yy += dx * sn + dy * cs;
             z += dir[j + 2] * out;
-            al = Math.min(1, e * 10) * Math.pow(1 - k, 1.4);
+            const fade = Math.pow(1 - k, 1.4);
+            if (explodeRest > 0) {
+              // reposo: en vez de apagarse, cada una se queda con su brillo (algo distinto en cada una, y respira) y flota a
+              // la deriva, más cuanto más lejos ha llegado; al recomponerse, la deriva se recoge con el mismo `k`
+              const ph = s.t * (0.25 + rnd[q + 2] * 0.35) + rnd[q + 1] * 6.283;
+              const drift = reach * 0.035 * k;
+              x += Math.sin(ph) * drift;
+              yy += Math.cos(ph * 0.8 + rnd[q + 3] * 3) * drift;
+              const rest = explodeRest * (0.55 + 0.45 * rnd[q + 3]) * (0.75 + 0.25 * Math.sin(ph * 1.7));
+              al = Math.min(1, e * 10) * Math.max(fade, rest);
+            } else {
+              al = Math.min(1, e * 10) * fade;
+            }
           } else if (rnd[q] < charge) {
             // carga: se desprende por la normal un trecho corto y se apaga; cuanta más carga, más partículas y más lejos
             const ph = (s.t * (0.45 + rnd[q + 2] * 0.9) + rnd[q + 1]) % 1;
@@ -491,7 +505,8 @@ function Mark({ path, viewBox, strokeWidth, depth, bevel, base, renderStyle, fx,
  */
 export default function LogoScene(props: LogoSceneProps) {
   const retro = props.renderStyle === "ascii" || props.renderStyle === "pixel" || props.renderStyle === "both";
-  const moving = props.motion !== "none" || props.draggable || props.charge > 0;
+  // las partículas en reposo (`explodeRest`) siguen a la deriva aunque la marca esté quieta
+  const moving = props.motion !== "none" || props.draggable || props.charge > 0 || (props.explode && props.explodeRest > 0);
   // en táctil, menos densidad de píxeles: el lienzo puede ocupar la pantalla entera y con el filtro la diferencia no se ve
   const coarse = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
   return (
