@@ -14,8 +14,8 @@ guia: []
 tono: [cálido, festivo, popular]
 paleta: [fondo claro, acento rojo, oro]
 tipografia: [slab de cartel, serif con cursiva]
-patrones: [cartelera por fechas, ficha de función, plano de sala, reserva propia, entrada con QR, programa de mano, barra de accesos unida, telón, cinta que corre, eventos privados, formulario de contacto]
-movimiento: [telón que se abre, transición de página, scroll suavizado, cinta que corre]
+patrones: [foto a sangre, franja de próximas funciones, cartelera por fechas, ficha de función, plano de sala, reserva propia, entrada con QR, programa de mano, barra de accesos unida, cinta que corre, eventos privados, formulario de contacto]
+movimiento: [acercamiento lento, titular por líneas, transición de página, scroll suavizado, cinta que corre]
 piezas: [EventLineup, SeatMap, ShowBookingFlow, BriefFlow, QRCode, Marquee, OpeningHours, FullscreenMenu, ActionBar, CookieBanner, ContactForm, PageTransition, SmoothScroll]
 piezas-nuevas: [EventLineup, SeatMap, ShowBookingFlow, PageTransition]
 relacionados: [pieza-flujos-de-negocio, demo-cadencia, replica-abuela-rosa]
@@ -31,7 +31,8 @@ La marca es inventada:
 - **una función cada noche**: bulerías, copla, chirigota, rumba, guitarra el domingo a mediodía y zambomba en diciembre.
 
 La estética es de cartel de varietés y de carnaval: papel crema, rojo telón, oro viejo, una slab negra de feria (Ultra) y
-programas de mano.
+programas de mano. La portada es moderna: la sala a sangre con el titular en Fraunces. Un telón animado en la portada y
+entre páginas se probó y el usuario lo descartó.
 
 ## Qué se midió
 
@@ -76,7 +77,12 @@ Maria toma el marco impreso, llevado al cartel de varietés.
   solo lectura.
 - Las fechas de la cartelera son fijas, y «lo que aún no ha pasado» se filtra en el navegador tras montar, para que el
   servidor y el navegador pinten lo mismo.
+- Un telón literal resulta antiguo como primera impresión. La temática va en la foto, la cartelera y los carteles de
+  función; la entrada, limpia.
+- `tokensToStyle` fija el halo de legibilidad en línea: para quitarlo en una web hay que sobrescribirlo en sus tokens, no
+  con una clase.
 
 ## Siguiente
 
-Las imágenes de Codex (`docs/encargo-imagenes-tramoya.md`).
+Las 19 imágenes de Codex están entregadas y revisadas (8c88a89). Queda medir la web con `refs:probe -- --repo` para
+su afinidad con las guías.

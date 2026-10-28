@@ -133,7 +133,7 @@ invierte la que toque. Todas cubren la ventana entera con `PageTransition` y la 
 | `scanline` | CRT: la vieja se deshace en líneas de barrido y la nueva se enciende desde una línea horizontal. |
 | `glitch` | La nueva entra por franjas que crecen, con saltos laterales y separación RGB (`--acc` / `--acc2`). |
 | `iris` | Un círculo se abre desde el centro de la pantalla con un aro del color `tone`. |
-| `curtain` | Un telón que se descorre desde el centro: la nueva aparece entre dos paños plegados del color `tone` que se abren hacia los lados (La Tramoya, docs/57). Luce más con `pace="slow"`. |
+| `curtain` | Un telón que se descorre desde el centro: la nueva aparece entre dos paños plegados del color `tone` que se abren hacia los lados. Luce más con `pace="slow"`. Se probó en La Tramoya (docs/57) y se retiró por antiguo como primera impresión: encaja mejor en webs de teatro de época. |
 | `terminal` | La vieja se apaga y la nueva se escribe por líneas (12 pasos) tras un cursor de bloque. |
 | `none` | Sin animación: la ventana cambia de golpe (las navegaciones con tipo siguen animando, ver abajo). |
 

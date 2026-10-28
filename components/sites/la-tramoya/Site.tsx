@@ -1,7 +1,7 @@
 "use client";
 
 import { Ultra } from "next/font/google";
-import { Suspense, useEffect, useState, type ReactNode } from "react";
+import { Suspense, useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import BriefFlow from "@/components/ui/BriefFlow";
@@ -30,15 +30,16 @@ const cartel = Ultra({ weight: "400", subsets: ["latin"], variable: "--tr-cartel
 
 /*
  * La Tramoya, venta-teatro en Chiclana de la Frontera (docs/57): cena de venta gaditana y una función cada noche. La
- * portada sube un telón sobre la sala; la cartelera (EventLineup) lleva a la ficha de cada función, y la reserva
- * (ShowBookingFlow) elige noche, mesa en el plano (SeatMap), menú y pago y entrega la entrada en QR, que queda en «mis
- * entradas». Entre páginas, el telón se descorre (PageTransition curtain). Carta, sala, eventos privados (BriefFlow) y
- * cómo llegar completan el sitio.
+ * portada es la sala a sangre con un acercamiento lento, el titular que entra por líneas y la franja de las próximas
+ * funciones; la cartelera (EventLineup) lleva a la ficha de cada función, y la reserva (ShowBookingFlow) elige noche,
+ * mesa en el plano (SeatMap), menú y pago y entrega la entrada en QR, que queda en «mis entradas». Carta, sala, eventos
+ * privados (BriefFlow) y cómo llegar completan el sitio.
  */
 
 const href = (p = "") => siteHref(SLUG, p);
 const KEY = "trama:la-tramoya:entradas";
-const TOKENS = tokensToStyle({ bg: "#f3e7d0", fg: "#1c1420", mut: "#5f5047", acc: "#b3121f", acc2: "#8a6420", card: "#fbf3e3", ln: "#cdb994", r: 0, font: "var(--font-manrope), sans-serif", display: "var(--font-fraunces), serif", glow: false });
+// sin el halo de legibilidad del tema: sobre los botones y franjas oscuras se veía como una sombra blanca
+const TOKENS = { ...tokensToStyle({ bg: "#f3e7d0", fg: "#1c1420", mut: "#5f5047", acc: "#b3121f", acc2: "#8a6420", card: "#fbf3e3", ln: "#cdb994", r: 0, font: "var(--font-manrope), sans-serif", display: "var(--font-fraunces), serif", glow: false }), "--legibility-ts": "0 0 transparent" } as CSSProperties;
 const NAV: [string, string][] = [
   ["cartelera", "Cartelera"],
   ["carta", "Carta"],
@@ -63,7 +64,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
   const proximas = useProximas();
   const esta = proximas[0];
-  // los pseudo-elementos del telón leen los tokens de :root (docs/05 · Tema): el paño rojo y el papel debajo
+  // los pseudo-elementos de la transición leen los tokens de :root (docs/05 · Tema): el papel debajo
   useEffect(() => {
     const s = document.documentElement.style;
     s.setProperty("--ui-vt-page", "#f3e7d0");
@@ -137,47 +138,46 @@ export function Shell({ children }: { children: ReactNode }) {
   );
 }
 
-function Telon() {
-  return (
-    <div className="tr-telon" aria-hidden>
-      <i />
-      <i />
-    </div>
-  );
-}
-
 function Portada() {
   const router = useRouter();
   const proximas = useProximas();
   const esta = proximas.find((f) => f.status !== "soldout") ?? proximas[0];
-  const e = esta ? ESPECTACULOS[esta.show] : null;
   return (
     <>
       <section className="tr-hero">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/img/tramoya/hero-sala.webp" alt="La sala de La Tramoya con el escenario iluminado y las mesas con velas" className="tr-hero__foto" />
-        <Telon />
         <div className="tr-hero__texto">
-          <p className="tr-kicker">Chiclana de la Frontera · desde 1962</p>
+          <p className="tr-kicker">Venta-teatro · Chiclana de la Frontera</p>
           <h1>
-            Cena de venta,
-            <br />
-            vino de Chiclana
-            <br />
-            <span>y función cada noche</span>
-          </h1>
-        </div>
-        {esta && e && (
-          <a href={href(`cartelera/${esta.id}`)} className="tr-cartelito">
-            <small>Próxima función</small>
-            <b>{esta.title}</b>
+            <span>Cena de venta,</span>
+            <span>vino de Chiclana</span>
             <span>
-              {prettyDate(esta.date)} · {esta.time}
+              <em>y función cada noche.</em>
             </span>
-            <span>{e.artista}</span>
-            <em>{esta.status === "few" ? `Últimas mesas · ${esta.left}` : "Hay mesa"} →</em>
-          </a>
-        )}
+          </h1>
+          <div className="tr-hero__acciones">
+            <a href={esta ? `${href("reservar")}?funcion=${esta.id}` : href("reservar")} className="tr-boton tr-boton--claro">
+              Reservar mesa
+            </a>
+            <a href={href("cartelera")} className="tr-boton tr-boton--borde">
+              Ver la cartelera
+            </a>
+          </div>
+        </div>
+        <ol className="tr-hero__proximas" aria-label="Próximas funciones">
+          {proximas.slice(0, 3).map((f) => (
+            <li key={f.id}>
+              <a href={href(`cartelera/${f.id}`)}>
+                <small>
+                  {prettyDate(f.date)} · {f.time}
+                </small>
+                <b>{f.title}</b>
+                <span>{f.status === "soldout" ? "Agotado" : f.status === "few" ? `Últimas mesas · ${f.left}` : "Hay mesa"}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
       </section>
       <nav className="tr-barra" aria-label="Accesos">
         <a href={href("cartelera")}>Cartelera</a>
@@ -609,7 +609,7 @@ export function Page({ path }: { path: string[] }) {
     <ComoLlegar />
   ) : null;
   return (
-    <PageTransition key={path.join("/")} kind="curtain" pace="slow" tone="acc">
+    <PageTransition key={path.join("/")} kind="fade" pace="normal">
       {pagina}
     </PageTransition>
   );

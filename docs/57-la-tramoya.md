@@ -40,9 +40,14 @@ noche:
 - domingo a mediodía, guitarra;
 - Nochevieja.
 
-**El gesto propio.** Un telón:
-- al cargar la portada, el telón se abre sobre la sala;
-- entre páginas, otro telón se descorre (`PageTransition kind="curtain"`, nuevo en el kit).
+**La primera impresión.** La primera versión abría un telón sobre la sala y otro entre páginas
+(`PageTransition kind="curtain"`). El usuario lo descartó el 28-10-2026: quería una entrada más moderna. Ahora:
+- la portada es la sala a sangre, con un acercamiento lento;
+- el titular en Fraunces entra por líneas, con dos acciones;
+- abajo, una franja translúcida con las tres próximas funciones;
+- entre páginas, un fundido.
+
+El tipo `curtain` sigue en el kit como opción.
 
 **La reserva** es lo que pide el negocio: noche → comensales y mesa en el plano → menú → datos → señal → entrada en QR.
 
@@ -86,4 +91,6 @@ noche:
 
 El encargo para Codex está en `docs/encargo-imagenes-tramoya.md`. Codex entregó las 19 (8c88a89) y están revisadas en escritorio y móvil.
 
-**Ajuste tras revisarlas:** en el móvil, la foto del héroe sube y se oscurece por abajo, para que la bailaora quede por encima del titular.
+**Ajuste tras revisarlas:** en el móvil, la foto del héroe ocupa la mitad de arriba y el texto va debajo, para que la bailaora no quede detrás del titular.
+
+**Sin halo de legibilidad.** `tokensToStyle` pone en línea un halo con el fondo del tema. Con el tema crema, sobre los botones oscuros (la barra «Reservar mesa») se veía como una sombra blanca. La web lo anula en sus tokens (`"--legibility-ts": "0 0 transparent"`), y ningún texto de la página tiene ya sombra.
