@@ -20,6 +20,7 @@ import { PAGINAS as remadaPaginas } from "./remada/data";
 import { PAGINAS as ahoraPaginas } from "./ahora/data";
 import { PAGINAS as oficioPaginas } from "./oficio/data";
 import { PAGINAS as abuelaPaginas } from "./abuela-rosa/data";
+import { PAGINAS as q47Paginas } from "./q47/data";
 
 export type Replica = {
   slug: string;
@@ -66,7 +67,7 @@ export const REPLICAS: Replica[] = [
   { slug: "ahora", nombre: "Ahora", ref: "Future London Academy", url: "https://futurelondonacademy.co.uk/", ficha: "§3.6", sector: "academia", firma: "amarillo, muro de profesores y tarjetas solapadas", hecha: true, guia: "escuela", acento: "#ffe32b", paginas: ahoraPaginas, transicion: "fade" },
   { slug: "oficio", nombre: "Oficio", ref: "Honhar", url: "https://honhar.in/", ficha: "§3.6", sector: "academia", firma: "neobrutalismo amarillo y programas por promoción", hecha: true, guia: "escuela", acento: "#ffaf2e", paginas: oficioPaginas, transicion: "fade" },
   { slug: "abuela-rosa", nombre: "Abuela Rosa", ref: "Peppa Sauce", url: "https://www.peppasauce.love/", ficha: "§3.8", sector: "producto", firma: "el bote fijo y dos tintas", hecha: true, guia: "marca", acento: "#e8612c", paginas: abuelaPaginas, transicion: "fade" },
-  { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: true, guia: "club", acento: "#ffffff" },
+  { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: true, guia: "club", acento: "#ffffff", paginas: q47Paginas, transicion: "stairs" },
   // las dos anteriores, del laboratorio de cine (docs/41–43): webs 3D enteras
   { slug: "cenit", nombre: "Cénit", ref: "Lusion", url: "https://lusion.co/", ficha: "docs/43", sector: "estudio creativo", firma: "racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla", hecha: true, guia: "monocromo", acento: "#2f3cff", scroll: "cinematic" },
   { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic" },

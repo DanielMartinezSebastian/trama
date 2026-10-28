@@ -41,7 +41,7 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   ahora: sitio(() => import("./ahora/Sitio")),
   oficio: sitio(() => import("./oficio/Sitio")),
   "abuela-rosa": sitio(() => import("./abuela-rosa/Sitio")),
-  q47: portada(() => import("./q47/Q47")),
+  q47: sitio(() => import("./q47/Sitio")),
   cenit: portada(() => import("./cenit/Cenit")),
   brasa: portada(() => import("./brasa/Brasa")),
 };
