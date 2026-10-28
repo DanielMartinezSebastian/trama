@@ -183,6 +183,7 @@
         "option-picker",
         "checkout-flow",
         "enrollment-flow",
+        "brief-flow",
         "membership-flow",
         "member-area",
         "date-picker",
@@ -15092,6 +15093,81 @@
       ],
       "example": "import EnrollmentFlow from \"@/components/ui/EnrollmentFlow\";\n\n<EnrollmentFlow />",
       "preview": "/componentes#enrollment-flow"
+    },
+    {
+      "id": "brief-flow",
+      "name": "Petición de propuesta",
+      "component": "BriefFlow",
+      "import": "import BriefFlow from \"@/components/ui/BriefFlow\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Petición de propuesta o presupuesto en pasos: qué necesitas (uno o varios servicios, presupuesto y plazo), el proyecto en una pregunta abierta y los datos de contacto (con empresa y teléfono si se piden). Confirma con una referencia y la guarda en este navegador. Para agencias, estudios, formación a medida, eventos y fabricantes.",
+      "props": [
+        {
+          "key": "title",
+          "type": "text",
+          "default": "Pide una propuesta",
+          "label": "Qué se pide"
+        },
+        {
+          "key": "budgets",
+          "type": "text",
+          "default": "Menos de 10.000 €, 10.000–30.000 €, Más de 30.000 €",
+          "label": "Rangos de presupuesto (vacío = no se pregunta)"
+        },
+        {
+          "key": "timelines",
+          "type": "text",
+          "default": "Este trimestre, Antes de seis meses, Sin prisa",
+          "label": "Plazos (vacío = no se pregunta)"
+        },
+        {
+          "key": "fields",
+          "type": "select",
+          "default": "company",
+          "label": "Campos extra",
+          "options": [
+            "company",
+            "company,phone",
+            "phone",
+            ""
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "`services`: label y hint; se eligen uno o varios. `initialServices` marca alguno al llegar (por ejemplo, desde la ficha de un servicio).",
+        "Con `onSend(brief)` se manda a un servidor; sin él, solo se guarda en `storageKey`. Ver /inspiraciones/ahora/empresas y docs/56."
+      ],
+      "example": "import BriefFlow from \"@/components/ui/BriefFlow\";\n\n<BriefFlow\n  title=\"Pide una propuesta\"\n/>",
+      "preview": "/componentes#brief-flow"
     },
     {
       "id": "membership-flow",

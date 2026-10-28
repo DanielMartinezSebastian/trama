@@ -1687,6 +1687,21 @@ Solicitud de plaza en un curso, programa o viaje por convocatorias: elegir convo
 - `cohorts`: label, dates, status (open, few, soon, closed) y seats. Las soon y closed piden lista de espera, sin pago.
 - Para probar el pago: 4242 4242 4242 4242. Ver /inspiraciones/melena/academia y docs/56.
 
+### Petición de propuesta — `BriefFlow`
+
+Petición de propuesta o presupuesto en pasos: qué necesitas (uno o varios servicios, presupuesto y plazo), el proyecto en una pregunta abierta y los datos de contacto (con empresa y teléfono si se piden). Confirma con una referencia y la guarda en este navegador. Para agencias, estudios, formación a medida, eventos y fabricantes.
+
+| prop | tipo | default |
+|---|---|---|
+| `title` | text | "Pide una propuesta" |
+| `budgets` | text | "Menos de 10.000 €, 10.000–30.000 €, Más de 30.000 €" |
+| `timelines` | text | "Este trimestre, Antes de seis meses, Sin prisa" |
+| `fields` | `company` · `company,phone` · `phone` · `` | "company" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- `services`: label y hint; se eligen uno o varios. `initialServices` marca alguno al llegar (por ejemplo, desde la ficha de un servicio).
+- Con `onSend(brief)` se manda a un servidor; sin él, solo se guarda en `storageKey`. Ver /inspiraciones/ahora/empresas y docs/56.
+
 ### Alta de socio — `MembershipFlow`
 
 Alta en un plan de gimnasio, estudio o club en pasos: plan, datos (con fecha de nacimiento para la edad mínima) y pago del primer mes con matrícula opcional (simulado, con validación de tarjeta). Confirma con el pase de socio en QR y guarda el plan con useMembership (lib/commerce/membership), que comparten MemberArea y la reserva de clases.

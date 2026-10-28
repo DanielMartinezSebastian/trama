@@ -5,6 +5,7 @@ import ActionBar from "@/components/ui/ActionBar";
 import AppointmentList from "@/components/ui/AppointmentList";
 import BookingFlow from "@/components/ui/BookingFlow";
 import CohortList from "@/components/ui/CohortList";
+import BriefFlow from "@/components/ui/BriefFlow";
 import EnrollmentFlow from "@/components/ui/EnrollmentFlow";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
@@ -157,6 +158,44 @@ export const negocio: CatalogEntry[] = [
           levels={["Nunca he tocado barro", "Ya he hecho algo"]}
           question={p.question as string}
           storageKey="trama:catalogo:solicitudes"
+          variant={p.variant as never}
+        />
+      </div>
+    ),
+  },
+  {
+    id: "brief-flow",
+    component: "BriefFlow",
+    path: "@/components/ui/BriefFlow",
+    name: "Petición de propuesta",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Petición de propuesta o presupuesto en pasos: qué necesitas (uno o varios servicios, presupuesto y plazo), el proyecto en una pregunta abierta y los datos de contacto (con empresa y teléfono si se piden). Confirma con una referencia y la guarda en este navegador. Para agencias, estudios, formación a medida, eventos y fabricantes.",
+    stageHeight: 600,
+    props: [
+      { key: "title", label: "Qué se pide", type: "text", default: "Pide una propuesta" },
+      { key: "budgets", label: "Rangos de presupuesto (vacío = no se pregunta)", type: "text", default: "Menos de 10.000 €, 10.000–30.000 €, Más de 30.000 €" },
+      { key: "timelines", label: "Plazos (vacío = no se pregunta)", type: "text", default: "Este trimestre, Antes de seis meses, Sin prisa" },
+      { key: "fields", label: "Campos extra", type: "select", default: "company", options: ["company", "company,phone", "phone", ""] },
+      variantProp("minimal"),
+    ],
+    notes: [
+      "`services`: label y hint; se eligen uno o varios. `initialServices` marca alguno al llegar (por ejemplo, desde la ficha de un servicio).",
+      "Con `onSend(brief)` se manda a un servidor; sin él, solo se guarda en `storageKey`. Ver /inspiraciones/ahora/empresas y docs/56.",
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <BriefFlow
+          title={p.title as string}
+          services={[
+            { label: "Identidad de marca", hint: "logo, tipografía y tono" },
+            { label: "Web", hint: "diseño y desarrollo" },
+            { label: "Campaña", hint: "piezas para redes y exterior" },
+          ]}
+          budgets={p.budgets as string}
+          timelines={p.timelines as string}
+          fields={p.fields as string}
+          storageKey="trama:catalogo:propuestas"
           variant={p.variant as never}
         />
       </div>
