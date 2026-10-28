@@ -849,7 +849,7 @@ Envuelve contenido (`children`), p. ej.: `{/* contenido de la página */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `curtain` · `terminal` | "fade" |
 | `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
@@ -870,7 +870,7 @@ Envuelve contenido (`children`), p. ej.: `{/* el elemento que entra o sale */}`
 
 | prop | tipo | default |
 |---|---|---|
-| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `terminal` | "fade" |
+| `kind` | `none` · `fade` · `slide` · `wipe` · `scan` · `stack` · `blinds` · `stairs` · `pixelate` · `scanline` · `glitch` · `iris` · `curtain` · `terminal` | "fade" |
 | `direction` | `auto` · `left` · `right` · `up` · `down` | "auto" |
 | `pace` | `fast` · `normal` · `slow` | "normal" |
 | `tone` | `acc` · `acc2` · `fg` | "acc" |
@@ -1276,6 +1276,20 @@ Clases de gimnasio, estudio o academia en los próximos días: filtro por discip
 - Los días se calculan en el navegador para no desajustar la hidratación.
 - Una clase de hoy cuya hora ya llegó sale como «Ya empezó» (startedLabel) y no se puede reservar.
 - Con useMembership (lib/commerce/membership): bookings={socio.bookings} y onBook={(c, d, espera) => socio.book(c.id, d, espera)}; MemberArea las enseña y las anula.
+
+### Cartelera de funciones — `EventLineup`
+
+Cartelera de funciones, conciertos o eventos por fecha: agrupada por mes, con la fecha grande, el género, la hora, el precio desde y el estado (últimas mesas, agotado, cancelado), y chips para filtrar por género. Cada función enlaza a su ficha o a la reserva.
+
+| prop | tipo | default |
+|---|---|---|
+| `layout` | `rows` · `cards` | "rows" |
+| `groupBy` | `month` · `none` | "month" |
+| `filters` | boolean | true |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- `events`: id, title, date (ISO), time, genre, blurb, image, price, status (open, few, soldout, cancelled), left y href.
+- Con `ShowBookingFlow` se reserva mesa para la función. Ver /sitios/la-tramoya/cartelera y docs/57.
 
 ### Programas por convocatoria — `CohortList`
 
@@ -1701,6 +1715,31 @@ Petición de propuesta o presupuesto en pasos: qué necesitas (uno o varios serv
 
 - `services`: label y hint; se eligen uno o varios. `initialServices` marca alguno al llegar (por ejemplo, desde la ficha de un servicio).
 - Con `onSend(brief)` se manda a un servidor; sin él, solo se guarda en `storageKey`. Ver /inspiraciones/ahora/empresas y docs/56.
+
+### Plano de sala — `SeatMap`
+
+Plano de una sala para elegir mesa: el escenario, las mesas en su sitio con su zona (color y suplemento en la leyenda), las ocupadas tachadas y las que no caben para los comensales apagadas. Cada mesa es un botón con nombre completo; sin onChange, el plano es de solo lectura.
+
+| prop | tipo | default |
+|---|---|---|
+| `guests` | number 1–6 | 2 |
+| `stagePosition` | `top` · `bottom` | "top" |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- `tables`: id, label, zone, seats, x e y (en % del plano) y shape (round, square, bar). `zones`: id, name, price (suplemento; negativo, más barata) y color.
+- Va dentro de `ShowBookingFlow`. Ver /sitios/la-tramoya/la-sala y docs/57.
+
+### Reserva de cena con espectáculo — `ShowBookingFlow`
+
+Reserva de mesa para una función: la noche, los comensales y la mesa en el plano (SeatMap, con las ocupadas de esa noche), el menú, los datos y el pago de la señal o del total (simulado, con validación de tarjeta). Confirma con la entrada en QR y la opción de añadirla al calendario; la guarda con useShowBookings (lib/commerce/shows).
+
+| prop | tipo | default |
+|---|---|---|
+| `depositPerGuest` | number 0–40 | 10 |
+| `variant` | `glass` · `solid` · `outline` · `neon` · `retro` · `terminal` · `minimal` · `dotmatrix` · `editorial` | "minimal" |
+
+- `initialEvent` e `initialTable` llegan elegidos (desde la ficha de la función o el plano). Para probar el pago: 4242 4242 4242 4242.
+- Ver /sitios/la-tramoya/reservar y docs/57.
 
 ### Alta de socio — `MembershipFlow`
 
@@ -3377,6 +3416,14 @@ Expedición de ficción en tres capítulos: una señal, un descenso y un hallazg
 Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
 
 `Button` ×2 · `ScrollProgress` · `Hero` · `Footer` · `SmoothScroll`
+
+### La Tramoya · venta-teatro en Chiclana — `/sitios/la-tramoya`
+
+Restaurante con espectáculo en directo en Chiclana de la Frontera: cartelera por noches, ficha de cada función, reserva de mesa en el plano de la sala con menú y entrada en QR, carta de venta gaditana, eventos privados y un telón entre páginas.
+
+Carpeta: `components/sites/la-tramoya/` · 39 páginas: La venta-teatro · Cartelera · Noche de bulerías · 2026-11-05 · Copla en la venta · 2026-11-06 · Antología de chirigotas · 2026-11-07 · Fino y guitarra · 2026-11-08 · Noche de bulerías · 2026-11-12 · Copla en la venta · 2026-11-13 · Rumba de La Barrosa · 2026-11-14 · Fino y guitarra · 2026-11-15 · Noche de bulerías · 2026-11-19 · Copla en la venta · 2026-11-20 · Antología de chirigotas · 2026-11-21 · Fino y guitarra · 2026-11-22 · Noche de bulerías · 2026-11-26 · Copla en la venta · 2026-11-27 · Rumba de La Barrosa · 2026-11-28 · Fino y guitarra · 2026-11-29 · Noche de bulerías · 2026-12-03 · Zambomba flamenca · 2026-12-04 · Rumba de La Barrosa · 2026-12-05 · Fino y guitarra · 2026-12-06 · Noche de bulerías · 2026-12-10 · Zambomba flamenca · 2026-12-11 · Antología de chirigotas · 2026-12-12 · Fino y guitarra · 2026-12-13 · Noche de bulerías · 2026-12-17 · Zambomba flamenca · 2026-12-18 · Rumba de La Barrosa · 2026-12-19 · Fino y guitarra · 2026-12-20 · Antología de chirigotas · 2026-12-26 · Fino y guitarra · 2026-12-27 · Nochevieja en La Tramoya · 2026-12-31 · Reservar mesa · Carta y menús · La sala · Eventos privados · Mis entradas · Cómo llegar
+
+`EventLineup` ×3 · `OpeningHours` ×2 · `SeatMap` ×2 · `Marquee` · `PageTransition` · `ContactForm` · `SmoothScroll` · `FullscreenMenu` · `CookieBanner` · `BriefFlow` · `ShowBookingFlow` · `ActionBar` · `QRCode`
 
 ## Inspiraciones
 

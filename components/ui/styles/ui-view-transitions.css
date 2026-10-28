@@ -94,11 +94,13 @@
 ::view-transition-new(.ui-vt-pixelate),
 ::view-transition-new(.ui-vt-scanline),
 ::view-transition-new(.ui-vt-iris),
+::view-transition-new(.ui-vt-curtain),
 ::view-transition-new(.ui-vt-terminal) { background: var(--ui-vt-page, var(--bg)); }
 ::view-transition-old(.ui-vt-blinds),
 ::view-transition-old(.ui-vt-stairs),
 ::view-transition-old(.ui-vt-pixelate),
-::view-transition-old(.ui-vt-iris) { animation: ui-vt-hold var(--ui-vt-d) linear both; }
+::view-transition-old(.ui-vt-iris),
+::view-transition-old(.ui-vt-curtain) { animation: ui-vt-hold var(--ui-vt-d) linear both; }
 
 /* ---------- fade: fundido cruzado con la salida más rápida que la entrada ---------- */
 ::view-transition-old(.ui-vt-fade) { animation: ui-vt-out calc(var(--ui-vt-d) * 0.5) ease-in both; }
@@ -378,6 +380,23 @@
   mask-image: radial-gradient(circle at 50% min(50%, 45vh), transparent calc(var(--ui-vt-r) + 3px), #000 0);
 }
 @keyframes ui-vt-iris { from { --ui-vt-r: 0px; } to { --ui-vt-r: 150vmax; } }
+
+/* ---------- curtain: un telón que se descorre desde el centro; los dos paños son franjas plegadas del color del tono ---------- */
+@property --ui-vt-cw { syntax: "<percentage>"; inherits: true; initial-value: 0%; }
+::view-transition-group(.ui-vt-in.ui-vt-curtain),
+::view-transition-group(.ui-vt-root.ui-vt-curtain) {
+  --ui-vt-cb: 7%;
+  animation: ui-vt-curtain var(--ui-vt-d) cubic-bezier(0.7, 0, 0.25, 1) both;
+  background:
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.22) 0 0.6%, transparent 0.6% 1.8%),
+    linear-gradient(90deg, transparent calc(50% - var(--ui-vt-cw) - var(--ui-vt-cb)), var(--ui-vt-c) 0 calc(50% - var(--ui-vt-cw)), transparent 0 calc(50% + var(--ui-vt-cw)), var(--ui-vt-c) 0 calc(50% + var(--ui-vt-cw) + var(--ui-vt-cb)), transparent 0);
+}
+::view-transition-new(.ui-vt-curtain) { animation: none; clip-path: inset(0 calc(50% - var(--ui-vt-cw)) 0 calc(50% - var(--ui-vt-cw))); }
+::view-transition-old(.ui-vt-root.ui-vt-curtain) {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(50% - var(--ui-vt-cw) - var(--ui-vt-cb)), transparent 0 calc(50% + var(--ui-vt-cw) + var(--ui-vt-cb)), #000 0);
+  mask-image: linear-gradient(90deg, #000 calc(50% - var(--ui-vt-cw) - var(--ui-vt-cb)), transparent 0 calc(50% + var(--ui-vt-cw) + var(--ui-vt-cb)), #000 0);
+}
+@keyframes ui-vt-curtain { from { --ui-vt-cw: 0%; } to { --ui-vt-cw: 58%; } }
 
 /* ---------- terminal: la vieja se apaga y la nueva se escribe por líneas (12 pasos) tras un cursor de bloque ---------- */
 ::view-transition-old(.ui-vt-terminal) { animation: ui-vt-out calc(var(--ui-vt-d) * 0.3) linear both; }

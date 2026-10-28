@@ -1,0 +1,229 @@
+/* La Tramoya (docs/57): papel crema #f3e7d0, tinta #1c1420, rojo telón #b3121f y oro viejo; la letra de cartel (Ultra)
+   para la marca y los títulos de función, Fraunces para lo editorial y Manrope para leer. La portada es la sala a oscuras con
+   un telón que se abre; el resto, programas de mano y carteles de varietés. */
+.tr { --tr-noche: #170a0e; --tr-oro: #d9a441; --tr-c: var(--tr-cartel), "Ultra", serif; background: var(--bg); color: var(--fg); overflow-x: clip; }
+.tr a { color: inherit; }
+.tr h1, .tr h2, .tr h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.02; }
+.tr-kicker { margin: 0; font: 600 12px/1.2 var(--font-antonio, var(--font-manrope)), sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); }
+
+/* aviso de demo y próxima función */
+.tr-aviso { display: flex; justify-content: space-between; gap: 16px; padding: 7px 20px; background: var(--tr-noche); color: #e9dcc3; font-size: 12px; }
+.tr-aviso a { text-decoration: none; }
+.tr-aviso a:hover { color: var(--tr-oro); }
+.tr-aviso b { color: var(--tr-oro); font-weight: 600; }
+
+/* cabecera */
+.tr-head { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 28px; padding: 12px 20px; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ln); }
+.tr-logo { display: grid; margin: 0; font: 400 26px/0.9 var(--tr-c); color: var(--acc); text-decoration: none; letter-spacing: 0.01em; }
+.tr-logo small { font: 600 10px/1.4 var(--font-manrope), sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--fg); }
+.tr-head nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; }
+.tr-head nav a { text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; transition: border-color 0.2s, color 0.2s; }
+.tr-head nav a:hover, .tr-head nav a[aria-current="page"] { border-color: var(--acc); color: var(--acc); }
+.tr-entradas { font-size: 14px; text-decoration: none; white-space: nowrap; }
+.tr-entradas:hover { color: var(--acc); }
+.tr-boton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 20px; border: 2px solid var(--acc); background: var(--acc); color: #fbf3e3 !important; font: 700 14px/1 var(--font-manrope), sans-serif; letter-spacing: 0.04em; text-decoration: none; text-transform: uppercase; transition: background 0.2s, color 0.2s, translate 0.2s; }
+.tr-boton:hover { background: transparent; color: var(--acc) !important; translate: 0 -2px; }
+.tr-boton--grande { padding: 16px 26px; font-size: 15px; justify-self: start; }
+.tr-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.tr-menu { --bg: #170a0e; --fg: #f3e7d0; --acc: #d9a441; }
+
+/* portada: la sala a oscuras, el telón que se abre y el cartel de la próxima función */
+.tr-hero { position: relative; display: grid; align-items: end; min-height: min(88svh, 860px); padding: 0 8vw 7vh; background: var(--tr-noche); color: #f3e7d0; overflow: hidden; isolation: isolate; }
+.tr-hero__foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: 0.72; }
+.tr-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgb(23 10 14 / 0.92) 8%, rgb(23 10 14 / 0.2) 60%, rgb(23 10 14 / 0.5)); }
+.tr-telon { position: absolute; inset: 0; z-index: 3; display: flex; pointer-events: none; }
+.tr-telon i { flex: 1; background: repeating-linear-gradient(90deg, #6e0a12 0 1.4%, #a3121d 2.6%, #c42230 3.3%, #8d0e18 4.4%, #6e0a12 5.6%); box-shadow: inset 0 -60px 80px -40px rgb(0 0 0 / 0.6); animation: tr-telon 1.9s cubic-bezier(0.7, 0, 0.2, 1) 0.35s both; }
+.tr-telon i:first-child { transform-origin: left; }
+.tr-telon i:last-child { transform-origin: right; }
+@keyframes tr-telon { from { scale: 1 1; } to { scale: 0.06 1; } }
+.tr-hero__texto { position: relative; z-index: 1; display: grid; gap: 14px; max-width: 900px; }
+.tr-hero .tr-kicker { color: var(--tr-oro); }
+.tr-hero h1 { font: 400 clamp(40px, 5.6vw, 92px)/0.92 var(--tr-c); letter-spacing: -0.01em; }
+.tr-hero h1 span { display: inline-block; margin-top: 0.12em; font: italic 500 0.52em/1 var(--font-fraunces), serif; color: var(--tr-oro); letter-spacing: -0.02em; }
+.tr .tr-cartelito { color: var(--fg); }
+.tr-cartelito { position: absolute; z-index: 2; right: 8vw; top: 9vh; display: grid; gap: 6px; width: min(300px, 80vw); padding: 22px 20px; background: #f3e7d0; color: var(--fg); text-decoration: none; rotate: 2deg; border: 2px solid var(--fg); outline: 1px solid var(--fg); outline-offset: -8px; transition: rotate 0.3s, translate 0.3s; }
+.tr-cartelito:hover { rotate: 0deg; translate: 0 -4px; }
+.tr-cartelito small { font: 600 11px/1 var(--font-manrope), sans-serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--acc); }
+.tr-cartelito b { font: 400 30px/0.95 var(--tr-c); color: var(--acc); }
+.tr-cartelito span { font-size: 14px; }
+.tr-cartelito em { margin-top: 6px; font-style: normal; font-weight: 700; }
+
+/* barra de accesos: cuatro botones unidos (como las entradas de una taquilla) */
+.tr-barra { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--fg); }
+.tr-barra a { padding: 18px 12px; text-align: center; font: 700 14px/1 var(--font-manrope), sans-serif; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-right: 1px solid var(--fg); transition: background 0.2s, color 0.2s; }
+.tr-barra a:last-child { border-right: 0; }
+.tr-barra a:hover { background: var(--fg); color: var(--bg); }
+.tr-barra a:nth-child(2) { background: var(--acc); color: #fbf3e3; }
+.tr-barra a:nth-child(2):hover { background: var(--fg); }
+
+/* secciones */
+.tr-sec { display: grid; gap: 28px; padding: clamp(60px, 10vw, 120px) 4vw; }
+.tr-sec__cab { display: grid; gap: 12px; max-width: 760px; }
+.tr-sec__cab h2, .tr-sala h2, .tr-privados h2 { font-size: clamp(34px, 4.6vw, 64px); }
+.tr-sec__cab p:not(.tr-kicker) { margin: 0; font-size: 18px; line-height: 1.5; color: var(--mut); }
+.tr-mas { justify-self: start; font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--acc); padding-bottom: 2px; }
+.tr-mas:hover { color: var(--acc); }
+.tr-lineup .ui-lineup__info strong { font-family: var(--tr-c); font-weight: 400; color: var(--acc); }
+.tr-lineup .ui-lineup__fecha b { font-family: var(--tr-c); font-weight: 400; }
+.tr-cinta { padding-block: 14px; background: var(--fg); color: var(--tr-oro); font: 400 clamp(22px, 3vw, 40px) var(--tr-c) !important; }
+
+/* programa de mano: tres horas de la noche como un tique troquelado */
+.tr-noche { background: var(--tr-noche); color: #f3e7d0; }
+.tr-noche .tr-sec__cab h2 { color: #f3e7d0; }
+.tr-noche .tr-kicker { color: var(--tr-oro); }
+.tr-programa { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; padding: 0; list-style: none; border: 2px solid var(--tr-oro); }
+.tr-programa li { position: relative; display: grid; gap: 10px; padding: 28px 24px; border-right: 2px dashed color-mix(in srgb, var(--tr-oro) 60%, transparent); }
+.tr-programa li:last-child { border-right: 0; }
+.tr-programa b { font: 400 clamp(36px, 4vw, 56px)/1 var(--tr-c); color: var(--tr-oro); }
+.tr-programa h3 { font-size: 24px; color: #f3e7d0; }
+.tr-programa p { margin: 0; color: #d9cbb2; line-height: 1.5; }
+
+/* cocina */
+.tr-platos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.tr-platos figure { display: grid; gap: 10px; margin: 0; }
+.tr-platos img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 6px solid var(--card); outline: 1px solid var(--ln); }
+.tr-platos figcaption { display: grid; justify-items: center; gap: 2px; text-align: center; }
+.tr-platos figcaption span { color: var(--mut); }
+
+/* la sala */
+.tr-sala { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 4vw; align-items: center; }
+.tr-sala > div:first-child { display: grid; gap: 16px; justify-items: start; }
+.tr-sala p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--mut); }
+.tr-sala--pag { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); align-items: start; }
+.tr-sala__info { display: grid; gap: 12px; justify-items: start; padding: 22px; border: 1px solid var(--ln); background: var(--card); }
+.tr-plano .ui-seat__plano { background-color: var(--card); }
+
+/* eventos privados (portada) */
+.tr-privados { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; background: var(--card); }
+.tr-privados img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.tr-privados > div { display: grid; gap: 16px; justify-items: start; }
+.tr-privados p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--mut); }
+
+/* páginas interiores */
+.tr-pag { display: grid; gap: 40px; padding: clamp(40px, 7vw, 80px) 4vw 120px; }
+.tr-pag > * { min-width: 0; }
+.tr-pag__cab { display: grid; gap: 14px; max-width: 820px; }
+.tr-pag__cab h1 { font: 400 clamp(52px, 8vw, 128px)/0.9 var(--tr-c); color: var(--acc); letter-spacing: -0.01em; }
+.tr-pag__cab p:not(.tr-kicker) { margin: 0; font-size: 19px; line-height: 1.5; color: var(--mut); }
+.tr-volver { justify-self: start; font-weight: 700; text-decoration: none; }
+.tr-volver:hover { color: var(--acc); }
+.tr-flujo { --ui-book-top: 90px; }
+.tr-vacio, .tr-nota { margin: 0; color: var(--mut); }
+
+/* ficha de función: el cartel */
+.tr-ficha { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 4vw; align-items: start; }
+.tr-cartel { display: grid; gap: 10px; padding: 18px 18px 26px; background: var(--card); border: 2px solid var(--fg); outline: 1px solid var(--fg); outline-offset: -10px; text-align: center; }
+.tr-cartel img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.tr-cartel__fecha { margin: 8px 0 0; font: 600 14px/1 var(--font-manrope), sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--acc); }
+.tr-cartel h1 { font: 400 clamp(40px, 5vw, 76px)/0.92 var(--tr-c); color: var(--acc); }
+.tr-cartel__artista { margin: 0; font: italic 500 22px var(--font-fraunces), serif; }
+.tr-ficha__texto { display: grid; gap: 20px; }
+.tr-ficha__lead { margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; }
+.tr-ficha dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0; padding: 16px 0; border-block: 1px solid var(--ln); }
+.tr-ficha dt { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); }
+.tr-ficha dd { margin: 4px 0 0; font-weight: 700; }
+.tr-ficha h2 { font-size: 28px; margin-top: 10px; }
+.tr-agotado { margin: 0; padding: 14px 18px; border: 2px solid var(--acc); color: var(--acc); font-weight: 700; }
+.tr-menus { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.tr-menus li { display: grid; gap: 4px; padding: 14px 16px; background: var(--card); border-left: 4px solid var(--acc); }
+.tr-menus span { color: var(--mut); font-size: 15px; }
+.tr-menus--grandes { grid-template-columns: repeat(3, 1fr); }
+.tr-menus--grandes li { gap: 10px; align-content: start; padding: 22px; }
+.tr-menus--grandes b { font: 400 26px/1 var(--tr-c); color: var(--acc); }
+.tr-menus em { font-style: normal; font-weight: 700; }
+.tr-sec__otras { display: grid; gap: 18px; }
+.tr-sec__otras h2 { font-size: 30px; }
+
+/* carta */
+.tr-sec__bloque { display: grid; gap: 18px; scroll-margin-top: 100px; }
+.tr-sec__bloque h2 { font-size: clamp(30px, 3.6vw, 48px); }
+.tr-sec__bloque > .tr-boton { justify-self: start; }
+.tr-carta { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ln); }
+.tr-carta li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 14px 0; border-bottom: 1px dotted var(--ln); }
+.tr-carta li:not(:has(img)) { grid-template-columns: minmax(0, 1fr) auto; }
+.tr-carta img { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; }
+.tr-carta span { display: grid; gap: 2px; }
+.tr-carta small { color: var(--mut); font-size: 14px; }
+.tr-carta em { font-style: normal; font-weight: 700; }
+
+/* la sala (página) */
+.tr-zonas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.tr-zonas figure { display: grid; gap: 10px; margin: 0; }
+.tr-zonas img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.tr-zonas figcaption { display: grid; gap: 4px; }
+.tr-zonas span { color: var(--mut); font-size: 15px; }
+.tr-historia { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4vw; align-items: center; }
+.tr-historia img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: sepia(0.35); }
+.tr-historia > div { display: grid; gap: 14px; }
+.tr-historia h2 { font-size: clamp(30px, 3.6vw, 48px); }
+.tr-historia p:not(.tr-kicker) { margin: 0; font-size: 17px; line-height: 1.6; color: var(--mut); }
+
+/* eventos */
+.tr-paquetes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.tr-paquetes article { display: grid; gap: 10px; align-content: start; padding-bottom: 18px; border-bottom: 2px solid var(--fg); }
+.tr-paquetes img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.tr-paquetes h2 { font-size: 28px; }
+.tr-paquetes p { margin: 0; color: var(--mut); }
+.tr-paquetes em { font-style: normal; font-weight: 700; color: var(--acc); }
+
+/* mis entradas */
+.tr-tickets { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.tr-tickets li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 22px; background: var(--card); border: 2px dashed var(--ln); }
+.tr-tickets li > div { display: grid; gap: 6px; }
+.tr-tickets h2 { font: 400 clamp(26px, 3vw, 40px)/1 var(--tr-c); color: var(--acc); }
+.tr-tickets p { margin: 0; }
+.tr-tickets__acciones { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 6px; }
+.tr-link { padding: 0; border: 0; background: none; color: var(--fg); font: 600 14px var(--font-manrope), sans-serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.tr-link:hover { color: var(--acc); }
+.tr-link--peligro { color: var(--acc); }
+
+/* cómo llegar */
+.tr-llegar { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4vw; align-items: start; }
+.tr-mapa { position: relative; aspect-ratio: 4 / 3; background: var(--card); border: 2px solid var(--fg); overflow: hidden; background-image: linear-gradient(105deg, #b9d3d6 0 34%, transparent 34%); }
+.tr-mapa span, .tr-mapa b { position: absolute; font-size: 14px; }
+.tr-mapa__mar { left: 4%; top: 40%; color: #355e6a; font: italic 500 18px var(--font-fraunces), serif !important; }
+.tr-mapa__lugar::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--fg); }
+.tr-mapa__lugar--chiclana { right: 10%; top: 18%; }
+.tr-mapa__lugar--barrosa { left: 40%; top: 66%; }
+.tr-mapa__lugar--petri { left: 30%; top: 86%; }
+.tr-mapa__carretera { position: absolute; left: 44%; top: 22%; width: 48%; height: 4px; background: var(--tr-oro); rotate: 32deg; transform-origin: left; }
+.tr-mapa__pin { left: 60%; top: 40%; padding: 6px 10px; background: var(--acc); color: #fbf3e3; font: 400 16px var(--tr-c) !important; }
+.tr-mapa__pin::after { content: ""; position: absolute; left: 12px; bottom: -8px; border: 8px solid transparent; border-bottom: 0; border-top-color: var(--acc); }
+.tr-llegar__info { display: grid; gap: 18px; }
+.tr-llegar__info ul { display: grid; gap: 10px; margin: 0; padding-left: 1.1em; line-height: 1.5; }
+.tr-contacto { max-width: 680px; }
+
+/* pie */
+.tr-pie { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 4vw; padding: 60px 4vw 110px; background: var(--tr-noche); color: #e9dcc3; --fg: #f3e7d0; --mut: #c8b99f; --ln: #4a3a36; --card: #241418; --bg: #170a0e; }
+.tr-pie .tr-logo { color: var(--tr-oro); }
+.tr-pie .tr-logo small { color: #e9dcc3; }
+.tr-pie p { margin: 0 0 12px; line-height: 1.6; }
+.tr-pie nav { display: grid; gap: 8px; align-content: start; }
+.tr-pie nav a { text-decoration: none; }
+.tr-pie a:hover { color: var(--tr-oro); }
+.tr-pie small { margin-top: 12px; color: #a99a83; font-size: 12px; line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .tr-head nav, .tr-head .tr-entradas, .tr-head > .tr-boton { display: none; }
+  .tr-head .ui-fsm__btn--burger { display: inline-flex; margin-left: auto; }
+  .tr-cartelito { position: relative; right: auto; top: auto; margin-top: 24px; rotate: 0deg; }
+  .tr-hero { align-content: end; padding-top: 18vh; }
+  .tr-barra { grid-template-columns: 1fr 1fr; }
+  .tr-barra a:nth-child(2) { border-right: 0; }
+  .tr-barra a:nth-child(-n + 2) { border-bottom: 1px solid var(--fg); }
+  .tr-programa, .tr-platos, .tr-menus--grandes, .tr-zonas, .tr-paquetes { grid-template-columns: 1fr 1fr; }
+  .tr-programa li:nth-child(2) { border-right: 0; }
+  .tr-sala, .tr-sala--pag, .tr-privados, .tr-ficha, .tr-historia, .tr-llegar, .tr-pie { grid-template-columns: 1fr; }
+  .tr-aviso a:first-child { display: none; }
+}
+@media (max-width: 560px) {
+  .tr-programa, .tr-platos, .tr-menus--grandes, .tr-zonas, .tr-paquetes { grid-template-columns: 1fr; }
+  .tr-programa li { border-right: 0; border-bottom: 2px dashed color-mix(in srgb, var(--tr-oro) 60%, transparent); }
+  .tr-ficha dl { grid-template-columns: 1fr; }
+  .tr-tickets li { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tr-telon { display: none; }
+  .tr-boton, .tr-cartelito, .tr-barra a { transition: none; }
+}
+@media (max-width: 560px) { .tr-hero h1 { font-size: 36px; line-height: 1; } }

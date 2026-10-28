@@ -8,7 +8,7 @@ import type { ComponentType, ReactNode } from "react";
  */
 
 /** Familias de animación. `slide`, `wipe`, `scan` y `stack` tienen dirección; el resto no. */
-export const PAGE_TRANSITION_KINDS = ["none", "fade", "slide", "wipe", "scan", "stack", "blinds", "stairs", "pixelate", "scanline", "glitch", "iris", "terminal"] as const;
+export const PAGE_TRANSITION_KINDS = ["none", "fade", "slide", "wipe", "scan", "stack", "blinds", "stairs", "pixelate", "scanline", "glitch", "iris", "curtain", "terminal"] as const;
 export type PageTransitionKind = (typeof PAGE_TRANSITION_KINDS)[number];
 export type PageTransitionDirection = "left" | "right" | "up" | "down";
 /** Familias con dirección (hacia dónde se mueve el contenido, la banda, la línea o la pila). */

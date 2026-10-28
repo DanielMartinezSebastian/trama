@@ -7,6 +7,9 @@ import BookingFlow from "@/components/ui/BookingFlow";
 import CohortList from "@/components/ui/CohortList";
 import BriefFlow from "@/components/ui/BriefFlow";
 import EnrollmentFlow from "@/components/ui/EnrollmentFlow";
+import EventLineup from "@/components/ui/EventLineup";
+import SeatMap, { type SeatTable, type SeatZone } from "@/components/ui/SeatMap";
+import ShowBookingFlow from "@/components/ui/ShowBookingFlow";
 import ClassSchedule, { type ScheduleBooking, type ClassScheduleProps } from "@/components/ui/ClassSchedule";
 import DatePicker from "@/components/ui/DatePicker";
 import MemberArea from "@/components/ui/MemberArea";
@@ -72,6 +75,27 @@ function MenuDemo({ layout, filter, add }: { layout: "list" | "columns" | "cards
       {add && <p style={{ margin: "0 0 12px", fontSize: 13, opacity: 0.7 }}>En el pedido: {n}</p>}
       <MenuList menu={MENU} layout={layout} filter={filter} onAdd={add ? () => setN((x) => x + 1) : undefined} />
     </>
+  );
+}
+
+
+const ZONAS_SALA: SeatZone[] = [
+  { id: "primera", name: "Primera fila", price: 8 },
+  { id: "patio", name: "Patio", color: "var(--acc2)" },
+  { id: "barra", name: "Barra", price: -6, color: "var(--mut)" },
+];
+const SALA: SeatTable[] = [
+  ...[24, 40, 60, 76].map((x, i) => ({ id: `A${i + 1}`, zone: "primera", seats: 4, x, y: 30 })),
+  ...[16, 34, 50, 66, 84].map((x, i) => ({ id: `B${i + 1}`, zone: "patio", seats: i % 2 ? 2 : 6, x, y: 56 })),
+  ...[38, 62].map((x, i) => ({ id: `C${i + 1}`, zone: "barra", seats: 3, x, y: 84, shape: "bar" as const })),
+];
+
+function SeatMapDemo({ guests, stagePosition, variant }: { guests: number; stagePosition: "top" | "bottom"; variant: never }) {
+  const [mesa, setMesa] = useState("");
+  return (
+    <div style={{ width: "min(100%, 760px)", padding: 16 }}>
+      <SeatMap tables={SALA} zones={ZONAS_SALA} taken={["A2", "B3"]} value={mesa} onChange={setMesa} guests={guests} stagePosition={stagePosition} variant={variant} />
+    </div>
   );
 }
 
@@ -196,6 +220,91 @@ export const negocio: CatalogEntry[] = [
           timelines={p.timelines as string}
           fields={p.fields as string}
           storageKey="trama:catalogo:propuestas"
+          variant={p.variant as never}
+        />
+      </div>
+    ),
+  },
+  {
+    id: "event-lineup",
+    component: "EventLineup",
+    path: "@/components/ui/EventLineup",
+    name: "Cartelera de funciones",
+    category: "datos",
+    styles: ALL_STYLES,
+    description: "Cartelera de funciones, conciertos o eventos por fecha: agrupada por mes, con la fecha grande, el género, la hora, el precio desde y el estado (últimas mesas, agotado, cancelado), y chips para filtrar por género. Cada función enlaza a su ficha o a la reserva.",
+    stageHeight: 560,
+    props: [
+      { key: "layout", label: "Forma", type: "select", default: "rows", options: ["rows", "cards"] },
+      { key: "groupBy", label: "Agrupar", type: "select", default: "month", options: ["month", "none"] },
+      { key: "filters", label: "Filtro por género", type: "boolean", default: true },
+      variantProp("minimal"),
+    ],
+    notes: ["`events`: id, title, date (ISO), time, genre, blurb, image, price, status (open, few, soldout, cancelled), left y href.", "Con `ShowBookingFlow` se reserva mesa para la función. Ver /sitios/la-tramoya/cartelera y docs/57."],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <EventLineup
+          layout={p.layout as never}
+          groupBy={p.groupBy as never}
+          filters={p.filters as boolean}
+          events={[
+            { id: "a", title: "Noche de bulerías", date: "2026-11-05", time: "22:00", genre: "Flamenco", blurb: "Cuadro de la casa", price: 38, href: "#cartelera" },
+            { id: "b", title: "Copla en la venta", date: "2026-11-06", time: "22:00", genre: "Copla", blurb: "Voz y piano", price: 36, status: "few", left: 3, href: "#cartelera" },
+            { id: "c", title: "Antología de chirigotas", date: "2026-11-07", time: "22:00", genre: "Carnaval", price: 34, status: "soldout" },
+            { id: "d", title: "Zambomba flamenca", date: "2026-12-04", time: "22:00", genre: "Navidad", price: 40, href: "#cartelera" },
+          ]}
+          variant={p.variant as never}
+        />
+      </div>
+    ),
+  },
+  {
+    id: "seat-map",
+    component: "SeatMap",
+    path: "@/components/ui/SeatMap",
+    name: "Plano de sala",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Plano de una sala para elegir mesa: el escenario, las mesas en su sitio con su zona (color y suplemento en la leyenda), las ocupadas tachadas y las que no caben para los comensales apagadas. Cada mesa es un botón con nombre completo; sin onChange, el plano es de solo lectura.",
+    stageHeight: 520,
+    props: [
+      { key: "guests", label: "Comensales", type: "number", default: 2, min: 1, max: 6, step: 1 },
+      { key: "stagePosition", label: "Escenario", type: "select", default: "top", options: ["top", "bottom"] },
+      variantProp("minimal"),
+    ],
+    notes: ["`tables`: id, label, zone, seats, x e y (en % del plano) y shape (round, square, bar). `zones`: id, name, price (suplemento; negativo, más barata) y color.", "Va dentro de `ShowBookingFlow`. Ver /sitios/la-tramoya/la-sala y docs/57."],
+    render: (p) => <SeatMapDemo guests={p.guests as number} stagePosition={p.stagePosition as never} variant={p.variant as never} />,
+  },
+  {
+    id: "show-booking-flow",
+    component: "ShowBookingFlow",
+    path: "@/components/ui/ShowBookingFlow",
+    name: "Reserva de cena con espectáculo",
+    category: "formularios",
+    styles: ALL_STYLES,
+    description: "Reserva de mesa para una función: la noche, los comensales y la mesa en el plano (SeatMap, con las ocupadas de esa noche), el menú, los datos y el pago de la señal o del total (simulado, con validación de tarjeta). Confirma con la entrada en QR y la opción de añadirla al calendario; la guarda con useShowBookings (lib/commerce/shows).",
+    stageHeight: 760,
+    props: [
+      { key: "depositPerGuest", label: "Señal por persona (0 = se paga todo)", type: "number", default: 10, min: 0, max: 40, step: 5 },
+      variantProp("minimal"),
+    ],
+    notes: ["`initialEvent` e `initialTable` llegan elegidos (desde la ficha de la función o el plano). Para probar el pago: 4242 4242 4242 4242.", "Ver /sitios/la-tramoya/reservar y docs/57."],
+    render: (p) => (
+      <div style={{ width: "100%", padding: 16 }}>
+        <ShowBookingFlow
+          key={String(p.depositPerGuest)}
+          events={[
+            { id: "a", title: "Noche de bulerías", date: "2026-11-05", time: "22:00", genre: "Flamenco" },
+            { id: "b", title: "Copla en la venta", date: "2026-11-06", time: "22:00", genre: "Copla", status: "few" },
+          ]}
+          tables={SALA}
+          zones={ZONAS_SALA}
+          menus={[
+            { id: "venta", name: "Menú de la venta", price: 38, description: "Chicharrones, tortillitas, pescaíto y postre." },
+            { id: "tapeo", name: "Tapeo y función", price: 26, description: "Tres tapas y una bebida." },
+          ]}
+          depositPerGuest={p.depositPerGuest as number}
+          storageKey="trama:catalogo:funciones"
           variant={p.variant as never}
         />
       </div>

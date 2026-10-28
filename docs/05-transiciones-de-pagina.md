@@ -133,6 +133,7 @@ invierte la que toque. Todas cubren la ventana entera con `PageTransition` y la 
 | `scanline` | CRT: la vieja se deshace en líneas de barrido y la nueva se enciende desde una línea horizontal. |
 | `glitch` | La nueva entra por franjas que crecen, con saltos laterales y separación RGB (`--acc` / `--acc2`). |
 | `iris` | Un círculo se abre desde el centro de la pantalla con un aro del color `tone`. |
+| `curtain` | Un telón que se descorre desde el centro: la nueva aparece entre dos paños plegados del color `tone` que se abren hacia los lados (La Tramoya, docs/57). Luce más con `pace="slow"`. |
 | `terminal` | La vieja se apaga y la nueva se escribe por líneas (12 pasos) tras un cursor de bloque. |
 | `none` | Sin animación: la ventana cambia de golpe (las navegaciones con tipo siguen animando, ver abajo). |
 
@@ -381,7 +382,7 @@ con `style={tokensToStyle(…)}`), repite en `:root` al menos el acento y el fon
 ```
 
 `--ui-vt-page` (por defecto `--bg`) es el color de fondo de la página: queda debajo de la animación de la raíz y hace
-opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `stairs`, `pixelate`, `scanline`, `iris`,
+opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `stairs`, `pixelate`, `scanline`, `iris`, `curtain`,
 `terminal`); en `stack`, además, es el color de los huecos entre barras.
 
 ## Accesibilidad y soporte

@@ -33,6 +33,7 @@ import * as vozDeLaTierra from "@/components/sites/voz-de-la-tierra/data";
 import * as nadir from "@/components/sites/nadir/data";
 import * as hebra from "@/components/sites/hebra/data";
 import * as cadencia from "@/components/sites/cadencia/data";
+import * as laTramoya from "@/components/sites/la-tramoya/data";
 import * as esparta from "@/components/sites/esparta/data";
 import * as forja from "@/components/sites/forja/data";
 
@@ -73,6 +74,7 @@ export const sites: SiteMeta[] = [
   { ...runa.meta, routes: runa.ROUTES, dir: "components/sites/runa" },
   { ...vozDeLaTierra.meta, routes: vozDeLaTierra.ROUTES, dir: "components/sites/voz-de-la-tierra" },
   { ...nadir.meta, routes: nadir.ROUTES, dir: "components/sites/nadir" },
+  { ...laTramoya.meta, routes: laTramoya.ROUTES, dir: "components/sites/la-tramoya" },
 ];
 
 export const getSite = (slug: string) => sites.find((s) => s.slug === slug);

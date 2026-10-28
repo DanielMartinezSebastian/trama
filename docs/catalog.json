@@ -139,6 +139,7 @@
         "meta-table",
         "opening-hours",
         "class-schedule",
+        "event-lineup",
         "cohort-list",
         "qr-code"
       ]
@@ -184,6 +185,8 @@
         "checkout-flow",
         "enrollment-flow",
         "brief-flow",
+        "seat-map",
+        "show-booking-flow",
         "membership-flow",
         "member-area",
         "date-picker",
@@ -3800,6 +3803,7 @@
             "scanline",
             "glitch",
             "iris",
+            "curtain",
             "terminal"
           ]
         },
@@ -3888,6 +3892,7 @@
             "scanline",
             "glitch",
             "iris",
+            "curtain",
             "terminal"
           ]
         },
@@ -15170,6 +15175,193 @@
       "preview": "/componentes#brief-flow"
     },
     {
+      "id": "event-lineup",
+      "name": "Cartelera de funciones",
+      "component": "EventLineup",
+      "import": "import EventLineup from \"@/components/ui/EventLineup\";",
+      "category": "datos",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Cartelera de funciones, conciertos o eventos por fecha: agrupada por mes, con la fecha grande, el género, la hora, el precio desde y el estado (últimas mesas, agotado, cancelado), y chips para filtrar por género. Cada función enlaza a su ficha o a la reserva.",
+      "props": [
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "rows",
+          "label": "Forma",
+          "options": [
+            "rows",
+            "cards"
+          ]
+        },
+        {
+          "key": "groupBy",
+          "type": "select",
+          "default": "month",
+          "label": "Agrupar",
+          "options": [
+            "month",
+            "none"
+          ]
+        },
+        {
+          "key": "filters",
+          "type": "boolean",
+          "default": true,
+          "label": "Filtro por género"
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "`events`: id, title, date (ISO), time, genre, blurb, image, price, status (open, few, soldout, cancelled), left y href.",
+        "Con `ShowBookingFlow` se reserva mesa para la función. Ver /sitios/la-tramoya/cartelera y docs/57."
+      ],
+      "example": "import EventLineup from \"@/components/ui/EventLineup\";\n\n<EventLineup />",
+      "preview": "/componentes#event-lineup"
+    },
+    {
+      "id": "seat-map",
+      "name": "Plano de sala",
+      "component": "SeatMap",
+      "import": "import SeatMap from \"@/components/ui/SeatMap\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Plano de una sala para elegir mesa: el escenario, las mesas en su sitio con su zona (color y suplemento en la leyenda), las ocupadas tachadas y las que no caben para los comensales apagadas. Cada mesa es un botón con nombre completo; sin onChange, el plano es de solo lectura.",
+      "props": [
+        {
+          "key": "guests",
+          "type": "number",
+          "default": 2,
+          "label": "Comensales",
+          "min": 1,
+          "max": 6
+        },
+        {
+          "key": "stagePosition",
+          "type": "select",
+          "default": "top",
+          "label": "Escenario",
+          "options": [
+            "top",
+            "bottom"
+          ]
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "`tables`: id, label, zone, seats, x e y (en % del plano) y shape (round, square, bar). `zones`: id, name, price (suplemento; negativo, más barata) y color.",
+        "Va dentro de `ShowBookingFlow`. Ver /sitios/la-tramoya/la-sala y docs/57."
+      ],
+      "example": "import SeatMap from \"@/components/ui/SeatMap\";\n\n<SeatMap />",
+      "preview": "/componentes#seat-map"
+    },
+    {
+      "id": "show-booking-flow",
+      "name": "Reserva de cena con espectáculo",
+      "component": "ShowBookingFlow",
+      "import": "import ShowBookingFlow from \"@/components/ui/ShowBookingFlow\";",
+      "category": "formularios",
+      "styles": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "description": "Reserva de mesa para una función: la noche, los comensales y la mesa en el plano (SeatMap, con las ocupadas de esa noche), el menú, los datos y el pago de la señal o del total (simulado, con validación de tarjeta). Confirma con la entrada en QR y la opción de añadirla al calendario; la guarda con useShowBookings (lib/commerce/shows).",
+      "props": [
+        {
+          "key": "depositPerGuest",
+          "type": "number",
+          "default": 10,
+          "label": "Señal por persona (0 = se paga todo)",
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "minimal",
+          "label": "Variante de estilo",
+          "hint": "Cambia superficie, borde, radio, sombra y tipografía",
+          "options": [
+            "glass",
+            "solid",
+            "outline",
+            "neon",
+            "retro",
+            "terminal",
+            "minimal",
+            "dotmatrix",
+            "editorial"
+          ]
+        }
+      ],
+      "notes": [
+        "`initialEvent` e `initialTable` llegan elegidos (desde la ficha de la función o el plano). Para probar el pago: 4242 4242 4242 4242.",
+        "Ver /sitios/la-tramoya/reservar y docs/57."
+      ],
+      "example": "import ShowBookingFlow from \"@/components/ui/ShowBookingFlow\";\n\n<ShowBookingFlow />",
+      "preview": "/componentes#show-booking-flow"
+    },
+    {
       "id": "membership-flow",
       "name": "Alta de socio",
       "component": "MembershipFlow",
@@ -20401,6 +20593,238 @@
         {
           "component": "SmoothScroll",
           "id": "smooth-scroll",
+          "uses": 1
+        }
+      ]
+    },
+    {
+      "slug": "la-tramoya",
+      "title": "La Tramoya · venta-teatro en Chiclana",
+      "url": "/sitios/la-tramoya",
+      "dir": "components/sites/la-tramoya",
+      "description": "Restaurante con espectáculo en directo en Chiclana de la Frontera: cartelera por noches, ficha de cada función, reserva de mesa en el plano de la sala con menú y entrada en QR, carta de venta gaditana, eventos privados y un telón entre páginas.",
+      "pages": [
+        {
+          "path": "/sitios/la-tramoya",
+          "title": "La venta-teatro"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera",
+          "title": "Cartelera"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-11-05",
+          "title": "Noche de bulerías · 2026-11-05"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/copla-2026-11-06",
+          "title": "Copla en la venta · 2026-11-06"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/chirigota-2026-11-07",
+          "title": "Antología de chirigotas · 2026-11-07"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-11-08",
+          "title": "Fino y guitarra · 2026-11-08"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-11-12",
+          "title": "Noche de bulerías · 2026-11-12"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/copla-2026-11-13",
+          "title": "Copla en la venta · 2026-11-13"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/rumba-2026-11-14",
+          "title": "Rumba de La Barrosa · 2026-11-14"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-11-15",
+          "title": "Fino y guitarra · 2026-11-15"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-11-19",
+          "title": "Noche de bulerías · 2026-11-19"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/copla-2026-11-20",
+          "title": "Copla en la venta · 2026-11-20"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/chirigota-2026-11-21",
+          "title": "Antología de chirigotas · 2026-11-21"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-11-22",
+          "title": "Fino y guitarra · 2026-11-22"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-11-26",
+          "title": "Noche de bulerías · 2026-11-26"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/copla-2026-11-27",
+          "title": "Copla en la venta · 2026-11-27"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/rumba-2026-11-28",
+          "title": "Rumba de La Barrosa · 2026-11-28"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-11-29",
+          "title": "Fino y guitarra · 2026-11-29"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-12-03",
+          "title": "Noche de bulerías · 2026-12-03"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/zambomba-2026-12-04",
+          "title": "Zambomba flamenca · 2026-12-04"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/rumba-2026-12-05",
+          "title": "Rumba de La Barrosa · 2026-12-05"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-12-06",
+          "title": "Fino y guitarra · 2026-12-06"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-12-10",
+          "title": "Noche de bulerías · 2026-12-10"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/zambomba-2026-12-11",
+          "title": "Zambomba flamenca · 2026-12-11"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/chirigota-2026-12-12",
+          "title": "Antología de chirigotas · 2026-12-12"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-12-13",
+          "title": "Fino y guitarra · 2026-12-13"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/bulerias-2026-12-17",
+          "title": "Noche de bulerías · 2026-12-17"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/zambomba-2026-12-18",
+          "title": "Zambomba flamenca · 2026-12-18"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/rumba-2026-12-19",
+          "title": "Rumba de La Barrosa · 2026-12-19"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-12-20",
+          "title": "Fino y guitarra · 2026-12-20"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/chirigota-2026-12-26",
+          "title": "Antología de chirigotas · 2026-12-26"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/guitarra-2026-12-27",
+          "title": "Fino y guitarra · 2026-12-27"
+        },
+        {
+          "path": "/sitios/la-tramoya/cartelera/nochevieja-2026-12-31",
+          "title": "Nochevieja en La Tramoya · 2026-12-31"
+        },
+        {
+          "path": "/sitios/la-tramoya/reservar",
+          "title": "Reservar mesa"
+        },
+        {
+          "path": "/sitios/la-tramoya/carta",
+          "title": "Carta y menús"
+        },
+        {
+          "path": "/sitios/la-tramoya/la-sala",
+          "title": "La sala"
+        },
+        {
+          "path": "/sitios/la-tramoya/eventos",
+          "title": "Eventos privados"
+        },
+        {
+          "path": "/sitios/la-tramoya/mis-entradas",
+          "title": "Mis entradas"
+        },
+        {
+          "path": "/sitios/la-tramoya/como-llegar",
+          "title": "Cómo llegar"
+        }
+      ],
+      "components": [
+        {
+          "component": "EventLineup",
+          "id": "event-lineup",
+          "uses": 3
+        },
+        {
+          "component": "OpeningHours",
+          "id": "opening-hours",
+          "uses": 2
+        },
+        {
+          "component": "SeatMap",
+          "id": "seat-map",
+          "uses": 2
+        },
+        {
+          "component": "Marquee",
+          "id": "marquee",
+          "uses": 1
+        },
+        {
+          "component": "PageTransition",
+          "id": "page-transition",
+          "uses": 1
+        },
+        {
+          "component": "ContactForm",
+          "id": "contact-form",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
+          "uses": 1
+        },
+        {
+          "component": "FullscreenMenu",
+          "id": "fullscreen-menu",
+          "uses": 1
+        },
+        {
+          "component": "CookieBanner",
+          "id": "cookie-banner",
+          "uses": 1
+        },
+        {
+          "component": "BriefFlow",
+          "id": "brief-flow",
+          "uses": 1
+        },
+        {
+          "component": "ShowBookingFlow",
+          "id": "show-booking-flow",
+          "uses": 1
+        },
+        {
+          "component": "ActionBar",
+          "id": "action-bar",
+          "uses": 1
+        },
+        {
+          "component": "QRCode",
+          "id": "qr-code",
           "uses": 1
         }
       ]

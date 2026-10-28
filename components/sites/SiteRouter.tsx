@@ -19,6 +19,7 @@ const site = (load: () => Promise<SiteModule>) => ({
 /** Cada web: su marco (barra, pie, estado compartido) y su página según la ruta. */
 const SITES: Record<string, { Shell: Shell; Page: Page }> = {
   esparta: site(() => import("./esparta/Site")),
+  "la-tramoya": site(() => import("./la-tramoya/Site")),
   forja: site(() => import("./forja/Site")),
   hebra: site(() => import("./hebra/Site")),
   cadencia: site(() => import("./cadencia/Site")),
