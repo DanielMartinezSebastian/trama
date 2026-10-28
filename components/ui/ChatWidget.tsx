@@ -32,7 +32,7 @@ export type ChatWidgetProps = {
   placeholder?: string;
   /** texto del botón flotante ("" = solo icono) */
   launcherLabel?: string;
-  /** glifo o `icon:nombre` del asistente */
+  /** glifo, `icon:nombre` o imagen (ruta que empieza por `/` o URL) del asistente */
   avatar?: string;
   position?: "bottom-right" | "bottom-left";
   defaultOpen?: boolean;
@@ -164,7 +164,14 @@ export default function ChatWidget({
         <div id={`${uid}-panel`} role="dialog" aria-label={title} className="ui-chat__panel ui-surface" onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
           <header className="ui-chat__head">
             <span className="ui-chat__avatar" aria-hidden>
-              {avatar.startsWith("icon:") ? renderGlyph(avatar, 18) : avatar}
+              {/^(\/|https?:|data:image)/.test(avatar) ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatar} alt="" />
+              ) : avatar.startsWith("icon:") ? (
+                renderGlyph(avatar, 18)
+              ) : (
+                avatar
+              )}
             </span>
             <span className="ui-chat__who">
               <strong>{title}</strong>

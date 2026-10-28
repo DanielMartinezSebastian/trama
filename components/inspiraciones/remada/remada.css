@@ -96,7 +96,6 @@
 .rm-opiniones p { margin: 0; }
 .rm-opiniones cite { font-style: normal; color: var(--mut); }
 
-.rm-chat { position: fixed; right: 24px; bottom: 24px; z-index: 40; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--acc); font-size: 20px; box-shadow: 0 6px 18px rgb(0 0 0 / 0.2); }
 
 @media (max-width: 760px) {
   .rm-nav, .rm-escribeme { left: auto; right: 20px; top: 40px; text-align: right; }
@@ -146,4 +145,56 @@
   .rm-vlogs article, .rm-contacto__cuerpo, .rm-pie { grid-template-columns: 1fr; }
   .rm-amigo { width: 30vw !important; }
   .rm-amigos__fotos p { width: 80%; }
+}
+
+/* páginas (docs/56): cabecera de página, ficha del viaje, envío del vídeo, vlogs, el chat de Lucía y el menú del móvil */
+.rm-pag { padding: 150px 120px 100px; display: grid; gap: 40px; }
+.rm-pag__cab h1 { font-size: 6vw; }
+.rm-pag__cab p, .rm-pag__nota { max-width: 36em; margin: 14px 0 0; color: var(--mut); }
+.rm-pag__nota a, .rm-leer { color: var(--acc); }
+.rm-pag__sub { font-size: 32px; font-weight: 400; }
+.rm-pag__bloque { display: grid; gap: 20px; padding-top: 30px; border-top: 1px solid var(--ln); scroll-margin-top: 40px; }
+.rm-pag .rm-vlogs, .rm-pag .rm-contacto { padding: 0; }
+.rm-volver { font-size: 13px; }
+.rm-leer { padding: 0; border: 0; background: none; font: inherit; text-transform: inherit; cursor: pointer; }
+.rm-ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+.rm-ficha > * { min-width: 0; }
+.rm-ficha img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.rm-ficha h1 { font-size: 45px; font-weight: 400; line-height: 1; }
+.rm-ficha h2 { margin-top: 26px; font-size: 22px; font-weight: 400; }
+.rm-ficha ul { margin: 10px 0 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.rm-ficha__niveles { color: var(--acc2); font-weight: 600; }
+.rm-ficha__precio { font-size: 28px; }
+.rm-ficha__precio small { font-size: 14px; color: var(--mut); }
+.rm-flujo { max-width: 760px; }
+.rm-analisis { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.rm-analisis > * { min-width: 0; }
+.rm-analisis--hecho { display: block; padding: 30px; background: var(--card); box-shadow: 6px 6px 0 #000; }
+.rm-analisis--hecho h3 { font-size: 28px; font-weight: 400; }
+.rm-subida { position: relative; display: grid; place-items: center; gap: 8px; min-height: 280px; padding: 20px; border: 2px dashed var(--fg); background: var(--card); cursor: pointer; text-align: center; }
+.rm-subida:focus-within { outline: 2px solid var(--acc); outline-offset: 3px; }
+.rm-subida input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.rm-subida video { position: relative; z-index: 1; width: 100%; max-height: 320px; background: #000; }
+.rm-subida small { color: var(--mut); }
+.rm-analisis__datos { display: grid; gap: 12px; align-content: start; }
+.rm-analisis__datos label { display: grid; gap: 4px; font-size: 13px; }
+.rm-analisis__datos :is(input, select, textarea) { padding: 10px 12px; border: 1px solid var(--ln); border-radius: 0; background: var(--card); color: var(--fg); font: inherit; text-transform: none; }
+.rm-analisis__datos .rm-boton { justify-self: start; border: 0; cursor: pointer; }
+.rm-analisis__datos .rm-boton:disabled { opacity: 0.5; cursor: not-allowed; translate: none; }
+.rm-vlogs--pag article { scroll-margin-top: 40px; }
+.rm-vlogs--pag article div { flex-direction: column; gap: 8px; }
+.rm-vlogs--pag p { margin: 0; font-size: 15px; }
+.rm-vlog { display: grid; grid-template-columns: 0.9fr 1fr; gap: 30px; align-items: start; padding-top: 20px; border-top: 1px solid var(--ln); }
+.rm-vlog div { display: flex; justify-content: space-between; font-size: 22px; }
+.rm-vlog:hover b { color: var(--acc); }
+.rm-pie { padding-bottom: 100px; }
+.rm-chat { --acc: #ff4f28; text-transform: none; }
+.rm-movil { display: none; position: absolute; z-index: 46; right: 16px; top: 30px; }
+@media (max-width: 760px) {
+  .rm-nav { display: none; }
+  .rm-movil { display: block; }
+  .rm-pag { padding: 100px 34px 80px; }
+  .rm-pag__cab h1 { font-size: 11vw; }
+  .rm-ficha, .rm-analisis, .rm-vlog { grid-template-columns: 1fr; }
+  .rm-ficha h1 { font-size: 32px; }
 }
