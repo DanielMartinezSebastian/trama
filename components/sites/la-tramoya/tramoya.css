@@ -239,3 +239,8 @@
   .tr-hero::before { background: linear-gradient(to bottom, rgb(23 10 14 / 0) 26%, var(--tr-noche) 46%); }
   .tr-hero__texto { align-self: end; padding-top: 38svh; }
 }
+
+/* barra inferior del móvil: escondida mientras se ve el héroe de la portada (sus botones ya están ahí) */
+.tr-barra-movil { transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, visibility 0s; }
+.tr-barra-movil.is-oculta { translate: 0 110%; opacity: 0; visibility: hidden; transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, visibility 0s 0.35s; }
+@media (prefers-reduced-motion: reduce) { .tr-barra-movil, .tr-barra-movil.is-oculta { transition: none; } }

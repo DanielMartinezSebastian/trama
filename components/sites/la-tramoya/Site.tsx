@@ -61,6 +61,16 @@ function useProximas() {
 export function Shell({ children }: { children: ReactNode }) {
   const entradas = useShowBookings(KEY);
   const path = usePathname();
+  // en la portada, la barra inferior del móvil repetiría los botones del héroe: aparece al dejarlo atrás
+  const [conHeroe, setConHeroe] = useState(path === href());
+  useEffect(() => {
+    const heroe = path === href() ? document.querySelector(".tr-hero") : null;
+    if (!heroe) return setConHeroe(false);
+    setConHeroe(true);
+    const io = new IntersectionObserver(([e]) => setConHeroe(e.isIntersecting), { threshold: 0.15 });
+    io.observe(heroe);
+    return () => io.disconnect();
+  }, [path]);
   const proximas = useProximas();
   const esta = proximas[0];
   // los pseudo-elementos de la transición leen los tokens de :root (docs/05 · Tema): el papel debajo
@@ -131,7 +141,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <small>Restaurante de demostración de Trama: sin reservas ni cobros reales. Artistas y precios inventados.</small>
         </nav>
       </footer>
-      <ActionBar actions={[{ label: "Cartelera", href: href("cartelera"), icon: "calendar" }, { label: "Reservar mesa", href: href("reservar"), icon: "arrow-right", primary: true }]} variant="minimal" />
+      <ActionBar actions={[{ label: "Cartelera", href: href("cartelera"), icon: "calendar" }, { label: "Reservar mesa", href: href("reservar"), icon: "arrow-right", primary: true }]} variant="minimal" className={`tr-barra-movil ${conHeroe ? "is-oculta" : ""}`} />
       <CookieBanner variant="minimal" storageKey="trama:la-tramoya:cookies" />
     </SiteFrame>
   );
