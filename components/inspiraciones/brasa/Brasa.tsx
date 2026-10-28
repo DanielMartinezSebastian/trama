@@ -1,28 +1,19 @@
-import { Ruthie, Stack_Sans_Headline } from "next/font/google";
 import ChapterStage from "@/components/ui/ChapterStage";
 import TornPaper from "@/components/ui/TornPaper";
 import ProjectReel from "@/components/ui/ProjectReel";
 import Relato from "./Relato";
 import Portada from "./Portada";
+import { CAPITULOS, TRABAJOS } from "./data";
+import { brasaHref } from "./enlaces";
+import { ruthie, stack } from "./fuentes";
 
 /*
  * Brasa, diseñador web 3D: inspiración de Trama basada en meermohsin.me (docs/30, docs/36 B1, docs/55). La portada con el
  * emblema, las llamas que suben y se invierten, `ChapterStage` con las palabras, listas y duraciones de la referencia a la
  * misma altura de scroll (fija su sección a los 3 291 px con 720 px de alto), la franja de papel rasgado y el reel de
- * proyectos. En /lab/cine/relato se sigue comparando con la original (`cine:compare`, receta `relato`).
+ * proyectos (cada uno abre su ficha). En /lab/cine/relato se sigue comparando con la original (`cine:compare`, receta
+ * `relato`). Las demás páginas, en Sitio.tsx (docs/56).
  */
-
-// la caligráfica de la referencia para las palabras gigantes (su web la carga como «ruthie»)
-const ruthie = Ruthie({ weight: "400", subsets: ["latin"], variable: "--font-ruthie" });
-// la de palo seco de la referencia (StackSansHeadline ExtraLight y Regular)
-const stack = Stack_Sans_Headline({ weight: ["200", "400"], subsets: ["latin"], variable: "--font-stack" });
-
-const I = "/img/inspiraciones/brasa/";
-const CAPITULOS = [
-  { word: "LEGADO", label: "Tensión", image: `${I}capitulo-legado.webp`, items: ["El diseño atrae la mirada. El desarrollo le da vida."] },
-  { word: "UI - UX", label: "Inmersión", image: `${I}capitulo-uiux.webp`, items: ["UI y UX", "Desarrollo web 3D", "Resolver problemas", "Investigación con usuarios"] },
-  { word: "WEB 3D", label: "Impacto", image: `${I}capitulo-web3d.webp`, items: ["Ingeniería frontend", "Three.js y WebGL", "Animación con GSAP", "Optimización del rendimiento"] },
-];
 
 export default function Brasa() {
   return (
@@ -54,12 +45,7 @@ export default function Brasa() {
         <ProjectReel
           perProject={1}
           backdrop={0.32}
-          projects={[
-            { title: "Códice", image: `${I}proyecto-codice.webp` },
-            { title: "Norte Capital", image: `${I}proyecto-norte.webp` },
-            { title: "Amarra", image: `${I}proyecto-amarra.webp` },
-            { title: "Charla", image: `${I}proyecto-charla.webp`, description: "Una app de mensajería clara y luminosa, pensada para conversar sin esfuerzo." },
-          ]}
+          projects={TRABAJOS.map((t) => ({ title: t.titulo, image: t.img, href: brasaHref(`trabajos/${t.id}`), description: t.id === "charla" ? t.texto : undefined }))}
         />
       </div>
       <div style={{ height: 2000 }} />

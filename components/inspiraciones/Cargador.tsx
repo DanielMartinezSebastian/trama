@@ -10,7 +10,7 @@ import { replica } from "./registro";
 /*
  * Cada inspiración se carga por separado: abrir una no descarga las demás. Las que tienen varias páginas (docs/56) exportan
  * desde su `Sitio.tsx` un `Shell` (marco que persiste al navegar: cabecera, menú, estado del carrito o la reserva, pie) y una
- * `Pagina` según la ruta; las de una sola página exportan su componente por defecto, que hace de portada.
+ * `Pagina` según la ruta (la portada, cuando la ruta está vacía). Las 18 tienen ya varias páginas.
  */
 type Shell = ComponentType<{ children: ReactNode }>;
 type Pagina = ComponentType<{ ruta: string[] }>;
@@ -20,10 +20,6 @@ const sitio = (load: () => Promise<ModuloSitio>) => ({
   Shell: dynamic(() => load().then((m) => m.Shell)) as Shell,
   Pagina: dynamic(() => load().then((m) => m.Pagina)) as Pagina,
 });
-const portada = (load: () => Promise<{ default: ComponentType }>) => {
-  const Portada = dynamic(load);
-  return { Shell: (({ children }) => children) as Shell, Pagina: (({ ruta }) => (ruta.length ? null : <Portada />)) as Pagina };
-};
 
 const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   matiz: sitio(() => import("./matiz/Sitio")),
@@ -43,7 +39,7 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   "abuela-rosa": sitio(() => import("./abuela-rosa/Sitio")),
   q47: sitio(() => import("./q47/Sitio")),
   cenit: sitio(() => import("./cenit/Sitio")),
-  brasa: portada(() => import("./brasa/Brasa")),
+  brasa: sitio(() => import("./brasa/Sitio")),
 };
 
 /**

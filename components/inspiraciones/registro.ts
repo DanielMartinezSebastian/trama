@@ -22,6 +22,7 @@ import { PAGINAS as oficioPaginas } from "./oficio/data";
 import { PAGINAS as abuelaPaginas } from "./abuela-rosa/data";
 import { PAGINAS as q47Paginas } from "./q47/data";
 import { PAGINAS as cenitPaginas } from "./cenit/data";
+import { PAGINAS as brasaPaginas } from "./brasa/data";
 
 export type Replica = {
   slug: string;
@@ -71,7 +72,7 @@ export const REPLICAS: Replica[] = [
   { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: true, guia: "club", acento: "#ffffff", paginas: q47Paginas, transicion: "stairs" },
   // las dos anteriores, del laboratorio de cine (docs/41–43): webs 3D enteras
   { slug: "cenit", nombre: "Cénit", ref: "Lusion", url: "https://lusion.co/", ficha: "docs/43", sector: "estudio creativo", firma: "racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla", hecha: true, guia: "monocromo", acento: "#2f3cff", scroll: "cinematic", paginas: cenitPaginas, transicion: "fade" },
-  { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic" },
+  { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

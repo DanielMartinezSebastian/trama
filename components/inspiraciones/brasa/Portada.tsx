@@ -3,6 +3,8 @@
 import Marquee from "@/components/ui/Marquee";
 import FluidCursor from "@/components/ui/FluidCursor";
 import ThornEmblem from "@/components/ui/ThornEmblem";
+import { useState } from "react";
+import { brasaHref } from "./enlaces";
 
 /*
  * La portada de Brasa (inspiración basada en meermohsin.me, docs/41 §1 y docs/55), con las medidas del DOM de la referencia en una vista de
@@ -14,11 +16,12 @@ import ThornEmblem from "@/components/ui/ThornEmblem";
  */
 
 const NAV = [
-  ["INICIO", "SOBRE MÍ", "SERVICIOS", "TRABAJOS", "BLOG", "CONTACTO"],
-  ["TIKTOK", "INSTAGRAM", "BEHANCE"],
+  [["INICIO", brasaHref()], ["SOBRE MÍ", brasaHref("sobre-mi")], ["SERVICIOS", brasaHref("servicios")], ["TRABAJOS", brasaHref("trabajos")], ["BLOG", brasaHref("blog")], ["CONTACTO", brasaHref("contacto")]],
+  [["TIKTOK", "https://www.tiktok.com/"], ["INSTAGRAM", "https://www.instagram.com/"], ["BEHANCE", "https://www.behance.net/"]],
 ];
 
 export default function Portada() {
+  const [sonido, setSonido] = useState(true);
   return (
     <>
       <style>{CSS}</style>
@@ -49,9 +52,9 @@ export default function Portada() {
       <nav className="mmh__nav" aria-label="Principal">
         {NAV.map((col, k) => (
           <ul key={k}>
-            {col.map((t) => (
+            {col.map(([t, href]) => (
               <li key={t}>
-                <a href="#">
+                <a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
                   {t}
                   <span aria-hidden>+</span>
                 </a>
@@ -60,7 +63,7 @@ export default function Portada() {
           </ul>
         ))}
       </nav>
-      <a className="mmh__cta" href="#">
+      <a className="mmh__cta" href={brasaHref("contacto")}>
         <img src="/img/inspiraciones/brasa/avatar.webp" alt="" />
         <span>
           <small>
@@ -69,7 +72,7 @@ export default function Portada() {
           Hablemos
         </span>
       </a>
-      <button className="mmh__sonido" type="button" aria-label="Sonido">
+      <button className={`mmh__sonido ${sonido ? "" : "is-off"}`} type="button" aria-label="Sonido" aria-pressed={sonido} onClick={() => setSonido(!sonido)}>
         {Array.from({ length: 34 }, (_, k) => (
           <i key={k} style={{ animationDelay: `${(k % 7) * -0.13}s` }} />
         ))}
@@ -120,6 +123,7 @@ const CSS = `
 @keyframes mmh-vivo { 0% { background: #0c0c0c; box-shadow: 0 0 #111111b3; transform: scale(.8); } 50% { background: #ff2b2b; box-shadow: 0 0 0 8px #ff2b2b00; transform: scale(1); } 100% { background: #111; transform: scale(.8); } }
 .mmh__sonido { position: fixed; left: 3vw; bottom: 9.5vh; z-index: 500; display: flex; gap: 2px; align-items: center; height: 12px; padding: 0; border: 0; background: none; cursor: pointer; mix-blend-mode: difference; }
 .mmh__sonido i { width: 2px; height: 10px; background: #ff3030; animation: mmh-onda .9s ease-in-out infinite alternate; }
+.mmh__sonido.is-off i { animation: none; transform: scaleY(.25); }
 @keyframes mmh-onda { from { transform: scaleY(.25); } to { transform: scaleY(1); } }
 .mmh__barra { position: fixed; left: 0; right: 0; bottom: 1vh; height: 47px; z-index: 900; display: flex; justify-content: space-around; align-items: center; pointer-events: none;
   color: #f5f5f5; font-family: var(--font-stack), sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .06em; }
