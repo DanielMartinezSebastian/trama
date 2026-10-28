@@ -19,6 +19,7 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import { downloadCalendar, hoursUntil, prettyDate } from "@/lib/commerce/booking";
 import { money } from "@/lib/commerce/money";
 import { takenTables, useShowBookings } from "@/lib/commerce/shows";
+import { phosphorRegular } from "@/lib/ui/icons-phosphor-regular";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { SiteFrame, siteHref } from "../shared";
 import { CARTA, DIRECCION, ESPECTACULOS, EVENTOS, FUNCIONES, MENUS, MESAS, NOCHE, PAQUETES, SLUG, ZONAS, type Funcion } from "./data";
@@ -73,7 +74,7 @@ export function Shell({ children }: { children: ReactNode }) {
     };
   }, []);
   return (
-    <SiteFrame tokens={TOKENS} className={`tr ${cartel.variable}`}>
+    <SiteFrame tokens={TOKENS} className={`tr ${cartel.variable}`} icons={{ set: phosphorRegular, weight: "regular" }}>
       <SmoothScroll feel="editorial" anchors syncGsap={false} />
       <div className="tr-aviso">
         <a href="/demos">TRAMA / WEBS COMPLETAS ↗</a>
