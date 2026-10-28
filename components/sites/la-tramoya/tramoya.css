@@ -240,10 +240,6 @@
   .tr-hero__texto { align-self: end; padding-top: 38svh; }
 }
 
-/* barra inferior del móvil: escondida mientras se ve el héroe de la portada (sus botones ya están ahí) */
-.tr-barra-movil { transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, visibility 0s; }
-.tr-barra-movil.is-oculta { translate: 0 110%; opacity: 0; visibility: hidden; transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, visibility 0s 0.35s; }
-@media (prefers-reduced-motion: reduce) { .tr-barra-movil, .tr-barra-movil.is-oculta { transition: none; } }
 
 /* la tira de la portada (HorizontalScroll): el scroll vertical pasa las fotos de la semana en horizontal; en pantallas
    estrechas es un carrusel nativo con imán. El primer panel es el título, con una barra que avanza con --hs-p */
@@ -276,9 +272,9 @@
 @media (prefers-reduced-motion: reduce) { .tr-tira__foto img { transition: none; } }
 /* en el móvil la tira también avanza con el scroll (minWidth={1}); solo con movimiento reducido es un carrusel */
 @media (max-width: 760px) {
-  .tr-tira .ui-hs__in { padding-top: 72px; padding-bottom: 84px; }
+  .tr-tira .ui-hs__in { padding-top: 72px; padding-bottom: 16px; }
   .tr-tira__intro { width: 80vw; }
-  .tr-tira__foto { height: calc(100svh - 72px - 84px - 16px); width: calc(100vw - 32px); aspect-ratio: auto; }
+  .tr-tira__foto { height: calc(100svh - 72px - 32px); width: calc(100vw - 32px); aspect-ratio: auto; }
   .tr-tira .tr-tira__foto--cuadrada { width: calc(100vw - 32px); }
   .tr-tira .tr-tira__foto--cuadrada { height: auto; }
   .tr-tira .tr-tira__foto--cuadrada img { width: 84vw; }

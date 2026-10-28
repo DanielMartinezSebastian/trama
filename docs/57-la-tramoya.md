@@ -53,8 +53,8 @@ Tras el héroe va «Una semana en La Tramoya», una tira con `HorizontalScroll`:
 - el primer panel es el título, con una barra de progreso;
 - en el móvil también avanza con el scroll (`minWidth={1}`); solo con «reducir movimiento» pasa a ser un carrusel con imán.
 
-Los cuatro accesos unidos (cartelera, reservar, carta y cómo llegar) bajan a después de la sala. En la portada, la barra
-inferior del móvil no sale mientras se ve el héroe.
+Los cuatro accesos unidos (cartelera, reservar, carta y cómo llegar) bajan a después de la sala. La barra inferior del
+móvil (`ActionBar`) se quitó: repetía los botones del héroe y de la cabecera.
 
 El tipo `curtain` sigue en el kit como opción.
 
