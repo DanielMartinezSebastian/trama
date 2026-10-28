@@ -227,3 +227,7 @@
   .tr-boton, .tr-cartelito, .tr-barra a { transition: none; }
 }
 @media (max-width: 560px) { .tr-hero h1 { font-size: 36px; line-height: 1; } }
+@media (max-width: 560px) {
+  .tr-hero__foto { object-position: 50% 0; height: 62%; }
+  .tr-hero::before { background: linear-gradient(to top, rgb(23 10 14 / 0.98) 42%, rgb(23 10 14 / 0.3) 72%, rgb(23 10 14 / 0.45)); }
+}

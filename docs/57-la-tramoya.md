@@ -84,4 +84,6 @@ noche:
 
 ## 4. Imágenes
 
-Encargo para Codex en `docs/encargo-imagenes-tramoya.md`. Hoy hay provisionales con el nombre de cada hueco.
+El encargo para Codex está en `docs/encargo-imagenes-tramoya.md`. Codex entregó las 19 (8c88a89) y están revisadas en escritorio y móvil.
+
+**Ajuste tras revisarlas:** en el móvil, la foto del héroe sube y se oscurece por abajo, para que la bailaora quede por encima del titular.
