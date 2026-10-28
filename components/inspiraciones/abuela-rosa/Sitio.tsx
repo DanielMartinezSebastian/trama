@@ -220,6 +220,8 @@ function Recetas() {
           return (
             <a key={r.id} href={abuelaHref(`recetas/${r.id}`)} className="ar-marco ar-receta">
               <Esquinas />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={r.img} alt="" loading="lazy" className="ar-receta__img" />
               <small>
                 {r.tiempo} · {r.raciones} PERSONAS
               </small>
@@ -243,6 +245,8 @@ function Receta({ id }: { id: string }) {
         ← RECETAS
       </a>
       <Cab titulo={r.t} texto={`${r.tiempo} · ${r.raciones} PERSONAS · CON ${m.nombre}`} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={r.img} alt={r.t} className="ar-receta__foto" />
       <div className="ar-ficha">
         <section className="ar-marco ar-receta__lista">
           <Esquinas />

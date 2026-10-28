@@ -36,9 +36,9 @@ export const TRAYECTORIA = [
 ];
 
 export const BLOG = [
-  { id: "caida", t: "La caída siempre fue parte del camino", f: "02.10.2026", texto: "Lo que aprendí de los proyectos que salieron mal, y por qué los enseño también." },
-  { id: "rendimiento-3d", t: "3D que no derrite el móvil", f: "18.09.2026", texto: "Cinco trucos para que una escena WebGL vaya fluida en un teléfono de hace cuatro años." },
-  { id: "silencio", t: "El valor del silencio en una web", f: "30.08.2026", texto: "Cuándo quitar animación es la mejor animación." },
+  { id: "caida", img: `${I}blog-caida.webp`, t: "La caída siempre fue parte del camino", f: "02.10.2026", texto: "Lo que aprendí de los proyectos que salieron mal, y por qué los enseño también." },
+  { id: "rendimiento-3d", img: `${I}blog-rendimiento-3d.webp`, t: "3D que no derrite el móvil", f: "18.09.2026", texto: "Cinco trucos para que una escena WebGL vaya fluida en un teléfono de hace cuatro años." },
+  { id: "silencio", img: `${I}blog-silencio.webp`, t: "El valor del silencio en una web", f: "30.08.2026", texto: "Cuándo quitar animación es la mejor animación." },
 ];
 
 export const PAGINAS = [

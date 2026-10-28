@@ -69,3 +69,6 @@
 }
 @media (min-width: 761px) { .br-movil--portada { display: none; } }
 @media (max-width: 760px) { .br-movil--portada { display: block; } }
+
+/* fotos del segundo encargo (docs/encargo-imagenes-inspiraciones-2.md) */
+.br-blog img { width: min(100%, 640px); aspect-ratio: 3 / 2; object-fit: cover; filter: grayscale(0.4); }

@@ -269,6 +269,8 @@ function Articulo({ id }: { id: string }) {
       <small>{b.f}</small>
       <h1>{b.t}</h1>
       <p className="q47-pag__lead">{b.texto}</p>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={b.img} alt="" className="q47-articulo__img" />
       {b.cuerpo.map((x) => (
         <p key={x}>{x}</p>
       ))}

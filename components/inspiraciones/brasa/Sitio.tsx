@@ -189,6 +189,8 @@ function Blog() {
       <ul className="br-blog">
         {BLOG.map((b) => (
           <li key={b.id} id={b.id}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={b.img} alt="" loading="lazy" />
             <small>{b.f}</small>
             <h2>{b.t}</h2>
             <p>{b.texto}</p>

@@ -1,0 +1,297 @@
+{
+ "estilo": {
+  "melena": "Salón, tienda y academia (inspirado en Hair Me Up). Bodegones de producto de pelo sin marca sobre fondo melocotón (#F4B39A) con sombras suaves, estilo catálogo limpio.",
+  "patron": "Barbería de lujo familiar (inspirado en Don Barber & Groom). Madera oscura, latón, cuero, azulejo verde; luz cálida y contrastada; tono clásico y masculino; paleta crema, negro y oro.",
+  "nucleo": "Estudio boutique de pilates (inspirado en Core Atelier). Rosa empolvado (#F7E7DE) y marrón (#744C32), suelo de madera clara, luz natural, aparatos de pilates (reformer, silla, torre, barril). Mujeres de 30 a 55 años.",
+  "lobo": "Gimnasio de artes marciales (inspirado en Fenriz). Blanco y negro muy contrastado, grano de película, sudor y movimiento: muay thai, BJJ, MMA, boxeo. Producto de merchandising negro sobre gris, sin logos.",
+  "abuela-rosa": "Salsa picante artesanal (inspirado en Peppa Sauce). Ilustración de dos tintas: crema (#FEEEE2) sobre azul noche (#141329).",
+  "oficio": "Instituto de formación práctica (inspirado en Honhar). Alumnos jóvenes aprendiendo oficios digitales y de comercio en aulas reales; fotos en blanco y negro con contraste, retratos de testimonio.",
+  "ahora": "Escuela de diseño y negocio en Madrid (inspirado en Future London Academy). Talleres con post-its y pizarras, gente de pie trabajando, retratos de profesores de 30 a 60 años sobre fondo neutro; acento amarillo (#FFE32B) en algún objeto.",
+  "q47": "Agencia creativa (inspirado en K72). Fotogramas de campañas publicitarias de cine: dirección de arte fuerte, color con intención, producto o personaje protagonista, encuadre panorámico.",
+  "brasa": "Diseñador de producto y web 3D (inspirado en Meer Mohsin). Negro y rojo intenso, retrato dramático con luz roja, maquetas de webs y apps sobre fondo oscuro."
+ },
+ "imagenes": {
+  "melena": [
+   {
+    "archivo": "/img/inspiraciones/melena/blog-otono.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Mujer de espaldas cepillándose una melena castaña junto a una ventana con luz de otoño",
+    "provisional": "/img/inspiraciones/melena/producto-serum.webp",
+    "donde": "artículo «Por qué se cae más el pelo en otoño»"
+   },
+   {
+    "archivo": "/img/inspiraciones/melena/blog-balayage.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Melena con balayage miel recién peinada, de perfil, sobre fondo melocotón",
+    "provisional": "/img/inspiraciones/melena/producto-balsamo.webp",
+    "donde": "artículo «Cómo hacer que tu balayage dure»"
+   },
+   {
+    "archivo": "/img/inspiraciones/melena/blog-flequillo.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Estilista peinando en seco un flequillo largo y abierto frente al espejo",
+    "provisional": "/img/inspiraciones/melena/producto-laca.webp",
+    "donde": "artículo «Flequillo: ¿sí o no?»"
+   }
+  ],
+  "patron": [
+   {
+    "archivo": "/img/inspiraciones/patron/servicio-spa.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Hombre recostado con una toalla caliente en la cara en una cabina de tratamiento de madera oscura",
+    "provisional": "/img/inspiraciones/patron/servicio-barberia.webp",
+    "donde": "servicio «Cuidado y spa» (tenía la foto de la barbería)"
+   }
+  ],
+  "nucleo": [
+   {
+    "archivo": "/img/inspiraciones/nucleo/coach-ines.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Instructora de unos 40 años, fundadora, de pie junto a un reformer, ropa de pilates en tonos tierra",
+    "provisional": "/img/inspiraciones/nucleo/sesion-privada.webp",
+    "donde": "coach Inés"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/coach-nico.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Instructor de unos 30 años con porte de bailarín, haciendo un ejercicio en la silla de pilates",
+    "provisional": "/img/inspiraciones/nucleo/aparato-silla.webp",
+    "donde": "coach Nico"
+   },
+   {
+    "archivo": "/img/inspiraciones/nucleo/coach-dani.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Instructora sonriente de unos 35 años en el estudio, con una esterilla enrollada bajo el brazo",
+    "provisional": "/img/inspiraciones/nucleo/sesion-trio.webp",
+    "donde": "coach Dani"
+   }
+  ],
+  "lobo": [
+   {
+    "archivo": "/img/inspiraciones/lobo/evento-sparring-boxeo.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos boxeadores con casco y guantes en sparring en el ring, luz dura cenital",
+    "provisional": "/img/inspiraciones/lobo/cartel.webp",
+    "donde": "cartel del sparring de boxeo"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/evento-sparring-muay-thai.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Patada de muay thai bloqueada con la espinilla en el ring",
+    "provisional": "/img/inspiraciones/lobo/cartel.webp",
+    "donde": "cartel del sparring de muay thai"
+   },
+   {
+    "archivo": "/img/inspiraciones/lobo/evento-open-mat.webp",
+    "formato": "4:5",
+    "px": "1200x1500",
+    "motivo": "Dos luchadores con kimono en el tatami, uno controlando al otro en el suelo",
+    "provisional": "/img/inspiraciones/lobo/cartel.webp",
+    "donde": "cartel del open mat de BJJ"
+   }
+  ],
+  "abuela-rosa": [
+   {
+    "archivo": "/img/inspiraciones/abuela-rosa/receta-papas-arrugadas.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Papas arrugadas con sal en una cazuela de barro y un cuenco de mojo rojo al lado",
+    "provisional": "/img/inspiraciones/abuela-rosa/abuela.webp",
+    "donde": "receta y su tarjeta"
+   },
+   {
+    "archivo": "/img/inspiraciones/abuela-rosa/receta-huevos-rotos.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Huevos rotos sobre patatas fritas regados con mojo verde, plato de loza",
+    "provisional": "/img/inspiraciones/abuela-rosa/abuela.webp",
+    "donde": "receta y su tarjeta"
+   },
+   {
+    "archivo": "/img/inspiraciones/abuela-rosa/receta-pollo-al-diablo.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Contramuslos de pollo asados con mojo rojo oscuro en una bandeja de horno",
+    "provisional": "/img/inspiraciones/abuela-rosa/abuela.webp",
+    "donde": "receta y su tarjeta"
+   }
+  ],
+  "oficio": [
+   {
+    "archivo": "/img/inspiraciones/oficio/mentor-marta.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Retrato de una mujer de unos 38 años, directora de contenido, sonriendo, fondo amarillo liso",
+    "provisional": "/img/inspiraciones/oficio/mentores.webp",
+    "donde": "mentora Marta Gil"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/mentor-raul.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Retrato de un hombre de unos 35 años con gafas y portátil, fondo amarillo liso",
+    "provisional": "/img/inspiraciones/oficio/mentores.webp",
+    "donde": "mentor Raúl Peña"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/mentor-susana.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Retrato de una diseñadora de unos 30 años con tableta gráfica, fondo amarillo liso",
+    "provisional": "/img/inspiraciones/oficio/mentores.webp",
+    "donde": "mentora Susana K. Vera"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/mentor-lola.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Retrato de una mujer de unos 50 años, experta en equipos, gesto cercano, fondo amarillo liso",
+    "provisional": "/img/inspiraciones/oficio/mentores.webp",
+    "donde": "mentora Lola Ibáñez"
+   },
+   {
+    "archivo": "/img/inspiraciones/oficio/mentor-tomas.webp",
+    "formato": "1:1",
+    "px": "1200x1200",
+    "motivo": "Retrato de un hombre de unos 45 años, vendedor, americana sin corbata, fondo amarillo liso",
+    "provisional": "/img/inspiraciones/oficio/mentores.webp",
+    "donde": "mentor Tomás Rey"
+   }
+  ],
+  "ahora": [
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-marca-hoy.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Mesa de trabajo con pruebas de identidad visual impresas y muestras de color",
+    "provisional": "/img/inspiraciones/ahora/a-medida.webp",
+    "donde": "ficha del curso «Marca hoy»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-estrategia-producto.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Pared con notas adhesivas y un mapa de recorrido de usuario, dos personas discutiendo",
+    "provisional": "/img/inspiraciones/ahora/intro-taller.webp",
+    "donde": "ficha del curso «Estrategia de diseño de producto»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-liderazgo-creativo.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Directora creativa hablando a su equipo en un estudio, todos de pie",
+    "provisional": "/img/inspiraciones/ahora/intro-taller.webp",
+    "donde": "ficha del curso «Liderazgo creativo»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-operaciones-creativas.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Tablero de planificación de proyectos con tarjetas y un calendario en un estudio",
+    "provisional": "/img/inspiraciones/ahora/a-medida.webp",
+    "donde": "ficha del curso «Operaciones creativas»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-programa-ejecutivo.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Grupo pequeño de directivos visitando un estudio de diseño en Madrid",
+    "provisional": "/img/inspiraciones/ahora/promocion.webp",
+    "donde": "ficha del «Programa ejecutivo»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/curso-mini-mba.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Persona estudiando en línea en casa con portátil y cuaderno, luz de tarde",
+    "provisional": "/img/inspiraciones/ahora/intro-taller.webp",
+    "donde": "ficha del «Mini-MBA»"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/diario-precio-del-diseno.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Calculadora, presupuesto impreso y bocetos sobre una mesa de estudio",
+    "provisional": "/img/inspiraciones/ahora/a-medida.webp",
+    "donde": "entrada del diario sobre precios"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/diario-feedback.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Dos diseñadores revisando un trabajo en pantalla, uno señalando",
+    "provisional": "/img/inspiraciones/ahora/intro-taller.webp",
+    "donde": "entrada del diario sobre feedback"
+   },
+   {
+    "archivo": "/img/inspiraciones/ahora/diario-madrid-creativa.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Calle de Malasaña con escaparate de un estudio de diseño",
+    "provisional": "/img/inspiraciones/ahora/promocion.webp",
+    "donde": "entrada del diario sobre estudios de Madrid"
+   }
+  ],
+  "q47": [
+   {
+    "archivo": "/img/inspiraciones/q47/blog-roce.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Equipo creativo discutiendo con energía alrededor de una mesa llena de bocetos, de noche",
+    "provisional": "/img/inspiraciones/q47/menu-blog.webp",
+    "donde": "artículo «La chispa sale del roce»"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/blog-marcas-lentas.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Fachada de una tienda de barrio con décadas de historia, luz de mañana",
+    "provisional": "/img/inspiraciones/q47/menu-blog.webp",
+    "donde": "artículo «Las marcas lentas ganan»"
+   },
+   {
+    "archivo": "/img/inspiraciones/q47/blog-brief.webp",
+    "formato": "16:9",
+    "px": "1920x1080",
+    "motivo": "Hoja de brief impresa con anotaciones a mano sobre una mesa negra",
+    "provisional": "/img/inspiraciones/q47/menu-blog.webp",
+    "donde": "artículo «El brief que nos gusta recibir»"
+   }
+  ],
+  "brasa": [
+   {
+    "archivo": "/img/inspiraciones/brasa/blog-caida.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Silueta cayendo hacia atrás en penumbra roja, con humo, cinematográfico",
+    "provisional": "/img/inspiraciones/brasa/capitulo-legado.webp",
+    "donde": "entrada «La caída siempre fue parte del camino»"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/blog-rendimiento-3d.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Móvil viejo sobre una mesa oscura mostrando una escena 3D luminosa en rojo",
+    "provisional": "/img/inspiraciones/brasa/capitulo-web3d.webp",
+    "donde": "entrada «3D que no derrite el móvil»"
+   },
+   {
+    "archivo": "/img/inspiraciones/brasa/blog-silencio.webp",
+    "formato": "3:2",
+    "px": "1800x1200",
+    "motivo": "Sala vacía casi negra con una sola franja de luz roja en la pared",
+    "provisional": "/img/inspiraciones/brasa/capitulo-uiux.webp",
+    "donde": "entrada «El valor del silencio en una web»"
+   }
+  ]
+ }
+}

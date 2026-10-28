@@ -6,7 +6,7 @@ const I = "/img/inspiraciones/patron/";
 
 export const SALAS = [
   { id: "barberia", nombre: "Barbería", img: `${I}servicio-afeitado.webp`, texto: "Los mejores servicios de corte y afeitado en el centro de Madrid." },
-  { id: "spa", nombre: "Cuidado y spa", img: `${I}servicio-barberia.webp`, texto: "Depilación y tratamientos para cara y cuerpo, pensados para la piel del hombre." },
+  { id: "spa", nombre: "Cuidado y spa", img: `${I}servicio-spa.webp`, texto: "Depilación y tratamientos para cara y cuerpo, pensados para la piel del hombre." },
   { id: "manos", nombre: "Manos y pies", img: `${I}servicio-manicura.webp`, texto: "Tratamientos de lujo para él en una sala propia." },
 ];
 

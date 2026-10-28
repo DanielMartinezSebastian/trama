@@ -28,9 +28,9 @@ export const PRIVADAS: BookingService[] = [
 ];
 
 export const INSTRUCTORAS: (BookingStaff & { bio: string })[] = [
-  { name: "Inés", role: "Fundadora · reformer y torre", photo: `${I}sesion-privada.webp`, bio: "Certificada en pilates clásico y contemporáneo. Abrió Núcleo en 2019." },
-  { name: "Nico", role: "Silla y movilidad", photo: `${I}aparato-silla.webp`, bio: "Viene de la danza: control, respiración y mucha precisión." },
-  { name: "Dani", role: "Iniciación y posparto", photo: `${I}sesion-trio.webp`, bio: "Clases de inicio y recuperación posparto, con paciencia infinita." },
+  { name: "Inés", role: "Fundadora · reformer y torre", photo: `${I}coach-ines.webp`, bio: "Certificada en pilates clásico y contemporáneo. Abrió Núcleo en 2019." },
+  { name: "Nico", role: "Silla y movilidad", photo: `${I}coach-nico.webp`, bio: "Viene de la danza: control, respiración y mucha precisión." },
+  { name: "Dani", role: "Iniciación y posparto", photo: `${I}coach-dani.webp`, bio: "Clases de inicio y recuperación posparto, con paciencia infinita." },
 ];
 
 export const PAGINAS = [

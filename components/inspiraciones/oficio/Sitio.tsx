@@ -169,6 +169,10 @@ function Mentores() {
       <ul className="of-mentores">
         {MENTORES.map((m) => (
           <li key={m.n}>
+            {m.foto && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={m.foto} alt="" loading="lazy" />
+            )}
             <b>{m.n}</b>
             <span>{m.r}</span>
           </li>

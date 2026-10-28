@@ -33,12 +33,12 @@ export const CUOTAS: MembershipPlanOption[] = [
   { id: "joven", name: "Joven (hasta 21)", price: 39, period: "mes", features: ["Todas las disciplinas", "Con DNI"] },
 ];
 
-export type Evento = { id: string; dia: string; titulo: string; texto: string; tono: string; fechas: EnrollmentCohort[] };
+export type Evento = { id: string; img: string; dia: string; titulo: string; texto: string; tono: string; fechas: EnrollmentCohort[] };
 
 export const EVENTOS: Evento[] = [
-  { id: "sparring-boxeo", dia: "Sábados", titulo: "Sparring de boxeo con Luciano", texto: "Sparring de boxeo para gente con experiencia. Protecciones obligatorias.", tono: "#4b1fd1", fechas: [{ label: "Este sábado", dates: "11:00 – 13:00", status: "few", seats: 3 }, { label: "Sábado que viene", dates: "11:00 – 13:00", status: "open", seats: 12 }] },
-  { id: "sparring-muay-thai", dia: "Domingos", titulo: "Sparring de Muay Thai", texto: "Sparring de Muay Thai para avanzados, por parejas de peso.", tono: "#c7a400", fechas: [{ label: "Este domingo", dates: "10:00 – 11:30", status: "open", seats: 8 }, { label: "Domingo que viene", dates: "10:00 – 11:30", status: "open", seats: 14 }] },
-  { id: "open-mat", dia: "Domingos", titulo: "Open mat de BJJ", texto: "Esterilla abierta de grappling y BJJ, también para gente de otros clubes.", tono: "#1747c9", fechas: [{ label: "Este domingo", dates: "11:00 – 13:00", status: "closed" }, { label: "Domingo que viene", dates: "11:00 – 13:00", status: "open", seats: 20 }] },
+  { id: "sparring-boxeo", img: `${I}evento-sparring-boxeo.webp`, dia: "Sábados", titulo: "Sparring de boxeo con Luciano", texto: "Sparring de boxeo para gente con experiencia. Protecciones obligatorias.", tono: "#4b1fd1", fechas: [{ label: "Este sábado", dates: "11:00 – 13:00", status: "few", seats: 3 }, { label: "Sábado que viene", dates: "11:00 – 13:00", status: "open", seats: 12 }] },
+  { id: "sparring-muay-thai", img: `${I}evento-sparring-muay-thai.webp`, dia: "Domingos", titulo: "Sparring de Muay Thai", texto: "Sparring de Muay Thai para avanzados, por parejas de peso.", tono: "#c7a400", fechas: [{ label: "Este domingo", dates: "10:00 – 11:30", status: "open", seats: 8 }, { label: "Domingo que viene", dates: "10:00 – 11:30", status: "open", seats: 14 }] },
+  { id: "open-mat", img: `${I}evento-open-mat.webp`, dia: "Domingos", titulo: "Open mat de BJJ", texto: "Esterilla abierta de grappling y BJJ, también para gente de otros clubes.", tono: "#1747c9", fechas: [{ label: "Este domingo", dates: "11:00 – 13:00", status: "closed" }, { label: "Domingo que viene", dates: "11:00 – 13:00", status: "open", seats: 20 }] },
 ];
 
 export const TIENDA = [

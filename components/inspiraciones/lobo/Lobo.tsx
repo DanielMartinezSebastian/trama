@@ -84,7 +84,7 @@ export default function Lobo() {
             <article key={e.id} style={{ "--tono": e.tono } as CSSProperties}>
               <div className="lb-cartel">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/img/inspiraciones/lobo/cartel.webp`} alt="" loading="lazy" />
+                <img src={e.img} alt="" loading="lazy" />
                 <b>{e.titulo}</b>
               </div>
               <small>{e.dia}</small>

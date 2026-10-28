@@ -23,12 +23,12 @@ export const PROGRAMAS: Programa[] = [
 ];
 
 export const MENTORES = [
-  { n: "Iota", r: "Agencia creativa · diseña los programas de marketing" },
-  { n: "Marta Gil", r: "Directora de contenido · 12 años en agencias" },
-  { n: "Raúl Peña", r: "Medios de pago · ha gestionado 4 M€ en anuncios" },
-  { n: "Susana K. Vera", r: "Diseñadora · creadora de plantillas para marcas" },
-  { n: "Lola Ibáñez", r: "Personas y equipos · ex-directora de RR. HH." },
-  { n: "Tomás Rey", r: "Ventas B2B · fundador de dos empresas" },
+  { n: "Iota", r: "Agencia creativa · diseña los programas de marketing", foto: "" },
+  { n: "Marta Gil", r: "Directora de contenido · 12 años en agencias", foto: "/img/inspiraciones/oficio/mentor-marta.webp" },
+  { n: "Raúl Peña", r: "Medios de pago · ha gestionado 4 M€ en anuncios", foto: "/img/inspiraciones/oficio/mentor-raul.webp" },
+  { n: "Susana K. Vera", r: "Diseñadora · creadora de plantillas para marcas", foto: "/img/inspiraciones/oficio/mentor-susana.webp" },
+  { n: "Lola Ibáñez", r: "Personas y equipos · ex-directora de RR. HH.", foto: "/img/inspiraciones/oficio/mentor-lola.webp" },
+  { n: "Tomás Rey", r: "Ventas B2B · fundador de dos empresas", foto: "/img/inspiraciones/oficio/mentor-tomas.webp" },
 ];
 
 export const SERVICIOS_MENTOR: BriefService[] = [

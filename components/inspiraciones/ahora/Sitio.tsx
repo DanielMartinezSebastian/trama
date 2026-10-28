@@ -169,6 +169,8 @@ function Curso({ id }: { id: string }) {
       <a href={ahoraHref("cursos")} className="ah-volver">
         ← CURSOS
       </a>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={c.img} alt="" className="ah-curso__img" />
       <div className="ah-curso">
         <div>
           <p className="ah-chips">
@@ -270,6 +272,8 @@ function Diario() {
       <div className="ah-diario">
         {DIARIO.map((d) => (
           <article key={d.id} id={d.id}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={d.img} alt="" loading="lazy" />
             <small>
               {d.f} · {profe(d.autor).name}
             </small>

@@ -261,11 +261,13 @@ El registro (`registro.ts`) da las rutas y la transición. El cargador ya solo u
 - `npm run verify`, `pkg:build` y `build` (907 páginas) pasan;
 - servido el build, ninguna portada pide un `.js` que dé 404.
 
-**Pendiente**: un segundo encargo de imágenes para Codex con las fichas nuevas que hoy reutilizan fotos:
+**Segundo encargo de imágenes** (28-10-2026, `docs/encargo-imagenes-inspiraciones-2.md` y `.json`): 33 huecos ya conectados en el código con provisionales recortadas. Cubre las fichas que repetían una foto ajena o no tenían foto:
 
-- productos de Patrón;
-- blog de Melena;
-- coaches de Núcleo;
-- recetas e historia de Abuela Rosa;
-- mentores de Oficio;
-- profesores de Ahora en contexto.
+- el blog de Melena;
+- el spa de Patrón;
+- los coaches de Núcleo;
+- los carteles de los eventos de Lobo;
+- las recetas de Abuela Rosa;
+- los mentores de Oficio;
+- los cursos y el diario de Ahora;
+- los blogs de Q47 y Brasa.

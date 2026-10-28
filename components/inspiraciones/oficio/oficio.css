@@ -206,3 +206,7 @@
   .of-pag { padding: 40px 20px 80px; }
   .of-ficha { grid-template-columns: 1fr; }
 }
+
+/* fotos del segundo encargo (docs/encargo-imagenes-inspiraciones-2.md) */
+.of-mentores img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 2px solid #000; border-radius: calc(var(--r) - 4px); }
+.of-mentores li { align-content: start; }

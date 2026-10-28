@@ -154,3 +154,6 @@
   .q47-pag { padding-top: 80px; }
 }
 .q47 .q47-head .ui-fsm__btn { color: #fff; }
+
+/* fotos del segundo encargo (docs/encargo-imagenes-inspiraciones-2.md) */
+.q47-articulo__img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
