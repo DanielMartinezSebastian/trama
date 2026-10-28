@@ -1137,9 +1137,10 @@
         {
           "key": "src",
           "type": "select",
-          "default": "/models/turbina.obj",
+          "default": "/models/satelite.glb",
           "label": "Modelo",
           "options": [
+            "/models/satelite.glb",
             "/models/turbina.obj",
             "/models/asteroide.gltf",
             "/models/ciudad.glb",
@@ -1150,7 +1151,7 @@
         {
           "key": "material",
           "type": "select",
-          "default": "clay",
+          "default": "original",
           "label": "Material",
           "options": [
             "clay",
@@ -1200,12 +1201,13 @@
         {
           "key": "rotation",
           "type": "text",
-          "default": "0,0,0",
+          "default": "25,-20,0",
           "label": "Orientación (x,y,z en grados)"
         }
       ],
       "notes": [
         "Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx=\"orbit\"><RetroModel src=\"/models/turbina.obj\" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.",
+        "Satélite solar detallado: `/models/satelite.glb`, geometría propia reproducible con `node scripts/gen-satellite.mjs`. Seis placas con celdas, manta térmica, cámara, radiador y parabólica; piezas nombradas y materiales incluidos. Usa `material=\"original\"`, `tint=\"scene\"` y píxel de 1–2 px para ver el detalle. Puede abrirse en Blender sin recursos externos.",
         "Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.",
         "`npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).",
         "`material=\"clay\"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint=\"scene\"`).",
@@ -20284,7 +20286,7 @@
       "title": "NÁDIR · una señal al otro lado del silencio",
       "url": "/sitios/nadir",
       "dir": "components/sites/nadir",
-      "description": "Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.",
+      "description": "Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una semilla mecánica procedural de Three.js se abre y se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.",
       "pages": [
         {
           "path": "/sitios/nadir",
@@ -20318,6 +20320,11 @@
         {
           "component": "Footer",
           "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "SmoothScroll",
+          "id": "smooth-scroll",
           "uses": 1
         }
       ]

@@ -326,30 +326,32 @@ export const fondos: CatalogEntry[] = [
     stageHeight: 460,
     notes: [
       "Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx=\"orbit\"><RetroModel src=\"/models/turbina.obj\" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.",
+      "Satélite solar detallado: `/models/satelite.glb`, geometría propia reproducible con `node scripts/gen-satellite.mjs`. Seis placas con celdas, manta térmica, cámara, radiador y parabólica; piezas nombradas y materiales incluidos. Usa `material=\"original\"`, `tint=\"scene\"` y píxel de 1–2 px para ver el detalle. Puede abrirse en Blender sin recursos externos.",
       "Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.",
       "`npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).",
       "`material=\"clay\"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint=\"scene\"`).",
       "Mientras carga no dibuja nada. glTF comprimido con Draco o meshopt no está soportado: expórtalo sin compresión.",
     ],
     props: [
-      { key: "src", label: "Modelo", type: "select", default: "/models/turbina.obj", options: ["/models/turbina.obj", "/models/asteroide.gltf", "/models/ciudad.glb", "/models/suzanne.glb", "/models/farol.glb"], labels: { "/models/turbina.obj": "turbina (.obj)", "/models/asteroide.gltf": "asteroide (.gltf)", "/models/ciudad.glb": "ciudad (.glb)", "/models/suzanne.glb": "Suzanne · Khronos, CC0 (.glb)", "/models/farol.glb": "farol · Khronos, CC0 (.glb)" } },
+      { key: "src", label: "Modelo", type: "select", default: "/models/satelite.glb", options: ["/models/satelite.glb", "/models/turbina.obj", "/models/asteroide.gltf", "/models/ciudad.glb", "/models/suzanne.glb", "/models/farol.glb"], labels: { "/models/satelite.glb": "satélite solar detallado (.glb)", "/models/turbina.obj": "turbina (.obj)", "/models/asteroide.gltf": "asteroide (.gltf)", "/models/ciudad.glb": "ciudad (.glb)", "/models/suzanne.glb": "Suzanne · Khronos, CC0 (.glb)", "/models/farol.glb": "farol · Khronos, CC0 (.glb)" } },
       { key: "url", label: "…o tu URL (.glb, .gltf, .obj)", type: "text", default: "", noCode: true },
-      { key: "material", label: "Material", type: "select", default: "clay", options: ["clay", "original", "wire"] },
+      { key: "material", label: "Material", type: "select", default: "original", options: ["clay", "original", "wire"] },
       { key: "flat", label: "Facetado", type: "boolean", default: false, when: (p) => p.material === "clay" },
       { key: "extent", label: "Tamaño (unidades de escena)", type: "number", default: 4, min: 1, max: 7, step: 0.1 },
       { key: "spin", label: "Giro (rpm)", type: "number", default: 6, min: 0, max: 30, step: 1 },
       { key: "spinAxis", label: "Eje del giro", type: "select", default: "y", options: ["x", "y", "z"], when: (p) => (p.spin as number) > 0 },
       { key: "float", label: "Balanceo", type: "boolean", default: true },
-      { key: "rotation", label: "Orientación (x,y,z en grados)", type: "text", default: "0,0,0" },
+      { key: "rotation", label: "Orientación (x,y,z en grados)", type: "text", default: "25,-20,0" },
       { key: "pointerFx", label: "Cámara con el ratón (RetroCanvas)", type: "select", default: "orbit", options: ["none", "parallax", "orbit", "tilt"], labels: { none: "quieta", parallax: "parallax", orbit: "órbita", tilt: "inclinación" }, noCode: true },
       { key: "pointerStrength", label: "Intensidad del ratón", type: "number", default: 1, min: 0.2, max: 2.5, step: 0.1, when: (p) => p.pointerFx !== "none", noCode: true },
-      { key: "mode", label: "Modo (RetroCanvas)", type: "select", default: "ascii", options: ["ascii", "pixel", "both"], noCode: true },
+      { key: "mode", label: "Modo (RetroCanvas)", type: "select", default: "pixel", options: ["ascii", "pixel", "both"], noCode: true },
+      { key: "pixelSize", label: "Píxel (px)", type: "number", default: 2, min: 1, max: 12, step: 1, when: (p) => p.mode !== "ascii", noCode: true },
       { key: "ramp", label: "Rampa de glifos", type: "select", default: "classic", options: ["classic", "dots", "braille", "blocks", "binary", "hex", "code", "hatch", "circuit"], when: (p) => p.mode !== "pixel", noCode: true },
       { key: "cellSize", label: "Celda ASCII (px)", type: "number", default: 6, min: 3, max: 20, step: 1, when: (p) => p.mode !== "pixel", noCode: true },
-      { key: "tint", label: "Tinte", type: "select", default: "mono", options: ["mono", "scene", "gradient"], noCode: true },
+      { key: "tint", label: "Tinte", type: "select", default: "scene", options: ["mono", "scene", "gradient"], noCode: true },
     ],
     render: (p) => (
-      <RetroCanvas mode={p.mode as never} ramp={p.ramp as never} cellSize={p.cellSize as number} tint={p.tint as never} pointerFx={p.pointerFx as never} pointerStrength={p.pointerStrength as number} label="Modelo 3D con filtro retro">
+      <RetroCanvas mode={p.mode as never} pixelSize={p.pixelSize as number} levels={12} ramp={p.ramp as never} cellSize={p.cellSize as number} tint={p.tint as never} pointerFx={p.pointerFx as never} pointerStrength={p.pointerStrength as number} label="Modelo 3D con filtro retro">
         <RetroModel src={(p.url as string).trim() || (p.src as string)} material={p.material as never} flat={p.flat as boolean} extent={p.extent as number} spin={p.spin as number} spinAxis={p.spinAxis as never} float={p.float as boolean} rotation={p.rotation as string} />
       </RetroCanvas>
     ),

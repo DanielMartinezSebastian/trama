@@ -1,0 +1,238 @@
+{
+  "name": "Semilla",
+  "version": 2,
+  "units": "metres",
+  "dimensions": {
+    "petals": 6,
+    "height": 5.4,
+    "radius": 1.32,
+    "thickness": 0.095,
+    "collarRadius": 1.49,
+    "segments": 12
+  },
+  "mechanics": {
+    "hingeY": -2.75,
+    "hingeRadius": 0.32,
+    "azimuth": 0.5235987755982988,
+    "collarTravel": 3.08,
+    "extraction": 0.3,
+    "maxAngle": 0.9,
+    "cycleSeconds": 26,
+    "bands": [
+      [
+        0.14,
+        0.43
+      ],
+      [
+        0.59,
+        0.83
+      ],
+      [
+        0.92,
+        1
+      ]
+    ]
+  },
+  "source": "components/sites/nadir/seed-model.ts",
+  "coordinates": {
+    "up": "+Y",
+    "front": "+Z"
+  },
+  "animations": [
+    "Apertura",
+    "Despiece"
+  ],
+  "textures": [
+    "texturas/valva-1-mineral-color.png",
+    "texturas/valva-1-mineral-surface.png",
+    "texturas/valva-1-interior-color.png",
+    "texturas/valva-1-interior-surface.png",
+    "texturas/cantos-y-nervios-de-cobre-color.png",
+    "texturas/cantos-y-nervios-de-cobre-surface.png",
+    "texturas/valva-2-mineral-color.png",
+    "texturas/valva-2-mineral-surface.png",
+    "texturas/valva-2-interior-color.png",
+    "texturas/valva-2-interior-surface.png",
+    "texturas/valva-3-mineral-color.png",
+    "texturas/valva-3-mineral-surface.png",
+    "texturas/valva-3-interior-color.png",
+    "texturas/valva-3-interior-surface.png",
+    "texturas/valva-4-mineral-color.png",
+    "texturas/valva-4-mineral-surface.png",
+    "texturas/valva-4-interior-color.png",
+    "texturas/valva-4-interior-surface.png",
+    "texturas/valva-5-mineral-color.png",
+    "texturas/valva-5-mineral-surface.png",
+    "texturas/valva-5-interior-color.png",
+    "texturas/valva-5-interior-surface.png",
+    "texturas/valva-6-mineral-color.png",
+    "texturas/valva-6-mineral-surface.png",
+    "texturas/valva-6-interior-color.png",
+    "texturas/valva-6-interior-surface.png",
+    "texturas/collar-de-cobre-patinado-color.png",
+    "texturas/collar-de-cobre-patinado-surface.png"
+  ],
+  "parts": [
+    {
+      "name": "valva-01-pivote",
+      "part": "valva",
+      "index": 0,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "valva-02-pivote",
+      "part": "valva",
+      "index": 1,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "valva-03-pivote",
+      "part": "valva",
+      "index": 2,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "valva-04-pivote",
+      "part": "valva",
+      "index": 3,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "valva-05-pivote",
+      "part": "valva",
+      "index": 4,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "valva-06-pivote",
+      "part": "valva",
+      "index": 5,
+      "axis": "local X",
+      "hinge": [
+        0,
+        -2.75,
+        0
+      ],
+      "removable": true,
+      "maxAngle": 0.9
+    },
+    {
+      "name": "collar-01"
+    },
+    {
+      "name": "collar-02"
+    },
+    {
+      "name": "collar-03"
+    },
+    {
+      "name": "collar-04"
+    },
+    {
+      "name": "collar-05"
+    },
+    {
+      "name": "collar-06"
+    },
+    {
+      "name": "collar-07"
+    },
+    {
+      "name": "collar-08"
+    },
+    {
+      "name": "collar-09"
+    },
+    {
+      "name": "collar-10"
+    },
+    {
+      "name": "collar-11"
+    },
+    {
+      "name": "collar-12"
+    },
+    {
+      "name": "bastidor-interior"
+    },
+    {
+      "name": "nucleo-memoria"
+    },
+    {
+      "name": "actuador-1-camisa"
+    },
+    {
+      "name": "actuador-1-vastago"
+    },
+    {
+      "name": "actuador-2-camisa"
+    },
+    {
+      "name": "actuador-2-vastago"
+    },
+    {
+      "name": "actuador-3-camisa"
+    },
+    {
+      "name": "actuador-3-vastago"
+    },
+    {
+      "name": "actuador-4-camisa"
+    },
+    {
+      "name": "actuador-4-vastago"
+    },
+    {
+      "name": "actuador-5-camisa"
+    },
+    {
+      "name": "actuador-5-vastago"
+    },
+    {
+      "name": "actuador-6-camisa"
+    },
+    {
+      "name": "actuador-6-vastago"
+    }
+  ],
+  "maps": {
+    "color": "sRGB RGBA",
+    "surface": "linear; R height, G roughness, B metallic"
+  },
+  "note": "Kinematic clearances, 30 fps sampled clips, telescopic actuators, interior punctual light and emissive strength. Bump maps supplied separately; additive halo and dynamic shadow settings are live-scene features."
+}

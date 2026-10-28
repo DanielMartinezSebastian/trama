@@ -24,14 +24,14 @@ try {
       for (const location of [".nd-opening", "#nd-step-2", ".nd-next", ".nd-footer"]) {
         await page.locator(location).evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
         await page.waitForTimeout(1500);
-        const bounds = await page.evaluate(() => {
+        const measured = await page.evaluate(() => {
           // El gancho de cine expone la escena real; proyectamos todos los vértices
-          // de los anillos, incluidas las matrices de cada segmento instanciado.
+          // de las valvas, el collar, el bastidor y el núcleo.
           const state = (window as any).__cine.state;
           const camera = state.lastCamera;
           const bounds = { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity };
-          state.lastScene.traverse((mesh: any) => {
-            if (mesh.geometry?.type !== "TorusGeometry") return;
+          state.lastScene.getObjectByName("nadir-semilla").traverse((mesh: any) => {
+            if (!mesh.isMesh) return;
             const vertices = mesh.geometry.attributes.position;
             const instance = mesh.matrixWorld.clone();
             const vertex = mesh.position.clone();
@@ -46,13 +46,26 @@ try {
               }
             }
           });
-          return bounds;
+          const seed = state.lastScene.getObjectByName("nadir-semilla");
+          const core = seed.getObjectByName("ampolla-agua"), points = core.geometry.attributes.position, v = core.position.clone();
+          const subject = { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity };
+          for (let i = 0; i < points.count; i++) {
+            v.fromBufferAttribute(points, i).applyMatrix4(core.matrixWorld).project(camera);
+            subject.minX = Math.min(subject.minX, v.x); subject.maxX = Math.max(subject.maxX, v.x); subject.minY = Math.min(subject.minY, v.y); subject.maxY = Math.max(subject.maxY, v.y);
+          }
+          return { bounds, subject, framing: seed.userData.framing };
         });
-        assert.ok(Object.values(bounds).every(Number.isFinite), "se midieron los anillos");
-        assert.ok(bounds.minX > -1 && bounds.maxX < 1 && bounds.minY > -1 && bounds.maxY < 1, `anillos completos: ${width} ${route} ${location} ${JSON.stringify(bounds)}`);
-        const headerHeight = width === 390 ? 80 : 100;
-        assert.ok(bounds.maxY < 1 - 2 * headerHeight / (width === 390 ? 844 : 883), "la cabecera no tapa el modelo");
-        measurements.push({ width, route, location, bounds });
+        const bounds = measured.bounds;
+        assert.ok(Object.values(bounds).every(Number.isFinite), "se midieron todas las piezas de Semilla");
+        if (measured.framing.cropped) {
+          const core = measured.subject;
+          assert.ok(core.minX > -1 && core.maxX < 1 && core.minY > -1 && core.maxY < 1, "el núcleo sigue visible en los macros con recorte intencional de las valvas");
+        } else {
+          assert.ok(bounds.minX > -1 && bounds.maxX < 1 && bounds.minY > -1 && bounds.maxY < 1, "Semilla completa en el plano general");
+          const headerHeight = width === 390 ? 80 : 100;
+          assert.ok(bounds.maxY < 1 - 2 * headerHeight / (width === 390 ? 844 : 883), "la cabecera no tapa el plano general");
+        }
+        measurements.push({ width, route, location, ...measured });
         if (location === ".nd-next") {
           const background = await page.locator(location).evaluate((el) => ({ image: getComputedStyle(el).backgroundImage, color: getComputedStyle(el).backgroundColor }));
           assert.deepEqual(background, { image: "none", color: "rgba(0, 0, 0, 0)" }, "la sección no tapa el modelo");
@@ -69,18 +82,17 @@ try {
   const modelPose = () => page.evaluate(() => {
     const scene = (window as any).__cine.state.lastScene;
     const root = scene.getObjectByName("nadir-orbital");
-    const ring = scene.getObjectByName("nadir-ring-0");
-    const segments = ring.children.find((object: any) => object.isInstancedMesh && object.geometry.type === "TorusGeometry");
-    const matrix = root.matrixWorld.clone(); segments.getMatrixAt(0, matrix);
-    return { position: root.position.toArray(), rotation: root.rotation.toArray().slice(0, 3), scale: root.scale.x, separation: ring.position.z, segment: matrix.elements.slice(12, 15) };
+    const model = scene.getObjectByName("nadir-semilla");
+    const petal = model.getObjectByName("valva-01-pivote");
+    return { position: root.position.toArray(), rotation: root.rotation.toArray().slice(0, 3), scale: root.scale.x, cameraZ: (window as any).__cine.state.lastCamera.position.z, separation: model.userData.pose.open, segment: [petal.position.x - Math.sin(Math.PI / 6) * .32, petal.position.y + 2.75, petal.position.z - Math.cos(Math.PI / 6) * .32] };
   });
   const first = await modelPose();
   await page.locator("#nd-step-2").evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
   await page.waitForTimeout(1500);
   const second = await modelPose();
   assert.ok(Math.abs(first.position[0] - second.position[0]) > 2, "el modelo cambia de lado");
-  assert.ok(Math.abs(first.scale - second.scale) > .03, "el acercamiento cambia el tama?o del modelo");
-  assert.ok(Math.abs(first.separation - second.separation) > .05, "los anillos se separan");
+  assert.ok(Math.abs(first.cameraZ - second.cameraZ) > .25, "la cámara mantiene el acercamiento coreografiado incluso cuando cambia la apertura");
+  assert.ok(first.separation <= .431 && second.separation <= .431, "la primera URL conserva su rango de apertura");
   await page.evaluate(() => {
     const a = document.getElementById("nd-step-1")!.getBoundingClientRect();
     const b = document.getElementById("nd-step-2")!.getBoundingClientRect();
@@ -89,7 +101,7 @@ try {
   await page.waitForTimeout(1800);
   const exploded = await modelPose();
   assert.ok(Math.hypot(...exploded.segment) > .5, "el despiece tiene un desplazamiento evidente");
-  assert.ok(Math.hypot(...first.segment) < .01 && Math.hypot(...second.segment) < .01, "las piezas vuelven a cerrar en reposo");
+  assert.ok(Math.abs(Math.hypot(...first.segment) - Math.hypot(...second.segment)) > .15, "cada sección conserva un despiece de reposo distinto");
   await page.screenshot({ path: resolve(out, "despiece-1440.png") });
   await page.locator("#nd-step-2").evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
   await page.evaluate(() => scrollBy(0, 350));
@@ -108,6 +120,6 @@ try {
   await page.locator("#nd-step-1").scrollIntoViewIfNeeded();
   assert.equal(await page.locator("#nd-step-1 .nd-story-copy").evaluate((el) => getComputedStyle(el).filter), "none");
   assert.deepEqual(errors, []);
-  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ measurements, errors, checks: ["24 encuadres completos", "finales transparentes", "traslado y zoom del modelo", "despiece visible", "anillos cerrados en reposo", "texto sin fundido", "canvas persistente", "historial", "movimiento reducido"] }, null, 2));
-  console.log("24 encuadres completos; traslado, zoom, anillos y segmentos animados; textos sin fundido, canvas persistente, historial y movimiento reducido correctos; sin errores.");
+  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ measurements, errors, checks: ["24 encuadres: generales completos y macros con núcleo visible", "finales transparentes", "traslado y zoom del modelo", "despiece visible", "valvas recogidas en el primer capítulo", "texto sin fundido", "canvas persistente", "historial", "movimiento reducido"] }, null, 2));
+  console.log("24 encuadres verificados; traslado, zoom, valvas y collar animados; textos sin fundido, canvas persistente, historial y movimiento reducido correctos; sin errores.");
 } finally { await browser.close(); }

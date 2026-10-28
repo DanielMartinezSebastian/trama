@@ -1,0 +1,51 @@
+/** Idle rotation and mouse inertia over the decorative canvas and over story text. */
+import assert from "node:assert/strict";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { chromium } from "playwright";
+import { chromiumPath } from "../chromium-path.mts";
+const origin = process.argv[2] ?? "http://localhost:3020", out = ".refs3d/nadir/reposo";
+mkdirSync(out, { recursive: true });
+const browser = await chromium.launch({ executablePath: chromiumPath() });
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const errors: string[] = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error") errors.push(m.text()); });
+  for (const file of ["three.js", "clock.js"]) await page.addInitScript({ path: resolve(`scripts/cine/hooks/${file}`) });
+  await page.goto(`${origin}/sitios/nadir/descenso`, { waitUntil: "networkidle" });
+  await page.locator(".nd-stage.is-ready canvas").waitFor();
+  await page.mouse.move(720, 500);
+  await page.locator("#nd-step-2").evaluate(el => el.scrollIntoView({ block: "center", behavior: "instant" }));
+  await page.waitForTimeout(1600);
+  await page.evaluate(async () => { const clock = (window as any).__cineClock; clock.control({ fps: 20 }); await new Promise(r => setTimeout(r, 100)); await clock.step(2); });
+  const step = (n: number) => page.evaluate(n => (window as any).__cineClock.step(n), n);
+  const read = () => page.evaluate(() => {
+    const state = (window as any).__cine.state, seed = state.lastScene.getObjectByName("nadir-semilla"), core = seed.getObjectByName("nucleo-memoria");
+    const focus = seed.position.clone().set(0, core.position.y + seed.userData.framing.focusY, 0).applyMatrix4(seed.matrixWorld).project(state.lastCamera);
+    return { ...seed.userData.interaction, focus: [focus.x, focus.y] };
+  });
+  const idle = [await read()];
+  await step(40); idle.push(await read());
+  await step(40); idle.push(await read());
+  assert.ok(Math.max(...idle.map(p => p.idleYaw)) - Math.min(...idle.map(p => p.idleYaw)) > .001, "still pose rotates gently over time");
+  assert.ok(idle.every(p => Math.abs(p.idleYaw) <= .055 && Math.abs(p.idlePitch) <= .012), "idle angles remain subtle");
+  await page.mouse.move(1260, 180);
+  await step(5); const early = await read();
+  await step(35); const followed = await read();
+  assert.ok(early.x > 0 && early.x < followed.x, "pointer follows with inertia rather than snapping");
+  assert.ok(followed.mouseYaw > .01 && followed.mousePitch < -.003, "mouse affects both axes over story text");
+  assert.ok(Math.hypot(followed.focus[0] - idle[0].focus[0], followed.focus[1] - idle[0].focus[1]) < .01, "core remains anchored in its macro composition");
+  await page.screenshot({ path: `${out}/raton.png` });
+  await page.evaluate(() => dispatchEvent(new Event("blur")));
+  await step(40); const reset = await read();
+  assert.ok(Math.abs(reset.x) < .01 && Math.abs(reset.y) < .01, "pointer influence returns smoothly on window exit");
+  await page.dispatchEvent("body", "pointermove", { pointerType: "touch", clientX: 0, clientY: 0 });
+  await step(10); assert.ok(Math.abs((await read()).x) < .01, "touch scrolling does not drag the model");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`${origin}/sitios/nadir/descenso`, { waitUntil: "networkidle" });
+  assert.equal(await page.locator(".nd-stage canvas").count(), 0);
+  assert.deepEqual(errors, []);
+  writeFileSync(`${out}/resultado.json`, JSON.stringify({ idle, early, followed, reset, errors }, null, 2));
+  console.log("Idle rotation, damped mouse follow over text, stable macro focus, reset, touch and reduced motion verified.");
+} finally { await browser.close(); }

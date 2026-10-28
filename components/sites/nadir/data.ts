@@ -3,7 +3,7 @@ export const meta = {
   slug: SLUG,
   name: "Nádir",
   title: "NÁDIR · una señal al otro lado del silencio",
-  blurb: "Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.",
+  blurb: "Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una semilla mecánica procedural de Three.js se abre y se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.",
   accent: "#e8b693",
   tag: "ciencia ficción · Three.js · scrollytelling",
 };
@@ -34,8 +34,8 @@ export const CHAPTERS = [
     intro: "A 6.400 metros bajo una superficie sin nombre encontramos algo que no debería seguir funcionando.",
     coordinate: "PROFUNDIDAD −6.400 M · SECTOR N−07", telemetry: "ENLACE DE EXPLORACIÓN", next: "hallazgo", nextLabel: "Entrar en el núcleo",
     steps: [
-      { label: "Bitácora 004 / Bajo la superficie", title: "El silencio\ntenía estructura.", body: "No había ruinas. Había una máquina. Anillos suspendidos alrededor de un centro que parecía absorber la luz.", detail: "Arquitectura de origen desconocido", value: "6.400", caption: "METROS BAJO LA SUPERFICIE" },
-      { label: "Bitácora 005 / Aproximación", title: "Nada se toca.\nTodo se sostiene.", body: "Cada pieza flotaba a la misma distancia de la siguiente. Al acercarnos, el mecanismo empezó a abrirse. Como si nos reconociera.", detail: "Separación de anillos · núcleo accesible", value: "0 g", caption: "GRAVEDAD EN EL INTERIOR" },
+      { label: "Bitácora 004 / Bajo la superficie", title: "El silencio\ntenía estructura.", body: "No había ruinas. Había una máquina. Valvas minerales suspendidas alrededor de un núcleo que guardaba una luz.", detail: "Arquitectura de origen desconocido", value: "6.400", caption: "METROS BAJO LA SUPERFICIE" },
+      { label: "Bitácora 005 / Aproximación", title: "Nada se toca.\nTodo se sostiene.", body: "Cada pieza flotaba a la misma distancia de la siguiente. Al acercarnos, el mecanismo empezó a abrirse. Como si nos reconociera.", detail: "Separación de valvas · núcleo accesible", value: "0 g", caption: "GRAVEDAD EN EL INTERIOR" },
       { label: "Bitácora 006 / El umbral", title: "No era una puerta.\nEra una espera.", body: "En el centro, una luz repetía el ritmo de la señal. Habíamos cruzado el espacio para encontrar el principio de una conversación.", detail: "Contacto confirmado · continuar al núcleo", value: "38 s", caption: "EL MISMO PULSO. AQUÍ." },
     ],
   },

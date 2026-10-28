@@ -152,16 +152,17 @@ Carga un modelo .glb, .gltf u .obj dentro de RetroCanvas: lo centra, lo escala y
 
 | prop | tipo | default |
 |---|---|---|
-| `src` | `/models/turbina.obj` · `/models/asteroide.gltf` · `/models/ciudad.glb` · `/models/suzanne.glb` · `/models/farol.glb` | "/models/turbina.obj" |
-| `material` | `clay` · `original` · `wire` | "clay" |
+| `src` | `/models/satelite.glb` · `/models/turbina.obj` · `/models/asteroide.gltf` · `/models/ciudad.glb` · `/models/suzanne.glb` · `/models/farol.glb` | "/models/satelite.glb" |
+| `material` | `clay` · `original` · `wire` | "original" |
 | `flat` | boolean | false |
 | `extent` | number 1–7 | 4 |
 | `spin` | number 0–30 | 6 |
 | `spinAxis` | `x` · `y` · `z` | "y" |
 | `float` | boolean | true |
-| `rotation` | text | "0,0,0" |
+| `rotation` | text | "25,-20,0" |
 
 - Va dentro de `RetroCanvas`: `<RetroCanvas pointerFx="orbit"><RetroModel src="/models/turbina.obj" /></RetroCanvas>`. Requiere `three` y `@react-three/fiber`; importa `trama-ui/RetroModel`.
+- Satélite solar detallado: `/models/satelite.glb`, geometría propia reproducible con `node scripts/gen-satellite.mjs`. Seis placas con celdas, manta térmica, cámara, radiador y parabólica; piezas nombradas y materiales incluidos. Usa `material="original"`, `tint="scene"` y píxel de 1–2 px para ver el detalle. Puede abrirse en Blender sin recursos externos.
 - Modelos de ejemplo en `public/models/`: asteroide.gltf, turbina.obj y ciudad.glb (propios, `scripts/gen-retro-models.mts`) y suzanne.glb y farol.glb (Khronos glTF-Sample-Assets, CC0; créditos en `public/models/LICENSES.md`). Los de otro dominio necesitan CORS.
 - `npx tsx scripts/strip-gltf.mts entrada.glb salida.glb` quita texturas, UV y animaciones: tras el filtro no se ven y el archivo baja mucho (el farol pasa de 9,5 MB a 131 KB).
 - `material="clay"` (por defecto) sustituye los materiales por un gris mate: texturas y colores apenas se ven tras el filtro y la luz sí. `original` conserva los del archivo (útil con `tint="scene"`).
@@ -3356,11 +3357,11 @@ Carpeta: `components/sites/voz-de-la-tierra/` · 4 páginas: El objeto · Surcos
 
 ### NÁDIR · una señal al otro lado del silencio — `/sitios/nadir`
 
-Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una máquina orbital procedural de Three.js se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.
+Expedición de ficción en tres capítulos: una señal, un descenso y un hallazgo. Una semilla mecánica procedural de Three.js se abre y se descompone al avanzar por scroll, con cámara coreografiada, partículas, audio sintetizado opcional y un mensaje que se revela en la última ruta. Sin modelos ni texturas externos; alternativa estática para movimiento reducido y ausencia de WebGL.
 
 Carpeta: `components/sites/nadir/` · 3 páginas: La señal · El descenso · El hallazgo
 
-`Button` ×2 · `ScrollProgress` · `Hero` · `Footer`
+`Button` ×2 · `ScrollProgress` · `Hero` · `Footer` · `SmoothScroll`
 
 ## Inspiraciones
 

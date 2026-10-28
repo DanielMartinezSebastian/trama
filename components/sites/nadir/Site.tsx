@@ -6,6 +6,9 @@ import Hero from "@/components/ui/Hero";
 import Button from "@/components/ui/Button";
 import Footer from "@/components/ui/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import { scrollToAnchor } from "@/lib/motion/anchors";
+import { getLenis } from "@/lib/motion/lenis";
 import { GLBoundary, useGLGate } from "@/lib/ui/gl";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { useReducedMotion } from "@/lib/ui/useReducedMotion";
@@ -13,6 +16,7 @@ import { useScrollStory, type StoryFrame } from "@/lib/story/useScrollStory";
 import { SiteFrame, siteHref } from "../shared";
 import { CHAPTERS, COLORS, ROUTES, SLUG } from "./data";
 import type { Flight } from "./Scene";
+import { SEED_MECHANICS } from "./seed-motion";
 import "./nadir.css";
 
 const Scene = lazy(() => import("./Scene"));
@@ -23,17 +27,25 @@ const TOKENS = {
 } as CSSProperties;
 const FlightContext = createContext<MutableRefObject<Flight> | null>(null);
 
-function OrbitalFallback() {
+function SeedFallback({ open }: { open: number }) {
   return <div className="nd-fallback" aria-hidden="true"><svg viewBox="0 0 700 700" fill="none">
-    <defs><radialGradient id="nd-core"><stop stopColor={COLORS.ice} /><stop offset="1" stopColor={COLORS.signal} stopOpacity="0.08" /></radialGradient></defs>
-    <g transform="translate(350 350) rotate(-25)">
-      {[270, 225, 180, 135].map((r, i) => <g key={r} transform={`rotate(${i * 30})`}><ellipse rx={r} ry={r * (0.55 + i * 0.1)} stroke={i % 2 ? COLORS.copper : COLORS.mist} strokeWidth={i === 0 ? 12 : 8} /><ellipse rx={r + 15} ry={(r + 15) * (0.55 + i * 0.1)} stroke={COLORS.mist} strokeDasharray="2 14" opacity="0.6" /></g>)}
-      <circle r="70" fill="url(#nd-core)" /><path d="M0-57 54-17 34 46H-34L-54-17Z" stroke={COLORS.signal} strokeWidth="2" />
+    <defs>
+      <linearGradient id="nd-shell" x1="200" y1="100" x2="480" y2="600" gradientUnits="userSpaceOnUse"><stop stopColor={COLORS.mineral} /><stop offset=".55" stopColor={COLORS.abyss} /><stop offset="1" stopColor={COLORS.mist} stopOpacity=".35" /></linearGradient>
+      <radialGradient id="nd-core"><stop stopColor={COLORS.ice} /><stop offset="1" stopColor={COLORS.signal} stopOpacity=".22" /></radialGradient>
+    </defs>
+    <g transform="translate(350 350) rotate(-12)">
+      <path d="M0-145C-18-112-58-28-46 46C-31 133 42 139 48 47C54-26 24-110 0-145Z" fill="url(#nd-core)" stroke={COLORS.signal} />
+      {[-1, 1].map(side => <g key={side} transform={"translate(" + (open * side * 85) + " 0) rotate(" + (open * side * -32) + " 0 235)"}>
+        <path d={"M0-250C" + (side * 145) + " -170 " + (side * 180) + " 105 0 250C" + (side * 45) + " 80 " + (side * 65) + " -90 0 -250Z"} fill="url(#nd-shell)" stroke={COLORS.copper} strokeWidth="2" />
+        {[0, 1, 2, 3, 4, 5, 6, 7].map(i => <path key={i} d={"M" + (side * (35 + Math.sin(i / 7 * Math.PI) * 10)) + " " + (-155 + i * 44) + "Q" + (side * 85) + " " + (-175 + i * 44) + " " + (side * (65 + Math.sin(i / 7 * Math.PI) * 62)) + " " + (-150 + i * 44)} stroke={COLORS.copper} opacity=".55" />)}
+      </g>)}
+      <ellipse rx={147 + open * 38} ry="24" cy="275" stroke={COLORS.copper} strokeWidth="8" strokeDasharray="64 8" />
+      <path d="M0 100V-82M0 40-24 9M0-9 27-38M0-45-15-68" stroke={COLORS.signal} strokeWidth="2" />
     </g>
   </svg></div>;
 }
 
-function Stage({ flight }: { flight: MutableRefObject<Flight> }) {
+function Stage({ flight, chapter }: { flight: MutableRefObject<Flight>; chapter: number }) {
   const el = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const gate = useGLGate(el, { want: !reduced });
@@ -41,7 +53,7 @@ function Stage({ flight }: { flight: MutableRefObject<Flight> }) {
   const onReady = useCallback(() => setReady(true), []);
   return <div ref={el} className={`nd-stage ${ready && gate.use3d ? "is-ready" : ""}`} aria-hidden="true">
     <div className="nd-atmosphere" />
-    <OrbitalFallback />
+    <SeedFallback open={SEED_MECHANICS.bands[chapter][0]} />
     {gate.use3d && gate.mounted && <div className="nd-webgl"><GLBoundary onError={gate.fail}><Suspense fallback={null}><Scene flight={flight} onReady={onReady} /></Suspense></GLBoundary></div>}
     <div className="nd-crosshair nd-crosshair--one" /><div className="nd-crosshair nd-crosshair--two" />
     <div className="nd-grain" />
@@ -109,12 +121,21 @@ function SignalAudio() {
 
 export function Shell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const previousPath = useRef(pathname);
+  useEffect(() => {
+    if (previousPath.current === pathname) return;
+    previousPath.current = pathname;
+    if (location.hash) return;
+    getLenis()?.scrollTo(0, { immediate: true, force: true });
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
   const index = Math.max(0, CHAPTERS.findIndex((c) => pathname === href(c.path)));
   const flight = useRef<Flight>({ chapter: index, progress: 0, side: 1, reading: 0, message: 0, revealed: false });
   return <SiteFrame tokens={TOKENS} className={`nd nd-world--${index}`}>
     <FlightContext.Provider value={flight}>
+      <SmoothScroll key={"scroll:" + pathname} feel="cinematic" syncGsap={false} />
       <a className="nd-skip" href="#nd-content">Saltar al relato</a>
-      <Stage flight={flight} />
+      <Stage flight={flight} chapter={index} />
       <header className="nd-header">
         <a className="nd-brand" href={href()} aria-label="Nádir, primera señal"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 26V6L27 26V6M1 16H31" stroke="currentColor" strokeWidth="1.5" /><circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="0.65" /></svg><span>NÁDIR<small>EXPLORATION PROGRAM</small></span></a>
         <nav aria-label="Capítulos de la expedición">{CHAPTERS.map((chapter, i) => <a key={chapter.number} href={href(chapter.path)} aria-current={index === i ? "page" : undefined}><span>{chapter.number}</span><b>{chapter.title}</b></a>)}</nav>
@@ -140,7 +161,6 @@ function Chapter({ index }: { index: number }) {
   const stage = useRef<HTMLDivElement>(null);
   const readout = useRef<HTMLSpanElement>(null);
   const [revealed, setRevealed] = useState(false);
-  const reduced = useReducedMotion();
   const updateReadout = useCallback(() => {
     const progress = flight.current.progress;
     const value = index === 2 ? Math.min(flight.current.revealed ? 100 : 99, Math.round(progress * 100)) : Math.round(progress * 100);
@@ -158,7 +178,7 @@ function Chapter({ index }: { index: number }) {
   }, [chapter.steps.length, flight, index, updateReadout]);
   useScrollStory(list, stage, { plateau: 0.7, cards: false, onFrame });
   useEffect(() => { flight.current.revealed = revealed; updateReadout(); }, [revealed, flight, updateReadout]);
-  const enter = () => document.getElementById("nd-step-1")?.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
+  const enter = () => { scrollToAnchor("#nd-step-1", { duration: 1.4 }); };
   return <main ref={list} id="nd-content" className={`nd-chapter nd-chapter--${index}`} tabIndex={-1}>
     <div ref={stage} className="nd-readout"><span><i /> {chapter.telemetry}</span><span ref={readout}>000%</span></div>
     <section className="nd-opening" data-step>
