@@ -248,7 +248,7 @@
 /* la tira de la portada (HorizontalScroll): el scroll vertical pasa las fotos de la semana en horizontal; en pantallas
    estrechas es un carrusel nativo con imán. El primer panel es el título, con una barra que avanza con --hs-p */
 .tr-galeria { background: var(--tr-noche); color: #f3e7d0; }
-.tr-tira .ui-hs__in { padding-top: 96px; }
+.tr-tira .ui-hs__in { padding-top: 96px; padding-bottom: 20px; }
 .tr-tira .ui-hs__track { align-items: center; }
 .tr-tira__intro { display: grid; gap: 18px; align-content: center; width: min(420px, 78vw); padding-right: 2vw; }
 .tr-tira__intro .tr-kicker { color: var(--tr-oro); }
@@ -257,11 +257,11 @@
 .tr-tira__intro p:not(.tr-kicker) { margin: 0; color: #d9cbb2; line-height: 1.55; }
 .tr-tira__progreso { display: block; height: 2px; background: rgb(243 231 208 / 0.18); }
 .tr-tira__progreso::after { content: ""; display: block; height: 100%; width: calc(var(--hs-p, 0) * 100%); background: var(--tr-oro); }
-.tr-tira__foto { position: relative; margin: 0; height: min(62svh, 600px); overflow: hidden; }
+.tr-tira__foto { position: relative; margin: 0; height: calc(100svh - 96px - 40px); overflow: hidden; }
 .tr-tira__foto--alta { aspect-ratio: 4 / 5; }
 .tr-tira__foto--ancha { aspect-ratio: 3 / 2; }
 .tr-tira__foto--cuadrada { display: grid; gap: 14px; justify-items: center; height: auto; overflow: visible; }
-.tr-tira .tr-tira__foto--cuadrada img { width: min(40svh, 380px); height: auto; aspect-ratio: 1; border-radius: 50%; }
+.tr-tira .tr-tira__foto--cuadrada img { width: min(calc(100svh - 230px), 720px); height: auto; aspect-ratio: 1; border-radius: 50%; }
 .tr-tira__foto img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .tr-tira__foto:hover img { scale: 1.05; }
 .tr-tira__foto figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 4px; padding: 40px 18px 16px; background: linear-gradient(to top, rgb(23 10 14 / 0.88), transparent); font: 600 18px/1.2 var(--font-fraunces), serif; color: #f3e7d0; }
@@ -276,10 +276,11 @@
 @media (prefers-reduced-motion: reduce) { .tr-tira__foto img { transition: none; } }
 /* en el móvil la tira también avanza con el scroll (minWidth={1}); solo con movimiento reducido es un carrusel */
 @media (max-width: 760px) {
-  .tr-tira .ui-hs__in { padding-top: 72px; }
+  .tr-tira .ui-hs__in { padding-top: 72px; padding-bottom: 84px; }
   .tr-tira__intro { width: 80vw; }
-  .tr-tira__foto { height: 52svh; }
+  .tr-tira__foto { height: calc(100svh - 72px - 84px - 16px); width: calc(100vw - 32px); aspect-ratio: auto; }
+  .tr-tira .tr-tira__foto--cuadrada { width: calc(100vw - 32px); }
   .tr-tira .tr-tira__foto--cuadrada { height: auto; }
-  .tr-tira .tr-tira__foto--cuadrada img { width: 62vw; }
+  .tr-tira .tr-tira__foto--cuadrada img { width: 84vw; }
   .tr-tira__foto figcaption { font-size: 16px; }
 }
