@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.marcoambrosi.salon/]
 fichas: [docs/50 §3.2 E2e]
 ruta: /inspiraciones/raiz
-codigo: [components/inspiraciones/raiz/Raiz.tsx, components/inspiraciones/raiz/raiz.css]
+codigo: [components/inspiraciones/raiz/Raiz.tsx, components/inspiraciones/raiz/raiz.css, components/inspiraciones/raiz/Sitio.tsx, components/inspiraciones/raiz/data.ts]
 colores: [#141618, #f2f0ed, #9aa0a6, #e0b183, #c98e58]
 fuentes: [Playfair Display, Outfit]
 sector: [peluquería]
@@ -16,7 +16,7 @@ paleta: [fondo oscuro, acento metálico]
 tipografia: [serif con cursiva]
 patrones: [sellos de valoración, razones en tarjetas, comparación, servicios numerados, antes y después, rejilla de trabajos, clips verticales, reseñas, reserva por WhatsApp, reserva fija, titular con palabra en cursiva]
 movimiento: [subrayado que crece]
-piezas: [BeforeAfter, TestimonialSection]
+piezas: [BeforeAfter, TestimonialSection, Accordion, ActionBar, AppointmentList, BookingFlow, ContactForm, FullscreenMenu, OpeningHours]
 piezas-nuevas: []
 relacionados: [estudio-peluqueria, demo-esparta, herramienta-probe-par]
 ---
@@ -78,3 +78,10 @@ sonda de estilos. Informe en `.refs3d/pares/raiz/par.md`.
 ## Siguiente
 
 - Que los clips del salón en movimiento suenen al tocarlos.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, trabajos con filtros, consulta.
+- Flujo de negocio, probado de punta a punta con Playwright: consulta en pasos.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

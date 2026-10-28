@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://surfing.academy/]
 fichas: [docs/50 §3.6 E4]
 ruta: /inspiraciones/remada
-codigo: [components/inspiraciones/remada/Remada.tsx, components/inspiraciones/remada/remada.css]
+codigo: [components/inspiraciones/remada/Remada.tsx, components/inspiraciones/remada/remada.css, components/inspiraciones/remada/Sitio.tsx, components/inspiraciones/remada/data.ts]
 colores: [#ededed, #17191a, #ff4f28, #39be91]
 fuentes: [Onest, Inter, Playfair Display]
 sector: [academia]
@@ -16,7 +16,7 @@ paleta: [fondo claro, dos acentos]
 tipografia: [minúsculas, títulos entre paréntesis]
 patrones: [autor como marca fija, ilustración de línea, programas por convocatoria, billete troquelado, principios con foto, cifras, primera clase gratis, sombra dura desplazada, testimonios, vlogs, preguntas frecuentes, formulario de contacto]
 movimiento: [trazo que se dibuja, scroll suavizado]
-piezas: [CohortList, LineDraw, FAQSection, ContactForm, SmoothScroll]
+piezas: [CohortList, LineDraw, FAQSection, ContactForm, SmoothScroll, ChatWidget, EnrollmentFlow, FullscreenMenu]
 piezas-nuevas: [CohortList]
 relacionados: [estudio-academia, pieza-cohort-list, replica-oficio, herramienta-probe-par]
 ---
@@ -81,3 +81,10 @@ de estilos y la tira del original. Informe en `.refs3d/pares/remada/par.md`.
 ## Siguiente
 
 - La tarjeta verde de «mi misión» con la foto de la ola.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, viajes y ficha de viaje, clases en línea, vlogs, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: solicitud de plaza con señal y lista de espera; envío del vídeo con vista previa; chat de la autora por reglas (`ChatWidget`).
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

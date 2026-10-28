@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://hairmeup.pl]
 fichas: [docs/50 §3.2 E2c]
 ruta: /inspiraciones/melena
-codigo: [components/inspiraciones/melena/Melena.tsx, components/inspiraciones/melena/melena.css]
+codigo: [components/inspiraciones/melena/Melena.tsx, components/inspiraciones/melena/melena.css, components/inspiraciones/melena/Sitio.tsx, components/inspiraciones/melena/data.ts]
 colores: [#ffffff, #2c2c2c, #feede4, #ffd5bf, #e9875a, #963e13]
 fuentes: [DM Serif Display, Lora]
 sector: [peluquería]
@@ -16,7 +16,7 @@ paleta: [fondo claro, pastel cálido]
 tipografia: [serif con cursiva]
 patrones: [arco detrás del titular, sello circular, servicios numerados, palabra de fondo, tienda, academia, reserva por salón, reserva fija, pestaña de reseñas fija, logos de marcas]
 movimiento: [subrayado que crece]
-piezas: [Carousel, LogoCloud, ProductCard, SectionHeader]
+piezas: [Carousel, LogoCloud, ProductCard, SectionHeader, Accordion, AppointmentList, BookingFlow, CartDrawer, CheckoutFlow, EnrollmentFlow, FullscreenMenu, QuantityStepper, TestimonialSection]
 piezas-nuevas: [SectionHeader]
 relacionados: [estudio-peluqueria, pieza-section-header, demo-hebra, herramienta-probe-par]
 ---
@@ -83,3 +83,10 @@ estilos. Informe en `.refs3d/pares/melena/par.md`.
 ## Siguiente
 
 - Comprobar si `NavBar` tiene un hover de subrayado que crece; si no, añadirlo como `linkHover="underline"`.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, salón, tienda y ficha, pedido, academia y ficha de curso.
+- Flujo de negocio, probado de punta a punta con Playwright: compra y solicitud de curso con `EnrollmentFlow` y lista de espera.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

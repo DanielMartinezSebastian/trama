@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://coachsportifecublens.com/]
 fichas: [docs/50 §3.4 E3b]
 ruta: /inspiraciones/impulso
-codigo: [components/inspiraciones/impulso/Impulso.tsx, components/inspiraciones/impulso/impulso.css]
+codigo: [components/inspiraciones/impulso/Impulso.tsx, components/inspiraciones/impulso/impulso.css, components/inspiraciones/impulso/Sitio.tsx, components/inspiraciones/impulso/data.ts]
 colores: [#000000, #ffffff, #999999, #bbbbbb]
 fuentes: [Inter Tight, Inter]
 sector: [gimnasio]
@@ -16,7 +16,7 @@ paleta: [fondo oscuro, blanco y negro]
 tipografia: [grotesca apretada, espaciado negativo, titular gigante]
 patrones: [titular a todo el ancho, cinta de texto, fichas numeradas, filas numeradas, logos de socios, manifiesto con retratos, píldoras de contorno, nota con estrellas, diplomas, muro de la fama, testimonios, tarifas en tarjetas, preguntas frecuentes, tira de instagram]
 movimiento: [titular que cruza, cinta que corre, crecer con el scroll, scroll suavizado, texto que rueda]
-piezas: [Marquee, ProjectList, LogoCloud, TestimonialSection, PricingSection, FAQSection, SmoothScroll, RollLink]
+piezas: [Marquee, ProjectList, LogoCloud, TestimonialSection, PricingSection, FAQSection, SmoothScroll, RollLink, AppointmentList, BookingFlow, ContactForm, EnrollmentFlow, FullscreenMenu, MemberArea, MembershipFlow, OpeningHours]
 piezas-nuevas: []
 relacionados: [estudio-gimnasio, replica-q47, demo-forja, herramienta-probe-par]
 ---
@@ -107,3 +107,10 @@ en la réplica.
 
 - La pestaña fija «Honors» de la izquierda es de Awwwards: no se replica.
 - El vídeo del diploma en la portada.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, equipo, servicios y ficha, tarifas, reservar, packs, reto, mi cuenta, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: reserva de sesión y alta.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

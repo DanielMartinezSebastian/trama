@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.fenriz-gym.com/]
 fichas: [docs/50 §3.4 E3f]
 ruta: /inspiraciones/lobo
-codigo: [components/inspiraciones/lobo/Lobo.tsx, components/inspiraciones/lobo/lobo.css]
+codigo: [components/inspiraciones/lobo/Lobo.tsx, components/inspiraciones/lobo/lobo.css, components/inspiraciones/lobo/Sitio.tsx, components/inspiraciones/lobo/data.ts]
 colores: [#e8e8e8, #1c1c1c, #ffd53d, #f5a623, #e2452b, #7a3fbf, #2251d1]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]
@@ -16,7 +16,7 @@ paleta: [blanco y negro, degradado de marca]
 tipografia: [condensada en mayúsculas, sans fina]
 patrones: [disciplinas en tarjetas de retrato, clase de prueba gratis, carteles a duotono, horario de clases, menú lateral, franja de degradado, bandas de foto, preguntas frecuentes, mapa de clubes, tienda]
 movimiento: [menú que cae, texto que rueda]
-piezas: [ClassSchedule, FAQSection, LogoCloud, ProductCard, RollLink]
+piezas: [ClassSchedule, FAQSection, LogoCloud, ProductCard, RollLink, CartDrawer, CheckoutFlow, ContactForm, EnrollmentFlow, MemberArea, MembershipFlow, OptionPicker]
 piezas-nuevas: [ClassSchedule]
 relacionados: [estudio-gimnasio, pieza-class-schedule, demo-forja, herramienta-probe-par]
 ---
@@ -81,3 +81,10 @@ de estilos y la tira del original. Informe en `.refs3d/pares/lobo/par.md`.
 
 - Valorar `RollLink fade`.
 - El menú lateral que cae, con el degradado arriba, como el de Fenriz.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, clases y ficha, prueba, eventos y evento, horario, cuotas, mi cuenta, tienda y ficha, pedido, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: clase de prueba gratis, cuota, apuntarse a un evento y compra.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

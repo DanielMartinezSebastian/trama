@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://don-barber.gr/en]
 fichas: [docs/50 §3.2 E2f]
 ruta: /inspiraciones/patron
-codigo: [components/inspiraciones/patron/Patron.tsx, components/inspiraciones/patron/patron.css]
+codigo: [components/inspiraciones/patron/Patron.tsx, components/inspiraciones/patron/patron.css, components/inspiraciones/patron/Sitio.tsx, components/inspiraciones/patron/data.ts]
 colores: [#eceae0, #000000, #7e929c, #757171]
 fuentes: [Antonio, Archivo, Playfair Display]
 sector: [barbería]
@@ -16,7 +16,7 @@ paleta: [fondo claro, apagada]
 tipografia: [gótica condensada, grotesca ancha, titular gigante]
 patrones: [portada partida, cinta de texto, el dueño como marca, tienda, servicios con óvalo central, noticias en rejilla, menú lateral, botones en óvalo]
 movimiento: [cinta que corre]
-piezas: [Marquee]
+piezas: [Marquee, ActionBar, AppointmentList, BookingFlow, CartDrawer, CheckoutFlow, ContactForm, OpeningHours, QuantityStepper]
 piezas-nuevas: []
 relacionados: [estudio-peluqueria, demo-esparta, herramienta-probe-par]
 ---
@@ -86,3 +86,10 @@ en `.refs3d/pares/patron/par.md`.
 ## Siguiente
 
 - El menú en panel lateral con la foto de portada (propio de la réplica): pasarlo a `FullscreenMenu` si aparece en otra web.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, servicios, tienda y ficha, bolsa, pedido, revista, reservar.
+- Flujo de negocio, probado de punta a punta con Playwright: reserva y compra con `CheckoutFlow`.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://futurelondonacademy.co.uk/]
 fichas: [docs/50 §3.6 E5]
 ruta: /inspiraciones/ahora
-codigo: [components/inspiraciones/ahora/Ahora.tsx, components/inspiraciones/ahora/ahora.css]
+codigo: [components/inspiraciones/ahora/Ahora.tsx, components/inspiraciones/ahora/ahora.css, components/inspiraciones/ahora/Sitio.tsx, components/inspiraciones/ahora/data.ts]
 colores: [#ffffff, #1a1a1a, #ffe32b, #f1f1f1]
 fuentes: [Space Grotesk, Inter]
 sector: [academia]
@@ -16,7 +16,7 @@ paleta: [fondo claro, amarillo y negro]
 tipografia: [una sola letra, grotesca en mayúsculas, letra de contorno]
 patrones: [letra gigante de líneas, muro de profesores, tarjetas solapadas, lista de cursos a todo el ancho, testimonios, muro de logos, boletín]
 movimiento: [trazo que se dibuja]
-piezas: [LineDraw, TeamSection]
+piezas: [LineDraw, TeamSection, BriefFlow, ContactForm, EnrollmentFlow, FullscreenMenu]
 piezas-nuevas: [TeamSection]
 relacionados: [estudio-academia, pieza-team-section, replica-oficio, herramienta-probe-par]
 ---
@@ -76,3 +76,10 @@ interlineado 1 (10,8 vw en móvil), y la navegación cambia de color y saca un b
 ## Siguiente
 
 - El hover de las tarjetas solapadas, que se separan.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, cursos con filtro de formato y ficha (temario y profesores), profesores, empresas, diario, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: solicitud de curso; propuesta para empresas con `BriefFlow`; boletín.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

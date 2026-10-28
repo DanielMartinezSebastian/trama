@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://ilcolorista.salon/]
 fichas: [docs/50 §3.1]
 ruta: /inspiraciones/matiz
-codigo: [components/inspiraciones/matiz/Matiz.tsx, components/inspiraciones/matiz/matiz.css]
+codigo: [components/inspiraciones/matiz/Matiz.tsx, components/inspiraciones/matiz/matiz.css, components/inspiraciones/matiz/Sitio.tsx, components/inspiraciones/matiz/data.ts]
 colores: [#ffffff, #2b2b2b, #f5a490, #f8c4b6, #1e1e1e]
 fuentes: [Cormorant Garamond, Manrope]
 sector: [peluquería]
@@ -16,7 +16,7 @@ paleta: [fondo claro, pastel cálido]
 tipografia: [serif fina, minúsculas]
 patrones: [mosaico de formas, menú a pantalla completa, carrusel de tratamientos, equipo con fotos, retratos B/N, noticias en rejilla, carta de servicios]
 movimiento: [fotos que se disuelven, filetes que se dibujan, enlaces que suben escalonados]
-piezas: [ShapeMosaic, FullscreenMenu, MenuList, TeamSection]
+piezas: [ShapeMosaic, FullscreenMenu, MenuList, TeamSection, ActionBar, AppointmentList, BookingFlow, ContactForm, OpeningHours, Reveal]
 piezas-nuevas: [ShapeMosaic, FullscreenMenu]
 relacionados: [estudio-peluqueria, pieza-shape-mosaic, pieza-fullscreen-menu, demo-hebra, herramienta-probe-par]
 ---
@@ -105,3 +105,10 @@ al filtrar lo invisible, vacío.
 
 - La transición entre páginas con la marca en el centro (E12).
 - Separar la carta en su propia página, como el original, si la réplica pasa a varias páginas.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, servicios con la carta, método, noticias, reservar, mis citas, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: reserva y anulación.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

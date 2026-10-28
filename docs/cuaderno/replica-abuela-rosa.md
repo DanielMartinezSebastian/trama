@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.peppasauce.love/]
 fichas: [docs/50 §3.8]
 ruta: /inspiraciones/abuela-rosa
-codigo: [components/inspiraciones/abuela-rosa/AbuelaRosa.tsx, components/inspiraciones/abuela-rosa/abuela-rosa.css]
+codigo: [components/inspiraciones/abuela-rosa/AbuelaRosa.tsx, components/inspiraciones/abuela-rosa/abuela-rosa.css, components/inspiraciones/abuela-rosa/Sitio.tsx, components/inspiraciones/abuela-rosa/data.ts]
 colores: [#141329, #feeee2, #8f93b8, #e8612c]
 fuentes: [Archivo]
 sector: [producto]
@@ -16,7 +16,7 @@ paleta: [dos tintas, fondo oscuro]
 tipografia: [grotesca ancha, grotesca en mayúsculas, titular gigante]
 patrones: [producto fijo, marcos de etiqueta, sello circular, cinta de compra fija, palabras gigantes con ilustración, lo que no, origen y familia]
 movimiento: [producto fijo, cinta que corre]
-piezas: [Marquee]
+piezas: [Marquee, CartDrawer, CheckoutFlow, FullscreenMenu, OptionPicker, QuantityStepper]
 piezas-nuevas: []
 relacionados: [replica-q47, herramienta-probe-par]
 ---
@@ -94,3 +94,10 @@ apariciones. Tres textos entran de otra forma (suben frente a aparecen).
 - Cinta vertical en los lados del marco («WTF IS PEPPA SAUCE»).
 - La foto del bote de Codex.
 - Que el bote se aparte a un lado en alguna sección.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, tienda y ficha de cada mojo, pedido, recetas y receta, historia.
+- Flujo de negocio, probado de punta a punta con Playwright: tamaño, cantidad y picante → bolsa → `CheckoutFlow`; el bote en CSS hace de foto de producto.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

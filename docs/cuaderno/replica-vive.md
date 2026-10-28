@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://fit-and-you.webflow.io/]
 fichas: [docs/50 §3.4 E3d]
 ruta: /inspiraciones/vive
-codigo: [components/inspiraciones/vive/Vive.tsx, components/inspiraciones/vive/vive.css]
+codigo: [components/inspiraciones/vive/Vive.tsx, components/inspiraciones/vive/vive.css, components/inspiraciones/vive/Sitio.tsx, components/inspiraciones/vive/data.ts]
 colores: [#000000, #ffffff, #fb5607]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]
@@ -16,7 +16,7 @@ paleta: [fondo oscuro, acento único saturado]
 tipografia: [condensada en mayúsculas, espaciado negativo, titular gigante]
 patrones: [menú en isla, damero de fotos y círculos, círculo de llamada, lista gigante de nombres, cinta de cifras, tarjetas ladeadas, planes con conmutador, enlaces con corchetes, mapa de clubes, foto en el titular, pie con lema]
 movimiento: [cinta que corre]
-piezas: [PricingSection]
+piezas: [PricingSection, ClassSchedule, FullscreenMenu, MemberArea, MembershipFlow]
 piezas-nuevas: []
 relacionados: [estudio-gimnasio, replica-talla, demo-cadencia, herramienta-probe-par]
 ---
@@ -86,3 +86,10 @@ sonda de estilos y la tira del original. Informe en `.refs3d/pares/vive/par.md`.
 
 - La lista de clases cambia la foto al pasar por cada fila, con la barra naranja.
 - El vídeo de la portada.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, clubes y ficha, membresía, clases, mi cuenta.
+- Flujo de negocio, probado de punta a punta con Playwright: alta con club y reserva de clase.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

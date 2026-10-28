@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://coreatelierpilates.com/]
 fichas: [docs/50 §3.4 E3a]
 ruta: /inspiraciones/nucleo
-codigo: [components/inspiraciones/nucleo/Nucleo.tsx, components/inspiraciones/nucleo/nucleo.css]
+codigo: [components/inspiraciones/nucleo/Nucleo.tsx, components/inspiraciones/nucleo/nucleo.css, components/inspiraciones/nucleo/Sitio.tsx, components/inspiraciones/nucleo/data.ts]
 colores: [#f7e7de, #25140c, #7c5a48, #744c32]
 fuentes: [Crimson Pro, Albert Sans]
 sector: [gimnasio]
@@ -16,7 +16,7 @@ paleta: [fondo claro, tonos tierra]
 tipografia: [serif con cursiva, titular partido en cursiva]
 patrones: [acordeón con foto fija, tarjetas de sesión, horario de clases, foto a sangre]
 movimiento: [foto fija, scroll suavizado, subrayado que crece]
-piezas: [FeatureExplorer, ClassSchedule, SmoothScroll]
+piezas: [FeatureExplorer, ClassSchedule, SmoothScroll, AppointmentList, BookingFlow, ContactForm, FullscreenMenu, MemberArea, MembershipFlow, OpeningHours]
 piezas-nuevas: []
 relacionados: [estudio-gimnasio, pieza-class-schedule, demo-cadencia, replica-matiz, herramienta-probe-par]
 ---
@@ -77,3 +77,10 @@ La sonda mejoró: el titular se busca solo entre lo visible (`checkVisibility` c
 ## Siguiente
 
 - El área de socio (reservas, paquetes y pedidos) como página aparte.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, clases, bonos, privadas, mi cuenta.
+- Flujo de negocio, probado de punta a punta con Playwright: alta con `MembershipFlow`, reserva de plaza y `MemberArea`.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

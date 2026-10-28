@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://honhar.in/]
 fichas: [docs/50 §3.6 E6]
 ruta: /inspiraciones/oficio
-codigo: [components/inspiraciones/oficio/Oficio.tsx, components/inspiraciones/oficio/oficio.css]
+codigo: [components/inspiraciones/oficio/Oficio.tsx, components/inspiraciones/oficio/oficio.css, components/inspiraciones/oficio/Sitio.tsx, components/inspiraciones/oficio/data.ts]
 colores: [#ffcc00, #000000, #ffffff, #3a2500]
 fuentes: [Permanent Marker, Montserrat]
 sector: [academia]
@@ -16,7 +16,7 @@ paleta: [amarillo y negro]
 tipografia: [brocha, espaciado abierto]
 patrones: [neobrutalismo, sombra dura desplazada, recuadros con borde, pizarra con personajes, sellos de valoración, cifras, palabras tachadas, programas por convocatoria, talleres, lanzamos pronto, primera clase gratis, testimonios]
 movimiento: []
-piezas: [CohortList]
+piezas: [CohortList, BriefFlow, EnrollmentFlow, FullscreenMenu]
 piezas-nuevas: [CohortList]
 relacionados: [estudio-academia, pieza-cohort-list, replica-ahora, replica-remada, herramienta-probe-par]
 ---
@@ -98,3 +98,10 @@ la sonda de estilos y la tira del original. Informe en `.refs3d/pares/oficio/par
 
 - La escena de los pollitos (Lottie en el original) como animación CSS.
 - El muro de vídeos de los alumnos en blanco y negro.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, programas, talleres y «lanzamos pronto» con ficha, mentores, colabora, legal.
+- Flujo de negocio, probado de punta a punta con Playwright: plaza con señal, masterclass gratis y lista de espera; «sé mentor» y colaboraciones con `BriefFlow`.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

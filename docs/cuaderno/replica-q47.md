@@ -6,7 +6,7 @@ estado: en curso
 referencias: [https://k72.ca/en]
 fichas: [docs/50 §3.9]
 ruta: /inspiraciones/q47
-codigo: [components/inspiraciones/q47/Q47.tsx, components/inspiraciones/q47/q47.css]
+codigo: [components/inspiraciones/q47/Q47.tsx, components/inspiraciones/q47/q47.css, components/inspiraciones/q47/Sitio.tsx, components/inspiraciones/q47/data.ts]
 colores: [#000000, #ffffff, #d3fd50, #9a9a9a]
 fuentes: [Inter Tight, Inter]
 sector: [agencia]
@@ -16,7 +16,7 @@ paleta: [fondo oscuro, acento único saturado]
 tipografia: [grotesca en mayúsculas, titular gigante]
 patrones: [portada sin scroll, reel de vídeo, vídeo en el titular, píldoras de contorno, hora local, menú a pantalla completa, rejilla de proyectos, barra del proyecto en vista]
 movimiento: [transición en escalera, fila que gira a marquesina, vídeos que se suceden, trazo que se dibuja]
-piezas: [FullscreenMenu, LineDraw, LocalTime]
+piezas: [FullscreenMenu, LineDraw, LocalTime, BriefFlow]
 piezas-nuevas: [FullscreenMenu, viewTransitions]
 relacionados: [pieza-fullscreen-menu, pieza-page-transition-stairs, replica-impulso, herramienta-probe-par]
 ---
@@ -83,3 +83,10 @@ elementos y fotogramas del botón. Informe en `.refs3d/pares/q47/par.md`; detall
 - La página de proyecto y su transición.
 - Un par de la página de trabajo con su URL: hoy Trabajo es un estado de la réplica, no una ruta.
 - El ritmo de la escalera, medido con fotogramas.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, trabajo con filtro de sector y ficha de caso, agencia, contacto, blog y artículo.
+- Flujo de negocio, probado de punta a punta con Playwright: presupuesto en pasos con `BriefFlow`; la escalera entre páginas es `PageTransition stairs`.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

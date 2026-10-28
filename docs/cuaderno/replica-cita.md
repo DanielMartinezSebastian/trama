@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.myrendezvous.ca/]
 fichas: [docs/50 §3.2 E2b]
 ruta: /inspiraciones/cita
-codigo: [components/inspiraciones/cita/Cita.tsx, components/inspiraciones/cita/cita.css]
+codigo: [components/inspiraciones/cita/Cita.tsx, components/inspiraciones/cita/cita.css, components/inspiraciones/cita/Sitio.tsx, components/inspiraciones/cita/data.ts]
 colores: [#ffffff, #000000, #ff622b]
 fuentes: [Playfair Display, Inter, Space Mono, IBM Plex Mono]
 sector: [barbería]
@@ -16,7 +16,7 @@ paleta: [fondo claro, acento único saturado]
 tipografia: [serif con cursiva, máquina de escribir, titular gigante]
 patrones: [vídeo que crece, palabra gigante de sección, locales en tarjetas, reseñas, app con QR, titular con palabra en cursiva, blog, preguntas frecuentes, final en negro, pie con foto]
 movimiento: [crecer con el scroll, palabras que asoman, scroll suavizado]
-piezas: [ScrollExpand, DeviceMockup, QRCode, FAQSection, SmoothScroll]
+piezas: [ScrollExpand, DeviceMockup, QRCode, FAQSection, SmoothScroll, ActionBar, AppointmentList, BookingFlow, FullscreenMenu, OpeningHours, PricingSection, Reveal]
 piezas-nuevas: []
 relacionados: [estudio-peluqueria, demo-esparta, herramienta-probe-par]
 ---
@@ -92,3 +92,10 @@ los hacía aparecer: ahora suben con `Reveal` (deslizamiento hacia arriba). El t
 
 - La tarjeta naranja con el horario que se abre en cada local («+»).
 - El vídeo en la portada móvil, con «Download app» debajo.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, locales y ficha de local, tarifas, reservar, mis citas.
+- Flujo de negocio, probado de punta a punta con Playwright: reserva con `BookingFlow` (local, servicio, barbero y hueco) y anulación desde mis citas.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

@@ -26,10 +26,10 @@
 
 | Qué | Dónde |
 |---|---|
-| Código de cada inspiración | `components/inspiraciones/<slug>/` (antes `components/lab/estudios/` y `components/lab/cine/piezas/`) |
+| Código de cada inspiración | `components/inspiraciones/<slug>/`: `data.ts` (datos y `PAGINAS`), `enlaces.ts`, la portada y `Sitio.tsx` (`Shell` y `Pagina`); docs/56 §7 |
 | Registro: marca, referencia, sector, firma, guía y acento | `components/inspiraciones/registro.ts` (`REPLICAS`) |
 | Carga por separado de cada una | `components/inspiraciones/Cargador.tsx` |
-| Ruta pública | `app/inspiraciones/[slug]/page.tsx` |
+| Rutas públicas | `app/inspiraciones/[slug]/layout.tsx` (el `Shell` persiste) y `[[...ruta]]/page.tsx` (cada página, con `PageTransition`) |
 | Grupo de /demos | `demoGroups()` en `lib/site-data.ts` |
 | Guías | `datosDeGuia()` (`inspiraciones`) en `components/site/guias/fuentes.ts`; `GuideSheet` §08 y `GuideIndex` |
 | Catálogo para agentes | sección «Inspiraciones» de `docs/CATALOG.md` (la escribe `npm run catalog` y comprueba que cada guía existe) |
@@ -65,17 +65,21 @@
 
 1. Estudia la web: `cine:web` o `refs:probe` (docs/50 y docs/53).
 2. Haz la réplica en `components/inspiraciones/<slug>/` con piezas del kit, con marca y textos propios. No uses la marca,
-   los clientes ni el texto de la original.
+   los clientes ni el texto de la original. Separa la portada del marco: `Sitio.tsx` exporta `Shell` (cabecera, menú
+   del móvil, estado y pie) y `Pagina({ ruta })`; los datos y `PAGINAS` van en `data.ts` (docs/56 §7).
 3. Regístrala:
-   - en `registro.ts`, con su `guia` y su `acento`;
-   - en `Cargador.tsx`.
+   - en `registro.ts`, con su `guia`, su `acento`, `paginas` y `transicion`;
+   - en `Cargador.tsx`, con `sitio(() => import("./<slug>/Sitio"))`.
 4. Mide el par: `refs:probe --par <original> http://localhost:<puerto>/lab/estudios/<slug>`.
 5. Anota la ficha del cuaderno, con `ruta: /inspiraciones/<slug>`.
 6. Encarga sus imágenes a Codex en `public/img/inspiraciones/<slug>/`.
 7. Ejecuta `npm run catalog` y vuelve a medir el repo con `refs:probe --repo` (docs/54).
+8. Pasa el revisor de interacción por todas sus páginas (`npm run smoke -- <url> --auditar`) y prueba su flujo de
+   negocio de punta a punta.
 
 ## 4. Pendiente
 
-- Las 221 imágenes de Codex. Hoy son provisionales.
-- Volver a medir las 18 con `--par` cuando lleguen las imágenes: la paleta por superficie cambia.
+- Hecho (28-10-2026): las 221 imágenes de Codex y las 18 con varias páginas y su flujo (docs/56 §7).
+- Un segundo encargo de imágenes para las fichas nuevas que reutilizan fotos (docs/56 §7).
+- Volver a medir las 18 con `--par` tras las imágenes: la paleta por superficie cambia.
 - Brasa y Cénit no tienen ficha propia en el cuaderno; su estudio está en docs/41–43.

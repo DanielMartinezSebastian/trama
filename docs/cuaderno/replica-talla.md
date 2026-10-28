@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.skulptfitness.nl]
 fichas: [docs/50 §3.4 E3e]
 ruta: /inspiraciones/talla
-codigo: [components/inspiraciones/talla/Talla.tsx, components/inspiraciones/talla/talla.css]
+codigo: [components/inspiraciones/talla/Talla.tsx, components/inspiraciones/talla/talla.css, components/inspiraciones/talla/Sitio.tsx, components/inspiraciones/talla/data.ts]
 colores: [#f5f5f5, #202020, #cef952]
 fuentes: [Antonio, Inter]
 sector: [gimnasio]
@@ -16,7 +16,7 @@ paleta: [fondo claro, acento único saturado]
 tipografia: [condensada en mayúsculas, titular gigante]
 patrones: [clase de prueba gratis, bordes de sección curvos, frase con humor, ventajas con foto, cinta de texto, oferta numerada, planes con conmutador, menú en columnas verticales, horario de apertura, lista con foto fija, formulario de contacto]
 movimiento: [cinta que corre]
-piezas: [PricingSection, Marquee, OpeningHours, ContactForm]
+piezas: [PricingSection, Marquee, OpeningHours, ContactForm, ClassSchedule, MemberArea, MembershipFlow]
 piezas-nuevas: []
 relacionados: [estudio-gimnasio, replica-vive, demo-forja, herramienta-probe-par]
 ---
@@ -91,3 +91,10 @@ sonda de estilos y la tira del original. Informe en `.refs3d/pares/talla/par.md`
 
 - La foto de la portada que se abre con borde curvo.
 - Las tarjetas de precio con más texto, como el original.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, oferta y ficha, horario, hazte socio, mi cuenta, contacto.
+- Flujo de negocio, probado de punta a punta con Playwright: alta, clase de prueba y reserva.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.

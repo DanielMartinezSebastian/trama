@@ -185,3 +185,79 @@ Lo aprendido va a docs/02 §10 (trampas), al cuaderno (fichas y piezas) y al cat
 | Cierre | auditor de las 18 a cero; `refs:probe --repo` y `--par`; docs/55 y 56; catálogo; build | S |
 
 Al terminar cada ola: aviso al usuario con las rutas para revisarla y un commit.
+
+## 7. Estado (28-10-2026): hecho
+
+Las 18 tienen varias páginas, su flujo de negocio y menú animado en el móvil. Cada una vive en
+`components/inspiraciones/<slug>/`:
+
+- `data.ts`, datos puros con `PAGINAS`;
+- `enlaces.ts`, con `<slug>Href`;
+- la portada sin marco;
+- `Sitio.tsx`, que exporta `Shell` (cabecera, menú, estado y pie que persisten) y `Pagina({ ruta })`.
+
+El registro (`registro.ts`) da las rutas y la transición. El cargador ya solo usa `sitio()`.
+
+| Ola | Inspiración | Páginas | Flujo probado de punta a punta |
+|---|---|---|---|
+| 1 | Cita | locales y ficha, tarifas, reservar, mis citas | `BookingFlow` con local, servicio, barbero y hueco; anular |
+| 1 | Matiz | servicios, método, noticias, reservar, mis citas, contacto | reserva y anulación |
+| 1 | Patrón | servicios, tienda y ficha, bolsa, pedido, revista, reservar | reserva y `CheckoutFlow` |
+| 1 | Melena | salón, tienda y ficha, pedido, academia y curso | compra y `EnrollmentFlow` con lista de espera |
+| 1 | Raíz | trabajos con filtros, consulta | consulta en pasos |
+| 1 | Nura | pelo, arte y ficha de obra, reservar, mis citas, info | reserva y petición de información de una obra |
+| 2 | Núcleo | clases, bonos, privadas, mi cuenta | `MembershipFlow`, reservar plaza, `MemberArea` |
+| 2 | Impulso | equipo, servicios y ficha, tarifas, reservar, packs, reto, mi cuenta | reserva de sesión y alta |
+| 2 | Vive | clubes y ficha, membresía, clases, mi cuenta | alta con club y reserva |
+| 2 | Talla | oferta y ficha, horario, hazte socio, mi cuenta | alta, prueba y reserva |
+| 2 | Lobo | clases y ficha, prueba, eventos, horario, cuotas, mi cuenta, tienda, pedido | prueba gratis, cuota, evento y compra |
+| 3 | Remada | viajes y ficha, en línea, vlogs, contacto | solicitud con señal y lista de espera; envío del vídeo; chat por reglas |
+| 3 | Ahora | cursos (filtro) y ficha, profesores, empresas, diario, contacto | solicitud de curso; `BriefFlow` para empresas; boletín |
+| 3 | Oficio | programas y ficha, mentores, colabora, legal | plaza con señal, masterclass gratis, lista de espera; «sé mentor» |
+| 4 | Abuela Rosa | tienda y ficha, pedido, recetas y receta, historia | tamaño y cantidad → bolsa → `CheckoutFlow` |
+| 4 | Q47 | trabajo (filtro) y caso, agencia, contacto, blog y artículo | presupuesto con `BriefFlow`; escalera entre páginas (`PageTransition stairs`) |
+| 4 | Cénit | proyectos (filtro) y ficha, estudio, contacto | `BriefFlow`; menú desplegable animado; boletín |
+| 4 | Brasa | trabajos y ficha, servicios, sobre mí, blog, contacto | `BriefFlow`; el reel abre la ficha |
+
+**Piezas nuevas del kit**:
+
+- `BookingFlow` y `AppointmentList` (`lib/commerce/booking`);
+- `CheckoutFlow` (`lib/commerce/card`);
+- `EnrollmentFlow`;
+- `MembershipFlow` y `MemberArea` (`lib/commerce/membership`);
+- `BriefFlow` (petición de propuesta o presupuesto en pasos);
+- las anclas animadas de `SmoothScroll` (`lib/motion/anchors`).
+
+**Ampliaciones del kit**:
+
+- `ClassSchedule` con `startedLabel`;
+- `ChatWidget` con un avatar de imagen;
+- el paso actual del `Stepper` sin halo.
+
+**Candidatas que quedan** (se repitieron y aún son locales):
+
+| Candidata | Dónde se repitió | Qué haría |
+|---|---|---|
+| Ficha de caso | Q47, Cénit, Brasa | cabecera, imagen, datos, texto, cifras y «siguiente proyecto» |
+| Filtro de chips | Ahora, Q47, Cénit, Raíz | chips con `aria-pressed` sobre una lista, con recuento |
+| Subida de archivo | Remada (vídeo), Raíz (fotos) | zona de arrastre con vista previa local y validación de tipo y tamaño |
+| Boletín con respuesta | Ahora, Cénit | `ContactForm fields="email"` ya vale; falta un estilo de pie oscuro |
+| Localizador de locales | Cita, Vive | sigue pendiente (§5) |
+
+**Trampas nuevas** (docs/02 §10):
+
+- un `var()` sin definir dentro de `font:` invalida toda la declaración y la letra vuelve a la heredada (Brasa con
+  `--font-sans`);
+- al quitar el envoltorio de una portada, hay que sustituir el final del archivo y no un `</div>` cualquiera;
+- en Git Bash, las rutas que empiezan por `/` se convierten en rutas de Windows (`MSYS_NO_PATHCONV=1`);
+- en `next dev`, Turbopack da 404 en los trozos que se cargan con `lazy()` dentro de un `next/dynamic` (Carousel,
+  CrossCluster, la escena de Brasa); en el build no pasa.
+
+**Pendiente**: un segundo encargo de imágenes para Codex con las fichas nuevas que hoy reutilizan fotos:
+
+- productos de Patrón;
+- blog de Melena;
+- coaches de Núcleo;
+- recetas e historia de Abuela Rosa;
+- mentores de Oficio;
+- profesores de Ahora en contexto.

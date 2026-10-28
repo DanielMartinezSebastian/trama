@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.alicehairart.se/]
 fichas: [docs/50 §3.2 E2a]
 ruta: /inspiraciones/nura
-codigo: [components/inspiraciones/nura/Nura.tsx, components/inspiraciones/nura/nura.css]
+codigo: [components/inspiraciones/nura/Nura.tsx, components/inspiraciones/nura/nura.css, components/inspiraciones/nura/Sitio.tsx, components/inspiraciones/nura/data.ts]
 colores: [#f5f5f5, #121212, #5c5c5c, #dedede]
 fuentes: [Geist, Inter]
 sector: [peluquería]
@@ -16,7 +16,7 @@ paleta: [fondo claro, grises con grano]
 tipografia: [una sola letra, grotesca en mayúsculas]
 patrones: [collage de fotos, equipo en filas, reserva por persona, barra inferior fija, sala de exposición]
 movimiento: [desenfoque al bajar]
-piezas: [GradientField, TeamSection]
+piezas: [GradientField, TeamSection, AppointmentList, BookingFlow, FullscreenMenu, OpeningHours]
 piezas-nuevas: [TeamSection]
 relacionados: [estudio-peluqueria, pieza-team-section, demo-hebra, herramienta-probe-par]
 ---
@@ -93,3 +93,10 @@ coincide (8 px) y el par sube a **8 de 11**.
 ## Siguiente
 
 - El conmutador «Hair / & Art» con la barra que se rellena.
+
+## Páginas y flujo (28-10-2026, docs/56)
+
+- Páginas: portada, pelo, arte y ficha de obra, reservar, mis citas, info.
+- Flujo de negocio, probado de punta a punta con Playwright: reserva y petición de información de una obra.
+- Marco en `Sitio.tsx` (`Shell`: cabecera, menú a pantalla completa en el móvil, estado y pie); datos y `PAGINAS` en
+  `data.ts`. Revisor de interacción (`smoke --auditar`) sin enlaces muertos ni botones sin efecto.
