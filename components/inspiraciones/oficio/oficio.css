@@ -166,3 +166,43 @@
 .of .of-boton { color: #000 !important; }
 .of .of-lema__frase { font-size: 44px; line-height: 1.1; max-width: none; }
 @media (max-width: 760px) { .of .of-lema__frase { font-size: 28px; } }
+
+/* páginas (docs/56): cabecera de página, ficha del programa con recuadro de módulos, mentores, legal y el menú del móvil */
+.of-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.of-pag { display: grid; gap: 40px; padding: 60px 42px 120px; }
+.of-pag > * { min-width: 0; }
+.of-pag > h2 { text-align: left; }
+.of-pag__cab { display: grid; gap: 16px; }
+.of-pag__cab h1 { font-size: clamp(44px, 6vw, 96px); }
+.of-pag__cab p { max-width: 40em; margin: 0; font-size: 20px; }
+.of-pag__foto { width: 100%; max-height: 70svh; object-fit: cover; border: 2px solid #000; border-radius: var(--r); box-shadow: 6px 6px 0 #000; }
+.of-pag__bloque { display: grid; gap: 20px; scroll-margin-top: 90px; }
+.of-pag__bloque h2 { text-align: left; }
+.of-pag__bloque p { margin: 0; max-width: 40em; }
+.of-volver { font-weight: 800; font-size: 13px; text-transform: uppercase; }
+.of-ficha { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+.of-ficha > * { min-width: 0; }
+.of-ficha > div:first-child { display: grid; gap: 14px; }
+.of-ficha h1 { font-size: clamp(40px, 4.6vw, 72px); }
+.of-ficha p { margin: 0; }
+.of-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.of-chips span { padding: 4px 12px; border: 2px solid #000; border-radius: 99px; background: #fff; font-size: 13px; font-weight: 800; }
+.of-precio { font: 400 30px/1.1 var(--of-brocha); }
+.of-recuadro { display: grid; gap: 14px; padding: 28px; border: 2px solid #000; border-radius: var(--r); background: #fff; box-shadow: 6px 6px 0 #000; }
+.of-recuadro h2 { font-size: 34px; text-align: left; }
+.of-recuadro h3 { font-size: 24px; }
+.of-recuadro :is(ol, ul) { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+.of-flujo { max-width: 1000px; }
+.of-mentores { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.of-mentores li { display: grid; gap: 4px; padding: 18px; border: 2px solid #000; border-radius: var(--r); background: #fff; }
+.of-mentores b { font: 400 24px/1.1 var(--of-brocha); }
+.of-legal section { display: grid; gap: 12px; scroll-margin-top: 90px; }
+.of-legal section p { max-width: 40em; margin: 0; }
+.of-legal .of-boton { justify-self: start; }
+.of-pie span a { text-decoration: underline; }
+@media (max-width: 760px) {
+  .of-head .ui-fsm__btn--burger { display: inline-flex; margin-left: auto; }
+  .of-head > .of-boton { display: none; }
+  .of-pag { padding: 40px 20px 80px; }
+  .of-ficha { grid-template-columns: 1fr; }
+}
