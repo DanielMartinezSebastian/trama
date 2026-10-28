@@ -34,7 +34,7 @@ for (const root of ROOTS) {
       for (const raw of decls) {
         // el `#000` de reserva dentro de var(--bg, #000) no es una sombra negra fija
         // el halo de legibilidad con su reserva calculada con --bg (ui-kit.css) cuenta como var(--legibility-ts)
-        const d = raw.replace(/var\(--legibility-ts, 0 1px 1px color-mix\(in srgb, var\(--bg, #07080f\) 85%, transparent\), 0 0 3px color-mix\(in srgb, var\(--bg, #07080f\) 65%, transparent\)\)/g, "var(--legibility-ts)").replace(/var\(--bg\s*,\s*#000\)/g, "var(--bg)");
+        const d = raw.replace(/var\(--legibility-ts, 0 0 transparent\)/g, "var(--legibility-ts)").replace(/var\(--bg\s*,\s*#000\)/g, "var(--bg)");
         if (/^\s*(none|var\(--(s-ts|s-pri-ts|legibility-ts)\)(\s*,\s*var\(--(s-ts|legibility-ts)\))?)\s*$/.test(d)) continue;
         if (/#000\b|#000000|\bblack\b|rgba?\(\s*0\s*,\s*0\s*,\s*0/.test(d)) bad.push(`${file}:${i + 1}  sombra negra fija → usa un halo del color de fondo (--bg) o var(--legibility-ts)`);
         else if (/var\(--(acc2?|fg|tone|pr-tone|mut)\b/.test(d) && !/--glow/.test(d)) bad.push(`${file}:${i + 1}  brillo con color del tema sin escalar por --glow → calc(Npx * var(--glow, 1))`);

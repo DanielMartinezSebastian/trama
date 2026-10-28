@@ -1,7 +1,7 @@
 "use client";
 
 import { Ultra } from "next/font/google";
-import { Suspense, useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ActionBar from "@/components/ui/ActionBar";
 import BriefFlow from "@/components/ui/BriefFlow";
@@ -38,8 +38,7 @@ const cartel = Ultra({ weight: "400", subsets: ["latin"], variable: "--tr-cartel
 
 const href = (p = "") => siteHref(SLUG, p);
 const KEY = "trama:la-tramoya:entradas";
-// sin el halo de legibilidad del tema: sobre los botones y franjas oscuras se veía como una sombra blanca
-const TOKENS = { ...tokensToStyle({ bg: "#f3e7d0", fg: "#1c1420", mut: "#5f5047", acc: "#b3121f", acc2: "#8a6420", card: "#fbf3e3", ln: "#cdb994", r: 0, font: "var(--font-manrope), sans-serif", display: "var(--font-fraunces), serif", glow: false }), "--legibility-ts": "0 0 transparent" } as CSSProperties;
+const TOKENS = tokensToStyle({ bg: "#f3e7d0", fg: "#1c1420", mut: "#5f5047", acc: "#b3121f", acc2: "#8a6420", card: "#fbf3e3", ln: "#cdb994", r: 0, font: "var(--font-manrope), sans-serif", display: "var(--font-fraunces), serif", glow: false });
 const NAV: [string, string][] = [
   ["cartelera", "Cartelera"],
   ["carta", "Carta"],

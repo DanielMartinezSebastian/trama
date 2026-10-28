@@ -17,6 +17,8 @@ export type TokenSet = {
   font: string;
   /** fuente de los titulares (h1–h3); sin ella heredan `font` */
   display?: string;
+  /** halo de legibilidad (texto encima de un fondo animado); de serie, ninguno */
+  legibility?: boolean;
   /** fuente de acento (cursiva dentro de un titular, `<em>`); se publica como `--font-accent` */
   accentFont?: string;
   /** fuerza los brillos de texto (neón, dot matrix…) a true/false; por defecto, solo con texto claro */
@@ -244,9 +246,8 @@ export function tokensToStyle(t: TokenSet): CSSProperties {
     ...(t.display ? { "--display": t.display } : {}),
     ...(t.accentFont ? { "--font-accent": t.accentFont } : {}),
     "--glow": (t.glow ?? !hasDarkText(t)) ? 1 : 0,
-    // El halo de legibilidad se fija aquí, con el fondo de ESTE tema: una variable definida en `:root` con `var(--bg, …)` se resuelve
-    // en `:root`, donde el tema aún no existe, y caería al negro de reserva (sombra negra sobre texto oscuro en temas claros).
-    "--legibility-ts": `0 1px 1px color-mix(in srgb, ${t.bg} 85%, transparent), 0 0 3px color-mix(in srgb, ${t.bg} 65%, transparent)`,
+    // halo de legibilidad solo si el tema lo pide (texto sobre un fondo animado); de serie, texto limpio (ui-kit.css §legibilidad)
+    ...(t.legibility ? { "--legibility-ts": `0 1px 1px color-mix(in srgb, ${t.bg} 85%, transparent), 0 0 3px color-mix(in srgb, ${t.bg} 65%, transparent)` } : {}),
     fontFamily: t.font,
     color: t.fg,
   } as CSSProperties;

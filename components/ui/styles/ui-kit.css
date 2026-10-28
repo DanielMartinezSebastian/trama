@@ -5,31 +5,22 @@
    ===================================================================== */
 
 /*
- * Legibilidad por defecto para texto "sin superficie" (sin --s-bg detrás: SectionHeader, Hero con
- * backdrop="none", LogoCloud, Divider…) y para las dos variantes con --s-bg: transparent (outline,
- * minimal) — pensados para poder sentarse encima de un fondo de la categoría "fondos" (guía §7).
+ * Legibilidad sobre fondos animados: un halo OPCIONAL (`--legibility-ts`), nunca de serie.
  *
- * Un halo ligero con el propio --bg del tema, por `text-shadow` (--legibility-ts): dos capas, 1 px y 3 px de
- * desenfoque, con alfa reducida. Invisible sobre un fondo --bg liso y con un margen de contraste discreto en
- * cuanto deja de serlo. La primera línea de defensa NO es este halo sino que el fondo sea sencillo (guía §7:
- * celdas grandes, sin bloom, estilos "dots"/"lines"): un halo agresivo tapando un fondo cargado se ve peor
- * que el problema que arregla. Para el look sin halo, a propósito: `--legibility-ts: 0 0 transparent` en el
- * contenedor.
+ * De serie el texto del kit va limpio: `text-shadow: var(--legibility-ts, 0 0 transparent)`. Antes cada regla traía un
+ * halo con el --bg del tema (dos capas de 1 y 3 px) y `tokensToStyle` lo fijaba en línea; en cuanto un componente se
+ * sentaba sobre otra superficie (el horario en un pie oscuro de un tema claro, un botón oscuro de la barra móvil) el halo
+ * salía del color equivocado y emborronaba el texto (La Tramoya, 28-10-2026; el usuario: «Siempre debe verse bien de
+ * serie»).
  *
- * Por qué `text-shadow` y NO `filter: drop-shadow()`: en Chromium el filtro fuerza un compositado que suaviza
- * los glifos — con texto oscuro sobre un tema claro (FOLIO) se leía borroso por pequeño que fuese el radio, y
- * solo desaparecía quitando el filtro. Con texto claro sobre fondo oscuro no se nota (el halo oscuro apenas
- * se ve sobre los glifos), por eso tardó en aparecer. `text-shadow` no tiene ese efecto secundario. Y se puede
- * combinar con la sombra del propio estilo (`text-shadow: var(--s-ts), var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent))`) porque --s-ts es
- * SIEMPRE un <shadow> válido — `0 0 transparent` cuando el estilo no tiene sombra, nunca la palabra clave
- * `none`, que invalidaría toda la lista.
- */
-/*
- * El halo NO se define en :root: una variable de :root se resuelve allí, con el --bg del tema por defecto (oscuro), y en
- * un tema claro hecho solo con CSS (las inspiraciones, `.mz { --bg: #fff }`) salía NEGRO sobre fondo blanco. Cada regla
- * usa `var(--legibility-ts, <halo con var(--bg)>)`: si nadie define --legibility-ts, el halo se calcula en el propio
- * elemento con el --bg que hereda. `tokensToStyle` la sigue fijando con el fondo del tema, y `0 0 transparent` en un
- * contenedor la quita (guía §8.0).
+ * Quien ponga texto encima de un fondo de la categoría «fondos» (AsciiBackground, GradientField…) lo activa a propósito en
+ * el contenedor de ese texto, con la clase `ui-legible` (halo con el --bg de ese contenedor) o con `legibility: true` en
+ * `tokensToStyle`. La primera línea de defensa sigue siendo que el fondo sea sencillo (guía §7).
+ *
+ * Por qué `text-shadow` y NO `filter: drop-shadow()`: en Chromium el filtro fuerza un compositado que suaviza los glifos.
+ * Y se combina con la sombra del propio estilo (`text-shadow: var(--s-ts), var(--legibility-ts, 0 0 transparent)`)
+ * porque --s-ts es SIEMPRE un <shadow> válido (`0 0 transparent` cuando el estilo no tiene sombra, nunca `none`, que
+ * invalidaría toda la lista).
  */
 
 /* ---------- 1. Sistema de estilos ---------- */
@@ -96,17 +87,13 @@
   --s-pri-bg: var(--acc); --s-pri-fg: var(--bg); --s-pri-bd: 1px solid var(--acc); --s-pri-sh: 0 0 22px -8px var(--acc); --s-pri-ts: none;
 }
 /*
- * outline y minimal son las dos únicas variantes con --s-bg: transparent — su legibilidad depende
- * por completo de lo que haya detrás, no solo el texto suelto (SectionHeader, Hero…) que ya lleva
- * --legibility-ts por su cuenta. Antes usaba `filter: var(--legibility)` en el elemento raíz para
- * proteger TODO el subárbol de una vez (borde incluido) sin tener que añadir la clase a cada hijo;
- * se cambió a `text-shadow` (heredado por CSS a todo el texto descendiente igual que --s-ts) porque
- * `filter: drop-shadow()` sobre texto suaviza visiblemente los glifos (mismo hallazgo que llevó a
- * --legibility-ts para el texto suelto — ver arriba). Ninguna de las dos variantes tiene borde o
- * relleno propio que proteger (outline: solo un borde de 1px ya de por sí contrastado; minimal: sin
- * borde ni relleno), así que no hace falta lo que `filter` daba de más.
+ * outline, minimal y editorial no tienen superficie propia (--s-bg: transparent): su texto se lee sobre lo que haya
+ * detrás. Si detrás hay un fondo animado, el halo opcional (`ui-legible` o `legibility: true`) protege todo el subárbol de
+ * una vez, porque `text-shadow` se hereda; de serie no hay halo (ver arriba).
  */
-.ui-s--outline, .ui-s--minimal, .ui-s--editorial { text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-s--outline, .ui-s--minimal, .ui-s--editorial { text-shadow: var(--legibility-ts, 0 0 transparent); }
+/* halo opcional para texto encima de un fondo animado: se calcula con el --bg de ESTE contenedor */
+.ui-legible { --legibility-ts: 0 1px 1px color-mix(in srgb, var(--bg) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg) 65%, transparent); }
 
 /*
  * Fuente de titulares: la de la variante (--s-df, solo la define dotmatrix), si no la del tema (--display, token opcional
@@ -251,7 +238,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--ln, rgba(255, 255, 255, 0.2
   padding: 14px 16px; border: 1px solid var(--ln); border-radius: var(--r, 12px);
   background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(6px); pointer-events: none;
 }
-.ui-sample strong { font-size: 18px; text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-sample strong { font-size: 18px; text-shadow: var(--legibility-ts, 0 0 transparent); }
 .ui-sample span { font-size: 12px; color: var(--mut); }
 .ui-tone--fg { --tone: var(--fg); } .ui-tone--acc { --tone: var(--acc); } .ui-tone--acc2 { --tone: var(--acc2); } .ui-tone--mut { --tone: var(--mut); }
 
@@ -807,9 +794,9 @@ a.ui-button { text-decoration: none; }
 /* ---------- SectionHeader ---------- */
 .ui-sh { display: grid; gap: 10px; width: min(100%, 560px); min-width: 0; font-family: var(--s-ff); }
 .ui-sh--center { text-align: center; justify-items: center; }
-.ui-sh__kicker { font-size: 12px; letter-spacing: 0.2em; color: var(--acc); text-transform: uppercase; text-shadow: var(--s-ts), var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
-.ui-sh h2 { margin: 0; font-size: clamp(26px, 4vw, 40px); line-height: 1.05; letter-spacing: -0.02em; text-transform: var(--s-tt); text-shadow: var(--s-ts), var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); font-weight: 800; }
-.ui-sh p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-sh__kicker { font-size: 12px; letter-spacing: 0.2em; color: var(--acc); text-transform: uppercase; text-shadow: var(--s-ts), var(--legibility-ts, 0 0 transparent); }
+.ui-sh h2 { margin: 0; font-size: clamp(26px, 4vw, 40px); line-height: 1.05; letter-spacing: -0.02em; text-transform: var(--s-tt); text-shadow: var(--s-ts), var(--legibility-ts, 0 0 transparent); font-weight: 800; }
+.ui-sh p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--mut); text-transform: none; letter-spacing: normal; text-shadow: var(--legibility-ts, 0 0 transparent); }
 .ui-sh__rule { color: var(--ln); font-family: var(--mono); overflow: hidden; white-space: nowrap; width: 100%; }
 .ui-sh__line { height: 1px; width: 64px; background: var(--acc); }
 /* editorial: titular en la fuente de titulares (--display) a peso normal, como en las webs de revista; sin halos */
@@ -827,7 +814,7 @@ a.ui-button { text-decoration: none; }
 .ui-sh--center .ui-sh__word { inset-inline-start: 50%; translate: -50% -50%; }
 
 /* ---------- Divider ---------- */
-.ui-div { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--mut); font-family: var(--s-ff); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-div { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--mut); font-family: var(--s-ff); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: var(--legibility-ts, 0 0 transparent); }
 .ui-div__rule { flex: 1; overflow: hidden; white-space: nowrap; color: var(--ln); font-family: var(--mono); }
 .ui-div__rule--line { height: 1px; background: var(--ln); font-size: 0; }
 .ui-s--neon .ui-div__rule--line { background: var(--acc); box-shadow: 0 0 8px var(--acc); }
@@ -842,7 +829,7 @@ a.ui-button { text-decoration: none; }
 .ui-s--terminal.ui-chart pre { color: var(--acc); } .ui-s--retro.ui-chart pre { color: var(--acc2); }
 
 /* ---------- Typewriter / NeonSign ---------- */
-.ui-type { font-family: var(--s-ff); color: var(--fg); font-weight: 800; letter-spacing: -0.01em; text-shadow: var(--s-ts), var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); text-transform: var(--s-tt); }
+.ui-type { font-family: var(--s-ff); color: var(--fg); font-weight: 800; letter-spacing: -0.01em; text-shadow: var(--s-ts), var(--legibility-ts, 0 0 transparent); text-transform: var(--s-tt); }
 .ui-type__cursor { display: inline-block; width: 0.1em; min-width: 3px; height: 1em; margin-left: 4px; vertical-align: text-bottom; background: var(--acc); animation: ui-blink 1s steps(1) infinite; }
 .ui-type__cursor--block { width: 0.55em; } .ui-type__cursor--underscore { height: 0.12em; width: 0.6em; vertical-align: baseline; }
 .ui-neon { margin: 0; font-weight: 800; letter-spacing: 0.04em; text-align: center; color: color-mix(in srgb, var(--tone, var(--acc)) 30%, #fff); }
@@ -1141,9 +1128,9 @@ a.ui-button { text-decoration: none; }
 .ui-hero__inner { position: relative; z-index: 1; display: grid; gap: 16px; max-width: 720px; }
 .ui-hero--center { text-align: center; justify-items: center; margin-inline: auto; }
 .ui-hero--left { text-align: left; justify-items: start; }
-.ui-hero__kicker { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
-.ui-hero h1 { margin: 0; font-size: clamp(32px, 6vw, 64px); line-height: 1.02; letter-spacing: -0.02em; font-weight: 800; text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
-.ui-hero p { margin: 0; max-width: 52ch; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.6; color: var(--mut); text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-hero__kicker { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); text-shadow: var(--legibility-ts, 0 0 transparent); }
+.ui-hero h1 { margin: 0; font-size: clamp(32px, 6vw, 64px); line-height: 1.02; letter-spacing: -0.02em; font-weight: 800; text-shadow: var(--legibility-ts, 0 0 transparent); }
+.ui-hero p { margin: 0; max-width: 52ch; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.6; color: var(--mut); text-shadow: var(--legibility-ts, 0 0 transparent); }
 .ui-hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
 .ui-hero--center .ui-hero__cta { justify-content: center; }
 .ui-hero__trust { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
@@ -1552,9 +1539,9 @@ a.ui-crumbs__link { text-decoration: none; }
 .ui-team--mono-hover .ui-team__tile:hover img { filter: none; scale: 1.04; }
 @media (prefers-reduced-motion: reduce) { .ui-team__photo img, .ui-team__link span, .ui-team__tile img { transition: none; } }
 .ui-logos { width: 100%; display: grid; gap: 16px; justify-items: center; text-align: center; }
-.ui-logos__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); }
+.ui-logos__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); text-shadow: var(--legibility-ts, 0 0 transparent); }
 .ui-logos__row { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(20px, 4vw, 48px); font-family: var(--s-ff); }
-.ui-logos__brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: var(--mut); text-transform: var(--s-tt); text-shadow: var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); transition: color 0.15s; }
+.ui-logos__brand { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: var(--mut); text-transform: var(--s-tt); text-shadow: var(--legibility-ts, 0 0 transparent); transition: color 0.15s; }
 .ui-logos__brand:hover { color: var(--fg); }
 .ui-logos__awards { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px; margin: 6px 0 0; padding: 0; list-style: none; }
 .ui-logos__award { display: inline-flex; align-items: center; gap: 8px; color: var(--mut); }
@@ -1818,7 +1805,7 @@ details.ui-callout[open] .ui-callout__chev { rotate: 180deg; }
 .ui-arthead { display: grid; gap: 14px; font-family: var(--s-ff); color: var(--fg); }
 .ui-arthead--center { justify-items: center; text-align: center; }
 .ui-arthead__kicker { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
-.ui-arthead__title { margin: 0; max-width: 22ch; font-size: clamp(30px, 5vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.02em; text-transform: var(--s-tt); text-shadow: var(--s-ts), var(--legibility-ts, 0 1px 1px color-mix(in srgb, var(--bg, #07080f) 85%, transparent), 0 0 3px color-mix(in srgb, var(--bg, #07080f) 65%, transparent)); text-wrap: balance; }
+.ui-arthead__title { margin: 0; max-width: 22ch; font-size: clamp(30px, 5vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.02em; text-transform: var(--s-tt); text-shadow: var(--s-ts), var(--legibility-ts, 0 0 transparent); text-wrap: balance; }
 .ui-arthead__sub { margin: 0; max-width: 60ch; font-size: clamp(16px, 2vw, 19px); line-height: 1.55; color: var(--mut); text-transform: none; letter-spacing: normal; text-wrap: pretty; }
 .ui-arthead__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 4px; font-size: 14px; text-transform: none; letter-spacing: normal; }
 .ui-arthead__author { display: inline-flex; align-items: center; gap: 10px; }

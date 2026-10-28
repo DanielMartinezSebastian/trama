@@ -534,14 +534,17 @@ letras oscuras las empasta y estorba la lectura.
   `tokensToStyle` la pone sola: 0 si el texto del tema es oscuro (luminancia < 0,4), 1 si es claro (`hasDarkText` en `lib/ui/tokens.ts`).
   En CSS: `text-shadow: 0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, var(--acc) calc(100% * var(--glow, 1)), transparent)`.
   Un tema que no pase por `tokensToStyle` pone `--glow: 0` a mano; y `glow: true | false` en el `TokenSet` fuerza el valor.
-- **`--legibility-ts` y la trampa de `:root`.** Una variable definida en `:root` se resuelve en `:root`, donde el tema aún no existe: el halo salía **negro en los temas claros** hechos solo con CSS.
-  - Pasó en las inspiraciones (27-10-2026, docs/55). `.mz { --bg: #fff }` dejaba el halo oscuro por defecto sobre fondo blanco.
-  - Desde entonces `--legibility-ts` **no se define en `:root`**. Cada regla del kit usa `var(--legibility-ts, <halo con var(--bg)>)`, y la reserva se calcula en el propio elemento con el `--bg` que hereda.
-  - `tokensToStyle` la sigue fijando con el fondo del tema, y `0 0 transparent` en un contenedor la quita.
-  - **No vuelvas a definirla en `:root`.**
-- **Legibilidad sobre fondos con movimiento** (ASCII, vídeo, imágenes): halo del **color del fondo del tema**, nunca negro fijo:
-  `var(--legibility-ts)` o `color-mix(in srgb, var(--bg) 90%, transparent)`. Con fondo oscuro es idéntico al antiguo negro; con
-  fondo claro es un halo claro, inocuo.
+- **De serie, ningún texto del kit lleva halo** (28-10-2026). Cada regla usa `var(--legibility-ts, 0 0 transparent)` y
+  `tokensToStyle` ya no lo fija.
+  - Antes el halo venía de serie, con el `--bg` del tema. En cuanto un componente quedaba sobre otra superficie, el halo
+    salía del color equivocado y emborronaba el texto. Pasaba con el horario en el pie oscuro de un tema claro y con el
+    botón oscuro de la barra móvil (La Tramoya, docs/57). El usuario lo pidió así: «siempre debe verse bien de serie».
+  - Se revisaron las 14 páginas con texto sobre fondos animados (landings `th-*`, la portada, Kernel Log, Faro, Volt…).
+    Todas se leen bien sin halo.
+- **Halo opcional, solo sobre un fondo con movimiento** (ASCII, vídeo, imágenes): la clase `ui-legible` en el contenedor
+  de ese texto (halo con el `--bg` de ese contenedor) o `legibility: true` en `tokensToStyle`. Nunca un negro fijo.
+  - **No definas `--legibility-ts` en `:root`**: se resolvería allí, sin el tema, y saldría negro en los temas claros
+    (inspiraciones, 27-10-2026).
 - **Nada de `#000`, `black` ni `rgba(0,0,0,…)` en un `text-shadow`.** `npm run check:shadows` lo comprueba en todos los CSS y
   falla si encuentra una sombra negra fija o un brillo de color sin `--glow`. Excepción justificada (un efecto elegido a propósito
   como `NeonSign`, o un terminal oscuro por diseño): comentario `/* shadow-ok: motivo */` en la misma regla.
@@ -923,16 +926,17 @@ fondo puede ser cualquier cosa — no solo el `--bg` liso de un tema. Y `outline
 variantes con `--s-bg: transparent`: cualquier cosa que las use (tarjetas, pestañas, acordeones, paginación…)
 depende igual de por completo de lo que haya detrás.
 
-*Qué se hace.* Un token `--legibility-ts` (`:root`, `components/ui/styles/ui-kit.css`): un halo con el propio `--bg` del tema, dos
-capas (1 px y 3 px de desenfoque, con alfa reducida), como lista de `text-shadow`. Lo llevan los textos sueltos
-(`.ui-sh`, `.ui-hero`, `.ui-logos`, `.ui-div`, `.ui-type`) y, una sola vez, las propias variantes
-(`.ui-s--outline, .ui-s--minimal { text-shadow: var(--legibility-ts); }`): `text-shadow` es una propiedad
-heredada, así que alcanza a todo el texto de dentro sin añadir la clase componente a componente — que es como
-se olvidó primero en `FeatureGrid` y `TeamSection` en variante `outline`. Un componente nuevo con texto pintado
-directamente sobre el fondo de la página (sin `ui-surface` propio) tiene que llevar
-`text-shadow: var(--legibility-ts)` él mismo. Invisible sobre un `--bg` liso (la sombra es del color de lo que
-hay detrás — por eso no cambia nada en el catálogo). Quien quiera el look sin halo, a propósito, sobrescribe
-`--legibility-ts: 0 0 transparent` en su contenedor.
+*Qué se hace.* Un enganche `--legibility-ts` (`components/ui/styles/ui-kit.css`) que de serie vale `0 0 transparent`.
+Lo llevan los textos sueltos (`.ui-sh`, `.ui-hero`, `.ui-logos`, `.ui-div`, `.ui-type`) y, una sola vez, las variantes sin
+superficie (`.ui-s--outline, .ui-s--minimal, .ui-s--editorial { text-shadow: var(--legibility-ts, 0 0 transparent); }`).
+`text-shadow` se hereda, así que alcanza a todo el texto de dentro.
+
+Cuando el texto va encima de un fondo animado, el halo se activa en ese contenedor con `ui-legible` (dos capas de 1 y 3
+px con el `--bg` de ese contenedor) o con `legibility: true` en `tokensToStyle`.
+
+Un componente nuevo con texto pintado directamente sobre el fondo de la página usa `text-shadow: var(--legibility-ts, 0 0
+transparent)`, nunca un halo fijo. Hasta el 28-10-2026 el halo venía de serie, y en superficies de otro color emborronaba
+el texto (§8.0).
 
 *Lo que NO funcionó, en el orden en que se descubrió — para no repetirlo.*
 1. **Halo fuerte (6 capas de `drop-shadow`) para compensar un fondo cargado.** Legible, pero el usuario lo rechazó
