@@ -8,6 +8,7 @@ import { defaultsOf, snippet } from "../lib/catalog/schema";
 import { knowledgeOutputs, selectPilot } from "./agent-knowledge.mts";
 import { resolvePublicExport } from "./package-surface.mts";
 import "./agent-evaluation-suites.test.mts";
+import "./agent-cohort-summary.test.mts";
 
 const { entries, recipe } = selectPilot(catalog, RECETAS_SECTOR, STYLE_GUIDES);
 assert.equal(recipe.id, "salon");
