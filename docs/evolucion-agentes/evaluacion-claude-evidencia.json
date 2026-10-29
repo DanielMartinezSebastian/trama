@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-29T14:19:15.177Z",
+  "cohort": {
+    "client": "claude-code 2.1.302",
+    "model": "claude-opus-5-5 (fijado con --model opus)",
+    "tools": "Read, Glob, Grep; + Skill en proposed_skills",
+    "settings": "--setting-sources project,local; --strict-mcp-config; ensayos fuera del repo",
+    "order": "rep1 docs→updated→pilot; rep2 inverso",
+    "interrupted": "7 ensayos de rep2 sin turno por límite de sesión; conservados en .cache/agent-evaluation-claude-sin-cuota y repetidos tras el reinicio"
+  },
+  "packages": {
+    "evaluated": {
+      "sha256": "ea7c7d080479ff83d5acbcdf07d9894f70a8772983f1f9bb1a6b8a0fdb981e31"
+    },
+    "typesExported": {
+      "sha256": "769cb1a57670b954577638a52127a719ea069c8059b499779504b3e09a963877",
+      "change": "tipos de reserva exportados por BookingFlow, AppointmentList y la raíz"
+    }
+  },
+  "runs": [
+    {
+      "id": "composition-docs-1",
+      "task": "composition",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "generationMs": 82398,
+      "turns": 24,
+      "costUsd": 0.7407004,
+      "tokens": {
+        "input": 517693,
+        "cachedInput": 458742,
+        "cacheWrite": 58927,
+        "output": 8872
+      },
+      "tools": {
+        "Grep": 8,
+        "Read": 12,
+        "Glob": 2,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-updated-1",
+      "task": "composition",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 86921,
+      "turns": 25,
+      "costUsd": 0.7236982,
+      "tokens": {
+        "input": 609957,
+        "cachedInput": 556251,
+        "cacheWrite": 53676,
+        "output": 9146
+      },
+      "tools": {
+        "Grep": 11,
+        "Read": 10,
+        "Glob": 2,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-pilot-1",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 103666,
+      "turns": 26,
+      "costUsd": 1.0713724,
+      "tokens": {
+        "input": 1028695,
+        "cachedInput": 945662,
+        "cacheWrite": 82997,
+        "output": 10906
+      },
+      "tools": {
+        "Skill": 1,
+        "Glob": 1,
+        "Read": 14,
+        "Grep": 7,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": [
+          "axe color-contrast ignorado (decorativo, aria-hidden) .ui-sh__word: Fix any of the following: Element has insufficient color contrast of 1.22 (foreground color: #f1e6e0, background color: #ffffff, font size: 291.6pt (388"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": [
+          "axe color-contrast ignorado (decorativo, aria-hidden) .ui-sh__word: Fix any of the following: Element has insufficient color contrast of 1.22 (foreground color: #f1e6e0, background color: #ffffff, font size: 291.6pt (388"
+        ]
+      }
+    },
+    {
+      "id": "reference-docs-1",
+      "task": "reference",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "generationMs": 78372,
+      "turns": 17,
+      "costUsd": 0.609514,
+      "tokens": {
+        "input": 262366,
+        "cachedInput": 212250,
+        "cacheWrite": 50100,
+        "output": 8310
+      },
+      "tools": {
+        "Read": 9,
+        "Grep": 5,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-updated-1",
+      "task": "reference",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 68750,
+      "turns": 14,
+      "costUsd": 0.5433288000000001,
+      "tokens": {
+        "input": 190306,
+        "cachedInput": 144544,
+        "cacheWrite": 45748,
+        "output": 7419
+      },
+      "tools": {
+        "Read": 6,
+        "Grep": 5,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-pilot-1",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 85547,
+      "turns": 14,
+      "costUsd": 0.6663456,
+      "tokens": {
+        "input": 207607,
+        "cachedInput": 150188,
+        "cacheWrite": 57403,
+        "output": 8851
+      },
+      "tools": {
+        "Read": 7,
+        "Skill": 1,
+        "Glob": 1,
+        "Grep": 2,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "booking-docs-1",
+      "task": "booking",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "generationMs": 64286,
+      "turns": 18,
+      "costUsd": 0.6458978,
+      "tokens": {
+        "input": 326056,
+        "cachedInput": 269769,
+        "cacheWrite": 56269,
+        "output": 7086
+      },
+      "tools": {
+        "Grep": 3,
+        "Read": 12,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "failed",
+        "details": [
+          "Module '\"trama-ui/BookingFlow\"' has no exported member 'BookingService'. Did you mean to use 'import BookingService from \"trama-ui/BookingFlow\"' instead?",
+          "Module '\"trama-ui/BookingFlow\"' has no exported member 'BookingStaff'. Did you mean to use 'import BookingStaff from \"trama-ui/BookingFlow\"' instead?"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast .ui-g-muted: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected con",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      }
+    },
+    {
+      "id": "booking-updated-1",
+      "task": "booking",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 74299,
+      "turns": 23,
+      "costUsd": 0.6610027999999999,
+      "tokens": {
+        "input": 480585,
+        "cachedInput": 429794,
+        "cacheWrite": 50765,
+        "output": 8441
+      },
+      "tools": {
+        "Grep": 8,
+        "Read": 12,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      }
+    },
+    {
+      "id": "booking-pilot-1",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 68456,
+      "turns": 19,
+      "costUsd": 0.7241810000000001,
+      "tokens": {
+        "input": 407481,
+        "cachedInput": 344605,
+        "cacheWrite": 62854,
+        "output": 7617
+      },
+      "tools": {
+        "Skill": 1,
+        "Glob": 1,
+        "Read": 9,
+        "Grep": 5,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-pilot-2",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 107677,
+      "turns": 24,
+      "costUsd": 0.9279631999999999,
+      "tokens": {
+        "input": 681316,
+        "cachedInput": 608616,
+        "cacheWrite": 72670,
+        "output": 11238
+      },
+      "tools": {
+        "Skill": 1,
+        "Glob": 2,
+        "Read": 14,
+        "Grep": 4,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": [
+          "axe color-contrast ignorado (decorativo, aria-hidden) .ui-sh__word: Fix any of the following: Element has insufficient color contrast of 1.22 (foreground color: #f1e6e0, background color: #ffffff, font size: 291.6pt (388"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": [
+          "axe color-contrast ignorado (decorativo, aria-hidden) .ui-sh__word: Fix any of the following: Element has insufficient color contrast of 1.22 (foreground color: #f1e6e0, background color: #ffffff, font size: 291.6pt (388"
+        ]
+      }
+    },
+    {
+      "id": "composition-updated-2",
+      "task": "composition",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 70099,
+      "turns": 17,
+      "costUsd": 0.5969238,
+      "tokens": {
+        "input": 326450,
+        "cachedInput": 277779,
+        "cacheWrite": 48651,
+        "output": 7604
+      },
+      "tools": {
+        "Grep": 6,
+        "Read": 7,
+        "Glob": 2,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-docs-2",
+      "task": "composition",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "generationMs": 103531,
+      "turns": 33,
+      "costUsd": 0.9125112,
+      "tokens": {
+        "input": 826964,
+        "cachedInput": 759616,
+        "cacheWrite": 67314,
+        "output": 11097
+      },
+      "tools": {
+        "Grep": 15,
+        "Read": 14,
+        "Glob": 2,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-pilot-2",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 89915,
+      "turns": 19,
+      "costUsd": 0.682863,
+      "tokens": {
+        "input": 312099,
+        "cachedInput": 256555,
+        "cacheWrite": 55524,
+        "output": 9364
+      },
+      "tools": {
+        "Read": 12,
+        "Skill": 1,
+        "Glob": 2,
+        "Grep": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-updated-2",
+      "task": "reference",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 70899,
+      "turns": 17,
+      "costUsd": 0.5688932,
+      "tokens": {
+        "input": 249042,
+        "cachedInput": 201946,
+        "cacheWrite": 47080,
+        "output": 7590
+      },
+      "tools": {
+        "Read": 8,
+        "Grep": 6,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-docs-2",
+      "task": "reference",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "generationMs": 59848,
+      "turns": 14,
+      "costUsd": 0.5091998,
+      "tokens": {
+        "input": 233800,
+        "cachedInput": 190679,
+        "cacheWrite": 43105,
+        "output": 6308
+      },
+      "tools": {
+        "Read": 5,
+        "Grep": 6,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "typesExportedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "booking-pilot-2",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 74586,
+      "turns": 20,
+      "costUsd": 0.7355176000000001,
+      "tokens": {
+        "input": 466495,
+        "cachedInput": 405188,
+        "cacheWrite": 61283,
+        "output": 8206
+      },
+      "tools": {
+        "Skill": 1,
+        "Glob": 2,
+        "Read": 11,
+        "Grep": 3,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expecte",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expecte",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad"
+        ]
+      }
+    },
+    {
+      "id": "booking-updated-2",
+      "task": "booking",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 65469,
+      "turns": 18,
+      "costUsd": 0.6091424,
+      "tokens": {
+        "input": 255728,
+        "cachedInput": 203092,
+        "cacheWrite": 52620,
+        "output": 7375
+      },
+      "tools": {
+        "Grep": 5,
+        "Read": 10,
+        "Glob": 1,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "failed",
+        "details": [
+          "Module '\"trama-ui\"' has no exported member 'BookingService'.",
+          "Module '\"trama-ui\"' has no exported member 'BookingStaff'."
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      }
+    },
+    {
+      "id": "booking-docs-2",
+      "task": "booking",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "generationMs": 71912,
+      "turns": 21,
+      "costUsd": 0.6017232,
+      "tokens": {
+        "input": 422910,
+        "cachedInput": 377136,
+        "cacheWrite": 45750,
+        "output": 8010
+      },
+      "tools": {
+        "Grep": 11,
+        "Read": 8,
+        "StructuredOutput": 1
+      },
+      "evaluatedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast p[role=\"note\"]: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected ",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      },
+      "typesExportedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast p[role=\"note\"]: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected ",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px),"
+        ]
+      }
+    }
+  ]
+}

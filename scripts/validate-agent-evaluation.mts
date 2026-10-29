@@ -18,9 +18,11 @@ for (const run of runs) {
   const source = join(evaluation, run.id, "Result.tsx");
   const result = { id: run.id, task: run.task, condition: run.condition, repetition: run.repetition, generationMs: run.elapsedMs, validationMs: 0, usage: run.usage, status: "pending", details: [] as string[], visualReview: "pending" };
   const events = join(evaluation, run.id, "events.jsonl");
-  const turnFailure = existsSync(events) ? readFileSync(events, "utf8").split(/\r?\n/).flatMap((line) => { try { const e = JSON.parse(line); return e.type === "turn.failed" ? [String(e.error?.message ?? "")] : []; } catch { return []; } })[0] : undefined;
+  const turnFailure = existsSync(events) ? readFileSync(events, "utf8").split(/\r?\n/).flatMap((line) => { try { const e = JSON.parse(line); // Codex: turn.failed; Claude Code: result con api_error.
+      if (e.type === "turn.failed") return [String(e.error?.message ?? "")];
+      return e.type === "result" && e.is_error && e.api_error ? [`${e.api_error}: ${e.result ?? ""}`] : []; } catch { return []; } })[0] : undefined;
   // Un turno que el cliente no llega a empezar (límite de uso, red) no mide al agente: se registra aparte, no como fallo.
-  if (!existsSync(source) && turnFailure && /usage limit|rate limit/i.test(turnFailure)) { result.status = "not-run-infrastructure"; result.details.push(`Cliente sin turno: ${turnFailure.slice(0, 160)}`); }
+  if (!existsSync(source) && turnFailure && /usage.limit|rate.limit|session limit/i.test(turnFailure)) { result.status = "not-run-infrastructure"; result.details.push(`Cliente sin turno: ${turnFailure.slice(0, 160)}`); }
   else if (!existsSync(source)) { result.status = "failed"; result.details.push("No entregó Result.tsx"); }
   else {
     const code = readFileSync(source, "utf8");
@@ -99,10 +101,18 @@ try {
         type Violation = { id: string; nodes: { target: string[]; failureSummary?: string }[] };
         const axe = (window as unknown as { axe: { run: (root: Element, opts: object) => Promise<{ violations: Violation[] }> } }).axe;
         const found = (await axe.run(document.querySelector("#evaluation-case")!, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa"] } })).violations;
-        return found.map((v) => ({ id: v.id, nodes: v.nodes.map((n) => `${n.target.join(" ")}: ${(n.failureSummary ?? "").replace(/\s+/g, " ").slice(0, 200)}`) }));
+        // WCAG 1.4.3 exime la decoración pura: texto de contraste dentro de aria-hidden se anota, no cuenta.
+        const decorative = (n: { target: string[] }) => !!document.querySelector(n.target.join(" "))?.closest('[aria-hidden="true"]');
+        const text = (n: { target: string[]; failureSummary?: string }) => `${n.target.join(" ")}: ${(n.failureSummary ?? "").replace(/\s+/g, " ").slice(0, 200)}`;
+        return found.map((v) => {
+          const ignored = v.id === "color-contrast" ? v.nodes.filter(decorative) : [];
+          return { id: v.id, nodes: v.nodes.filter((n) => !ignored.includes(n)).map(text), ignored: ignored.map(text) };
+        });
       });
-      if (audit.length) result.details.push(...audit.flatMap((v) => v.nodes.map((n) => `axe ${v.id} ${n}`)));
-      assert.deepEqual(audit.map((v) => v.id), [], "Incumplimientos automáticos de accesibilidad");
+      result.details.push(...audit.flatMap((v) => v.ignored.map((n) => `axe ${v.id} ignorado (decorativo, aria-hidden) ${n}`)));
+      const violations = audit.filter((v) => v.nodes.length);
+      if (violations.length) result.details.push(...violations.flatMap((v) => v.nodes.map((n) => `axe ${v.id} ${n}`)));
+      assert.deepEqual(violations.map((v) => v.id), [], "Incumplimientos automáticos de accesibilidad");
       if (result.task === "booking") {
         await subject.getByRole("button", { name: "Elegir día y hora" }).click();
         assert(await subject.getByRole("button", { name: "Continuar", exact: true }).isDisabled());

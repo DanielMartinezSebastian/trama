@@ -13,7 +13,7 @@ desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); re
 | P2. Distribución piloto | Hecha | `knowledge/` y `skills/` en el `.tgz`; consumidor limpio `examples/agent-pilot` con build Next 16.3.5 y recorrido en navegador |
 | P3. Construcción y estilo | Hecha | `skills/trama-build`, `skills/trama-style`; instalador `trama-ui skills install`; [descubrimiento](./discovery-evidencia.json) en Codex CLI 0.165.0 y Claude Code 2.1.302 |
 | P3b. Investigación | Hecha | `skills/trama-research`; [brief piloto](./research-piloto.md) y [evidencia](./research-evidencia.json) |
-| P4. Evaluación | Hecha, con un ensayo pendiente | [Informe](./p4-evaluacion.md), [datos](./evaluacion-evidencia.json) |
+| P4. Evaluación | Hecha: Codex (11 de 12 ensayos) y Claude Code (18 de 18) | [Codex](./p4-evaluacion.md), [Claude Code](./p4b-evaluacion-claude.md), datos en `evaluacion-*evidencia.json` |
 | P5. Comunicación | Hecha | Portada, metadatos, README, README del paquete y [docs/57-agentes.md](../57-agentes.md) |
 | P6. Consulta y extensiones | Decidida: no ahora | Ver abajo |
 
@@ -26,23 +26,34 @@ desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); re
 - **Arreglo del kit**: `Button` con `glyph` funciona desde Server Components (comprobado en el consumidor). La causa,
   `renderGlyph` dentro de un módulo `"use client"`, afectaba también a `Callout`, `FeatureGrid`, `Footer` y `Timeline`;
   ahora vive en `components/ui/glyph.ts` y `trama-ui/Icon` lo sigue exportando.
+- **Tipos de reserva**: `Appointment`, `BookingService`, `BookingStaff` y `BookingPlace` se importan desde
+  `trama-ui/BookingFlow` o desde la raíz; dos agentes los buscaron ahí.
+- **Fichas de las 19 guías** en `knowledge/guides/`, cada una con su tabla de contraste medida.
 
 ## Resultado de la evaluación
 
-Con skills, 6 de 6 ensayos pasan la adjudicación automática; con la documentación actual, 2 de 5 (3 de 5 con el arreglo
-de `Button`). Las skills cuestan más: +46 % de tiempo y +58 % de tokens de entrada. La muestra es pequeña (un cliente,
-un modelo no identificado, una guía) y no autoriza cifras generales. Detalle en [P4](./p4-evaluacion.md).
+| | Codex | Claude Code (Opus 5.5) |
+| --- | --- | --- |
+| Documentación de la base | 2/5 | 4/6 |
+| Documentación actualizada | — | 4/6 |
+| Skills | 6/6 | 5/6 |
+| Entrada extra con skills | +58 % | +20 % |
+
+Las skills aciertan más con los dos clientes y cuestan más. Con Opus, la documentación ya resuelve composición y
+referencia; los fallos restantes son de contraste en la reserva. Una guía y dos clientes: no autoriza cifras generales.
+Detalle en [P4](./p4-evaluacion.md) y [P4b](./p4b-evaluacion-claude.md).
 
 ## P6: decisión
 
-No se añaden MCP, registro ni una consulta CLI nueva. P4 no mostró fallos por no encontrar una pieza: los fallos
-fueron de contraste y fuentes, y el sobrecoste del piloto está en leer las fichas, no en buscarlas. `trama-ui knowledge`
-basta para localizar el índice de la versión instalada. Volver a valorarlo si una segunda cohorte con varias guías
-muestra búsquedas largas o fichas equivocadas.
+No se añaden MCP, registro ni una consulta CLI nueva. Ninguna de las dos cohortes falló por no encontrar una pieza:
+los fallos fueron de contraste, fuentes y tipos sin exportar, y el sobrecoste de las skills está en leer las fichas,
+no en buscarlas. `trama-ui knowledge` basta para localizar el índice de la versión instalada. Volver a valorarlo si
+más recetas y piezas con ficha alargan la búsqueda.
 
 ## Pendiente
 
-- Repetir `booking-docs-2` (sin turno por límite de uso del cliente); instrucciones en P4.
+- Repetir `booking-docs-2` de Codex (sin turno por límite de uso); instrucciones en P4.
+- Decidir si `GuideFrame` corrige solo el contraste de `--mut`/`--acc` cuando se usan como texto (propuesta en P4b).
 - Revisión visual humana de las capturas de P4 y del consumidor piloto.
-- Generalizar `knowledge/` más allá de `salon` solo tras una segunda cohorte.
+- Recetas y piezas con ficha siguen siendo solo las de `salon`.
 - Publicar en npm y desplegar la web son decisiones del usuario; esta rama no lo hace.
