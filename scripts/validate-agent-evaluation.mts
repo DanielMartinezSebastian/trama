@@ -9,6 +9,8 @@ import { evaluationSuite } from "./agent-evaluation-suites.mts";
 
 const evaluation = resolve(process.argv[2] ?? ".cache/agent-evaluation");
 const consumer = resolve(process.argv[3] ?? ".cache/agent-pilot-final");
+// Opt-in para comprobar flujos con enlaces repetidos y etiquetas equivalentes; conserva el protocolo P4 por defecto.
+const robustSelectors = process.argv.includes("--robust-selectors");
 const manifest = join(evaluation, "cohort.json");
 const suite = evaluationSuite(existsSync(manifest) ? JSON.parse(readFileSync(manifest, "utf8")).contract.suite.id : "salon");
 if (existsSync(manifest)) assert.deepEqual(JSON.parse(readFileSync(manifest, "utf8")).contract.suite, suite, "El protocolo difiere del contrato congelado");
@@ -131,11 +133,12 @@ try {
         await subject.locator('input[type=email]').fill("alex@example.com");
         await subject.getByRole("button", { name: "Confirmar cita", exact: true }).click();
         await subject.locator(".ui-book__ok").waitFor();
-        await subject.getByRole("link", { name: "Ver mis citas", exact: true }).click();
+        const appointmentsLink = subject.getByRole("link", { name: "Ver mis citas", exact: true });
+        await (robustSelectors ? appointmentsLink.first() : appointmentsLink).click();
         await page.locator(".ui-appts__item").waitFor();
         await page.reload(); await page.locator(".ui-appts__item").waitFor();
-        await page.getByRole("button", { name: "Anular", exact: true }).click();
-        await page.getByRole("button", { name: "Sí, anular", exact: true }).click();
+        await page.getByRole("button", { name: robustSelectors ? /^Anular(?: cita)?$/ : "Anular", exact: true }).click();
+        await page.getByRole("button", { name: robustSelectors ? /^Sí, anular(?: cita)?$/ : "Sí, anular", exact: true }).click();
         assert.equal(await page.locator(".ui-appts__item").count(), 0);
       }
       assert.deepEqual(errors, []);
@@ -144,6 +147,6 @@ try {
     } catch (error) { result.status = "failed"; result.details.push(String(error)); }
     finally { result.validationMs += Math.round(performance.now() - start); await ctx.close(); }
     console.log(`${result.id}: ${result.status}`);
-    writeFileSync(join(evaluation, "validation.json"), JSON.stringify({ records, sharedBuildMs, origin, browser: "Chromium", visualReview: "pending-human" }, null, 2) + "\n");
+    writeFileSync(join(evaluation, "validation.json"), JSON.stringify({ records, sharedBuildMs, origin, browser: "Chromium", selectorMode: robustSelectors ? "equivalent-labels-and-repeated-links" : "original-exact-labels", visualReview: "pending-human" }, null, 2) + "\n");
   }
 } finally { await browser.close(); server.kill(); }

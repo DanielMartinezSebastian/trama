@@ -16,6 +16,8 @@ const path = (file: string) => relative(process.cwd(), file).replace(/\\/g, "/")
 const manifest = read(join(dir, "cohort.json"));
 const runs = read(join(dir, "runs.json")) as Run[];
 const validation = read(join(dir, "validation.json"));
+const originalFile = join(dir, "validation-protocolo-original.json");
+const original = existsSync(originalFile) ? read(originalFile) : null;
 const install = read(join(consumer, "pilot-install.json"));
 const visualFile = join(dir, "visual-review.json");
 const visual = existsSync(visualFile) ? read(visualFile) : null;
@@ -27,6 +29,7 @@ const records = runs.map((run) => {
   const files = ["Result.tsx", "brief.md", "events.jsonl", "run.json"].filter((name) => existsSync(join(dir, run.id, name))).map((name) => ({ path: path(join(dir, run.id, name)), sha256: sha(join(dir, run.id, name)) }));
   return { id: run.id, task: run.task, condition: run.condition, repetition: run.repetition, generationMs: run.elapsedMs,
     cliExit: run.exitCode, configuration: run.configuration, tokens, adjudication,
+    ...(original ? { originalAdjudication: (original.records as Validation[]).find((v) => v.id === run.id) ?? null } : {}),
     visual: visual?.records?.find((v: { id: string }) => v.id === run.id) ?? { status: "pending" }, files };
 });
 const conditionNames: Record<string, string> = { docs: "current_documentation", updated: "updated_documentation", pilot: "proposed_skills" };
@@ -38,6 +41,7 @@ const summary = (manifest.contract.conditions as string[]).map((name) => {
   const mean = <T,>(items: T[], get: (item: T) => number) => items.length ? items.reduce((sum, item) => sum + get(item), 0) / items.length : null;
   return { condition, planned: manifest.contract.suite.tasks.length * 2, registered: all.length, executed: executed.length,
     passed: executed.filter((r) => r.adjudication.status.startsWith("passed-")).length,
+    ...(original ? { passedOriginalSelectors: executed.filter((r) => r.originalAdjudication?.status.startsWith("passed-")).length } : {}),
     failed: executed.filter((r) => r.adjudication.status === "failed").length,
     pendingValidation: executed.filter((r) => !r.adjudication.status.startsWith("passed-") && r.adjudication.status !== "failed").length,
     infrastructure: all.length - executed.length, tokenSamples: withTokens.length,
@@ -45,8 +49,9 @@ const summary = (manifest.contract.conditions as string[]).map((name) => {
       uncachedInput: mean(withTokens, (r) => r.tokens!.input - r.tokens!.cachedInput), output: mean(withTokens, (r) => r.tokens!.output) } };
 });
 const evidence = { schemaVersion: 1, generatedAt: new Date().toISOString(), cohort: manifest, package: install,
-  inputs: [join(dir, "cohort.json"), join(dir, "runs.json"), join(dir, "validation.json"), join(consumer, "pilot-install.json"), ...(existsSync(visualFile) ? [visualFile] : [])].map((file) => ({ path: path(file), sha256: sha(file) })),
+  inputs: [join(dir, "cohort.json"), join(dir, "runs.json"), join(dir, "validation.json"), join(consumer, "pilot-install.json"), ...(existsSync(visualFile) ? [visualFile] : []), ...(original ? [originalFile] : [])].map((file) => ({ path: path(file), sha256: sha(file) })),
   sharedBuildMs: validation.sharedBuildMs ?? validation.buildMs ?? null, browser: validation.browser ?? null,
+  selectorMode: validation.selectorMode ?? "original-exact-labels",
   humanReview: visual?.humanReview ?? "pending", summary, records };
 writeFileSync(output, JSON.stringify(evidence, null, 2) + "\n");
 console.log(JSON.stringify(summary, null, 2));
