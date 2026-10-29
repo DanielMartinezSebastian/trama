@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { downloadCalendar, hoursUntil, prettyDate, useAppointments, type BookingPlace, type BookingService } from "@/lib/commerce/booking";
+export type { Appointment, BookingPlace, BookingService } from "@/lib/commerce/booking";
 import Button from "./Button";
 import { vcls, type Variant } from "./variants";
 

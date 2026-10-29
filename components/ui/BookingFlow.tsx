@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { bookingSlots, downloadCalendar, prettyDate, useAppointments, type Appointment, type BookingPlace, type BookingService, type BookingStaff } from "@/lib/commerce/booking";
+export type { Appointment, BookingPlace, BookingService, BookingStaff } from "@/lib/commerce/booking";
 import { money } from "@/lib/commerce/money";
 import Button from "./Button";
 import DatePicker from "./DatePicker";
