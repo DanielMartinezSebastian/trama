@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-29",
+  "sources": [
+    {
+      "file": ".refs3d/agent-pilot/reference-hero.png",
+      "sha256": "a01bc1fc89e02c5c100fb826ccb0e944b7fc6f808126885c21d0c2352ef8c861"
+    },
+    {
+      "file": ".refs3d/agent-research/url-evidence.json",
+      "sha256": "1c334a2baf629d8747f8413ebe3d06bcc9872d708837d74bf2937d8e24614aa2"
+    },
+    {
+      "file": ".refs3d/agent-research/probe/datos.json",
+      "sha256": "12a6e5ae6cc76f0d3ca5880254cd9a4debdafb7103cfe3b927d367c10239765d"
+    },
+    {
+      "file": "examples/agent-pilot/references/linde-brand.md",
+      "sha256": "8cb467b3dd64a47df9a182a86e7032fb39d0cd7fc35bcdd44a9285e21bb1dc28"
+    },
+    {
+      "file": "examples/agent-pilot/public/images/trazo.svg",
+      "sha256": "4b6c137ce60724abe55040bf5e591cd5aa5f06495ebe843a86abb383d83f4838"
+    },
+    {
+      "file": "examples/agent-pilot/public/images/textura.svg",
+      "sha256": "ba89e63049cb154c07f0cf588f8f1b2867ebda22a756d05099476fa9622e419d"
+    }
+  ],
+  "urlEvidence": {
+    "url": "http://127.0.0.1:3417",
+    "at": "2026-10-29T10:31:31.288Z",
+    "measured": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "title": {
+        "text": "Un corte.Un color.Tu manera.",
+        "font": "\"Cormorant Garamond\", \"Cormorant Garamond Fallback\", Georgia, serif",
+        "size": "110.88px",
+        "weight": "300",
+        "rect": {
+          "x": 100,
+          "y": 288.421875,
+          "width": 642.390625,
+          "height": 306,
+          "top": 288.421875,
+          "right": 742.390625,
+          "bottom": 594.421875,
+          "left": 100
+        }
+      },
+      "image": {
+        "x": 814.390625,
+        "y": 183.109375,
+        "width": 525.609375,
+        "height": 692.296875,
+        "top": 183.109375,
+        "right": 1340,
+        "bottom": 875.40625,
+        "left": 814.390625
+      },
+      "columns": "642.391px 525.609px",
+      "guide": "salon"
+    }
+  },
+  "limitations": [
+    "Referencia local ficticia; no tres webs externas",
+    "Capturas y sonda ignoradas por git; regenerables",
+    "Captura no acredita familias CSS ni comportamiento móvil"
+  ]
+}

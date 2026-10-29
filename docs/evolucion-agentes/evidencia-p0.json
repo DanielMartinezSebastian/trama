@@ -1,0 +1,81 @@
+{
+  "purpose": "Evidencia puntual de P0; no es fuente de generación del producto",
+  "observedAt": "2026-10-29T09:56:11.745Z",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "packageVersion": "0.13.0",
+  "counts": {
+    "catalogEntries": 187,
+    "categories": 14,
+    "variants": 9,
+    "landingReferences": 8,
+    "siteReferences": 34,
+    "directTsxFiles": 190,
+    "barrelComponents": 173,
+    "styleGuides": 19,
+    "sectorRecipes": 8,
+    "inspirations": 18
+  },
+  "bytes": {
+    "docs/CATALOG.md": 229396,
+    "docs/catalog.json": 621170
+  },
+  "compactComponentBytes": 323382,
+  "hashes": {
+    "package.json": "81609dfcea52899e205f98934bbdbe31a2849213b0491138e2aba217a5368f7e",
+    "package-lock.json": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a",
+    "docs/catalog.json": "c009aa957a814f0128b73675716b9baa581b82ad605fcda2de64fa84cb59400f",
+    "docs/CATALOG.md": "4a734f6474ff62e1605b95dbf9064cbf0295b8982912c2838fa1c195743aad88",
+    "scripts/build-package.mts": "e98e8fc2e02bb4008c342e001fcecb5c7ef5a5fc78365501ec46052fd71ad6ce",
+    "scripts/build-catalog.mts": "35f4bf2495b50392d0279a585aa0aa7d5cfbf9a63fbb789269693768288abea5",
+    "lib/ui/guides.ts": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6",
+    "lib/catalog/sectores.ts": "62a93994cfb5ec19a864069c39221e409929c9b018557d4152d010464d414865",
+    "components/ui/BookingFlow.tsx": "fb138cbef957c97c09b58f0e99750f2404c84a1e0aefe28bdbafdc945b5349c3",
+    "lib/commerce/booking.ts": "2dee2224ba9298c2acdedb4ef555d668bb7b770a417781e2894a0423ad90d121",
+    "dist-npm/package.json": "984d06c7e3544b71a1a044c52770d1e54b819ee93920fe53edbf7d2101bf930a",
+    "components/inspiraciones/registro.ts": "6f806fbb83cd60f0f4333e6b311399dffffa0c38409a46a6eb09fd6f113dc063"
+  },
+  "installed": {
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "typescript": "5.9.3"
+  },
+  "packageExports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/components/ui/styles/kit.css",
+    "./fonts": {
+      "types": "./dist/lib/ui/fonts.d.ts",
+      "default": "./dist/lib/ui/fonts.js"
+    },
+    "./tokens": {
+      "types": "./dist/lib/ui/tokens.d.ts",
+      "default": "./dist/lib/ui/tokens.js"
+    },
+    "./icons/phosphor": {
+      "types": "./dist/lib/ui/icons-phosphor.d.ts",
+      "default": "./dist/lib/ui/icons-phosphor.js"
+    },
+    "./icons/phosphor-*": {
+      "types": "./dist/lib/ui/icons-phosphor-*.d.ts",
+      "default": "./dist/lib/ui/icons-phosphor-*.js"
+    },
+    "./icons/lucide": {
+      "types": "./dist/lib/ui/icons-lucide.d.ts",
+      "default": "./dist/lib/ui/icons-lucide.js"
+    },
+    "./assets/*": "./assets/*",
+    "./*": {
+      "types": "./dist/components/ui/*.d.ts",
+      "default": "./dist/components/ui/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "registry": {
+    "url": "https://registry.npmjs.org/trama-ui",
+    "command": "npm view trama-ui version dist-tags versions repository dist.tarball --json --registry=https://registry.npmjs.org",
+    "evidence": "npm-registry-p0.json",
+    "sha256": "b2c81234e4d30f34336e9d7b0a79e3a8dece46a1e5252e61226670b42eaa6d60"
+  }
+}

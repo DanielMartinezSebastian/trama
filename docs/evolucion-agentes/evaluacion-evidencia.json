@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-29T12:15:44.298Z",
+  "cohort": {
+    "client": "codex-cli 0.165.0",
+    "model": "heredado sin override (no informado por el cliente)",
+    "sandbox": "read-only",
+    "order": "rep1 docs→piloto, rep2 piloto→docs",
+    "configFingerprint": "1513dfb4770ad2f9ee02ecc29c809ecd41038388a2788cf68dade46cd24f984f"
+  },
+  "packages": {
+    "evaluated": {
+      "file": "trama-ui-0.13.0.tgz",
+      "sha256": "e238839e470ed732c8f5d661d2613edc5e4715fddde15aadf6254dc40c81ea93"
+    },
+    "fixedGlyph": {
+      "file": "trama-ui-0.13.0.tgz",
+      "sha256": "d1aa60a53a597f3667f04e4a08f0e5a245ea54afca30e5f505b9ac52c2d6e74d",
+      "change": "renderGlyph fuera del módulo use client"
+    }
+  },
+  "validation": {
+    "sharedBuildMs": {
+      "original": 5413,
+      "fixed": 9218
+    },
+    "browser": "Chromium headless, 1440x900 y 390x844, es-ES, reduced-motion, reloj fijo 2026-11-03",
+    "visualReview": "revisión de capturas por el agente evaluador, no humana"
+  },
+  "runs": [
+    {
+      "id": "composition-docs-1",
+      "task": "composition",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "order": 1,
+      "generationMs": 75375,
+      "cliExit": 0,
+      "tokens": {
+        "input": 271977,
+        "cachedInput": 228864,
+        "output": 2972,
+        "reasoning": 232
+      },
+      "fonts": "nombre literal (fallback del sistema)",
+      "originalPackage": {
+        "status": "failed",
+        "details": [
+          "AssertionError [ERR_ASSERTION]: Se exige un h1 por muestra"
+        ]
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-pilot-1",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "order": 2,
+      "generationMs": 73981,
+      "cliExit": 0,
+      "tokens": {
+        "input": 357137,
+        "cachedInput": 298752,
+        "output": 3745,
+        "reasoning": 311
+      },
+      "fonts": "variables next/font",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-docs-1",
+      "task": "reference",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "order": 3,
+      "generationMs": 80795,
+      "cliExit": 0,
+      "tokens": {
+        "input": 234625,
+        "cachedInput": 193024,
+        "output": 3015,
+        "reasoning": 333
+      },
+      "fonts": "nombre literal (fallback del sistema)",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-pilot-1",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "order": 4,
+      "generationMs": 119273,
+      "cliExit": 0,
+      "tokens": {
+        "input": 378346,
+        "cachedInput": 321280,
+        "output": 4313,
+        "reasoning": 471
+      },
+      "fonts": "variables next/font",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "booking-docs-1",
+      "task": "booking",
+      "condition": "current_documentation",
+      "repetition": 1,
+      "order": 5,
+      "generationMs": 85665,
+      "cliExit": 0,
+      "tokens": {
+        "input": 277767,
+        "cachedInput": 221824,
+        "output": 3579,
+        "reasoning": 166
+      },
+      "fonts": "nombre literal (fallback del sistema)",
+      "originalPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.",
+          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected cont",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh"
+        ]
+      },
+      "fixedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.",
+          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected cont",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh"
+        ]
+      }
+    },
+    {
+      "id": "booking-pilot-1",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "order": 6,
+      "generationMs": 140941,
+      "cliExit": 0,
+      "tokens": {
+        "input": 544249,
+        "cachedInput": 438016,
+        "output": 4989,
+        "reasoning": 834
+      },
+      "fonts": "variables next/font",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-pilot-2",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "order": 7,
+      "generationMs": 85269,
+      "cliExit": 0,
+      "tokens": {
+        "input": 422415,
+        "cachedInput": 363648,
+        "output": 3455,
+        "reasoning": 161
+      },
+      "fonts": "heredada de la guía",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "composition-docs-2",
+      "task": "composition",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "order": 8,
+      "generationMs": 70180,
+      "cliExit": 0,
+      "tokens": {
+        "input": 299982,
+        "cachedInput": 234112,
+        "output": 2545,
+        "reasoning": 88
+      },
+      "fonts": "nombre literal (fallback del sistema)",
+      "originalPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected ",
+          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected con",
+          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), fo",
+          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), "
+        ]
+      },
+      "fixedPackage": {
+        "status": "failed",
+        "details": [
+          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected ",
+          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected con",
+          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), fo",
+          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), "
+        ]
+      }
+    },
+    {
+      "id": "reference-pilot-2",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "order": 9,
+      "generationMs": 119627,
+      "cliExit": 0,
+      "tokens": {
+        "input": 234031,
+        "cachedInput": 184320,
+        "output": 3886,
+        "reasoning": 547
+      },
+      "fonts": "heredada de la guía",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "reference-docs-2",
+      "task": "reference",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "order": 10,
+      "generationMs": 81154,
+      "cliExit": 0,
+      "tokens": {
+        "input": 231681,
+        "cachedInput": 190720,
+        "output": 2985,
+        "reasoning": 280
+      },
+      "fonts": "nombre literal (fallback del sistema)",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "booking-pilot-2",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "order": 11,
+      "generationMs": 149191,
+      "cliExit": 0,
+      "tokens": {
+        "input": 564510,
+        "cachedInput": 504960,
+        "output": 5292,
+        "reasoning": 621
+      },
+      "fonts": "variables next/font",
+      "originalPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      },
+      "fixedPackage": {
+        "status": "passed-automated-pending-visual",
+        "details": []
+      }
+    },
+    {
+      "id": "booking-docs-2",
+      "task": "booking",
+      "condition": "current_documentation",
+      "repetition": 2,
+      "order": 12,
+      "generationMs": 3258,
+      "cliExit": 1,
+      "tokens": "no disponible",
+      "fonts": null,
+      "originalPackage": {
+        "status": "not-run-infrastructure",
+        "details": [
+          "Cliente sin turno: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at"
+        ]
+      },
+      "fixedPackage": {
+        "status": "not-run-infrastructure",
+        "details": [
+          "Cliente sin turno: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at"
+        ]
+      }
+    }
+  ]
+}

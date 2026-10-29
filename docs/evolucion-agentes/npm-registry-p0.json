@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "dist-tags": {
+    "latest": "0.2.0"
+  },
+  "versions": [
+    "0.1.0",
+    "0.2.0"
+  ],
+  "repository": {
+    "url": "git+https://github.com/DanielMartinezSebastian/trama.git",
+    "type": "git"
+  },
+  "dist.tarball": "https://registry.npmjs.org/trama-ui/-/trama-ui-0.2.0.tgz"
+}
