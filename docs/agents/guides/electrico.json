@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "0e5e8a28bd2f0da285a996bfc9019bf75ad448c6",
+  "sourceDirty": true,
+  "kind": "guide",
+  "id": "electrico",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/styles/ui-guides.css",
+      "sha256": "f6ac463e784ff48a042fc808562f2356b28ce57053642818417f2c2871ab6219"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/fonts.ts",
+      "sha256": "10e14339fc907e6406d34accfe0c02e7de9d53dfcd5f493cc031a2efe1bc78b7"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "d52551df083b84f8bfb881ca843b5d46ebd0eb7b7c23ec489c13c3f6feeb67cb"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Acento eléctrico",
+  "guide": {
+    "id": "electrico",
+    "source": "premiadas",
+    "label": "Acento eléctrico",
+    "note": "Casi negro y un acento ácido, condensada gruesa en mayúsculas y grotesca variable para leer. Velocidad.",
+    "sectors": "Deporte, motor, música, eventos, marcas personales",
+    "refs": [
+      "Lando Norris",
+      "Nick Ho",
+      "Neutomni"
+    ],
+    "variant": "editorial",
+    "tokens": {
+      "bg": "#282c20",
+      "fg": "#e8eadf",
+      "mut": "#a3a893",
+      "acc": "#d2ff00",
+      "acc2": "#b3c43c",
+      "card": "rgba(232,234,223,0.06)",
+      "ln": "rgba(232,234,223,0.16)",
+      "r": 6,
+      "font": "var(--font-mona-sans), ui-sans-serif, system-ui, sans-serif",
+      "display": "var(--font-anton), Impact, \"Arial Narrow\", sans-serif",
+      "accentFont": "var(--font-instrument-serif), Georgia, serif"
+    },
+    "fonts": {
+      "display": "var(--font-anton), Impact, \"Arial Narrow\", sans-serif",
+      "body": "var(--font-mona-sans), ui-sans-serif, system-ui, sans-serif",
+      "accent": "var(--font-instrument-serif), Georgia, serif",
+      "mono": "var(--font-geist-mono), ui-monospace, Consolas, monospace"
+    },
+    "type": {
+      "brand": "clamp(4.5rem, 16vw, 16rem)",
+      "h1": "clamp(3rem, 7.6vw, 8rem)",
+      "h2": "clamp(2rem, 4.4vw, 4rem)",
+      "body": "1rem",
+      "label": "0.75rem",
+      "weight": 400,
+      "lineHeight": 0.85,
+      "tracking": -0.01,
+      "upper": true,
+      "labelUpper": true,
+      "labelTracking": 0.04,
+      "bodyLineHeight": 1.3
+    },
+    "space": {
+      "margin": "16px",
+      "gutter": "16px",
+      "cols": 12,
+      "section": "clamp(96px, 12vw, 180px)",
+      "header": "56px",
+      "measure": "26em"
+    },
+    "surface": {
+      "radius": 10,
+      "pill": true,
+      "shadow": false
+    },
+    "motion": {
+      "fast": 0.25,
+      "reveal": 0.5,
+      "page": 0.7,
+      "stagger": 0.04,
+      "ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeReveal": "cubic-bezier(0.19, 1, 0.22, 1)"
+    },
+    "heroes": [
+      "dark-data",
+      "wordmark"
+    ],
+    "stories": [
+      "object",
+      "chapters"
+    ]
+  },
+  "application": {
+    "component": "GuideFrame",
+    "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"electrico\">",
+    "css": "trama-ui/styles.css",
+    "classes": [
+      "ui-g-body",
+      "ui-g-brand",
+      "ui-g-btn",
+      "ui-g-btn--ghost",
+      "ui-g-card",
+      "ui-g-grid",
+      "ui-g-h1",
+      "ui-g-h2",
+      "ui-g-header",
+      "ui-g-label",
+      "ui-g-line",
+      "ui-g-mono",
+      "ui-g-muted",
+      "ui-g-rise",
+      "ui-g-section",
+      "ui-g-wrap"
+    ],
+    "fontVariables": [
+      "--font-anton",
+      "--font-geist-mono",
+      "--font-instrument-serif",
+      "--font-mona-sans"
+    ]
+  },
+  "contrast": [
+    {
+      "text": "fg",
+      "surface": "bg",
+      "ratio": 11.73,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "bg",
+      "ratio": 5.83,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "bg",
+      "ratio": 12.26,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc2",
+      "surface": "bg",
+      "ratio": 7.39,
+      "use": "texto normal"
+    }
+  ],
+  "requirements": [
+    "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
+    "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
+    "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: oscurecer ese rol en un tema local (style con --mut/--acc) y registrar la razón; las piezas del kit usan --mut y --acc para etiquetas, metadatos y botones."
+  ],
+  "examples": [],
+  "limitations": [
+    "La tabla de contraste mide tokens sobre fondos lisos; revisar la aplicación visual en cada proyecto (imágenes, transparencias, estados). Una guía no certifica accesibilidad.",
+    "Fotos, vídeos y fuentes Fontshare no se redistribuyen por esta ficha.",
+    "No se declara soporte universal de Next.js o de React genérico a partir de un consumidor piloto."
+  ]
+}

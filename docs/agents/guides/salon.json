@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceCommit": "0e5e8a28bd2f0da285a996bfc9019bf75ad448c6",
   "sourceDirty": true,
   "kind": "guide",
   "id": "salon",
@@ -46,7 +46,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+      "sha256": "d52551df083b84f8bfb881ca843b5d46ebd0eb7b7c23ec489c13c3f6feeb67cb"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -54,11 +54,11 @@
     },
     {
       "path": "scripts/build-package.mts",
-      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
     },
     {
       "path": "scripts/fixtures/agents/salon-booking.tsx.txt",
-      "sha256": "57e8b21b681ec35147cc9699f933abcf0203f0f7a6f7acdf04977be27e5b4d3a"
+      "sha256": "f4f93ea69c1f86bebe1896a7dd34d81ab060b8a5fe68aca7cf46298755c8b779"
     },
     {
       "path": "scripts/fixtures/agents/salon-fonts.tsx.txt",
@@ -165,6 +165,7 @@
   "application": {
     "component": "GuideFrame",
     "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"salon\">",
     "css": "trama-ui/styles.css",
     "classes": [
       "ui-g-body",
@@ -265,7 +266,7 @@
       "id": "salon-booking",
       "fixture": "scripts/fixtures/agents/salon-booking.tsx.txt",
       "file": "examples/salon-booking.tsx.txt",
-      "code": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport BookingFlow from \"trama-ui/BookingFlow\";\nimport AppointmentList from \"trama-ui/AppointmentList\";\n\ntype BookingProps = ComponentProps<typeof BookingFlow>;\ntype Booked = Parameters<NonNullable<BookingProps[\"onBooked\"]>>[0];\n\nexport const services = [\n  { id: \"consulta\", name: \"Consulta inicial\", minutes: 15, price: 0 },\n  { id: \"corte\", name: \"Corte\", minutes: 45, price: 35 },\n  { id: \"color\", name: \"Color\", minutes: 90, price: 65, from: true },\n] satisfies BookingProps[\"services\"];\nexport const staff = [\n  { name: \"Alba\", services: [\"consulta\", \"corte\", \"color\"] },\n  { name: \"Dani\", services: [\"consulta\", \"corte\"] },\n] satisfies BookingProps[\"staff\"];\nexport const storageKey = \"linde:pilot:v1\";\n\n// Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.\n// El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.\nexport function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingProps, \"initialService\" | \"initialStaff\" | \"editId\">) {\n  const booked = (_appointment: Booked) => { /* Solo notificación local; no confirma un servicio externo. */ };\n  return <BookingFlow services={services} staff={staff} storageKey={storageKey}\n    initialService={initialService} initialStaff={initialStaff} editId={editId}\n    times=\"10:00,11:00,12:00,13:00,16:00,17:00,18:00\" closedDays=\"0,1\" closesAt={{ 6: \"14:00\" }} min={1} max={45}\n    business=\"Linde (demostración)\" location=\"Local ficticio\" appointmentsHref=\"/mis-citas\"\n    serviceLabel=\"Elige tu servicio\" staffLabel=\"Elige profesional\" anyStaffLabel=\"Quien tenga hueco\" placeLabel=\"El salón\"\n    note=\"Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón.\"\n    onBooked={booked} variant=\"editorial\" />;\n}\n\nexport function AppointmentsSample() {\n  return <section aria-label=\"Citas de demostración\">\n    <p>Solo citas locales de prueba; sin agenda conectada.</p>\n    <AppointmentList services={services} storageKey={storageKey} bookHref=\"/reservar\" cutoffHours={24}\n      business=\"Linde (demostración)\" location=\"Local ficticio\" emptyTitle=\"Aún no hay citas de prueba\"\n      emptyText=\"Reserva con datos ficticios. La cita se guarda en este navegador.\" variant=\"editorial\" />\n  </section>;\n}\n",
+      "code": "\"use client\";\n\nimport BookingFlow, { type Appointment, type BookingFlowProps, type BookingService, type BookingStaff } from \"trama-ui/BookingFlow\";\nimport AppointmentList from \"trama-ui/AppointmentList\";\n\nexport const services = [\n  { id: \"consulta\", name: \"Consulta inicial\", minutes: 15, price: 0 },\n  { id: \"corte\", name: \"Corte\", minutes: 45, price: 35 },\n  { id: \"color\", name: \"Color\", minutes: 90, price: 65, from: true },\n] satisfies BookingService[];\nexport const staff = [\n  { name: \"Alba\", services: [\"consulta\", \"corte\", \"color\"] },\n  { name: \"Dani\", services: [\"consulta\", \"corte\"] },\n] satisfies BookingStaff[];\nexport const storageKey = \"linde:pilot:v1\";\n\n// Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.\n// El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.\nexport function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingFlowProps, \"initialService\" | \"initialStaff\" | \"editId\">) {\n  const booked = (_appointment: Appointment) => { /* Solo notificación local; no confirma un servicio externo. */ };\n  return <BookingFlow services={services} staff={staff} storageKey={storageKey}\n    initialService={initialService} initialStaff={initialStaff} editId={editId}\n    times=\"10:00,11:00,12:00,13:00,16:00,17:00,18:00\" closedDays=\"0,1\" closesAt={{ 6: \"14:00\" }} min={1} max={45}\n    business=\"Linde (demostración)\" location=\"Local ficticio\" appointmentsHref=\"/mis-citas\"\n    serviceLabel=\"Elige tu servicio\" staffLabel=\"Elige profesional\" anyStaffLabel=\"Quien tenga hueco\" placeLabel=\"El salón\"\n    note=\"Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón.\"\n    onBooked={booked} variant=\"editorial\" />;\n}\n\nexport function AppointmentsSample() {\n  return <section aria-label=\"Citas de demostración\">\n    <p>Solo citas locales de prueba; sin agenda conectada.</p>\n    <AppointmentList services={services} storageKey={storageKey} bookHref=\"/reservar\" cutoffHours={24}\n      business=\"Linde (demostración)\" location=\"Local ficticio\" emptyTitle=\"Aún no hay citas de prueba\"\n      emptyText=\"Reserva con datos ficticios. La cita se guarda en este navegador.\" variant=\"editorial\" />\n  </section>;\n}\n",
       "requirements": [
         "trama-ui/BookingFlow",
         "trama-ui/AppointmentList"

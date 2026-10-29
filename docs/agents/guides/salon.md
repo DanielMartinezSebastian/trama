@@ -103,6 +103,7 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./sa
 {
   "component": "GuideFrame",
   "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+  "usage": "<GuideFrame guide=\"salon\">",
   "css": "trama-ui/styles.css",
   "classes": [
     "ui-g-body",
@@ -130,60 +131,18 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./sa
 }
 ```
 
-## contrast
+## Contraste
 
-```json
-[
-  {
-    "text": "fg",
-    "surface": "bg",
-    "ratio": 16.48,
-    "use": "texto normal"
-  },
-  {
-    "text": "fg",
-    "surface": "card",
-    "ratio": 14.99,
-    "use": "texto normal"
-  },
-  {
-    "text": "mut",
-    "surface": "bg",
-    "ratio": 3.64,
-    "use": "solo texto grande, iconos o bordes de control"
-  },
-  {
-    "text": "mut",
-    "surface": "card",
-    "ratio": 3.31,
-    "use": "solo texto grande, iconos o bordes de control"
-  },
-  {
-    "text": "acc",
-    "surface": "bg",
-    "ratio": 1.98,
-    "use": "decorativo: no usar para texto ni controles"
-  },
-  {
-    "text": "acc",
-    "surface": "card",
-    "ratio": 1.8,
-    "use": "decorativo: no usar para texto ni controles"
-  },
-  {
-    "text": "acc2",
-    "surface": "bg",
-    "ratio": 7.01,
-    "use": "texto normal"
-  },
-  {
-    "text": "acc2",
-    "surface": "card",
-    "ratio": 6.37,
-    "use": "texto normal"
-  }
-]
-```
+| Texto | Fondo | Ratio | Uso |
+| --- | --- | --- | --- |
+| --fg | --bg | 16,48:1 | texto normal |
+| --fg | --card | 14,99:1 | texto normal |
+| --mut | --bg | 3,64:1 | solo texto grande, iconos o bordes de control |
+| --mut | --card | 3,31:1 | solo texto grande, iconos o bordes de control |
+| --acc | --bg | 1,98:1 | decorativo: no usar para texto ni controles |
+| --acc | --card | 1,80:1 | decorativo: no usar para texto ni controles |
+| --acc2 | --bg | 7,01:1 | texto normal |
+| --acc2 | --card | 6,37:1 | texto normal |
 
 ## requirements
 
@@ -231,28 +190,24 @@ La generación no acredita compilación o navegador; validar tipos, build y reco
 ```tsx
 "use client";
 
-import type { ComponentProps } from "react";
-import BookingFlow from "trama-ui/BookingFlow";
+import BookingFlow, { type Appointment, type BookingFlowProps, type BookingService, type BookingStaff } from "trama-ui/BookingFlow";
 import AppointmentList from "trama-ui/AppointmentList";
-
-type BookingProps = ComponentProps<typeof BookingFlow>;
-type Booked = Parameters<NonNullable<BookingProps["onBooked"]>>[0];
 
 export const services = [
   { id: "consulta", name: "Consulta inicial", minutes: 15, price: 0 },
   { id: "corte", name: "Corte", minutes: 45, price: 35 },
   { id: "color", name: "Color", minutes: 90, price: 65, from: true },
-] satisfies BookingProps["services"];
+] satisfies BookingService[];
 export const staff = [
   { name: "Alba", services: ["consulta", "corte", "color"] },
   { name: "Dani", services: ["consulta", "corte"] },
-] satisfies BookingProps["staff"];
+] satisfies BookingStaff[];
 export const storageKey = "linde:pilot:v1";
 
 // Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.
 // El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.
-export function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingProps, "initialService" | "initialStaff" | "editId">) {
-  const booked = (_appointment: Booked) => { /* Solo notificación local; no confirma un servicio externo. */ };
+export function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingFlowProps, "initialService" | "initialStaff" | "editId">) {
+  const booked = (_appointment: Appointment) => { /* Solo notificación local; no confirma un servicio externo. */ };
   return <BookingFlow services={services} staff={staff} storageKey={storageKey}
     initialService={initialService} initialStaff={initialStaff} editId={editId}
     times="10:00,11:00,12:00,13:00,16:00,17:00,18:00" closedDays="0,1" closesAt={{ 6: "14:00" }} min={1} max={45}

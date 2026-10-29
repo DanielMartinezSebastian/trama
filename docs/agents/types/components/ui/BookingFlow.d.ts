@@ -1,4 +1,5 @@
 import { type Appointment, type BookingPlace, type BookingService, type BookingStaff } from "../../lib/commerce/booking.js";
+export type { Appointment, BookingPlace, BookingService, BookingStaff } from "../../lib/commerce/booking.js";
 import { type Variant } from "./variants.js";
 export type BookingFlowProps = {
     /** lo que se reserva, con duración y precio */

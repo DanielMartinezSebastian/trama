@@ -5,6 +5,24 @@
 Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./index.json).
 
 - [guide: Salón editorial claro](./guides/salon.md)
+- [guide: Lujo tranquilo](./guides/lujo.md)
+- [guide: Monocromo de agencia](./guides/monocromo.md)
+- [guide: Técnico de producto](./guides/tecnico.md)
+- [guide: Producto nocturno](./guides/nocturno.md)
+- [guide: Acento eléctrico](./guides/electrico.md)
+- [guide: Rótulo cinético](./guides/rotulo.md)
+- [guide: Editorial cálido](./guides/calido.md)
+- [guide: Lúdico](./guides/ludico.md)
+- [guide: Barbería de carácter](./guides/barberia.md)
+- [guide: Club de alto contraste](./guides/club.md)
+- [guide: Estudio boutique](./guides/boutique.md)
+- [guide: Academia de autor](./guides/autor.md)
+- [guide: Escuela amarilla](./guides/escuela.md)
+- [guide: Producto de marca](./guides/marca.md)
+- [guide: Terminal de neón](./guides/terminal.md)
+- [guide: Arcade pixel](./guides/pixel.md)
+- [guide: Matriz de puntos](./guides/puntos.md)
+- [guide: Estudio en papel](./guides/papel.md)
 - [recipe: Peluquería y color, estética](./recipes/salon.md)
 - [component: ActionBar](./components/action-bar.md)
 - [component: AppointmentList](./components/appointment-list.md)
@@ -44,6 +62,24 @@ pilot
 | Tipo | ID | Uso |
 | --- | --- | --- |
 | guide | salon | Blanco y gris claro con un pastel cálido, serifa muy fina y texto grande y ligero; formas o fotos de trabajos como único adorno. |
+| guide | lujo | Hueso cálido, una tinta oliva, serifa fina en mayúsculas y vídeo a sangre |
+| guide | monocromo | Blanco y negro, una grotesca gigante en peso normal con tracking muy negativo, rejilla fina |
+| guide | tecnico | Gris frío y pizarra, grotesca suiza fina con mono, el visual dentro de un marco, datos y reloj en la cabecera. |
+| guide | nocturno | Negro azulado, grises de la misma tinta, Inter a 510 de peso y la interfaz real como imagen. |
+| guide | electrico | Casi negro y un acento ácido, condensada gruesa en mayúsculas y grotesca variable para leer |
+| guide | rotulo | Blanco y un azul marino, una frase gigante que se mueve y una foto que hace de ventana; chips en letra extendida. |
+| guide | calido | Crema, tinta verde y una serifa de contraste enorme; telón de color entre páginas |
+| guide | ludico | Pareja de colores vivos, una grotesca redonda y gruesa, pixel en las etiquetas |
+| guide | barberia | Hueso y negro con un acento saturado, condensada o serifa enorme con la cursiva para el énfasis, datos en mayúsculas y botones en óvalo. |
+| guide | club | Negro absoluto y blanco con un acento saturado, condensada en mayúsculas gigante y muy apretada, píldoras de contorno y texto que rueda. |
+| guide | boutique | Rosa empolvado y marrón tierra, serifa con media frase en cursiva, sans limpia con aire y reserva siempre a mano. |
+| guide | autor | Gris claro con dos acentos, todo en minúsculas, títulos entre paréntesis, garabatos a mano y botones con sombra dura: la marca es la persona. |
+| guide | escuela | Amarillo saturado y negro, una grotesca en mayúsculas siempre apretada, recuadros con borde y sombra dura; fotos documentales de las clases. |
+| guide | marca | Dos tintas como una serigrafía, grotesca estrecha y gruesa a tamaño de cartel, texto grande en mayúsculas y el producto fijo mientras pasa la página. |
+| guide | terminal | Negro tintado del color del acento, todo en monoespaciada, titulares gruesos en mayúsculas y un solo neón para lo que se puede tocar. |
+| guide | pixel | Ciruela de noche, letra de píxel solo en los titulares, monoespaciada para leer, un amarillo de moneda y esquinas que no se redondean. |
+| guide | puntos | Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color. |
+| guide | papel | Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante. |
 | recipe | salon | Un salón que vende oficio y calma: el equipo y los trabajos son el producto. |
 | component | action-bar | Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el… |
 | component | appointment-list | Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación |
@@ -80,7 +116,7 @@ Sin ejemplo específico; consultar receta/guía y declaración completa.
 
 ```json
 [
-  "Selección parcial: no es inventario completo del paquete.",
+  "Selección parcial: todas las guías, pero solo la receta y las piezas de salon; no es inventario completo del paquete.",
   "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."
 ]
 ```
