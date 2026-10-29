@@ -12,7 +12,7 @@
 | 2026-10-29 | [demo-linde-agentes](demo-linde-agentes.md) · Linde, consumidor limpio para el piloto de agentes | demo | en curso | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-evaluacion-agentes](herramienta-evaluacion-agentes.md) · Evaluación de agentes con y sin skills de Trama | herramienta | hecho | peluquería | salón editorial claro |  |
-| 2026-10-29 | [herramienta-evaluacion-boutique](herramienta-evaluacion-boutique.md) · Evaluación de agentes — guía boutique y reserva de pilates | herramienta | en curso | estudio boutique | estudio boutique |  |
+| 2026-10-29 | [herramienta-evaluacion-boutique](herramienta-evaluacion-boutique.md) · Evaluación de agentes — guía boutique y reserva de pilates | herramienta | hecho | estudio boutique | estudio boutique |  |
 | 2026-10-29 | [herramienta-skills-trama](herramienta-skills-trama.md) · Skills Trama por proyecto y evaluación independiente | herramienta | hecho |  |  |  |
 | 2026-10-29 | [pieza-guide-frame-contraste](pieza-guide-frame-contraste.md) · GuideFrame — contraste de texto optativo sin cambiar la decoración | pieza | hecho | peluquería | salón editorial claro | `/componentes#guide-frame` |
 | 2026-10-29 | [pieza-section-header-legible](pieza-section-header-legible.md) · SectionHeader — decoración sin interferir con el texto | pieza | hecho | peluquería | salón editorial claro | `/componentes#section-header` |

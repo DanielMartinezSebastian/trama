@@ -192,3 +192,39 @@
   Servidor de referencia propio en 3433 cerrado tras el smoke. Sin publicación, despliegue ni push.
 - Siguiente paso: generar en `.cache/agent-evaluation-boutique`, adjudicar con el consumidor nuevo y revisar
   las capturas antes de interpretar resultados. Las cifras históricas permanecen separadas.
+
+## Cierre: resultados boutique (29 de octubre de 2026)
+
+- Objetivo completado: 12/12 ensayos con fuente y brief, sin incidencias de cuota, en la rama/worktree acordados.
+  Protocolo anterior a los ensayos en `ed144d2`; resumen reproducible probado en `3c83fed`.
+- Adjudicación inicial: 5/6 por condición. `booking-updated-1` tenía dos enlaces válidos a «Ver mis citas» y
+  Playwright exigía uno; `booking-pilot-1` usaba «Anular cita»/«Sí, anular cita» y el selector exigía el texto corto.
+  Conservado `validation-protocolo-original.json` antes de ajustar el validador.
+- Herramienta: `--robust-selectors` en `33a55eb` admite enlaces repetidos y esas etiquetas equivalentes sin cambiar
+  los defaults de P4. Repetida la adjudicación de los doce ensayos, mismas fuentes y mismo paquete: **6/6 con
+  documentación actual y 6/6 con skills**, incluidos error de datos, confirmación, persistencia y anulación.
+  Evidencia conserva ambos resultados; no se atribuyen los falsos fallos al agente ni se corrige su código.
+- Generación media: documentación 83 s / 259 k entrada (51 k sin caché) / 3,3 k salida; skills 107 s / 252 k
+  (46 k sin caché) / 3,8 k. Skills: entrada −2 % (−8 % sin caché), tiempo +29 %, salida +16 %. No hay ahorro global
+  ni ventaja funcional demostrados en esta muestra; modelo heredado no informado y n=2 por celda.
+- Revisión visual: Codex inspeccionó las 24 capturas de 1440/390 px. Las cuatro referencias conservan disposición,
+  ilustración y CTA; sin fallback de fuentes observado. Cuatro respuestas de documentación adaptan rosa/tierra
+  a crema/verde; las seis de skills conservan la paleta medida. Se registra como observación visual, no se altera
+  retrospectivamente la tasa automática. Ilustraciones ornamentales de varias reservas quedan recortadas en móvil.
+- Hallazgo de reutilización: una respuesta con skills rehace la lista para evitar el texto fijo «llámanos» de
+  AppointmentList. Funciona, pero añade código y acoplamiento. Otra reutiliza la pieza y aclara que es texto de demo.
+  Se propone valorar texto configurable; no se cambia la API ni el kit por esta evaluación.
+- Entregables: `p4c-evaluacion-boutique.md`, `evaluacion-boutique-evidencia.json`, entrega y docs de agentes actualizados;
+  ficha `herramienta-evaluacion-boutique` cerrada e índice regenerado (47 fichas). Artefactos ignorados en
+  `.cache/agent-evaluation-boutique/` y `.refs3d/agent-boutique/`; resúmenes conservan hashes de fuentes y entradas.
+- Comprobaciones: `doctor`, `verify` completo (incluye compatibilidad del protocolo P4 y denominadores del resumen),
+  build del sitio y del consumidor, smoke de la referencia y revisión de capturas correctos. Preflight probado:
+  reanudar con otro orden de condiciones se rechaza antes de generar. `git diff --check` correcto.
+- Paquete congelado `28d62a4f55ce7a38a3f5856052e2970992e8427f4ca84fa77775fdbec9aea3d3` intacto; no se recompila
+  porque no se toca el kit. Cohortes originales sin cambios. Avisos conocidos de Three.js y fuentes fallback,
+  sin fallo. Sin publicación npm, despliegue ni push; ningún otro worktree modificado.
+- Servidores propios de referencia/smoke en 3433 y adjudicación en 3421 cerrados; puertos comprobados libres.
+  Build del sitio sin dev de este worktree.
+- Decisiones y siguiente paso: no añadir MCP ni una receta boutique por estos datos. Antes conviene probar una nota
+  de fidelidad de paleta y valorar personalización del mensaje de cierre de AppointmentList. Valoración visual
+  del usuario opcional; no se presenta esta revisión por Codex como aprobación humana.

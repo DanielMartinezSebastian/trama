@@ -16,7 +16,7 @@ Las cohortes mantienen sus paquetes históricos; sus cifras no corresponden a es
 | P2. Distribución piloto | Hecha | `knowledge/` y `skills/` en el `.tgz`; consumidor limpio `examples/agent-pilot` con build Next 16.3.5 y recorrido en navegador |
 | P3. Construcción y estilo | Hecha | `skills/trama-build`, `skills/trama-style`; instalador `trama-ui skills install`; [descubrimiento](./discovery-evidencia.json) en Codex CLI 0.165.0 y Claude Code 2.1.302 |
 | P3b. Investigación | Hecha | `skills/trama-research`; [brief piloto](./research-piloto.md) y [evidencia](./research-evidencia.json) |
-| P4. Evaluación | Hecha: Codex (12 de 12 ensayos) y Claude Code (18 de 18) | [Codex](./p4-evaluacion.md), [Claude Code](./p4b-evaluacion-claude.md), datos en `evaluacion-*evidencia.json` |
+| P4. Evaluación | Hecha: salon con Codex (12/12) y Claude Code (18/18); boutique con Codex (12/12) | [Codex](./p4-evaluacion.md), [Claude Code](./p4b-evaluacion-claude.md), [boutique](./p4c-evaluacion-boutique.md), datos en `evaluacion-*evidencia.json` |
 | P5. Comunicación | Hecha | Portada, metadatos, README, README del paquete y [docs/57-agentes.md](../57-agentes.md) |
 | P6. Consulta y extensiones | Decidida: no ahora | Ver abajo |
 
@@ -46,19 +46,30 @@ Las cohortes mantienen sus paquetes históricos; sus cifras no corresponden a es
 | Skills | 6/6 | 5/6 |
 | Entrada extra con skills | +64 % | +20 % |
 
-Las skills aciertan más con los dos clientes y cuestan más. Con Opus, la documentación ya resuelve composición y
-referencia; los fallos restantes son de contraste en la reserva. Una guía y dos clientes: no autoriza cifras generales.
+En las cohortes de **salon**, las skills aciertan más con los dos clientes y cuestan más. Con Opus, la documentación
+ya resuelve composición y referencia; los fallos restantes son de contraste en la reserva.
 Detalle en [P4](./p4-evaluacion.md) y [P4b](./p4b-evaluacion-claude.md).
+
+Con **boutique**, después de los arreglos y usando el mismo paquete actual en ambas condiciones, documentación y
+skills pasan **6/6 pruebas funcionales cada una**. Los selectores originales daban 5/6 a ambas por dos limitaciones
+del validador; se conservó ese resultado y se repitió el conjunto con `--robust-selectors`, sin tocar las respuestas.
+Las skills leen un 2 % menos de entrada (8 % menos sin caché), pero tardan un 29 % más y producen un 16 % más de
+salida. En las 24 capturas revisadas por Codex, cuatro respuestas de documentación adaptan la paleta a crema/verde;
+las seis con skills conservan la paleta medida. [Protocolo, resultados y límites P4c](./p4c-evaluacion-boutique.md).
+
+Dos guías, dos clientes y paquetes distintos entre cohortes: no autoriza cifras generales ni un ahorro universal.
 
 ## P6: decisión
 
-No se añaden MCP, registro ni una consulta CLI nueva. Ninguna de las dos cohortes falló por no encontrar una pieza:
-los fallos fueron de contraste, fuentes y tipos sin exportar, y el sobrecoste de las skills está en leer las fichas,
-no en buscarlas. `trama-ui knowledge` basta para localizar el índice de la versión instalada. Volver a valorarlo si
-más recetas y piezas con ficha alargan la búsqueda.
+No se añaden MCP, registro ni una consulta CLI nueva. Las cohortes iniciales fallaban por contraste, fuentes y tipos
+sin exportar, y su sobrecoste estaba en leer fichas, no en buscarlas. Boutique tampoco aporta un fallo por no encontrar
+una pieza: la siguiente mejora que conviene probar es conservar la paleta medida cuando el encargo la especifica.
+`trama-ui knowledge` basta para localizar el índice de la versión instalada. Volver a valorarlo si más recetas y
+piezas con ficha alargan la búsqueda.
 
 ## Pendiente
 
 - Revisión visual humana de las capturas de P4 y del consumidor piloto.
+- Valoración visual del usuario de los resultados boutique; la revisión del agente ya está registrada.
 - Recetas y piezas con ficha siguen siendo solo las de `salon`.
 - Publicar en npm y desplegar la web son decisiones del usuario; esta rama no lo hace.

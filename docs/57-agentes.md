@@ -92,20 +92,26 @@ Los SVG del ejemplo son ilustraciones originales, sin fotos o testimonios de cli
 
 ## Qué mostró la evaluación
 
-Dos cohortes con las mismas tres tareas: 12 ensayos con Codex CLI y 18 con Claude Code (Opus 5.5), que añade una
-condición con el catálogo actualizado. Detalle en [P4](./evolucion-agentes/p4-evaluacion.md) y
-[P4b](./evolucion-agentes/p4b-evaluacion-claude.md).
+Dos cohortes con `salon`: 12 ensayos con Codex CLI y 18 con Claude Code (Opus 5.5), que añade una condición con
+el catálogo actualizado. Detalle en [P4](./evolucion-agentes/p4-evaluacion.md) y [P4b](./evolucion-agentes/p4b-evaluacion-claude.md).
 
 - **Más ensayos correctos**: con skills, 6/6 (Codex) y 5/6 (Claude); con documentación, 2/6 y 4/6. Casi todos los
   fallos son de contraste con los tokens de `salon`; además, un defecto de `Button` en Server Components y unos tipos
   de reserva sin exportar, ya corregidos.
-- **No ahorra**: con skills se leen un 64 % (Codex) o un 20 % (Claude) más tokens de entrada. El conocimiento extra
+- **Sin ahorro en salon**: con skills se leen un 64 % (Codex) o un 20 % (Claude) más tokens de entrada. El conocimiento extra
   se paga en lectura.
 - **Depende del modelo**: con Opus, la documentación ya acierta en composición y referencia; todos sus fallos están
   en la reserva.
-- **Fuentes**: sin skills, el agente escribió el nombre literal de la familia y el titular cayó a una serif del
+- **Fuentes en P4 con Codex**: sin skills, el agente escribió el nombre literal de la familia y el titular cayó a una serif del
   sistema. El catálogo y la ficha de guía explican ahora cómo nombrarlas.
 
-Son muestras pequeñas con dos clientes y una guía; no generalizan a otros casos. MCP, registro
-o una consulta CLI más fina no se añaden: P4 no mostró que falten, y el coste observado está en leer, no en buscar.
-Se reconsiderarán si más guías o recetas alargan la búsqueda.
+La [cohorte boutique](./evolucion-agentes/p4c-evaluacion-boutique.md), posterior a los arreglos y con el mismo paquete
+actual en ambas condiciones, suma otros 12 ensayos de un estudio ficticio de pilates. Documentación y skills pasan
+6/6 pruebas funcionales cada una; se conservaron dos falsos fallos del validador por enlaces repetidos/etiquetas
+equivalentes y se comprobó el conjunto con selectores robustos. Con skills: entrada −2 % (−8 % sin caché), generación
++29 % y salida +16 %. En las capturas, las seis variantes con skills conservan la paleta medida; cuatro de
+documentación la adaptan a crema/verde. Esta observación visual no forma parte de la tasa automática de aciertos.
+
+Son muestras pequeñas con dos clientes, dos guías y paquetes distintos entre cohortes; no generalizan a otros casos.
+MCP, registro o una consulta CLI más fina no se añaden: estas evaluaciones no muestran que falten.
+Se reconsiderarán si más guías o recetas alargan la búsqueda. No se promete ahorro universal de lectura ni de tiempo.

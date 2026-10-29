@@ -1,0 +1,1330 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-29T15:58:43.082Z",
+  "cohort": {
+    "createdAt": "2026-10-29T15:32:52.844Z",
+    "contractSha256": "554e3140f79b608514d86007f07b2e3094b88586d4ef0f749aa1bd28086bb0b3",
+    "contract": {
+      "suite": {
+        "id": "boutique",
+        "guide": "boutique",
+        "fonts": "Cormorant/Inter",
+        "reference": ".refs3d/agent-boutique/reference-hero.png",
+        "artSrc": "/images/movimiento.svg",
+        "compositionContent": [
+          "Sesión inicial",
+          "Clase privada",
+          "Dúo",
+          "35",
+          "65"
+        ],
+        "tasks": [
+          {
+            "id": "composition",
+            "prompt": "Construye una sección comercial para Compás, estudio ficticio de pilates. Un h1 'Compás — Pilates y movimiento', introducción breve, tres servicios (Sesión inicial gratis/15 min; Clase privada 35 €/45 min; Dúo desde 65 €/60 min), y enlaces claros para reservar usando bookHref. Guía boutique, contraste legible, disposición responsive y copy propio. Usar piezas del kit que encajen. Sin imágenes ni servicios conectados."
+          },
+          {
+            "id": "reference",
+            "prompt": "Adapta la captura adjunta al hero de Compás, estudio ficticio de pilates. Mantén jerarquía editorial con el titular 'Fuerza con calma. Movimiento contigo.', texto breve y CTA usando bookHref. En escritorio texto a la izquierda e ilustración a la derecha; en móvil apilar texto antes de imagen sin desborde. La ilustración propia se recibe como artSrc, con alt descriptivo. Guía boutique, tono cercano y contraste legible. No afirmes conocer tipografías/CSS exactos de la imagen; registra observado/inferido/decidido en brief.md. Se pide adaptación, no igualdad de píxeles."
+          },
+          {
+            "id": "booking",
+            "prompt": "Implementa un flujo de reserva local para Compás, estudio ficticio de pilates, con Trama. Si mode='book': servicio/profesional, día/hueco, datos inválidos y confirmación con enlace appointmentsHref. Si mode='appointments': vacío/citas persistidas, enlace bookHref, anulación con confirmación. Servicios: inicial (15min/0€, Sesión inicial), privada (45min/35€, Clase privada), duo (60min/65€/from, Dúo); Alba hace todos y Dani inicial/privada. Usa la storageKey recibida para ambas vistas; textos explícitos de demostración sin correos/agenda conectados. Cerrado 0,1; sábado cierre14; times 10,11,12,13,16,17,18 en formato HH:mm, min1 max45, cutoff24h. Un h1 propio por vista. Guía boutique. No implementes un servidor de reservas ni presentes la demo como tratamiento sanitario."
+          }
+        ]
+      },
+      "conditions": [
+        "updated",
+        "pilot"
+      ],
+      "client": "codex",
+      "clientVersion": "0.165.0",
+      "model": "default-inherited-unreported",
+      "sourceTreeSha256": "c63b41fe46853e0156b59aa414426bf70febe1175302d82f6ac07956354b3a4b",
+      "referenceSha256": "ea7bf75e60a18d9b6a100eea3cba6bc08f65af0e015a7af91b9ad4db57bf9d55",
+      "legacyCatalogSha256": null
+    }
+  },
+  "package": {
+    "target": ".cache/agent-pilot-boutique",
+    "tarball": "dist-npm/trama-ui-0.13.0.tgz",
+    "sha256": "28d62a4f55ce7a38a3f5856052e2970992e8427f4ca84fa77775fdbec9aea3d3",
+    "version": "0.13.0",
+    "knowledge": true,
+    "preparedAt": "2026-10-29T15:26:01.625Z",
+    "suite": "boutique"
+  },
+  "inputs": [
+    {
+      "path": ".cache/agent-evaluation-boutique/cohort.json",
+      "sha256": "03db5e15fede0629245239b16b03e29243271d2672b494baf64da8e25abb7805"
+    },
+    {
+      "path": ".cache/agent-evaluation-boutique/runs.json",
+      "sha256": "7bbc3d0050a498ef1c819784edcd916cfc99ed60ee0ca7d2b4060939ba0f881e"
+    },
+    {
+      "path": ".cache/agent-evaluation-boutique/validation.json",
+      "sha256": "9d62bf5de4d1c0bea90ae42387f424bf69837b55694ff593362bbec598a5c504"
+    },
+    {
+      "path": ".cache/agent-pilot-boutique/pilot-install.json",
+      "sha256": "d05bc64fa5a4c36bdf117fefe09887d284f6c2db54659ce01ecaedabf548b10b"
+    },
+    {
+      "path": ".cache/agent-evaluation-boutique/visual-review.json",
+      "sha256": "5fe121964dbf85ec718dd135b3cebd1010e0a0f149450e81f7e80d6debebc648"
+    },
+    {
+      "path": ".cache/agent-evaluation-boutique/validation-protocolo-original.json",
+      "sha256": "912aaa781b1c71323347fb8d644f014a0a37b1cff86a4a24545f08481cc1f108"
+    }
+  ],
+  "sharedBuildMs": 5611,
+  "browser": "Chromium",
+  "selectorMode": "equivalent-labels-and-repeated-links",
+  "humanReview": "pending",
+  "summary": [
+    {
+      "condition": "updated_documentation",
+      "planned": 6,
+      "registered": 6,
+      "executed": 6,
+      "passed": 6,
+      "passedOriginalSelectors": 5,
+      "failed": 0,
+      "pendingValidation": 0,
+      "infrastructure": 0,
+      "tokenSamples": 6,
+      "mean": {
+        "generationMs": 83166.83333333333,
+        "input": 258590.5,
+        "uncachedInput": 50633.166666666664,
+        "output": 3258.3333333333335
+      }
+    },
+    {
+      "condition": "proposed_skills",
+      "planned": 6,
+      "registered": 6,
+      "executed": 6,
+      "passed": 6,
+      "passedOriginalSelectors": 5,
+      "failed": 0,
+      "pendingValidation": 0,
+      "infrastructure": 0,
+      "tokenSamples": 6,
+      "mean": {
+        "generationMs": 107016.33333333333,
+        "input": 252491.5,
+        "uncachedInput": 46496.833333333336,
+        "output": 3765.6666666666665
+      }
+    }
+  ],
+  "records": [
+    {
+      "id": "composition-updated-1",
+      "task": "composition",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 71374,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 1
+      },
+      "tokens": {
+        "input": 321094,
+        "cachedInput": 260864,
+        "output": 3553,
+        "reasoning": 497
+      },
+      "adjudication": {
+        "id": "composition-updated-1",
+        "task": "composition",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 71374,
+        "validationMs": 1955,
+        "usage": [
+          {
+            "input_tokens": 321094,
+            "cached_input_tokens": 260864,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3553,
+            "reasoning_output_tokens": 497
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "composition-updated-1",
+        "task": "composition",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 71374,
+        "validationMs": 2053,
+        "usage": [
+          {
+            "input_tokens": 321094,
+            "cached_input_tokens": 260864,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3553,
+            "reasoning_output_tokens": 497
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "composition-updated-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/composition-updated-1/desktop.png",
+          ".cache/agent-evaluation-boutique/composition-updated-1/mobile.png"
+        ],
+        "palette": "adapted-cream-olive",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Adapta la paleta medida rosa/tierra a crema/verde sin petición de otro color; menor fidelidad cromática, sin fallo funcional ni de contraste."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-1/Result.tsx",
+          "sha256": "9f8bb87261f413be923c130f0b73948d89259064c730f728f93b051dc9e7cc2d"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-1/brief.md",
+          "sha256": "708982f03a6904f57522af7a52a21e5da31e1991dfc6bc21501f078e672ca6cd"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-1/events.jsonl",
+          "sha256": "ac6c1acc451dbbc3f128bd4fcd7a56b3cf2ca9919798cd62595cae22dbfda680"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-1/run.json",
+          "sha256": "b4940066bd3be222b97e6dc20b6a12fc155bc7357a1a33ba7b9185f0cd058b9d"
+        }
+      ]
+    },
+    {
+      "id": "composition-pilot-1",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 100014,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 2
+      },
+      "tokens": {
+        "input": 292827,
+        "cachedInput": 255232,
+        "output": 3138,
+        "reasoning": 577
+      },
+      "adjudication": {
+        "id": "composition-pilot-1",
+        "task": "composition",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 100014,
+        "validationMs": 1773,
+        "usage": [
+          {
+            "input_tokens": 292827,
+            "cached_input_tokens": 255232,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3138,
+            "reasoning_output_tokens": 577
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "composition-pilot-1",
+        "task": "composition",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 100014,
+        "validationMs": 1870,
+        "usage": [
+          {
+            "input_tokens": 292827,
+            "cached_input_tokens": 255232,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3138,
+            "reasoning_output_tokens": 577
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "composition-pilot-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/composition-pilot-1/desktop.png",
+          ".cache/agent-evaluation-boutique/composition-pilot-1/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": []
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-1/Result.tsx",
+          "sha256": "93b09652fe68f0e7b77364ed2eb9ff97ddf566e08e5ce446dafb86bbc5991298"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-1/brief.md",
+          "sha256": "9b26945f4846c97641896102ace20aecd5717b128e9d0da51eb60a48eae0b1e8"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-1/events.jsonl",
+          "sha256": "0eeed135c119a695cc1533ca269ad306f14c44641f8ec352e5ef96fa0c36c1e4"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-1/run.json",
+          "sha256": "d80ad4699487ec5be58d2903b2f52a6395ed53615f91e699eab583cfa05476d3"
+        }
+      ]
+    },
+    {
+      "id": "reference-updated-1",
+      "task": "reference",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 78891,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 3
+      },
+      "tokens": {
+        "input": 194778,
+        "cachedInput": 153728,
+        "output": 2872,
+        "reasoning": 490
+      },
+      "adjudication": {
+        "id": "reference-updated-1",
+        "task": "reference",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 78891,
+        "validationMs": 1546,
+        "usage": [
+          {
+            "input_tokens": 194778,
+            "cached_input_tokens": 153728,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2872,
+            "reasoning_output_tokens": 490
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "reference-updated-1",
+        "task": "reference",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 78891,
+        "validationMs": 1586,
+        "usage": [
+          {
+            "input_tokens": 194778,
+            "cached_input_tokens": 153728,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2872,
+            "reasoning_output_tokens": 490
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "reference-updated-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/reference-updated-1/desktop.png",
+          ".cache/agent-evaluation-boutique/reference-updated-1/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Jerarquía editorial, ilustración completa, CTA visible y orden texto-imagen conservados en escritorio/móvil; brief distingue observado, inferido y decidido."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-1/Result.tsx",
+          "sha256": "2a03b0b16a14f6b9c584f39539b07cff0510892e829496761bbe004eeb1d6e1b"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-1/brief.md",
+          "sha256": "4eee3ded1c1b59813712dd84fe9cfe01b0bce16983afcb9dd2b383282e42033f"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-1/events.jsonl",
+          "sha256": "a12c636104fc734d2f720cd236dd3954c4c944e9efa73ec1cac00501490eae9a"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-1/run.json",
+          "sha256": "c5a390c59ad854fda0d01212396b58391e131671922518898b93ac83451cf01a"
+        }
+      ]
+    },
+    {
+      "id": "reference-pilot-1",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 107282,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 4
+      },
+      "tokens": {
+        "input": 204567,
+        "cachedInput": 162304,
+        "output": 3316,
+        "reasoning": 709
+      },
+      "adjudication": {
+        "id": "reference-pilot-1",
+        "task": "reference",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 107282,
+        "validationMs": 1700,
+        "usage": [
+          {
+            "input_tokens": 204567,
+            "cached_input_tokens": 162304,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3316,
+            "reasoning_output_tokens": 709
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "reference-pilot-1",
+        "task": "reference",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 107282,
+        "validationMs": 1843,
+        "usage": [
+          {
+            "input_tokens": 204567,
+            "cached_input_tokens": 162304,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3316,
+            "reasoning_output_tokens": 709
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "reference-pilot-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/reference-pilot-1/desktop.png",
+          ".cache/agent-evaluation-boutique/reference-pilot-1/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Jerarquía editorial, ilustración completa, CTA visible y orden texto-imagen conservados en escritorio/móvil; brief distingue observado, inferido y decidido."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-1/Result.tsx",
+          "sha256": "de52ecd46e5c042ec949513d21e222a96f3b837093742a256823c7a60ac19ddf"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-1/brief.md",
+          "sha256": "8a2041ba267de61207e700360d63b4628aae49b1267d0de27c4bf84ffb65b9e0"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-1/events.jsonl",
+          "sha256": "5b607352d11f70997002f73a8330d1a9c5cf378a5585535a9f0e829c8bdf2c1c"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-1/run.json",
+          "sha256": "c4b5116d2246332f6532f58e9af786120aec5fb1f88e543afc332fa105a80c63"
+        }
+      ]
+    },
+    {
+      "id": "booking-updated-1",
+      "task": "booking",
+      "condition": "updated_documentation",
+      "repetition": 1,
+      "generationMs": 86457,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 5
+      },
+      "tokens": {
+        "input": 337406,
+        "cachedInput": 289536,
+        "output": 3684,
+        "reasoning": 288
+      },
+      "adjudication": {
+        "id": "booking-updated-1",
+        "task": "booking",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 86457,
+        "validationMs": 2473,
+        "usage": [
+          {
+            "input_tokens": 337406,
+            "cached_input_tokens": 289536,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3684,
+            "reasoning_output_tokens": 288
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "booking-updated-1",
+        "task": "booking",
+        "condition": "updated_documentation",
+        "repetition": 1,
+        "generationMs": 86457,
+        "validationMs": 2472,
+        "usage": [
+          {
+            "input_tokens": 337406,
+            "cached_input_tokens": 289536,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3684,
+            "reasoning_output_tokens": 288
+          }
+        ],
+        "status": "failed",
+        "details": [
+          "Error: locator.click: Error: strict mode violation: locator('#evaluation-case').getByRole('link', { name: 'Ver mis citas', exact: true }) resolved to 2 elements:\n    1) <a href=\"/evaluation/booking-updated-1?mode=appointments\" class=\"ui-button ui-button--primary ui-button--md ui-intent--accent ui-s ui-s--minimal\">…</a> aka getByRole('region', { name: 'Formulario de reserva' }).getByRole('link', { name: 'Ver mis citas' })\n    2) <a href=\"/evaluation/booking-updated-1?mode=appointments\">…</a> aka getByText('Ver mis citas ↗')\n\nCall log:\n\u001b[2m  - waiting for locator('#evaluation-case').getByRole('link', { name: 'Ver mis citas', exact: true })\u001b[22m\n"
+        ],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "booking-updated-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/booking-updated-1/desktop.png",
+          ".cache/agent-evaluation-boutique/booking-updated-1/mobile.png"
+        ],
+        "palette": "adapted-cream-olive",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Adapta la paleta medida rosa/tierra a crema/verde sin petición de otro color; menor fidelidad cromática, sin fallo funcional ni de contraste.",
+          "Ilustración ornamental recortada; especialmente estrecha en móvil en ambas reservas con skills y booking-updated-2. No impide leer ni reservar."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-1/Result.tsx",
+          "sha256": "caccd0fbab4a3255b8afbd8695266b4c76daebe32ee5b354a966b868e5f1ff30"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-1/brief.md",
+          "sha256": "be4836a73e452e85acd7f675244fea176e37f31b08c6bd34e50f80edc810a74a"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-1/events.jsonl",
+          "sha256": "31ea9fe0cc68d613435e6195a0ce9a3d5c88253e0fa6c0227a38e15f9276f8d8"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-1/run.json",
+          "sha256": "7283bf338e53b7248026cc98b8b842766f4b17f287949055c883ec44fee98360"
+        }
+      ]
+    },
+    {
+      "id": "booking-pilot-1",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 1,
+      "generationMs": 149548,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 6
+      },
+      "tokens": {
+        "input": 325890,
+        "cachedInput": 268032,
+        "output": 5909,
+        "reasoning": 889
+      },
+      "adjudication": {
+        "id": "booking-pilot-1",
+        "task": "booking",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 149548,
+        "validationMs": 2695,
+        "usage": [
+          {
+            "input_tokens": 325890,
+            "cached_input_tokens": 268032,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 5909,
+            "reasoning_output_tokens": 889
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "booking-pilot-1",
+        "task": "booking",
+        "condition": "proposed_skills",
+        "repetition": 1,
+        "generationMs": 149548,
+        "validationMs": 32838,
+        "usage": [
+          {
+            "input_tokens": 325890,
+            "cached_input_tokens": 268032,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 5909,
+            "reasoning_output_tokens": 889
+          }
+        ],
+        "status": "failed",
+        "details": [
+          "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Anular', exact: true })\u001b[22m\n"
+        ],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "booking-pilot-1",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/booking-pilot-1/desktop.png",
+          ".cache/agent-evaluation-boutique/booking-pilot-1/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Ilustración ornamental recortada; especialmente estrecha en móvil en ambas reservas con skills y booking-updated-2. No impide leer ni reservar.",
+          "Usa BookingFlow y una lista local propia compatible con el almacenamiento; evita el texto fijo de llamada a un negocio real del listado del kit."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-1/Result.tsx",
+          "sha256": "abb200d758f36cb16d036c6146c51a60195d1bfe77d4c25b4f0fd2225a450ae7"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-1/brief.md",
+          "sha256": "23fd5b9ce888e898752623c3cef68a8286a83771fd526bacb597a52a4060bab9"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-1/events.jsonl",
+          "sha256": "e69e895a350b442cd9cd441571306bc53b13dfa79fb1b782786cb9765efe3c07"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-1/run.json",
+          "sha256": "0127fd29694c2096b2fd80f0b4c2ef9abff228f63fe67836705b8cfe6c4d6086"
+        }
+      ]
+    },
+    {
+      "id": "composition-pilot-2",
+      "task": "composition",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 102693,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 7
+      },
+      "tokens": {
+        "input": 203958,
+        "cachedInput": 158336,
+        "output": 3702,
+        "reasoning": 943
+      },
+      "adjudication": {
+        "id": "composition-pilot-2",
+        "task": "composition",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 102693,
+        "validationMs": 1792,
+        "usage": [
+          {
+            "input_tokens": 203958,
+            "cached_input_tokens": 158336,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3702,
+            "reasoning_output_tokens": 943
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "composition-pilot-2",
+        "task": "composition",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 102693,
+        "validationMs": 1844,
+        "usage": [
+          {
+            "input_tokens": 203958,
+            "cached_input_tokens": 158336,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3702,
+            "reasoning_output_tokens": 943
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "composition-pilot-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/composition-pilot-2/desktop.png",
+          ".cache/agent-evaluation-boutique/composition-pilot-2/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": []
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-2/Result.tsx",
+          "sha256": "927f4f9e189e3d40efb263a3c9d0a9f11669a3bbfeaeb79590aa5dd570b66e50"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-2/brief.md",
+          "sha256": "676af9d386d2ec170430b4b239485e648298664eefbc95beac7a3c7a4090cf0e"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-2/events.jsonl",
+          "sha256": "b78bfa00c60cbf9e1bfe6e5a3f53c28c54e7ba3405cf0c5ed68354a1d2ce73fc"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-pilot-2/run.json",
+          "sha256": "08daab543edd9d870ebeaf68ea5eeff56a25077091c92d10ad62ec19e2af4891"
+        }
+      ]
+    },
+    {
+      "id": "composition-updated-2",
+      "task": "composition",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 90864,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 8
+      },
+      "tokens": {
+        "input": 227925,
+        "cachedInput": 186112,
+        "output": 3384,
+        "reasoning": 478
+      },
+      "adjudication": {
+        "id": "composition-updated-2",
+        "task": "composition",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 90864,
+        "validationMs": 1863,
+        "usage": [
+          {
+            "input_tokens": 227925,
+            "cached_input_tokens": 186112,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3384,
+            "reasoning_output_tokens": 478
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "composition-updated-2",
+        "task": "composition",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 90864,
+        "validationMs": 1858,
+        "usage": [
+          {
+            "input_tokens": 227925,
+            "cached_input_tokens": 186112,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3384,
+            "reasoning_output_tokens": 478
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "composition-updated-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/composition-updated-2/desktop.png",
+          ".cache/agent-evaluation-boutique/composition-updated-2/mobile.png"
+        ],
+        "palette": "adapted-cream-olive",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Adapta la paleta medida rosa/tierra a crema/verde sin petición de otro color; menor fidelidad cromática, sin fallo funcional ni de contraste."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-2/Result.tsx",
+          "sha256": "78d82f7e447e28e4cae28df664071496a34ec655f57f370a0be1e76a0a4ca2eb"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-2/brief.md",
+          "sha256": "7b3ef5b4cdce748426cbce0b36e6e01cb6a9c47ced9904947c2bb7d35e0245b3"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-2/events.jsonl",
+          "sha256": "e04f3bcf3ee202521ce6ea6897a7792a773085a12592d3a03d3cf1bedd5f1446"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/composition-updated-2/run.json",
+          "sha256": "e32949ea6b6b7d61930f340eca1725264dac86426bc35cb33fb88827bcbc125c"
+        }
+      ]
+    },
+    {
+      "id": "reference-pilot-2",
+      "task": "reference",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 75007,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 9
+      },
+      "tokens": {
+        "input": 162051,
+        "cachedInput": 120320,
+        "output": 2387,
+        "reasoning": 209
+      },
+      "adjudication": {
+        "id": "reference-pilot-2",
+        "task": "reference",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 75007,
+        "validationMs": 1684,
+        "usage": [
+          {
+            "input_tokens": 162051,
+            "cached_input_tokens": 120320,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2387,
+            "reasoning_output_tokens": 209
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "reference-pilot-2",
+        "task": "reference",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 75007,
+        "validationMs": 1717,
+        "usage": [
+          {
+            "input_tokens": 162051,
+            "cached_input_tokens": 120320,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2387,
+            "reasoning_output_tokens": 209
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "reference-pilot-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/reference-pilot-2/desktop.png",
+          ".cache/agent-evaluation-boutique/reference-pilot-2/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Jerarquía editorial, ilustración completa, CTA visible y orden texto-imagen conservados en escritorio/móvil; brief distingue observado, inferido y decidido."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-2/Result.tsx",
+          "sha256": "eb3ed6a9858f0c9b58ab2ff41eb43fceaecf50e92537c5c1b3b380be59b5727e"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-2/brief.md",
+          "sha256": "8cd95e7f68d85860b244d244ddc989540db35bd60dca01a90b9d180a6d1831c4"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-2/events.jsonl",
+          "sha256": "de56fb5be72d8f9809b08225e661b36dc3b400a31055402f45b2ed6508ec379a"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-pilot-2/run.json",
+          "sha256": "f3302fdcc063cafc05629ed8ba2ade5fded63eae0accfaae2e70ae9759229106"
+        }
+      ]
+    },
+    {
+      "id": "reference-updated-2",
+      "task": "reference",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 80447,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 10
+      },
+      "tokens": {
+        "input": 213593,
+        "cachedInput": 176512,
+        "output": 2492,
+        "reasoning": 338
+      },
+      "adjudication": {
+        "id": "reference-updated-2",
+        "task": "reference",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 80447,
+        "validationMs": 1707,
+        "usage": [
+          {
+            "input_tokens": 213593,
+            "cached_input_tokens": 176512,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2492,
+            "reasoning_output_tokens": 338
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "reference-updated-2",
+        "task": "reference",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 80447,
+        "validationMs": 1725,
+        "usage": [
+          {
+            "input_tokens": 213593,
+            "cached_input_tokens": 176512,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2492,
+            "reasoning_output_tokens": 338
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "reference-updated-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/reference-updated-2/desktop.png",
+          ".cache/agent-evaluation-boutique/reference-updated-2/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Jerarquía editorial, ilustración completa, CTA visible y orden texto-imagen conservados en escritorio/móvil; brief distingue observado, inferido y decidido."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-2/Result.tsx",
+          "sha256": "6fa6104115c4b0da56c4e9d64e597cf8c38a9654d6d6f242416a5e8553dbddc3"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-2/brief.md",
+          "sha256": "84e062114ae55f6c71afa0615024dd59ee1be5c91c73d7d033dde16063e6f3e4"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-2/events.jsonl",
+          "sha256": "dbb02600963df5c916fdedcb4b326497c672c33e736f2a7618ba01cb2d9cff2d"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/reference-updated-2/run.json",
+          "sha256": "b1ef3b448c063d1eb626b039e1a043f5b4ef2d4696056dc2775de66548b778e0"
+        }
+      ]
+    },
+    {
+      "id": "booking-pilot-2",
+      "task": "booking",
+      "condition": "proposed_skills",
+      "repetition": 2,
+      "generationMs": 107554,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 11
+      },
+      "tokens": {
+        "input": 325656,
+        "cachedInput": 271744,
+        "output": 4142,
+        "reasoning": 568
+      },
+      "adjudication": {
+        "id": "booking-pilot-2",
+        "task": "booking",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 107554,
+        "validationMs": 2360,
+        "usage": [
+          {
+            "input_tokens": 325656,
+            "cached_input_tokens": 271744,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 4142,
+            "reasoning_output_tokens": 568
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "booking-pilot-2",
+        "task": "booking",
+        "condition": "proposed_skills",
+        "repetition": 2,
+        "generationMs": 107554,
+        "validationMs": 2551,
+        "usage": [
+          {
+            "input_tokens": 325656,
+            "cached_input_tokens": 271744,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 4142,
+            "reasoning_output_tokens": 568
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "booking-pilot-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/booking-pilot-2/desktop.png",
+          ".cache/agent-evaluation-boutique/booking-pilot-2/mobile.png"
+        ],
+        "palette": "measured-boutique",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Ilustración ornamental recortada; especialmente estrecha en móvil en ambas reservas con skills y booking-updated-2. No impide leer ni reservar."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-2/Result.tsx",
+          "sha256": "ed03a0353aca961cccac06213ed6136f0532abcbe43358d26a70db5e900dfbba"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-2/brief.md",
+          "sha256": "8f921bc79411d8a11db5d1738eb83e2b2687fef558b0f104ceda195ff384e636"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-2/events.jsonl",
+          "sha256": "4ec04e7d9a70594e2ff144b3c9f141fe036f80844dd18878fd1df9fe76bee7d2"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-pilot-2/run.json",
+          "sha256": "f8be4a169a8bf5c743e20b6deeca24df81c9a02577c4516adcfbcba322b5786d"
+        }
+      ]
+    },
+    {
+      "id": "booking-updated-2",
+      "task": "booking",
+      "condition": "updated_documentation",
+      "repetition": 2,
+      "generationMs": 90968,
+      "cliExit": 0,
+      "configuration": {
+        "client": "codex-cli",
+        "version": "0.165.0",
+        "model": "default-inherited-unreported",
+        "modelOverride": false,
+        "sandbox": "read-only",
+        "output": "json-schema",
+        "approval": "never",
+        "order": 12
+      },
+      "tokens": {
+        "input": 256747,
+        "cachedInput": 180992,
+        "output": 3565,
+        "reasoning": 359
+      },
+      "adjudication": {
+        "id": "booking-updated-2",
+        "task": "booking",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 90968,
+        "validationMs": 2493,
+        "usage": [
+          {
+            "input_tokens": 256747,
+            "cached_input_tokens": 180992,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3565,
+            "reasoning_output_tokens": 359
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "originalAdjudication": {
+        "id": "booking-updated-2",
+        "task": "booking",
+        "condition": "updated_documentation",
+        "repetition": 2,
+        "generationMs": 90968,
+        "validationMs": 2574,
+        "usage": [
+          {
+            "input_tokens": 256747,
+            "cached_input_tokens": 180992,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3565,
+            "reasoning_output_tokens": 359
+          }
+        ],
+        "status": "passed-automated-pending-visual",
+        "details": [],
+        "visualReview": "pending"
+      },
+      "visual": {
+        "id": "booking-updated-2",
+        "status": "reviewed-by-agent",
+        "reviewer": "Codex",
+        "viewports": [
+          1440,
+          390
+        ],
+        "screenshots": [
+          ".cache/agent-evaluation-boutique/booking-updated-2/desktop.png",
+          ".cache/agent-evaluation-boutique/booking-updated-2/mobile.png"
+        ],
+        "palette": "adapted-cream-olive",
+        "fontObservation": "Cormorant/Inter visibles; no se observa fallback del sistema",
+        "findings": [
+          "Adapta la paleta medida rosa/tierra a crema/verde sin petición de otro color; menor fidelidad cromática, sin fallo funcional ni de contraste.",
+          "Ilustración ornamental recortada; especialmente estrecha en móvil en ambas reservas con skills y booking-updated-2. No impide leer ni reservar."
+        ]
+      },
+      "files": [
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-2/Result.tsx",
+          "sha256": "b9ba807f7a5196e77e7530d8b1c07731690596b63bb77c85502705f74b7223b8"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-2/brief.md",
+          "sha256": "d417fe8afe6e9b72fa7e974f32052db2e64d6a949302625404e9e5d7b271ffa1"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-2/events.jsonl",
+          "sha256": "531f8be5c684473f7787aec943e906c65c79782dd77922a9e96bb2a67b8f2c9e"
+        },
+        {
+          "path": ".cache/agent-evaluation-boutique/booking-updated-2/run.json",
+          "sha256": "2f9832b54f992fc7f9882c1b4cedcdeb6cfded6511cc00252a49add0fd49da97"
+        }
+      ]
+    }
+  ]
+}
