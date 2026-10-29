@@ -156,3 +156,16 @@
   worktree durante el build. Sin publicación npm, despliegue ni push; `git diff --check` correcto.
 - Siguiente paso: revisión humana opcional de capturas, uso opt-in en proyectos y otra guía/cohorte antes de
   generalizar las cifras. No queda pendiente la aprobación ni la implementación de la propuesta de P4b.
+
+## Validación visual del usuario (29 de octubre de 2026)
+
+- Objetivo: registrar la aceptación visual de `GuideFrame textContrast`.
+- Rama / partida / worktree: `feat/evolucion-agentes`, `52fd49e`, `C:/COMPARTIDO/trama-evolucion-agentes`.
+  Status inicial limpio y worktrees revisados; ningún otro worktree modificado.
+- Validación: el usuario respondió «valido» después de recibir `/componentes#guide-frame` con la comparación de
+  `salon` y las capturas de antes/después y móvil. Revisión visual de este ajuste aceptada; no se extiende a todas
+  las capturas ni a las cifras de las cohortes históricas.
+- Cambios: aceptación registrada aquí y en `pieza-guide-frame-contraste`; sin cambios de código ni paquete.
+- Servidor de revisión propio en `http://127.0.0.1:3431`, abierto a petición del usuario, cerrado al terminar la revisión.
+- Comprobaciones: `verify` completo y `git diff --check`. Sin push, publicación ni despliegue.
+- Siguiente paso: otra guía/cohorte si el usuario decide continuar la evaluación; no se inicia automáticamente.

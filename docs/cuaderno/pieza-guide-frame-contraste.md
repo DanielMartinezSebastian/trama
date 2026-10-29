@@ -61,4 +61,6 @@ colores semánticos y los botones rellenos requieren su propia revisión. Los es
 
 ## Siguiente
 
-Revisión humana opcional de las capturas y otra guía/cohorte antes de generalizar los resultados de evaluación.
+El usuario validó visualmente este ajuste tras recibir el catálogo comparativo y las capturas de antes/después
+y móvil (29 de octubre de 2026). Esa validación corresponde al ajuste de GuideFrame, no a toda la cohorte de P4.
+Siguiente: otra guía/cohorte antes de generalizar los resultados de evaluación.
