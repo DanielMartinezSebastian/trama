@@ -1,0 +1,9 @@
+"use client";
+import AppointmentList from "trama-ui/AppointmentList";
+import { services, storageKey } from "./data";
+
+export default function Appointments() {
+  return <AppointmentList services={services} storageKey={storageKey} bookHref="/reservar" cutoffHours={24}
+    business="Linde (demostración)" location="Local ficticio" emptyTitle="Aún no hay citas de prueba"
+    emptyText="Elige tu servicio y prueba la reserva con datos ficticios." variant="editorial" />;
+}

@@ -1,0 +1,31 @@
+import SectionHeader from "trama-ui/SectionHeader";
+import PricingSection from "trama-ui/PricingSection";
+import TeamSection from "trama-ui/TeamSection";
+import TestimonialSection from "trama-ui/TestimonialSection";
+import OpeningHours from "trama-ui/OpeningHours";
+import ImageReveal from "trama-ui/ImageReveal";
+import ActionBar from "trama-ui/ActionBar";
+
+export default function Home() {
+  return <>
+    <section className="intro wrap"><div className="intro-copy"><p className="eyebrow">LINDE / CORTE Y COLOR</p><h1>Un corte.<br />Un color.<br /><em>Tu manera.</em></h1><p>Escuchar primero. Encontrar después ese pelo que sientes tuyo.</p><a className="text-cta" href="/reservar">Encuentra tu hueco <span>↗</span></a><small>Salón de demostración · Ven con datos ficticios</small></div>
+      <div className="intro-art"><ImageReveal src="/images/trazo.svg" alt="Ilustración propia: un mechón dibuja una curva entre dos superficies cálidas" ratio="4 / 5" /><span className="art-caption">OFICIO, TEXTURA Y TIEMPO</span></div>
+    </section>
+    <section className="manifesto wrap"><p className="eyebrow">EMPEZAMOS ESCUCHANDO</p><p>El buen pelo no necesita parecerse al de nadie. <em>Necesita parecerse a ti.</em></p></section>
+    <section id="servicios" className="wrap section"><SectionHeader title="Lo justo. Lo tuyo." kicker="SERVICIOS" subtitle="Precio y tiempo claros antes de sentarte. IVA incluido; el color se presupuesta en consulta." backdrop="" variant="editorial" />
+      <PricingSection kicker="" title="" subtitle="" layout="menu" variant="editorial" plans={[
+        { id: "consulta", name: "Consulta inicial", description: "Hablamos de tu pelo y de lo que necesitas.", price: "Gratis", meta: "15 minutos", cta: "Elegir consulta", href: "/reservar?servicio=consulta", note: "Sin compromiso" },
+        { id: "corte", name: "Corte", description: "Forma, textura y un acabado que puedas mantener.", price: "35 €", meta: "45 minutos", cta: "Elegir corte", href: "/reservar?servicio=corte", note: "Precio cerrado" },
+        { id: "color", name: "Color", description: "Tu matiz, con tiempo para cuidarlo.", price: "Desde 65 €", meta: "90 minutos", cta: "Elegir color", href: "/reservar?servicio=color", note: "Presupuesto en consulta" },
+      ]} footnote="Reserva de demostración: no se contacta con ningún salón." />
+    </section>
+    <section id="equipo" className="wrap section"><TeamSection kicker="EL EQUIPO" title="Las manos, las personas." subtitle="Profesionales ficticios para probar tu elección de cita." titleSize="giant" layout="rows" align="left" linkLabel="Reservar" variant="editorial" members={[
+      { name: "Alba", role: "Corte y color", bio: "Escuchar, mirar y encontrar el matiz.", href: "/reservar?profesional=Alba" },
+      { name: "Dani", role: "Corte y textura", bio: "Una forma que siga siendo tuya al día siguiente.", href: "/reservar?profesional=Dani" },
+    ]} /></section>
+    <section className="work wrap section"><ImageReveal src="/images/textura.svg" alt="Ilustración propia: ondas de cabello sobre un plano rosado" ratio="16 / 9" /><div><p className="eyebrow">TRABAJOS / UNA NOTA DE INTENCIÓN</p><h2>Menos ruido.<br /><em>Más textura.</em></h2><p>Ilustraciones originales del piloto. No representan trabajos ni clientes reales.</p></div></section>
+    <section className="wrap section"><TestimonialSection kicker="RESEÑAS DE MUESTRA" title="El tiempo también se cuida." subtitle="Textos ficticios para evaluar la composición." items={"Me escucharon antes de empezar. Salí con un corte que puedo cuidar en casa.|Alex|Personaje ficticio|5\nUn rato tranquilo y un color que siento mío.|Sol|Personaje ficticio|5"} source="" sourceHref="" distribution="" variant="editorial" /></section>
+    <section className="wrap section hours"><div><p className="eyebrow">UN RATO PARA TI</p><h2>Nos hacemos<br /><em>un hueco.</em></h2><a className="text-cta" href="/reservar">Reservar una cita de prueba ↗</a></div><OpeningHours title="Horario del salón ficticio" hours={"M-V|10:00-20:00\nS|10:00-14:00\nD,L|cerrado"} variant="editorial" /></section>
+    <ActionBar actions={[{ label: "Mis citas", href: "/mis-citas", icon: "calendar" }, { label: "Reservar", href: "/reservar", icon: "arrow-right", primary: true }]} show="mobile" position="fixed" variant="editorial" />
+  </>;
+}

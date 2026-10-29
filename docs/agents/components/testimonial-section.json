@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "testimonial-section",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/Avatar.tsx",
+      "sha256": "b252cfb0172f9e55bdd026b4eefd199662e4dbeb052f900e77cfcebb384089e4"
+    },
+    {
+      "path": "components/ui/Carousel.tsx",
+      "sha256": "b559a7609eae708e72f18096fd2f8ad989d8b21be652b99cc32ab6f9d354a603"
+    },
+    {
+      "path": "components/ui/CarouselLazy.tsx",
+      "sha256": "9c679210670559128528edeb8068ee519b62156dbec4bfdc364d1400d497cf0f"
+    },
+    {
+      "path": "components/ui/SectionHeader.tsx",
+      "sha256": "5b7f22147bb427070102ff5bd2d29114353e04c93c69007ed86b54471b6a3b9d"
+    },
+    {
+      "path": "components/ui/Testimonial.tsx",
+      "sha256": "f8e65884ccc36f6206b4c003f23a0506bc2e15e3b88ccf9e9548553467fc7e9c"
+    },
+    {
+      "path": "components/ui/TestimonialSection.tsx",
+      "sha256": "8dee2607a9a1fb0956bfb50879db9a9af4fb5e06cd927acc621879c2df47fc68"
+    },
+    {
+      "path": "components/ui/fill.ts",
+      "sha256": "7bbee28575e93e7585bbba6b0ab0e8a1c05ba1302623e7e9868613725720827e"
+    },
+    {
+      "path": "components/ui/swiperCss.ts",
+      "sha256": "a4b347616e80081fe3c51160c16443cfeecd6b685c0568211e2ce349782872cf"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/secciones.tsx",
+      "sha256": "f36f4717d2681064143278efb9ca5058dbee9c92cbd5fa4c6d32a265ba755d68"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "lib/ui/placeholder.ts",
+      "sha256": "dea751fe44450ad39503dd653e51b25d06fd47a47e014753f15ce9065f248d6e"
+    },
+    {
+      "path": "lib/ui/useReducedMotion.ts",
+      "sha256": "d52a210aefcb2cedd423dccda398ede31de83402f335a7d89d4f25f8670e8371"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Sección de testimonios",
+  "component": "TestimonialSection",
+  "description": "Prueba social lista para pegar: cabecera, resumen de valoraciones (media con estrellas parciales, número y fuente enlazada, reparto por estrellas que filtra las citas) y las citas en rejilla o en slider, siempre a la misma altura con el autor abajo. Con align=\"left\" y quoteFont=\"display\" encaja en webs editoriales.",
+  "category": "secciones",
+  "import": "import TestimonialSection from \"trama-ui/TestimonialSection\";",
+  "api": {
+    "module": "trama-ui/TestimonialSection",
+    "props": "React.ComponentProps<typeof TestimonialSection>",
+    "declaration": "types/components/ui/TestimonialSection.d.ts",
+    "packageDeclaration": "./dist/components/ui/TestimonialSection.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "kicker",
+      "label": "Sobretítulo",
+      "type": "text",
+      "default": "Lo que dicen"
+    },
+    {
+      "key": "title",
+      "label": "Titular",
+      "type": "text",
+      "default": "Alumnos que ya cogieron su ola"
+    },
+    {
+      "key": "items",
+      "label": "Reseñas (una por línea, «cita|autor|rol|valoración|avatar URL opcional»)",
+      "type": "text",
+      "multiline": true,
+      "default": "Levanté la tabla el primer día. El equipo es paciente y el mar, una maravilla.|Lucía Pardo|Alumna, iniciación|5\nVinimos en familia y los peques no querían salir del agua.|Marcos Ibáñez|Curso familiar|5\nEl monitor grabó mis olas y corregimos la técnica al momento.|Diego Rus|Clases privadas|4"
+    },
+    {
+      "key": "layout",
+      "label": "Disposición",
+      "type": "select",
+      "default": "grid",
+      "options": [
+        "grid",
+        "carousel"
+      ],
+      "hint": "carousel usa Swiper: arrastre, flechas y puntos"
+    },
+    {
+      "key": "perView",
+      "label": "Visibles en pantalla ancha",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "key": "autoplay",
+      "label": "Reproducción automática (s, 0 = manual)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "effect",
+      "label": "Efecto del carrusel",
+      "type": "select",
+      "default": "slide",
+      "options": [
+        "slide",
+        "fade",
+        "cards"
+      ],
+      "hint": "fade = una cita que se funde con la siguiente"
+    },
+    {
+      "key": "align",
+      "label": "Alineación",
+      "type": "select",
+      "default": "center",
+      "options": [
+        "center",
+        "left"
+      ],
+      "labels": {
+        "center": "centrada (landing)",
+        "left": "a la izquierda (editorial)"
+      }
+    },
+    {
+      "key": "rating",
+      "label": "Nota media del resumen (0 = sin resumen)",
+      "type": "number",
+      "default": 4.8,
+      "min": 0,
+      "max": 5,
+      "step": 0.1
+    },
+    {
+      "key": "count",
+      "label": "Número de reseñas",
+      "type": "number",
+      "default": 214,
+      "min": 0,
+      "max": 5000,
+      "step": 1
+    },
+    {
+      "key": "source",
+      "label": "Fuente",
+      "type": "text",
+      "default": "Google"
+    },
+    {
+      "key": "distribution",
+      "label": "Reparto por estrellas (filtra las citas)",
+      "type": "text",
+      "default": "5:180, 4:26, 3:6, 2:1, 1:1"
+    },
+    {
+      "key": "pageSize",
+      "label": "Citas al principio (0 = todas; rejilla)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "key": "quoteFont",
+      "label": "Fuente de la cita",
+      "type": "select",
+      "default": "body",
+      "options": [
+        "body",
+        "display"
+      ],
+      "labels": {
+        "body": "la del texto",
+        "display": "la de titulares"
+      }
+    },
+    {
+      "key": "avatars",
+      "label": "Mostrar avatares (foto o iniciales)",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "avatarSize",
+      "label": "Tamaño de los retratos",
+      "type": "select",
+      "default": "md",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    {
+      "key": "avatarShape",
+      "label": "Forma del avatar",
+      "type": "select",
+      "default": "theme",
+      "options": [
+        "theme",
+        "circle"
+      ]
+    },
+    {
+      "key": "presentation",
+      "label": "Tratamiento de las citas",
+      "type": "select",
+      "default": "card",
+      "options": [
+        "card",
+        "soft",
+        "plain"
+      ]
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "glass",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "Las tarjetas llenan su celda (rejilla) o su diapositiva (slider): todas a la misma altura, con la cita arriba y el autor abajo.",
+    "El reparto filtra por estrellas (aria-pressed); las estrellas sin citas quedan deshabilitadas. Ver /sitios/almibar."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [
+      "Avatar",
+      "Carousel",
+      "CarouselLazy",
+      "SectionHeader",
+      "Testimonial"
+    ],
+    "packages": [
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      },
+      {
+        "name": "swiper",
+        "version": "^14.2.0"
+      }
+    ]
+  },
+  "examples": [],
+  "limitations": []
+}

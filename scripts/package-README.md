@@ -1,8 +1,7 @@
 # Trama
 
-Componentes React / Next.js de **ASCII, textmode y pixel art**: fondos de caracteres animados, tarjetas con capas
-ASCII, secciones de landing completas (hero, precios, FAQ, blog…), formularios, overlays y más. Siete estilos
-(`glass solid outline neon retro terminal minimal dotmatrix`) y tema por tokens CSS.
+Componentes, guías visuales y recetas para construir webs con carácter en React / Next.js. Incluye ASCII, textmode,
+pixel art, secciones, formularios y patrones de negocio. Consulta `CATALOG.md` para las variantes y piezas disponibles.
 
 ## Instalación
 
@@ -10,8 +9,13 @@ ASCII, secciones de landing completas (hero, precios, FAQ, blog…), formularios
 npm i trama-ui
 ```
 
-Requiere React 19. Pensado para **Next.js (App Router)**, sin configuración extra (probado con Turbopack y con
-webpack); los componentes interactivos ya llevan `"use client"`.
+Requiere React 19. El piloto usa **Next.js App Router con Turbopack**; los componentes interactivos llevan `"use client"`.
+Para transformar `trama-ui/fonts`, configura `transpilePackages: ['trama-ui']` y verifica build y fuentes en navegador.
+No se certifica compatibilidad universal con otros frameworks ni equivalencia con `latest` de npm.
+
+El paquete incluye `knowledge/index.json` y las skills experimentales `trama-build`, `trama-style` y `trama-research`.
+Instálalas por proyecto con `npx --no-install trama-ui skills install --client codex` (o `claude`). El instalador conserva
+instrucciones y modificaciones locales. La CLI `knowledge` imprime el índice de esta versión, no consulta una versión remota.
 
 ## Uso
 

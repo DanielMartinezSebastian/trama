@@ -40,6 +40,9 @@
     "scripts/**/*.mts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist-npm",
+    "docs/agents",
+    ".cache"
   ]
 }

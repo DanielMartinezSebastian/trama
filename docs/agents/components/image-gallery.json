@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "image-gallery",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/ImageGallery.tsx",
+      "sha256": "3f1f66e1716c51bd48451c449e9c0277c0eb758d4992b8671ee45ab83150ed6b"
+    },
+    {
+      "path": "components/ui/swiperCss.ts",
+      "sha256": "a4b347616e80081fe3c51160c16443cfeecd6b685c0568211e2ce349782872cf"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/galerias.tsx",
+      "sha256": "43ac2f697a250b365c5bca89b2d0e63930afc9ff227a5e21ab0fbba4bde2d30c"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "lib/ui/placeholder.ts",
+      "sha256": "dea751fe44450ad39503dd653e51b25d06fd47a47e014753f15ce9065f248d6e"
+    },
+    {
+      "path": "lib/ui/useReducedMotion.ts",
+      "sha256": "d52a210aefcb2cedd423dccda398ede31de83402f335a7d89d4f25f8670e8371"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Galería de imágenes",
+  "component": "ImageGallery",
+  "description": "Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas. Táctil, con teclado y flechas; sin imágenes propias usa escenas pixel art generadas.",
+  "category": "galerias",
+  "import": "import ImageGallery from \"trama-ui/ImageGallery\";",
+  "api": {
+    "module": "trama-ui/ImageGallery",
+    "props": "React.ComponentProps<typeof ImageGallery>",
+    "declaration": "types/components/ui/ImageGallery.d.ts",
+    "packageDeclaration": "./dist/components/ui/ImageGallery.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "layout",
+      "label": "Presentación",
+      "type": "select",
+      "default": "thumbs",
+      "options": [
+        "thumbs",
+        "coverflow",
+        "cards",
+        "fade",
+        "cube",
+        "creative",
+        "filmstrip",
+        "mosaic"
+      ],
+      "hint": "thumbs · coverflow · cards · fade · cube · creative · filmstrip · mosaic"
+    },
+    {
+      "key": "images",
+      "label": "Imágenes (una por línea, «imagen|título|texto»)",
+      "type": "text",
+      "multiline": true,
+      "default": "gen:0|Amanecer|Primera luz sobre la bahía\ngen:1|Mediodía|Mar limpio y viento suave\ngen:2|Atardecer|La hora dorada del swell\ngen:3|Noche|Luna llena y marea alta\ngen:4|Cala|Aguas verdes entre rocas\ngen:5|Ocaso|Rojos y naranjas en el horizonte\ngen:6|Bruma|Mañana de niebla fina\ngen:7|Aurora|Cielo violeta sobre el agua"
+    },
+    {
+      "key": "ratio",
+      "label": "Proporción",
+      "type": "select",
+      "default": "4/3",
+      "options": [
+        "4/3",
+        "16/9",
+        "21/9",
+        "1/1",
+        "3/4"
+      ]
+    },
+    {
+      "key": "captions",
+      "label": "Pies de foto",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "autoplay",
+      "label": "Reproducción automática (s, 0 = manual)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "loop",
+      "label": "Bucle",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "zoom",
+      "label": "Zoom",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "retro",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "Cada línea de «imágenes» es «imagen|título|texto». La imagen puede ser una URL o ruta, o `gen:N` (0, 1, 2…) para una escena de ejemplo generada, sin descargas.",
+    "Las flechas, los puntos y las imágenes toman borde, radio y sombra de la variante de estilo (variables --s-*).",
+    "El zoom (doble clic o pellizco) solo se aplica a los modos thumbs y fade."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [],
+    "packages": [
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      },
+      {
+        "name": "swiper",
+        "version": "^14.2.0"
+      }
+    ]
+  },
+  "examples": [],
+  "limitations": []
+}

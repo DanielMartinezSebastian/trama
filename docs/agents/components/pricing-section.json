@@ -1,0 +1,397 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "pricing-section",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/Badge.tsx",
+      "sha256": "7da4bd43d791d5ac26427f7ebe6982ece0d9df118166436ea12c502bfb7e0b38"
+    },
+    {
+      "path": "components/ui/Button.tsx",
+      "sha256": "e227219d21e13ff9c9e8b46fb82d1c1ba0ae9efc7e2860571a05e63ec3578776"
+    },
+    {
+      "path": "components/ui/Carousel.tsx",
+      "sha256": "b559a7609eae708e72f18096fd2f8ad989d8b21be652b99cc32ab6f9d354a603"
+    },
+    {
+      "path": "components/ui/CarouselLazy.tsx",
+      "sha256": "9c679210670559128528edeb8068ee519b62156dbec4bfdc364d1400d497cf0f"
+    },
+    {
+      "path": "components/ui/Icon.tsx",
+      "sha256": "5c195dde2599fe7fa14aa334ddac173c71f1c52897977e1c4058cd583775c95e"
+    },
+    {
+      "path": "components/ui/PricingCard.tsx",
+      "sha256": "b1c56554225387528eb8329e35efe4544930df973ed484004d3951908dedd431"
+    },
+    {
+      "path": "components/ui/PricingSection.tsx",
+      "sha256": "e9a1de97e1028198f21d80dc466ebb88510c7120bad79af9fa286e1f235bc4a1"
+    },
+    {
+      "path": "components/ui/SectionHeader.tsx",
+      "sha256": "5b7f22147bb427070102ff5bd2d29114353e04c93c69007ed86b54471b6a3b9d"
+    },
+    {
+      "path": "components/ui/fill.ts",
+      "sha256": "7bbee28575e93e7585bbba6b0ab0e8a1c05ba1302623e7e9868613725720827e"
+    },
+    {
+      "path": "components/ui/glyph.ts",
+      "sha256": "26607a697b81418325b535646fa00184780132d43f5327b1dfe7b03b9e9dfdba"
+    },
+    {
+      "path": "components/ui/intent.ts",
+      "sha256": "ecb232b1025ad4e94a1cec0012cf08f30c4ce2a4c86aaf720461148a03b196d9"
+    },
+    {
+      "path": "components/ui/swiperCss.ts",
+      "sha256": "a4b347616e80081fe3c51160c16443cfeecd6b685c0568211e2ce349782872cf"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/secciones.tsx",
+      "sha256": "f36f4717d2681064143278efb9ca5058dbee9c92cbd5fa4c6d32a265ba755d68"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/icons.ts",
+      "sha256": "30f2f6f05f635d66b074053a55e3fe350c9c3305f736416de713565f961edb2b"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "lib/ui/placeholder.ts",
+      "sha256": "dea751fe44450ad39503dd653e51b25d06fd47a47e014753f15ce9065f248d6e"
+    },
+    {
+      "path": "lib/ui/pricing.ts",
+      "sha256": "0b4994a637fe960607c28c7dfa82a596e5a7e19e6a2c3c6ef7c7460e3ce100f3"
+    },
+    {
+      "path": "lib/ui/useReducedMotion.ts",
+      "sha256": "d52a210aefcb2cedd423dccda398ede31de83402f335a7d89d4f25f8670e8371"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Sección de precios",
+  "component": "PricingSection",
+  "description": "Precios con datos tipados o texto, selector mensual/anual y condiciones visibles. Tarjetas, columnas unidas, lista, carrusel, carta de servicios (menu) y tabla comparativa accesible (comparison). El mismo componente se adapta a una peluquería o un club sin duplicar su lógica.",
+  "category": "secciones",
+  "import": "import PricingSection from \"trama-ui/PricingSection\";",
+  "api": {
+    "module": "trama-ui/PricingSection",
+    "props": "React.ComponentProps<typeof PricingSection>",
+    "declaration": "types/components/ui/PricingSection.d.ts",
+    "packageDeclaration": "./dist/components/ui/PricingSection.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "kicker",
+      "label": "Sobretítulo",
+      "type": "text",
+      "default": "Precios"
+    },
+    {
+      "key": "title",
+      "label": "Titular",
+      "type": "text",
+      "default": "Un plan para cada tamaño"
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "Cambia o cancela cuando quieras."
+    },
+    {
+      "key": "plans",
+      "label": "Planes (uno por línea: «nombre|precio|periodo|destacado si/no|características;…|descripción|precio anual»; «-» delante = no incluida)",
+      "type": "text",
+      "multiline": true,
+      "default": "Básico|9 €|/ mes|no|Un proyecto;Exportación PNG;Soporte por email;-Dominio propio|Para probar sin compromiso|90 €\nPro|29 €|/ mes|si|Proyectos ilimitados;Soporte prioritario;Exportación a PNG y SVG;Dominio propio|Para quien publica cada semana|290 €\nEquipo|79 €|/ mes|no|Todo lo de Pro;5 puestos;Panel de administración;Facturación centralizada|Para estudios y agencias|790 €"
+    },
+    {
+      "key": "layout",
+      "label": "Disposición",
+      "type": "select",
+      "default": "grid",
+      "options": [
+        "grid",
+        "joined",
+        "list",
+        "carousel",
+        "menu",
+        "comparison"
+      ],
+      "labels": {
+        "grid": "rejilla",
+        "joined": "una pieza con columnas",
+        "list": "lista horizontal",
+        "carousel": "carrusel",
+        "menu": "carta de servicios",
+        "comparison": "tabla comparativa"
+      }
+    },
+    {
+      "key": "comparison",
+      "label": "Comparación: prestación|plan 1|plan 2|plan 3",
+      "type": "text",
+      "multiline": true,
+      "default": "Proyectos|1|Sin límite|Sin límite\nPuestos|1|1|5\nSoporte|Email|Prioritario|Prioritario"
+    },
+    {
+      "key": "caption",
+      "label": "Nombre accesible de la tabla",
+      "type": "text",
+      "default": "Comparación de planes"
+    },
+    {
+      "key": "footnote",
+      "label": "Condiciones bajo los precios",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "cardLayout",
+      "label": "Tarjetas",
+      "type": "select",
+      "default": "classic",
+      "options": [
+        "classic",
+        "compact"
+      ]
+    },
+    {
+      "key": "highlight",
+      "label": "Plan destacado",
+      "type": "select",
+      "default": "invert",
+      "options": [
+        "invert",
+        "glow",
+        "border",
+        "lift"
+      ],
+      "labels": {
+        "invert": "invertido (fondo de acento)",
+        "glow": "halo de acento",
+        "border": "borde grueso",
+        "lift": "luz cenital (producto)"
+      }
+    },
+    {
+      "key": "badge",
+      "label": "Insignia del destacado",
+      "type": "text",
+      "default": "Más popular"
+    },
+    {
+      "key": "planCase",
+      "label": "Nombre del plan",
+      "type": "select",
+      "default": "upper",
+      "options": [
+        "upper",
+        "none"
+      ],
+      "labels": {
+        "upper": "versalitas",
+        "none": "tal cual"
+      }
+    },
+    {
+      "key": "marker",
+      "label": "Marca de las características",
+      "type": "select",
+      "default": "plus",
+      "options": [
+        "plus",
+        "check"
+      ],
+      "labels": {
+        "plus": "+",
+        "check": "✓ fina (no incluidas sin tachar)"
+      }
+    },
+    {
+      "key": "toggle",
+      "label": "Selector mensual/anual",
+      "type": "select",
+      "default": "accent",
+      "options": [
+        "accent",
+        "neutral"
+      ],
+      "labels": {
+        "accent": "en el acento",
+        "neutral": "neutro"
+      }
+    },
+    {
+      "key": "fill",
+      "label": "Fondo del resto",
+      "type": "select",
+      "default": "surface",
+      "options": [
+        "surface",
+        "tint",
+        "gradient",
+        "pattern"
+      ],
+      "labels": {
+        "surface": "el de la variante",
+        "tint": "tinte de acento",
+        "gradient": "degradado",
+        "pattern": "trama"
+      }
+    },
+    {
+      "key": "yearlyNote",
+      "label": "Etiqueta de ahorro anual",
+      "type": "text",
+      "default": "2 meses gratis"
+    },
+    {
+      "key": "cta",
+      "label": "Botón de cada plan",
+      "type": "text",
+      "default": "Empezar ahora"
+    },
+    {
+      "key": "perView",
+      "label": "Visibles en pantalla ancha",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "key": "autoplay",
+      "label": "Reproducción automática (s, 0 = manual)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "glass",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "Fórmula de producto: joined + lift. Servicios: menu + planes tipados con meta (duración), note (condición) y href. Club social: comparison con filas de prestaciones; gimnasio de fuerza: list. Ejemplos en Hebra, Esparta, Cadencia y Forja.",
+    "plans acepta PricingPlan[] además del texto. El texto permite dos columnas nuevas al final: meta y nota. Un precio anual igual al mensual mantiene su periodo. El total anual no se presenta como una equivalencia mensual sin calcular."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [
+      "Badge",
+      "Button",
+      "Carousel",
+      "CarouselLazy",
+      "Icon",
+      "PricingCard",
+      "SectionHeader"
+    ],
+    "packages": [
+      {
+        "name": "pixelarticons",
+        "version": "^2.4.1"
+      },
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      },
+      {
+        "name": "swiper",
+        "version": "^14.2.0"
+      }
+    ]
+  },
+  "examples": [],
+  "limitations": []
+}

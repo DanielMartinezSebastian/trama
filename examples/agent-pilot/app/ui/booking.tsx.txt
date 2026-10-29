@@ -1,0 +1,42 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import BookingFlow from "trama-ui/BookingFlow";
+import { services, staff, storageKey } from "./data";
+
+export default function Booking() {
+  const search = useSearchParams();
+  const service = search.get("servicio");
+  const person = search.get("profesional");
+  const edit = search.get("editar");
+  const initialService = services.find((s) => s.id === service)?.id;
+  const initialStaff = staff.find((s) => s.name === person)?.name;
+  const [editId, setEditId] = useState<string | undefined>();
+  const [ready, setReady] = useState(!edit);
+  const [invalidEdit, setInvalidEdit] = useState(false);
+  const [temporary, setTemporary] = useState(false);
+  useEffect(() => {
+    if (!edit) { setReady(true); return; }
+    try {
+      const list = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
+      const valid = Array.isArray(list) && list.some((a) => a?.id === edit && typeof a.date === "string" && typeof a.time === "string" && services.some(s => s.id === a.service) && staff.some(s => s.name === a.staff));
+      setEditId(valid ? edit : undefined); setInvalidEdit(!valid);
+    } catch { setTemporary(true); setInvalidEdit(true); }
+    setReady(true);
+  }, [edit]);
+  useEffect(() => {
+    try { const key = "linde:storage-check"; localStorage.setItem(key, "ok"); localStorage.removeItem(key); }
+    catch { setTemporary(true); }
+  }, []);
+  const invalid = (service && !initialService) || (person && !initialStaff) || invalidEdit;
+  return <>{invalid && <p role="status">El enlace no contiene una selección válida. Puedes reservar una nueva cita.</p>}
+    {temporary && <p role="status">Sin almacenamiento: esta cita durará solo esta pantalla y no aparecerá en Mis citas.</p>}
+    {!ready ? <p role="status">Abriendo la cita…</p> : <BookingFlow key={`${initialService}-${initialStaff}-${editId}`}
+      services={services} staff={staff} initialService={initialService} initialStaff={initialStaff} editId={editId}
+      storageKey={storageKey} times="10:00,11:00,12:00,13:00,16:00,17:00,18:00" closedDays="0,1" closesAt={{ 6: "14:00" }} min={1} max={45}
+      serviceLabel="Elige tu servicio" staffLabel="Elige profesional" anyStaffLabel="Quien tenga hueco" placeLabel="El salón"
+      business="Linde (demostración)" location="Local ficticio" appointmentsHref="/mis-citas" variant="editorial"
+      note="Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón." />}
+  </>;
+}

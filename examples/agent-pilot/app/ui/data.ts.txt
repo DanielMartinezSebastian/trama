@@ -1,0 +1,14 @@
+import type { ComponentProps } from "react";
+import type BookingFlow from "trama-ui/BookingFlow";
+
+type Props = ComponentProps<typeof BookingFlow>;
+export const services = [
+  { id: "consulta", name: "Consulta inicial", minutes: 15, price: 0, description: "Hablamos de tu pelo. Sin compromiso." },
+  { id: "corte", name: "Corte", minutes: 45, price: 35, description: "Forma, textura y acabado. IVA incluido." },
+  { id: "color", name: "Color", minutes: 90, price: 65, from: true, description: "Presupuesto confirmado en consulta." },
+] satisfies Props["services"];
+export const staff: Props["staff"] = [
+  { name: "Alba", services: ["consulta", "corte", "color"] },
+  { name: "Dani", services: ["consulta", "corte"] },
+];
+export const storageKey = "linde:pilot:v1";

@@ -13,6 +13,7 @@ import { execSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, posix, relative } from "node:path";
 import { ALWAYS, closure, kitComponents, packageImports, toPosix } from "./kit-lib.mts";
+import { OPTIONAL_PEER_COMPONENTS, OPTIONAL_PEERS, PACKAGE_EXPORTS } from "./package-surface.mts";
 
 const OUT = "dist-npm";
 const SRC = join(OUT, ".src");
@@ -45,8 +46,6 @@ for (const f of files) {
 // ---------- 2. barrel: todos los componentes por nombre + utilidades públicas ----------
 // Componentes que necesitan dependencias opcionales (three, @react-three/fiber): fuera del barrel para que `import … from "trama-ui"`
 // no obligue a instalarlas; se importan por subruta (`trama-ui/RetroCanvas`).
-const OPTIONAL_PEER_COMPONENTS = new Set(["RetroCanvas", "RetroFX", "RetroShapes", "RetroModel", "DeviceMockup3D", "Logo3D", "DistortImage", "ObjectStage", "ExplorableCanvas", "TypeField", "Porthole", "ToyDrive", "ChapterStage", "CrossCluster", "EngravedMap", "GravureCanvas", "ThornEmblem"]);
-const OPTIONAL_PEERS = { three: ">=0.170", "@react-three/fiber": ">=9" };
 const components = kitComponents().map((f) => posix.basename(f, ".tsx")).filter((c) => !OPTIONAL_PEER_COMPONENTS.has(c)).sort();
 const barrel = [
   "/** Punto de entrada de Trama: cada componente por su nombre. También `import X from \"trama-ui/X\"`. */",
@@ -128,6 +127,10 @@ if (missing.length) throw new Error(`"use client" perdido en: ${missing.join(", 
 for (const f of files.filter((x) => x.endsWith(".css"))) cpSync(f, join(OUT, "dist", f));
 cpSync("public/pixel/kenney-pixel-ui", join(OUT, "assets/pixel/kenney-pixel-ui"), { recursive: true });
 cpSync("scripts/trama-cli.mjs", join(OUT, "bin/trama-ui.mjs"));
+// Misma fuente generada que el repo; impedir empaquetar referencias obsoletas.
+execSync("npm run catalog:check", { stdio: "inherit" });
+cpSync("docs/agents", join(OUT, "knowledge"), { recursive: true });
+cpSync("skills", join(OUT, "skills"), { recursive: true });
 // Catálogo para agentes con las rutas del paquete: `@/components/ui/X` → `trama-ui/X`
 const catalogMd = readFileSync("docs/CATALOG.md", "utf8")
   .replace(/import (\w+) from "@\/components\/ui\/(\w+)"/g, 'import $1 from "trama-ui/$2"')
@@ -148,7 +151,7 @@ const deps = Object.fromEntries(used.filter((p) => !PEERS.includes(p) && root.de
 const pkg = {
   name: root.name,
   version: root.version,
-  description: "Componentes React/Next.js de ASCII, textmode y pixel art: fondos de caracteres, tarjetas, secciones de landing y más, con 8 estilos y tema por tokens CSS.",
+  description: root.description,
   license: root.license ?? "MIT",
   author: root.author,
   repository: { type: "git", url: "git+https://github.com/DanielMartinezSebastian/trama.git" },
@@ -159,21 +162,9 @@ const pkg = {
   sideEffects: ["**/*.css", "**/swiperCss.js"],
   main: "./dist/index.js",
   types: "./dist/index.d.ts",
-  exports: {
-    ".": { types: "./dist/index.d.ts", default: "./dist/index.js" },
-    "./styles.css": "./dist/components/ui/styles/kit.css",
-    "./fonts": { types: "./dist/lib/ui/fonts.d.ts", default: "./dist/lib/ui/fonts.js" },
-    "./tokens": { types: "./dist/lib/ui/tokens.d.ts", default: "./dist/lib/ui/tokens.js" },
-    "./icons/phosphor": { types: "./dist/lib/ui/icons-phosphor.d.ts", default: "./dist/lib/ui/icons-phosphor.js" },
-    // un solo peso (~1/6 del set completo): `trama-ui/icons/phosphor-light` → `phosphorLight`
-    "./icons/phosphor-*": { types: "./dist/lib/ui/icons-phosphor-*.d.ts", default: "./dist/lib/ui/icons-phosphor-*.js" },
-    "./icons/lucide": { types: "./dist/lib/ui/icons-lucide.d.ts", default: "./dist/lib/ui/icons-lucide.js" },
-    "./assets/*": "./assets/*",
-    "./*": { types: "./dist/components/ui/*.d.ts", default: "./dist/components/ui/*.js" },
-    "./package.json": "./package.json",
-  },
+  exports: PACKAGE_EXPORTS,
   bin: { "trama-ui": "bin/trama-ui.mjs" },
-  files: ["dist", "assets", "bin", "CATALOG.md", "THIRD-PARTY.md"],
+  files: ["dist", "assets", "bin", "knowledge", "skills", "CATALOG.md", "THIRD-PARTY.md"],
   keywords: ["react", "nextjs", "components", "ascii", "textmode", "pixel-art", "ui-kit", "landing"],
   peerDependencies: { react: ">=19", "react-dom": ">=19", next: ">=15", ...OPTIONAL_PEERS },
   peerDependenciesMeta: { next: { optional: true }, three: { optional: true }, "@react-three/fiber": { optional: true } },

@@ -1,0 +1,41 @@
+"use client";
+
+import type { ComponentProps } from "react";
+import BookingFlow from "trama-ui/BookingFlow";
+import AppointmentList from "trama-ui/AppointmentList";
+
+type BookingProps = ComponentProps<typeof BookingFlow>;
+type Booked = Parameters<NonNullable<BookingProps["onBooked"]>>[0];
+
+export const services = [
+  { id: "consulta", name: "Consulta inicial", minutes: 15, price: 0 },
+  { id: "corte", name: "Corte", minutes: 45, price: 35 },
+  { id: "color", name: "Color", minutes: 90, price: 65, from: true },
+] satisfies BookingProps["services"];
+export const staff = [
+  { name: "Alba", services: ["consulta", "corte", "color"] },
+  { name: "Dani", services: ["consulta", "corte"] },
+] satisfies BookingProps["staff"];
+export const storageKey = "linde:pilot:v1";
+
+// Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.
+// El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.
+export function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingProps, "initialService" | "initialStaff" | "editId">) {
+  const booked = (_appointment: Booked) => { /* Solo notificación local; no confirma un servicio externo. */ };
+  return <BookingFlow services={services} staff={staff} storageKey={storageKey}
+    initialService={initialService} initialStaff={initialStaff} editId={editId}
+    times="10:00,11:00,12:00,13:00,16:00,17:00,18:00" closedDays="0,1" closesAt={{ 6: "14:00" }} min={1} max={45}
+    business="Linde (demostración)" location="Local ficticio" appointmentsHref="/mis-citas"
+    serviceLabel="Elige tu servicio" staffLabel="Elige profesional" anyStaffLabel="Quien tenga hueco" placeLabel="El salón"
+    note="Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón."
+    onBooked={booked} variant="editorial" />;
+}
+
+export function AppointmentsSample() {
+  return <section aria-label="Citas de demostración">
+    <p>Solo citas locales de prueba; sin agenda conectada.</p>
+    <AppointmentList services={services} storageKey={storageKey} bookHref="/reservar" cutoffHours={24}
+      business="Linde (demostración)" location="Local ficticio" emptyTitle="Aún no hay citas de prueba"
+      emptyText="Reserva con datos ficticios. La cita se guarda en este navegador." variant="editorial" />
+  </section>;
+}

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "product-card",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/PriceTag.tsx",
+      "sha256": "0c2479dc506b88953fb8507d21b5a171f815825613dff2a3bec8cb0aed334de8"
+    },
+    {
+      "path": "components/ui/ProductCard.tsx",
+      "sha256": "7aefb3442804bf91b1a1f962f7794e23159940807d4fa09be7236d9a6e2f2ff1"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/comercio.tsx",
+      "sha256": "bc2ed7e45bddfad52167d6d5aa4800befe99c2993221eef49d564fdd5d1280da"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/commerce/money.ts",
+      "sha256": "a29aba23406791bcba9e76320188b8bf60448299464145590448f0328358ec5d"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Tarjeta de producto",
+  "component": "ProductCard",
+  "description": "Imagen con segunda imagen al pasar el puntero, etiqueta, título, material y precio. Todo el cuadro es un único enlace con nombre claro. Sin JS: el cambio de imagen es CSS.",
+  "category": "tarjetas",
+  "import": "import ProductCard from \"trama-ui/ProductCard\";",
+  "api": {
+    "module": "trama-ui/ProductCard",
+    "props": "React.ComponentProps<typeof ProductCard>",
+    "declaration": "types/components/ui/ProductCard.d.ts",
+    "packageDeclaration": "./dist/components/ui/ProductCard.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Jarrón Ola"
+    },
+    {
+      "key": "price",
+      "label": "Precio",
+      "type": "number",
+      "default": 48,
+      "min": 0,
+      "max": 999,
+      "step": 1
+    },
+    {
+      "key": "compareAt",
+      "label": "Precio anterior (0 = sin rebaja)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 999,
+      "step": 1
+    },
+    {
+      "key": "badge",
+      "label": "Etiqueta",
+      "type": "text",
+      "default": "Novedad"
+    },
+    {
+      "key": "meta",
+      "label": "Línea secundaria",
+      "type": "text",
+      "default": "Jarrones · gres"
+    },
+    {
+      "key": "soldOut",
+      "label": "Agotado",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "ratio",
+      "label": "Relación de aspecto",
+      "type": "text",
+      "default": "4 / 5"
+    }
+  ],
+  "notes": [],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [
+      "PriceTag"
+    ],
+    "packages": []
+  },
+  "examples": [],
+  "limitations": []
+}

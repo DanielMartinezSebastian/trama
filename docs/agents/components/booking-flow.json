@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "booking-flow",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/BookingFlow.tsx",
+      "sha256": "fb138cbef957c97c09b58f0e99750f2404c84a1e0aefe28bdbafdc945b5349c3"
+    },
+    {
+      "path": "components/ui/Button.tsx",
+      "sha256": "e227219d21e13ff9c9e8b46fb82d1c1ba0ae9efc7e2860571a05e63ec3578776"
+    },
+    {
+      "path": "components/ui/DatePicker.tsx",
+      "sha256": "1e43e030a9fafb42ef02856704701779230d34e415bf8c2aae0b250fe0df4e1e"
+    },
+    {
+      "path": "components/ui/Icon.tsx",
+      "sha256": "5c195dde2599fe7fa14aa334ddac173c71f1c52897977e1c4058cd583775c95e"
+    },
+    {
+      "path": "components/ui/Stepper.tsx",
+      "sha256": "e40b43fdb3d729b18d414a4f90c95be27fa0a297f472ebbd89d2da8e814baf30"
+    },
+    {
+      "path": "components/ui/TextField.tsx",
+      "sha256": "054b3a3ac44e18afb3e004fa847c3274bcf0ee9511eb2f1f22e9e70209c53fc9"
+    },
+    {
+      "path": "components/ui/glyph.ts",
+      "sha256": "26607a697b81418325b535646fa00184780132d43f5327b1dfe7b03b9e9dfdba"
+    },
+    {
+      "path": "components/ui/intent.ts",
+      "sha256": "ecb232b1025ad4e94a1cec0012cf08f30c4ce2a4c86aaf720461148a03b196d9"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/negocio.tsx",
+      "sha256": "87d4a6071e9a070d00f1f830d405b14559ad0f9749ec45af4f1ecdf8b9c6cd99"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/commerce/booking.ts",
+      "sha256": "2dee2224ba9298c2acdedb4ef555d668bb7b770a417781e2894a0423ad90d121"
+    },
+    {
+      "path": "lib/commerce/money.ts",
+      "sha256": "a29aba23406791bcba9e76320188b8bf60448299464145590448f0328358ec5d"
+    },
+    {
+      "path": "lib/ui/icons.ts",
+      "sha256": "30f2f6f05f635d66b074053a55e3fe350c9c3305f736416de713565f961edb2b"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/fixtures/agents/salon-booking.tsx.txt",
+      "sha256": "57e8b21b681ec35147cc9699f933abcf0203f0f7a6f7acdf04977be27e5b4d3a"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Reserva de cita",
+  "component": "BookingFlow",
+  "description": "Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al calendario». Los huecos dependen de la duración del servicio, del cierre de cada día y de las citas ya guardadas, y un resumen al lado sigue la elección. Guarda en localStorage con useAppointments (lib/commerce/booking); no envía nada.",
+  "category": "formularios",
+  "import": "import BookingFlow from \"trama-ui/BookingFlow\";",
+  "api": {
+    "module": "trama-ui/BookingFlow",
+    "props": "React.ComponentProps<typeof BookingFlow>",
+    "declaration": "types/components/ui/BookingFlow.d.ts",
+    "packageDeclaration": "./dist/components/ui/BookingFlow.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "places",
+      "label": "Varios locales",
+      "type": "boolean",
+      "default": false,
+      "noCode": true
+    },
+    {
+      "key": "staffLabel",
+      "label": "Título de la elección de profesional",
+      "type": "text",
+      "default": "¿Con quién?"
+    },
+    {
+      "key": "anyStaffLabel",
+      "label": "Opción «me da igual»",
+      "type": "text",
+      "default": "Me da igual"
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "minimal",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "Datos: `services` (id, name, minutes, price, description), `staff` (name, role, photo, `services` que hace, `places` donde trabaja) y `places` opcional. Huecos: `times`, `closedDays`, `closesAt` ({ 6: \"14:00\" }), `min` y `max`.",
+    "Desde una carta o una ficha: `initialService`, `initialStaff` e `initialPlace` (de `?servicio=`); reprogramar con `editId` (de `?editar=`, el enlace «Cambiar» de AppointmentList).",
+    "Misma `storageKey` en BookingFlow y AppointmentList. Ver /inspiraciones/cita/reservar (cinco locales) y docs/56."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor.",
+    "services no vacío y staff compatible con sus servicios; mismos services/storageKey que AppointmentList.",
+    "El adaptador de página lee query; pasar initialService, initialStaff y editId explícitamente."
+  ],
+  "dependencies": {
+    "components": [
+      "Button",
+      "DatePicker",
+      "Icon",
+      "Stepper",
+      "TextField"
+    ],
+    "packages": [
+      {
+        "name": "pixelarticons",
+        "version": "^2.4.1"
+      },
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "salon-booking",
+      "fixture": "scripts/fixtures/agents/salon-booking.tsx.txt",
+      "file": "examples/salon-booking.tsx.txt",
+      "code": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport BookingFlow from \"trama-ui/BookingFlow\";\nimport AppointmentList from \"trama-ui/AppointmentList\";\n\ntype BookingProps = ComponentProps<typeof BookingFlow>;\ntype Booked = Parameters<NonNullable<BookingProps[\"onBooked\"]>>[0];\n\nexport const services = [\n  { id: \"consulta\", name: \"Consulta inicial\", minutes: 15, price: 0 },\n  { id: \"corte\", name: \"Corte\", minutes: 45, price: 35 },\n  { id: \"color\", name: \"Color\", minutes: 90, price: 65, from: true },\n] satisfies BookingProps[\"services\"];\nexport const staff = [\n  { name: \"Alba\", services: [\"consulta\", \"corte\", \"color\"] },\n  { name: \"Dani\", services: [\"consulta\", \"corte\"] },\n] satisfies BookingProps[\"staff\"];\nexport const storageKey = \"linde:pilot:v1\";\n\n// Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.\n// El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.\nexport function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingProps, \"initialService\" | \"initialStaff\" | \"editId\">) {\n  const booked = (_appointment: Booked) => { /* Solo notificación local; no confirma un servicio externo. */ };\n  return <BookingFlow services={services} staff={staff} storageKey={storageKey}\n    initialService={initialService} initialStaff={initialStaff} editId={editId}\n    times=\"10:00,11:00,12:00,13:00,16:00,17:00,18:00\" closedDays=\"0,1\" closesAt={{ 6: \"14:00\" }} min={1} max={45}\n    business=\"Linde (demostración)\" location=\"Local ficticio\" appointmentsHref=\"/mis-citas\"\n    serviceLabel=\"Elige tu servicio\" staffLabel=\"Elige profesional\" anyStaffLabel=\"Quien tenga hueco\" placeLabel=\"El salón\"\n    note=\"Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón.\"\n    onBooked={booked} variant=\"editorial\" />;\n}\n\nexport function AppointmentsSample() {\n  return <section aria-label=\"Citas de demostración\">\n    <p>Solo citas locales de prueba; sin agenda conectada.</p>\n    <AppointmentList services={services} storageKey={storageKey} bookHref=\"/reservar\" cutoffHours={24}\n      business=\"Linde (demostración)\" location=\"Local ficticio\" emptyTitle=\"Aún no hay citas de prueba\"\n      emptyText=\"Reserva con datos ficticios. La cita se guarda en este navegador.\" variant=\"editorial\" />\n  </section>;\n}\n",
+      "requirements": [
+        "trama-ui/BookingFlow",
+        "trama-ui/AppointmentList"
+      ],
+      "validation": "La generación no acredita compilación o navegador; validar tipos, build y recorrido en el proyecto consumidor. Los ensayos del paquete se registran en el informe de entrega."
+    }
+  ],
+  "limitations": [
+    "Solo reserva local; onBooked se invoca después de guardar y mostrar confirmación, sin transacción ni error asíncrono de agenda.",
+    "El correo se valida pero no se guarda ni forma parte de Appointment/onBooked.",
+    "La ocupación de demostración no acredita disponibilidad real ni concurrencia multiusuario."
+  ]
+}

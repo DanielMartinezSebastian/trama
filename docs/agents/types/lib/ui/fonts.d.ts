@@ -1,0 +1,82 @@
+export declare const inter: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const manrope: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const spaceGrotesk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const syne: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const fraunces: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const instrumentSerif: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jetbrainsMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const spaceMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+/**
+ * Monoespaciadas técnicas de la variante `dotmatrix` (y del tema `dotmatrixTokens`): IBM Plex Mono para el cuerpo (legible
+ * en tamaños pequeños y con acentos), Share Tech Mono para etiquetas estrechas y Major Mono Display como titular alternativo.
+ * El titular por defecto de la variante es Doto (matriz de puntos), más abajo con las pixel. Sin precarga: solo se descargan
+ * en las páginas que las usan.
+ */
+export declare const ibmPlexMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const shareTechMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const majorMonoDisplay: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const interTight: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const instrumentSans: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const geist: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const schibstedGrotesk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bricolageGrotesque: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const newsreader: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bodoniModa: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const cormorantGaramond: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const playfairDisplay: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const geistMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const anton: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const antonio: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const monaSans: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const onest: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const archivo: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const gloock: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const martianMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const pressStart2P: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const vt323: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const geistPixel: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey25: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const pixelifySans: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const dotGothic16: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const silkscreen: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountSingle: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey10: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const doto: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const tiny5: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountPropSingle: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const handjet: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountGridDouble: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquard12: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey20: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey15: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquardaBastarda9: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const micro5: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountPropSingleInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountGridDoubleInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountPropDoubleInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountGridSingleInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountSingleInk: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquard24: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountGridSingle: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const coralPixels: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bytesized: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcount: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquard12Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bitcountPropDouble: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquard24Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey15Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const micro5Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey10Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey25Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jacquardaBastarda9Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const jersey20Charted: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const sixtyfour: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const sixtyfourConvergence: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const workbench: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const rubikPixels: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const rubikIso: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const mozillaHeadline: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const rubikBrokenFax: import("next/dist/compiled/@next/font").NextFontWithVariable;
+/** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
+export declare const fontVariables: string;

@@ -1,7 +1,7 @@
 {
   "name": "trama-ui",
   "version": "0.13.0",
-  "description": "Trama: librería de componentes React/Next.js (ASCII, textmode, pixel art, secciones de landing). Ver docs/README.md y AGENTS.md.",
+  "description": "Trama: componentes, guías visuales y recetas para construir webs con carácter en React y Next.js; skills experimentales para agentes.",
   "license": "MIT",
   "author": "Daniel Martínez Sebastián",
   "repository": {
@@ -15,7 +15,7 @@
   "private": true,
   "scripts": {
     "doctor": "tsx scripts/doctor.mts",
-    "verify": "npm run typecheck && npm run catalog:check && npm run check:shadows && npm run cine:test && npm run lab:cuaderno -- --check",
+    "verify": "npm run typecheck && npm run catalog:check && npm run agents:test && npm run check:shadows && npm run cine:test && npm run lab:cuaderno -- --check",
     "smoke": "tsx scripts/smoke.mts",
     "cine:test": "tsx scripts/cine/base-url.test.mts",
     "dev": "next dev",
@@ -47,7 +47,14 @@
     "cine:sintesis": "tsx scripts/cine/sintesis.mts",
     "cine:rampa": "tsx scripts/cine/rampa.mts",
     "cine:ritmo": "tsx scripts/cine/ritmo.mts",
-    "lab:cuaderno": "tsx scripts/cuaderno.mts"
+    "lab:cuaderno": "tsx scripts/cuaderno.mts",
+    "agents:check-package": "tsx scripts/check-agent-package.mts",
+    "agents:test": "tsx --import ./scripts/stub-register.mjs scripts/agent-knowledge.test.mts",
+    "agents:pilot": "tsx scripts/prepare-agent-pilot.mts",
+    "agents:test-install": "tsx scripts/test-agent-install.mts",
+    "agents:test-pilot": "tsx scripts/test-agent-pilot.mts",
+    "agents:evaluate": "tsx scripts/evaluate-agents.mts",
+    "agents:validate-evaluation": "tsx scripts/validate-agent-evaluation.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

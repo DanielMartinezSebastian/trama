@@ -1,0 +1,19 @@
+import GuideFrame from "trama-ui/GuideFrame";
+import SectionHeader from "trama-ui/SectionHeader";
+import Button from "trama-ui/Button";
+import { guide } from "trama-ui";
+import "trama-ui/styles.css";
+
+export default function SalonStyleSample() {
+  const selected = guide("salon");
+  return (
+    <GuideFrame guide={selected}>
+      <main className="ui-g-wrap ui-g-section">
+        <h1 className="ui-g-brand">Linde</h1>
+        <p className="ui-g-body">Corte y color. Tiempo para escucharte.</p>
+        <SectionHeader title="Oficio, sin prisa." kicker="EL SALÓN" subtitle="Un salón ficticio para probar Trama." backdrop="oficio" variant={selected.variant} />
+        <Button label="Reservar una cita de prueba" href="/reservar" variant={selected.variant} />
+      </main>
+    </GuideFrame>
+  );
+}

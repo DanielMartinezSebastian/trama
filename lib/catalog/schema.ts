@@ -65,6 +65,11 @@ export type CatalogEntry = {
   /** altura mínima del escenario en px */
   stageHeight?: number;
   notes?: string[];
+  /** Conocimiento de consumo que no se deduce de los controles del visor. */
+  consumption?: {
+    requirements?: string[];
+    limitations?: string[];
+  };
   /** el componente usa una prop que dispara animaciones (`playKey`) */
   replayable?: boolean;
   /** hijos de ejemplo para el código de uso (envoltorios: Reveal, Presence…); sin él se genera `<X />` */

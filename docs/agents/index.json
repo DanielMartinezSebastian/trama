@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "index",
+  "id": "pilot",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/comercio.tsx",
+      "sha256": "bc2ed7e45bddfad52167d6d5aa4800befe99c2993221eef49d564fdd5d1280da"
+    },
+    {
+      "path": "lib/catalog/entries/contenido.tsx",
+      "sha256": "c54678c74f0c83fdd7f507043f836951519a805ccde39f5c0ea4dd7e4e71e4a9"
+    },
+    {
+      "path": "lib/catalog/entries/datos.tsx",
+      "sha256": "e2c2fd7b8ab40193ffa887d0ffea04fd6122808977d716ba6fdbaa4ef5ef1513"
+    },
+    {
+      "path": "lib/catalog/entries/feedback.tsx",
+      "sha256": "642fbc9e21ef774094c3f955c33178a15d11e9f2e1986cfbc53df8af789681ae"
+    },
+    {
+      "path": "lib/catalog/entries/fondos.tsx",
+      "sha256": "ebd734adf2ed78ec73ac23580e4dd8d519c2fef255f9e0dad90beb995ac20531"
+    },
+    {
+      "path": "lib/catalog/entries/formularios.tsx",
+      "sha256": "2d01ee67e5fadaf21408817418da55532c4407220176f969485bf4bd02b887a7"
+    },
+    {
+      "path": "lib/catalog/entries/formulas.tsx",
+      "sha256": "1ae3c939decc786eeaf51ecd0ef5253776f23e02187504ad957752b4ef307536"
+    },
+    {
+      "path": "lib/catalog/entries/galerias.tsx",
+      "sha256": "43ac2f697a250b365c5bca89b2d0e63930afc9ff227a5e21ab0fbba4bde2d30c"
+    },
+    {
+      "path": "lib/catalog/entries/guias.tsx",
+      "sha256": "010577818634a3af53ce1afdf4b6686a5d73fcc2f93a3a8008ef088cad1a1482"
+    },
+    {
+      "path": "lib/catalog/entries/interaccion.tsx",
+      "sha256": "a7a303cfc6b368c0ff83c7fb8ed9cf11845188ef0a7e9f448d9f70cb5fc483d1"
+    },
+    {
+      "path": "lib/catalog/entries/luz.tsx",
+      "sha256": "ab0a29ed93306dff24bb96c5354ee3b3a86ee2ca9d5a9738a45c33d91d36d320"
+    },
+    {
+      "path": "lib/catalog/entries/movimiento.tsx",
+      "sha256": "28e1c69d784612d2cab4b142de42432aa0f3fa23e6c22944d29e6529273208fa"
+    },
+    {
+      "path": "lib/catalog/entries/navegacion.tsx",
+      "sha256": "35f69664dfe38b9e4ef361cdf057e750962ad58ac8f768f882b6e6e8df03f02f"
+    },
+    {
+      "path": "lib/catalog/entries/negocio.tsx",
+      "sha256": "87d4a6071e9a070d00f1f830d405b14559ad0f9749ec45af4f1ecdf8b9c6cd99"
+    },
+    {
+      "path": "lib/catalog/entries/overlays.tsx",
+      "sha256": "40e63846f78ddd2ec8961f762179d32ec55bfc4718dc0de24153e7f8166f00c8"
+    },
+    {
+      "path": "lib/catalog/entries/pixel.tsx",
+      "sha256": "03d6d2073da48d62ac25ea4a88c20fdd8dcb95138f396503ee8beb40ef105603"
+    },
+    {
+      "path": "lib/catalog/entries/producto.tsx",
+      "sha256": "bf328eef2b9e396e16f086775f21771e9bce75923b0a87ee2406031b98008ffa"
+    },
+    {
+      "path": "lib/catalog/entries/ronda3.tsx",
+      "sha256": "a3cdd7b71241ef483320598bd2975cef2228c62072bd23384aebd87119500428"
+    },
+    {
+      "path": "lib/catalog/entries/ronda5.tsx",
+      "sha256": "61ff8bf9ee398244dc3936e9d14aa5b5f2ba5b98902bbf17c2319b82b0752c16"
+    },
+    {
+      "path": "lib/catalog/entries/scroll.tsx",
+      "sha256": "53a534ce63b6bb552b62baafd81c42f39789d97d2c69bff0dcb4d26ec5c55252"
+    },
+    {
+      "path": "lib/catalog/entries/secciones.tsx",
+      "sha256": "f36f4717d2681064143278efb9ca5058dbee9c92cbd5fa4c6d32a265ba755d68"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/entries/tarjetas.tsx",
+      "sha256": "ca89e6d8c634e01ce7d811eb08bd29e82edd3041aaaeb4805515b639dbcc805b"
+    },
+    {
+      "path": "lib/catalog/entries/texto.tsx",
+      "sha256": "65f758f2e1d2bdf12c47b93a60e7ee92a0f8ccc7cc20dc2d6d321cb7d0d433d3"
+    },
+    {
+      "path": "lib/catalog/entries/transiciones.tsx",
+      "sha256": "3d37447d67399a09e588050a35da69ded3ea95ddcdd059809a68c51c428cdbac"
+    },
+    {
+      "path": "lib/catalog/entries/webgl.tsx",
+      "sha256": "6b33647894cff50161b91c8f467d0e3563d4e7c989ff72638a9eea61ccd91edc"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Conocimiento de Trama — piloto salon",
+  "scope": "pilot",
+  "items": [
+    {
+      "kind": "guide",
+      "id": "salon",
+      "name": "Salón editorial claro",
+      "description": "Blanco y gris claro con un pastel cálido, serifa muy fina y texto grande y ligero; formas o fotos de trabajos como único adorno.",
+      "file": "guides/salon.json"
+    },
+    {
+      "kind": "recipe",
+      "id": "salon",
+      "name": "Peluquería y color, estética",
+      "description": "Un salón que vende oficio y calma: el equipo y los trabajos son el producto.",
+      "file": "recipes/salon.json"
+    },
+    {
+      "kind": "component",
+      "id": "action-bar",
+      "name": "ActionBar",
+      "description": "Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el…",
+      "file": "components/action-bar.json"
+    },
+    {
+      "kind": "component",
+      "id": "appointment-list",
+      "name": "AppointmentList",
+      "description": "Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación",
+      "file": "components/appointment-list.json"
+    },
+    {
+      "kind": "component",
+      "id": "articles-section",
+      "name": "ArticlesSection",
+      "description": "Cabecera + artículos (BlogCard) en rejilla, destacado (el primero grande con imagen de fondo), lista o carrusel",
+      "file": "components/articles-section.json"
+    },
+    {
+      "kind": "component",
+      "id": "before-after",
+      "name": "BeforeAfter",
+      "description": "Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido)",
+      "file": "components/before-after.json"
+    },
+    {
+      "kind": "component",
+      "id": "booking-flow",
+      "name": "BookingFlow",
+      "description": "Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al…",
+      "file": "components/booking-flow.json"
+    },
+    {
+      "kind": "component",
+      "id": "footer",
+      "name": "Footer",
+      "description": "Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing.",
+      "file": "components/footer.json"
+    },
+    {
+      "kind": "component",
+      "id": "guide-frame",
+      "name": "GuideFrame",
+      "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—,…",
+      "file": "components/guide-frame.json"
+    },
+    {
+      "kind": "component",
+      "id": "image-gallery",
+      "name": "ImageGallery",
+      "description": "Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas",
+      "file": "components/image-gallery.json"
+    },
+    {
+      "kind": "component",
+      "id": "image-reveal",
+      "name": "ImageReveal",
+      "description": "Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño",
+      "file": "components/image-reveal.json"
+    },
+    {
+      "kind": "component",
+      "id": "menu-list",
+      "name": "MenuList",
+      "description": "Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que…",
+      "file": "components/menu-list.json"
+    },
+    {
+      "kind": "component",
+      "id": "navbar",
+      "name": "NavBar",
+      "description": "Barra de navegación completa: siete disposiciones (o piezas en el orden que quieras), seis formas de barra, submenús desplegables o mega menú con categorías, barra de búsqueda o paleta ⌘K, menú móvil propio, anuncio,…",
+      "file": "components/navbar.json"
+    },
+    {
+      "kind": "component",
+      "id": "opening-hours",
+      "name": "OpeningHours",
+      "description": "«Abierto ahora · cierra a las 20:30» calculado en la zona horaria del negocio, con tramos partidos, días cerrados, festivos y aperturas especiales",
+      "file": "components/opening-hours.json"
+    },
+    {
+      "kind": "component",
+      "id": "pricing-section",
+      "name": "PricingSection",
+      "description": "Precios con datos tipados o texto, selector mensual/anual y condiciones visibles",
+      "file": "components/pricing-section.json"
+    },
+    {
+      "kind": "component",
+      "id": "product-card",
+      "name": "ProductCard",
+      "description": "Imagen con segunda imagen al pasar el puntero, etiqueta, título, material y precio",
+      "file": "components/product-card.json"
+    },
+    {
+      "kind": "component",
+      "id": "section-header",
+      "name": "SectionHeader",
+      "description": "Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.",
+      "file": "components/section-header.json"
+    },
+    {
+      "kind": "component",
+      "id": "shape-mosaic",
+      "name": "ShapeMosaic",
+      "description": "Rejilla de círculos y cuadrados en tres tonos del acento, con foto dentro de algunas formas",
+      "file": "components/shape-mosaic.json"
+    },
+    {
+      "kind": "component",
+      "id": "team-section",
+      "name": "TeamSection",
+      "description": "Cabecera de sección + perfiles del equipo: foto con marco y tratamiento (o avatar de iniciales), biografía y enlace por persona para reservar con ella; en rejilla, carrusel o filas.",
+      "file": "components/team-section.json"
+    },
+    {
+      "kind": "component",
+      "id": "testimonial-section",
+      "name": "TestimonialSection",
+      "description": "Prueba social lista para pegar: cabecera, resumen de valoraciones (media con estrellas parciales, número y fuente enlazada, reparto por estrellas que filtra las citas) y las citas en rejilla o en slider, siempre a la…",
+      "file": "components/testimonial-section.json"
+    }
+  ],
+  "requirements": [
+    "Abrir solo la guía, receta o piezas necesarias; las fichas enlazan declaraciones completas."
+  ],
+  "examples": [],
+  "limitations": [
+    "Selección parcial: no es inventario completo del paquete.",
+    "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."
+  ]
+}

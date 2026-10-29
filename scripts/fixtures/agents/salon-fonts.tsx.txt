@@ -1,0 +1,8 @@
+// Muestra de layout de servidor para Next.js; el build del consumidor queda pendiente.
+import type { ReactNode } from "react";
+import { fontVariables } from "trama-ui/fonts";
+import "trama-ui/styles.css";
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={fontVariables}><body>{children}</body></html>;
+}

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "menu-list",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/MenuList.tsx",
+      "sha256": "ad5a6c28d7731dde29ec45d092f5d2e0d5d4b215e8d615b33359f35538754ad5"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/negocio.tsx",
+      "sha256": "87d4a6071e9a070d00f1f830d405b14559ad0f9749ec45af4f1ecdf8b9c6cd99"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/commerce/money.ts",
+      "sha256": "a29aba23406791bcba9e76320188b8bf60448299464145590448f0328358ec5d"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Carta con alérgenos",
+  "component": "MenuList",
+  "description": "Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que no puedes tomar, agotados del día y botón de añadir para el pedido en mesa o para recoger.",
+  "category": "contenido",
+  "import": "import MenuList from \"trama-ui/MenuList\";",
+  "api": {
+    "module": "trama-ui/MenuList",
+    "props": "React.ComponentProps<typeof MenuList>",
+    "declaration": "types/components/ui/MenuList.d.ts",
+    "packageDeclaration": "./dist/components/ui/MenuList.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "layout",
+      "label": "Forma",
+      "type": "select",
+      "default": "list",
+      "options": [
+        "list",
+        "columns",
+        "cards"
+      ],
+      "labels": {
+        "list": "lista con puntos guía",
+        "columns": "dos columnas",
+        "cards": "tarjetas"
+      }
+    },
+    {
+      "key": "filter",
+      "label": "Filtro de alérgenos",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "add",
+      "label": "Botón «Añadir» (onAdd)",
+      "type": "boolean",
+      "default": false,
+      "noCode": true
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "minimal",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "La carta como texto: `#Sección|nota` y una línea por plato `Nombre|descripción|precio|alérgenos|etiquetas`. O como datos: `MenuSection[]` con `soldOut` e `image` por plato.",
+    "Es la carta que abre el QR de la mesa: ver QRCode y /sitios/almibar-barrio/mesa/7."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [],
+    "packages": [
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      }
+    ]
+  },
+  "examples": [],
+  "limitations": []
+}

@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "appointment-list",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/AppointmentList.tsx",
+      "sha256": "ec78cd8fbd17f7faacd3eeae3b5a8bea3d2cf0c0b78636e2b54da0e0bba9e0a2"
+    },
+    {
+      "path": "components/ui/Button.tsx",
+      "sha256": "e227219d21e13ff9c9e8b46fb82d1c1ba0ae9efc7e2860571a05e63ec3578776"
+    },
+    {
+      "path": "components/ui/Icon.tsx",
+      "sha256": "5c195dde2599fe7fa14aa334ddac173c71f1c52897977e1c4058cd583775c95e"
+    },
+    {
+      "path": "components/ui/glyph.ts",
+      "sha256": "26607a697b81418325b535646fa00184780132d43f5327b1dfe7b03b9e9dfdba"
+    },
+    {
+      "path": "components/ui/intent.ts",
+      "sha256": "ecb232b1025ad4e94a1cec0012cf08f30c4ce2a4c86aaf720461148a03b196d9"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/negocio.tsx",
+      "sha256": "87d4a6071e9a070d00f1f830d405b14559ad0f9749ec45af4f1ecdf8b9c6cd99"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/commerce/booking.ts",
+      "sha256": "2dee2224ba9298c2acdedb4ef555d668bb7b770a417781e2894a0423ad90d121"
+    },
+    {
+      "path": "lib/ui/icons.ts",
+      "sha256": "30f2f6f05f635d66b074053a55e3fe350c9c3305f736416de713565f961edb2b"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/fixtures/agents/salon-booking.tsx.txt",
+      "sha256": "57e8b21b681ec35147cc9699f933abcf0203f0f7a6f7acdf04977be27e5b4d3a"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Mis citas",
+  "component": "AppointmentList",
+  "description": "Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación. Dentro de cutoffHours los cambios se cierran, como en una agenda real. Con la lista vacía, una invitación a reservar.",
+  "category": "formularios",
+  "import": "import AppointmentList from \"trama-ui/AppointmentList\";",
+  "api": {
+    "module": "trama-ui/AppointmentList",
+    "props": "React.ComponentProps<typeof AppointmentList>",
+    "declaration": "types/components/ui/AppointmentList.d.ts",
+    "packageDeclaration": "./dist/components/ui/AppointmentList.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "cutoffHours",
+      "label": "Horas antes en que se cierran los cambios",
+      "type": "number",
+      "default": 24,
+      "min": 0,
+      "max": 72,
+      "step": 1
+    },
+    {
+      "key": "emptyTitle",
+      "label": "Título sin citas",
+      "type": "text",
+      "default": "Aún no tienes citas"
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "minimal",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [
+    "Reserva una cita en la ficha de BookingFlow y aparece aquí (comparten `storageKey`).",
+    "`bookHref` es la página de la reserva; «Cambiar» le añade `?editar=<id>`."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor.",
+    "Misma clave y catálogo de servicios que BookingFlow; montar por navegación/remonte para releer citas."
+  ],
+  "dependencies": {
+    "components": [
+      "Button",
+      "Icon"
+    ],
+    "packages": [
+      {
+        "name": "pixelarticons",
+        "version": "^2.4.1"
+      },
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "salon-booking",
+      "fixture": "scripts/fixtures/agents/salon-booking.tsx.txt",
+      "file": "examples/salon-booking.tsx.txt",
+      "code": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport BookingFlow from \"trama-ui/BookingFlow\";\nimport AppointmentList from \"trama-ui/AppointmentList\";\n\ntype BookingProps = ComponentProps<typeof BookingFlow>;\ntype Booked = Parameters<NonNullable<BookingProps[\"onBooked\"]>>[0];\n\nexport const services = [\n  { id: \"consulta\", name: \"Consulta inicial\", minutes: 15, price: 0 },\n  { id: \"corte\", name: \"Corte\", minutes: 45, price: 35 },\n  { id: \"color\", name: \"Color\", minutes: 90, price: 65, from: true },\n] satisfies BookingProps[\"services\"];\nexport const staff = [\n  { name: \"Alba\", services: [\"consulta\", \"corte\", \"color\"] },\n  { name: \"Dani\", services: [\"consulta\", \"corte\"] },\n] satisfies BookingProps[\"staff\"];\nexport const storageKey = \"linde:pilot:v1\";\n\n// Muestras para dos rutas distintas: no montarlas esperando sincronización en vivo.\n// El adaptador de /reservar valida la query y pasa estas props; no hay router aquí.\nexport function ReservationSample({ initialService, initialStaff, editId }: Pick<BookingProps, \"initialService\" | \"initialStaff\" | \"editId\">) {\n  const booked = (_appointment: Booked) => { /* Solo notificación local; no confirma un servicio externo. */ };\n  return <BookingFlow services={services} staff={staff} storageKey={storageKey}\n    initialService={initialService} initialStaff={initialStaff} editId={editId}\n    times=\"10:00,11:00,12:00,13:00,16:00,17:00,18:00\" closedDays=\"0,1\" closesAt={{ 6: \"14:00\" }} min={1} max={45}\n    business=\"Linde (demostración)\" location=\"Local ficticio\" appointmentsHref=\"/mis-citas\"\n    serviceLabel=\"Elige tu servicio\" staffLabel=\"Elige profesional\" anyStaffLabel=\"Quien tenga hueco\" placeLabel=\"El salón\"\n    note=\"Demostración: la cita solo se guarda en este navegador. No se envían correos ni se contacta con un salón.\"\n    onBooked={booked} variant=\"editorial\" />;\n}\n\nexport function AppointmentsSample() {\n  return <section aria-label=\"Citas de demostración\">\n    <p>Solo citas locales de prueba; sin agenda conectada.</p>\n    <AppointmentList services={services} storageKey={storageKey} bookHref=\"/reservar\" cutoffHours={24}\n      business=\"Linde (demostración)\" location=\"Local ficticio\" emptyTitle=\"Aún no hay citas de prueba\"\n      emptyText=\"Reserva con datos ficticios. La cita se guarda en este navegador.\" variant=\"editorial\" />\n  </section>;\n}\n",
+      "requirements": [
+        "trama-ui/BookingFlow",
+        "trama-ui/AppointmentList"
+      ],
+      "validation": "La generación no acredita compilación o navegador; validar tipos, build y recorrido en el proyecto consumidor. Los ensayos del paquete se registran en el informe de entrega."
+    }
+  ],
+  "limitations": [
+    "useAppointments mantiene estado por instancia; no es un almacén reactivo compartido.",
+    "Sin almacenamiento, la memoria de una instancia no garantiza persistencia al navegar a otra ruta."
+  ]
+}

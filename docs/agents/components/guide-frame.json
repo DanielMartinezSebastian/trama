@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "guide-frame",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/GuideFrame.tsx",
+      "sha256": "e9cdc1d6bec830da7ba38058bedfbf92eed38f9b0cf6fbc51dfe87177d18252d"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/guias.tsx",
+      "sha256": "010577818634a3af53ce1afdf4b6686a5d73fcc2f93a3a8008ef088cad1a1482"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/fixtures/agents/salon-style.tsx.txt",
+      "sha256": "92b48b375acbc3153a7f5dd437c20848a104fbd8cd8c3919b079db52a31599f0"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Guía de estilo (sistema completo de una web premiada)",
+  "component": "GuideFrame",
+  "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+  "category": "secciones",
+  "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+  "api": {
+    "module": "trama-ui/GuideFrame",
+    "props": "React.ComponentProps<typeof GuideFrame>",
+    "declaration": "types/components/ui/GuideFrame.d.ts",
+    "packageDeclaration": "./dist/components/ui/GuideFrame.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "guide",
+      "label": "Guía",
+      "type": "select",
+      "default": "lujo",
+      "options": [
+        "lujo",
+        "monocromo",
+        "tecnico",
+        "nocturno",
+        "electrico",
+        "rotulo",
+        "calido",
+        "ludico",
+        "salon",
+        "barberia",
+        "club",
+        "boutique",
+        "autor",
+        "escuela",
+        "marca",
+        "terminal",
+        "pixel",
+        "puntos",
+        "papel"
+      ],
+      "labels": {
+        "lujo": "Lujo tranquilo",
+        "monocromo": "Monocromo de agencia",
+        "tecnico": "Técnico de producto",
+        "nocturno": "Producto nocturno",
+        "electrico": "Acento eléctrico",
+        "rotulo": "Rótulo cinético",
+        "calido": "Editorial cálido",
+        "ludico": "Lúdico",
+        "salon": "Salón editorial claro",
+        "barberia": "Barbería de carácter",
+        "club": "Club de alto contraste",
+        "boutique": "Estudio boutique",
+        "autor": "Academia de autor",
+        "escuela": "Escuela amarilla",
+        "marca": "Producto de marca",
+        "terminal": "Terminal de neón",
+        "pixel": "Arcade pixel",
+        "puntos": "Matriz de puntos",
+        "papel": "Estudio en papel"
+      }
+    },
+    {
+      "key": "title",
+      "label": "Titular",
+      "type": "text",
+      "default": "Luz que llega lejos",
+      "noCode": true
+    },
+    {
+      "key": "lead",
+      "label": "Entradilla",
+      "type": "text",
+      "default": "Diseñamos lámparas y espacios que aprovechan la luz del día.",
+      "noCode": true
+    }
+  ],
+  "notes": [
+    "Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).",
+    "Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).",
+    "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [],
+    "packages": [
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "salon-style",
+      "fixture": "scripts/fixtures/agents/salon-style.tsx.txt",
+      "file": "examples/salon-style.tsx.txt",
+      "code": "import GuideFrame from \"trama-ui/GuideFrame\";\nimport SectionHeader from \"trama-ui/SectionHeader\";\nimport Button from \"trama-ui/Button\";\nimport { guide } from \"trama-ui\";\nimport \"trama-ui/styles.css\";\n\nexport default function SalonStyleSample() {\n  const selected = guide(\"salon\");\n  return (\n    <GuideFrame guide={selected}>\n      <main className=\"ui-g-wrap ui-g-section\">\n        <h1 className=\"ui-g-brand\">Linde</h1>\n        <p className=\"ui-g-body\">Corte y color. Tiempo para escucharte.</p>\n        <SectionHeader title=\"Oficio, sin prisa.\" kicker=\"EL SALÓN\" subtitle=\"Un salón ficticio para probar Trama.\" backdrop=\"oficio\" variant={selected.variant} />\n        <Button label=\"Reservar una cita de prueba\" href=\"/reservar\" variant={selected.variant} />\n      </main>\n    </GuideFrame>\n  );\n}\n",
+      "requirements": [
+        "trama-ui/GuideFrame",
+        "trama-ui/SectionHeader",
+        "trama-ui/Button",
+        "trama-ui",
+        "trama-ui/styles.css"
+      ],
+      "validation": "La generación no acredita compilación o navegador; validar tipos, build y recorrido en el proyecto consumidor. Los ensayos del paquete se registran en el informe de entrega."
+    }
+  ],
+  "limitations": []
+}

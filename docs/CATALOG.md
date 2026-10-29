@@ -7,6 +7,8 @@ Todos los componentes: `import X from "@/components/ui/X"`, CSS una vez con `imp
 tema con los tokens `--bg --fg --mut --acc --acc2 --card --ln --r` en cualquier contenedor, estilo con
 `variant` (glass · solid · outline · neon · retro · terminal · minimal · dotmatrix · editorial). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con `|`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: `\,` (coma), `\|` (barra) o `\;` (punto y coma), p. ej. `badges="+12 proyectos, 99\,5 % disponibilidad"` (atributo JSX entre comillas; dentro de una cadena JS, `{"…"}`, la barra va doble: `"99\\,5 %"`).
 
+Fuentes: `fontVariables` de `@/lib/ui/fonts` (paquete: `trama-ui/fonts`) en el `className` de `<html>`, una vez. Se nombran con su variable (`fontFamily: "var(--font-cormorant-garamond)"`) o con las clases `ui-g-*` de `GuideFrame`, nunca con el nombre literal (`'Cormorant'`): `next/font` registra otra familia y el texto cae a una fuente del sistema. Antes de usar los tokens de una guía para texto, mide su contraste: varias guías son medidas de webs reales y su `--mut` o `--acc` no llegan a 4,5:1.
+
 ## Fondos (`fondos`)
 
 Escenas de caracteres que rellenan un contenedor.
@@ -2774,11 +2776,11 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 
 Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
+Envuelve contenido (`children`), p. ej.: `<h1 className="ui-g-h1">{"Luz que llega lejos"}</h1> <p className="ui-g-body">{"Diseñamos lámparas y espacios que aprovechan la luz del día."}</p>`
+
 | prop | tipo | default |
 |---|---|---|
 | `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `terminal` · `pixel` · `puntos` · `papel` | "lujo" |
-| `title` | text | "Luz que llega lejos" |
-| `lead` | text | "Diseñamos lámparas y espacios que aprovechan la luz del día." |
 
 - Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
 - Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).

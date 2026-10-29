@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "navbar",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/Button.tsx",
+      "sha256": "e227219d21e13ff9c9e8b46fb82d1c1ba0ae9efc7e2860571a05e63ec3578776"
+    },
+    {
+      "path": "components/ui/Icon.tsx",
+      "sha256": "5c195dde2599fe7fa14aa334ddac173c71f1c52897977e1c4058cd583775c95e"
+    },
+    {
+      "path": "components/ui/NavBar.tsx",
+      "sha256": "f8117bac08c5f2253291c4fc56fd8e3672ad9b7a679d40bf2a86bbd3123a2df0"
+    },
+    {
+      "path": "components/ui/glyph.ts",
+      "sha256": "26607a697b81418325b535646fa00184780132d43f5327b1dfe7b03b9e9dfdba"
+    },
+    {
+      "path": "components/ui/intent.ts",
+      "sha256": "ecb232b1025ad4e94a1cec0012cf08f30c4ce2a4c86aaf720461148a03b196d9"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/navegacion.tsx",
+      "sha256": "35f69664dfe38b9e4ef361cdf057e750962ad58ac8f768f882b6e6e8df03f02f"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/icons.ts",
+      "sha256": "30f2f6f05f635d66b074053a55e3fe350c9c3305f736416de713565f961edb2b"
+    },
+    {
+      "path": "lib/ui/list.ts",
+      "sha256": "df6610b1287dc568bb138e841420f15ce67b755150d89589267bb6f38d9d6dd2"
+    },
+    {
+      "path": "lib/ui/themeSnapshot.ts",
+      "sha256": "233e54572241f141ffb3d57cae7308b88a8c2a14b2d13246c1665163532c79d8"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Barra de navegación",
+  "component": "NavBar",
+  "description": "Barra de navegación completa: siete disposiciones (o piezas en el orden que quieras), seis formas de barra, submenús desplegables o mega menú con categorías, barra de búsqueda o paleta ⌘K, menú móvil propio, anuncio, dos llamadas a la acción y comportamiento al hacer scroll.",
+  "category": "navegacion",
+  "import": "import NavBar from \"trama-ui/NavBar\";",
+  "api": {
+    "module": "trama-ui/NavBar",
+    "props": "React.ComponentProps<typeof NavBar>",
+    "declaration": "types/components/ui/NavBar.d.ts",
+    "packageDeclaration": "./dist/components/ui/NavBar.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "layout",
+      "label": "Disposición",
+      "type": "select",
+      "default": "classic",
+      "options": [
+        "classic",
+        "left",
+        "right",
+        "center",
+        "split",
+        "stacked",
+        "minimal"
+      ],
+      "labels": {
+        "classic": "clásica (marca · enlaces · acciones)",
+        "left": "enlaces junto a la marca",
+        "right": "enlaces junto a las acciones",
+        "center": "enlaces centrados",
+        "split": "marca en el centro",
+        "stacked": "dos filas (búsqueda arriba, secciones abajo)",
+        "minimal": "mínima (marca + menú)"
+      }
+    },
+    {
+      "key": "slots",
+      "label": "Piezas a medida (sustituye a la disposición)",
+      "type": "text",
+      "default": "",
+      "hint": "brand links search actions spacer menu · | nueva fila · / columnas"
+    },
+    {
+      "key": "shape",
+      "label": "Forma de la barra",
+      "type": "select",
+      "default": "island",
+      "options": [
+        "island",
+        "full",
+        "contained",
+        "floating",
+        "transparent",
+        "underline"
+      ],
+      "labels": {
+        "island": "tarjeta",
+        "full": "de borde a borde",
+        "contained": "de borde a borde, contenido centrado",
+        "floating": "píldora flotante",
+        "transparent": "transparente",
+        "underline": "solo línea inferior"
+      }
+    },
+    {
+      "key": "linkHover",
+      "label": "Enlaces al pasar",
+      "type": "select",
+      "default": "color",
+      "options": [
+        "color",
+        "underline"
+      ],
+      "labels": {
+        "color": "cambian de color",
+        "underline": "raya que crece"
+      }
+    },
+    {
+      "key": "size",
+      "label": "Densidad",
+      "type": "select",
+      "default": "md",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    {
+      "key": "bleed",
+      "label": "Ocupar el ancho de la ventana",
+      "type": "boolean",
+      "default": false,
+      "hint": "sale de los márgenes de su contenedor"
+    },
+    {
+      "key": "search",
+      "label": "Búsqueda",
+      "type": "select",
+      "default": "bar",
+      "options": [
+        "none",
+        "bar",
+        "inline",
+        "button",
+        "command"
+      ],
+      "labels": {
+        "none": "sin búsqueda",
+        "bar": "barra de búsqueda",
+        "inline": "campo compacto",
+        "button": "icono → paleta",
+        "command": "botón ⌘K → paleta"
+      }
+    },
+    {
+      "key": "searchPlaceholder",
+      "label": "Texto de la búsqueda",
+      "type": "text",
+      "default": "Buscar clases, tablas…"
+    },
+    {
+      "key": "searchItems",
+      "label": "Entradas extra de búsqueda",
+      "type": "text",
+      "default": "Horarios, Mareas de hoy, Bonos regalo"
+    },
+    {
+      "key": "brand",
+      "label": "Marca",
+      "type": "text",
+      "default": "Maré"
+    },
+    {
+      "key": "links",
+      "label": "Enlaces (una sección por línea)",
+      "type": "text",
+      "multiline": true,
+      "default": "Clases > Iniciación|Grupos de seis y espuma blanda|icon:users; Perfeccionamiento|Vídeo-análisis de tus olas|icon:video; Privadas|Un monitor solo para ti|icon:user\nTienda > #Tablas; Softboard; Longboard; Shortboard; #Neoprenos; Primavera 3/2; Invierno 4/3; #Accesorios; Quillas; Leash; Parafina\nReservas=#reservas\nContacto [nuevo]"
+    },
+    {
+      "key": "menuStyle",
+      "label": "Submenús",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        "auto",
+        "dropdown",
+        "mega"
+      ],
+      "labels": {
+        "auto": "auto (mega con descripciones o categorías)",
+        "dropdown": "desplegable",
+        "mega": "mega menú"
+      }
+    },
+    {
+      "key": "openOn",
+      "label": "Abrir submenús con",
+      "type": "select",
+      "default": "hover",
+      "options": [
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "key": "linksAlign",
+      "label": "Alinear enlaces (clásica)",
+      "type": "select",
+      "default": "center",
+      "options": [
+        "start",
+        "center",
+        "end"
+      ]
+    },
+    {
+      "key": "cta",
+      "label": "Botón principal",
+      "type": "text",
+      "default": "Reservar"
+    },
+    {
+      "key": "secondaryCta",
+      "label": "Botón secundario",
+      "type": "text",
+      "default": "Entrar"
+    },
+    {
+      "key": "announcement",
+      "label": "Anuncio",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "utility",
+      "label": "Barra de utilidades (corporativo)",
+      "type": "text",
+      "default": "",
+      "hint": "Empleo=/empleo, Inversores=/inversores | ES, EN — tras | van a la derecha"
+    },
+    {
+      "key": "collapseAt",
+      "label": "Plegar por debajo de (px)",
+      "type": "number",
+      "default": 760,
+      "min": 0,
+      "max": 1400,
+      "step": 20
+    },
+    {
+      "key": "mobileMenu",
+      "label": "Menú móvil",
+      "type": "select",
+      "default": "drawer",
+      "options": [
+        "drawer",
+        "sheet"
+      ],
+      "labels": {
+        "drawer": "cajón lateral",
+        "sheet": "hoja bajo la barra"
+      }
+    },
+    {
+      "key": "defaultActive",
+      "label": "Enlace activo",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "glass",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    },
+    {
+      "key": "previewWidth",
+      "label": "Ancho de la vista previa (px, 0 = todo)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 1400,
+      "step": 20,
+      "noCode": true
+    }
+  ],
+  "notes": [
+    "Enlaces como texto, una sección por línea: `Sección > Hijo|descripción|icon:nombre; Hijo=/ruta`. Dentro de un submenú, `#Categoría` abre una columna con título. `Etiqueta=#id` es un enlace real y `Etiqueta [nuevo]` lleva insignia.",
+    "layout elige una disposición; slots la sustituye pieza a pieza: brand, links, search, actions, spacer y menu separadas por espacios, `|` para otra fila y `/` para columnas alineadas a izquierda, centro y derecha. Ej.: \"brand / links / search actions\".",
+    "Se pliega en menú móvil según el ancho de su contenedor (collapseAt), no de la ventana: baja «Ancho de la vista previa» para verlo.",
+    "Con search=\"button\" o \"command\" (y siempre en móvil), ⌘K / Ctrl+K y «/» abren la paleta; busca en los enlaces, sus categorías y searchItems.",
+    "La paleta y el cajón móvil salen a document.body con los tokens copiados: un ancestro con backdrop-filter (glass, cabeceras con blur) atraparía su position: fixed."
+  ],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [
+      "Button",
+      "Icon"
+    ],
+    "packages": [
+      {
+        "name": "pixelarticons",
+        "version": "^2.4.1"
+      },
+      {
+        "name": "react",
+        "version": "^19.3.0"
+      },
+      {
+        "name": "react-dom",
+        "version": "^19.3.0"
+      }
+    ]
+  },
+  "examples": [],
+  "limitations": []
+}

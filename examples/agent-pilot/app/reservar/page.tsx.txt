@@ -1,0 +1,6 @@
+import { Suspense } from "react";
+import Booking from "../ui/booking";
+
+export default function ReservationPage() {
+  return <section className="wrap section route"><p className="eyebrow">TU PRÓXIMA PAUSA</p><h1>Te hacemos<br /><em>un hueco.</em></h1><p className="notice">Reserva de demostración. Solo se guarda en este navegador; no se envían correos ni se contacta con un salón.</p><Suspense fallback={<p role="status">Preparando la reserva…</p>}><Booking /></Suspense></section>;
+}

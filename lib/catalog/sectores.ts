@@ -22,6 +22,16 @@ export type RecetaSector = {
   /** inspiraciones (slug de /inspiraciones) y webs completas (/sitios/<slug>) */
   replicas: string[];
   webs: string[];
+  /** Selección acotada de conocimiento; no convierte la receta en una plantilla distribuida. */
+  pilot?: {
+    components: string[];
+    examples: string[];
+    flow: string;
+    pages: { path: string; purpose: string; states: string[] }[];
+    integrations: { capability: string; status: "local" | "pending"; note: string }[];
+    limitations: string[];
+    assets: { status: "pending"; note: string }[];
+  };
 };
 
 export const RECETAS_SECTOR: RecetaSector[] = [
@@ -46,6 +56,22 @@ export const RECETAS_SECTOR: RecetaSector[] = [
     noOlvidar: ["texto grande y ligero (24 px en Il Colorista), no 14", "consulta inicial gratis si luego reservas", "las palabras de fondo de cada sección (SectionHeader backdrop)"],
     replicas: ["matiz", "nura", "melena"],
     webs: ["hebra"],
+    pilot: {
+      components: ["ActionBar", "GuideFrame", "BookingFlow", "AppointmentList"],
+      examples: ["scripts/fixtures/agents/salon-style.tsx.txt", "scripts/fixtures/agents/salon-booking.tsx.txt", "scripts/fixtures/agents/salon-fonts.tsx.txt"],
+      flow: "F6: encargo sin referencias; elegir servicio y profesional, reservar y consultar/cambiar/anular una cita local.",
+      pages: [
+        { path: "/", purpose: "Presentación editorial de Linde y CTA a reservar; sin noticias ni tienda", states: ["escritorio", "móvil", "teclado", "movimiento reducido"] },
+        { path: "/reservar", purpose: "Adaptar servicio/profesional/editar de query a props de BookingFlow", states: ["selección", "sin hueco", "datos inválidos", "confirmación local"] },
+        { path: "/mis-citas", purpose: "AppointmentList con la misma clave y servicios; navegación/remonte entre rutas", states: ["carga", "vacío", "citas", "cambio", "confirmar anulación", "cambios cerrados a 24 horas"] },
+      ],
+      integrations: [
+        { capability: "Persistencia", status: "local", note: "localStorage por origen; memoria temporal si no está disponible; sin sincronización entre instancias." },
+        { capability: "Disponibilidad, agenda, identidad, correo y cobro", status: "pending", note: "No hay servicios conectados. Slots de demostración incluyen ocupación ficticia." },
+      ],
+      limitations: ["Los ejemplos son muestras de API; las tres páginas y su recorrido aún no están construidos ni validados.", "Las referencias Hebra y las inspiraciones no son assets ni plantillas incluidas en npm."],
+      assets: [{ status: "pending", note: "Dos imágenes propias o con licencia y dimensiones/alt fijados antes del consumidor visual; no usar /img/hebra/*." }],
+    },
   },
   {
     id: "barberia",

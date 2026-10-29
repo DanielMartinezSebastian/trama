@@ -1,0 +1,5 @@
+import Appointments from "../ui/appointments";
+
+export default function AppointmentsPage() {
+  return <section className="wrap section route"><p className="eyebrow">TU AGENDA LOCAL</p><h1>Nos vemos<br /><em>pronto.</em></h1><p className="notice">Citas de prueba guardadas en este navegador. No hay agenda conectada.</p><Appointments /></section>;
+}

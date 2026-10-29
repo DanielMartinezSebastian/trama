@@ -5,7 +5,8 @@
  *   npm run catalog          → escribe docs/catalog.json y docs/CATALOG.md
  *   npm run catalog:check    → falla si están desactualizados o si alguna validación no pasa
  */
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { CATEGORIES, STYLES, defaultsOf, snippet, type PropSpec } from "@/lib/catalog/schema";
 import { catalog } from "@/lib/catalog/catalog";
 import { demos } from "@/lib/demos";
@@ -14,6 +15,7 @@ import { RECETAS_SECTOR } from "@/lib/catalog/sectores";
 import { STYLE_GUIDES } from "@/lib/ui/guides";
 import { REPLICAS } from "@/components/inspiraciones/registro";
 import { closure, kitComponents } from "./kit-lib.mts";
+import { knowledgeOutputs, KNOWLEDGE_DIR } from "./agent-knowledge.mts";
 
 const CHECK = process.argv.includes("--check");
 const errors: string[] = [];
@@ -179,6 +181,8 @@ const md: string[] = [
   "tema con los tokens `--bg --fg --mut --acc --acc2 --card --ln --r` en cualquier contenedor, estilo con",
   `\`variant\` (${STYLES.map((s) => s.id).join(" · ")}). Las listas se pasan como texto (una entrada por línea o separadas por comas; campos con \`|\`), tal como muestran los defaults. Para escribir el separador dentro de un elemento, escápalo con barra invertida: \`\\,\` (coma), \`\\|\` (barra) o \`\\;\` (punto y coma), p. ej. \`badges="+12 proyectos, 99\\,5 % disponibilidad"\` (atributo JSX entre comillas; dentro de una cadena JS, \`{"…"}\`, la barra va doble: \`"99\\\\,5 %"\`).`,
   "",
+  "Fuentes: `fontVariables` de `@/lib/ui/fonts` (paquete: `trama-ui/fonts`) en el `className` de `<html>`, una vez. Se nombran con su variable (`fontFamily: \"var(--font-cormorant-garamond)\"`) o con las clases `ui-g-*` de `GuideFrame`, nunca con el nombre literal (`'Cormorant'`): `next/font` registra otra familia y el texto cae a una fuente del sistema. Antes de usar los tokens de una guía para texto, mide su contraste: varias guías son medidas de webs reales y su `--mut` o `--acc` no llegan a 4,5:1.",
+  "",
 ];
 for (const c of CATEGORIES) {
   md.push(`## ${c.label} (\`${c.id}\`)`, "", c.blurb, "");
@@ -256,12 +260,28 @@ const outputs: [string, string][] = [
   ["docs/CATALOG.md", md.join("\n")],
 ];
 
+// No generar conocimiento a partir de un catálogo inválido.
+if (!errors.length) outputs.push(...knowledgeOutputs(catalog, RECETAS_SECTOR, STYLE_GUIDES));
+const generatedPaths = new Set(outputs.map(([path]) => path));
+function checkExtraFiles(dir: string) {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) checkExtraFiles(path);
+    else if (!generatedPaths.has(path)) errors.push(`Salida de conocimiento obsoleta o ajena: ${path}; revisar antes de retirarla`);
+  }
+}
+checkExtraFiles(KNOWLEDGE_DIR);
+
 if (CHECK) {
   for (const [file, content] of outputs) {
     if (!existsSync(file) || readFileSync(file, "utf8") !== content) errors.push(`${file} está desactualizado: ejecuta npm run catalog`);
   }
 } else {
-  for (const [file, content] of outputs) writeFileSync(file, content);
+  if (!errors.length) for (const [file, content] of outputs) {
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, content);
+  }
 }
 
 if (errors.length) {

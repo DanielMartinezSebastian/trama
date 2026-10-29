@@ -415,6 +415,10 @@ export const negocio: CatalogEntry[] = [
   },
   {
     id: "booking-flow",
+    consumption: {
+      requirements: ["services no vacío y staff compatible con sus servicios; mismos services/storageKey que AppointmentList.", "El adaptador de página lee query; pasar initialService, initialStaff y editId explícitamente."],
+      limitations: ["Solo reserva local; onBooked se invoca después de guardar y mostrar confirmación, sin transacción ni error asíncrono de agenda.", "El correo se valida pero no se guarda ni forma parte de Appointment/onBooked.", "La ocupación de demostración no acredita disponibilidad real ni concurrencia multiusuario."],
+    },
     component: "BookingFlow",
     path: "@/components/ui/BookingFlow",
     name: "Reserva de cita",
@@ -441,6 +445,10 @@ export const negocio: CatalogEntry[] = [
   },
   {
     id: "appointment-list",
+    consumption: {
+      requirements: ["Misma clave y catálogo de servicios que BookingFlow; montar por navegación/remonte para releer citas."],
+      limitations: ["useAppointments mantiene estado por instancia; no es un almacén reactivo compartido.", "Sin almacenamiento, la memoria de una instancia no garantiza persistencia al navegar a otra ruta."],
+    },
     component: "AppointmentList",
     path: "@/components/ui/AppointmentList",
     name: "Mis citas",

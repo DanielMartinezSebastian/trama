@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+  "sourceDirty": true,
+  "kind": "component",
+  "id": "section-header",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/SectionHeader.tsx",
+      "sha256": "5b7f22147bb427070102ff5bd2d29114353e04c93c69007ed86b54471b6a3b9d"
+    },
+    {
+      "path": "components/ui/variants.ts",
+      "sha256": "60e8cd48e1b1f7b3e0e2c9993e8642c531eb1a56a3244b1b0d16797b263e6de8"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/entries/shared.tsx",
+      "sha256": "002faca481fece040c2b9102aa99f2f50461a5484ecb0c589497893922226158"
+    },
+    {
+      "path": "lib/catalog/entries/texto.tsx",
+      "sha256": "65f758f2e1d2bdf12c47b93a60e7ee92a0f8ccc7cc20dc2d6d321cb7d0d433d3"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "e3620e97496a62f329afa85f5d7a8b36b679dce9f2824e80795e9ae1c7934b14"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "ee14a92cb29d057fe2b6e95b4cd6970914f0316b1ba3752e45556cba875398db"
+    },
+    {
+      "path": "scripts/fixtures/agents/salon-style.tsx.txt",
+      "sha256": "92b48b375acbc3153a7f5dd437c20848a104fbd8cd8c3919b079db52a31599f0"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Cabecera de sección",
+  "component": "SectionHeader",
+  "description": "Sobretítulo, titular, subtítulo y regla decorativa; titular gigante y palabra de fondo opcionales.",
+  "category": "texto",
+  "import": "import SectionHeader from \"trama-ui/SectionHeader\";",
+  "api": {
+    "module": "trama-ui/SectionHeader",
+    "props": "React.ComponentProps<typeof SectionHeader>",
+    "declaration": "types/components/ui/SectionHeader.d.ts",
+    "packageDeclaration": "./dist/components/ui/SectionHeader.d.ts",
+    "complete": "Consultar declaración y sus imports transitivos; controles del visor no son la firma."
+  },
+  "playgroundProps": [
+    {
+      "key": "kicker",
+      "label": "Sobretítulo",
+      "type": "text",
+      "default": "Cómo funciona"
+    },
+    {
+      "key": "title",
+      "label": "Titular",
+      "type": "text",
+      "default": "Tres pasos y estás en el agua"
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "Reserva, elige tu horario y nosotros nos ocupamos del resto."
+    },
+    {
+      "key": "align",
+      "label": "Alineación",
+      "type": "select",
+      "default": "left",
+      "options": [
+        "left",
+        "center"
+      ]
+    },
+    {
+      "key": "rule",
+      "label": "Regla",
+      "type": "select",
+      "default": "line",
+      "options": [
+        "none",
+        "line",
+        "ascii",
+        "dots"
+      ]
+    },
+    {
+      "key": "titleSize",
+      "label": "Titular",
+      "type": "select",
+      "default": "md",
+      "options": [
+        "md",
+        "giant"
+      ],
+      "hint": "giant: a lo ancho y apretado, como los «Locations» de las barberías"
+    },
+    {
+      "key": "backdrop",
+      "label": "Palabra de fondo",
+      "type": "text",
+      "default": "",
+      "hint": "Enorme y tenue detrás de la cabecera, cortada por el borde («blog», «tienda»)"
+    },
+    {
+      "key": "variant",
+      "label": "Variante de estilo",
+      "type": "select",
+      "default": "minimal",
+      "options": [
+        "glass",
+        "solid",
+        "outline",
+        "neon",
+        "retro",
+        "terminal",
+        "minimal",
+        "dotmatrix",
+        "editorial"
+      ],
+      "hint": "Cambia superficie, borde, radio, sombra y tipografía"
+    }
+  ],
+  "notes": [],
+  "requirements": [
+    "import \"trama-ui/styles.css\" una vez; tema/guía en contenedor."
+  ],
+  "dependencies": {
+    "components": [],
+    "packages": []
+  },
+  "examples": [
+    {
+      "id": "salon-style",
+      "fixture": "scripts/fixtures/agents/salon-style.tsx.txt",
+      "file": "examples/salon-style.tsx.txt",
+      "code": "import GuideFrame from \"trama-ui/GuideFrame\";\nimport SectionHeader from \"trama-ui/SectionHeader\";\nimport Button from \"trama-ui/Button\";\nimport { guide } from \"trama-ui\";\nimport \"trama-ui/styles.css\";\n\nexport default function SalonStyleSample() {\n  const selected = guide(\"salon\");\n  return (\n    <GuideFrame guide={selected}>\n      <main className=\"ui-g-wrap ui-g-section\">\n        <h1 className=\"ui-g-brand\">Linde</h1>\n        <p className=\"ui-g-body\">Corte y color. Tiempo para escucharte.</p>\n        <SectionHeader title=\"Oficio, sin prisa.\" kicker=\"EL SALÓN\" subtitle=\"Un salón ficticio para probar Trama.\" backdrop=\"oficio\" variant={selected.variant} />\n        <Button label=\"Reservar una cita de prueba\" href=\"/reservar\" variant={selected.variant} />\n      </main>\n    </GuideFrame>\n  );\n}\n",
+      "requirements": [
+        "trama-ui/GuideFrame",
+        "trama-ui/SectionHeader",
+        "trama-ui/Button",
+        "trama-ui",
+        "trama-ui/styles.css"
+      ],
+      "validation": "La generación no acredita compilación o navegador; validar tipos, build y recorrido en el proyecto consumidor. Los ensayos del paquete se registran en el informe de entrega."
+    }
+  ],
+  "limitations": []
+}

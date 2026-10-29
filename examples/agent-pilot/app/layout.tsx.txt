@@ -1,0 +1,20 @@
+import type { CSSProperties, ReactNode } from "react";
+import { manrope, cormorantGaramond, geistMono } from "trama-ui/fonts";
+import GuideFrame from "trama-ui/GuideFrame";
+import "trama-ui/styles.css";
+import "./pilot.css";
+
+export const metadata = { title: "Linde — Corte y color", description: "Un salón ficticio para comprobar el piloto de Trama. Reservas de demostración.", icons: { icon: "/images/trazo.svg" } };
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${manrope.variable} ${cormorantGaramond.variable} ${geistMono.variable}`}>
+    <body><GuideFrame guide="salon" className="linde" style={{ "--mut": "#626262", "--acc": "#963e13", "--acc2": "#f5a490" } as CSSProperties}>
+      <a className="skip" href="#contenido">Saltar al contenido</a>
+      <header className="site-header"><a className="wordmark" href="/" aria-label="Linde, inicio">linde<span> / </span></a>
+        <nav aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#equipo">El equipo</a><a href="/mis-citas">Mis citas</a><a className="book-link" href="/reservar">Reservar ↗</a></nav>
+      </header>
+      <main id="contenido">{children}</main>
+      <footer className="site-footer"><p className="wordmark">linde /</p><p>Corte y color. Sin prisa.</p><small>Salón ficticio · Reservas de prueba en este navegador · Sin agenda, pagos ni correos conectados.</small><a href="/reservar">Reservar una cita de prueba ↗</a></footer>
+    </GuideFrame></body>
+  </html>;
+}

@@ -1,0 +1,18 @@
+---
+name: trama-build
+description: Construir o modificar páginas React/Next.js con Trama, eligiendo componentes y recetas compatibles con el paquete instalado. Usar para consumo de trama-ui; no para mantener el kit o para interfaces que no usan Trama.
+---
+
+# Construir con Trama
+
+Detecta el proyecto desde su directorio de trabajo: ejecuta `node <directorio-de-esta-skill>/scripts/context.mjs --cwd <proyecto>`. El resultado identifica paquete, versión, imports, conocimiento y límites. No uses `npx trama-ui@latest` para consultar una versión instalada ni actualices dependencias para hacer encajar un ejemplo. Si hay código copiado, revisa `.kit.json` y las adaptaciones locales.
+
+Abre el `knowledge/index.json` de esa instalación y después solo la receta, guía y piezas necesarias. La selección piloto es parcial: una pieza ausente del índice puede existir en el paquete; consulta su `CATALOG.md`, exports y declaraciones antes de concluir que falta. Si la instalación antigua no tiene knowledge, usa sus declaraciones y catálogo; no le apliques fichas de otra versión.
+
+Concreta público, contenido, páginas, acción principal y alcance de integración usando el encargo. Compón con secciones cuando encajen y baja a piezas para resolver lo específico. Pasa copy propio explícito y `""` para textos opcionales que se oculten. Las props `playgroundProps` son controles del visor: `api.declaration` y las declaraciones de los exports públicos gobiernan objetos, callbacks y composición. No importes demos, catálogo o rutas internas del paquete. Deriva tipos anidados con `ComponentProps` cuando no tengan export propio.
+
+Aplica la guía elegida mediante `GuideFrame`, tokens y clases `ui-g-*`; la variante se pasa a cada pieza que la admita. Usa CSS público una vez. En Next consulta sus docs locales antes de crear rutas; para `trama-ui/fonts`, usa la configuración de fuentes comprobada que indique el contexto. No copies `/img/...` de una demo: declara recursos propios y sus licencias.
+
+Completa los estados relevantes del recorrido y declara lo que se simula. En reservas piloto: estado por instancia/localStorage, ocupación ficticia y `onBooked` posterior a confirmación; no es una transacción de agenda. La query se adapta en la página, no la lee `BookingFlow`. No prometas correo, pagos, identidad, persistencia remota o disponibilidad real sin integración probada.
+
+Verifica tipos/build y el recorrido en navegador, incluyendo móvil, teclado/foco, errores, vacío, confirmación y movimiento reducido según impacto. Una captura o compilación no certifica el flujo. Entrega cambios, evidencia y límites; si el usuario pidió construir, continúa hasta resolver los criterios autorizados sin rondas rutinarias de aprobación. Publicar o desplegar exige autorización propia.
