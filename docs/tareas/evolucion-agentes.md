@@ -119,3 +119,40 @@
   Sin publicación npm, despliegue ni push; otros worktrees intactos. `git diff --check` correcto.
 - Siguiente paso: revisión humana opcional de capturas y decisión del usuario sobre el opt-in de GuideFrame;
   probar otra guía antes de generalizar las cifras. No queda ensayo pendiente en ninguna de las dos cohortes.
+
+## Continuación: GuideFrame con contraste optativo aprobado (29 de octubre de 2026)
+
+- Objetivo y autorización: el usuario aprobó expresamente implementar el opt-in de contraste propuesto en P4b.
+- Rama / partida / worktree: `feat/evolucion-agentes`, `f180f0d`, `C:/COMPARTIDO/trama-evolucion-agentes`.
+  Status inicial limpio y worktrees revisados; cambios limitados a este worktree.
+- Implementación del kit y catálogo: commit `886d321` (`feat(ui): añade contraste optativo de texto a GuideFrame`).
+- Kit: `GuideFrame textContrast?: boolean = false` calcula en servidor `--mut-text`/`--acc-text` a 4,5:1 sobre
+  `--bg`, con guía y overrides de `style`. Helper en `lib/ui/text-contrast.ts`; colores sRGB opacos hex/rgb.
+  Ajuste hacia negro/blanco con comprobación del hex final sin redondear el ratio; no muta guías ni cambia colores
+  que ya cumplen. `lib/ui/guides.ts` permanece idéntico.
+- CSS: textos secundarios/de acento usan los alias con fallback; fondos, bordes, sombras y decoración mantienen
+  los tokens originales. Reinicio de ámbitos de guía, paletas invertidas, PixelFrame e intenciones semánticas.
+  En `salon`: `#767676`/`#9e695d` para texto; `#868686`/`#f5a490` originales conservados.
+- API/conocimiento: prop y límites registrados en catálogo; `npm run catalog`; tabla de `docs/README.md`, guía de
+  componentes, docs de agentes, ejemplo de estilo y consejo de trama-style actualizados. Skill-creator aplicado a
+  esa revisión puntual; `quick_validate.py` correcto con PyYAML local. Ficha `pieza-guide-frame-contraste` e índice
+  del cuaderno regenerados (46 fichas).
+- Pruebas: `ui:test` integrado en `verify` comprueba las 19 guías, fondos claros/oscuros, umbral sin redondear,
+  colores ya válidos, overrides, formatos no resolubles y ausencia de mutación. `doctor`, `verify` completo,
+  build del sitio, `pkg:build`, `pkg:pack` y `agents:check-package` correctos. Avisos conocidos de Three.js y 22
+  métricas fallback de fuentes; no se actualizan dependencias.
+- Navegador: smoke en `http://127.0.0.1:3431/componentes#guide-frame` correcto, sin errores ni sombras oscuras.
+  Con/sin opt-in, móvil/escritorio, guía anidada, color semántico y paleta invertida comprobados; capturas con
+  reduced-motion revisadas por Codex en `.refs3d/guide-contrast/` (no revisión humana).
+- Paquete/consumidor: `.cache/agent-pilot-contrast` nuevo, dependencias y `.next` propios; `.tgz` local SHA-256
+  `28d62a4f55ce7a38a3f5856052e2970992e8427f4ca84fa77775fdbec9aea3d3`. Copia de `booking-docs-2` en
+  `.cache/agent-evaluation-contrast` con solo `textContrast` añadido: adjudicación completa correcta (tipos,
+  build, axe inicial, error de formulario, confirmación, persistencia y anulación), capturas revisadas.
+  Es una regresión posterior, no otra cohorte; fuentes/cifras/paquetes de P4 y P4b intactos.
+- Límites: no certifica otros fondos, transparencias, imágenes, opacidades, estados ni colores semánticos.
+  CSS propio debe consumir los alias; expresiones dinámicas (`var()`, hsl, etc.) no se resuelven en servidor.
+  Para un tema anidado nuevo se usa otro GuideFrame o se reinician/recalculan los alias.
+- Servidores: propios en 3431 (sitio) y 3421 (validador), cerrados; puertos libres comprobados. Sin dev del
+  worktree durante el build. Sin publicación npm, despliegue ni push; `git diff --check` correcto.
+- Siguiente paso: revisión humana opcional de capturas, uso opt-in en proyectos y otra guía/cohorte antes de
+  generalizar las cifras. No queda pendiente la aprobación ni la implementación de la propuesta de P4b.

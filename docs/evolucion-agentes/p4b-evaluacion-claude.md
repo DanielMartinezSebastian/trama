@@ -62,8 +62,14 @@ Las capturas y cifras de esta cohorte conservan el paquete evaluado; [ficha del 
 - El fallo que se repite en los dos clientes es el contraste de los tokens medidos de `salon` dentro de piezas del kit.
   Es más barato corregirlo en el kit que esperar que cada agente lo recuerde.
 
-## Propuesta para el kit (no aplicada)
+## Propuesta para el kit y aplicación posterior
 
 Que `GuideFrame` ofrezca una opción para subir automáticamente `--mut` y `--acc` hasta 4,5:1 sobre `--bg` cuando
 se usen como texto, conservando los valores medidos para lo decorativo. Toca la fidelidad de guías medidas en webs
 reales, así que es una decisión del producto.
+
+Aprobada expresamente por el usuario el 29 de octubre de 2026 e implementada como `GuideFrame textContrast`
+(por defecto `false`). Publica `--mut-text`/`--acc-text` a 4,5:1 sobre `--bg` para los textos del kit y conserva
+los tokens decorativos y `lib/ui/guides.ts`. Véanse los límites en la [ficha del cuaderno](../cuaderno/pieza-guide-frame-contraste.md).
+Una copia de `booking-docs-2` con solo ese opt-in pasa la adjudicación completa con el paquete nuevo en un consumidor
+limpio. Es una regresión posterior al estudio; las cifras y fuentes históricas de las dos cohortes se conservan.

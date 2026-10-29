@@ -4,7 +4,7 @@
 desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); registro en
 [tareas/evolucion-agentes.md](../tareas/evolucion-agentes.md).
 
-Paquete tras el arreglo de SectionHeader: `dist-npm/trama-ui-0.13.0.tgz`, SHA-256 `411ab1dc…`.
+Paquete tras el opt-in de contraste: `dist-npm/trama-ui-0.13.0.tgz`, SHA-256 `28d62a4f…`.
 Las cohortes mantienen sus paquetes históricos; sus cifras no corresponden a este artefacto nuevo.
 
 ## Estado por entrega
@@ -34,6 +34,8 @@ Las cohortes mantienen sus paquetes históricos; sus cifras no corresponden a es
 - **Fichas de las 19 guías** en `knowledge/guides/`, cada una con su tabla de contraste medida.
 - **SectionHeader con backdrop**: la palabra decorativa ocupa una franja recortada sobre el texto para evitar
   que cruce el subtítulo. Sin cambios de API; ficha en [el cuaderno](../cuaderno/pieza-section-header-legible.md).
+- **GuideFrame textContrast**: opción aprobada por el usuario, desactivada por defecto. Ajusta los roles de texto
+  secundario/acento sobre `--bg`, preservando los tokens medidos y decorativos. [Ficha y límites](../cuaderno/pieza-guide-frame-contraste.md).
 
 ## Resultado de la evaluación
 
@@ -57,7 +59,6 @@ más recetas y piezas con ficha alargan la búsqueda.
 
 ## Pendiente
 
-- Decidir si `GuideFrame` corrige solo el contraste de `--mut`/`--acc` cuando se usan como texto (propuesta en P4b).
 - Revisión visual humana de las capturas de P4 y del consumidor piloto.
 - Recetas y piezas con ficha siguen siendo solo las de `salon`.
 - Publicar en npm y desplegar la web son decisiones del usuario; esta rama no lo hace.
