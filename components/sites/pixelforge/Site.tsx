@@ -25,7 +25,7 @@ import Tabs from "@/components/ui/Tabs";
 import TestimonialSection from "@/components/ui/TestimonialSection";
 import TextField from "@/components/ui/TextField";
 import Toast from "@/components/ui/Toast";
-import { renderGlyph } from "@/components/ui/Icon";
+import { renderGlyph } from "@/components/ui/glyph";
 import { assetArt } from "@/lib/sites/art";
 import { tokensToStyle } from "@/lib/ui/tokens";
 import { PageHeader, Section, SiteFrame, euros, siteHref, useActiveIndex, useSiteNavigate } from "../shared";

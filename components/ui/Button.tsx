@@ -1,5 +1,5 @@
 import { forwardRef, type AriaAttributes, type Ref } from "react";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { INTENTS, type Intent } from "./intent";
 import { vcls, type Variant } from "./variants";
 

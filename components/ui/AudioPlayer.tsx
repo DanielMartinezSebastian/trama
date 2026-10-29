@@ -7,7 +7,7 @@ import { splitEscaped } from "@/lib/ui/list";
 import { resolveImage } from "@/lib/ui/placeholder";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import { useTokens } from "@/lib/ui/useTokens";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { vcls, type Variant } from "./variants";
 
 export type AudioPlayerProps = {

@@ -4,7 +4,7 @@ import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, typ
 import { createPortal } from "react-dom";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
 import Button from "./Button";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { splitEscaped, splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 

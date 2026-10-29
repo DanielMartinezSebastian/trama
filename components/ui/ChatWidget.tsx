@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { inline } from "@/lib/ui/markdownInline";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { splitList } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { resolveImage } from "@/lib/ui/placeholder";
 import type { ASCII_STYLES } from "./AsciiBackground";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { vcls, type Variant } from "./variants";
 
 export type VideoPlayerProps = {

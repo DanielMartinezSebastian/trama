@@ -1,4 +1,4 @@
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { splitEscaped } from "@/lib/ui/list";
 import { vcls, type Variant } from "./variants";
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { inline } from "@/lib/ui/markdownInline";
-import { renderGlyph } from "./Icon";
+import { renderGlyph } from "./glyph";
 import { intentCls, type Intent } from "./intent";
 import { vcls, type Variant } from "./variants";
 
