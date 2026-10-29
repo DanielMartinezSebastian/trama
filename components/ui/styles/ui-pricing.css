@@ -2,19 +2,19 @@
 .ui-pricing .ui-price { width:100%; min-width:0; align-content:stretch; grid-template-rows:auto auto 1fr auto; }
 .ui-pricing .ui-price > .ui-button { align-self:end; margin-top:8px; }
 .ui-pricing .ui-price--hl { translate:none; }
-.ui-price__meta { color:var(--mut); font-size:12px; font-weight:500; text-transform:none; letter-spacing:normal; }
-.ui-pricing__footnote { color:var(--mut); font-size:12px; line-height:1.7; margin:24px auto 0; max-width:90ch; text-align:center; }
-.ui-pricing__intro { color:var(--mut); font-size:15px; line-height:1.7; max-width:72ch; margin:0 0 35px; }
+.ui-price__meta { color: var(--mut-text, var(--mut)); font-size:12px; font-weight:500; text-transform:none; letter-spacing:normal; }
+.ui-pricing__footnote { color: var(--mut-text, var(--mut)); font-size:12px; line-height:1.7; margin:24px auto 0; max-width:90ch; text-align:center; }
+.ui-pricing__intro { color: var(--mut-text, var(--mut)); font-size:15px; line-height:1.7; max-width:72ch; margin:0 0 35px; }
 .ui-pricing-menu { width:100%; color:var(--fg); text-align:left; border-top:1px solid var(--ln); }
 .ui-pricing-menu__row { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(80px,auto) auto; align-items:center; gap:24px; padding:26px 0; border-bottom:1px solid var(--ln); }
 .ui-pricing-menu__row > div { min-width:0; }
 .ui-pricing-menu__row h3 { margin:0; font:inherit; font-size:22px; font-weight:600; letter-spacing:-.025em; }
-.ui-pricing-menu__row p { color:var(--mut); font-size:13px; line-height:1.6; margin:8px 0 0; max-width:58ch; text-transform:none; letter-spacing:normal; }
-.ui-pricing-menu__row > div > small { display:block; margin-top:8px; font-size:11px; color:var(--mut); }
-.ui-pricing-menu__meta { color:var(--mut); font-size:12px; white-space:nowrap; text-transform:none; letter-spacing:normal; }
+.ui-pricing-menu__row p { color: var(--mut-text, var(--mut)); font-size:13px; line-height:1.6; margin:8px 0 0; max-width:58ch; text-transform:none; letter-spacing:normal; }
+.ui-pricing-menu__row > div > small { display:block; margin-top:8px; font-size:11px; color: var(--mut-text, var(--mut)); }
+.ui-pricing-menu__meta { color: var(--mut-text, var(--mut)); font-size:12px; white-space:nowrap; text-transform:none; letter-spacing:normal; }
 .ui-pricing-menu__price { display:grid; gap:5px; text-align:right; align-self:start; padding-top:3px; }
 .ui-pricing-menu__price strong { font-size:26px; font-weight:500; letter-spacing:-.04em; white-space:nowrap; }
-.ui-pricing-menu__price small { font-size:11px; color:var(--mut); }
+.ui-pricing-menu__price small { font-size:11px; color: var(--mut-text, var(--mut)); }
 .ui-pricing-compare { width:100%; overflow:auto; border:1px solid var(--ln); border-radius:var(--r); scrollbar-color:var(--mut) var(--card); }
 .ui-pricing-compare:focus-visible { outline:2px solid var(--acc); outline-offset:4px; }
 .ui-pricing-compare table { border-collapse:collapse; width:100%; min-width:640px; table-layout:fixed; color:var(--fg); font-family:inherit; font-size:13px; text-transform:none; letter-spacing:normal; }
@@ -22,12 +22,12 @@
 .ui-pricing-compare tr > :last-child { border-right:0; }
 .ui-pricing-compare tfoot tr > * { border-bottom:0; vertical-align:middle; }
 .ui-pricing-compare thead th { padding-block:30px; font-weight:400; }
-.ui-pricing-compare thead th:first-child { vertical-align:bottom; color:var(--mut); width:25%; }
+.ui-pricing-compare thead th:first-child { vertical-align:bottom; color: var(--mut-text, var(--mut)); width:25%; }
 .ui-pricing-compare tbody th,.ui-pricing-compare tfoot th { font-weight:500; }
 .ui-pricing-compare [data-featured] { background:color-mix(in srgb,var(--acc) 8%,var(--bg)); }
 .ui-pricing-compare__name { display:block; font-size:18px; font-weight:600; letter-spacing:-.025em; }
-.ui-pricing-compare__badge { display:block; min-height:15px; margin-top:10px; color:var(--acc); font-size:10px; }
+.ui-pricing-compare__badge { display:block; min-height:15px; margin-top:10px; color: var(--acc-text, var(--acc)); font-size:10px; }
 .ui-pricing-compare thead strong { display:block; margin-top:25px; font-size:40px; font-weight:500; letter-spacing:-.045em; }
-.ui-pricing-compare thead strong small { display:block; margin-top:8px; color:var(--mut); font-size:12px; letter-spacing:normal; }
-.ui-pricing-compare thead p { font-size:12px; line-height:1.6; color:var(--mut); margin:18px 0 0; }
+.ui-pricing-compare thead strong small { display:block; margin-top:8px; color: var(--mut-text, var(--mut)); font-size:12px; letter-spacing:normal; }
+.ui-pricing-compare thead p { font-size:12px; line-height:1.6; color: var(--mut-text, var(--mut)); margin:18px 0 0; }
 @media(max-width:640px) { .ui-pricing-menu__row { grid-template-columns:minmax(0,1fr) auto; gap:14px; padding-block:22px; }.ui-pricing-menu__row h3 { font-size:20px; }.ui-pricing-menu__row p { font-size:12px; }.ui-pricing-menu__meta { grid-column:1; grid-row:2; }.ui-pricing-menu__price { grid-column:2; grid-row:1; }.ui-pricing-menu__row > .ui-button { grid-column:2; grid-row:2; min-height:42px; font-size:11px; }.ui-pricing-compare th,.ui-pricing-compare td { padding:16px; }.ui-pricing__footnote { text-align:left; } }

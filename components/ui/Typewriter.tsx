@@ -66,7 +66,7 @@ export default function Typewriter({ phrases = "surf en Cantabria\nolas para tod
       <span className="ui-sr-only">{`${prefix}${list.join(" / ")}`}</span>
       <span aria-hidden>
         {prefix}
-        <span style={{ color: "var(--acc)" }}>{text}</span>
+        <span style={{ color: "var(--acc-text, var(--acc))" }}>{text}</span>
       </span>
       {cursor !== "none" && <i className={`ui-type__cursor ui-type__cursor--${cursor}`} aria-hidden />}
     </p>

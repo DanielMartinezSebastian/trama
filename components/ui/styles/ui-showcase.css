@@ -18,9 +18,9 @@
 .ui-xcan--tour .ui-xcan__view { cursor: default; touch-action: auto; }
 .ui-pin .ui-xcan--tour .ui-xcan__view { height: 100svh; min-height: 0; border: 0; border-radius: 0; }
 .ui-xcan__stop { position: absolute; left: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 40px); z-index: 2; display: grid; gap: 6px; max-width: min(420px, calc(100% - 32px)); padding: 16px 18px; border: 1px solid var(--ln); border-radius: var(--r, 12px); background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); animation: ui-xcan-card 0.5s var(--ease-out, ease-out) both; }
-.ui-xcan__stop small { color: var(--mut); font: 500 11px ui-monospace, monospace; letter-spacing: 0.12em; }
+.ui-xcan__stop small { color: var(--mut-text, var(--mut)); font: 500 11px ui-monospace, monospace; letter-spacing: 0.12em; }
 .ui-xcan__stop b { font-family: var(--display, inherit); font-weight: 500; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.05; }
-.ui-xcan__stop p { margin: 0; color: var(--mut); font-size: 14px; line-height: 1.5; }
+.ui-xcan__stop p { margin: 0; color: var(--mut-text, var(--mut)); font-size: 14px; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) { .ui-xcan__stop { animation: none; } }
 /* depth="3d": la escena ocupa la ventana; el mundo deja de moverse y los puntos se colocan donde dice la cámara (--sx, --sy) */
 .ui-xcan__gl { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s linear; }
@@ -45,13 +45,13 @@
 .ui-xcan__pt span { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 2px; padding: 3px 9px; border-radius: 99px; background: var(--bg); color: var(--fg); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; border: 1px solid var(--ln); }
 .ui-xcan__pt:is(:hover, :focus-visible, [data-on]) span { background: var(--fg); color: var(--bg); }
 .ui-xcan__pt:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; border-radius: 50%; }
-.ui-xcan__hint { position: absolute; left: 16px; bottom: 14px; margin: 0; padding: 6px 12px; border-radius: 99px; background: var(--bg); border: 1px solid var(--ln); color: var(--mut); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; pointer-events: none; }
+.ui-xcan__hint { position: absolute; left: 16px; bottom: 14px; margin: 0; padding: 6px 12px; border-radius: 99px; background: var(--bg); border: 1px solid var(--ln); color: var(--mut-text, var(--mut)); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; pointer-events: none; }
 .ui-xcan__card { position: absolute; right: 16px; bottom: 16px; display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; width: min(420px, calc(100% - 32px)); padding: 12px; border: 1px solid var(--ln); border-radius: var(--r, 12px); background: var(--bg); color: var(--fg); cursor: default; animation: ui-xcan-card 0.4s var(--ease-out, ease-out) both; }
 @keyframes ui-xcan-card { from { opacity: 0; transform: translateY(12px); } }
 .ui-xcan__card img { width: 112px; height: 100%; min-height: 96px; object-fit: cover; border-radius: calc(var(--r, 12px) - 4px); }
-.ui-xcan__card small { display: block; color: var(--mut); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.ui-xcan__card small { display: block; color: var(--mut-text, var(--mut)); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
 .ui-xcan__card b { display: block; font-family: var(--display, inherit); font-weight: 500; font-size: 20px; line-height: 1.1; margin: 2px 0 6px; }
-.ui-xcan__card p { margin: 0 0 8px; font-size: 13px; line-height: 1.45; color: var(--mut); }
+.ui-xcan__card p { margin: 0 0 8px; font-size: 13px; line-height: 1.45; color: var(--mut-text, var(--mut)); }
 .ui-xcan__card a { color: var(--fg); font-size: 13px; text-underline-offset: 3px; }
 .ui-xcan__x { position: absolute; right: 6px; top: 4px; width: 32px; height: 32px; border: 0; background: none; color: var(--fg); font-size: 22px; line-height: 1; cursor: pointer; }
 .ui-xcan__x:focus-visible { outline: 2px solid var(--acc); border-radius: 50%; }
@@ -62,8 +62,8 @@
 .ui-xcan__list li { border-bottom: 1px solid var(--ln); }
 .ui-xcan__list a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 4px; color: inherit; text-decoration: none; }
 .ui-xcan__list b { font-family: var(--display, inherit); font-weight: 500; font-size: clamp(20px, 3vw, 34px); }
-.ui-xcan__list small { color: var(--mut); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
-.ui-xcan__list a:is(:hover, :focus-visible) b { color: var(--acc); }
+.ui-xcan__list small { color: var(--mut-text, var(--mut)); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.ui-xcan__list a:is(:hover, :focus-visible) b { color: var(--acc-text, var(--acc)); }
 @media (max-width: 560px) { .ui-xcan__card { grid-template-columns: 84px minmax(0, 1fr); } .ui-xcan__card img { width: 84px; } }
 @media (prefers-reduced-motion: reduce) { .ui-xcan__pt i::after, .ui-xcan__card { animation: none; } }
 
@@ -112,7 +112,7 @@
   padding: 6px 8px; border-radius: 6px; background: color-mix(in srgb, var(--bg) 70%, transparent); border: 1px solid color-mix(in srgb, var(--fg) 18%, transparent);
   margin: 14px 0 0 14px;
 }
-.ui-pcloud__tag { margin: -12px 0 0 0; translate: -50% -100%; color: var(--acc); border-color: color-mix(in srgb, var(--acc) 45%, transparent); font-size: 13px; }
+.ui-pcloud__tag { margin: -12px 0 0 0; translate: -50% -100%; color: var(--acc-text, var(--acc)); border-color: color-mix(in srgb, var(--acc) 45%, transparent); font-size: 13px; }
 
 /* ---------- ScratchReveal ---------- */
 .ui-scratch { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--r, 10px); }
@@ -160,7 +160,7 @@
 /* ---------- SoundToggle ---------- */
 .ui-sound {
   display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; cursor: pointer; font: inherit; font-size: 13px;
-  border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--mut);
+  border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--mut-text, var(--mut));
 }
 .ui-sound.is-on { color: var(--fg); border-color: var(--acc); }
 .ui-sound:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }

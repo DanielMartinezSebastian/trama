@@ -217,6 +217,13 @@ vía tokens, nunca una fuente concreta a pelo.
 
 ### 2.4b Guías de estilo (`STYLE_GUIDES`, `GuideFrame`)
 
+`GuideFrame textContrast` calcula opcionalmente `--mut-text` y `--acc-text` a 4,5:1 sobre `--bg` (hex/rgb opacos,
+incluidos overrides de `style`). El texto del kit los consume con fallback al token original; fondos, bordes y
+decoración siguen usando `--mut`/`--acc`. La opción está desactivada por defecto. En una pieza nueva, usa
+`color: var(--mut-text, var(--mut))` o `color: var(--acc-text, var(--acc))` para esos roles de texto.
+No extrapoles el ratio a otros fondos, transparencias, estados o colores semánticos. Una paleta local que reemplace
+los tokens debe reiniciar los alias (`initial`) o recalcularlos con otro GuideFrame; cada GuideFrame inicia su ámbito.
+
 Un tema fija colores y fuentes; una **guía** fija además la escala tipográfica (dos escalones: marca 12–18 vw y titular 3–8 vw),
 el margen lateral, la rejilla, el aire entre secciones, el radio, la sombra y el movimiento (duraciones, curvas, stagger), con
 los valores medidos en las webs premiadas ([`16`](./16-guias-de-estilo-plan.md)). Son ocho, en `lib/ui/guides.ts`.

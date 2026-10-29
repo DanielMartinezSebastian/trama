@@ -6,6 +6,9 @@
  */
 
 .ui-guide {
+  /* Cada guía inicia su ámbito; una guía anidada sin opt-in no hereda la corrección de su padre. */
+  --mut-text: initial;
+  --acc-text: initial;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--g-font-body, inherit);
@@ -82,7 +85,7 @@
 }
 
 .ui-g-muted {
-  color: var(--mut);
+  color: var(--mut-text, var(--mut));
 }
 
 .ui-g-label {

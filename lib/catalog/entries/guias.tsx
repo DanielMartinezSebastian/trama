@@ -21,14 +21,16 @@ export const guias: CatalogEntry[] = [
       "Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).",
       "Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).",
       "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest.",
+      "textContrast es opt-in: calcula --mut-text y --acc-text a 4,5:1 sobre --bg para el texto del kit; no cambia --mut/--acc de fondos, bordes ni decoración. Usa colores sRGB opacos (hex o rgb); style se tiene en cuenta y puede sobrescribir los alias. No certifica superficies distintas, transparencias, colores semánticos, estados ni CSS propio que use directamente --mut/--acc.",
     ],
     props: [
       { key: "guide", label: "Guía", type: "select", default: "lujo", options: STYLE_GUIDES.map((g) => g.id), labels: Object.fromEntries(STYLE_GUIDES.map((g) => [g.id, g.label])) },
+      { key: "textContrast", label: "Contraste de texto 4,5:1", type: "boolean", default: false },
       { key: "title", label: "Titular", type: "text", default: "Luz que llega lejos", noCode: true },
       { key: "lead", label: "Entradilla", type: "text", default: "Diseñamos lámparas y espacios que aprovechan la luz del día.", noCode: true },
     ],
     render: (p, { replay }) => (
-      <GuideFrame guide={p.guide as string} key={`${p.guide}-${replay}`} style={{ width: "100%", minHeight: 440 }}>
+      <GuideFrame guide={p.guide as string} textContrast={p.textContrast as boolean} key={`${p.guide}-${replay}`} style={{ width: "100%", minHeight: 440 }}>
         <header className="ui-g-header ui-g-line" style={{ borderTop: 0, borderBottom: "1px solid var(--ln)" }}>
           <strong style={{ fontFamily: "var(--g-font-display)" }}>Albor</strong>
           <span className="ui-g-label ui-g-muted">Colección · Estudio · Contacto</span>

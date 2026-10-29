@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "0e5e8a28bd2f0da285a996bfc9019bf75ad448c6",
+  "sourceCommit": "f180f0d707213e64ac8dfba2d9820e3eaba2f02f",
   "sourceDirty": true,
   "kind": "guide",
   "id": "pixel",
@@ -10,7 +10,7 @@
   "sources": [
     {
       "path": "components/ui/styles/ui-guides.css",
-      "sha256": "f6ac463e784ff48a042fc808562f2356b28ce57053642818417f2c2871ab6219"
+      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
     },
     {
       "path": "lib/catalog/catalog.tsx",
@@ -42,11 +42,11 @@
     },
     {
       "path": "package.json",
-      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+      "sha256": "6686f3821c21d16f6b4356737c54cbb6f4ad6f4c7c76b6c315d5e596f9ddac42"
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "d52551df083b84f8bfb881ca843b5d46ebd0eb7b7c23ec489c13c3f6feeb67cb"
+      "sha256": "db83ef05c91ade90b13bb389429b51ea7fc25c20c0bcb3677010c6d321e55b0b"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -233,7 +233,7 @@
     "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
     "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
     "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
-    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: oscurecer ese rol en un tema local (style con --mut/--acc) y registrar la razón; las piezas del kit usan --mut y --acc para etiquetas, metadatos y botones."
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: GuideFrame textContrast calcula --mut-text/--acc-text para el texto del kit sobre --bg (sRGB opaco), conservando --mut/--acc decorativos. Consultar sus límites en la API; para otras superficies/estados o CSS propio, adaptar y medir el tema local."
   ],
   "examples": [],
   "limitations": [

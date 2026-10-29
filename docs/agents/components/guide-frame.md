@@ -98,6 +98,12 @@ import GuideFrame from "trama-ui/GuideFrame";
     }
   },
   {
+    "key": "textContrast",
+    "label": "Contraste de texto 4,5:1",
+    "type": "boolean",
+    "default": false
+  },
+  {
     "key": "title",
     "label": "Titular",
     "type": "text",
@@ -120,7 +126,8 @@ import GuideFrame from "trama-ui/GuideFrame";
 [
   "Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).",
   "Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).",
-  "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest."
+  "Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest.",
+  "textContrast es opt-in: calcula --mut-text y --acc-text a 4,5:1 sobre --bg para el texto del kit; no cambia --mut/--acc de fondos, bordes ni decoración. Usa colores sRGB opacos (hex o rgb); style se tiene en cuenta y puede sobrescribir los alias. No certifica superficies distintas, transparencias, colores semánticos, estados ni CSS propio que use directamente --mut/--acc."
 ]
 ```
 
@@ -162,7 +169,7 @@ import "trama-ui/styles.css";
 export default function SalonStyleSample() {
   const selected = guide("salon");
   return (
-    <GuideFrame guide={selected}>
+    <GuideFrame guide={selected} textContrast>
       <main className="ui-g-wrap ui-g-section">
         <h1 className="ui-g-brand">Linde</h1>
         <p className="ui-g-body">Corte y color. Tiempo para escucharte.</p>

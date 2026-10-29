@@ -7,7 +7,7 @@
 /* ---------- BlueprintFrame ---------- */
 .ui-bp { --bp-inset: 6px; --bp-pad: 0px; position: relative; margin: var(--bp-inset); border: 1px solid var(--ln); }
 .ui-bp__in { position: relative; padding: var(--bp-pad); }
-.ui-bp__x { position: absolute; z-index: 1; width: 14px; height: 14px; display: grid; place-items: center; font-style: normal; font-size: 14px; line-height: 1; color: var(--mut); pointer-events: none; background: var(--bg); }
+.ui-bp__x { position: absolute; z-index: 1; width: 14px; height: 14px; display: grid; place-items: center; font-style: normal; font-size: 14px; line-height: 1; color: var(--mut-text, var(--mut)); pointer-events: none; background: var(--bg); }
 .ui-bp__x--tl { left: -7px; top: -7px; } .ui-bp__x--tr { right: -7px; top: -7px; }
 .ui-bp__x--bl { left: -7px; bottom: -7px; } .ui-bp__x--br { right: -7px; bottom: -7px; }
 /* regla de marcas milimétricas en los cuatro bordes */
@@ -109,7 +109,7 @@
 .ui-meta__r { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--ln); }
 .ui-meta--2 .ui-meta__r { border-right: 1px solid var(--ln); }
 .ui-meta__r:last-child { border-bottom: 0; }
-.ui-meta dt { color: var(--mut); }
+.ui-meta dt { color: var(--mut-text, var(--mut)); }
 .ui-meta--mono dt { font-family: var(--mono, ui-monospace, monospace); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 .ui-meta dd { margin: 0; }
 @media (max-width: 560px) { .ui-meta--2 { grid-template-columns: minmax(0, 1fr); } }

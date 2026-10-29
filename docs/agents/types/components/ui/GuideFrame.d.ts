@@ -3,6 +3,8 @@ import { type StyleGuide } from "../../lib/ui/guides.js";
 export type GuideFrameProps = {
     /** id de una guía de `STYLE_GUIDES` (`lujo`, `monocromo`, `tecnico`, `nocturno`, `electrico`, `rotulo`, `calido`, `ludico`, `salon`, `barberia`, `club`, `boutique`, `autor`, `escuela`, `marca`, `terminal`, `pixel`, `puntos`, `papel`; hoja de cada una en /guias/<id>) o una guía propia */
     guide?: string | StyleGuide;
+    /** Ajusta --mut-text/--acc-text a 4,5:1 sobre --bg (sRGB opaco); conserva --mut/--acc decorativos. Por defecto false. */
+    textContrast?: boolean;
     as?: "div" | "main" | "section" | "article";
     className?: string;
     style?: CSSProperties;
@@ -14,7 +16,7 @@ export type GuideFrameProps = {
  * `ui-g-body`, `ui-g-label`, `ui-g-btn`, `ui-g-grid`, `ui-g-wrap`, `ui-g-section`, `ui-g-rise`…) y cualquier componente del kit
  * (lee los mismos tokens) siguen la guía. Componente de servidor: no tiene estado ni efectos.
  */
-export default function GuideFrame({ guide: g, as, className, style, children }: GuideFrameProps): import("react").DetailedReactHTMLElement<{
+export default function GuideFrame({ guide: g, textContrast, as, className, style, children }: GuideFrameProps): import("react").DetailedReactHTMLElement<{
     className: string;
     "data-guide": string;
     style: {

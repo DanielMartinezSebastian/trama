@@ -2781,10 +2781,12 @@ Envuelve contenido (`children`), p. ej.: `<h1 className="ui-g-h1">{"Luz que lleg
 | prop | tipo | default |
 |---|---|---|
 | `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `terminal` · `pixel` · `puntos` · `papel` | "lujo" |
+| `textContrast` | boolean | false |
 
 - Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
 - Variables: --g-fs-*, --g-margin, --g-gutter, --g-cols, --g-section, --g-dur-*, --g-ease, --g-ease-reveal, --g-stagger (guideToStyle de lib/ui/guides).
 - Switzer y General Sans (guía técnica) vienen de Fontshare: carga GUIDE_FONTSHARE_CSS o caen a Inter y Onest.
+- textContrast es opt-in: calcula --mut-text y --acc-text a 4,5:1 sobre --bg para el texto del kit; no cambia --mut/--acc de fondos, bordes ni decoración. Usa colores sRGB opacos (hex o rgb); style se tiene en cuenta y puede sobrescribir los alias. No certifica superficies distintas, transparencias, colores semánticos, estados ni CSS propio que use directamente --mut/--acc.
 
 ## Contenido (`contenido`)
 

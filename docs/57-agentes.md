@@ -62,6 +62,13 @@ la transformación de fuentes: debe pasar el build y observarse su carga en nave
 Los ajustes locales de contraste se pasan en `GuideFrame.style` o en una guía adaptada, porque los tokens de la guía
 son inline y prevalecen frente a una clase CSS del mismo nodo. No hace falta cambiar la guía global para adaptar un cliente.
 
+`<GuideFrame guide="salon" textContrast>` ajusta opcionalmente los roles `--mut-text` y `--acc-text` a 4,5:1
+sobre `--bg` para el texto del kit. Conserva `--mut`/`--acc` en fondos, bordes y decoración; está desactivado de serie.
+Calcula con la guía y los overrides de `style`, en servidor, para colores sRGB opacos en hex o rgb. En CSS propio
+usa `color: var(--mut-text, var(--mut))` o `color: var(--acc-text, var(--acc))`.
+No certifica el resto de superficies, transparencias, opacidades, estados ni colores semánticos; tampoco puede
+resolver `var()` u otras expresiones CSS dinámicas. Para otro tema anidado, usa otro GuideFrame y vuelve a medir.
+
 `BookingFlow` conserva citas localmente, genera ocupación ficticia y llama `onBooked` después de confirmar. No ofrece
 una transacción asíncrona de agenda. El correo se valida pero no se guarda; `AppointmentList` relee al montar y no
 sincroniza automáticamente otra instancia viva. El adaptador de página debe validar la query. Sin almacenamiento,

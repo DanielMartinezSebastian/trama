@@ -39,7 +39,7 @@
 
 /* Botón de girar (rotatable): fuera del dibujo, debajo y centrado; por encima de las capas 3D, que sobresalen de la caja */
 .ui-device__rotate { position: relative; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; margin: 18px auto 0; padding: 0; background: var(--card); color: var(--fg); border: 1px solid var(--ln); border-radius: var(--r); cursor: pointer; }
-.ui-device__rotate:hover { color: var(--acc); border-color: var(--acc); }
+.ui-device__rotate:hover { color: var(--acc-text, var(--acc)); border-color: var(--acc); }
 .ui-device__rotate:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .ui-device__rotate[aria-pressed="true"] svg { transform: rotate(90deg); }
 
@@ -62,7 +62,7 @@
 .ui-device__bar { display: flex; flex: none; align-items: center; gap: 0.5em; padding: 0 1em; box-sizing: border-box; background: color-mix(in oklab, var(--fg) 8%, var(--bg)); border-bottom: 1px solid var(--ln); font-family: var(--mono, ui-monospace, monospace); }
 .ui-device__bar i { flex: none; width: 0.7em; height: 0.7em; border-radius: 50%; background: var(--ln); }
 .ui-device__bar i:first-child { background: var(--acc); }
-.ui-device__url { flex: 1; min-width: 0; max-width: 60%; min-height: 1.5em; margin-inline: auto; padding: 0.3em 1.2em; border-radius: 999px; background: var(--card); color: var(--mut); font-size: 0.8em; line-height: 1.5; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ui-device__url { flex: 1; min-width: 0; max-width: 60%; min-height: 1.5em; margin-inline: auto; padding: 0.3em 1.2em; border-radius: 999px; background: var(--card); color: var(--mut-text, var(--mut)); font-size: 0.8em; line-height: 1.5; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ---------- 3D ----------
    El lienzo y la capa CSS 3D sobresalen un 15 % por cada lado (un 50 % el portátil: `deviceBleed`) para que el giro no se recorte; la caja de

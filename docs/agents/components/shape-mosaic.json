@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "0e5e8a28bd2f0da285a996bfc9019bf75ad448c6",
+  "sourceCommit": "f180f0d707213e64ac8dfba2d9820e3eaba2f02f",
   "sourceDirty": true,
   "kind": "component",
   "id": "shape-mosaic",
@@ -50,11 +50,11 @@
     },
     {
       "path": "package.json",
-      "sha256": "fb9f9cbf605a4b13ba1e20d695eeb7d5a659bd53c09f431448c3515e758f503c"
+      "sha256": "6686f3821c21d16f6b4356737c54cbb6f4ad6f4c7c76b6c315d5e596f9ddac42"
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "d52551df083b84f8bfb881ca843b5d46ebd0eb7b7c23ec489c13c3f6feeb67cb"
+      "sha256": "db83ef05c91ade90b13bb389429b51ea7fc25c20c0bcb3677010c6d321e55b0b"
     },
     {
       "path": "scripts/build-catalog.mts",

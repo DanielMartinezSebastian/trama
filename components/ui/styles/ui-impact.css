@@ -53,7 +53,7 @@
 .ui-fexp__body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--dur-m, 0.4s) var(--ease-out, ease), visibility 0s linear var(--dur-m, 0.4s); }
 .ui-fexp__item[data-on] .ui-fexp__body { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
 .ui-fexp__body > div { overflow: hidden; }
-.ui-fexp__body p { margin: 0; padding: 0 20px 18px 14px; font-size: 15px; line-height: 1.55; color: var(--mut); text-transform: none; letter-spacing: normal; }
+.ui-fexp__body p { margin: 0; padding: 0 20px 18px 14px; font-size: 15px; line-height: 1.55; color: var(--mut-text, var(--mut)); text-transform: none; letter-spacing: normal; }
 .ui-fexp__media { position: relative; min-width: 0; overflow: hidden; border-radius: var(--r, 18px); background: var(--card); }
 .ui-fexp__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.03; transition: opacity var(--dur-m, 0.5s) var(--ease-out, ease), scale var(--dur-l, 0.9s) var(--ease-out, ease); }
 .ui-fexp__media img[data-on] { opacity: 1; scale: 1; }
