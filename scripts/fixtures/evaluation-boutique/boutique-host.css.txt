@@ -1,0 +1,2 @@
+/* Reset del host, sin tema ni estilos para las respuestas evaluadas. */
+*, *::before, *::after { box-sizing: border-box; }

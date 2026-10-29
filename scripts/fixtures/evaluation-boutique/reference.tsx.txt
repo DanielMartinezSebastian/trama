@@ -1,0 +1,21 @@
+import GuideFrame from "trama-ui/GuideFrame";
+import Hero from "trama-ui/Hero";
+
+export default function Reference() {
+  return <GuideFrame guide="boutique" style={{ minHeight: "100vh" }}>
+    <header className="ui-g-wrap" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 24, alignItems: "baseline", paddingBlock: 24, borderBottom: "1px solid var(--ln)" }}>
+      <span style={{ fontFamily: "var(--g-font-display)", fontSize: 36 }}>compás.</span>
+      <a href="/reservar" className="ui-g-btn ui-g-btn--ghost">Reservar una sesión</a>
+    </header>
+    <main className="ui-g-wrap ui-g-section" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))", gap: "clamp(24px, 4vw, 64px)", alignItems: "center" }}>
+      <Hero kicker="PILATES · ESTUDIO DE DEMOSTRACIÓN" title="Fuerza con calma. Movimiento contigo."
+        subtitle="Sesiones privadas y en pareja. Empezamos escuchando cómo te mueves y qué quieres trabajar."
+        primaryCta="Reservar sesión inicial" primaryHref="/reservar" secondaryCta="" secondaryHref=""
+        badges="" align="left" backdrop="none" variant="editorial" />
+      <figure style={{ margin: 0, minWidth: 0 }}>
+        <img src="/images/movimiento.svg" alt="Ilustración original de un reformer y una pelota de pilates en tonos tierra" style={{ display: "block", width: "100%", height: "auto", aspectRatio: "4 / 3", objectFit: "cover" }} />
+        <figcaption className="ui-g-muted" style={{ fontSize: 13, marginTop: 16 }}>Ilustración propia · estudio ficticio, sin agenda conectada.</figcaption>
+      </figure>
+    </main>
+  </GuideFrame>;
+}

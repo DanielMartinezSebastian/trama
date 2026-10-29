@@ -169,3 +169,26 @@
 - Servidor de revisión propio en `http://127.0.0.1:3431`, abierto a petición del usuario, cerrado al terminar la revisión.
 - Comprobaciones: `verify` completo y `git diff --check`. Sin push, publicación ni despliegue.
 - Siguiente paso: otra guía/cohorte si el usuario decide continuar la evaluación; no se inicia automáticamente.
+
+## Continuación: protocolo de boutique (29 de octubre de 2026)
+
+- Objetivo aprobado por el usuario: evaluar otra guía con composición, referencia y reserva, documentación actual
+  frente a skills. Rama `feat/evolucion-agentes`, partida `5abd496`, mismo worktree; status inicial limpio y
+  worktrees revisados. Ningún otro worktree modificado.
+- Diseño fijado antes de generar: `docs/evolucion-agentes/p4c-evaluacion-boutique.md`, 12 ensayos con Codex CLI
+  0.165.0 heredado, condiciones `updated,pilot`, paquete congelado `28d62a4f…`. Compás es un estudio ficticio de
+  pilates. Se evalúa adaptación de contenido/flujo con la ficha boutique y ejemplos/receta todavía de salon.
+- Herramientas: suites explícitas, selección estricta, manifiesto con contrato y hash del paquete completo,
+  referencia y configuración; resume con preflight que rechaza mezclas. Versión de Codex leída del ejecutable,
+  detención ante falta de cuota. Defaults/encargos de P4 comprobados contra su fuente histórica, sin cambios.
+- Referencia: fixtures propios `scripts/fixtures/evaluation-boutique/`, consumidor limpio `.cache/agent-pilot-boutique`
+  con `.next` y dependencias propios, host sin guía heredada y con reset de box-sizing. Frontend-design aplicado
+  a la muestra GuideFrame/Hero; Cormorant/Inter, colores de boutique e ilustración SVG original. No es web externa.
+- Comprobaciones de preparación: `doctor`, typecheck y `verify` completos correctos; build del consumidor,
+  captura con medidas de fuentes/tokens, dos columnas/apilado y ausencia de desborde; capturas revisadas por Codex.
+  Smoke en `http://127.0.0.1:3433/` correcto, sin errores ni sombras. Paquete/kit sin cambios; no se recompila
+  el .tgz para medir esta cohorte. Ficha `herramienta-evaluacion-boutique` e índice (47 fichas).
+- Artefactos: `.refs3d/agent-boutique/`, hash de referencia `ea7bf75e…`; consumidores y cohortes anteriores intactos.
+  Servidor de referencia propio en 3433 cerrado tras el smoke. Sin publicación, despliegue ni push.
+- Siguiente paso: generar en `.cache/agent-evaluation-boutique`, adjudicar con el consumidor nuevo y revisar
+  las capturas antes de interpretar resultados. Las cifras históricas permanecen separadas.

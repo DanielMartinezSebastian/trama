@@ -1,0 +1,13 @@
+import type { ReactNode } from "react";
+import { inter, cormorantGaramond, geistMono } from "trama-ui/fonts";
+import "trama-ui/styles.css";
+import "./boutique-host.css";
+
+export const metadata = { title: "Compás — piloto boutique", icons: { icon: "/images/movimiento.svg" } };
+
+// Host neutro: las respuestas deben aplicar su propia guía, no heredar una adaptación del evaluador.
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${inter.variable} ${cormorantGaramond.variable} ${geistMono.variable}`}>
+    <body style={{ margin: 0 }}>{children}</body>
+  </html>;
+}

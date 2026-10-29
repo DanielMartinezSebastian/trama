@@ -7,6 +7,7 @@ import { STYLE_GUIDES } from "../lib/ui/guides";
 import { defaultsOf, snippet } from "../lib/catalog/schema";
 import { knowledgeOutputs, selectPilot } from "./agent-knowledge.mts";
 import { resolvePublicExport } from "./package-surface.mts";
+import "./agent-evaluation-suites.test.mts";
 
 const { entries, recipe } = selectPilot(catalog, RECETAS_SECTOR, STYLE_GUIDES);
 assert.equal(recipe.id, "salon");

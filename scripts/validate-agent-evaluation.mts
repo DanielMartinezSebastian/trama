@@ -5,9 +5,13 @@ import { join, resolve } from "node:path";
 import ts from "typescript";
 import { chromium } from "playwright";
 import { chromiumPath } from "./chromium-path.mts";
+import { evaluationSuite } from "./agent-evaluation-suites.mts";
 
 const evaluation = resolve(process.argv[2] ?? ".cache/agent-evaluation");
 const consumer = resolve(process.argv[3] ?? ".cache/agent-pilot-final");
+const manifest = join(evaluation, "cohort.json");
+const suite = evaluationSuite(existsSync(manifest) ? JSON.parse(readFileSync(manifest, "utf8")).contract.suite.id : "salon");
+if (existsSync(manifest)) assert.deepEqual(JSON.parse(readFileSync(manifest, "utf8")).contract.suite, suite, "El protocolo difiere del contrato congelado");
 const runs = JSON.parse(readFileSync(join(evaluation, "runs.json"), "utf8")) as { id: string; task: string; condition: string; repetition: number; elapsedMs: number; usage: unknown }[];
 const cases = join(consumer, "app/evaluation/cases"); mkdirSync(cases, { recursive: true });
 const records: { id: string; task: string; condition: string; repetition: number; generationMs: number; validationMs: number; status: string; details: string[]; visualReview: string; usage: unknown }[] = [];
@@ -40,7 +44,7 @@ for (const run of runs) {
   result.validationMs = Math.round(performance.now() - started); records.push(result);
 }
 const route = join(consumer, "app/evaluation/[id]"); mkdirSync(route, { recursive: true });
-const loader = `import { Suspense } from "react";\nconst cases = {\n${valid.map((id) => `${JSON.stringify(id)}: () => import(${JSON.stringify(`../cases/${id}`)}),`).join("\n")}\n};\nexport default async function Page({params,searchParams}:{params:Promise<{id:string}>;searchParams:Promise<{mode?:string}>}){const {id}=await params;const query=await searchParams;const load=cases[id as keyof typeof cases];if(!load)return <h1>Ensayo no disponible</h1>;const {default:Result}=await load();return <div id="evaluation-case"><Suspense fallback={<p>Cargando ensayo</p>}><Result mode={query.mode==='appointments'?'appointments':'book'} bookHref={'/evaluation/'+id+'?mode=book'} appointmentsHref={'/evaluation/'+id+'?mode=appointments'} storageKey={'eval:'+id} artSrc='/images/trazo.svg'/></Suspense></div>;}\n`;
+const loader = `import { Suspense } from "react";\nconst cases = {\n${valid.map((id) => `${JSON.stringify(id)}: () => import(${JSON.stringify(`../cases/${id}`)}),`).join("\n")}\n};\nexport default async function Page({params,searchParams}:{params:Promise<{id:string}>;searchParams:Promise<{mode?:string}>}){const {id}=await params;const query=await searchParams;const load=cases[id as keyof typeof cases];if(!load)return <h1>Ensayo no disponible</h1>;const {default:Result}=await load();return <div id="evaluation-case"><Suspense fallback={<p>Cargando ensayo</p>}><Result mode={query.mode==='appointments'?'appointments':'book'} bookHref={'/evaluation/'+id+'?mode=book'} appointmentsHref={'/evaluation/'+id+'?mode=appointments'} storageKey={'eval:'+id} artSrc={${JSON.stringify(suite.artSrc)}}/></Suspense></div>;}\n`;
 writeFileSync(join(route, "page.tsx"), loader);
 const npm = process.env.npm_execpath;
 if (!npm) throw new Error("Ejecutar mediante npm run agents:validate-evaluation");
@@ -78,7 +82,7 @@ try {
       await page.screenshot({ path: join(evaluation, result.id, "desktop.png"), fullPage: true });
       if (result.task === "composition") {
         const text = await subject.innerText();
-        for (const expected of ["Consulta inicial", "Corte", "Color", "35", "65"]) assert(text.includes(expected), `Falta ${expected}`);
+        for (const expected of suite.compositionContent) assert(text.includes(expected), `Falta ${expected}`);
         assert(await subject.locator('a[href*="mode=book"]').count() > 0, "Falta CTA de reserva");
       }
       if (result.task === "reference") {
