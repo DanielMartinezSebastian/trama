@@ -66,3 +66,13 @@
 - Comprobaciones: `npm run typecheck`, `catalog`, `verify` (tras regenerar el cuaderno) y `build` correctos; smoke de `/`, `/docs/agentes` y `/sitios/pixelforge` sin errores ni sombras, capturas revisadas. `pkg:build`, `pkg:pack` (SHA-256 `ea7c7d08…`) y `agents:check-package` correctos. `.tgz` evaluado (`e238839e…`) guardado en `.cache/paquetes/`. `git diff --check` correcto.
 - Sin commit, publicación ni despliegue.
 - Siguiente paso: repetir `booking-docs-2` cuando haya cuota (instrucciones en P4), revisión visual humana de las capturas y, antes de generalizar `knowledge/`, una segunda cohorte con otra guía.
+
+## Continuación: segunda cohorte con Claude Code (29 de octubre de 2026)
+
+- Encargo del usuario: seguir sin Codex («a tope»): commits, cohorte con Claude Code y fichas de todas las guías. Cuatro commits previos en la rama, sin push.
+- Fichas: `knowledge/guides/` cubre las 19 guías con tabla de contraste (Markdown legible); skills y docs ajustados. Índice 17,7 kB.
+- `evaluate-agents.mts` admite `--client claude`, `--conditions docs,updated,pilot` y `--model`. Ensayos en `%TEMP%/trama-eval/` (Claude Code carga `CLAUDE.md` de los padres) y copiados a `.cache/agent-evaluation-claude/`. Sondas: `--restricted` ocultaba las skills del proyecto y el modelo por defecto en `-p` era Haiku; se usa `--setting-sources project,local`, `--strict-mcp-config`, herramientas de lectura y Opus fijado.
+- 7 ensayos chocaron con el límite de sesión; apartados en `.cache/agent-evaluation-claude-sin-cuota/` y repetidos tras el reinicio. El validador reconoce ese límite y excluye del contraste el texto decorativo `aria-hidden` (anotado).
+- Resultados: base 4/6, actualizada 4/6, skills 5/6; todos los fallos en reserva. Informe `docs/evolucion-agentes/p4b-evaluacion-claude.md`, datos `evaluacion-claude-evidencia.json`.
+- Kit: tipos de reserva exportados desde `BookingFlow`, `AppointmentList` y la raíz (`build-package.mts`); ejemplo de reserva simplificado. Paquete `769cb1a5…`, consumidor `.cache/agent-pilot-v3`; readjudicación en `.cache/agent-evaluation-claude-v3/` (13/18, mismo recuento por condición).
+- Propuesta sin aplicar: corrección de contraste de `--mut`/`--acc` en `GuideFrame` (decisión de producto).

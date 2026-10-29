@@ -4,9 +4,9 @@ fecha: 2026-10-29
 tipo: herramienta
 estado: hecho
 referencias: []
-fichas: [docs/evolucion-agentes/p4-evaluacion.md, docs/57-agentes.md]
+fichas: [docs/evolucion-agentes/p4-evaluacion.md, docs/evolucion-agentes/p4b-evaluacion-claude.md, docs/57-agentes.md]
 ruta:
-codigo: [scripts/evaluate-agents.mts, scripts/validate-agent-evaluation.mts, components/ui/glyph.ts]
+codigo: [scripts/evaluate-agents.mts, scripts/validate-agent-evaluation.mts, components/ui/glyph.ts, components/ui/BookingFlow.tsx]
 colores: [#ffffff, #868686, #f5a490]
 fuentes: [Cormorant Garamond, Manrope]
 sector: [peluquería]
@@ -29,9 +29,9 @@ con el mismo cliente, encargo y adjudicación automática en un consumidor Next 
 ## Qué se midió
 
 Tres encargos (sección de servicios, hero desde captura, reserva local) × dos condiciones × dos repeticiones con Codex
-CLI 0.165.0. Por ensayo: tiempo, tokens, tipos e imports públicos, build, h1, contenido, columnas y apilado, desborde
-móvil, axe WCAG 2 A/AA, recorrido de reserva y capturas a 1440 y 390 px. Once ensayos ejecutados; uno sin turno por
-límite de uso del cliente.
+CLI 0.165.0 (11 ejecutados; uno sin turno por límite de uso), y otra cohorte de 18 con Claude Code 2.1.302 (Opus 5.5)
+que añade la condición «catálogo actualizado». Por ensayo: tiempo, tokens, tipos e imports públicos, build, h1,
+contenido, columnas y apilado, desborde móvil, axe WCAG 2 A/AA, recorrido de reserva y capturas a 1440 y 390 px.
 
 ## Qué se hizo
 
@@ -52,6 +52,10 @@ Los fallos de la documentación vinieron de lo que el catálogo no decía: contr
 cohorte destapó además un defecto real: `Button` con `glyph` rompía en Server Components porque `renderGlyph` vivía en
 un módulo `"use client"`.
 
+Con Claude Code: skills 5/6, catálogo antiguo y actualizado 4/6; todos los fallos en reserva, por contraste de los
+tokens de `salon` dentro de `BookingFlow`. Destapó además tipos de reserva sin exportar (corregido). Claude Code
+debe ejecutarse fuera del repo: sube buscando `CLAUDE.md`; y `--restricted` oculta las skills del proyecto.
+
 ## Siguiente
 
-Repetir el ensayo pendiente cuando haya cuota y probar una segunda guía u otro cliente antes de publicar cifras.
+Decidir si `GuideFrame` corrige el contraste de `--mut`/`--acc` para texto, y probar otra guía antes de publicar cifras.

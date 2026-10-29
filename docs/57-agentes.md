@@ -44,9 +44,10 @@ Una petición reproducible para el consumidor piloto:
 
 ## Consultar sin cargar todo el catálogo
 
-`node_modules/trama-ui/knowledge/index.json` selecciona la guía y receta `salon` y sus piezas. Las fichas separan
-`playgroundProps` de declaraciones completas de API, incluyen procedencia/versiones y enlazan ejemplos. Es una selección
-parcial: otras guías/componentes pueden existir en los exports y el catálogo completo aunque no tengan ficha piloto.
+`node_modules/trama-ui/knowledge/index.json` lista las 19 guías (tokens, fuentes y contraste medido de cada una) y la
+receta `salon` con sus piezas. Las fichas separan `playgroundProps` de declaraciones completas de API, incluyen
+procedencia/versiones y enlazan ejemplos. Las piezas son una selección parcial: otros componentes existen en los exports
+y en el catálogo completo aunque no tengan ficha.
 
 Las fuentes de autoridad siguen siendo tipos/exports, `STYLE_GUIDES` y `RECETAS_SECTOR`. Los JSON/Markdown son salidas
 generadas. No edites una ficha para corregir la API: corrige su fuente y ejecuta `npm run catalog`.
@@ -84,16 +85,20 @@ Los SVG del ejemplo son ilustraciones originales, sin fotos o testimonios de cli
 
 ## Qué mostró la evaluación
 
-Una cohorte de 11 ensayos con Codex CLI (tres tareas, documentación actual frente a skills, dos repeticiones; uno no
-llegó a ejecutarse por límite de uso del cliente) dio estos resultados. Detalle en la [evaluación P4](./evolucion-agentes/p4-evaluacion.md).
+Dos cohortes con las mismas tres tareas: 11 ensayos con Codex CLI y 18 con Claude Code (Opus 5.5), que añade una
+condición con el catálogo actualizado. Detalle en [P4](./evolucion-agentes/p4-evaluacion.md) y
+[P4b](./evolucion-agentes/p4b-evaluacion-claude.md).
 
-- **Más ensayos correctos**: 6 de 6 con skills y 2 de 5 con la documentación actual. Los fallos fueron contraste con
-  los tokens de `salon` y, en uno, un defecto de `Button` desde Server Components, ya corregido.
-- **No ahorra**: con skills cada ensayo tardó de media un 46 % más y leyó un 58 % más de tokens. El conocimiento
-  extra se paga en lectura.
+- **Más ensayos correctos**: con skills, 6/6 (Codex) y 5/6 (Claude); con documentación, 2/5 y 4/6. Casi todos los
+  fallos son de contraste con los tokens de `salon`; además, un defecto de `Button` en Server Components y unos tipos
+  de reserva sin exportar, ya corregidos.
+- **No ahorra**: con skills se leen un 58 % (Codex) o un 20 % (Claude) más tokens de entrada. El conocimiento extra
+  se paga en lectura.
+- **Depende del modelo**: con Opus, la documentación ya acierta en composición y referencia; todos sus fallos están
+  en la reserva.
 - **Fuentes**: sin skills, el agente escribió el nombre literal de la familia y el titular cayó a una serif del
   sistema. El catálogo y la ficha de guía explican ahora cómo nombrarlas.
 
-Es una muestra pequeña con un cliente, un modelo no identificado y una guía; no generaliza a otros casos. MCP, registro
+Son muestras pequeñas con dos clientes y una guía; no generalizan a otros casos. MCP, registro
 o una consulta CLI más fina no se añaden: P4 no mostró que falten, y el coste observado está en leer, no en buscar.
-Se reconsiderarán con una segunda cohorte.
+Se reconsiderarán si más guías o recetas alargan la búsqueda.

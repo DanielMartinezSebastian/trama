@@ -38,7 +38,7 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
 se quedan atrás o si un componente no aparece en la tabla de abajo.
 
-El [índice piloto para agentes](./agents/README.md) también se genera con `npm run catalog`: guía y receta `salon`,
+El [índice piloto para agentes](./agents/README.md) también se genera con `npm run catalog`: una ficha por guía con su contraste medido, la receta `salon`,
 sus piezas, controles del visor separados de declaraciones completas y tres ejemplos de consumo. Su selección y límites
 se declaran en las fichas; no es un catálogo alternativo mantenido a mano. `npm run agents:check-package`, después de
 `npm run pkg:build`, compila los ejemplos contra los exports del paquete y compara el cierre de declaraciones.

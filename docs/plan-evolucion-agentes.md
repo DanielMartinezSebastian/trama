@@ -68,3 +68,7 @@ limpio y en dos clientes. La [evaluación P4](./evolucion-agentes/p4-evaluacion.
 la documentación actual, con más tiempo y tokens; destapó un defecto de `Button` en Server Components (corregido) y
 dos huecos del catálogo (contraste de guías y nombre de fuentes), cubiertos en el generador. P5 alinea web y
 documentación con esas cifras y sus límites. P6 decide no añadir MCP, registro ni consulta CLI por ahora.
+
+La [segunda cohorte](./evolucion-agentes/p4b-evaluacion-claude.md), con Claude Code y una condición de catálogo
+actualizado, confirma la ventaja de las skills (5/6 frente a 4/6) con menor sobrecoste (+20 % de entrada) y sitúa
+todos los fallos restantes en el contraste de la reserva. Las fichas cubren ya las 19 guías.
