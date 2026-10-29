@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "0e5e8a28bd2f0da285a996bfc9019bf75ad448c6",
+  "sourceCommit": "2c7d04c132a676669b0675ed97f4509e9bcbf08b",
   "sourceDirty": true,
   "kind": "component",
   "id": "testimonial-section",
@@ -22,7 +22,7 @@
     },
     {
       "path": "components/ui/SectionHeader.tsx",
-      "sha256": "5b7f22147bb427070102ff5bd2d29114353e04c93c69007ed86b54471b6a3b9d"
+      "sha256": "b21cdc67f332711cabca338173379d5a2d96955728cb499fba8b7504722455ea"
     },
     {
       "path": "components/ui/Testimonial.tsx",

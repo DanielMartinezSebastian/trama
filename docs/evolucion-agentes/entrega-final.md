@@ -4,6 +4,9 @@
 desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); registro en
 [tareas/evolucion-agentes.md](../tareas/evolucion-agentes.md).
 
+Paquete tras el arreglo de SectionHeader: `dist-npm/trama-ui-0.13.0.tgz`, SHA-256 `411ab1dc…`.
+Las cohortes mantienen sus paquetes históricos; sus cifras no corresponden a este artefacto nuevo.
+
 ## Estado por entrega
 
 | Entrega | Estado | Evidencia |
@@ -13,7 +16,7 @@ desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); re
 | P2. Distribución piloto | Hecha | `knowledge/` y `skills/` en el `.tgz`; consumidor limpio `examples/agent-pilot` con build Next 16.3.5 y recorrido en navegador |
 | P3. Construcción y estilo | Hecha | `skills/trama-build`, `skills/trama-style`; instalador `trama-ui skills install`; [descubrimiento](./discovery-evidencia.json) en Codex CLI 0.165.0 y Claude Code 2.1.302 |
 | P3b. Investigación | Hecha | `skills/trama-research`; [brief piloto](./research-piloto.md) y [evidencia](./research-evidencia.json) |
-| P4. Evaluación | Hecha: Codex (11 de 12 ensayos) y Claude Code (18 de 18) | [Codex](./p4-evaluacion.md), [Claude Code](./p4b-evaluacion-claude.md), datos en `evaluacion-*evidencia.json` |
+| P4. Evaluación | Hecha: Codex (12 de 12 ensayos) y Claude Code (18 de 18) | [Codex](./p4-evaluacion.md), [Claude Code](./p4b-evaluacion-claude.md), datos en `evaluacion-*evidencia.json` |
 | P5. Comunicación | Hecha | Portada, metadatos, README, README del paquete y [docs/57-agentes.md](../57-agentes.md) |
 | P6. Consulta y extensiones | Decidida: no ahora | Ver abajo |
 
@@ -29,15 +32,17 @@ desplegar. Plan en [plan-evolucion-agentes.md](../plan-evolucion-agentes.md); re
 - **Tipos de reserva**: `Appointment`, `BookingService`, `BookingStaff` y `BookingPlace` se importan desde
   `trama-ui/BookingFlow` o desde la raíz; dos agentes los buscaron ahí.
 - **Fichas de las 19 guías** en `knowledge/guides/`, cada una con su tabla de contraste medida.
+- **SectionHeader con backdrop**: la palabra decorativa ocupa una franja recortada sobre el texto para evitar
+  que cruce el subtítulo. Sin cambios de API; ficha en [el cuaderno](../cuaderno/pieza-section-header-legible.md).
 
 ## Resultado de la evaluación
 
 | | Codex | Claude Code (Opus 5.5) |
 | --- | --- | --- |
-| Documentación de la base | 2/5 | 4/6 |
+| Documentación de la base | 2/6 | 4/6 |
 | Documentación actualizada | — | 4/6 |
 | Skills | 6/6 | 5/6 |
-| Entrada extra con skills | +58 % | +20 % |
+| Entrada extra con skills | +64 % | +20 % |
 
 Las skills aciertan más con los dos clientes y cuestan más. Con Opus, la documentación ya resuelve composición y
 referencia; los fallos restantes son de contraste en la reserva. Una guía y dos clientes: no autoriza cifras generales.
@@ -52,7 +57,6 @@ más recetas y piezas con ficha alargan la búsqueda.
 
 ## Pendiente
 
-- Repetir `booking-docs-2` de Codex (sin turno por límite de uso); instrucciones en P4.
 - Decidir si `GuideFrame` corrige solo el contraste de `--mut`/`--acc` cuando se usan como texto (propuesta en P4b).
 - Revisión visual humana de las capturas de P4 y del consumidor piloto.
 - Recetas y piezas con ficha siguen siendo solo las de `salon`.

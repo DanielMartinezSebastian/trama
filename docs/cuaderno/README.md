@@ -3,7 +3,7 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-44 fichas.
+45 fichas.
 
 ## Fichas
 
@@ -13,6 +13,7 @@
 | 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-evaluacion-agentes](herramienta-evaluacion-agentes.md) · Evaluación de agentes con y sin skills de Trama | herramienta | hecho | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-skills-trama](herramienta-skills-trama.md) · Skills Trama por proyecto y evaluación independiente | herramienta | hecho |  |  |  |
+| 2026-10-29 | [pieza-section-header-legible](pieza-section-header-legible.md) · SectionHeader — decoración sin interferir con el texto | pieza | hecho | peluquería | salón editorial claro | `/componentes#section-header` |
 | 2026-10-28 | [concepto-nadir-semilla](concepto-nadir-semilla.md) · Semilla, memoria articulada de NÁDIR | concepto | hecho |  |  | `/sitios/nadir` |
 | 2026-10-28 | [demo-la-tramoya](demo-la-tramoya.md) · La Tramoya, venta-teatro con espectáculo en Chiclana | demo | hecho | restaurante |  | `/sitios/la-tramoya` |
 | 2026-10-28 | [pieza-flujos-de-negocio](pieza-flujos-de-negocio.md) · Flujos de negocio en pasos (reserva, compra, plaza, alta y propuesta) | pieza | hecho | peluquería, gimnasio, academia, producto, agencia, estudio creativo |  | `/componentes` |
@@ -210,15 +211,15 @@ Las etiquetas usadas, por campo y por número de fichas. Antes de inventar una, 
 
 ### Sector (`sector`)
 
-peluquería (16) · gimnasio (13) · academia (8) · agencia (6) · barbería (6) · producto (3) · estudio creativo (1) · restaurante (1)
+peluquería (17) · gimnasio (13) · academia (8) · agencia (6) · barbería (6) · producto (3) · estudio creativo (1) · restaurante (1)
 
 ### Familia de estilo (`guia`)
 
-salón editorial claro (8) · club de alto contraste (7) · barbería de carácter (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · arcade pixel (1) · estudio en papel (1) · matriz de puntos (1) · producto de marca (1) · terminal de neón (1)
+salón editorial claro (9) · club de alto contraste (7) · barbería de carácter (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · arcade pixel (1) · estudio en papel (1) · matriz de puntos (1) · producto de marca (1) · terminal de neón (1)
 
 ### Tono (`tono`)
 
-cálido (7) · editorial (6) · enérgico (6) · cercano (3) · comercial (3) · seguro (3) · clásico (2) · con humor (2) · descarado (2) · familiar (2) · lúdico (2) · lujo discreto (2) · urbano (2) · artesanal (1) · artístico (1) · de barrio (1) · documental (1) · especialista (1) · festivo (1) · institucional (1) · personal (1) · popular (1) · sobrio (1)
+cálido (7) · editorial (7) · enérgico (6) · cercano (3) · comercial (3) · seguro (3) · clásico (2) · con humor (2) · descarado (2) · familiar (2) · lúdico (2) · lujo discreto (2) · urbano (2) · artesanal (1) · artístico (1) · de barrio (1) · documental (1) · especialista (1) · festivo (1) · institucional (1) · personal (1) · popular (1) · sobrio (1)
 
 ### Paleta (`paleta`)
 
@@ -226,7 +227,7 @@ fondo claro (11) · fondo oscuro (8) · acento único saturado (5) · pastel cá
 
 ### Tipografía (`tipografia`)
 
-titular gigante (10) · serif con cursiva (7) · condensada en mayúsculas (5) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · espaciado abierto (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · slab de cartel (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
+titular gigante (11) · serif con cursiva (7) · condensada en mayúsculas (5) · grotesca en mayúsculas (4) · espaciado negativo (2) · gótica condensada (2) · grotesca ancha (2) · máquina de escribir (2) · minúsculas (2) · serif fina (2) · una sola letra (2) · brocha (1) · espaciado abierto (1) · grotesca apretada (1) · letra de contorno (1) · sans fina (1) · slab de cartel (1) · titular partido en cursiva (1) · títulos entre paréntesis (1)
 
 ### Patrones (`patrones`)
 
@@ -238,7 +239,7 @@ cinta que corre (9) · scroll suavizado (5) · subrayado que crece (4) · texto 
 
 ### Piezas del kit (`piezas`)
 
-FullscreenMenu (16) · AppointmentList (13) · BookingFlow (13) · OpeningHours (12) · ContactForm (10) · PricingSection (10) · TeamSection (9) · ActionBar (8) · Marquee (8) · ClassSchedule (7) · EnrollmentFlow (7) · FAQSection (6) · GuideFrame (6) · MemberArea (6) · MembershipFlow (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · CartDrawer (4) · QRCode (4) · SectionHeader (4) · TestimonialSection (4) · Button (3) · CohortList (3) · LineDraw (3) · LogoCloud (3) · QuantityStepper (3) · RollLink (3) · Stepper (3) · Accordion (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · OptionPicker (2) · ProductCard (2) · Reveal (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · EventLineup (1) · FeatureExplorer (1) · fonts (1) · Footer (1) · GradientField (1) · guides (1) · Hero (1) · HorizontalScroll (1) · LocalTime (1) · MenuList (1) · NavBar (1) · PageTransition (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollExpand (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · TextField (1) · viewTransitions (1)
+FullscreenMenu (16) · AppointmentList (13) · BookingFlow (13) · OpeningHours (12) · ContactForm (10) · PricingSection (10) · TeamSection (9) · ActionBar (8) · Marquee (8) · ClassSchedule (7) · EnrollmentFlow (7) · FAQSection (6) · GuideFrame (6) · MemberArea (6) · MembershipFlow (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · SectionHeader (5) · CartDrawer (4) · QRCode (4) · TestimonialSection (4) · Button (3) · CohortList (3) · LineDraw (3) · LogoCloud (3) · QuantityStepper (3) · RollLink (3) · Stepper (3) · Accordion (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · OptionPicker (2) · ProductCard (2) · Reveal (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · EventLineup (1) · FeatureExplorer (1) · fonts (1) · Footer (1) · GradientField (1) · guides (1) · Hero (1) · HorizontalScroll (1) · LocalTime (1) · MenuList (1) · NavBar (1) · PageTransition (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollExpand (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · TextField (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
@@ -249,6 +250,7 @@ TeamSection (7) · ClassSchedule (5) · CohortList (4) · FullscreenMenu (4) · 
 Con tres etiquetas o más en común (sin contar piezas).
 
 - [demo-linde-agentes](demo-linde-agentes.md): replica-matiz (4), demo-hebra (4), replica-melena (3), replica-nura (3)
+- [pieza-section-header-legible](pieza-section-header-legible.md): demo-linde-agentes (3), replica-matiz (3), replica-nura (3), demo-hebra (3)
 - [demo-la-tramoya](demo-la-tramoya.md): replica-nucleo (5), demo-cadencia (4), replica-cita (3), replica-melena (3), replica-remada (3)
 - [pieza-antonio](pieza-antonio.md): replica-lobo (3), replica-talla (3), replica-vive (3), demo-forja (3)
 - [pieza-fullscreen-menu](pieza-fullscreen-menu.md): replica-q47 (4), replica-matiz (3)

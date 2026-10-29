@@ -105,7 +105,7 @@ import SectionHeader from "trama-ui/SectionHeader";
     "label": "Palabra de fondo",
     "type": "text",
     "default": "",
-    "hint": "Enorme y tenue detrás de la cabecera, cortada por el borde («blog», «tienda»)"
+    "hint": "Enorme y tenue en una franja recortada sobre el texto («blog», «tienda»)"
   },
   {
     "key": "variant",

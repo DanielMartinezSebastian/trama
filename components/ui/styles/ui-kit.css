@@ -807,11 +807,10 @@ a.ui-button { text-decoration: none; }
 .ui-sh--giant { width: 100%; }
 .ui-sh--giant h2, .ui-sh--giant.ui-s--editorial h2 { font-size: clamp(52px, 12.5vw, 200px); line-height: 0.86; letter-spacing: -0.045em; text-wrap: balance; }
 .ui-sh--giant p { max-width: 60ch; }
-/* palabra de fondo: enorme, tenue y cortada por el borde de la cabecera */
-.ui-sh--backdrop { position: relative; isolation: isolate; width: 100%; overflow: clip; padding-block: clamp(24px, 5vw, 64px); }
+/* palabra decorativa: franja recortada propia para no cruzar el texto */
+.ui-sh--backdrop { position: relative; isolation: isolate; width: 100%; overflow: clip; padding-block-end: clamp(24px, 5vw, 64px); }
 .ui-sh--backdrop:not(.ui-sh--giant) > :not(.ui-sh__word) { max-width: 560px; }
-.ui-sh__word { position: absolute; z-index: -1; inset-block-start: 50%; inset-inline-start: -0.04em; translate: 0 -50%; font-family: var(--display, var(--s-ff)); font-size: clamp(120px, 27vw, 420px); font-weight: 400; line-height: 0.8; letter-spacing: -0.04em; white-space: nowrap; color: color-mix(in srgb, var(--acc) 13%, transparent); pointer-events: none; user-select: none; text-transform: none; text-shadow: none; }
-.ui-sh--center .ui-sh__word { inset-inline-start: 50%; translate: -50% -50%; }
+.ui-sh__word { min-width: 0; width: 100%; height: clamp(64px, 10vw, 140px); max-width: 100%; overflow: clip; font-family: var(--display, var(--s-ff)); font-size: clamp(120px, 27vw, 420px); font-weight: 400; line-height: 0.8; letter-spacing: -0.04em; white-space: nowrap; color: color-mix(in srgb, var(--acc) 13%, transparent); pointer-events: none; user-select: none; text-transform: none; text-shadow: none; }
 
 /* ---------- Divider ---------- */
 .ui-div { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--mut); font-family: var(--s-ff); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: var(--legibility-ts, 0 0 transparent); }

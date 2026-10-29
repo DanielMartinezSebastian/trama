@@ -174,11 +174,11 @@ export const texto: CatalogEntry[] = [
       { key: "align", label: "Alineación", type: "select", default: "left", options: ["left", "center"] },
       { key: "rule", label: "Regla", type: "select", default: "line", options: ["none", "line", "ascii", "dots"] },
       { key: "titleSize", label: "Titular", type: "select", default: "md", options: ["md", "giant"], hint: "giant: a lo ancho y apretado, como los «Locations» de las barberías" },
-      { key: "backdrop", label: "Palabra de fondo", type: "text", default: "", hint: "Enorme y tenue detrás de la cabecera, cortada por el borde («blog», «tienda»)" },
+      { key: "backdrop", label: "Palabra de fondo", type: "text", default: "", hint: "Enorme y tenue en una franja recortada sobre el texto («blog», «tienda»)" },
       variantProp("minimal"),
     ],
     render: (p) => (
-      <div className="ui-center">
+      <div className="ui-center" style={{ position: "relative", minHeight: 300 }}>
         <SectionHeader kicker={p.kicker as string} title={p.title as string} subtitle={p.subtitle as string} align={p.align as never} rule={p.rule as never} titleSize={p.titleSize as never} backdrop={p.backdrop as string} variant={p.variant as never} />
       </div>
     ),

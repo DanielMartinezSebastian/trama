@@ -44,15 +44,17 @@ ensayos con skills. WCAG 1.4.3 exime la decoración pura, así que esos nodos se
 Revisión visual (por el agente evaluador): sin fuentes de sistema en ninguna condición; Opus nombra las fuentes por
 variable o hereda las clases `ui-g-*` incluso con la documentación de la base. Defecto no detectado por la
 validación: en `composition-pilot-1` la palabra decorativa «servicios» queda detrás del subtítulo y estorba la lectura.
+Corregido después de la evaluación: la palabra tiene una franja recortada propia sobre el texto, sin cambiar la API.
+Las capturas y cifras de esta cohorte conservan el paquete evaluado; [ficha del arreglo](../cuaderno/pieza-section-header-legible.md).
 
 ## Lectura junto a P4
 
 | | Codex (P4) | Claude Code (P4b) |
 | --- | --- | --- |
-| Documentación de la base | 2/5 | 4/6 |
+| Documentación de la base | 2/6 | 4/6 |
 | Documentación actualizada | — | 4/6 |
 | Skills | 6/6 | 5/6 |
-| Sobrecoste de las skills (entrada) | +58 % | +20 % (+47 % frente a la actualizada) |
+| Sobrecoste de las skills (entrada) | +64 % | +20 % (+47 % frente a la actualizada) |
 
 - Las skills ganan con ambos clientes, pero la ventaja depende mucho del modelo: con Opus la documentación ya
   resuelve composición y referencia.

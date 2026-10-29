@@ -95,3 +95,27 @@
 - Decisiones: hashes/paquetes de P4 conservados, sin atribuir al paquete nuevo las cifras históricas. Revisión
   humana pendiente; las capturas automáticas no la sustituyen. Sin publicación, despliegue ni push.
 - Siguiente paso: cerrar la revisión visual del arreglo de SectionHeader y comprobar sitio/paquete finales.
+
+## Cierre: SectionHeader legible y validación final (29 de octubre de 2026)
+
+- Objetivo: evitar que la palabra decorativa de SectionHeader interfiera con el subtítulo, sin cambiar su API.
+- Rama / worktree: `feat/evolucion-agentes`, `C:/COMPARTIDO/trama-evolucion-agentes`; evaluación cerrada en `7a372a6`.
+- Cambios: `.ui-sh__word` ocupa una fila recortada de 64–140 px sobre el texto; `min-width: 0` evita ensanchar el
+  grid. Conserva escala, tokens y `aria-hidden`. Actualizados comentario de prop, hint y escenario del catálogo
+  (crece con el contenido), catálogo/conocimiento generado y ficha `pieza-section-header-legible`; cuaderno con 45 fichas.
+- Decisiones: separar físicamente la decoración evita depender del fondo o del contraste. La cabecera con
+  `backdrop` gana altura; sin esa prop conserva la composición del kit. GuideFrame y `lib/ui/guides.ts` no cambian:
+  el opt-in de contraste continúa pendiente de aprobación expresa, según la instrucción del usuario.
+- Comprobaciones correctas: `doctor`, `catalog`, `verify` completo, build del sitio sin dev de este worktree,
+  `smoke` en `http://127.0.0.1:3431/componentes#section-header` (HTTP 200, sin errores ni sombras oscuras), revisión
+  visual de las ocho capturas de 1440/390 px × izquierda/centro × md/giant y separación geométrica sin desborde.
+  Artefactos ignorados en `.refs3d/section-header/`; palabra separada 12 px del texto en variante editorial.
+- Paquete: `pkg:build`, `pkg:pack` y `agents:check-package` correctos (tres ejemplos e imports públicos).
+  Nuevo `.tgz` local SHA-256 `411ab1dc315f32ef3e3a95deae451c40268fff00619b3827d03fa91ceac8ce07`.
+  Artefacto previo `769cb1a5…` conservado en `.cache/paquetes/trama-ui-0.13.0-antes-section-header.tgz`;
+  consumidores y paquetes históricos de evaluación intactos. No se instaló el nuevo `.tgz` en otro consumidor.
+- Avisos sin fallo: Three.js deprecado y 22 avisos de métricas fallback de fuentes en build; no se cambian dependencias.
+- Servidores: solo `next start` propio en 3431 y validador en 3421; ambos cerrados, puertos comprobados libres.
+  Sin publicación npm, despliegue ni push; otros worktrees intactos. `git diff --check` correcto.
+- Siguiente paso: revisión humana opcional de capturas y decisión del usuario sobre el opt-in de GuideFrame;
+  probar otra guía antes de generalizar las cifras. No queda ensayo pendiente en ninguna de las dos cohortes.

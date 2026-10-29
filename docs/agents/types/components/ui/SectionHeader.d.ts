@@ -7,7 +7,7 @@ export type SectionHeaderProps = {
     rule?: "none" | "line" | "ascii" | "dots";
     /** md = titular de sección · giant = titular a lo ancho, apretado (los «Locations» o «Services» de salones y gimnasios) */
     titleSize?: "md" | "giant";
-    /** palabra enorme y tenue detrás de la cabecera, cortada por los bordes («blog», «tienda»); "" = sin ella */
+    /** palabra enorme y tenue en una franja recortada sobre el texto («blog», «tienda»); "" = sin ella */
     backdrop?: string;
     variant?: Variant;
     className?: string;
