@@ -85,14 +85,14 @@ Los SVG del ejemplo son ilustraciones originales, sin fotos o testimonios de cli
 
 ## Qué mostró la evaluación
 
-Dos cohortes con las mismas tres tareas: 11 ensayos con Codex CLI y 18 con Claude Code (Opus 5.5), que añade una
+Dos cohortes con las mismas tres tareas: 12 ensayos con Codex CLI y 18 con Claude Code (Opus 5.5), que añade una
 condición con el catálogo actualizado. Detalle en [P4](./evolucion-agentes/p4-evaluacion.md) y
 [P4b](./evolucion-agentes/p4b-evaluacion-claude.md).
 
-- **Más ensayos correctos**: con skills, 6/6 (Codex) y 5/6 (Claude); con documentación, 2/5 y 4/6. Casi todos los
+- **Más ensayos correctos**: con skills, 6/6 (Codex) y 5/6 (Claude); con documentación, 2/6 y 4/6. Casi todos los
   fallos son de contraste con los tokens de `salon`; además, un defecto de `Button` en Server Components y unos tipos
   de reserva sin exportar, ya corregidos.
-- **No ahorra**: con skills se leen un 58 % (Codex) o un 20 % (Claude) más tokens de entrada. El conocimiento extra
+- **No ahorra**: con skills se leen un 64 % (Codex) o un 20 % (Claude) más tokens de entrada. El conocimiento extra
   se paga en lectura.
 - **Depende del modelo**: con Opus, la documentación ya acierta en composición y referencia; todos sus fallos están
   en la reserva.

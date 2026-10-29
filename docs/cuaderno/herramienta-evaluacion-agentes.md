@@ -29,7 +29,7 @@ con el mismo cliente, encargo y adjudicación automática en un consumidor Next 
 ## Qué se midió
 
 Tres encargos (sección de servicios, hero desde captura, reserva local) × dos condiciones × dos repeticiones con Codex
-CLI 0.165.0 (11 ejecutados; uno sin turno por límite de uso), y otra cohorte de 18 con Claude Code 2.1.302 (Opus 5.5)
+CLI 0.165.0 (12 ejecutados; el intento inicial sin cuota queda conservado aparte), y otra cohorte de 18 con Claude Code 2.1.302 (Opus 5.5)
 que añade la condición «catálogo actualizado». Por ensayo: tiempo, tokens, tipos e imports públicos, build, h1,
 contenido, columnas y apilado, desborde móvil, axe WCAG 2 A/AA, recorrido de reserva y capturas a 1440 y 390 px.
 
@@ -37,7 +37,7 @@ contenido, columnas y apilado, desborde móvil, axe WCAG 2 A/AA, recorrido de re
 
 `evaluate-agents` lanza cada ensayo en un directorio propio y guarda eventos y uso; `validate-agent-evaluation` monta
 las fuentes en el consumidor, compila, sirve en un puerto propio y recorre en Chromium. Ahora registra los nodos de cada
-fallo de axe y separa los ensayos que el cliente no empezó. Se repitió la adjudicación con el paquete corregido.
+fallo de axe y separa los ensayos que el cliente no empezó. Se repitió la adjudicación con el paquete corregido. El resumen se regenera con `npx tsx scripts/summarize-agent-evaluation.mts` desde ambos `validation.json` y `runs.json`.
 
 ## Diferencias con la referencia
 
@@ -46,7 +46,7 @@ una persona.
 
 ## Aprendido
 
-Skills 6/6 frente a documentación 2/5, pero con +46 % de tiempo y +58 % de tokens de entrada: más acierto, no ahorro.
+Skills 6/6 frente a documentación 2/6, pero con +40 % de tiempo y +64 % de tokens de entrada: más acierto, no ahorro.
 Los fallos de la documentación vinieron de lo que el catálogo no decía: contraste de los tokens medidos de `salon`
 (`--mut` 3,64:1, `--acc` 1,98:1) y fuentes nombradas por su nombre literal, que `next/font` no registra así. La
 cohorte destapó además un defecto real: `Button` con `glyph` rompía en Server Components porque `renderGlyph` vivía en

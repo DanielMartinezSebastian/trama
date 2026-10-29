@@ -76,3 +76,22 @@
 - Resultados: base 4/6, actualizada 4/6, skills 5/6; todos los fallos en reserva. Informe `docs/evolucion-agentes/p4b-evaluacion-claude.md`, datos `evaluacion-claude-evidencia.json`.
 - Kit: tipos de reserva exportados desde `BookingFlow`, `AppointmentList` y la raíz (`build-package.mts`); ejemplo de reserva simplificado. Paquete `769cb1a5…`, consumidor `.cache/agent-pilot-v3`; readjudicación en `.cache/agent-evaluation-claude-v3/` (13/18, mismo recuento por condición).
 - Propuesta sin aplicar: corrección de contraste de `--mut`/`--acc` en `GuideFrame` (decisión de producto).
+
+## Continuación: completar Codex (29 de octubre de 2026)
+
+- Objetivo: cerrar `booking-docs-2` con las condiciones originales y actualizar las cifras.
+- Rama / partida / worktree: `feat/evolucion-agentes`, `2c7d04c`, `C:/COMPARTIDO/trama-evolucion-agentes`.
+  Status inicial limpio y worktrees revisados; no se modificaron otros worktrees.
+- Cambios: intento inicial preservado en `.cache/agent-evaluation-json-sin-cuota/booking-docs-2`, quitado de
+  `runs.json` antes del reintento. `agents:evaluate` usó `.cache/agent-pilot-final/node_modules/trama-ui`, sin
+  regenerar los otros once. Resumen reproducible en `scripts/summarize-agent-evaluation.mts`, informes P4/P4b,
+  entrega, docs de agentes y ficha de evaluación actualizados.
+- Resultado: 12/12 ejecutados; nuevo ensayo 98 s, 205.249 tokens de entrada, 3.492 de salida. Compila y falla por
+  contraste de `--mut`/`--acc`; capturas de escritorio/móvil revisadas por Codex. Original: documentación 2/6,
+  skills 6/6; con arreglo de glyph: 3/6 y 6/6. Sobrecoste de skills: tiempo +40 %, entrada +64 %, salida +38 %.
+- Comprobaciones: adjudicación completa con `agent-pilot-final` y `agent-pilot-glyph`; fuentes y `runs.json`
+  iguales en ambas salidas. Validación original anterior conservada, además de la nueva completa. Typecheck correcto.
+  Servidores propios de adjudicación en 3421 cerrados por el validador.
+- Decisiones: hashes/paquetes de P4 conservados, sin atribuir al paquete nuevo las cifras históricas. Revisión
+  humana pendiente; las capturas automáticas no la sustituyen. Sin publicación, despliegue ni push.
+- Siguiente paso: cerrar la revisión visual del arreglo de SectionHeader y comprobar sitio/paquete finales.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T12:15:44.298Z",
+  "generatedAt": "2026-10-29T14:48:22.155Z",
   "cohort": {
     "client": "codex-cli 0.165.0",
     "model": "heredado sin override (no informado por el cliente)",
@@ -21,11 +21,15 @@
   },
   "validation": {
     "sharedBuildMs": {
-      "original": 5413,
-      "fixed": 9218
+      "original": 31625,
+      "fixed": 20588
     },
     "browser": "Chromium headless, 1440x900 y 390x844, es-ES, reduced-motion, reloj fijo 2026-11-03",
-    "visualReview": "revisión de capturas por el agente evaluador, no humana"
+    "visualReview": "revisión de capturas por el agente evaluador, no humana",
+    "sources": [
+      ".cache/agent-evaluation-json/validation.json",
+      ".cache/agent-evaluation-json-glyph/validation.json"
+    ]
   },
   "runs": [
     {
@@ -46,7 +50,7 @@
       "originalPackage": {
         "status": "failed",
         "details": [
-          "AssertionError [ERR_ASSERTION]: Se exige un h1 por muestra"
+          "AssertionError [ERR_ASSERTION]: Se exige un h1 por muestra\n\n0 !== 1\n"
         ]
       },
       "fixedPackage": {
@@ -144,19 +148,47 @@
       "originalPackage": {
         "status": "failed",
         "details": [
-          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.",
-          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected cont",
-          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
-          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh"
+          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(3) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(2) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(3) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__summary > p:nth-child(3): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(4): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(5): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast .ui-book__summary > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 14.3pt (19.0667px), font weight: normal). Expected contrast ",
+          "axe color-contrast footer > span:nth-child(1): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast footer > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       },
       "fixedPackage": {
         "status": "failed",
         "details": [
-          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.",
-          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected cont",
-          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh",
-          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weigh"
+          "axe color-contrast section[aria-labelledby=\"view-title\"] > div > .ui-g-label: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast figcaption: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(3) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(2) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(3) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__summary > p:nth-child(3): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(4): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(5): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast .ui-book__summary > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 14.3pt (19.0667px), font weight: normal). Expected contrast ",
+          "axe color-contrast footer > span:nth-child(1): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast footer > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       }
     },
@@ -226,19 +258,37 @@
       "originalPackage": {
         "status": "failed",
         "details": [
-          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected ",
-          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected con",
-          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), fo",
-          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), "
+          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(1) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(2) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(2) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(2) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(3) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast div:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(3) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(3) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       },
       "fixedPackage": {
         "status": "failed",
         "details": [
-          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected ",
-          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected con",
-          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), fo",
-          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), "
+          "axe color-contrast .ui-sh__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-sh > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(1) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(1) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(1) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(2) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(2) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(2) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "axe color-contrast article:nth-child(3) > div:nth-child(1) > p: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast div:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(3) > .ui-pricing-menu__meta: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast article:nth-child(3) > .ui-button.ui-button--outline.ui-button--md > .ui-button__label: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       }
     },
@@ -320,22 +370,75 @@
       "condition": "current_documentation",
       "repetition": 2,
       "order": 12,
-      "generationMs": 3258,
-      "cliExit": 1,
-      "tokens": "no disponible",
-      "fonts": null,
+      "generationMs": 98246,
+      "cliExit": 0,
+      "tokens": {
+        "input": 205249,
+        "cachedInput": 159616,
+        "output": 3492,
+        "reasoning": 471
+      },
+      "fonts": "hereda GuideFrame (variables next/font)",
       "originalPackage": {
-        "status": "not-run-infrastructure",
+        "status": "failed",
         "details": [
-          "Cliente sin turno: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at"
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(3) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(2) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(3) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__summary > p:nth-child(3): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(4): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(5): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast .ui-book__summary > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 14.3pt (19.0667px), font weight: normal). Expected contrast ",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       },
       "fixedPackage": {
-        "status": "not-run-infrastructure",
+        "status": "failed",
         "details": [
-          "Cliente sin turno: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at"
+          "axe color-contrast li:nth-child(2) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast li:nth-child(3) > span:nth-child(2): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(1) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(2) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__options > button:nth-child(3) > span: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(1) > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(2) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast button:nth-child(3) > span > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__kicker: Fix any of the following: Element has insufficient color contrast of 1.98 (foreground color: #f5a490, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio ",
+          "axe color-contrast .ui-book__summary > p:nth-child(3): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(4): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast p:nth-child(5): Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 17.2pt (22.88px), font weight: normal). Expected contrast ra",
+          "axe color-contrast .ui-book__summary > small: Fix any of the following: Element has insufficient color contrast of 3.64 (foreground color: #868686, background color: #ffffff, font size: 14.3pt (19.0667px), font weight: normal). Expected contrast ",
+          "AssertionError [ERR_ASSERTION]: Incumplimientos automáticos de accesibilidad\n+ actual - expected\n\n+ [\n+   'color-contrast'\n+ ]\n- []\n"
         ]
       }
+    }
+  ],
+  "summary": [
+    {
+      "condition": "current_documentation",
+      "executed": 6,
+      "passedOriginal": 2,
+      "passedFixed": 3,
+      "generationMs": 81902.5,
+      "input": 253546.83333333334,
+      "uncachedInput": 48853.5,
+      "output": 3098
+    },
+    {
+      "condition": "proposed_skills",
+      "executed": 6,
+      "passedOriginal": 6,
+      "passedFixed": 6,
+      "generationMs": 114713.66666666667,
+      "input": 416781.3333333333,
+      "uncachedInput": 64952,
+      "output": 4280
     }
   ]
 }
