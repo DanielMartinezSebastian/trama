@@ -4,7 +4,10 @@ import { useState } from "react";
 import CodeBlock from "@/components/ui/CodeBlock";
 import Tabs from "@/components/ui/Tabs";
 
-const NPM = `npm i trama-ui
+const NPM = `# En el repo: npm run pkg:pack
+# En tu proyecto: instala el .tgz exacto de esa versión
+npm i /ruta/a/trama-ui-x.y.z.tgz
+npx --no-install trama-ui skills install --client codex
 
 // app/layout.tsx
 import "trama-ui/styles.css";
@@ -39,7 +42,7 @@ export default function StartSteps() {
   const [code, lang, file] = STEPS[step];
   return (
     <div className="tr-start__steps">
-      <Tabs items="npm, Copiar el código, Tema" content="" variant="minimal" onChange={(i) => setStep(i)} />
+      <Tabs items="Paquete local, Copiar el código, Tema" content="" variant="minimal" onChange={(i) => setStep(i)} />
       <CodeBlock code={code} language={lang} filename={file} variant="minimal" />
     </div>
   );

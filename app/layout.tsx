@@ -6,7 +6,7 @@ import "./landings.css";
 // El kit va después del CSS del sitio, en el mismo orden que antes de moverlo a components/ui/styles/.
 import "@/components/ui/styles/kit.css";
 
-const DESCRIPTION = "Librería de componentes ASCII, textmode, pixel art y secciones de landing para Next.js: catálogo interactivo, documentación, demos y webs de referencia.";
+const DESCRIPTION = "Trama: componentes, guías visuales y recetas para construir webs con carácter en React y Next.js. Catálogo, referencias y skills experimentales para agentes.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

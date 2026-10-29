@@ -6,9 +6,9 @@ import { JsonLd, homeJsonLd } from "@/lib/seo";
 import { homeData } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: "Trama · Librería de componentes ASCII, textmode y pixel art para Next.js",
+  title: "Trama · Componentes, guías y recetas para React y Next.js",
   description:
-    "Componentes React para Next.js con fondos ASCII y textmode, efectos de texto, pixel art y secciones de landing listas para pegar. Ocho estilos, un juego de tokens CSS, catálogo interactivo y documentación.",
+    "Componentes, guías visuales y recetas para webs con carácter: tokens, composición y movimiento en React y Next.js. Recorrido experimental para agentes.",
   alternates: { canonical: "/" },
 };
 

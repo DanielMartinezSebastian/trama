@@ -24,7 +24,7 @@ export function homeJsonLd(components: number) {
         "@type": "SoftwareSourceCode",
         "@id": `${SITE_URL}/#libreria`,
         name: "Trama (trama-ui)",
-        description: `Librería de ${components} componentes React para Next.js: fondos ASCII y textmode, efectos de texto, pixel art y secciones de landing.`,
+        description: `Trama: ${components} entradas de catálogo, guías visuales y recetas para construir webs con carácter en React y Next.js.`,
         url: `${SITE_URL}/`,
         codeRepository: GITHUB,
         programmingLanguage: ["TypeScript", "React"],

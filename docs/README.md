@@ -38,6 +38,12 @@ enseña: portada (`/`), documentación (`/docs`, las páginas de esta carpeta), 
 `CATALOG.md` y `catalog.json` salen de `lib/catalog/` con `npm run catalog`; `npm run catalog:check` falla si
 se quedan atrás o si un componente no aparece en la tabla de abajo.
 
+El [índice piloto para agentes](./agents/README.md) también se genera con `npm run catalog`: guía y receta `salon`,
+sus piezas, controles del visor separados de declaraciones completas y tres ejemplos de consumo. Su selección y límites
+se declaran en las fichas; no es un catálogo alternativo mantenido a mano. `npm run agents:check-package`, después de
+`npm run pkg:build`, compila los ejemplos contra los exports del paquete y compara el cierre de declaraciones.
+Esto no sustituye instalar un `.tgz` limpio ni comprobar rutas, fuentes y recorrido en navegador (P2–P4).
+
 ## Qué es librería y qué es sitio
 
 | Parte | Carpeta | ¿Se exporta a otros proyectos? |
@@ -111,12 +117,12 @@ re-exportación nunca pisa un archivo modificado en el proyecto sin `--force`.
 ## Catálogo interactivo: `/componentes`
 
 Vista previa en tiempo real, props editables (controles generados del esquema), código de uso, **selector de tema y
-panel de tokens** (`bg fg mut acc acc2 r font`), filtros por **categoría** y **estilo**, y un **comparador de los 7
-estilos** para cualquier componente con variante. La URL guarda el componente abierto (`/componentes#ascii-card`).
+panel de tokens** (`bg fg mut acc acc2 r font`), filtros por **categoría** y **estilo**, y un **comparador de variantes
+disponibles** para componentes que las admiten. La URL guarda el componente abierto (`/componentes#ascii-card`).
 
 - **Tema y color** llegan a todos los componentes (guía §2.1): `var()` en DOM, `useTokens` en canvas y `palette` en
   los fondos de escena.
-- **Tipografía**: 8 fuentes de Google + 46 pixel, autoalojadas con `next/font` (guía §2.3).
+- **Tipografía**: familias editoriales, sans, mono y pixel declaradas en `lib/ui/fonts.ts`, autoalojadas con `next/font` (guía §2.3).
 - **Botón «FX»**: envuelve el componente con `Presence` (entrada/salida) y `HoverFX` (hover) sin tocar su código
   (guía §6.1). No aplica a Fondos.
 - **«Ver en caso real»**: una escena creíble por categoría con el componente en vivo dentro (`lib/catalog/scenarios.tsx`,
@@ -185,7 +191,7 @@ Sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y
   `progress` ya pasa su propio valor al painter (guía §7).
 - Los textos por defecto de los componentes son copy de demostración (escuela de surf…): en un proyecto real hay que
   pasar siempre las props de texto (o `""`).
-- Sin pruebas visuales automatizadas: la red de seguridad es `npm run typecheck`, `npm run catalog:check` y `next build`.
+- Hay smoke automatizado en navegador y un recorrido del consumidor piloto; no certifican fidelidad visual ni accesibilidad completa. La revisión visual sigue siendo necesaria junto a tipos, catálogo y build.
 
 ## Fotografías de las demos
 

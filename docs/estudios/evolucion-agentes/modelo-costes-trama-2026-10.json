@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "date": "2026-10-28",
+  "purpose": "Coste de ejecucion por tarea: tiempo, tokens, herramientas e iteraciones hasta cumplir objetivos. Sustituye el enfoque monetario anterior.",
+  "status": "Proposed measurement model; no future-skill execution benchmark has been run.",
+  "baseline": {
+    "repository": "https://github.com/DanielMartinezSebastian/trama",
+    "commit": "2263365bc6b9485028ae7ce769fcf1fb5ba619ec",
+    "repositoryVersion": "0.13.0",
+    "installedConsumerVersion": "0.12.1",
+    "measuredDocumentation": {
+      "catalogComponents": 187,
+      "allComponentEntriesCompactUtf8Bytes": 323382,
+      "selectedTwelveEntriesCompactUtf8Bytes": 26917,
+      "limitation": "Bytes are not tokens; subset reduction does not establish task-level savings."
+    },
+    "historicalDeclaredTimings": {
+      "source": "docs/28-estudio-hublot-y-coste.md",
+      "hardware": "RTX 5060",
+      "captureSeconds": 16,
+      "captureViewport": [1280, 720],
+      "captureWallMinutes": [4, 6.5],
+      "cycleWallMinutes": [6, 8],
+      "independentlyReproduced": false
+    }
+  },
+  "validationProfiles": [
+    { "id": "V0", "purpose": "Known composition", "provisionalCorrectionCycles": [1, 2] },
+    { "id": "V1", "purpose": "Complete functional flow", "provisionalCorrectionCycles": [2, 4] },
+    { "id": "V2", "purpose": "Visual direction from references", "provisionalCorrectionCycles": [3, 6] },
+    { "id": "V3", "purpose": "High fidelity or new motion technique", "provisionalCorrectionCycles": [5, 10], "mayExceedRange": true }
+  ],
+  "profileLimitations": "Cycle ranges are unvalidated pilot hypotheses, not hard caps, acceptance criteria, or measured prediction intervals. Initial construction is separate.",
+  "flowHypotheses": [
+    { "id": "F1", "correctionCycles": [2, 5] },
+    { "id": "F2", "correctionCycles": [3, 6] },
+    { "id": "F3", "correctionCycles": [2, 4] },
+    { "id": "F4", "correctionCycles": [3, 6] },
+    { "id": "F5", "correctionCycles": [5, 10], "mayExceedRange": true },
+    { "id": "F6", "correctionCycles": [1, 3], "condition": "Existing guide and recipe fit" },
+    { "id": "F7", "correctionCycles": [2, 5] },
+    { "id": "F8", "correctionCycles": [2, 4] }
+  ],
+  "objectiveStates": ["pending", "passed", "not_applicable", "insufficient_evidence"],
+  "terminalStates": ["completed", "pending", "insufficient_evidence", "interrupted"],
+  "objectiveFields": ["id", "description", "required", "acceptanceCriterion", "validationMethod", "status", "evidence", "conditions"],
+  "taskFields": ["id", "scope", "referenceMode", "references", "tramaVersion", "agentEnvironment", "modelConfiguration", "objectives", "startedAt", "finishedAt", "waits", "normalizedUsage", "cycles", "terminalState"],
+  "cycleFields": ["index", "hypothesis", "changes", "startedAt", "finishedAt", "normalizedUsage", "toolRuns", "objectiveResults", "regressions", "nextDecision"],
+  "usageNormalization": {
+    "inputCategories": ["uncached", "cache_read", "cache_write"],
+    "outputIncludesReasoningWhenReportedAsSubset": true,
+    "avoidDoubleCountingProviderTotals": true,
+    "imageInputCount": "Use model-specific usage; do not infer tokens from image file bytes.",
+    "whenUnavailable": "Record unavailable; keep estimates separate from observations."
+  },
+  "formulas": {
+    "taskWallTime": "setup + requiredResearch + initialConstruction + criticalPathOfCycles + finalValidation + delivery",
+    "cycleWallTime": "diagnosis + change + testExecution + inspection; adjust for overlaps",
+    "totalInput": "Sum normalized provider input totals across all requests, without double-counting cache categories",
+    "totalOutput": "Sum billed output totals across all requests, without double-counting reasoning subsets",
+    "taskTokens": "totalInput + totalOutput"
+  },
+  "arithmeticExamplesNotBenchmarks": {
+    "time": {
+      "setupAndConstructionMinutes": 20,
+      "perCycleMinutes": 8,
+      "closingMinutes": 10,
+      "cycleCounts": [3, 7],
+      "expectedTotalsMinutes": [54, 86]
+    },
+    "growingHistory": {
+      "requests": 8,
+      "firstInputTokens": 12000,
+      "additionalInputPerRequest": 2000,
+      "outputTokensPerRequest": 1500,
+      "cacheAssumed": false,
+      "expectedInputTokens": 152000,
+      "expectedOutputTokens": 12000,
+      "expectedTotalTokens": 164000
+    }
+  },
+  "pilot": {
+    "ordinaryTaskTypes": 3,
+    "conditions": ["current_documentation", "proposed_skills"],
+    "repetitions": 2,
+    "expectedInitialExecutions": 12,
+    "advancedMotionBatchSeparate": true,
+    "compare": ["time_to_objectives", "tokens_to_objectives", "success_rate", "correction_cycles", "tool_time", "human_review_time", "regressions", "stalled_objectives"]
+  },
+  "completionPolicy": "Complete only when all required objectives have valid evidence. Reaching a provisional time/token/cycle envelope does not mean success. Diagnose stagnation and record remaining objectives."
+}

@@ -47,11 +47,11 @@ más un sitio que la enseña. Dos tipos de tarea:
 4. **Pasa siempre las props de texto**: los defaults son copy de demostración (escuela de surf…). Pasa `""` para
    ocultar un texto opcional.
 5. Tema = tokens CSS `--bg --fg --mut --acc --acc2 --card --ln --r` en un contenedor; estilo = prop `variant`
-   (`glass solid outline neon retro terminal minimal dotmatrix`); color semántico = prop `intent`
+   (`glass solid outline neon retro terminal minimal dotmatrix editorial`); color semántico = prop `intent`
    (`accent neutral success info warning danger`), igual en Button, Badge, Alert, TextField, Toast y Modal.
    No añadas colores fijos.
 6. En **otro proyecto**, dos opciones: `npm i trama-ui` (imports `trama-ui` / `trama-ui/X`, CSS `trama-ui/styles.css`,
-   referencia en `node_modules/trama/CATALOG.md`), o `npm run kit:export -- <ruta> [--only A,B]` desde este repo
+   referencia en `node_modules/trama-ui/CATALOG.md`), o `npm run kit:export -- <ruta> [--only A,B]` desde este repo
    para copiar el código y adaptarlo (`import "@/components/ui/styles/kit.css"` y `fontVariables` de `@/lib/ui/fonts`).
 
 ## 2. Cambiar o ampliar la librería

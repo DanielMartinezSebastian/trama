@@ -6,6 +6,10 @@ el **estilo** (`variant`) y el **color semántico** (`intent`). Esta página lle
 
 ## Instalar
 
+Para reproducir el piloto de agentes de esta rama usa el `.tgz` local exacto de `npm run pkg:pack`, no `latest`:
+la consulta pública del 29-10-2026 devolvió una versión distinta. [Instalación y límites por canal](./57-agentes.md).
+Las guías y recetas complementan al kit; su conocimiento y las skills del piloto se distribuyen junto al paquete.
+
 Dos caminos, según quieras usar el kit tal cual o adaptarlo a fondo en tu proyecto:
 
 | | npm | copia del código |

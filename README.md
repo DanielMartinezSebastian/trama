@@ -1,8 +1,8 @@
 # Trama
 
-Componentes React / Next.js de **ASCII, textmode y pixel art**: fondos de caracteres animados, tarjetas con capas
-ASCII, secciones de landing completas (hero, precios, FAQ, blog…), formularios, overlays y más. 72 componentes,
-siete estilos (`glass solid outline neon retro terminal minimal`) y tema por tokens CSS.
+Componentes, guías visuales y recetas para construir webs con carácter en React / Next.js: composición, tokens,
+movimiento y patrones de negocio. ASCII, textmode y pixel art siguen siendo parte del kit. El catálogo generado
+es la referencia de piezas y variantes; el [recorrido para agentes](docs/57-agentes.md) es experimental.
 
 Este repositorio es la librería **y** el sitio que la enseña: una galería de demos, un catálogo interactivo
 (`/componentes`) con props editables, y landings de referencia construidas solo con Trama.
@@ -10,8 +10,12 @@ Este repositorio es la librería **y** el sitio que la enseña: una galería de 
 ## Usarla en un proyecto
 
 ```bash
-npm i trama-ui            # cuando esté publicada; mientras tanto: npm run pkg:pack y npm i ./dist-npm/trama-ui-x.y.z.tgz
-npx trama-ui assets       # copia las imágenes de PixelFrame y Sprite a public/
+# Desde este repo: generar el paquete de la versión de esta rama
+npm run pkg:pack
+# Desde el consumidor: instalar ese .tgz exacto
+npm i /ruta/al/trama-ui-x.y.z.tgz
+# Opcional: instalar las skills de la dependencia local
+npx --no-install trama-ui skills install --client codex
 ```
 
 ```tsx
@@ -20,6 +24,9 @@ import { Hero, PricingSection, Button } from "trama-ui";
 ```
 
 Referencia de props: [`docs/CATALOG.md`](docs/CATALOG.md) (generada; también en `catalog.json`).
+
+La consulta pública de npm del 29-10-2026 devolvió `latest` 0.2.0; no equivale a 0.13.0 de esta rama. El paquete
+local distribuye `knowledge/` y skills; no se ha publicado esta evolución. [Evidencia y canales](docs/evolucion-agentes/p0-matriz.md).
 
 ## Desarrollar
 

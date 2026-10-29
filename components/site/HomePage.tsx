@@ -6,6 +6,7 @@ import DemoPreviewLink from "./DemoPreviewLink";
 import InstallChip from "./InstallChip";
 import StartSteps from "./StartSteps";
 import VariantLab from "./VariantLab";
+import { VERSION } from "./theme";
 
 /*
  * Portada de la web: componente de servidor. El texto, las listas y los enlaces llegan como HTML sin JavaScript propio;
@@ -33,11 +34,11 @@ export default function HomePage({ data }: { data: HomeData }) {
       <main className="tr-home">
         {/* ---------- 00 · portada ---------- */}
         <section className="tr-hero" data-act={0}>
-          <p className="tr-label">Librería de componentes · React / Next.js</p>
+          <p className="tr-label">Componentes, guías y recetas · React / Next.js · {VERSION}</p>
           <div className="tr-hero__body">
             <h1 className="tr-hero__name">TRAMA</h1>
             <p className="tr-hero__lead">
-              ASCII, textmode, pixel art y secciones de landing. <span>Un juego de tokens, ocho estilos y seis intenciones de color</span> para montar webs con carácter sin salir de React.
+              Componentes, guías visuales y recetas para construir webs con carácter. <span>{counts.styles} variantes, tokens y composición</span>, con ASCII, textmode y pixel art cuando el proyecto los pide.
             </p>
             <div className="tr-hero__cta">
               <Link href="/docs/empezar" className="tr-btn tr-btn--solid">
@@ -46,12 +47,13 @@ export default function HomePage({ data }: { data: HomeData }) {
               <Link href="/componentes" className="tr-btn">
                 Ver componentes →
               </Link>
-              <InstallChip />
+              <Link href="/docs/agentes" className="tr-btn">Para agentes ↗</Link>
+              <InstallChip command="npm run pkg:pack" />
             </div>
           </div>
           <dl className="tr-stats">
             <div>
-              <dt>componentes</dt>
+              <dt>entradas de catálogo</dt>
               <dd>{counts.components}</dd>
             </div>
             <div>
@@ -84,7 +86,7 @@ export default function HomePage({ data }: { data: HomeData }) {
             <h2 className="tr-statement">
               Un componente,
               <br />
-              ocho estilos.
+              {counts.styles} variantes.
             </h2>
             <p className="tr-sec__lead">
               El tema son ocho tokens CSS en un contenedor; el estilo, la prop <code>variant</code>; el color semántico, la prop <code>intent</code>. Pruébalo: todo lo de abajo son piezas reales del kit.
@@ -96,7 +98,7 @@ export default function HomePage({ data }: { data: HomeData }) {
 
           <div className="tr-sub">
             <p className="tr-label">
-              {counts.categories} categorías · {counts.components} componentes
+              {counts.categories} categorías · {counts.components} entradas de catálogo
             </p>
             <Link href="/componentes" className="tr-link">
               Abrir el catálogo interactivo →

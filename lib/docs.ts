@@ -16,6 +16,7 @@ export const DOC_GROUPS: DocGroup[] = [
     label: "Empezar",
     pages: [
       { slug: "empezar", file: "00-empezar.md", title: "Primeros pasos", blurb: "Instalar, poner el tema y montar la primera página.", description: "Instala Trama con npm o copiando el código, define los ocho tokens de tema, elige variant e intent y monta tu primera landing en Next.js." },
+      { slug: "agentes", file: "57-agentes.md", title: "Trama para agentes", blurb: "Paquete, conocimiento versionado y skills por proyecto: piloto experimental.", description: "Instala las skills de Trama desde tu versión local, consulta guías y recetas compatibles y verifica el resultado. Alcance y límites del piloto experimental." },
       { slug: "", file: "README.md", title: "Visión general", blurb: "Qué es librería y qué es sitio, npm o copia, scripts.", description: "Visión general de Trama: qué es librería y qué es sitio, instalación con npm o kit:export, catálogo interactivo, landings y webs de referencia." },
     ],
   },

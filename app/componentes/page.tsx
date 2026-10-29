@@ -4,7 +4,7 @@ import SiteChrome from "@/components/site/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Componentes · Trama",
-  description: "Catálogo interactivo de los componentes de Trama: vista previa en tiempo real, props editables, ocho estilos, tokens de tema y código de uso listo para copiar.",
+  description: "Catálogo interactivo de Trama: vista previa en tiempo real, controles editables, variantes, tokens de tema y código de uso listo para copiar.",
   alternates: { canonical: "/componentes" },
 };
 

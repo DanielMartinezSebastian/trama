@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-/** `npm i trama-ui` que se copia al pulsar. */
-export default function InstallChip({ className = "", command = "npm i trama-ui" }: { className?: string; command?: string }) {
+/** Construcción local de la versión de esta rama, sin resolver el latest público. */
+export default function InstallChip({ className = "", command = "npm run pkg:pack" }: { className?: string; command?: string }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -15,7 +15,7 @@ export default function InstallChip({ className = "", command = "npm i trama-ui"
     }
   };
   return (
-    <button type="button" className={`tr-install ${className}`} onClick={copy} aria-label={`Copiar el comando ${command}`}>
+    <button type="button" className={`tr-install ${className}`} onClick={copy} aria-label={`Copiar el comando ${command}`} title="Desde el repositorio de Trama; después instala el .tgz en tu proyecto">
       <span aria-hidden>$</span> <span aria-hidden>{command}</span>
       <em aria-hidden>{copied ? "copiado" : "copiar"}</em>
       <span className="ui-sr-only" role="status">

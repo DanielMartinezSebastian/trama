@@ -3,12 +3,16 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-40 fichas.
+44 fichas.
 
 ## Fichas
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
+| 2026-10-29 | [demo-linde-agentes](demo-linde-agentes.md) · Linde, consumidor limpio para el piloto de agentes | demo | en curso | peluquería | salón editorial claro |  |
+| 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |
+| 2026-10-29 | [herramienta-evaluacion-agentes](herramienta-evaluacion-agentes.md) · Evaluación de agentes con y sin skills de Trama | herramienta | hecho | peluquería | salón editorial claro |  |
+| 2026-10-29 | [herramienta-skills-trama](herramienta-skills-trama.md) · Skills Trama por proyecto y evaluación independiente | herramienta | hecho |  |  |  |
 | 2026-10-28 | [concepto-nadir-semilla](concepto-nadir-semilla.md) · Semilla, memoria articulada de NÁDIR | concepto | hecho |  |  | `/sitios/nadir` |
 | 2026-10-28 | [demo-la-tramoya](demo-la-tramoya.md) · La Tramoya, venta-teatro con espectáculo en Chiclana | demo | hecho | restaurante |  | `/sitios/la-tramoya` |
 | 2026-10-28 | [pieza-flujos-de-negocio](pieza-flujos-de-negocio.md) · Flujos de negocio en pasos (reserva, compra, plaza, alta y propuesta) | pieza | hecho | peluquería, gimnasio, academia, producto, agencia, estudio creativo |  | `/componentes` |
@@ -54,6 +58,16 @@
 
 Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 
+### salón editorial claro
+
+- Fichas: [demo-linde-agentes](demo-linde-agentes.md), [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
+- Colores: `#ffffff` `#1f1f1f` `#963e13` `#f5a490` `#2b2b2b` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
+- Letras: Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
+- Tipografía: serif con cursiva (2), serif fina (2), grotesca en mayúsculas, minúsculas, una sola letra
+- Paleta: fondo claro (3), pastel cálido (3), fondo oscuro, grises con grano
+- Tono: cálido (4), editorial (4), artesanal, artístico, comercial, sobrio
+- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos, logos de marcas
+
 ### club de alto contraste
 
 - Fichas: [replica-impulso](replica-impulso.md), [replica-lobo](replica-lobo.md), [replica-q47](replica-q47.md), [replica-talla](replica-talla.md), [replica-vive](replica-vive.md), [demo-forja](demo-forja.md)
@@ -73,16 +87,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: fondo claro (3), apagada (2), acento metálico, acento único saturado, fondo oscuro
 - Tono: clásico (2), urbano (2), especialista, familiar, lujo discreto, seguro
 - Patrones: botones en óvalo (2), cinta de texto (2), menú lateral (2), reseñas (2), titular con palabra en cursiva (2), antes y después, app con QR, blog, clips verticales, comparación, el dueño como marca, equipo con fotos
-
-### salón editorial claro
-
-- Fichas: [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
-- Colores: `#ffffff` `#2b2b2b` `#f5a490` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#963e13` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
-- Letras: Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
-- Tipografía: serif con cursiva (2), serif fina (2), grotesca en mayúsculas, minúsculas, una sola letra
-- Paleta: fondo claro (3), pastel cálido (3), fondo oscuro, grises con grano
-- Tono: cálido (3), editorial (3), artesanal, artístico, comercial, sobrio
-- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos, logos de marcas
 
 ### escuela amarilla
 
@@ -206,15 +210,15 @@ Las etiquetas usadas, por campo y por número de fichas. Antes de inventar una, 
 
 ### Sector (`sector`)
 
-gimnasio (13) · peluquería (13) · academia (8) · agencia (6) · barbería (6) · producto (3) · estudio creativo (1) · restaurante (1)
+peluquería (16) · gimnasio (13) · academia (8) · agencia (6) · barbería (6) · producto (3) · estudio creativo (1) · restaurante (1)
 
 ### Familia de estilo (`guia`)
 
-club de alto contraste (7) · barbería de carácter (5) · salón editorial claro (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · arcade pixel (1) · estudio en papel (1) · matriz de puntos (1) · producto de marca (1) · terminal de neón (1)
+salón editorial claro (8) · club de alto contraste (7) · barbería de carácter (5) · escuela amarilla (2) · estudio boutique (2) · academia de autor (1) · arcade pixel (1) · estudio en papel (1) · matriz de puntos (1) · producto de marca (1) · terminal de neón (1)
 
 ### Tono (`tono`)
 
-cálido (6) · enérgico (6) · editorial (5) · cercano (3) · comercial (3) · seguro (3) · clásico (2) · con humor (2) · descarado (2) · familiar (2) · lúdico (2) · lujo discreto (2) · urbano (2) · artesanal (1) · artístico (1) · de barrio (1) · documental (1) · especialista (1) · festivo (1) · institucional (1) · personal (1) · popular (1) · sobrio (1)
+cálido (7) · editorial (6) · enérgico (6) · cercano (3) · comercial (3) · seguro (3) · clásico (2) · con humor (2) · descarado (2) · familiar (2) · lúdico (2) · lujo discreto (2) · urbano (2) · artesanal (1) · artístico (1) · de barrio (1) · documental (1) · especialista (1) · festivo (1) · institucional (1) · personal (1) · popular (1) · sobrio (1)
 
 ### Paleta (`paleta`)
 
@@ -234,7 +238,7 @@ cinta que corre (9) · scroll suavizado (5) · subrayado que crece (4) · texto 
 
 ### Piezas del kit (`piezas`)
 
-FullscreenMenu (16) · OpeningHours (11) · ContactForm (10) · AppointmentList (9) · BookingFlow (9) · Marquee (8) · PricingSection (8) · TeamSection (8) · ActionBar (7) · ClassSchedule (7) · EnrollmentFlow (7) · FAQSection (6) · MemberArea (6) · MembershipFlow (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · CartDrawer (4) · QRCode (4) · SectionHeader (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · QuantityStepper (3) · RollLink (3) · Stepper (3) · TestimonialSection (3) · Accordion (2) · Button (2) · Chart (2) · DatePicker (2) · GuideFrame (2) · OptionPicker (2) · ProductCard (2) · Reveal (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · EventLineup (1) · FeatureExplorer (1) · fonts (1) · Footer (1) · GradientField (1) · guides (1) · Hero (1) · HorizontalScroll (1) · ImageReveal (1) · LocalTime (1) · MenuList (1) · NavBar (1) · PageTransition (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollExpand (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · TextField (1) · viewTransitions (1)
+FullscreenMenu (16) · AppointmentList (13) · BookingFlow (13) · OpeningHours (12) · ContactForm (10) · PricingSection (10) · TeamSection (9) · ActionBar (8) · Marquee (8) · ClassSchedule (7) · EnrollmentFlow (7) · FAQSection (6) · GuideFrame (6) · MemberArea (6) · MembershipFlow (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · CartDrawer (4) · QRCode (4) · SectionHeader (4) · TestimonialSection (4) · Button (3) · CohortList (3) · LineDraw (3) · LogoCloud (3) · QuantityStepper (3) · RollLink (3) · Stepper (3) · Accordion (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · OptionPicker (2) · ProductCard (2) · Reveal (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · EventLineup (1) · FeatureExplorer (1) · fonts (1) · Footer (1) · GradientField (1) · guides (1) · Hero (1) · HorizontalScroll (1) · LocalTime (1) · MenuList (1) · NavBar (1) · PageTransition (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollExpand (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · TextField (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
@@ -244,6 +248,7 @@ TeamSection (7) · ClassSchedule (5) · CohortList (4) · FullscreenMenu (4) · 
 
 Con tres etiquetas o más en común (sin contar piezas).
 
+- [demo-linde-agentes](demo-linde-agentes.md): replica-matiz (4), demo-hebra (4), replica-melena (3), replica-nura (3)
 - [demo-la-tramoya](demo-la-tramoya.md): replica-nucleo (5), demo-cadencia (4), replica-cita (3), replica-melena (3), replica-remada (3)
 - [pieza-antonio](pieza-antonio.md): replica-lobo (3), replica-talla (3), replica-vive (3), demo-forja (3)
 - [pieza-fullscreen-menu](pieza-fullscreen-menu.md): replica-q47 (4), replica-matiz (3)
@@ -254,10 +259,10 @@ Con tres etiquetas o más en común (sin contar piezas).
 - [replica-cita](replica-cita.md): replica-impulso (5), demo-esparta (5), replica-patron (4), replica-raiz (4), demo-la-tramoya (3)
 - [replica-impulso](replica-impulso.md): replica-vive (7), replica-lobo (6), demo-forja (6), replica-cita (5), replica-q47 (5)
 - [replica-lobo](replica-lobo.md): demo-forja (7), replica-impulso (6), replica-vive (5), replica-talla (4)
-- [replica-matiz](replica-matiz.md): demo-hebra (7), replica-melena (5), replica-nura (4), replica-nucleo (3), demo-esparta (3)
-- [replica-melena](replica-melena.md): demo-hebra (6), replica-matiz (5), replica-raiz (5), replica-nucleo (4), demo-la-tramoya (3)
+- [replica-matiz](replica-matiz.md): demo-hebra (7), replica-melena (5), demo-linde-agentes (4), replica-nura (4), replica-nucleo (3)
+- [replica-melena](replica-melena.md): demo-hebra (6), replica-matiz (5), replica-raiz (5), replica-nucleo (4), demo-linde-agentes (3)
 - [replica-nucleo](replica-nucleo.md): demo-cadencia (7), demo-la-tramoya (5), replica-melena (4), replica-cita (3), replica-matiz (3)
-- [replica-nura](replica-nura.md): demo-hebra (6), replica-ahora (4), replica-matiz (4), replica-melena (3)
+- [replica-nura](replica-nura.md): demo-hebra (6), replica-ahora (4), replica-matiz (4), demo-linde-agentes (3), replica-melena (3)
 - [replica-oficio](replica-oficio.md): replica-remada (7), replica-ahora (5)
 - [replica-patron](replica-patron.md): demo-esparta (11), replica-abuela-rosa (4), replica-cita (4), replica-talla (4), replica-impulso (3)
 - [replica-q47](replica-q47.md): replica-impulso (5), replica-abuela-rosa (4), replica-vive (4), replica-cita (3), replica-talla (3)
@@ -268,7 +273,7 @@ Con tres etiquetas o más en común (sin contar piezas).
 - [demo-cadencia](demo-cadencia.md): replica-nucleo (7), replica-vive (5), demo-forja (5), demo-la-tramoya (4), demo-hebra (4)
 - [demo-esparta](demo-esparta.md): replica-patron (11), replica-cita (5), replica-talla (4), demo-forja (4), demo-la-tramoya (3)
 - [demo-forja](demo-forja.md): replica-vive (8), replica-lobo (7), replica-impulso (6), replica-talla (6), demo-cadencia (5)
-- [demo-hebra](demo-hebra.md): replica-matiz (7), replica-melena (6), replica-nura (6), demo-cadencia (4), demo-la-tramoya (3)
+- [demo-hebra](demo-hebra.md): replica-matiz (7), replica-melena (6), replica-nura (6), demo-linde-agentes (4), demo-cadencia (4)
 - [estudio-academia](estudio-academia.md): replica-oficio (6), replica-remada (6), replica-ahora (3)
 - [estudio-gimnasio](estudio-gimnasio.md): replica-lobo (4), replica-talla (4), replica-vive (4), demo-cadencia (4), demo-forja (4)
 - [estudio-peluqueria](estudio-peluqueria.md): replica-matiz (4), replica-cita (3), replica-melena (3), replica-patron (3), replica-raiz (3)
