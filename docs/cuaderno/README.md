@@ -9,7 +9,7 @@
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
-| 2026-10-30 | [demo-umbral-skills](demo-umbral-skills.md) · UMBRAL, festival ficticio compuesto con las skills de Trama | demo | hecho | cultura | lúdico | `http://127.0.0.1:3436` |
+| 2026-10-30 | [demo-umbral-skills](demo-umbral-skills.md) · UMBRAL, festival ficticio compuesto con las skills de Trama | demo | hecho | cultura | lúdico | `http://127.0.0.1:3435` |
 | 2026-10-29 | [demo-linde-agentes](demo-linde-agentes.md) · Linde, consumidor limpio para el piloto de agentes | demo | en curso | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-evaluacion-agentes](herramienta-evaluacion-agentes.md) · Evaluación de agentes con y sin skills de Trama | herramienta | hecho | peluquería | salón editorial claro |  |

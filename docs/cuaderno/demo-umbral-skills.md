@@ -5,7 +5,7 @@ tipo: demo
 estado: hecho
 referencias: []
 fichas: [examples/demo-umbral/BRIEF.md]
-ruta: http://127.0.0.1:3436
+ruta: http://127.0.0.1:3435
 codigo: [examples/demo-umbral/app/page.tsx.txt, examples/demo-umbral/app/ui/spaces-gallery.tsx.txt, examples/demo-umbral/app/programa/page.tsx.txt, examples/demo-umbral/app/entradas/page.tsx.txt, examples/demo-umbral/public/espacios]
 colores: [#f4d4d4, #2b1d1d, #2f5be0, #ffcf4a, #fff7f0]
 fuentes: [Bricolage Grotesque, Instrument Sans, Silkscreen]

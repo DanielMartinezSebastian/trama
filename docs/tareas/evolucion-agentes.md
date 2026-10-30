@@ -292,4 +292,5 @@
 - Cambios: se generaron nuevas visualizaciones con asistentes entrando y encontrándose en Nave 08, bailando en Nave A y alternando baile/conversación en el Patio. La galería pasa de tres tarjetas iguales a un collage de recorrido: Nave A domina en un arco; entrada y patio se escalonan a su lado, con marcas 00–02 que señalan la ruta real del recinto.
 - Decisiones: el arco enlaza la sala principal con el portal geométrico del hero; el azul y amarillo vienen de la guía elegida. Se conserva el aviso de que personas y lugares son generados y ficticios.
 - Comprobaciones: typecheck y build del consumidor aislado correctos; QA completo del recorrido, filtros, compra de muestra y transiciones; axe sin violaciones; las tres imágenes cargan con alt y aviso ficticio; sin overflow a 320/390/768/1440 px; `smoke` en las tres rutas sin errores ni sombras; revisión de capturas de escritorio y móvil. `npm run verify` y `git diff --check` correctos.
-- Siguiente paso: revisar la versión actualizada en `http://127.0.0.1:3436/`.
+- Comprobación adicional: el preview de referencia en `http://127.0.0.1:3435/` también sirve la nueva portada y los tres assets; `smoke` vuelve a pasar en ese puerto. Se deja 3435 como URL única de revisión y se cierra el servidor duplicado 3436.
+- Siguiente paso: revisión del usuario en `http://127.0.0.1:3435/`.
