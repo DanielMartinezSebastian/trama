@@ -1,0 +1,42 @@
+"use client";
+
+import { useMemo, useRef, useState } from "react";
+import Button from "trama-ui/Button";
+
+const works = [
+  { id: "jardin", title: "La noche también florece", type: "Editorial", client: "Revista Umbral", year: "2026", pos: "0% 0%", color: "#df442d", shape: "wide", note: "Un paseo lento por jardines que se abren cuando la ciudad duerme." },
+  { id: "pedal", title: "Moverse es imaginar", type: "Campaña", client: "Bici Pública", year: "2026", pos: "50% 0%", color: "#2848bc", shape: "tall", note: "Una ciudad amable se dibuja desde el sillín." },
+  { id: "plaza", title: "La plaza es de todos", type: "Campaña", client: "Festival Patio", year: "2025", pos: "100% 0%", color: "#f4bd40", shape: "square", note: "Baile, música y una tarde que no quiere terminar." },
+  { id: "pez", title: "Lo que el río recuerda", type: "Editorial", client: "Papel Salvaje", year: "2025", pos: "0% 100%", color: "#f2b8a8", shape: "square", note: "Una fábula sobre cuidar lo que no vemos." },
+  { id: "invernadero", title: "Manual para cuidar el sol", type: "Libro", client: "Ediciones Brote", year: "2025", pos: "50% 100%", color: "#63a78a", shape: "tall", note: "Pequeños gestos para una casa llena de vida." },
+  { id: "nube", title: "Leer hasta tocar el cielo", type: "Editorial", client: "Domingo", year: "2024", pos: "100% 100%", color: "#323f91", shape: "wide", note: "Una invitación a perderse entre páginas y tejados." },
+];
+const filters = ["Todo", "Editorial", "Campaña", "Libro"];
+
+export default function Home() {
+  const [filter, setFilter] = useState("Todo");
+  const [selected, setSelected] = useState<(typeof works)[number] | null>(null);
+  const [menu, setMenu] = useState(false);
+  const [sent, setSent] = useState(false);
+  const opener = useRef<HTMLElement | null>(null);
+  const visible = useMemo(() => works.filter((work) => filter === "Todo" || work.type === filter), [filter]);
+  const closeWork = () => { setSelected(null); requestAnimationFrame(() => opener.current?.focus()); };
+
+  return <main className="studio-shell">
+    <header className="masthead"><a className="wordmark" href="#inicio" aria-label="Inés Bruma, inicio">IB<span>✳</span></a><a className="masthead-note" href="#archivo">CUADERNO VIVO<br/>SELECCIÓN 2024—26</a><button className="menu-toggle" aria-expanded={menu} onClick={() => setMenu(!menu)}>{menu ? "Cerrar −" : "Índice +"}</button>{menu && <nav className="menu-panel" aria-label="Navegación"><a onClick={() => setMenu(false)} href="#archivo">Obra / 06</a><a onClick={() => setMenu(false)} href="#sobre">La autora</a><a onClick={() => setMenu(false)} href="#contacto">Encargos ↗</a></nav>}<span className="availability"><i/> DISPONIBLE PARA PROYECTOS · OCT 2026</span></header>
+
+    <section className="opening" id="inicio"><div className="opening-copy"><p className="kicker">ILUSTRACIÓN DIGITAL · MADRID Y DONDE HAGA FALTA</p><h1>Dibujos para<br/><em>quedarse un rato.</em></h1><p className="intro">Soy Inés. Invento imágenes con pulso, color y un pie en lo cotidiano. Para leer, mirar, compartir y recordar.</p><a className="text-link" href="#archivo">Bajar al cuaderno <span>↓</span></a></div><div className="opening-art"><div className="artwork artwork-hero" role="img" aria-label="Ilustración conceptual: una persona cuida flores gigantes bajo la luna" style={{backgroundPosition:"0% 0%"}}/><span className="art-index">01 / CUANDO FLORECE LA CIUDAD</span><span className="orbit-stamp" aria-hidden="true">hecho<br/>con calma<br/>✳</span><span className="scribble" aria-hidden="true">una historia<br/>en cada esquina ↗</span></div><div className="opening-foot"><span>DESLIZA, CLICA, QUÉDATE</span><span>ILUSTRACIONES CONCEPTUALES PARA ESTA DEMO</span></div></section>
+
+    <section className="work-section" id="archivo"><div className="section-heading"><div><p className="kicker">01 — ARCHIVO ABIERTO</p><h2>Un mundo<br/><em>por descubrir.</em></h2></div><p className="section-aside">Encargos e historias propias<br/>que se cruzan en la misma mesa.</p></div><div className="filter-row" role="group" aria-label="Filtrar ilustraciones">{filters.map((item) => <button key={item} className={filter === item ? "filter active" : "filter"} aria-pressed={filter === item} onClick={() => setFilter(item)}>{item}<sup>{item === "Todo" ? "06" : String(works.filter(w => w.type === item).length).padStart(2,"0")}</sup></button>)}<span className="filter-count">{visible.length} piezas a la vista</span></div>
+      <div className="work-grid">{visible.map((work, index) => <button key={work.id} className={`work-card ${work.shape} card-${index}`} onClick={(event) => {opener.current = event.currentTarget; setSelected(work);}} aria-label={`Abrir obra: ${work.title}`}><span className="card-image"><span className="artwork" style={{backgroundPosition:work.pos}}/><span className="card-open" aria-hidden="true">↗</span></span><span className="card-caption"><span><b>{work.title}</b><small>{work.client} · {work.year}</small></span><span className="card-type">{work.type}</span></span></button>)}</div>
+    </section>
+
+    <section className="about-section" id="sobre"><div className="about-mark" aria-hidden="true">✳</div><div className="about-copy"><p className="kicker">02 — QUIÉN DIBUJA</p><h2>Observar primero.<br/><em>Dibujar después.</em></h2><p>Me gustan los detalles que casi pasan desapercibidos: la luz en una persiana, una conversación en la cola, plantas que se inclinan hacia la ventana. De ahí salen mis imágenes.</p><p>Trabajo con editoriales, equipos culturales y marcas que quieren hablar con más humanidad. Cada encargo empieza con preguntas y termina con una imagen que tiene algo que decir.</p><div className="about-tags"><span>EDITORIAL</span><span>CAMPAÑA</span><span>LIBRO ILUSTRADO</span><span>ANIMACIÓN BREVE</span></div></div></section>
+
+    <section className="contact-section" id="contacto"><div><p className="kicker">03 — TU IDEA, MI MESA</p><h2>¿Y si lo<br/><em>dibujamos?</em></h2><p>Cuéntame qué estás imaginando. Me gustan los proyectos que empiezan con una pregunta.</p></div><form className="contact-note" onSubmit={(event) => {event.preventDefault(); setSent(true);}}><label>Tu nombre<input required minLength={2} placeholder="¿Cómo te llamas?"/></label><label>Correo<input required type="email" placeholder="hola@ejemplo.com"/></label><label>¿Qué tienes entre manos?<textarea required minLength={8} placeholder="Una idea, una fecha, un lugar…" rows={3}/></label><Button type="submit" label={sent ? "Nota guardada en este navegador ✓" : "Dejar una nota ↗"} variant="minimal" size="lg"/><small>{sent ? "Es una confirmación local de muestra; no se ha enviado ningún dato." : "Demo local: el formulario no envía ni almacena datos."}</small></form></section>
+
+    <footer className="colophon"><a className="wordmark" href="#inicio">IB<span>✳</span></a><span>INÉS BRUMA · ILUSTRADORA FICTICIA</span><a href="#inicio">VOLVER ARRIBA ↑</a><span>HECHO PARA MIRAR DESPACIO · 2026</span></footer>
+
+    {selected && <div className="modal-backdrop" role="presentation" onKeyDown={(event) => {if(event.key === "Escape") closeWork();}} onMouseDown={(event) => {if(event.target === event.currentTarget) closeWork();}}><section className="work-dialog" role="dialog" aria-modal="true" aria-labelledby="work-title"><button className="dialog-close" autoFocus onClick={closeWork} aria-label="Cerrar ficha">×</button><div className="dialog-image"><span className="artwork" style={{backgroundPosition:selected.pos}}/></div><div className="dialog-copy"><p className="kicker">{selected.type.toUpperCase()} · {selected.year}</p><h2 id="work-title">{selected.title}</h2><p>{selected.note}</p><div className="dialog-meta"><span>IDEA / ILUSTRACIÓN</span><b>{selected.client}</b></div><p className="concept-note">Pieza conceptual creada para esta demo. No corresponde a un encargo real.</p><Button label="Ver otra pieza" variant="minimal" emphasis="outline" onClick={() => {const i = works.findIndex(w => w.id === selected.id);setSelected(works[(i+1)%works.length]);}}/></div></section></div>}
+  </main>;
+}

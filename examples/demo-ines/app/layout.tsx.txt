@@ -1,0 +1,15 @@
+import type { ReactNode } from "react";
+import GuideFrame from "trama-ui/GuideFrame";
+import { instrumentSerif, instrumentSans, jetbrainsMono } from "trama-ui/fonts";
+import "trama-ui/styles.css";
+import "./studio.css";
+
+export const metadata = {
+  title: "Inés Bruma — ilustración que abre ventanas",
+  description: "Cuaderno vivo de Inés Bruma, ilustradora digital ficticia. Encargos editoriales, campañas e historias dibujadas.",
+  icons: { icon: "/icon.svg" },
+};
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${instrumentSerif.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}><body><GuideFrame guide="editorial" textContrast className="ines-frame">{children}</GuideFrame></body></html>;
+}
