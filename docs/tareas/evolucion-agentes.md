@@ -270,3 +270,10 @@
 - Decisiones: las instrucciones son neutrales al cliente y citan Codex imagegen como ejemplo. Iconos, logotipos, diagramas y patrones simples siguen siendo código; las imágenes generadas no se presentan como evidencia de personal, instalaciones o resultados reales.
 - Comprobaciones: `npm run verify`, `npm run pkg:build`, `npm run pkg:pack` y `npm run agents:check-package`; `git diff --check`. `quick_validate.py` no pudo ejecutarse porque el Python disponible carece de `PyYAML`; se conservaron los frontmatters existentes y el empaquetado incluyó ambas skills. El paquete previo quedó guardado en `.cache/package-skill-imagegen-baseline/`.
 - Siguiente paso: instalar/actualizar las skills en un consumidor y comprobar su uso en una demo que realmente se beneficie de una imagen. No publicar ni hacer push.
+
+## Revisión de necesidad de imágenes en UMBRAL (30 de octubre de 2026)
+
+- Objetivo: comprobar en las tres rutas si una imagen raster resolvería una necesidad visual o de contenido.
+- Evidencia revisada: capturas de `/`, `/programa` y `/entradas` en escritorio; portada y programa también en móvil, en `.refs3d/demo-umbral/recorrido/`.
+- Decisión: no añadir imágenes raster ahora. El portal SVG del hero ya expresa la idea de cruzar un umbral y mantiene el lenguaje gráfico de cartel. Programa y entradas priorizan exploración y selección; más imágenes reducirían espacio y jerarquía, especialmente en móvil. El recinto y los artistas son ficticios, así que fotos podrían sugerir hechos que la demo no representa.
+- Siguiente paso: reconsiderar si UMBRAL recibe material real autorizado de artistas o recinto, o si una sección concreta queda sin comunicar algo que el SVG no resuelve. La vista previa local sigue en `http://127.0.0.1:3435`.
