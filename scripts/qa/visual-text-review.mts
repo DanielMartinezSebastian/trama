@@ -34,10 +34,11 @@ try {
     });
     await page.screenshot({ path: resolve(out, `${width}.png`), fullPage: true });
     const review = await page.evaluate(() => {
-      type Line = { text: string; tag: string; className: string; ariaHidden: boolean; fontSize: number; rect: { x: number; y: number; width: number; height: number } };
+      type Line = { text: string; tag: string; className: string; container: string; ariaHidden: boolean; fontSize: number; rect: { x: number; y: number; width: number; height: number } };
       const lines: Line[] = [];
       const clipped: { text: string; clippedBy: string; axis: string }[] = [];
       const mediaIntersections: { text: string; textClass: string; media: string; ratio: number }[] = [];
+      const nearText: { a: Line; b: Line; gap: number; inkAllowance: number }[] = [];
       const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       while (walker.nextNode()) {
         const node = walker.currentNode;
@@ -71,6 +72,7 @@ try {
           lines.push({
             text: text.slice(0, 100), tag: element.tagName.toLowerCase(),
             className: typeof element.className === "string" ? element.className : "",
+            container: (() => { const parent = element.closest(".fz-cover__index,.fz-cover__story,header,section,nav,footer"); return parent ? `${parent.tagName.toLowerCase()}.${typeof parent.className === "string" ? parent.className : ""}` : ""; })(),
             ariaHidden: Boolean(element.closest('[aria-hidden="true"]')),
             fontSize: parseFloat(style.fontSize),
             rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
@@ -78,6 +80,18 @@ try {
         }
       }
       const collisions = [];
+      for (let i = 0; i < lines.length; i++) for (let j = i + 1; j < lines.length; j++) {
+        const a = lines[i], b = lines[j];
+        if (a.container === b.container || (a.tag === b.tag && a.className === b.className && a.text === b.text)) continue;
+        const xGap = Math.max(0, Math.max(a.rect.x, b.rect.x) - Math.min(a.rect.x + a.rect.width, b.rect.x + b.rect.width));
+        const yGap = Math.max(0, Math.max(a.rect.y, b.rect.y) - Math.min(a.rect.y + a.rect.height, b.rect.y + b.rect.height));
+        if (xGap === 0 && yGap === 0) continue;
+        const gap = Math.hypot(xGap, yGap);
+        // Text ink can extend beyond Range boxes (italic overhang/negative tracking).
+        // Keep close cross-block pairs as candidates even when the boxes do not intersect.
+        const inkAllowance = Math.max(12, Math.min(24, Math.max(a.fontSize, b.fontSize) * .75));
+        if (gap <= inkAllowance) nearText.push({ a, b, gap: +gap.toFixed(1), inkAllowance: +inkAllowance.toFixed(1) });
+      }
       for (let i = 0; i < lines.length; i++) for (let j = i + 1; j < lines.length; j++) {
         const a = lines[i], b = lines[j];
         if (a.tag === b.tag && a.className === b.className && a.text === b.text) continue;
@@ -96,10 +110,11 @@ try {
         const ratio = area / Math.max(1, line.rect.width * line.rect.height);
         if (area > 16 && ratio > .02) mediaIntersections.push({ text: line.text, textClass: `${line.tag}.${line.className}`, media: item.name, ratio: +ratio.toFixed(2) });
       }
-      return { viewport: innerWidth, document: document.documentElement.scrollWidth, collisionCount: collisions.length, collisions: collisions.slice(0, 100), mediaIntersectionCount: mediaIntersections.length, mediaIntersections: mediaIntersections.slice(0, 100), smallText, clipped: [...new Map(clipped.map((item) => [`${item.text}|${item.clippedBy}|${item.axis}`, item])).values()] };
+      nearText.sort((a, b) => a.gap - b.gap);
+      return { viewport: innerWidth, document: document.documentElement.scrollWidth, collisionCount: collisions.length, collisions: collisions.slice(0, 100), nearTextCount: nearText.length, nearText: nearText.slice(0, 100), mediaIntersectionCount: mediaIntersections.length, mediaIntersections: mediaIntersections.slice(0, 100), smallText, clipped: [...new Map(clipped.map((item) => [`${item.text}|${item.clippedBy}|${item.axis}`, item])).values()] };
     });
     reports.push(review);
-    console.log(JSON.stringify({ width, document: review.document, collisionCount: review.collisionCount, mediaIntersectionCount: review.mediaIntersectionCount, clippedCount: review.clipped.length, smallTextCount: review.smallText.length, candidates: review.collisions.slice(0, 5), mediaCandidates: review.mediaIntersections.slice(0, 5), smallText: review.smallText.slice(0, 5) }));
+    console.log(JSON.stringify({ width, document: review.document, collisionCount: review.collisionCount, nearTextCount: review.nearTextCount, mediaIntersectionCount: review.mediaIntersectionCount, clippedCount: review.clipped.length, smallTextCount: review.smallText.length, candidates: review.collisions.slice(0, 5), nearTextCandidates: review.nearText.slice(0, 5), mediaCandidates: review.mediaIntersections.slice(0, 5), smallText: review.smallText.slice(0, 5) }));
   }
   writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ url: base.href, path, widths, reports, criterio: "Las colisiones y el microtexto son candidatos para inspección visual; la herramienta no los declara error automáticamente." }, null, 2) + "\n");
   console.log(`Capturas e informe: ${out}`);
