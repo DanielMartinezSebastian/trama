@@ -2,54 +2,72 @@ import Image from "next/image";
 
 const SPACES = [
   {
-    id: "recinto",
-    name: "Nave 08",
-    type: "EL RECINTO",
-    description: "Una antigua nave industrial imaginada para encontrarnos alrededor del sonido.",
+    id: "entrada",
+    index: "00",
+    type: "ENTRADA · NAVE 08",
+    name: "Cruza el umbral.",
+    description: "La nave se llena. La noche empieza a moverse.",
     src: "/espacios/nave-08.webp",
-    alt: "Visualización conceptual generada del interior de Nave 08, un recinto ficticio de ladrillo y acero iluminado en azul y amarillo.",
+    alt: "Visualización conceptual generada de visitantes entrando y encontrándose en el recinto ficticio Nave 08, iluminado en azul y amarillo.",
+    sizes: "(max-width: 900px) 100vw, 42vw",
+    className: "space-scene--entrada",
   },
   {
     id: "nave-a",
+    index: "01",
+    type: "DIRECTOS · AUDIOVISUAL",
     name: "Nave A",
-    type: "SONIDO Y LUZ",
-    description: "Instalaciones inmersivas y directos audiovisuales entre ladrillo y luz.",
+    description: "El bajo reúne los cuerpos; la luz hace el resto.",
     src: "/espacios/nave-a.webp",
-    alt: "Visualización conceptual generada de Nave A, sala ficticia con una instalación audiovisual y público distante.",
+    alt: "Visualización conceptual generada de un público bailando ante un directo audiovisual en la sala ficticia Nave A.",
+    sizes: "(max-width: 900px) 100vw, 62vw",
+    className: "space-scene--nave-a",
   },
   {
     id: "patio",
+    index: "02",
+    type: "ENCUENTRO · AIRE LIBRE",
     name: "El Patio",
-    type: "AIRE ABIERTO",
-    description: "Conversaciones, sesiones y pausas bajo el cielo de Madrid.",
+    description: "Una conversación se convierte en baile y vuelve a empezar.",
     src: "/espacios/patio.webp",
-    alt: "Visualización conceptual generada del Patio, un espacio exterior ficticio con árboles, ladrillo y luces cálidas al anochecer.",
+    alt: "Visualización conceptual generada de personas bailando y conversando al aire libre en el Patio ficticio de Nave 08.",
+    sizes: "(max-width: 900px) 100vw, 42vw",
+    className: "space-scene--patio",
   },
 ];
 
 export default function SpacesGallery() {
   return (
-    <section className="spaces-section section-wrap" aria-labelledby="spaces-title">
-      <div className="spaces-heading">
-        <div><span className="eyebrow">NAVE 08 · MADRID</span><h2 id="spaces-title">Tres espacios.<br />Un mismo pulso.</h2></div>
-        <p>Una nave para perder la noción del tiempo. Un patio para volver a encontrarnos.</p>
+    <section className="spaces-section" aria-labelledby="spaces-title">
+      <div className="spaces-inner">
+        <div className="spaces-heading">
+          <span className="spaces-kicker">NAVE 08 · MADRID · 14—16 MAYO</span>
+          <div className="spaces-heading__row">
+            <h2 id="spaces-title">Sigue el <em>sonido.</em><br />Cambia de espacio.</h2>
+            <p>Entras por una nave, te quedas por lo que pasa entre un lugar y otro.</p>
+          </div>
+        </div>
+        <ol className="spaces-route" aria-label="Recorrido por el recinto">
+          {SPACES.map((space) => <li key={space.id}><span>{space.index}</span>{space.id === "entrada" ? "Nave 08" : space.name.replaceAll(".", "")}</li>)}
+        </ol>
+        <div className="spaces-mosaic">
+          {SPACES.map((space) => (
+            <article className={`space-scene ${space.className}`} key={space.id}>
+              <div className="space-scene__picture">
+                <Image src={space.src} alt={space.alt} fill sizes={space.sizes} />
+              </div>
+              <div className="space-scene__shade" aria-hidden="true" />
+              <div className="space-scene__copy">
+                <span className="space-scene__type"><i>{space.index}</i>{space.type}</span>
+                <h3>{space.name}</h3>
+                <p>{space.description}</p>
+              </div>
+              <span className="space-scene__mark" aria-hidden="true">↗</span>
+            </article>
+          ))}
+        </div>
+        <p className="spaces-disclaimer">Visualizaciones conceptuales generadas para esta demo. Recinto, espacios y asistentes son ficticios.</p>
       </div>
-      <div className="spaces-grid">
-        {SPACES.map((space) => (
-          <article className="space-card" key={space.id}>
-            <div className="space-card__image">
-              <Image src={space.src} alt={space.alt} width={1600} height={900}
-                sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
-            </div>
-            <div className="space-card__copy">
-              <span className="space-card__type">{space.type}</span>
-              <h3>{space.name}</h3>
-              <p>{space.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <p className="spaces-disclaimer">Visualizaciones conceptuales generadas para esta demo. El recinto y sus espacios son ficticios.</p>
     </section>
   );
 }

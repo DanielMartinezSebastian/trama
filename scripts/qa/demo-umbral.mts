@@ -31,12 +31,12 @@ try {
     if (path.startsWith("/entradas")) await page.locator('[data-testid="order-total"], .pass-receipt, .empty-pass').first().waitFor({ state: "visible", timeout: 15000 });
   };
   await go("/");
-  await page.locator(".spaces-grid").scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => [...document.querySelectorAll<HTMLImageElement>(".space-card img")].length === 3 && [...document.querySelectorAll<HTMLImageElement>(".space-card img")].every((image) => image.complete && image.naturalWidth > 0));
-  const spaces = await page.locator(".space-card img").evaluateAll((images) => images.map((image) => ({ alt: (image as HTMLImageElement).alt, width: (image as HTMLImageElement).naturalWidth })));
+  await page.locator(".spaces-mosaic").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => [...document.querySelectorAll<HTMLImageElement>(".space-scene img")].length === 3 && [...document.querySelectorAll<HTMLImageElement>(".space-scene img")].every((image) => image.complete && image.naturalWidth > 0));
+  const spaces = await page.locator(".space-scene img").evaluateAll((images) => images.map((image) => ({ alt: (image as HTMLImageElement).alt, width: (image as HTMLImageElement).naturalWidth })));
   assert.equal(spaces.length, 3);
   assert.ok(spaces.every((space) => space.width > 0 && space.alt.includes("conceptual")));
-  await page.getByText("Visualizaciones conceptuales generadas para esta demo. El recinto y sus espacios son ficticios.").waitFor();
+  await page.getByText("Visualizaciones conceptuales generadas para esta demo. Recinto, espacios y asistentes son ficticios.").waitFor();
   await page.evaluate(() => window.scrollTo(0, 0));
   await audit("/");
   assert.equal(await page.locator("h1").count(), 1);

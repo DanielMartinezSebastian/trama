@@ -21,8 +21,10 @@ guía ya incluida en Trama.
 ## Imágenes del recinto
 
 Las imágenes WebP de `public/espacios/` se generaron con Codex imagegen a partir de un brief común de arquitectura
-industrial, luz azul, lámparas amarillas y ambiente rosado. Representan espacios inventados; no documentan un recinto
-real. La galería los etiqueta de forma visible y cada imagen tiene texto alternativo que declara su carácter conceptual.
+industrial, luz azul, lámparas amarillas y ambiente rosado. La segunda dirección muestra acciones humanas: entrada y
+encuentro en Nave 08, baile ante un directo en Nave A, y conversación y baile en el Patio. La galería deja la retícula
+de tres tarjetas por un collage de recorrido, con Nave A en un marco de arco que retoma el portal del hero. Representan
+espacios y asistentes inventados; el aviso y los textos alternativos declaran su carácter conceptual.
 
 ## Composición y piezas
 

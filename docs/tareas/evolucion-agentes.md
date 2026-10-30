@@ -285,3 +285,11 @@
 - Decisiones: se conserva el portal geométrico SVG como motivo de identidad y las nuevas imágenes se concentran en la galería, donde ayudan a distinguir lugar y espacios. No se presentan como fotos de una ubicación real.
 - Comprobaciones: build y pruebas de recorrido de un consumidor aislado, `npm run smoke`, revisión visual en escritorio y móvil, `npm run verify`, `npm run lab:cuaderno` y `git diff --check`.
 - Siguiente paso: revisión del usuario en `http://127.0.0.1:3436/`, con el preview de producción disponible para abrirlo en navegador. El servidor anterior en 3435 sigue intacto.
+
+## Revisión de dirección visual de UMBRAL (30 de octubre de 2026)
+
+- Objetivo: responder a la valoración de que las imágenes y su disposición se sentían genéricas, y mostrar más acción humana en los espacios.
+- Cambios: se generaron nuevas visualizaciones con asistentes entrando y encontrándose en Nave 08, bailando en Nave A y alternando baile/conversación en el Patio. La galería pasa de tres tarjetas iguales a un collage de recorrido: Nave A domina en un arco; entrada y patio se escalonan a su lado, con marcas 00–02 que señalan la ruta real del recinto.
+- Decisiones: el arco enlaza la sala principal con el portal geométrico del hero; el azul y amarillo vienen de la guía elegida. Se conserva el aviso de que personas y lugares son generados y ficticios.
+- Comprobaciones: typecheck y build del consumidor aislado correctos; QA completo del recorrido, filtros, compra de muestra y transiciones; axe sin violaciones; las tres imágenes cargan con alt y aviso ficticio; sin overflow a 320/390/768/1440 px; `smoke` en las tres rutas sin errores ni sombras; revisión de capturas de escritorio y móvil. `npm run verify` y `git diff --check` correctos.
+- Siguiente paso: revisar la versión actualizada en `http://127.0.0.1:3436/`.
