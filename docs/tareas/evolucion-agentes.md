@@ -228,3 +228,34 @@
 - Decisiones y siguiente paso: no añadir MCP ni una receta boutique por estos datos. Antes conviene probar una nota
   de fidelidad de paleta y valorar personalización del mensaje de cierre de AppointmentList. Valoración visual
   del usuario opcional; no se presenta esta revisión por Codex como aprobación humana.
+
+## Demo nueva: UMBRAL con las skills de Trama (30 de octubre de 2026)
+
+- Objetivo: crear una demo cultural distinta a las cohortes de peluquería y boutique, aplicando las skills existentes
+  a un festival con programa filtrable y pases. Rama `feat/evolucion-agentes`, partida `0ea641d`, worktree
+  `C:/COMPARTIDO/trama-evolucion-agentes`; estado inicial limpio y worktrees revisados.
+- Cambios: fuente de consumidor en `examples/demo-umbral/`, materializador `scripts/prepare-demo-umbral.mts`,
+  recorrido QA en `scripts/qa/demo-umbral.mts`, ficha `docs/cuaderno/demo-umbral-skills.md`. Las fuentes `.tsx`,
+  `.ts` y `.css` llevan `.txt` para que no entren en el build del sitio; el materializador retira ese sufijo al copiar.
+- Skills: `trama-build` para catálogo, recetas y componentes; `trama-style` para `GuideFrame`/guía `ludico`; y
+  `frontend-design` para la dirección gráfica. No se usaron MCP ni webs externas. Se conservó la paleta medida y no se
+  modificó el paquete de Trama. Hash del `.tgz` local congelado: `28d62a4f55ce7a38a3f5856052e2970992e8427f4ca84fa77775fdbec9aea3d3`.
+- Decisiones: UMBRAL es ficticio, con portada, programa filtrable por día/espacio y flujo de tres pasos. El pase solo
+  usa almacenamiento local y un QR de ejemplo; el archivo descargable dice `NO VÁLIDO PARA ACCESO`. No se solicita
+  pago ni se envía correo. `CheckoutFlow` está orientado a entrega/recogida y pago, por eso se compuso la selección
+  de entradas con piezas públicas más pequeñas. La cabecera propia enlaza a inicio porque `NavBar` no ofrece ese
+  `href` de marca. No se añadieron ni cambiaron componentes del kit.
+- Comprobaciones: typecheck y build de producción del consumidor; flujo de día enlazado, cantidad y precio, errores de
+  formulario, guardado y recuperación tras recarga, descarga y estado vacío. Axe WCAG 2.0 A/AA sin violaciones en
+  portada, programa y recibo; sin errores de navegador ni desbordamiento a 320/390/768/1440 px. `npm run smoke` en
+  `/`, `/programa` y `/entradas`: HTTP 200, sin errores ni sombras. Capturas de producción revisadas en
+  `.refs3d/demo-umbral/recorrido/` (ignoradas); no equivalen a validación visual del usuario.
+- Consumidor aislado en `.cache/demo-umbral/`; el preparador se probó además con destino nuevo
+  `.cache/demo-umbral-preflight/` y anotó el hash del paquete. Vista previa propia en `http://127.0.0.1:3435`, dejada
+  abierta para revisión del usuario. Sin publicación npm, despliegue ni push; sin cambios en otros worktrees.
+- Comprobaciones de repo: `npm run doctor` correcto (Chromium y ffmpeg presentes; avisos por `.env.scripts` y
+  `public/lab-assets` ausentes), `npm run verify` correcto (48 fichas al día), build del sitio correcto y
+  `git diff --check` limpio. El build conserva avisos conocidos de métricas de fuentes pixel y acceso dinámico de
+  filesystem en el panel de cine; no se originan en esta demo.
+- Siguiente paso: valoración del usuario sobre la demo cultural en 3435; decidir después si se integra en una ruta
+  del sitio. El servidor de revisión se deja abierto para esa valoración.
