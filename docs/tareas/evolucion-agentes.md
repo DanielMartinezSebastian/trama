@@ -262,3 +262,11 @@
   filesystem en el panel de cine; no se originan en esta demo.
 - Siguiente paso: valoración del usuario sobre la demo cultural en 3435; decidir después si se integra en una ruta
   del sitio. El servidor de revisión se deja abierto para esa valoración.
+
+## Skills: generación de imagen opcional (30 de octubre de 2026)
+
+- Objetivo: aclarar si las skills de Trama pueden aprovechar generación de imágenes de Codex cuando esté disponible, sin hacerla requisito.
+- Cambios: `trama-style` contempla un brief visual y generación opcional de fotos, ilustraciones o texturas raster originales. `trama-build` prioriza recursos aportados/licenciados o SVG/CSS si la capacidad no existe, y pide revisar recorte, alt y representación responsive. Se actualizó la ficha `herramienta-skills-trama`.
+- Decisiones: las instrucciones son neutrales al cliente y citan Codex imagegen como ejemplo. Iconos, logotipos, diagramas y patrones simples siguen siendo código; las imágenes generadas no se presentan como evidencia de personal, instalaciones o resultados reales.
+- Comprobaciones: `npm run verify`, `npm run pkg:build`, `npm run pkg:pack` y `npm run agents:check-package`; `git diff --check`. `quick_validate.py` no pudo ejecutarse porque el Python disponible carece de `PyYAML`; se conservaron los frontmatters existentes y el empaquetado incluyó ambas skills. El paquete previo quedó guardado en `.cache/package-skill-imagegen-baseline/`.
+- Siguiente paso: instalar/actualizar las skills en un consumidor y comprobar su uso en una demo que realmente se beneficie de una imagen. No publicar ni hacer push.

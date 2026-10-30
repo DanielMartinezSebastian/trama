@@ -48,6 +48,7 @@ equivalencia de comportamiento entre clientes. Los modelos por defecto de los cl
 Menos documento leído no significa menos tokens: las llamadas adicionales y el historial reenviado también cuestan.
 La evaluación conserva un intento interrumpido por falta de entrega y registra eventos/uso real en el protocolo revisado.
 Una skill útil conserva el encargo y sus permisos; no impone otra estética ni pide confirmaciones rutinarias.
+La generación de imágenes es una capacidad opcional del cliente: se ofrece para recursos raster originales cuando aportan valor, con revisión de recorte y tratamiento responsive; el código sigue siendo preferible para gráficos simples.
 
 ## Siguiente
 
