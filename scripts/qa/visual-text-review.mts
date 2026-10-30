@@ -39,6 +39,7 @@ try {
       const clipped: { text: string; clippedBy: string; axis: string }[] = [];
       const mediaIntersections: { text: string; textClass: string; media: string; ratio: number }[] = [];
       const nearText: { a: Line; b: Line; gap: number; inkAllowance: number }[] = [];
+      const textEscapes: { text: string; textClass: string; container: string; side: string; excess: number }[] = [];
       const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       while (walker.nextNode()) {
         const node = walker.currentNode;
@@ -69,6 +70,25 @@ try {
             }
           }
           if (fullyClipped) continue;
+          for (let ancestor = element.parentElement; ancestor && ancestor !== document.body; ancestor = ancestor.parentElement) {
+            const layout = getComputedStyle(ancestor);
+            if (!/^(inline-)?(flex|grid)$/.test(layout.display)) continue;
+            const box = ancestor.getBoundingClientRect();
+            const borderBox = {
+              left: box.left + parseFloat(layout.borderLeftWidth),
+              right: box.right - parseFloat(layout.borderRightWidth),
+              top: box.top + parseFloat(layout.borderTopWidth),
+              bottom: box.bottom - parseFloat(layout.borderBottomWidth),
+            };
+            const escapes = [
+              { side: "left", excess: borderBox.left - rect.left },
+              { side: "right", excess: rect.right - borderBox.right },
+              { side: "top", excess: borderBox.top - rect.top },
+              { side: "bottom", excess: rect.bottom - borderBox.bottom },
+            ].filter((item) => item.excess > 2);
+            for (const item of escapes) textEscapes.push({ text: text.slice(0, 100), textClass: `${element.tagName.toLowerCase()}.${typeof element.className === "string" ? element.className : ""}`, container: `${ancestor.tagName.toLowerCase()}.${typeof ancestor.className === "string" ? ancestor.className : ""}`, side: item.side, excess: +item.excess.toFixed(1) });
+            break;
+          }
           lines.push({
             text: text.slice(0, 100), tag: element.tagName.toLowerCase(),
             className: typeof element.className === "string" ? element.className : "",
@@ -111,10 +131,10 @@ try {
         if (area > 16 && ratio > .02) mediaIntersections.push({ text: line.text, textClass: `${line.tag}.${line.className}`, media: item.name, ratio: +ratio.toFixed(2) });
       }
       nearText.sort((a, b) => a.gap - b.gap);
-      return { viewport: innerWidth, document: document.documentElement.scrollWidth, collisionCount: collisions.length, collisions: collisions.slice(0, 100), nearTextCount: nearText.length, nearText: nearText.slice(0, 100), mediaIntersectionCount: mediaIntersections.length, mediaIntersections: mediaIntersections.slice(0, 100), smallText, clipped: [...new Map(clipped.map((item) => [`${item.text}|${item.clippedBy}|${item.axis}`, item])).values()] };
+      return { viewport: innerWidth, document: document.documentElement.scrollWidth, collisionCount: collisions.length, collisions: collisions.slice(0, 100), nearTextCount: nearText.length, nearText: nearText.slice(0, 100), textEscapeCount: textEscapes.length, textEscapes: textEscapes.slice(0, 100), mediaIntersectionCount: mediaIntersections.length, mediaIntersections: mediaIntersections.slice(0, 100), smallText, clipped: [...new Map(clipped.map((item) => [`${item.text}|${item.clippedBy}|${item.axis}`, item])).values()] };
     });
     reports.push(review);
-    console.log(JSON.stringify({ width, document: review.document, collisionCount: review.collisionCount, nearTextCount: review.nearTextCount, mediaIntersectionCount: review.mediaIntersectionCount, clippedCount: review.clipped.length, smallTextCount: review.smallText.length, candidates: review.collisions.slice(0, 5), nearTextCandidates: review.nearText.slice(0, 5), mediaCandidates: review.mediaIntersections.slice(0, 5), smallText: review.smallText.slice(0, 5) }));
+    console.log(JSON.stringify({ width, document: review.document, collisionCount: review.collisionCount, nearTextCount: review.nearTextCount, textEscapeCount: review.textEscapeCount, mediaIntersectionCount: review.mediaIntersectionCount, clippedCount: review.clipped.length, smallTextCount: review.smallText.length, candidates: review.collisions.slice(0, 5), nearTextCandidates: review.nearText.slice(0, 5), textEscapeCandidates: review.textEscapes.slice(0, 5), mediaCandidates: review.mediaIntersections.slice(0, 5), smallText: review.smallText.slice(0, 5) }));
   }
   writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ url: base.href, path, widths, reports, criterio: "Las colisiones y el microtexto son candidatos para inspección visual; la herramienta no los declara error automáticamente." }, null, 2) + "\n");
   console.log(`Capturas e informe: ${out}`);

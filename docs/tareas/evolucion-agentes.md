@@ -334,3 +334,12 @@
 - Comprobaciones: `qa:visual-text` en 1281/1400/1440/1441/1536 px; antes del ajuste señalaba la marca contra el bloque vecino con 14,8 px de distancia; tras el ajuste, esa pareja deja de aparecer como candidata. Capturas de 1281 y 1441 px revisadas manualmente. Build del consumidor Fanzine, build del sitio, typecheck, flujo completo de la demo, `smoke`, cuaderno y `git diff --check` correctos. `npm run verify` vuelve a detenerse en los 39 JSON obsoletos de `docs/agents/` ya documentados. Puerto 3436 mantenido como preview.
 - Rama: `feat/evolucion-agentes`.
 - Siguiente paso: revisión del usuario en `http://127.0.0.1:3436`; el preview se mantiene activo.
+
+## Solapamiento del índice en escritorio 1080p (30 de octubre de 2026)
+
+- Objetivo: reproducir la nueva captura de Fanzine y corregir el cruce de «UMBRAL» con la regla vertical en una pantalla de escritorio común.
+- Causa: 1080p describe la altura, no el ancho CSS. La captura mide 1918×985 y el layout usa viewport ancho (>1440 px), donde volvía al tamaño de marca de 23 px dentro de una columna de 100 px. El texto excedía el límite interior y cruzaba el borde. La corrección anterior solo cubría hasta 1440 px.
+- Cambios: `qa:visual-text` ahora informa cuando un rango de texto rebasa el borde de su contenedor flex/grid, además de colisiones y proximidad entre bloques. La skill distingue resolución física de viewport CSS y pide comprobar el ancho completo en escritorio 1080p. Fanzine mantiene la marca del índice entre 17 y 18 px en el layout de escritorio para que quepa con margen en la columna.
+- Decisiones: preservar el layout de tres columnas; ajustar el tamaño de una etiqueta de índice es menos disruptivo que mover la regla o ensanchar la columna a costa del titular y la fotografía.
+- Comprobaciones: antes del arreglo `qa:visual-text` reprodujo el desborde de «UMBRAL» por 8,8 px a 1918 px; después, sin desbordes de esa marca en 1281/1440/1441/1918/1920/2560 px. Informe y capturas en `.refs3d/visual-text/3436-1793358056337/`; revisión visual a 1281 y 1918 px. Build del consumidor y del sitio, typecheck, recorrido funcional de Fanzine, smoke, cuaderno y `git diff --check` correctos. `npm run verify` continúa bloqueado por los 39 JSON desactualizados de `docs/agents/` ya documentados.
+- Siguiente paso: revisión del usuario en `http://127.0.0.1:3436` con viewport CSS de 1918 px.
