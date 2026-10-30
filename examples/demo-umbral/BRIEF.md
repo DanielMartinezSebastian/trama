@@ -20,12 +20,18 @@ guía ya incluida en Trama.
 ## Composición y piezas
 
 La cabecera y el portal son composiciones locales. El resto reúne `GuideFrame`, `Hero`, `Marquee`, `EventLineup`,
-`FAQSection`, `Footer`, `Button`, `TextField`, `QuantityStepper`, `Alert` y `QRCode`.
+`FAQSection`, `Footer`, `Button`, `TextField`, `QuantityStepper`, `Alert`, `QRCode` y las transiciones públicas
+`PageTransition`/`PageTransitionPersist`.
 
 `CheckoutFlow` no representa este caso: sus variantes actuales modelan entrega/recogida y pago. El paso de entradas se
 compone con piezas públicas pequeñas, sin añadir props ni cambiar el kit. El nombre y el correo solo se guardan en
 `localStorage`; la cantidad tiene un máximo de seis. El recibo se puede descargar como texto, muestra un QR de ejemplo
 y lleva la marca `NO VÁLIDO PARA ACCESO`.
+
+Las páginas envuelven el contenido con `PageTransition kind="wipe"`; los enlaces del App Router indican avance o
+regreso y la cabecera usa `PageTransitionPersist`. El tema de `GuideFrame` vive en un contenedor, así que se repiten en
+`:root` los tokens que leen los pseudo-elementos de la transición. Los enlaces `<a>` de `EventLineup` conservan un
+fundido entre documentos del mismo origen.
 
 ## Paquete y evidencia
 

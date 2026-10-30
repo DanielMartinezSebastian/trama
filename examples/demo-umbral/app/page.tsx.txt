@@ -3,17 +3,21 @@ import Hero from "trama-ui/Hero";
 import Marquee from "trama-ui/Marquee";
 import EventLineup from "trama-ui/EventLineup";
 import FAQSection from "trama-ui/FAQSection";
-import Button from "trama-ui/Button";
+import PageTransition, { NAV_FORWARD } from "trama-ui/PageTransition";
 import { SESSIONS } from "./data";
 import Portal from "./ui/portal";
 
 export default function Home() {
-  return <>
+  return <PageTransition kind="wipe" direction="left" pace="fast" tone="acc">
+  <>
     <section className="hero-stage" aria-label="Umbral 2027">
       <div className="hero-meta"><span>ENCUENTRO DE SONIDO Y CULTURA DIGITAL</span><span>MADRID · NAVE 08</span></div>
       <div className="hero-grid">
-        <Hero kicker="14 — 16 MAYO 2027" title="Sal de lo de siempre." subtitle="Tres días de música, arte y nuevas miradas. Un lugar para encontrarnos en lo que todavía no tiene nombre."
-          primaryCta="Cruza el umbral" primaryHref="/entradas" secondaryCta="Explorar programa" secondaryHref="/programa" badges="" backdrop="none" align="left" variant="minimal" className="festival-hero" />
+        <div className="hero-copy">
+          <Hero kicker="14 — 16 MAYO 2027" title="Sal de lo de siempre." subtitle="Tres días de música, arte y nuevas miradas. Un lugar para encontrarnos en lo que todavía no tiene nombre."
+            primaryCta="" secondaryCta="" badges="" backdrop="none" align="left" variant="minimal" className="festival-hero" />
+          <div className="hero-actions"><Link className="hero-action-primary" href="/entradas" transitionTypes={[NAV_FORWARD]}>Cruza el umbral <span aria-hidden>→</span></Link><Link className="hero-action-secondary" href="/programa" transitionTypes={[NAV_FORWARD]}>Explorar programa</Link></div>
+        </div>
         <Portal />
       </div>
       <div className="hero-bottom"><span>SONIDO. LUZ. ENCUENTRO.</span><span>Una puerta abierta a lo inesperado <span aria-hidden>↙</span></span></div>
@@ -24,12 +28,13 @@ export default function Home() {
       <div className="encounter-copy"><p>Un directo que se convierte en paisaje. Una conversación que acaba en baile. Una idea que no sabías que estabas buscando.</p><p>Umbral reúne a quienes hacen, escuchan y se dejan sorprender. En una nave y un patio, sin prisas por llegar a ningún otro sitio.</p><div className="location-chip"><span className="location-symbol" aria-hidden>↗</span><div><b>Nave 08, Madrid</b><span>Un espacio ficticio para un encuentro posible.</span></div></div></div>
     </section>
     <section className="program-preview section-wrap">
-      <div className="section-heading"><div><span className="eyebrow">ESTO EMPIEZA A SONAR</span><h2>Abre el programa.</h2></div><Link className="text-link" href="/programa">Las 12 sesiones <span aria-hidden>↗</span></Link></div>
+      <div className="section-heading"><div><span className="eyebrow">ESTO EMPIEZA A SONAR</span><h2>Abre el programa.</h2></div><Link className="text-link" href="/programa" transitionTypes={[NAV_FORWARD]}>Las 12 sesiones <span aria-hidden>↗</span></Link></div>
       <EventLineup events={SESSIONS.filter((event) => ["nodo", "vertice", "aire", "otras-formas"].includes(event.id))} layout="rows" groupBy="none" filters={false} cta="Elegir pase" emptyLabel="El programa está tomando forma." statusLabels={{ open: "EN PROGRAMA" }} variant="minimal" />
     </section>
-    <section className="ticket-callout section-wrap"><div><span className="eyebrow">UN DÍA. O TODO EL ENCUENTRO.</span><h2>Guárdate<br />este momento.</h2><p>Pase de día desde 29 €. Abono de tres días por 69 €.<br />Tú eliges cuánto quieres cruzar.</p><Button label="Encuentra tu pase" href="/entradas" variant="minimal" glyph="↗" size="lg" /></div><div className="big-date" aria-label="14 al 16 de mayo"><span>14</span><i aria-hidden>↘</i><span>16</span><b>MAYO / 2027</b></div></section>
+    <section className="ticket-callout section-wrap"><div><span className="eyebrow">UN DÍA. O TODO EL ENCUENTRO.</span><h2>Guárdate<br />este momento.</h2><p>Pase de día desde 29 €. Abono de tres días por 69 €.<br />Tú eliges cuánto quieres cruzar.</p><Link className="ticket-callout-link" href="/entradas" transitionTypes={[NAV_FORWARD]}>Encuentra tu pase <span aria-hidden>↗</span></Link></div><div className="big-date" aria-label="14 al 16 de mayo"><span>14</span><i aria-hidden>↘</i><span>16</span><b>MAYO / 2027</b></div></section>
     <div className="section-wrap faq-wrap" id="preguntas"><FAQSection kicker="ANTES DE CRUZAR" title="Por si te lo preguntas." subtitle="" layout="split" presentation="lines" answerAlign="left" defaultOpen={-1} variant="minimal" items={
       "¿Qué incluye cada pase?|El pase de día da acceso al programa de la fecha elegida. El abono incluye los tres días. El pase Dentro del proceso añade el laboratorio de sonido del sábado.\n¿Dónde se celebra?|Nave 08 es un espacio ficticio situado en Madrid para esta demo. No existe una convocatoria ni una venta de entradas real.\n¿Puedo descargar mi pase?|Sí. Al terminar la selección y completar tus datos, puedes descargar un justificante de muestra. El pedido se conserva en este navegador si permite almacenamiento.\n¿Me van a cobrar algo?|No. Esta es una demo local de Trama. No se piden datos de tarjeta, no se procesan pagos y no se envían correos."
     } /></div>
-  </>;
+  </>
+  </PageTransition>;
 }

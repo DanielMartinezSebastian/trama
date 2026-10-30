@@ -91,6 +91,33 @@ try {
   await empty.getByRole("heading", { name: "Aún no tienes un pase guardado." }).waitFor();
   await emptyContext.close();
 
+  const motionContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const motionPage = await motionContext.newPage();
+  await motionPage.addInitScript("window.__name = (f) => f");
+  await motionPage.goto(`${base}/`, { waitUntil: "domcontentloaded" });
+  await motionPage.locator(".site-header").waitFor();
+  assert.equal(await motionPage.locator(".site-header").evaluate((el) => (el as HTMLElement).style.viewTransitionName), "umbral-site-header");
+  async function navigateAndRead(selector: string, destination: string, expected: string) {
+    const transition = motionPage.evaluate(() => new Promise<string>((resolve, reject) => {
+      const root = document.documentElement;
+      const timer = setTimeout(() => { observer.disconnect(); reject(new Error("PageTransition no marcó la navegación")); }, 2500);
+      const observer = new MutationObserver(() => {
+        const value = root.dataset.uiVt;
+        if (value) { clearTimeout(timer); observer.disconnect(); resolve(value); }
+      });
+      observer.observe(root, { attributes: true, attributeFilter: ["data-ui-vt"] });
+      if (root.dataset.uiVt) { clearTimeout(timer); observer.disconnect(); resolve(root.dataset.uiVt); }
+    }));
+    await motionPage.locator(selector).click();
+    assert.equal(await transition, expected);
+    await motionPage.waitForURL(`${base}${destination}`);
+    await motionPage.waitForTimeout(300);
+  }
+  await navigateAndRead(".hero-action-secondary", "/programa", "wipe-left");
+  await navigateAndRead(".header-cta", "/entradas", "wipe-left");
+  await navigateAndRead(".desktop-nav a[href='/programa']", "/programa", "wipe-right");
+  await motionContext.close();
+
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const path of ["/", "/programa", "/entradas"]) {
@@ -102,7 +129,7 @@ try {
   }
   assert.deepEqual(errors, []);
   assert.deepEqual(axeViolations, []);
-  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ ok: true, checks: ["3 rutas", "programa por día y espacio", "cantidad y precio", "validación", "pase persistente", "descarga marcada como no válida", "estado vacío", "ancho móvil 320/390/768/1440", "axe wcag2a/wcag2aa", "errores de navegador"], errors, axeViolations }, null, 2) + "\n");
+  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ ok: true, checks: ["3 rutas", "programa por día y espacio", "cantidad y precio", "validación", "pase persistente", "descarga marcada como no válida", "estado vacío", "PageTransition wipe-left / wipe-right", "cabecera persistente", "ancho móvil 320/390/768/1440", "axe wcag2a/wcag2aa", "errores de navegador"], errors, axeViolations }, null, 2) + "\n");
   console.log(`UMBRAL OK: flujo completo; evidencia ${out}`);
 } finally {
   await browser.close();

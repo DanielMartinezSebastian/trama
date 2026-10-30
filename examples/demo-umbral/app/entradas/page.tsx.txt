@@ -1,8 +1,9 @@
 import TicketFlow from "../ui/ticket-flow";
+import PageTransition from "trama-ui/PageTransition";
 import { DAYS } from "../data";
 export const metadata = { title: "Entradas" };
 export default async function TicketsPage({ searchParams }: { searchParams: Promise<{ dia?: string; ver?: string }> }) {
   const query = await searchParams;
   const day = DAYS.some((d) => d.value === query.dia) ? query.dia! : undefined;
-  return <TicketFlow initialDay={day} showSaved={query.ver === "pase"} />;
+  return <PageTransition kind="wipe" direction="left" pace="fast" tone="acc"><TicketFlow initialDay={day} showSaved={query.ver === "pase"} /></PageTransition>;
 }

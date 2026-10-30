@@ -2,22 +2,26 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
+import { NAV_BACK, NAV_FORWARD, PageTransitionPersist } from "trama-ui/PageTransition";
 
 export default function SiteHeader() {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLButtonElement>(null);
   const close = () => setOpen(false);
-  return <header className="site-header" onKeyDown={(event) => { if (event.key === "Escape") { setOpen(false); menuRef.current?.focus(); } }}>
-    <Link href="/" className="wordmark" aria-label="Umbral, inicio" onClick={close}><span className="brand-gate" aria-hidden="true">∩</span>UMBRAL<span className="edition">/ 27</span></Link>
+  const backToHome = path !== "/";
+  const programDirection = path === "/entradas" ? NAV_BACK : NAV_FORWARD;
+  const ticketDirection = path === "/entradas" ? undefined : NAV_FORWARD;
+  return <PageTransitionPersist name="umbral-site-header"><header className="site-header" onKeyDown={(event) => { if (event.key === "Escape") { setOpen(false); menuRef.current?.focus(); } }}>
+    <Link href="/" transitionTypes={backToHome ? [NAV_BACK] : undefined} className="wordmark" aria-label="Umbral, inicio" onClick={close}><span className="brand-gate" aria-hidden="true">∩</span>UMBRAL<span className="edition">/ 27</span></Link>
     <nav className="desktop-nav" aria-label="Principal">
-      <Link href="/programa" aria-current={path === "/programa" ? "page" : undefined}>Programa</Link>
-      <Link href="/#encuentro">El encuentro</Link>
+      <Link href="/programa" transitionTypes={[programDirection]} aria-current={path === "/programa" ? "page" : undefined}>Programa</Link>
+      <Link href="/#encuentro" transitionTypes={backToHome ? [NAV_BACK] : undefined}>El encuentro</Link>
       <Link href="/entradas?ver=pase">Mi pase</Link>
     </nav>
-    <div className="header-actions"><Link className="header-cta" href="/entradas" onClick={close}>Entradas <span aria-hidden>↗</span></Link>
+    <div className="header-actions"><Link className="header-cta" href="/entradas" transitionTypes={ticketDirection ? [ticketDirection] : undefined} onClick={close}>Entradas <span aria-hidden>↗</span></Link>
       <button ref={menuRef} className="menu-toggle" type="button" aria-expanded={open} aria-controls={open ? "mobile-nav" : undefined} onClick={() => setOpen(!open)}>{open ? "Cerrar" : "Menú"}<span aria-hidden>{open ? "−" : "+"}</span></button>
     </div>
-    {open && <nav id="mobile-nav" className="mobile-nav" aria-label="Navegación móvil"><Link href="/programa" onClick={close}>Programa ↗</Link><Link href="/#encuentro" onClick={close}>El encuentro ↗</Link><Link href="/entradas?ver=pase" onClick={close}>Mi pase ↗</Link></nav>}
-  </header>;
+    {open && <nav id="mobile-nav" className="mobile-nav" aria-label="Navegación móvil"><Link href="/programa" transitionTypes={[programDirection]} onClick={close}>Programa ↗</Link><Link href="/#encuentro" transitionTypes={backToHome ? [NAV_BACK] : undefined} onClick={close}>El encuentro ↗</Link><Link href="/entradas?ver=pase" onClick={close}>Mi pase ↗</Link></nav>}
+  </header></PageTransitionPersist>;
 }

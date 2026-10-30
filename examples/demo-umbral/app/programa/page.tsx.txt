@@ -1,6 +1,7 @@
 import Link from "next/link";
+import PageTransition, { NAV_BACK } from "trama-ui/PageTransition";
 import Program from "../ui/program";
 export const metadata = { title: "Programa" };
 export default function ProgramPage() {
-  return <section className="section-wrap page-section"><Link className="back-link" href="/">← Volver al encuentro</Link><div className="page-heading"><div><span className="eyebrow">14 — 16 MAYO / MADRID</span><h1>Encuentra<br />tu frecuencia.</h1></div><p>Del primer «¿y si…?» al último baile.<br />Haz espacio para algo que no esperabas.</p></div><Program /></section>;
+  return <PageTransition kind="wipe" direction="left" pace="fast" tone="acc"><section className="section-wrap page-section"><Link className="back-link" href="/" transitionTypes={[NAV_BACK]}>← Volver al encuentro</Link><div className="page-heading"><div><span className="eyebrow">14 — 16 MAYO / MADRID</span><h1>Encuentra<br />tu frecuencia.</h1></div><p>Del primer «¿y si…?» al último baile.<br />Haz espacio para algo que no esperabas.</p></div><Program /></section></PageTransition>;
 }

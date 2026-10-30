@@ -24,5 +24,8 @@ existe; no borra ni reemplaza una demo anterior. Para trabajar sin Codex, omite 
 - `/programa`: sesiones filtrables por día y espacio.
 - `/entradas`: selección de pase, cantidad, datos de muestra, recibo descargable y recuperación desde el mismo navegador.
 
+Las rutas usan `PageTransition` de Trama: barrido rápido al avanzar, sentido inverso al volver y cabecera persistente.
+Los enlaces de cartelera que genera `EventLineup` mantienen además un fundido entre documentos del mismo origen.
+
 Las fichas conservadas en `app/*.txt` son las fuentes: el sufijo evita que el TypeScript del sitio raíz las compile.
 El preparador las copia al consumidor y elimina `.txt`. `BRIEF.md` registra las decisiones de diseño y ensamblado.
