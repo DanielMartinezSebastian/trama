@@ -304,3 +304,11 @@
 - Comprobaciones: `npm run build` de producción en los tres consumidores; QA completo de `scripts/qa/demo-umbral.mts` en los tres: filtros, compra de muestra, validación, persistencia, descarga, transiciones, axe WCAG 2.0 A/AA y 320/390/768/1440 px; todos pasan. `npm run smoke` devuelve HTTP 200 sin errores ni sombras. Capturas revisadas en `.refs3d/demo-umbral/entrega-*`.
 - Verificación del repo: `typecheck`, `ui:test`, `check:shadows`, `cine:test`, cuaderno y `git diff --check` pasan. `npm run verify` queda bloqueado por 39 JSON de `docs/agents/` que `catalog:check` considera desactualizados; al ejecutar `agents:test` de forma aislada también falla la instantánea de conocimiento por metadatos de commit/hash anteriores. No se regeneraron datos del catálogo ajenos a esta demo.
 - Siguiente paso: valoración del usuario en `http://127.0.0.1:3436`, `:3437` y `:3438`; se mantienen las tres vistas previas levantadas.
+
+## Criterio de revisión de solapamientos en skills (30 de octubre de 2026)
+
+- Objetivo: evaluar solapamientos según si construyen la composición o si interfieren con la lectura y el uso.
+- Cambios: `trama-style` pide clasificarlos por efecto y revisar capas, jerarquía, recortes y textos en imágenes a tamaños reales; `trama-build` define como fallo el texto oculto/ilegible o la capa que intercepta controles.
+- Decisión: una colisión gráfica puede ser deliberada; que sea intencional no exime de legibilidad. Texto informativo y acciones deben seguir claros.
+- Comprobaciones: revisión de ambos `SKILL.md` y `git diff --check`. `npm run pkg:pack` no pudo continuar porque el preflight `catalog:check` detecta los mismos 39 JSON desactualizados de `docs/agents/`; no se regeneró ese catálogo ajeno a este cambio.
+- Siguiente paso: regenerar/revisar el catálogo de agentes en una tarea propia y volver a empaquetar para validar la copia instalada.
