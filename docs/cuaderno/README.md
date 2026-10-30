@@ -12,7 +12,7 @@
 | 2026-10-30 | [demo-rizo-empresa-tecnologica](demo-rizo-empresa-tecnologica.md) · RIZO, cinco experiencias para una empresa ficticia de software | demo | hecho | empresa, tecnología, marketing, eventos | electrico, tecnico, nocturno | `http://127.0.0.1:3441` |
 | 2026-10-30 | [demo-umbral-skills](demo-umbral-skills.md) · UMBRAL, festival ficticio compuesto con las skills de Trama | demo | hecho | cultura | lúdico | `http://127.0.0.1:3435` |
 | 2026-10-30 | [herramienta-mapa-decision-skills](herramienta-mapa-decision-skills.md) · Mapa interactivo de decisiones de las skills de Trama | herramienta | hecho |  |  | `http://127.0.0.1:3450/flujo-decision-skills.html` |
-| 2026-10-30 | [ines-bruma-ilustradora](ines-bruma-ilustradora.md) · Inés Bruma, portfolio de ilustradora digital | demo | en curso | ilustración, cultura | editorial | `http://127.0.0.1:3451/` |
+| 2026-10-30 | [ines-bruma-ilustradora](ines-bruma-ilustradora.md) · Inés Bruma, portfolio de ilustradora digital | demo | hecho | ilustración, cultura | editorial | `http://127.0.0.1:3451/` |
 | 2026-10-30 | [umbral-tres-esteticas](umbral-tres-esteticas.md) · Tres estéticas para UMBRAL | demo | hecho | cultura | lúdico | `http://127.0.0.1:3436` |
 | 2026-10-29 | [demo-linde-agentes](demo-linde-agentes.md) · Linde, consumidor limpio para el piloto de agentes | demo | en curso | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |
@@ -149,7 +149,7 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 ### editorial
 
 - Fichas: [ines-bruma-ilustradora](ines-bruma-ilustradora.md)
-- Colores: `#f4efdf` `#202221` `#e14d35` `#273f9b` `#f2bd48`
+- Colores: `#f4efdf` `#202221` `#b93228` `#273f9b` `#f2bd48`
 - Letras: Instrument Serif, Instrument Sans, JetBrains Mono
 - Tipografía: mono en metadatos, serif expresiva en titulares
 - Paleta: amarillo mantequilla, azul ultramar, papel cálido, tomate, verde
@@ -297,11 +297,11 @@ cinta de texto (6) · horario de clases (6) · equipo con fotos (5) · preguntas
 
 ### Movimiento (`movimiento`)
 
-cinta que corre (9) · movimiento reducido respetado (5) · scroll suavizado (5) · subrayado que crece (4) · texto que rueda (3) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · marquesina lenta (2) · acercamiento de ilustraciones (1) · acercamiento lento (1) · cámara coreografiada (1) · cambios de estado sin animación obligatoria (1) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · menú que cae (1) · órbitas animadas (1) · palabras que asoman (1) · producto fijo (1) · relleno que baja (1) · rotación editorial (1) · titular por líneas (1) · titular que cruza (1) · transición de página (1) · transición entre páginas (1) · vídeos que se suceden (1)
+cinta que corre (9) · movimiento reducido respetado (5) · scroll suavizado (5) · subrayado que crece (4) · texto que rueda (3) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · marquesina lenta (2) · acercamiento lento (1) · cámara coreografiada (1) · cambios de estado sin animación obligatoria (1) · desenfoque al bajar (1) · enlaces que suben escalonados (1) · escena expandida con scroll (1) · menú que cae (1) · órbitas animadas (1) · palabras que asoman (1) · producto fijo (1) · relleno que baja (1) · revelado por recorte (1) · shader WebGL en hover (1) · titular por líneas (1) · titular que cruza (1) · transición de página (1) · transición entre páginas (1) · vídeos que se suceden (1)
 
 ### Piezas del kit (`piezas`)
 
-FullscreenMenu (16) · AppointmentList (15) · BookingFlow (15) · GuideFrame (12) · OpeningHours (12) · ContactForm (10) · Marquee (10) · PricingSection (10) · TeamSection (9) · ActionBar (8) · FAQSection (8) · Button (7) · ClassSchedule (7) · EnrollmentFlow (7) · MemberArea (6) · MembershipFlow (6) · QRCode (6) · SectionHeader (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · QuantityStepper (5) · CartDrawer (4) · Hero (4) · PageTransition (4) · TestimonialSection (4) · CohortList (3) · EventLineup (3) · Footer (3) · LineDraw (3) · LogoCloud (3) · RollLink (3) · Stepper (3) · TextField (3) · Accordion (2) · Alert (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · OptionPicker (2) · ProductCard (2) · Reveal (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · guides (1) · HorizontalScroll (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollExpand (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · viewTransitions (1)
+FullscreenMenu (16) · AppointmentList (15) · BookingFlow (15) · GuideFrame (12) · OpeningHours (12) · ContactForm (10) · Marquee (10) · PricingSection (10) · TeamSection (9) · ActionBar (8) · FAQSection (8) · Button (7) · ClassSchedule (7) · EnrollmentFlow (7) · MemberArea (6) · MembershipFlow (6) · QRCode (6) · SectionHeader (6) · SmoothScroll (6) · BriefFlow (5) · CheckoutFlow (5) · QuantityStepper (5) · CartDrawer (4) · Hero (4) · PageTransition (4) · TestimonialSection (4) · CohortList (3) · EventLineup (3) · Footer (3) · LineDraw (3) · LogoCloud (3) · Reveal (3) · RollLink (3) · Stepper (3) · TextField (3) · Accordion (2) · Alert (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · OptionPicker (2) · ProductCard (2) · ScrollExpand (2) · ShapeMosaic (2) · BeforeAfter (1) · Carousel (1) · ChatWidget (1) · CookieBanner (1) · DeviceMockup (1) · DistortImage (1) · FeatureExplorer (1) · fonts (1) · GradientField (1) · guides (1) · HorizontalScroll (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollProgress (1) · SeatMap (1) · ShowBookingFlow (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 
