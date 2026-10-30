@@ -284,4 +284,4 @@
 - Cambios: tres visualizaciones conceptuales generadas con Codex imagegen, convertidas a WebP optimizado y añadidas a `examples/demo-umbral/public/espacios/`. Galería responsive en la portada con `next/image`, alt descriptivo y una nota visible que aclara que el recinto es ficticio.
 - Decisiones: se conserva el portal geométrico SVG como motivo de identidad y las nuevas imágenes se concentran en la galería, donde ayudan a distinguir lugar y espacios. No se presentan como fotos de una ubicación real.
 - Comprobaciones: build y pruebas de recorrido de un consumidor aislado, `npm run smoke`, revisión visual en escritorio y móvil, `npm run verify`, `npm run lab:cuaderno` y `git diff --check`.
-- Siguiente paso: revisión del usuario en la captura de la portada renovada; el servidor temporal se cierra al terminar esta comprobación.
+- Siguiente paso: revisión del usuario en `http://127.0.0.1:3436/`, con el preview de producción disponible para abrirlo en navegador. El servidor anterior en 3435 sigue intacto.
