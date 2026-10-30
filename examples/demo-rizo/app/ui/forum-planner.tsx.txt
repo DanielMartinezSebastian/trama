@@ -1,0 +1,16 @@
+"use client";
+import { useState } from "react";
+const sessions = [
+  { time: "10:30", title: "La interfaz como infraestructura", room: "Sala Umbral", type: "CONVERSACIÓN", speaker: "Mara Soler · Diseño de servicios" },
+  { time: "12:00", title: "Prototipar sistemas, no pantallas", room: "Laboratorio 02", type: "TALLER", speaker: "Leo Navas · Ingeniería de producto" },
+  { time: "15:15", title: "Cuando los datos se vuelven espacio", room: "Plaza central", type: "INSTALACIÓN", speaker: "Estudio Rizo · Experiencia inmersiva" },
+  { time: "17:00", title: "Una organización, muchas experiencias", room: "Sala Umbral", type: "MESA ABIERTA", speaker: "Invitadas de producto y CX" },
+];
+export default function ForumPlanner() {
+  const [day, setDay] = useState("Jueves 12"); const [chosen, setChosen] = useState(""); const [confirmed, setConfirmed] = useState(false);
+  return <div className="forum-planner"><div className="planner-controls"><div role="group" aria-label="Día del foro">{["Jueves 12", "Viernes 13"].map(d => <button key={d} className={day === d ? "active" : ""} aria-pressed={day === d} onClick={() => { setDay(d); setConfirmed(false); }}>{d} <small>{d.startsWith("Jueves") ? "NOV" : "NOV"}</small></button>)}</div><span>AFORO CONCEPTUAL · ACCESO LIBRE</span></div>
+    <div className="session-list">{sessions.map((s, i) => <button key={s.time} onClick={() => { setChosen(s.title); setConfirmed(false); }} className={`session ${chosen === s.title ? "session--active" : ""}`}><span className="session-time">{day.startsWith("Jueves") ? s.time : ["10:00", "11:45", "14:30", "16:15"][i]}</span><span className="session-main"><small>{s.type}</small><strong>{s.title}</strong><em>{s.speaker}</em></span><span className="session-room">{s.room}</span><span className="session-arrow">↗</span></button>)}</div>
+    <div className="planner-bottom"><div><span className="eyebrow">TU SIGUIENTE PASO</span><strong>{chosen || "Elige una sesión del programa."}</strong></div><button className="button button--acid" disabled={!chosen} onClick={() => setConfirmed(true)}>{confirmed ? "Añadido a tu recorrido ✓" : "Añadir a mi recorrido ↗"}</button></div>
+    {confirmed && <p className="planner-confirm" role="status">Sesión guardada en este navegador. El programa y la asistencia son ficticios.</p>}
+  </div>;
+}

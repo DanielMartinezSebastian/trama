@@ -1,0 +1,17 @@
+import type { ReactNode } from "react";
+import GuideFrame from "trama-ui/GuideFrame";
+import { jetbrainsMono, instrumentSans, spaceGrotesk } from "trama-ui/fonts";
+import "trama-ui/styles.css";
+import "./rizo.css";
+
+export const metadata = {
+  icons: { icon: "/icon.svg" },
+  title: "RIZO — Sistemas que mueven organizaciones",
+  description: "Tres maneras de diseñar tecnología transversal con UX de alto impacto. Campaña, producto y experiencia en vivo.",
+};
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}><body>
+    <GuideFrame guide="electrico" textContrast className="rizo-frame">{children}</GuideFrame>
+  </body></html>;
+}

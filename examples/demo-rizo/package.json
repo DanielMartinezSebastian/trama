@@ -1,0 +1,8 @@
+{
+  "name": "demo-rizo-trama-skills",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "dev": "next dev --port 3441", "build": "next build", "start": "next start --port 3441", "typecheck": "tsc --noEmit" },
+  "dependencies": { "next": "16.3.5", "react": "19.3.0", "react-dom": "19.3.0", "trama-ui": "0.13.0" },
+  "devDependencies": { "typescript": "5.9.3", "@types/react": "19.3.0", "@types/node": "24.10.1", "@types/react-dom": "19.3.0", "playwright": "1.64.1" }
+}

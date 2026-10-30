@@ -1,0 +1,28 @@
+"use client";
+import { useState } from "react";
+
+export default function BriefForm({ dark = false }: { dark?: boolean }) {
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    if (name.length < 2 || !/^\S+@\S+\.\S+$/.test(email)) { setError("Comprueba tu nombre y un correo válido."); return; }
+    const brief = { name, email, challenge: String(data.get("challenge") ?? ""), createdAt: new Date().toISOString() };
+    const old = JSON.parse(localStorage.getItem("rizo-briefs") ?? "[]") as unknown[];
+    localStorage.setItem("rizo-briefs", JSON.stringify([...old, brief]));
+    setError(""); setSent(true);
+  }
+  return <form className={`brief-form ${dark ? "brief-form--dark" : ""}`} onSubmit={submit}>
+    {sent ? <div className="form-success" role="status"><span>✓</span><div><strong>Brief guardado en esta demo.</strong><p>Gracias. El registro se conserva en este navegador; no se envía a un servidor.</p><button type="button" onClick={() => setSent(false)}>Crear otro brief</button></div></div> : <>
+      <label>Tu nombre<input name="name" autoComplete="name" required minLength={2} placeholder="Alex García" /></label>
+      <label>Correo de trabajo<input name="email" type="email" autoComplete="email" required placeholder="alex@empresa.com" /></label>
+      <label>¿Qué te gustaría transformar?<select name="challenge" defaultValue=""><option value="" disabled>Selecciona un reto</option><option>Un servicio que llega a demasiados canales</option><option>Una herramienta interna difícil de usar</option><option>Una campaña o experiencia pública</option><option>Explorar una oportunidad</option></select></label>
+      {error && <p className="form-error" role="alert">{error}</p>}
+      <button className="button button--send" type="submit">Crear un brief local <span aria-hidden="true">↗</span></button>
+      <p className="form-note">Prototipo funcional · el formulario solo guarda el ejemplo en tu navegador.</p>
+    </>}
+  </form>;
+}

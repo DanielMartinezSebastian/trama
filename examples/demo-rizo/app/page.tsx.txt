@@ -1,0 +1,19 @@
+import Link from "next/link";
+import PageTransition from "trama-ui/PageTransition";
+import Button from "trama-ui/Button";
+
+const demos = [
+  { href: "/campaign", n: "01", tag: "CAMPAÑA · HISTORIA PÚBLICA", title: "La ciudad también es una interfaz.", copy: "Una campaña experiencial para convertir la movilidad cotidiana en una conversación que se puede tocar.", style: "tile--signal", label: "Entrar en la campaña", mode: "ESCALA · EMOCIÓN" },
+  { href: "/system", n: "02", tag: "PRODUCTO · SISTEMA OPERATIVO", title: "Menos fricción. Más organización.", copy: "Un espacio de trabajo real para orquestar operaciones complejas sin perder de vista a las personas.", style: "tile--system", label: "Explorar el producto", mode: "PRECISIÓN · CONTROL" },
+  { href: "/forum", n: "03", tag: "FERIA · EXPERIENCIA PRESENCIAL", title: "La tecnología se encuentra en persona.", copy: "Una invitación a recorrer un foro donde cada instalación vuelve tangible una idea digital.", style: "tile--forum", label: "Visitar el foro", mode: "ESPACIO · COMUNIDAD" },
+];
+
+export default function Home() {
+  return <main className="index"><PageTransition kind="stairs" pace="slow"><header className="index-head"><Link className="wordmark" href="/">RIZO<span>®</span></Link><p>TECNOLOGÍA CON INTENCIÓN<br/>MADRID · REMOTO · 2026</p></header>
+    <div className="index-kicker"><span>ESTUDIO INDEPENDIENTE DE PRODUCTO</span><span>UX DE ALTO IMPACTO / SISTEMAS TRANSVERSALES</span></div>
+    <h1>Hacemos que lo complejo <em>se sienta sencillo.</em></h1>
+    <p className="index-deck">Diseñamos y desarrollamos software a medida para organizaciones que no caben en una plantilla. Tres puntos de vista. Una misma convicción: la tecnología debe mover algo.</p>
+    <div className="demo-grid">{demos.map(d => <article key={d.href} className={`demo-tile ${d.style}`}><div className="tile-meta"><span>{d.n} / 03</span><span>{d.mode}</span></div><div><p className="eyebrow">{d.tag}</p><h2>{d.title}</h2><p>{d.copy}</p><Button label={d.label} href={d.href} variant="solid" size="md"/></div></article>)}</div>
+    <footer className="index-foot"><span>CONCEPTOS FICTICIOS · CONSTRUIDOS CON TRAMA UI</span><span>DISEÑO × INGENIERÍA × SISTEMAS</span></footer>
+  </PageTransition></main>;
+}

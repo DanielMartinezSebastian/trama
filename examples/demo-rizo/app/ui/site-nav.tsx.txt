@@ -1,0 +1,7 @@
+import Link from "next/link";
+import { NAV_FORWARD } from "trama-ui/PageTransition";
+
+type Props = { brand: string; tone: string; links: { href: string; label: string }[] };
+export default function SiteNav({ brand, tone, links }: Props) {
+  return <header className={`site-nav ${tone}`}><Link className="site-brand" href="/">{brand}<span>®</span></Link><nav aria-label="Navegación principal"><Link href="/" transitionTypes={[NAV_FORWARD]}>RIZO</Link>{links.map(link => <Link key={link.href} href={link.href} transitionTypes={[NAV_FORWARD]}>{link.label}</Link>)}</nav><Link className="nav-contact" href="/system#brief" transitionTypes={[NAV_FORWARD]}>Hablemos <span aria-hidden="true">↗</span></Link></header>;
+}

@@ -57,7 +57,8 @@
     "agents:test-pilot": "tsx scripts/test-agent-pilot.mts",
     "agents:evaluate": "tsx scripts/evaluate-agents.mts",
     "agents:validate-evaluation": "tsx scripts/validate-agent-evaluation.mts",
-    "umbral:variant": "tsx scripts/prepare-umbral-variantes.mts"
+    "umbral:variant": "tsx scripts/prepare-umbral-variantes.mts",
+    "rizo:prepare": "tsx scripts/prepare-demo-rizo.mts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

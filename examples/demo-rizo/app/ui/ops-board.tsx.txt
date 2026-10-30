@@ -1,0 +1,23 @@
+"use client";
+import { useMemo, useState } from "react";
+const work = [
+  { id: "CX-104", name: "Unificar la atención de 14 canales", area: "Servicio", status: "En diseño", impact: "Alto", owner: "Equipo Nexo", desc: "Un front door común que conserva la lógica y los equipos locales. Investigación con 24 agentes, mapa de 6 journeys y arquitectura de servicios." },
+  { id: "CX-087", name: "Portal de operaciones urbanas", area: "Plataforma", status: "En desarrollo", impact: "Alto", owner: "Equipo Atlas", desc: "Un sistema común para incidencias, permisos y seguimiento de activos en 8 distritos. Interfaces accesibles y API para integrar sistemas existentes." },
+  { id: "CX-061", name: "Activación interactiva en calle", area: "Campaña", status: "En vivo", impact: "Medio", owner: "Equipo Prisma", desc: "Una experiencia pública que transforma señales de movilidad en una visualización participativa. El concepto se muestra en /campaign." },
+  { id: "CX-112", name: "Kit de autoservicio para equipos", area: "Producto", status: "En definición", impact: "Medio", owner: "Equipo Nexo", desc: "Componentes y patrones accesibles para que distintos productos compartan lenguaje, estados y métricas de experiencia." },
+];
+export default function OpsBoard() {
+  const [filter, setFilter] = useState("Todo"); const [selected, setSelected] = useState(work[0]); const [query, setQuery] = useState(""); const [saved, setSaved] = useState(false);
+  const shown = useMemo(() => work.filter(item => (filter === "Todo" || item.area === filter) && `${item.name} ${item.id} ${item.owner}`.toLowerCase().includes(query.toLowerCase())), [filter, query]);
+  return <section className="ops-board" aria-label="Vista previa interactiva de Rizo OS">
+    <div className="board-top"><div><span className="live-dot"/> ESPACIO DE TRABAJO <b>/ DEMO</b></div><button onClick={() => setSaved(v => !v)} aria-pressed={saved}>{saved ? "★ Guardado" : "☆ Guardar vista"}</button></div>
+    <div className="board-welcome"><div><span className="eyebrow">JUEVES, 30 OCTUBRE · VISTA DE DIRECCIÓN</span><h2>Buenos días, Alex.</h2><p>Tu cartera, a escala humana.</p></div><div className="capacity"><span>CAPACIDAD DE EQUIPO</span><strong>82<small>%</small></strong><div><i/></div><small>3 equipos · 11 iniciativas activas</small></div></div>
+    <div className="board-kpis"><div><span>Iniciativas activas</span><strong>11</strong><small>+2 este trimestre</small></div><div><span>En buen camino</span><strong>8 <i>↗</i></strong><small>73% de la cartera</small></div><div><span>Personas en equipos</span><strong>36</strong><small>UX · producto · ingeniería</small></div></div>
+    <div className="board-table"><div className="table-head"><div><span className="eyebrow">PORTFOLIO DE TRABAJO</span><h3>Iniciativas</h3></div><input aria-label="Buscar iniciativa" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar…"/></div>
+      <div className="filters" aria-label="Filtrar por área">{["Todo", "Servicio", "Plataforma", "Campaña", "Producto"].map(f => <button key={f} className={filter === f ? "is-active" : ""} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f}</button>)}</div>
+      <div className="work-list">{shown.length ? shown.map(item => <button key={item.id} className={`work-row ${selected.id === item.id ? "is-selected" : ""}`} onClick={() => setSelected(item)}><span>{item.id}</span><strong>{item.name}</strong><span className="row-area">{item.area}</span><span className={`status status--${item.status.replaceAll(" ", "-").toLowerCase()}`}>{item.status}</span><span className="row-arrow">↗</span></button>) : <p className="empty-state">No hay iniciativas con ese filtro. Prueba otra búsqueda.</p>}</div>
+      <aside className="detail-panel" aria-live="polite"><div><span className="eyebrow">{selected.id} · {selected.area.toUpperCase()}</span><h4>{selected.name}</h4><p>{selected.desc}</p></div><div className="detail-meta"><span>RESPONSABLE<strong>{selected.owner}</strong></span><span>IMPACTO<strong>{selected.impact}</strong></span><span>ESTADO<strong>{selected.status}</strong></span></div></aside>
+    </div>
+    <p className="board-disclaimer">Datos de muestra · Rizo OS es un concepto, no un producto en producción.</p>
+  </section>;
+}

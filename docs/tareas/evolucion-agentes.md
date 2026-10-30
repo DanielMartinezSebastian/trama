@@ -346,7 +346,7 @@
 
 ## Siguiente prueba de skills: tres demos para una empresa tecnológica (30 de octubre de 2026)
 
-- Estado: prompt guardado; implementación pendiente.
+- Estado: implementada y disponible para revisión en `http://127.0.0.1:3441/`.
 - Objetivo: probar las skills de revisión actualizadas construyendo tres demos funcionales para la misma propuesta de una SL de servicios tecnológicos. Deben diferenciarse en enfoque y estructura, aprovechar la librería y ofrecer experiencias efectistas pero útiles para explicar y convertir.
 - Prompt recibido:
 
@@ -354,4 +354,15 @@
 Con todos los cambios realizados en esta sesion sobre las skills de revision. Voy a solicitar tres demos funcionales al 100% que incluyan imagenes si es necesario, animaciones, transiciones entre paginas y un abanico amplio de opciones para mostrar la potencia y alcance de la libreria para generar diferentes demostraciones con aproximaciones y puntos de vista totalmente diferentes entre si para una misma propuesta. Objetivo: 3 Webs para una SL que ofrece servicios tecnologicos de desarrollo de software a medida con enfoque en la UX de alto impacto. La empresa se dedica a crear soluciones digitales transversales para grandes empresas. Las demos deben impactar en el uso de tecnicas modernas con una UI efectista en todas ellas aportando cierto valor cinematico en sus narativas pero efectivas a la hora de convertir las explicaciones en acciones para el usuario. La empresa actualmente debe simular haber participado en campañas de marketing, aplicaciones, webs, y ferias donde la tecnologia y efectismo digital es la base y core de la personalidad de los trabajos realizados.
 ```
 
-- Siguiente paso: iniciar la prueba en esta rama, definir tres direcciones de diseño realmente distintas y evaluar en cada demo legibilidad, límites de texto, navegación, animaciones, transiciones y acciones de conversión. Mantener pendiente la regeneración de los 39 JSON de `docs/agents/` hasta una tarea específica.
+- Siguiente paso: revisión humana de las tres experiencias en producción local. Mantener pendiente la regeneración de los 39 JSON de `docs/agents/` hasta una tarea específica.
+
+## Tres experiencias RIZO para una empresa tecnológica (30 de octubre de 2026)
+
+- Objetivo: llevar el prompt guardado a tres webs navegables para la SL ficticia RIZO UX Systems, con aproximaciones diferentes a campañas, producto/software y ferias.
+- Cambios: nueva fuente en `examples/demo-rizo/`; materializador seguro en `scripts/prepare-demo-rizo.mts`; tablero operativo filtrable y buscable, ficha secundaria de producto, caso secundario de campaña, programa interactivo, registro de brief y visita en `localStorage`; imágenes conceptuales generadas para Señal y FORO / 10; ficha `docs/cuaderno/demo-rizo-empresa-tecnologica.md` e índice actualizado. El root del sitio permite elegir las tres rutas bajo `/campaign`, `/system` y `/forum`.
+- Decisiones: una app Next aislada y un origen compartido simplifican la navegación/transición y dejan cada web en su espacio de rutas; el landing index funciona como selector, con links cruzados. Las acciones muestran estado y guardan solo datos locales. Las imágenes, clientes, campañas, personas, resultados y evento se presentan como ficticios. No se altera el kit ni se conectan sistemas externos.
+- Comprobaciones: `typecheck` y build de producción del consumidor RIZO correctos; build del sitio de la librería correcto (advierte por el tracing dinámico existente de cine y fuentes sin override); `smoke --auditar` en índice y cinco rutas sin errores de consola, sombras oscuras ni controles/enlaces sin efecto; Playwright recorre navegación, briefs, filtros, búsqueda, detalle, agenda y reserva local. `qa:visual-text` sin desbordes ni texto recortado en las rutas principales a 16 anchos (320–1920 px), y sin marcas en las dos fichas secundarias a 14 anchos. En `/forum`, solo queda la intersección geométrica de los bounding boxes de las dos líneas del titular «FORO / 10»; inspeccionadas en capturas a 320 y 556 px, las letras no se tocan y el titular mantiene lectura. Evidencias ignoradas en `.refs3d/visual-text/3441-1793359766417`, `...9773220`, `...9778417` y `.refs3d/smoke/`.
+- Estado de `verify`: ejecutado; pasa `typecheck` y se detiene en `catalog:check` por los 39 JSON obsoletos de `docs/agents/` que el usuario pidió dejar sin regenerar. `agents:test` también señala la huella/fuente obsoleta. `ui:test`, `check:shadows`, `cine:test` y `lab:cuaderno -- --check` pasan por separado.
+- Rama/worktree: `feat/evolucion-agentes`, `C:/COMPARTIDO/trama-evolucion-agentes`; paquete instalado trama-ui 0.13.0, consumidor aislado en `.cache/demo-rizo`.
+- Servidor de revisión: `http://127.0.0.1:3441/` (producción local, iniciado por esta tarea y conservado para revisión).
+- Siguiente paso: recibir observaciones de la revisión humana; mantener la deuda de los JSON pendiente y no publicar ni desplegar.
