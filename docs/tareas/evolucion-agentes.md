@@ -343,3 +343,15 @@
 - Decisiones: preservar el layout de tres columnas; ajustar el tamaño de una etiqueta de índice es menos disruptivo que mover la regla o ensanchar la columna a costa del titular y la fotografía.
 - Comprobaciones: antes del arreglo `qa:visual-text` reprodujo el desborde de «UMBRAL» por 8,8 px a 1918 px; después, sin desbordes de esa marca en 1281/1440/1441/1918/1920/2560 px. Informe y capturas en `.refs3d/visual-text/3436-1793358056337/`; revisión visual a 1281 y 1918 px. Build del consumidor y del sitio, typecheck, recorrido funcional de Fanzine, smoke, cuaderno y `git diff --check` correctos. `npm run verify` continúa bloqueado por los 39 JSON desactualizados de `docs/agents/` ya documentados.
 - Siguiente paso: revisión del usuario en `http://127.0.0.1:3436` con viewport CSS de 1918 px.
+
+## Siguiente prueba de skills: tres demos para una empresa tecnológica (30 de octubre de 2026)
+
+- Estado: prompt guardado; implementación pendiente.
+- Objetivo: probar las skills de revisión actualizadas construyendo tres demos funcionales para la misma propuesta de una SL de servicios tecnológicos. Deben diferenciarse en enfoque y estructura, aprovechar la librería y ofrecer experiencias efectistas pero útiles para explicar y convertir.
+- Prompt recibido:
+
+```text
+Con todos los cambios realizados en esta sesion sobre las skills de revision. Voy a solicitar tres demos funcionales al 100% que incluyan imagenes si es necesario, animaciones, transiciones entre paginas y un abanico amplio de opciones para mostrar la potencia y alcance de la libreria para generar diferentes demostraciones con aproximaciones y puntos de vista totalmente diferentes entre si para una misma propuesta. Objetivo: 3 Webs para una SL que ofrece servicios tecnologicos de desarrollo de software a medida con enfoque en la UX de alto impacto. La empresa se dedica a crear soluciones digitales transversales para grandes empresas. Las demos deben impactar en el uso de tecnicas modernas con una UI efectista en todas ellas aportando cierto valor cinematico en sus narativas pero efectivas a la hora de convertir las explicaciones en acciones para el usuario. La empresa actualmente debe simular haber participado en campañas de marketing, aplicaciones, webs, y ferias donde la tecnologia y efectismo digital es la base y core de la personalidad de los trabajos realizados.
+```
+
+- Siguiente paso: iniciar la prueba en esta rama, definir tres direcciones de diseño realmente distintas y evaluar en cada demo legibilidad, límites de texto, navegación, animaciones, transiciones y acciones de conversión. Mantener pendiente la regeneración de los 39 JSON de `docs/agents/` hasta una tarea específica.
