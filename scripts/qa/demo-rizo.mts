@@ -11,7 +11,7 @@ page.on("pageerror", e => errors.push(e.message));
 page.on("console", m => { if (m.type() === "error") errors.push(m.text()); });
 try {
   await page.goto(origin);
-  assert.equal(await page.locator(".demo-tile").count(), 3, "el índice ofrece las tres demos");
+  assert.equal(await page.locator(".demo-tile").count(), 5, "el selector ofrece cinco experiencias distintas");
 
   await page.getByRole("link", { name: "Entrar en la campaña" }).click();
   await page.getByRole("link", { name: "Descubrir la idea" }).click();
@@ -52,6 +52,20 @@ try {
   await page.getByRole("status").getByText("Tu visita de prueba está en este navegador.").waitFor();
   assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem("rizo-forum-visits") ?? "[]").length), 1);
 
+  await page.goto(`${origin}/archive`);
+  await page.getByRole("button", { name: "CAMPAÑA", exact: true }).click();
+  assert.equal(await page.locator(".archive-card").count(), 1, "el archivo filtra casos por práctica");
+  await page.getByRole("button", { name: "TODO", exact: true }).click();
+  assert.equal(await page.locator(".archive-card").count(), 4, "el archivo restaura todos los casos");
+  await page.getByRole("link", { name: /Señal: la ciudad responde/ }).click();
+  await page.waitForURL(/\/campaign$/);
+
+  await page.goto(`${origin}/navigator`);
+  await page.getByRole("radio", { name: /Activar una experiencia/ }).check();
+  await page.getByRole("radio", { name: /La gente abandona/ }).check();
+  await page.getByRole("heading", { name: "Empieza con una idea que se pueda vivir." }).waitFor();
+  assert.match(await page.getByRole("link", { name: /Ver una campaña experiencial/ }).getAttribute("href") ?? "", /\/campaign$/);
+
   assert.deepEqual(errors, [], `errores de navegador: ${errors.join("; ")}`);
-  console.log(JSON.stringify({ ok: true, url: origin, flows: ["navegación y caso de campaña", "brief local de campaña", "filtro, detalle y búsqueda del producto", "brief local de producto", "agenda y recorrido personal del foro", "reserva de visita local"], errors }, null, 2));
+  console.log(JSON.stringify({ ok: true, url: origin, flows: ["navegación y caso de campaña", "brief local de campaña", "filtro, detalle, búsqueda y brief de producto", "agenda y reserva de visita de foro", "filtro de archivo y navegación a caso", "diagnóstico y recomendación interactiva"], errors }, null, 2));
 } finally { await browser.close(); }

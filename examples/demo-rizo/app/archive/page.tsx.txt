@@ -1,0 +1,7 @@
+import Link from "next/link";
+import PageTransition from "trama-ui/PageTransition";
+import ArchiveGrid from "../ui/archive-grid";
+
+export default function Archive() {
+  return <main className="archive"><PageTransition kind="scan" pace="slow"><header className="archive-bar"><Link href="/" className="archive-symbol">R—</Link><span>ARCHIVO DE TRABAJO · 2021—26</span><Link href="/navigator">¿Tienes un reto? ↗</Link></header><section className="archive-intro"><p>RIZO / SELECTED WORK</p><h1>Diseñamos<br/><i>lo que mueve</i><br/>a las personas.</h1><div><span>PRODUCTO · SISTEMAS · CULTURA</span><span>DESPLAZA PARA EXPLORAR ↓</span></div></section><ArchiveGrid/><footer className="archive-footer"><span>NO SON CASOS. SON CAMBIOS DE CONTEXTO.</span><Link href="/">VOLVER AL SELECTOR ↗</Link></footer></PageTransition></main>;
+}

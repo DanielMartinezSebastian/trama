@@ -1,0 +1,16 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+const goals = ["Unificar canales", "Mejorar una herramienta", "Activar una experiencia", "Alinear equipos"];
+const contexts = ["Hay muchos sistemas", "La gente abandona", "Cada área trabaja distinto", "Aún estamos explorando"];
+const advice: Record<string, { title: string; copy: string; href: string; action: string }> = {
+  "Unificar canales": { title: "Empieza por el servicio completo.", copy: "Mapeamos los puntos de entrada, las reglas compartidas y lo que debe seguir siendo específico.", href: "/system", action: "Ver una plataforma transversal" },
+  "Mejorar una herramienta": { title: "Empieza por el trabajo real.", copy: "Observamos la tarea, los desvíos y las decisiones que la interfaz debería hacer más fáciles.", href: "/system#workspace", action: "Explorar Rizo OS" },
+  "Activar una experiencia": { title: "Empieza con una idea que se pueda vivir.", copy: "Conectamos una historia, un lugar y una interacción que invita a participar.", href: "/campaign", action: "Ver una campaña experiencial" },
+  "Alinear equipos": { title: "Empieza poniendo el sistema en común.", copy: "Un espacio compartido ayuda a convertir perspectivas distintas en una agenda de trabajo.", href: "/forum", action: "Visitar Foro / 10" },
+};
+export default function ImpactNavigator() {
+  const [goal, setGoal] = useState(""); const [context, setContext] = useState("");
+  const result = goal ? advice[goal] : null;
+  return <section className="navigator-tool" aria-label="Explorador de retos"><div className="navigator-steps"><fieldset><legend><b>01</b> ¿QUÉ QUIERES MOVER?</legend>{goals.map((item,i)=><label className={goal===item?"chosen":""} key={item}><input type="radio" name="goal" checked={goal===item} onChange={()=>setGoal(item)}/><span>0{i+1}</span>{item}<i>↗</i></label>)}</fieldset><fieldset><legend><b>02</b> ¿QUÉ OBSERVAS HOY?</legend>{contexts.map((item,i)=><label className={context===item?"chosen":""} key={item}><input type="radio" name="context" checked={context===item} onChange={()=>setContext(item)}/><span>0{i+1}</span>{item}<i>↗</i></label>)}</fieldset></div><aside className={`navigator-result ${result?"is-ready":""}`} aria-live="polite"><span className="result-index">R / {goal&&context?"READY":"WAITING"}</span>{result&&context?<><p>PRIMERA HIPÓTESIS</p><h2>{result.title}</h2><p>{result.copy}</p><Link href={result.href}>{result.action} ↗</Link></>:<><div className="result-orbit" aria-hidden="true"/><h2>El siguiente paso aparece aquí.</h2><p>Elige una dirección y un contexto. No es un presupuesto: es una forma de empezar la conversación.</p></>}</aside></section>;
+}

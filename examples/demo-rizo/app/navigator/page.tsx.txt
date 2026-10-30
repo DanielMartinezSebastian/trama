@@ -1,0 +1,7 @@
+import Link from "next/link";
+import PageTransition from "trama-ui/PageTransition";
+import ImpactNavigator from "../ui/impact-navigator";
+
+export default function Navigator() {
+  return <main className="navigator"><PageTransition kind="pixelate" pace="normal"><header className="navigator-bar"><Link href="/" className="navigator-mark">RIZO<span> / FIELD GUIDE</span></Link><span>TOOL 01 — SCOPING</span><Link href="/archive">CASOS ↗</Link></header><section className="navigator-heading"><p>NO EMPIECES POR LA SOLUCIÓN.</p><h1>¿Dónde se atasca<br/>el sistema?</h1><span>3 PREGUNTAS · 1 PUNTO DE PARTIDA</span></section><ImpactNavigator/><footer className="navigator-foot"><span>DISEÑO DE SERVICIOS · PRODUCTO · INGENIERÍA</span><span>RIZO UX SYSTEMS / HERRAMIENTA CONCEPTUAL</span></footer></PageTransition></main>;
+}

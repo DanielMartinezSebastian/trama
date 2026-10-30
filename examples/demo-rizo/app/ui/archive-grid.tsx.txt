@@ -1,0 +1,14 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+const projects = [
+  { id: "01", type: "CAMPAÑA", title: "Señal: la ciudad responde", meta: "Experiencia pública · Madrid", href: "/campaign", image: "/images/city-signal.png", className: "archive-card--signal" },
+  { id: "02", type: "PRODUCTO", title: "Rizo OS", meta: "Plataforma transversal · Concepto", href: "/system", image: "", className: "archive-card--system" },
+  { id: "03", type: "ENCUENTRO", title: "Foro / 10", meta: "Evento de producto · Nave 08", href: "/forum", image: "/images/forum-night.png", className: "archive-card--forum" },
+  { id: "04", type: "ESTRATEGIA", title: "Del problema a la primera decisión", meta: "Navegador de retos · Interactivo", href: "/navigator", image: "", className: "archive-card--navigator" },
+];
+export default function ArchiveGrid() {
+  const [filter, setFilter] = useState("TODO");
+  const shown = projects.filter(project => filter === "TODO" || project.type === filter);
+  return <section className="archive-work" aria-label="Proyectos seleccionados"><div className="archive-filters" role="group" aria-label="Filtrar proyectos">{["TODO", "CAMPAÑA", "PRODUCTO", "ENCUENTRO", "ESTRATEGIA"].map(item => <button key={item} className={filter === item ? "active" : ""} aria-pressed={filter === item} onClick={() => setFilter(item)}>{item}</button>)}</div><div className="archive-grid">{shown.map(project => <Link key={project.id} className={`archive-card ${project.className}`} href={project.href}><div className="archive-card-art">{project.image ? <img src={project.image} alt="" /> : <span aria-hidden="true">{project.id === "02" ? "01 / 11" : "→"}</span>}<small>{project.id} / 04</small></div><div className="archive-card-copy"><span>{project.type}</span><h2>{project.title}</h2><p>{project.meta}</p></div><b aria-hidden="true">↗</b></Link>)}</div></section>;
+}

@@ -1,13 +1,34 @@
 import Link from "next/link";
 import PageTransition, { NAV_FORWARD } from "trama-ui/PageTransition";
-import SiteNav from "../ui/site-nav";
 import OpsBoard from "../ui/ops-board";
 import BriefForm from "../ui/brief-form";
 
-export default function System() { return <main className="system"><PageTransition kind="stack" pace="normal"><SiteNav brand="rizo / systems" tone="nav--system" links={[{href:"/system/blueprint",label:"Método"},{href:"/system#brief",label:"Contacto"}]} /><section className="system-hero"><div className="system-intro"><span className="eyebrow"><i className="live-dot"/> SOFTWARE A MEDIDA · EQUIPOS TRANSVERSALES</span><h1>La organización<br/>es compleja.<br/><em>El trabajo no debería serlo.</em></h1><p>Construimos plataformas que alinean personas, procesos y tecnología. Este es un espacio de trabajo conceptual: explora una cartera de iniciativas con datos de muestra.</p><div className="system-actions"><a href="#workspace" className="button button--ink">Explorar Rizo OS <span>↓</span></a><Link href="/system/blueprint" className="text-link" transitionTypes={[NAV_FORWARD]}>Cómo diseñamos ↗</Link></div></div><div className="system-graphic" aria-hidden="true"><div className="graphic-axis graphic-axis--x"/><div className="graphic-axis graphic-axis--y"/><span className="graphic-node graphic-node--a">USUARIOS</span><span className="graphic-node graphic-node--b">SERVICIOS</span><span className="graphic-node graphic-node--c">DATOS</span><span className="graphic-node graphic-node--d">SISTEMAS</span><div className="graphic-core">r<span>+</span></div><small>UN SISTEMA<br/>CON MUCHAS<br/>ENTRADAS.</small></div></section>
-    <section className="system-proof"><div><strong>01—04</strong><span>SERVICIOS QUE SE CONECTAN</span></div><div><strong>36</strong><span>PERSONAS · 3 DISCIPLINAS</span></div><div><strong>∞</strong><span>CONTEXTO ANTES QUE PLANTILLAS</span></div></section>
-    <section className="workspace-section" id="workspace"><div className="section-aside"><span className="eyebrow">EL SISTEMA EN CONTEXTO</span><h2>Una ventana a Rizo OS.</h2><p>Filtra por área, busca una iniciativa y abre su ficha. La interfaz es navegable; todos los nombres y datos son ficticios.</p><Link href="/system/blueprint" transitionTypes={[NAV_FORWARD]} className="text-link">Leer el enfoque de producto ↗</Link></div><OpsBoard/></section>
-    <section className="system-services"><span className="eyebrow">DISEÑAMOS EL SISTEMA COMPLETO</span><div className="service-grid"><article><b>01</b><h3>Servicios digitales</h3><p>Unimos canales y operaciones en experiencias coherentes para clientes y equipos.</p></article><article><b>02</b><h3>Plataformas internas</h3><p>Herramientas que hacen visible el trabajo transversal sin añadir burocracia.</p></article><article><b>03</b><h3>Experiencias de marca</h3><p>Campañas, sitios y espacios conectados por una idea memorable y medible.</p></article><article><b>04</b><h3>Ingeniería de producto</h3><p>Arquitectura evolutiva, sistemas de diseño y tecnología preparada para crecer.</p></article></div></section>
-    <section className="system-brief" id="brief"><div><span className="eyebrow">UN RETO REAL MERECE UNA PRIMERA PREGUNTA</span><h2>Empezamos por entender el sistema.</h2><p>Cuéntanos qué no está conectando. Guardaremos un brief de prueba en este navegador para que puedas recorrer el estado completo.</p></div><BriefForm/></section>
-    <footer className="site-footer site-footer--system"><Link className="site-brand" href="/">rizo<span>®</span></Link><p>Software a medida para realidades que no caben en una plantilla.</p><span>PRODUCTO CONCEPTUAL · DATOS DE MUESTRA © 2026</span><Link href="/forum" transitionTypes={[NAV_FORWARD]}>SIGUIENTE EXPERIENCIA: FORO ↗</Link></footer>
-  </PageTransition></main>; }
+export default function System() {
+  return (
+    <main className="system">
+      <PageTransition kind="stack" pace="normal">
+        <header className="system-appbar"><Link className="system-app-logo" href="/">rizo<span>OS</span></Link><div className="system-app-context"><b>ESPACIO DE TRABAJO</b><a href="#workspace">Cartera</a><a href="#servicios">Capacidades</a><Link href="/system/blueprint">Método</Link></div><Link className="system-user" href="#brief"><span>AC</span> Alex · Dirección</Link></header>
+        <section className="system-hero">
+          <div className="system-intro">
+            <span className="eyebrow"><i className="live-dot" /> SOFTWARE A MEDIDA · EQUIPOS TRANSVERSALES</span>
+            <h1>La organización es compleja.<br /><em>El trabajo no debería serlo.</em></h1>
+            <p>Construimos plataformas que alinean personas, procesos y tecnología. Explora una cartera operativa con datos de muestra.</p>
+            <div className="system-actions">
+              <a href="#workspace" className="button button--ink">Explorar Rizo OS <span>↓</span></a>
+              <Link href="/system/blueprint" className="text-link" transitionTypes={[NAV_FORWARD]}>Cómo diseñamos ↗</Link>
+            </div>
+          </div>
+          <div className="system-graphic" aria-hidden="true"><div className="graphic-axis graphic-axis--x" /><div className="graphic-axis graphic-axis--y" /><span className="graphic-node graphic-node--a">USUARIOS</span><span className="graphic-node graphic-node--b">SERVICIOS</span><span className="graphic-node graphic-node--c">DATOS</span><span className="graphic-node graphic-node--d">SISTEMAS</span><div className="graphic-core">r<span>+</span></div><small>UN SISTEMA<br />CON MUCHAS<br />ENTRADAS.</small></div>
+        </section>
+        <section className="workspace-section" id="workspace">
+          <div className="section-aside"><span className="eyebrow">PRODUCTO EN FUNCIONAMIENTO · DATOS FICTICIOS</span><h2>Una ventana a Rizo OS.</h2><p>Filtra por área, busca una iniciativa y abre su ficha. La interfaz responde; no es una captura estática.</p><Link href="/system/blueprint" transitionTypes={[NAV_FORWARD]} className="text-link">Leer el enfoque de producto ↗</Link></div>
+          <OpsBoard />
+        </section>
+        <section className="system-proof"><div><strong>01—04</strong><span>SERVICIOS QUE SE CONECTAN</span></div><div><strong>36</strong><span>PERSONAS · 3 DISCIPLINAS</span></div><div><strong>∞</strong><span>CONTEXTO ANTES QUE PLANTILLAS</span></div></section>
+        <section className="system-services" id="servicios"><span className="eyebrow">DISEÑAMOS EL SISTEMA COMPLETO</span><div className="service-grid"><article><b>01</b><h3>Servicios digitales</h3><p>Unimos canales y operaciones en experiencias coherentes para clientes y equipos.</p></article><article><b>02</b><h3>Plataformas internas</h3><p>Herramientas que hacen visible el trabajo transversal sin añadir burocracia.</p></article><article><b>03</b><h3>Experiencias de marca</h3><p>Campañas, sitios y espacios conectados por una idea memorable y medible.</p></article><article><b>04</b><h3>Ingeniería de producto</h3><p>Arquitectura evolutiva, sistemas de diseño y tecnología preparada para crecer.</p></article></div></section>
+        <section className="system-brief" id="brief"><div><span className="eyebrow">UN RETO REAL MERECE UNA PRIMERA PREGUNTA</span><h2>Empezamos por entender el sistema.</h2><p>Cuéntanos qué no está conectando. Guardaremos un brief de prueba en este navegador para que puedas recorrer el estado completo.</p></div><BriefForm /></section>
+        <footer className="site-footer site-footer--system"><Link className="site-brand" href="/">rizo<span>®</span></Link><p>Software a medida para realidades que no caben en una plantilla.</p><span>PRODUCTO CONCEPTUAL · DATOS DE MUESTRA © 2026</span><Link href="/forum" transitionTypes={[NAV_FORWARD]}>SIGUIENTE EXPERIENCIA: FORO ↗</Link></footer>
+      </PageTransition>
+    </main>
+  );
+}

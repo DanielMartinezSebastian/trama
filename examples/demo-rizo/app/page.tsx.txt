@@ -3,17 +3,19 @@ import PageTransition from "trama-ui/PageTransition";
 import Button from "trama-ui/Button";
 
 const demos = [
-  { href: "/campaign", n: "01", tag: "CAMPAÑA · HISTORIA PÚBLICA", title: "La ciudad también es una interfaz.", copy: "Una campaña experiencial para convertir la movilidad cotidiana en una conversación que se puede tocar.", style: "tile--signal", label: "Entrar en la campaña", mode: "ESCALA · EMOCIÓN" },
-  { href: "/system", n: "02", tag: "PRODUCTO · SISTEMA OPERATIVO", title: "Menos fricción. Más organización.", copy: "Un espacio de trabajo real para orquestar operaciones complejas sin perder de vista a las personas.", style: "tile--system", label: "Explorar el producto", mode: "PRECISIÓN · CONTROL" },
-  { href: "/forum", n: "03", tag: "FERIA · EXPERIENCIA PRESENCIAL", title: "La tecnología se encuentra en persona.", copy: "Una invitación a recorrer un foro donde cada instalación vuelve tangible una idea digital.", style: "tile--forum", label: "Visitar el foro", mode: "ESPACIO · COMUNIDAD" },
+  { href: "/campaign", n: "A", tag: "SEÑAL · CAMPAÑA URBANA", title: "Una ciudad que responde.", copy: "Un caso contado como una película en el espacio público.", style: "tile--signal", label: "Entrar en la campaña", mode: "IMAGEN / NARRATIVA" },
+  { href: "/system", n: "B", tag: "RIZO OS · PRODUCTO DIGITAL", title: "La operación, en marcha.", copy: "Una herramienta real para ordenar trabajo transversal.", style: "tile--system", label: "Abrir el producto", mode: "DATOS / CONTROL" },
+  { href: "/forum", n: "C", tag: "FORO / 10 · EVENTO", title: "Dos días fuera de la pantalla.", copy: "Un encuentro de producto como cartel, programa y visita.", style: "tile--forum", label: "Recorrer el foro", mode: "ESPACIO / COMUNIDAD" },
+  { href: "/archive", n: "D", tag: "ARCHIVO · CASOS", title: "Pruebas de trabajo.", copy: "Un índice visual de campañas, plataformas y experiencias.", style: "tile--archive", label: "Abrir el archivo", mode: "PROYECTOS / IMÁGENES" },
+  { href: "/navigator", n: "E", tag: "NAVEGADOR · DIAGNÓSTICO", title: "Empieza por el problema.", copy: "Un selector interactivo para encontrar el primer movimiento útil.", style: "tile--navigator", label: "Encontrar un camino", mode: "DECISIÓN / ACCIÓN" },
 ];
 
 export default function Home() {
-  return <main className="index"><PageTransition kind="stairs" pace="slow"><header className="index-head"><Link className="wordmark" href="/">RIZO<span>®</span></Link><p>TECNOLOGÍA CON INTENCIÓN<br/>MADRID · REMOTO · 2026</p></header>
-    <div className="index-kicker"><span>ESTUDIO INDEPENDIENTE DE PRODUCTO</span><span>UX DE ALTO IMPACTO / SISTEMAS TRANSVERSALES</span></div>
-    <h1>Hacemos que lo complejo <em>se sienta sencillo.</em></h1>
-    <p className="index-deck">Diseñamos y desarrollamos software a medida para organizaciones que no caben en una plantilla. Tres puntos de vista. Una misma convicción: la tecnología debe mover algo.</p>
-    <div className="demo-grid">{demos.map(d => <article key={d.href} className={`demo-tile ${d.style}`}><div className="tile-meta"><span>{d.n} / 03</span><span>{d.mode}</span></div><div><p className="eyebrow">{d.tag}</p><h2>{d.title}</h2><p>{d.copy}</p><Button label={d.label} href={d.href} variant="solid" size="md"/></div></article>)}</div>
-    <footer className="index-foot"><span>CONCEPTOS FICTICIOS · CONSTRUIDOS CON TRAMA UI</span><span>DISEÑO × INGENIERÍA × SISTEMAS</span></footer>
+  return <main className="index"><PageTransition kind="stairs" pace="slow"><header className="index-head"><Link className="wordmark" href="/">RIZO<span>®</span></Link><p>UN ESTUDIO · CINCO FORMAS<br/>DE HACER TECNOLOGÍA</p></header>
+    <div className="index-kicker"><span>SELECTOR DE EXPERIENCIAS</span><span>ELIGE UNA PUERTA; CADA UNA TIENE SU PROPIO MUNDO</span></div>
+    <h1>No hay una sola forma <em>de entrar.</em></h1>
+    <p className="index-deck">Cinco prototipos para una misma compañía. Sin una plantilla común: campaña, producto, encuentro, archivo y diagnóstico.</p>
+    <div className="demo-grid">{demos.map(d => <article key={d.href} className={`demo-tile ${d.style}`}><div className="tile-meta"><span>{d.n} / 05</span><span>{d.mode}</span></div><div><p className="eyebrow">{d.tag}</p><h2>{d.title}</h2><p>{d.copy}</p><Button label={d.label} href={d.href} variant="solid" size="md"/></div></article>)}</div>
+    <footer className="index-foot"><span>RIZO UX SYSTEMS · CONCEPTOS FICTICIOS</span><span>CINCO DIRECCIONES · UN MISMO OFICIO</span></footer>
   </PageTransition></main>;
 }
