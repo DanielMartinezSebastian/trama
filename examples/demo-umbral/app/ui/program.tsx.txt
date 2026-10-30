@@ -1,0 +1,18 @@
+"use client";
+import { useState } from "react";
+import EventLineup from "trama-ui/EventLineup";
+import { DAYS, SESSIONS } from "../data";
+
+export default function Program() {
+  const [day, setDay] = useState("all");
+  const [stage, setStage] = useState("all");
+  const events = SESSIONS.filter((event) => (day === "all" || event.date === day) && (stage === "all" || event.stage === stage));
+  return <div className="program-board">
+    <div className="program-controls">
+      <fieldset><legend>Elige el día</legend><div className="chips">{[{ value: "all", short: "Todos los días" }, ...DAYS].map((item) => <label className="filter-chip" key={item.value}><input type="radio" name="program-day" value={item.value} checked={day === item.value} onChange={() => setDay(item.value)} /><span>{item.short}</span></label>)}</div></fieldset>
+      <fieldset><legend>Espacio</legend><div className="chips">{["all", "Nave A", "Patio"].map((value) => <label className="filter-chip" key={value}><input type="radio" name="program-stage" value={value} checked={stage === value} onChange={() => setStage(value)} /><span>{value === "all" ? "Todos" : value}</span></label>)}</div></fieldset>
+    </div>
+    <p className="result-count" role="status">{events.length} {events.length === 1 ? "sesión para explorar" : "sesiones para explorar"}</p>
+    <EventLineup events={events.map((event) => ({ ...event, genre: `${event.stage} · ${event.genre}` }))} groupBy="none" filters={false} cta="Elegir pase" emptyLabel="No hay sesiones con esta combinación. Prueba otro día o espacio." variant="minimal" />
+  </div>;
+}

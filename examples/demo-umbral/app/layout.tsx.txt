@@ -1,0 +1,25 @@
+import type { ReactNode } from "react";
+import GuideFrame from "trama-ui/GuideFrame";
+import Footer from "trama-ui/Footer";
+import { bricolageGrotesque, instrumentSans, silkscreen } from "trama-ui/fonts";
+import SiteHeader from "./ui/site-header";
+import "trama-ui/styles.css";
+import "./umbral.css";
+
+export const metadata = {
+  icons: { icon: "/icon.svg" },
+  title: { default: "Umbral — Sonido, luz y otras formas de encontrarnos", template: "%s · Umbral" },
+  description: "Un encuentro ficticio de sonido y cultura digital. 14–16 de mayo de 2027, Nave 08, Madrid. Demo construida con Trama.",
+};
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${bricolageGrotesque.variable} ${instrumentSans.variable} ${silkscreen.variable}`}>
+    <body><GuideFrame guide="ludico" textContrast className="umbral">
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
+      <SiteHeader />
+      <main id="contenido">{children}</main>
+      <Footer brand="UMBRAL" tagline="Hay cosas que solo pasan cuando nos encontramos."
+        columns="Explora: Programa=/programa, Entradas=/entradas, Mi pase=/entradas?ver=pase; El encuentro: Qué es Umbral=/#encuentro, Preguntas frecuentes=/#preguntas"
+        social="" copyright="Umbral es una demo local. Festival, espacio y artistas ficticios. No hay pagos, envíos ni entradas reales." variant="minimal" className="um-footer" />
+    </GuideFrame></body>
+  </html>;
+}

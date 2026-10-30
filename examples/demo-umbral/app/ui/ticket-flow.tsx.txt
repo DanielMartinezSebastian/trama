@@ -1,0 +1,114 @@
+"use client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import Button from "trama-ui/Button";
+import TextField from "trama-ui/TextField";
+import QuantityStepper from "trama-ui/QuantityStepper";
+import Alert from "trama-ui/Alert";
+import QRCode from "trama-ui/QRCode";
+import { CART_KEY, DAYS, ORDER_KEY, PASSES, isOrder, money, type DemoOrder, type PassId } from "../data";
+
+type Step = "select" | "data" | "done" | "empty";
+export default function TicketFlow({ initialDay, showSaved }: { initialDay?: string; showSaved: boolean }) {
+  const router = useRouter();
+  const [passId, setPassId] = useState<PassId>(initialDay ? "dia" : "abono");
+  const [day, setDay] = useState(initialDay ?? DAYS[0].value);
+  const [qty, setQty] = useState(1);
+  const [step, setStep] = useState<Step>("select");
+  const [order, setOrder] = useState<DemoOrder | null>(null);
+  const [ready, setReady] = useState(false);
+  const [notice, setNotice] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const formRef = useRef<HTMLFormElement>(null);
+  const doneRef = useRef<HTMLHeadingElement>(null);
+  const pass = PASSES.find((p) => p.id === passId)!;
+  const total = pass.price * qty;
+  const dayLabel = passId === "dia" ? DAYS.find((d) => d.value === day)!.label : "14–16 de mayo de 2027";
+
+  useEffect(() => {
+    let savedOrder: DemoOrder | null = null;
+    let sourceDayApplied = false;
+    try {
+      const raw: unknown = JSON.parse(localStorage.getItem(ORDER_KEY) ?? "null");
+      savedOrder = isOrder(raw) ? raw : null;
+      const cart: unknown = JSON.parse(localStorage.getItem(CART_KEY) ?? "null");
+      if (cart && typeof cart === "object") {
+        const c = cart as { pass?: unknown; qty?: unknown; day?: unknown; sourceDay?: unknown };
+        sourceDayApplied = c.sourceDay === initialDay;
+        if (PASSES.some((p) => p.id === c.pass)) setPassId(c.pass as PassId);
+        if (typeof c.qty === "number" && Number.isInteger(c.qty) && c.qty >= 1 && c.qty <= 6) setQty(c.qty);
+        if (DAYS.some((d) => d.value === c.day)) setDay(c.day as string);
+      }
+    } catch {
+      setNotice("No pudimos recuperar los datos guardados. Puedes crear y descargar un pase en esta pantalla, pero podría perderse al recargar.");
+    }
+    if (initialDay && !sourceDayApplied) { setDay(initialDay); setPassId("dia"); }
+    setOrder(savedOrder);
+    setStep(showSaved ? savedOrder ? "done" : "empty" : "select");
+    setReady(true);
+  }, [initialDay, showSaved]);
+  useEffect(() => {
+    if (!ready) return;
+    try { localStorage.setItem(CART_KEY, JSON.stringify({ pass: passId, day, qty, sourceDay: initialDay })); }
+    catch { setNotice("Este navegador no permite guardar el pase. Podrás descargarlo al terminar; al recargar se perderá."); }
+  }, [ready, passId, day, qty, initialDay]);
+  useEffect(() => { if (step === "done") doneRef.current?.focus(); }, [step]);
+
+  function confirm(event: FormEvent) {
+    event.preventDefault();
+    const next = { name: name.trim().length < 2 ? "Escribe al menos 2 caracteres." : undefined,
+      email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ? "Escribe un correo válido, como nombre@ejemplo.com." : undefined };
+    setErrors(next);
+    if (next.name || next.email) {
+      requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>('input[aria-invalid="true"]')?.focus());
+      return;
+    }
+    const code = `UMB-27-${crypto.randomUUID().replaceAll("-", "").slice(0, 6).toUpperCase()}`;
+    const result: DemoOrder = { code, name: name.trim(), email: email.trim(), pass: passId, day, qty, total, createdAt: new Date().toISOString() };
+    let persisted = false;
+    try { localStorage.setItem(ORDER_KEY, JSON.stringify(result)); persisted = true; }
+    catch { setNotice("El pase está disponible en esta pantalla. Descárgalo ahora: el navegador no permite conservarlo al recargar."); }
+    setOrder(result);
+    setStep("done");
+    if (persisted) router.replace("/entradas?ver=pase", { scroll: false });
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function download() {
+    if (!order) return;
+    const chosen = PASSES.find((p) => p.id === order.pass)!;
+    const date = order.pass === "dia" ? DAYS.find((d) => d.value === order.day)!.label : "14–16 mayo 2027";
+    const text = `UMBRAL / 2027\nPASE DE MUESTRA — NO VÁLIDO PARA ACCESO\n\n${order.code}\n${order.name}\n${chosen.title}\n${date}\n${order.qty} ${order.qty === 1 ? "pase" : "pases"}\nTotal simulado: ${money(order.total)}\n\nFestival y artistas ficticios. No se ha realizado ningún cargo ni enviado correo.\n`;
+    const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+    const link = document.createElement("a"); link.href = url; link.download = `umbral-${order.code}.txt`; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  return <section className="section-wrap page-section tickets-page">
+    <Link className="back-link" href="/programa">← Volver al programa</Link>
+    <div className="page-heading"><div><span className="eyebrow">14 — 16 MAYO / NAVE 08</span><h1>{step === "done" ? <>Tu pase<br />está listo.</> : step === "empty" ? <>Todavía hay<br />algo por vivir.</> : <>Nos vemos<br />al otro lado.</>}</h1></div><p>{step === "done" ? "Guárdalo. Compártelo con tu curiosidad.\nEsto es solo el comienzo." : "Un día para dejarte llevar.\nO tres para no perderte nada."}</p></div>
+    {!ready ? <p role="status">Preparando los pases…</p> : <>
+      {notice && <Alert title="Sobre tu pase guardado" message={notice} intent="neutral" variant="outline" />}
+      {step === "empty" ? <div className="empty-pass"><span aria-hidden>↗</span><h2>Aún no tienes un pase guardado.</h2><p>Elige cómo quieres vivir Umbral y crea uno de muestra.</p><Button label="Encontrar mi pase" href="/entradas" variant="minimal" /></div> :
+      step === "done" && order ? <>
+        <div className="confirmation-label" role="status">Pase de muestra creado. No se ha realizado ningún cargo.</div>
+        <article className="pass-receipt" aria-label="Tu pase de muestra"><div className="receipt-top"><b>UMBRAL / 27</b><span>PASE DE MUESTRA</span></div><div className="receipt-content"><div><h2 tabIndex={-1} ref={doneRef}>{order.name}</h2><p className="receipt-kind">{PASSES.find((p) => p.id === order.pass)!.title}</p><p>{order.pass === "dia" ? DAYS.find((d) => d.value === order.day)!.label : "14–16 de mayo de 2027"}</p><p>{order.qty} {order.qty === 1 ? "pase" : "pases"} · Total simulado {money(order.total)}</p><p className="receipt-code">{order.code}</p></div><QRCode value={`UMBRAL-DEMO:${order.code}`} caption="Identificador de muestra" label="Código QR del pase de muestra, sin validez para acceso" codeSize={156} tone="fg" /></div><div className="receipt-bottom"><span>NAVE 08 · MADRID</span><span>ENTRA CON CURIOSIDAD.</span></div></article>
+        <div className="receipt-actions"><Button label="Descargar pase de muestra" onClick={download} variant="minimal" glyph="↓" /><Button label="Explorar el programa" href="/programa" emphasis="outline" variant="minimal" /><Button label="Elegir otro pase" href="/entradas" emphasis="link" variant="minimal" /></div>
+        <p className="small-note">Este pase se conserva solo en este navegador. No es una entrada real y no se envía por correo.</p>
+      </> : <>
+        <ol className="checkout-steps" aria-label="Pasos para crear tu pase"><li aria-current={step === "select" ? "step" : undefined}><b>1</b>Tu pase</li><li aria-current={step === "data" ? "step" : undefined}><b>2</b>Tus datos</li><li><b>3</b>Todo listo</li></ol>
+        {step === "select" ? <>
+          {order && <p className="existing-order">Ya tienes un pase de muestra. <Link href="/entradas?ver=pase">Ver mi pase guardado ↗</Link></p>}
+          <div className="ticket-options" role="group" aria-label="Tipos de pase">{PASSES.map((item) => <article key={item.id} className={`ticket-option ${passId === item.id ? "is-selected" : ""}`}><div className="ticket-tag">{item.id === "abono" ? "EL ENCUENTRO COMPLETO" : item.id === "dia" ? "A TU RITMO" : "UN POCO MÁS ADENTRO"}</div><h2>{item.title}</h2><p className="ticket-price">{item.price}<span>€ / persona</span></p><p>{item.note}</p><p className="ticket-includes">{item.includes}</p><Button label={passId === item.id ? `${item.title} seleccionado` : `Elegir ${item.title}`} variant="minimal" emphasis="outline" active={passId === item.id} onClick={() => setPassId(item.id)} /></article>)}</div>
+        </> : null}
+        <div className="checkout-grid">
+          <div>{step === "select" ? <div className="selection-details"><h2>Hazlo a tu manera.</h2>{passId === "dia" && <label className="day-select" htmlFor="ticket-day">¿Qué día cruzas?<select id="ticket-day" value={day} onChange={(event) => setDay(event.target.value)}>{DAYS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}</select></label>}<div className="quantity-row"><div><b>¿Cuántos venís?</b><p>Hasta 6 pases por pedido de muestra.</p></div><QuantityStepper value={qty} onChange={setQty} min={1} max={6} label="pases" /></div><p className="small-note">Festival ficticio. Precios y pases de demostración, sin pago ni reserva real.</p></div> :
+          <form ref={formRef} onSubmit={confirm} noValidate className="attendee-form"><h2>Ponle nombre a tu pase.</h2><p>Usa datos ficticios. El pase se crea aquí, sin enviar formularios ni correos.</p>{(errors.name || errors.email) && <Alert title="Revisa los datos" message="Comprueba los campos señalados antes de continuar." intent="neutral" variant="outline" />}<TextField label="Tu nombre" name="attendeeName" value={name} onChange={setName} autoComplete="name" placeholder="Cómo quieres aparecer en el pase" required intent={errors.name ? "danger" : undefined} hint={errors.name ?? "Al menos 2 caracteres."} variant="outline" /><TextField label="Correo electrónico" name="email" value={email} onChange={setEmail} type="email" autoComplete="email" placeholder="nombre@ejemplo.com" required intent={errors.email ? "danger" : undefined} hint={errors.email ?? "Se guarda solo en este navegador; no se envía correo."} variant="outline" /><Button label="Crear pase de muestra" type="submit" variant="minimal" glyph="↗" size="lg" /><Button label="Volver a elegir el pase" emphasis="link" variant="minimal" onClick={() => setStep("select")} /></form>}</div>
+          <aside className="order-summary" aria-label="Resumen del pase"><span className="eyebrow">LO QUE TE LLEVAS</span><h2>{pass.title}</h2><p>{dayLabel}</p><div className="summary-line"><span>{qty} {qty === 1 ? "persona" : "personas"} × {money(pass.price)}</span><b>{money(total)}</b></div><div className="summary-total"><span>Total simulado</span><strong data-testid="order-total">{money(total)}</strong></div>{step === "select" && <Button label="Continuar con este pase" fullWidth variant="minimal" glyph="↗" size="lg" onClick={() => { setStep("data"); requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>("input")?.focus()); }} />}<p className="small-note">Sin gastos de gestión. Sin tarjeta. Es una demostración local.</p></aside>
+        </div>
+      </>}
+    </>}
+  </section>;
+}

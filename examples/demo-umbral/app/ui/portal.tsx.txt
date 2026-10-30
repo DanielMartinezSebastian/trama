@@ -1,0 +1,14 @@
+export default function Portal() {
+  return <div className="portal" aria-hidden="true">
+    <svg viewBox="0 0 600 660" focusable="false">
+      <path className="portal-floor" d="M0 560H600M0 600H600M100 660L260 540M500 660L340 540M200 660L280 540M400 660L320 540" />
+      <path className="portal-door portal-door--outer" d="M70 540V250C70 110 165 50 300 50S530 110 530 250V540" />
+      <path className="portal-door portal-door--mid" d="M155 540V270C155 170 210 125 300 125S445 170 445 270V540" />
+      <path className="portal-door portal-door--inner" d="M235 540V300C235 250 255 210 300 210S365 250 365 300V540" />
+      <circle className="portal-orb" cx="300" cy="350" r="68" />
+      <path className="portal-axis" d="M300 275V425M225 350H375" />
+    </svg>
+    <span className="portal-coordinate">40°25′ N / 03°42′ W</span>
+    <span className="portal-caption">ENTRA CON CURIOSIDAD.</span>
+  </div>;
+}

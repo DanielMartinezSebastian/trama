@@ -1,0 +1,6 @@
+import Link from "next/link";
+import Program from "../ui/program";
+export const metadata = { title: "Programa" };
+export default function ProgramPage() {
+  return <section className="section-wrap page-section"><Link className="back-link" href="/">← Volver al encuentro</Link><div className="page-heading"><div><span className="eyebrow">14 — 16 MAYO / MADRID</span><h1>Encuentra<br />tu frecuencia.</h1></div><p>Del primer «¿y si…?» al último baile.<br />Haz espacio para algo que no esperabas.</p></div><Program /></section>;
+}

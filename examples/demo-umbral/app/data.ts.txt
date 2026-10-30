@@ -1,0 +1,40 @@
+import type { LineupEvent } from "trama-ui/EventLineup";
+
+export const DAYS = [
+  { value: "2027-05-14", short: "Vie 14", label: "Viernes 14 de mayo" },
+  { value: "2027-05-15", short: "Sáb 15", label: "Sábado 15 de mayo" },
+  { value: "2027-05-16", short: "Dom 16", label: "Domingo 16 de mayo" },
+];
+export const PASSES = [
+  { id: "dia", title: "Un día fuera", price: 29, note: "Elige viernes, sábado o domingo.", includes: "Todas las sesiones del día elegido." },
+  { id: "abono", title: "Todo Umbral", price: 69, note: "Tres días. Todas las posibilidades.", includes: "Acceso al programa del 14 al 16 de mayo." },
+  { id: "laboratorio", title: "Dentro del proceso", price: 89, note: "El encuentro, un poco más de cerca.", includes: "Abono de tres días + laboratorio de sonido del sábado." },
+] as const;
+export type PassId = typeof PASSES[number]["id"];
+export type Session = LineupEvent & { stage: "Nave A" | "Patio" };
+export const SESSIONS: Session[] = [
+  { id: "cuerpo-electrico", title: "El cuerpo eléctrico", date: DAYS[0].value, time: "17:00", genre: "Conversación", stage: "Patio", blurb: "Aira + Tomás Sur · Escuchar también es una forma de mirar." },
+  { id: "cartografia", title: "Cartografía del ruido", date: DAYS[0].value, time: "19:00", genre: "Instalación", stage: "Nave A", blurb: "Tessel · Un paisaje que cambia con cada paso." },
+  { id: "nodo", title: "NODO / Frecuencia común", date: DAYS[0].value, time: "21:00", genre: "Live A/V", stage: "Nave A", blurb: "NODO · Sintetizadores, luz y un pulso compartido." },
+  { id: "bajo-cielo", title: "Bajo el mismo cielo", date: DAYS[0].value, time: "23:00", genre: "Sesión DJ", stage: "Patio", blurb: "Cinta · Del primer baile al último eco." },
+  { id: "laboratorio", title: "Hacer sonar lo invisible", date: DAYS[1].value, time: "12:00", genre: "Laboratorio", stage: "Nave A", blurb: "Laika · Exploración sonora incluida en el pase Dentro del proceso." },
+  { id: "otras-formas", title: "Otras formas de estar", date: DAYS[1].value, time: "17:30", genre: "Conversación", stage: "Patio", blurb: "Mesa abierta · Cultura digital a escala humana." },
+  { id: "vertice", title: "Vértice / Materia blanda", date: DAYS[1].value, time: "20:00", genre: "Live A/V", stage: "Nave A", blurb: "Vértice · Imágenes que se escuchan. Sonidos que se tocan." },
+  { id: "sin-centro", title: "Una pista sin centro", date: DAYS[1].value, time: "22:30", genre: "Sesión DJ", stage: "Patio", blurb: "Doble Fase · Ritmos que se encuentran a mitad de camino." },
+  { id: "manana", title: "La mañana después", date: DAYS[2].value, time: "12:00", genre: "Escucha", stage: "Patio", blurb: "Seda · Una sesión para bajar las revoluciones." },
+  { id: "archivo", title: "Archivo de futuros", date: DAYS[2].value, time: "15:30", genre: "Instalación", stage: "Nave A", blurb: "Tessel · Última oportunidad para entrar en el paisaje." },
+  { id: "aire", title: "Todo lo que queda en el aire", date: DAYS[2].value, time: "18:00", genre: "Live A/V", stage: "Nave A", blurb: "Aira · Una despedida hecha de capas y respiraciones." },
+  { id: "hasta-luego", title: "Esto no termina aquí", date: DAYS[2].value, time: "20:00", genre: "Sesión DJ", stage: "Patio", blurb: "Cinta + Laika · El último baile se hace entre todos." },
+].map((event) => ({ ...event, href: `/entradas?dia=${event.date}`, stage: event.stage as Session["stage"] }));
+export const money = (value: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
+export type DemoOrder = { code: string; name: string; email: string; pass: PassId; day: string; qty: number; total: number; createdAt: string };
+export const CART_KEY = "umbral:selection:v1";
+export const ORDER_KEY = "umbral:order:v1";
+export function isOrder(value: unknown): value is DemoOrder {
+  if (!value || typeof value !== "object") return false;
+  const v = value as Partial<DemoOrder>;
+  const pass = PASSES.find((p) => p.id === v.pass);
+  return !!pass && typeof v.code === "string" && /^UMB-27-[A-Z0-9]{6}$/.test(v.code) && typeof v.name === "string" &&
+    typeof v.email === "string" && Number.isInteger(v.qty) && v.qty! >= 1 && v.qty! <= 6 &&
+    DAYS.some((day) => day.value === v.day) && v.total === pass.price * v.qty! && typeof v.createdAt === "string";
+}
