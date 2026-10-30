@@ -311,4 +311,6 @@
 - Cambios: `trama-style` pide clasificarlos por efecto y revisar capas, jerarquía, recortes y textos en imágenes a tamaños reales; `trama-build` define como fallo el texto oculto/ilegible o la capa que intercepta controles.
 - Decisión: una colisión gráfica puede ser deliberada; que sea intencional no exime de legibilidad. Texto informativo y acciones deben seguir claros.
 - Comprobaciones: revisión de ambos `SKILL.md` y `git diff --check`. `npm run pkg:pack` no pudo continuar porque el preflight `catalog:check` detecta los mismos 39 JSON desactualizados de `docs/agents/`; no se regeneró ese catálogo ajeno a este cambio.
-- Siguiente paso: regenerar/revisar el catálogo de agentes en una tarea propia y volver a empaquetar para validar la copia instalada.
+- Prueba en las demos: inspección de capturas desktop/móvil y geometría de texto en 3436–3438. Se halló y corrigió la fecha del afiche Cartel sobre el titular a 390 px; QA completo del flujo en Cartel pasó tras el ajuste. Las intersecciones de FAQ eran respuestas cerradas del acordeón, sin colisión visible.
+- URLs para revisión del usuario: Fanzine `http://127.0.0.1:3436`, Nocturno `http://127.0.0.1:3437`, Cartel `http://127.0.0.1:3438`.
+- Siguiente paso: recibir feedback visual del usuario; regenerar/revisar el catálogo de agentes en una tarea propia y volver a empaquetar para validar la copia instalada.

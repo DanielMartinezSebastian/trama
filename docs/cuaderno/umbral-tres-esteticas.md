@@ -27,7 +27,7 @@ Tres direcciones para el mismo festival inventado: Fanzine editorial, Club noctu
 
 ## Qué se midió
 
-Se construyeron tres consumidores separados con el mismo paquete local congelado. QA completo comprobó rutas, imágenes, filtros, flujo y persistencia del pase, descarga, transiciones, axe WCAG 2.0 A/AA y anchos de 320/390/768/1440 px. `smoke` pasó en las tres portadas sin errores ni sombras.
+Se construyeron tres consumidores separados con el mismo paquete local congelado. QA completo comprobó rutas, imágenes, filtros, flujo y persistencia del pase, descarga, transiciones, axe WCAG 2.0 A/AA y anchos de 320/390/768/1440 px. `smoke` pasó en las tres portadas sin errores ni sombras. Una revisión explícita de solapamientos en 1440 y 390 px detectó la fecha del afiche sobre el titular en Cartel móvil; se recolocó arriba del titular en una placa opaca y el recorrido volvió a pasar.
 
 ## Qué se hizo
 

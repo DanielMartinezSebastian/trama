@@ -5,3 +5,5 @@
 .umbral--cartel .poster-sheet__bottom>div{display:flex;align-items:center;gap:20px}.umbral--cartel .poster-sheet__bottom .hero-action-secondary{color:#2b1d1d;font:11px var(--g-font-mono);text-underline-offset:4px}
 .umbral--cartel .poster-sheet__bottom .hero-action-secondary{color:#fff7f0}.umbral--cartel .poster-program .ui-lineup__genero{color:#2b1d1d}
 .umbral--cartel .page-section .ui-lineup__item *{color:#2b1d1d!important}
+.umbral--cartel .poster-sheet__date{background:#ffcf4a;color:#2b1d1d;border:2px solid #2b1d1d;padding:7px 12px}
+@media(max-width:760px){.umbral--cartel .poster-sheet__date{position:static;grid-row:2;justify-self:end;top:auto;right:auto;margin:0}.umbral--cartel .poster-sheet h1{grid-row:3;margin:0}.umbral--cartel .poster-sheet__image{grid-row:4}}
