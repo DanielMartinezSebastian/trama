@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 import { chromiumPath } from "../chromium-path.mts";
 
 const base = process.argv[2] ?? "http://127.0.0.1:3435";
-const out = resolve(".refs3d/demo-umbral/recorrido");
+const out = resolve(process.argv[3] ?? ".refs3d/demo-umbral/recorrido");
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: chromiumPath() });
 const errors: string[] = [];
@@ -31,6 +31,13 @@ try {
     if (path.startsWith("/entradas")) await page.locator('[data-testid="order-total"], .pass-receipt, .empty-pass').first().waitFor({ state: "visible", timeout: 15000 });
   };
   await go("/");
+  await page.locator(".spaces-grid").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => [...document.querySelectorAll<HTMLImageElement>(".space-card img")].length === 3 && [...document.querySelectorAll<HTMLImageElement>(".space-card img")].every((image) => image.complete && image.naturalWidth > 0));
+  const spaces = await page.locator(".space-card img").evaluateAll((images) => images.map((image) => ({ alt: (image as HTMLImageElement).alt, width: (image as HTMLImageElement).naturalWidth })));
+  assert.equal(spaces.length, 3);
+  assert.ok(spaces.every((space) => space.width > 0 && space.alt.includes("conceptual")));
+  await page.getByText("Visualizaciones conceptuales generadas para esta demo. El recinto y sus espacios son ficticios.").waitFor();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await audit("/");
   assert.equal(await page.locator("h1").count(), 1);
   await page.screenshot({ path: resolve(out, "inicio-desktop.png"), fullPage: true });
@@ -129,7 +136,7 @@ try {
   }
   assert.deepEqual(errors, []);
   assert.deepEqual(axeViolations, []);
-  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ ok: true, checks: ["3 rutas", "programa por día y espacio", "cantidad y precio", "validación", "pase persistente", "descarga marcada como no válida", "estado vacío", "PageTransition wipe-left / wipe-right", "cabecera persistente", "ancho móvil 320/390/768/1440", "axe wcag2a/wcag2aa", "errores de navegador"], errors, axeViolations }, null, 2) + "\n");
+  writeFileSync(resolve(out, "resultado.json"), JSON.stringify({ ok: true, checks: ["3 rutas", "3 imágenes de espacios cargadas con alt y aviso ficticio", "programa por día y espacio", "cantidad y precio", "validación", "pase persistente", "descarga marcada como no válida", "estado vacío", "PageTransition wipe-left / wipe-right", "cabecera persistente", "ancho móvil 320/390/768/1440", "axe wcag2a/wcag2aa", "errores de navegador"], errors, axeViolations }, null, 2) + "\n");
   console.log(`UMBRAL OK: flujo completo; evidencia ${out}`);
 } finally {
   await browser.close();

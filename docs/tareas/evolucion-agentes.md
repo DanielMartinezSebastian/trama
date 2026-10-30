@@ -277,3 +277,11 @@
 - Evidencia revisada: capturas de `/`, `/programa` y `/entradas` en escritorio; portada y programa también en móvil, en `.refs3d/demo-umbral/recorrido/`.
 - Decisión: no añadir imágenes raster ahora. El portal SVG del hero ya expresa la idea de cruzar un umbral y mantiene el lenguaje gráfico de cartel. Programa y entradas priorizan exploración y selección; más imágenes reducirían espacio y jerarquía, especialmente en móvil. El recinto y los artistas son ficticios, así que fotos podrían sugerir hechos que la demo no representa.
 - Siguiente paso: reconsiderar si UMBRAL recibe material real autorizado de artistas o recinto, o si una sección concreta queda sin comunicar algo que el SVG no resuelve. La vista previa local sigue en `http://127.0.0.1:3435`.
+
+## Imágenes del recinto ficticio y sus espacios (30 de octubre de 2026)
+
+- Objetivo: incorporar imágenes de Nave 08, Nave A y el Patio para hacer reconocibles los espacios del festival inventado.
+- Cambios: tres visualizaciones conceptuales generadas con Codex imagegen, convertidas a WebP optimizado y añadidas a `examples/demo-umbral/public/espacios/`. Galería responsive en la portada con `next/image`, alt descriptivo y una nota visible que aclara que el recinto es ficticio.
+- Decisiones: se conserva el portal geométrico SVG como motivo de identidad y las nuevas imágenes se concentran en la galería, donde ayudan a distinguir lugar y espacios. No se presentan como fotos de una ubicación real.
+- Comprobaciones: build y pruebas de recorrido de un consumidor aislado, `npm run smoke`, revisión visual en escritorio y móvil, `npm run verify`, `npm run lab:cuaderno` y `git diff --check`.
+- Siguiente paso: revisión del usuario en la captura de la portada renovada; el servidor temporal se cierra al terminar esta comprobación.

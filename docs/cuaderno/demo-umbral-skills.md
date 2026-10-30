@@ -6,7 +6,7 @@ estado: hecho
 referencias: []
 fichas: [examples/demo-umbral/BRIEF.md]
 ruta: http://127.0.0.1:3435
-codigo: [examples/demo-umbral/app/page.tsx.txt, examples/demo-umbral/app/programa/page.tsx.txt, examples/demo-umbral/app/entradas/page.tsx.txt]
+codigo: [examples/demo-umbral/app/page.tsx.txt, examples/demo-umbral/app/ui/spaces-gallery.tsx.txt, examples/demo-umbral/app/programa/page.tsx.txt, examples/demo-umbral/app/entradas/page.tsx.txt, examples/demo-umbral/public/espacios]
 colores: [#f4d4d4, #2b1d1d, #2f5be0, #ffcf4a, #fff7f0]
 fuentes: [Bricolage Grotesque, Instrument Sans, Silkscreen]
 sector: [cultura]
@@ -42,6 +42,10 @@ y espacio; cantidad y total; validación de datos en navegador; persistencia loc
 muestra. La fuente del consumidor quedó conservada en `examples/demo-umbral/` y el preparador escribe solo en un destino
 nuevo bajo `.cache/`.
 
+Después de revisar la demo, se generaron tres visualizaciones conceptuales del recinto ficticio y sus espacios con
+Codex imagegen; se integraron en una galería responsive de la portada, con textos alternativos y aviso visible. Los tres
+WebP optimizados pesan aproximadamente 0,8 MB en conjunto.
+
 ## Diferencias con la referencia
 
 No hay web de referencia: es una composición original basada en la guía Lúdico. No se alteraron la API, los tokens ni
@@ -52,8 +56,9 @@ de entrega y pago; se usaron piezas públicas más pequeñas.
 
 El catálogo y las skills bastaron para resolver la estructura sin ampliar el kit. La primera comprobación visual halló
 que el encabezado se desbordaba en 320 px y que un enlace del hero heredaba texto oscuro sobre azul; ambos ajustes
-locales pasan ahora el barrido responsive y contraste. El almacenamiento local permite probar la recuperación, pero
-el estado vacío y el aviso dejan claro que no existe un pedido real.
+locales pasan ahora el barrido responsive y contraste. La galería hace tangibles los espacios y, al mismo tiempo,
+explicita que las vistas son generadas y ficticias. El almacenamiento local permite probar la recuperación, pero el
+estado vacío y el aviso dejan claro que no existe un pedido real.
 
 ## Siguiente
 

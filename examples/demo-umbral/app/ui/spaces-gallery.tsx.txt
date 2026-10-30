@@ -1,0 +1,55 @@
+import Image from "next/image";
+
+const SPACES = [
+  {
+    id: "recinto",
+    name: "Nave 08",
+    type: "EL RECINTO",
+    description: "Una antigua nave industrial imaginada para encontrarnos alrededor del sonido.",
+    src: "/espacios/nave-08.webp",
+    alt: "Visualización conceptual generada del interior de Nave 08, un recinto ficticio de ladrillo y acero iluminado en azul y amarillo.",
+  },
+  {
+    id: "nave-a",
+    name: "Nave A",
+    type: "SONIDO Y LUZ",
+    description: "Instalaciones inmersivas y directos audiovisuales entre ladrillo y luz.",
+    src: "/espacios/nave-a.webp",
+    alt: "Visualización conceptual generada de Nave A, sala ficticia con una instalación audiovisual y público distante.",
+  },
+  {
+    id: "patio",
+    name: "El Patio",
+    type: "AIRE ABIERTO",
+    description: "Conversaciones, sesiones y pausas bajo el cielo de Madrid.",
+    src: "/espacios/patio.webp",
+    alt: "Visualización conceptual generada del Patio, un espacio exterior ficticio con árboles, ladrillo y luces cálidas al anochecer.",
+  },
+];
+
+export default function SpacesGallery() {
+  return (
+    <section className="spaces-section section-wrap" aria-labelledby="spaces-title">
+      <div className="spaces-heading">
+        <div><span className="eyebrow">NAVE 08 · MADRID</span><h2 id="spaces-title">Tres espacios.<br />Un mismo pulso.</h2></div>
+        <p>Una nave para perder la noción del tiempo. Un patio para volver a encontrarnos.</p>
+      </div>
+      <div className="spaces-grid">
+        {SPACES.map((space) => (
+          <article className="space-card" key={space.id}>
+            <div className="space-card__image">
+              <Image src={space.src} alt={space.alt} width={1600} height={900}
+                sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+            </div>
+            <div className="space-card__copy">
+              <span className="space-card__type">{space.type}</span>
+              <h3>{space.name}</h3>
+              <p>{space.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p className="spaces-disclaimer">Visualizaciones conceptuales generadas para esta demo. El recinto y sus espacios son ficticios.</p>
+    </section>
+  );
+}

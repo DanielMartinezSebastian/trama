@@ -12,10 +12,17 @@ se pueda probar de principio a fin. El producto debe dejar claro que ni los pase
 - `trama-style`: elegir la guía `ludico`, leer sus tokens y fuentes, mantener su paleta y usar `GuideFrame` con
   `textContrast` para el texto. Los colores adicionales solo aparecen como composición local derivada de esos tokens.
 - `frontend-design`: dar al sitio una dirección propia y consistente: festival de sonido, portal geométrico SVG, bandas
-  amarillas, tipografía grande y ritmo de cartel. La ilustración es código vectorial, sin imágenes de stock.
+  amarillas, tipografía grande y ritmo de cartel. El portal sigue siendo código vectorial; la portada añade
+  visualizaciones conceptuales generadas para Nave 08, Nave A y el Patio.
 
 No se copió una web de referencia ni se ejecutó una investigación externa. Las decisiones parten del concepto y de la
 guía ya incluida en Trama.
+
+## Imágenes del recinto
+
+Las imágenes WebP de `public/espacios/` se generaron con Codex imagegen a partir de un brief común de arquitectura
+industrial, luz azul, lámparas amarillas y ambiente rosado. Representan espacios inventados; no documentan un recinto
+real. La galería los etiqueta de forma visible y cada imagen tiene texto alternativo que declara su carácter conceptual.
 
 ## Composición y piezas
 

@@ -21,6 +21,7 @@ existe; no borra ni reemplaza una demo anterior. Para trabajar sin Codex, omite 
 ## Rutas
 
 - `/`: concepto del festival, cartel destacado, fechas y preguntas frecuentes.
+- La portada presenta visualizaciones conceptuales generadas del recinto ficticio Nave 08, Nave A y el Patio.
 - `/programa`: sesiones filtrables por día y espacio.
 - `/entradas`: selección de pase, cantidad, datos de muestra, recibo descargable y recuperación desde el mismo navegador.
 
