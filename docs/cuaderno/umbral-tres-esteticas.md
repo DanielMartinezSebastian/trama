@@ -27,11 +27,11 @@ Tres direcciones para el mismo festival inventado: Fanzine editorial, Club noctu
 
 ## Qué se midió
 
-Se construyeron tres consumidores separados con el mismo paquete local congelado y se probaron las rutas con smoke. Se revisaron capturas de escritorio; QA de axe y responsive encontró incidencias en las variantes fanzine/nocturno (contraste) y cartel (overflow de marquesina a 320 px), pendientes de corregir.
+Se construyeron tres consumidores separados con el mismo paquete local congelado. QA completo comprobó rutas, imágenes, filtros, flujo y persistencia del pase, descarga, transiciones, axe WCAG 2.0 A/AA y anchos de 320/390/768/1440 px. `smoke` pasó en las tres portadas sin errores ni sombras.
 
 ## Qué se hizo
 
-Las hojas temáticas viven en `examples/demo-umbral/app/variantes/`; `scripts/prepare-umbral-variantes.mts` materializa copias aisladas en `.cache/`. Cada variante corre en su propio puerto y comparte el contenido y los assets de la demo base.
+Cada dirección tiene una portada propia en `examples/demo-umbral/variantes/` además de su hoja temática en `examples/demo-umbral/app/variantes/`; `scripts/prepare-umbral-variantes.mts` materializa copias aisladas en `.cache/`. Fanzine organiza la historia como cubierta y columna editorial; Nocturno abre con una imagen a pantalla completa y estructura de sala; Cartel compone un afiche modular con fechas, fotografía y cartelera como bloques. Cada una corre en su propio puerto y comparte rutas, programa, compra de muestra y assets de la demo base.
 
 ## Diferencias con la referencia
 
@@ -39,8 +39,8 @@ No hay referencia externa: son interpretaciones visuales del mismo brief de UMBR
 
 ## Aprendido
 
-Smoke confirma HTTP 200 y ausencia de errores de navegador y sombras. Axe confirma que conviene revisar el contraste tras cambiar tokens; la marquesina infinita requiere una comprobación de overflow móvil en la variante cartel.
+La primera propuesta solo cambiaba la piel del mismo esqueleto y no satisfacía el encargo; las tres portadas nuevas sí parten de estructuras distintas. Las correcciones de color para sus fondos y componentes pasan axe, y los tres recorridos pasan responsive sin desbordamiento.
 
 ## Siguiente
 
-Revisar las tres URLs y corregir contraste/overflow señalados por QA antes de considerar estas variantes cerradas.
+Valorar las tres composiciones en `http://127.0.0.1:3436`, `:3437` y `:3438`.

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 const variantes = {
@@ -36,6 +36,12 @@ const themedLayout = layout
   .replace('import "./umbral.css";', `import "./umbral.css";\nimport "./variantes/${id}.css";`)
   .replace('className="umbral"', `className="umbral umbral--${id}"`);
 writeFileSync(layoutPath, themedLayout);
+const variantHome = join(target, "variantes", `${id}-home.tsx`);
+if (!existsSync(variantHome)) throw new Error(`Falta la portada alternativa: ${variantHome}`);
+writeFileSync(join(target, "app/page.tsx"), readFileSync(variantHome, "utf8")
+  .replaceAll('"../app/data"', '"./data"')
+  .replaceAll('"../app/ui/', '"./ui/'));
+unlinkSync(variantHome);
 
 const tarball = resolve("dist-npm/trama-ui-0.13.0.tgz");
 const sha256 = createHash("sha256").update(readFileSync(tarball)).digest("hex");
