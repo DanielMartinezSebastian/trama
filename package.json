@@ -18,6 +18,7 @@
     "verify": "npm run typecheck && npm run catalog:check && npm run ui:test && npm run agents:test && npm run check:shadows && npm run cine:test && npm run lab:cuaderno -- --check",
     "ui:test": "tsx scripts/text-contrast.test.ts",
     "smoke": "tsx scripts/smoke.mts",
+    "qa:visual-text": "tsx scripts/qa/visual-text-review.mts",
     "cine:test": "tsx scripts/cine/base-url.test.mts",
     "dev": "next dev",
     "build": "next build",

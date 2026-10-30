@@ -53,6 +53,12 @@ No hay web de referencia: es una composición original basada en la guía Lúdic
 el paquete de Trama. `CheckoutFlow` no encaja con una entrada digital de muestra porque su flujo representa opciones
 de entrega y pago; se usaron piezas públicas más pequeñas.
 
+## Revisión de solapamientos
+
+Tres capturas del usuario revelaron límites de la revisión visual anterior: solo inspeccionaba 390/1440 px y etiquetas semánticas, por lo que no cubría anchos intermedios ni texto en `span`/`div` dentro de capas decorativas `aria-hidden`. La nueva herramienta `npm run qa:visual-text -- <url> --widths ...` recorre rangos de texto renderizados, señala posibles cruces entre textos y medios, microtexto y clipping, y guarda capturas/informe. Es un detector de candidatos; las decisiones siguen dependiendo de revisar la captura, porque el interlineado compacto y los textos colocados deliberadamente sobre imágenes generan cruces geométricos.
+
+La revisión encontró tres problemas reales: el titular editorial de Fanzine invadía la fotografía en anchos intermedios; el sello vertical de Cartel cruzaba el titular a 1072–1151 px; y las coordenadas del portal en móvil tenían poco tamaño/contraste. Se amplió el layout de dos columnas de Fanzine hasta 1280 px y se redujo el titular de escritorio estrecho hasta 1440 px, se retiró el sello superpuesto de Cartel y las coordenadas móviles pasaron a una etiqueta oscura de 12 px. Las capturas alrededor de esos anchos y a cada lado de los breakpoints se volvieron a revisar manualmente.
+
 ## Aprendido
 
 El catálogo y las skills bastaron para resolver la estructura sin ampliar el kit. La primera comprobación visual halló
