@@ -294,3 +294,11 @@
 - Comprobaciones: typecheck y build del consumidor aislado correctos; QA completo del recorrido, filtros, compra de muestra y transiciones; axe sin violaciones; las tres imágenes cargan con alt y aviso ficticio; sin overflow a 320/390/768/1440 px; `smoke` en las tres rutas sin errores ni sombras; revisión de capturas de escritorio y móvil. `npm run verify` y `git diff --check` correctos.
 - Comprobación adicional: el preview de referencia en `http://127.0.0.1:3435/` también sirve la nueva portada y los tres assets; `smoke` vuelve a pasar en ese puerto. Se deja 3435 como URL única de revisión y se cierra el servidor duplicado 3436.
 - Siguiente paso: revisión del usuario en `http://127.0.0.1:3435/`.
+
+## Tres direcciones visuales para UMBRAL (30 de octubre de 2026)
+
+- Objetivo: crear tres demostraciones estéticas basadas en el contenido generado para UMBRAL, manteniendo el programa, flujo de pase, portal SVG, imágenes conceptuales y una parte de los colores corporativos.
+- Cambios: consumidor Fanzine editorial (3436), Club nocturno (3437) y Cartel constructivista (3438); fuentes CSS aisladas en `examples/demo-umbral/app/variantes/`, guía en `examples/demo-umbral/variantes/README.md` y materializador seguro a `.cache/` en `scripts/prepare-umbral-variantes.mts`.
+- Decisiones: cada copia usa el paquete local ya congelado y conserva `node_modules` y `.next` propios; no se tocó el consumidor base 3435 ni se alteró la API del kit. Se dejan los tres servidores abiertos para revisión.
+- Comprobaciones: `npm run typecheck && npm run build` en los tres consumidores; `npm run smoke` HTTP 200 en los tres, sin errores de navegador ni sombras; revisión visual de capturas desktop. QA completo de `scripts/qa/demo-umbral.mts` señaló contrastes insuficientes en Fanzine y Nocturno y overflow horizontal a 320 px en Cartel; quedan registrados para una pasada de corrección.
+- Siguiente paso: abrir `http://127.0.0.1:3436`, `:3437` y `:3438`, valorar la dirección estética y corregir los hallazgos de contraste/overflow.
