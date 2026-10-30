@@ -46,6 +46,10 @@ No hay una referencia única: son tres expresiones deliberadamente divergentes d
 
 El tablero del producto transmite una experiencia distinta porque sus controles responden de verdad y el contenido cambia, mientras que las otras dos demos traducen marca y espacio. Las imágenes sintéticas funcionan cuando su naturaleza está declarada. El detector de texto sirve como lista de inspección: las líneas comprimidas de un titular de cartel pueden generar intersecciones geométricas sin que las letras se toquen, por lo que la última palabra la tiene la lectura visual a tamaño real.
 
+Una revisión posterior de contraste encontró texto auxiliar del tablero por debajo de 4,5:1 (el peor caso era 3,05:1 sobre papel). La skill nombraba el umbral, pero no lo convertía en una condición de cierre por cada superficie. Se oscurecieron los textos, se quitaron transparencias sobre texto funcional y se añadió una puerta de axe; los textos sobre imagen quedan señalados para inspección manual con scrim opaco.
+
+La repetición a 16 anchos no encontró incumplimientos automáticos en las tres rutas. Axe todavía marca los chips de estado del tablero como `incomplete` entre 390 y 720 px porque no puede resolver su fondo en esa composición; sus fondos son sólidos, se inspeccionó la cobertura de elementos y se revisaron las capturas. El checker ahora deja esos casos pendientes de revisión en vez de darlos por aprobados silenciosamente.
+
 ## Siguiente
 
 Revisión humana en `http://127.0.0.1:3441/`, con accesos directos a campaña, producto y foro. Si se aprueban como muestra, decidir si se conservan como consumidor independiente o se integran en `/demos`; no publicar, desplegar ni conectar reservas en esta prueba.

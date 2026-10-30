@@ -191,7 +191,7 @@ Sitios **de varias páginas** hechos con el kit, en `components/sites/<slug>/` y
   `progress` ya pasa su propio valor al painter (guía §7).
 - Los textos por defecto de los componentes son copy de demostración (escuela de surf…): en un proyecto real hay que
   pasar siempre las props de texto (o `""`).
-- Hay smoke automatizado en navegador y un recorrido del consumidor piloto; no certifican fidelidad visual ni accesibilidad completa. La revisión visual sigue siendo necesaria junto a tipos, catálogo y build.
+- Hay smoke automatizado, revisión de texto y recorrido del consumidor piloto. `npm run qa:contrast -- <url-local> --widths ...` mide texto contra las superficies reales con axe; los casos `incomplete` (p. ej. texto sobre imagen) necesitan revisión visual y un scrim/contraste comprobado. Estas pruebas no certifican la accesibilidad completa.
 
 ## Fotografías de las demos
 

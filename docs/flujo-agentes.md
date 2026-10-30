@@ -24,12 +24,15 @@ Elegir un puerto libre y registrar la URL. No compartir `node_modules` ni `.next
 ```powershell
 npm run verify
 npm run smoke -- http://localhost:3006/lab/cine/plain-sight
+npm run qa:contrast -- http://localhost:3006/lab/cine/plain-sight --widths 320,390,768,1024,1440
 npm run cine:vuelta -- plain-sight --base-url http://localhost:3006 --nota "Descripción del cambio"
 ```
 
 `verify` ejecuta typecheck, comprobación del catálogo, comprobación de sombras y las pruebas del cambio de origen (`cine:test`); se detiene ante el primer fallo. No regenera el catálogo automáticamente. Si las props cambian, regenerarlo conscientemente con `npm run catalog` y revisar el diff.
 
 `smoke` visita una URL local con Chromium, guarda `pagina.png` y `resultado.json` en `.refs3d/smoke/<fecha>/`, y falla ante errores de JavaScript/consola o una respuesta HTTP fallida. Se puede elegir salida con `--out`. Inspeccionar la imagen generada: esta prueba no certifica interacciones, carga de modelos ni fidelidad visual. Para eso usar capturas y comparaciones de cine.
+
+`qa:contrast` ejecuta la regla de contraste de axe en cada alto de scroll para los anchos indicados y guarda violaciones y casos no resueltos en `.refs3d/contrast/`. Exige 4,5:1 para texto normal y 3:1 para texto grande o gráfico. Cero violaciones es obligatorio; los casos `incomplete` sobre imagen, gradiente, pseudo-elementos o capas se inspeccionan visualmente y se resuelven con color medido o un scrim opaco. Repite la regla en estados interactivos que no aparecen al cargar.
 
 `--base-url` cambia solo el origen del banco: conserva la ruta, query y hash de la receta y no cambia las referencias externas. También se puede usar `CINE_BASE_URL`, heredada por procesos hijos como `cine:reestudio`; la opción explícita tiene prioridad. Sin configuración se mantienen las URLs originales, incluido el puerto 3005.
 
