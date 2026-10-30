@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "f180f0d707213e64ac8dfba2d9820e3eaba2f02f",
-  "sourceDirty": true,
+  "sourceCommit": "19d98eba56de6b4378975b9326481d607151665b",
+  "sourceDirty": false,
   "kind": "component",
   "id": "action-bar",
   "status": "pilot",
@@ -54,11 +54,11 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "52a4423d56c6829d3f8b70282918b4ee1148112c8da3c7e0b310b27a6f16fa4a"
+      "sha256": "3eeb4b518bfcbd7561f16dd72ac7c9beda2e3513398fdaaeb7e7ac4fc8123f0c"
     },
     {
       "path": "package.json",
-      "sha256": "6686f3821c21d16f6b4356737c54cbb6f4ad6f4c7c76b6c315d5e596f9ddac42"
+      "sha256": "2ec279ef18c74fabb6d6a064d5cae64ff70ae92ead9dad016e6a695fb68d4654"
     },
     {
       "path": "scripts/agent-knowledge.mts",

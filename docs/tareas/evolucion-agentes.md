@@ -388,3 +388,13 @@ Con todos los cambios realizados en esta sesion sobre las skills de revision. Vo
 - Rama/worktree: `feat/evolucion-agentes`, `C:/COMPARTIDO/trama-evolucion-agentes`. No se tocó ningún otro worktree; sin push, publicación ni despliegue. Se conservan sin modificar los 39 JSON obsoletos de `docs/agents/` aplazados por el usuario.
 - Vista previa de producción local: `http://127.0.0.1:3441/` (origen único; rutas enlazadas desde el índice).
 - Siguiente paso: valoración humana de las cinco direcciones; luego decidir si se mantienen como consumidor aislado o se integran en `/demos`.
+
+## Regeneración de procedencia de los 39 JSON de agentes (30 de octubre de 2026)
+
+- Objetivo: resolver la deuda de `docs/agents/` que bloqueaba `catalog:check` y `verify`, aplazada hasta esta tarea.
+- Rama/worktree al comenzar: `feat/evolucion-agentes`, `C:/COMPARTIDO/trama-evolucion-agentes`, commit `19d98eb`; estado limpio. No se tocaron otros worktrees.
+- Causa: las fichas piloto todavía declaraban como fuente `f180f0d` con `sourceDirty: true`, y sus hashes de `package.json` y `package-lock.json` correspondían a una versión previa. El generador `scripts/agent-knowledge.mts` deriva esa procedencia desde el repositorio; no era una desactualización manual de los 39 contenidos.
+- Cambios: ejecutado `npm run catalog`, que actualizó exactamente 39 archivos JSON en `docs/agents/` (18 componentes, 19 guías, 1 receta y el índice). Las diferencias solo cambian `sourceCommit` a `19d98eba…`, `sourceDirty` a `false` y los hashes vigentes de los manifiestos. No se regeneraron otros documentos ni se modificaron las fichas Markdown.
+- Comprobaciones: antes de ejecutar, `npm run doctor` pasó dependencias, Chromium y ffmpeg. Después, `npm run catalog:check`, `npm run agents:test` y `npm run verify` pasan; no se observan cambios semánticos en las fichas. `npm run pkg:build`, `npm run pkg:pack` y `npm run agents:check-package` pasan: el tarball local incluye conocimiento actualizado y compila los tres ejemplos contra trama-ui 0.13.0.
+- Decisiones: conservar el alcance generado de 39 JSON y evitar regenerar el contenido en Markdown, que no estaba obsoleto. El `.tgz` solo se creó localmente para verificación; no se publicó ni desplegó.
+- Siguiente paso: futuras modificaciones a las fuentes del catálogo o al paquete requieren repetir `npm run catalog`; los JSON regenerados ya están validados y listos para commit.
