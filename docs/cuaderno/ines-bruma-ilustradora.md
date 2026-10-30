@@ -6,7 +6,7 @@ estado: hecho
 referencias: [https://www.granyon.com/work/aurelia-durand, https://www.aurelia-studio.com/, https://www.torebentsen.com/]
 fichas: [examples/demo-ines/README.md]
 ruta: http://127.0.0.1:3451/
-codigo: [examples/demo-ines/app/page.tsx.txt, examples/demo-ines/app/studio.css.txt, examples/demo-ines/public/images/ines-bruma-sheet.png, examples/demo-ines/public/images/ines-bruma-sheet.webp, examples/demo-ines/public/images/ines-bruma-night-garden.webp]
+codigo: [examples/demo-ines/app/page.tsx.txt, examples/demo-ines/app/studio.css.txt, examples/demo-ines/public/images/ines-bruma-sheet.png, examples/demo-ines/public/images/ines-bruma-sheet.webp, examples/demo-ines/public/images/ines-bruma-night-garden.webp, examples/demo-ines/public/images/ines-bruma-rooftop-kite.webp]
 colores: [#f4efdf, #202221, #b93228, #273f9b, #f2bd48]
 fuentes: [Instrument Serif, Instrument Sans, JetBrains Mono]
 sector: [ilustración, cultura]
@@ -15,7 +15,7 @@ tono: [cálido, curioso, artesanal]
 paleta: [papel cálido, tomate, azul ultramar, amarillo mantequilla, verde]
 tipografia: [serif expresiva en titulares, mono en metadatos]
 patrones: [portfolio asimétrico, archivo filtrable, ficha de obra modal, contacto local]
-movimiento: [shader WebGL en hover, escena expandida con scroll, revelado por recorte, movimiento reducido respetado]
+movimiento: [shader WebGL en hover, escena expandida con scroll, reflejo desenfocado de la escena, revelado por recorte, movimiento reducido respetado]
 piezas: [GuideFrame, Button, DistortImage, ScrollExpand, Reveal]
 piezas-nuevas: []
 relacionados: [demo-rizo-empresa-tecnologica]
@@ -35,6 +35,7 @@ Se revisaron el caso de estudio del estudio que diseñó el sitio de Aurélia Du
 - Se generó una serie original de seis ilustraciones conceptuales en una plancha común y se usa con recortes CSS. La artista, obras, editoriales y campañas son ficticias.
 - Se compuso una dirección editorial de papel cálido, serif de titulares, folio mono, piezas rotadas y una cuadrícula asimétrica. GuideFrame y Button aportan piezas del kit Trama.
 - La ilustración principal tiene distorsión WebGL al puntero; una segunda escena se expande desde una tarjeta inclinada hasta ocupar la ventana con ScrollExpand; el archivo revela las imágenes con Reveal. El texto de las fichas permanece visible durante el movimiento.
+- La escena expandida usa una ilustración distinta de la portada: dos personas remontan una cometa sobre los tejados junto al mar. La misma imagen se amplía y desenfoca a 42 px detrás, siguiendo el tratamiento de fondo de `ProjectReel`; la obra frontal mantiene su proporción y queda nítida.
 - Se guardaron los dos originales en PNG y se sirven como WebP de 367 KB y 450 KB para reducir la descarga de esas imágenes de 6,3 MB a unos 817 KB.
 - El preparador materializa un consumidor Next aislado en `.cache/demo-ines-review/`, copia dependencias locales y assets.
 
@@ -48,8 +49,8 @@ Se revisaron el caso de estudio del estudio que diseñó el sitio de Aurélia Du
 
 ## Aprendido
 
-Una referencia específica vinculada al sector hace que el brief de estilo parta de evidencia contextual y no de una receta corporativa. La creación de arte original es crucial aquí: sin las ilustraciones el sistema editorial perdería su razón de ser. La primera pasada reveló dos errores de integración: `overflow:hidden` en el lienzo general cancelaba el sticky de ScrollExpand, y Reveal en modo self se ocultaba a su propio IntersectionObserver con clip-path. El lienzo pasó a `overflow:clip`; Reveal envuelve la imagen y anima su hijo, dejando intactos textos y controles. El recorte llega ahora a pantalla completa en móvil y escritorio. La revisión automática encontró texto blanco sobre el sello rojo y titulares rojos sobre fondo arena por debajo del umbral; se oscureció el rojo y quedaron en cero las infracciones de contraste en 320, 390, 768, 1024 y 1440 px. Axe no puede resolver el texto sobre el gradiente oscuro de la escena; las capturas de escritorio y móvil se inspeccionaron y el scrim conserva una lectura clara. La revisión geométrica también marca cajas de titulares que se cruzan, pero las formas de las letras se leen sin tocarse. Filtros, ficha, Escape, retorno del foco, menú, formulario, shader en escritorio, fallback plano en tacto y movimiento reducido y ausencia de overflow se probaron en navegador.
+Una referencia específica vinculada al sector hace que el brief de estilo parta de evidencia contextual y no de una receta corporativa. La creación de arte original es crucial aquí: sin las ilustraciones el sistema editorial perdería su razón de ser. La primera pasada reveló dos errores de integración: `overflow:hidden` en el lienzo general cancelaba el sticky de ScrollExpand, y Reveal en modo self se ocultaba a su propio IntersectionObserver con clip-path. El lienzo pasó a `overflow:clip`; Reveal envuelve la imagen y anima su hijo, dejando intactos textos y controles. El recorte llega ahora a pantalla completa en móvil y escritorio. La revisión automática encontró texto blanco sobre el sello rojo y titulares rojos sobre fondo arena por debajo del umbral; se oscureció el rojo y quedaron en cero las infracciones de contraste en 320, 390, 768, 1024 y 1440 px. Axe no puede resolver el texto sobre el gradiente oscuro de la escena; las capturas de escritorio y móvil se inspeccionaron y el scrim conserva una lectura clara. La escena expandida tiene obra propia y una copia ampliada desenfocada como fondo, igual que el reflejo del reel de vídeo; conviene revisar que el halo no reduzca el contraste del texto al desplegarse. La revisión geométrica también marca cajas de titulares que se cruzan, pero las formas de las letras se leen sin tocarse. Filtros, ficha, Escape, retorno del foco, menú, formulario, shader en escritorio, fallback plano en tacto y movimiento reducido y ausencia de overflow se probaron en navegador.
 
 ## Siguiente
 
-Revisar la preview en `http://127.0.0.1:3451/`, incluida la ficha de obra, filtros y formulario, en escritorio y móvil; decidir si se aprueba la dirección y qué parte se itera.
+Valorar en `http://127.0.0.1:3451/` la nueva obra de la cometa al desplegarse y su reflejo desenfocado; la portada conserva la escena del jardín.
