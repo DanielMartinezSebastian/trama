@@ -16,7 +16,7 @@ paleta: [fondo claro, pastel cálido, acento azul, acento amarillo]
 tipografia: [titular gigante, etiquetas pixel]
 patrones: [cartelera por fechas, programa filtrable, entrada con QR, preguntas frecuentes, cinta de texto, portal geométrico]
 movimiento: [marquesina lenta, movimiento reducido respetado]
-piezas: [GuideFrame, Hero, Marquee, EventLineup, FAQSection, Footer, Button, TextField, QuantityStepper, Alert, QRCode]
+piezas: [GuideFrame, Hero, Marquee, EventLineup, FAQSection, Footer, Button, TextField, QuantityStepper, Alert, QRCode, PageTransition]
 piezas-nuevas: []
 relacionados: [herramienta-skills-trama]
 ---
@@ -35,7 +35,9 @@ recibo; `smoke` sobre las tres rutas.
 ## Qué se hizo
 
 Se aplicaron `trama-build` y `trama-style` para consultar receta, catálogo, guía y componentes públicos; `frontend-design`
-sirvió para definir una dirección gráfica propia. Se crearon `/`, `/programa` y `/entradas`; filtros accesibles por día
+sirvió para definir una dirección gráfica propia. Se usaron `PageTransition` y `PageTransitionPersist` ya existentes
+en el kit: barrido rápido hacia delante, dirección inversa al volver y cabecera fija. Se crearon `/`, `/programa` y
+`/entradas`; filtros accesibles por día
 y espacio; cantidad y total; validación de datos en navegador; persistencia local; y descarga de un recibo marcado como
 muestra. La fuente del consumidor quedó conservada en `examples/demo-umbral/` y el preparador escribe solo en un destino
 nuevo bajo `.cache/`.
@@ -48,12 +50,12 @@ de entrega y pago; se usaron piezas públicas más pequeñas.
 
 ## Aprendido
 
-El catálogo y las skills bastaron para resolver la estructura sin tocar el kit. La primera comprobación visual halló
+El catálogo y las skills bastaron para resolver la estructura sin ampliar el kit. La primera comprobación visual halló
 que el encabezado se desbordaba en 320 px y que un enlace del hero heredaba texto oscuro sobre azul; ambos ajustes
 locales pasan ahora el barrido responsive y contraste. El almacenamiento local permite probar la recuperación, pero
 el estado vacío y el aviso dejan claro que no existe un pedido real.
 
 ## Siguiente
 
-Abrir la demo local en `http://127.0.0.1:3435` y revisar el concepto y el copy. Si se decide convertirla en muestra
+Abrir la demo local en `http://127.0.0.1:3435` y revisar el concepto, el copy y las transiciones. Si se decide convertirla en muestra
 integrada en el sitio, acordar una ruta pública y revisar su contenido antes de exponerla allí.

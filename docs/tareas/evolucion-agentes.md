@@ -244,10 +244,13 @@
   usa almacenamiento local y un QR de ejemplo; el archivo descargable dice `NO VÁLIDO PARA ACCESO`. No se solicita
   pago ni se envía correo. `CheckoutFlow` está orientado a entrega/recogida y pago, por eso se compuso la selección
   de entradas con piezas públicas más pequeñas. La cabecera propia enlaza a inicio porque `NavBar` no ofrece ese
-  `href` de marca. No se añadieron ni cambiaron componentes del kit.
+  `href` de marca. Las transiciones reutilizan `PageTransition` y `PageTransitionPersist`, ya existentes en Trama; los
+  enlaces del App Router marcan `NAV_FORWARD`/`NAV_BACK` y la cabecera queda fija. Los enlaces HTML de cartelera añaden
+  un fundido entre documentos del mismo origen. No se añadieron ni cambiaron componentes del kit.
 - Comprobaciones: typecheck y build de producción del consumidor; flujo de día enlazado, cantidad y precio, errores de
   formulario, guardado y recuperación tras recarga, descarga y estado vacío. Axe WCAG 2.0 A/AA sin violaciones en
-  portada, programa y recibo; sin errores de navegador ni desbordamiento a 320/390/768/1440 px. `npm run smoke` en
+  portada, programa y recibo; selección comprobada de `wipe-left` al avanzar y `wipe-right` al volver, cabecera
+  persistente, sin errores de navegador ni desbordamiento a 320/390/768/1440 px. `npm run smoke` en
   `/`, `/programa` y `/entradas`: HTTP 200, sin errores ni sombras. Capturas de producción revisadas en
   `.refs3d/demo-umbral/recorrido/` (ignoradas); no equivalen a validación visual del usuario.
 - Consumidor aislado en `.cache/demo-umbral/`; el preparador se probó además con destino nuevo
