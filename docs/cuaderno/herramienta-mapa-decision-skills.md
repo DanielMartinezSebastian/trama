@@ -23,33 +23,48 @@ relacionados: [herramienta-skills-trama, herramienta-evaluacion-agentes, demo-ri
 
 ## Concepto
 
-Un mapa navegable para entender qué pasos siguen `trama-research`, `trama-style` y `trama-build`, y qué decisiones
-son puertas obligatorias, orientaciones o elecciones creativas.
+Un mapa navegable y exhaustivo de las reglas escritas en las cuatro skills de Trama. Expone el activador, la pregunta,
+las salidas condicionales, los traspasos entre skills y el bucle de revisión, distinguiendo obligaciones, orientaciones,
+elecciones abiertas, traspasos y resultados.
 
 ## Qué se midió
 
-Lectura de las tres skills locales y sus reglas sobre contexto, conocimiento, guías, recetas, referencias y revisión.
-Se comparó el caso de una web con un pedido de tres o cuatro versiones del mismo proyecto.
+Lectura de `trama-research`, `trama-style`, `trama-build` y `trama-kit-evolution` en la instalación revisada. Se
+contrastaron las condiciones de alcance, evidencia/fidelidad, contexto y versiones múltiples, assets, técnica reusable,
+integraciones simuladas y puertas de calidad con cinco escenarios de navegación.
 
 ## Qué se hizo
 
-Página HTML autocontenida en `public/flujo-decision-skills.html`, con nodos SVG seleccionables, panel de detalle,
-filtros por tipo de regla y un conmutador de escenario. En móvil el diagrama permite desplazamiento horizontal.
-`trama-build` y `trama-style` ahora separan restricciones de preferencias y abren la exploración de conceptos cuando
-el usuario pide varias versiones; no imponen una lista fija de estéticas.
+La versión inicial del diagrama se sustituyó por siete etapas con 22 decisiones seleccionables y sus ramas etiquetadas.
+El inspector muestra activador, resultado, responsable y skill fuente; cinco escenarios atenúan las ramas ajenas y cinco
+filtros separan el tipo de regla. El flujo se adapta a móvil sin desplazamiento horizontal. La página aclara que la
+activación real de skills pertenece al orquestador y que no se está representando telemetría ni razonamiento privado.
+La edición también documenta los cambios recientes en `trama-build`/`trama-style` para propuestas múltiples y la
+fidelidad de firma en referencias.
 
 ## Diferencias con la referencia
 
-No pretende exponer una cadena privada de razonamiento ni representar las skills como un árbol ejecutable. Visualiza
-las instrucciones documentadas y deja claro que el agente interpreta el encargo. Los gates de contraste, legibilidad,
-responsive y funcionamiento se separan de las decisiones visuales.
+No pretende exponer una cadena privada de razonamiento ni simular un router ejecutable. Expone las condiciones escritas
+y sus ramales; el orquestador puede cargar skills según la tarea y no hay instrumentación aquí que registre su
+selección. Las puertas de contraste, legibilidad, responsive y función se separan de las decisiones visuales.
 
 ## Aprendido
 
 Las reglas de compatibilidad y calidad no obligan por sí solas a una estética. La convergencia aparece cuando receta,
-guía o esqueleto de landing pasan de ser recursos a ser el punto de partida automático. Las instrucciones nuevas
-reducen ese sesgo, pero no garantizan resultados impredecibles: el modelo, el historial y los ejemplos vistos siguen
-influyendo.
+guía o esqueleto de landing pasan de recurso a punto de partida automático. Las instrucciones de diversidad y fidelidad
+reducen sesgos distintos, pero no garantizan resultados impredecibles: historial, ejemplos y selección del agente siguen
+influyendo. Para valorar comportamiento real hace falta instrumentar ejecuciones, no inferirlo del mapa de instrucciones.
+
+## Revisión 2026-10-31
+
+- **Objetivo:** sustituir el mapa incompleto por uno preciso, con más ramas y los límites de lo que se puede afirmar.
+- **Decisiones:** agrupar por etapas; mostrar todas las salidas en tarjetas; evitar presentar el escenario resaltado como
+  traza observada; indicar skill responsable y fuente; conservar interacción teclado y movimiento reducido.
+- **Comprobaciones:** `npm run smoke -- http://127.0.0.1:3450/flujo-decision-skills.html --auditar` (200, sin errores,
+  sombras ni interacciones/enlaces rotos); Playwright en 1440 y 390 px (22 decisiones, escenarios/inspector/filtro
+  operativos, cero overflow horizontal y errores de página). Captura móvil: `.refs3d/decision-map-390.png`.
+- **Siguiente:** si se necesita conocer qué skills se activan realmente en cada sesión, añadir telemetría explícita al
+  orquestador y representar esas trazas como una capa separada del modelo de instrucciones.
 
 ## Siguiente
 
