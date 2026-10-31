@@ -37,7 +37,8 @@ for (const run of runs) {
     const program = ts.createProgram([source], options);
     const errors = ts.getPreEmitDiagnostics(program);
     const imports = [...code.matchAll(/(?:from\s+|import\s+)["']([^"']+)["']/g)].map((m) => m[1]);
-    const privateImport = imports.find((i) => i !== "react" && i !== "trama-ui" && !/^trama-ui\/[A-Za-z][A-Za-z0-9]*$/.test(i) && i !== "trama-ui/styles.css");
+    const allowed = new Set(["react", "trama-ui", "trama-ui/styles.css", ...(suite.id === "signature" && run.task === "webgl" ? ["@react-three/fiber", "three"] : [])]);
+    const privateImport = imports.find((i) => !allowed.has(i) && !/^trama-ui\/[A-Za-z][A-Za-z0-9]*$/.test(i));
     if (errors.length || privateImport) {
       result.status = "failed";
       result.details.push(...errors.map((d) => ts.flattenDiagnosticMessageText(d.messageText, "\n")), ...(privateImport ? [`Import fuera de contrato: ${privateImport}`] : []));
@@ -71,7 +72,7 @@ try {
   assert(up);
   for (const result of records.filter((r) => valid.includes(r.id))) {
     const start = performance.now();
-    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "es-ES", timezoneId: "Europe/Madrid", reducedMotion: "reduce" });
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "es-ES", timezoneId: "Europe/Madrid", reducedMotion: result.task === "webgl" ? "no-preference" : "reduce" });
     const page = await ctx.newPage(); const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.addInitScript("window.__name = f => f");
@@ -80,8 +81,52 @@ try {
       const url = `${origin}/evaluation/${result.id}`;
       assert.equal((await page.goto(url, { waitUntil: "networkidle" }))?.status(), 200);
       const subject = page.locator("#evaluation-case");
-      assert.equal(await subject.locator("h1").count(), 1, "Se exige un h1 por muestra");
+      if (suite.id !== "signature") assert.equal(await subject.locator("h1").count(), 1, "Se exige un h1 visible por muestra/variante");
       await page.screenshot({ path: join(evaluation, result.id, "desktop.png"), fullPage: true });
+      if (suite.id === "signature" && result.task === "webgl") {
+        const canvas = subject.locator("canvas").first();
+        await canvas.waitFor({ state: "visible", timeout: 15000 });
+        const context = await canvas.evaluate((el) => {
+          const node = el as HTMLCanvasElement;
+          return { width: node.width, height: node.height, webgl: !!(node.getContext("webgl2") || node.getContext("webgl") || node.getContext("experimental-webgl")) };
+        });
+        assert(context.width > 0 && context.height > 0 && context.webgl, "La firma WebGL necesita un canvas GL real y visible");
+        const chapters = subject.locator('nav[aria-label*="Capítulos"] button');
+        assert.equal(await chapters.count(), 3, "Se esperan tres capítulos navegables");
+        for (let i = 0; i < 3; i++) {
+          await chapters.nth(i).click();
+          await page.waitForTimeout(200);
+          await page.screenshot({ path: join(evaluation, result.id, `desktop-chapter-${i + 1}.png`) });
+        }
+        await chapters.first().click();
+        const firstStage = await canvas.screenshot();
+        await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.35));
+        await page.waitForTimeout(900);
+        const secondStage = await canvas.screenshot();
+        assert(!firstStage.equals(secondStage), "El canvas no cambió al avanzar la escena con scroll/tiempo");
+        await page.screenshot({ path: join(evaluation, result.id, "stage-scrolled.png") });
+      }
+      if (suite.id === "signature" && result.task === "directions") {
+        const tabs = subject.locator('[role="tab"]');
+        assert.equal(await tabs.count(), 3, "Se exigen tres direcciones seleccionables");
+        const labels = await tabs.allTextContents();
+        assert.equal(new Set(labels.map((label) => label.trim())).size, 3, "Cada dirección necesita un nombre propio");
+        for (let i = 0; i < 3; i++) {
+          await tabs.nth(i).click();
+          await page.waitForTimeout(150);
+          assert.equal(await tabs.nth(i).getAttribute("aria-selected"), "true", "El tab activo debe estar marcado");
+          assert.equal(await subject.locator('[role="tabpanel"]:not([hidden]) h1').count(), 1, "El panel activo debe tener un solo h1");
+          await page.screenshot({ path: join(evaluation, result.id, `desktop-direction-${i + 1}.png`), fullPage: true });
+        }
+        await page.setViewportSize({ width: 390, height: 844 });
+        for (let i = 0; i < 3; i++) {
+          await tabs.nth(i).click();
+          assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `Desborde móvil en dirección ${i + 1}`);
+          await page.screenshot({ path: join(evaluation, result.id, `mobile-direction-${i + 1}.png`), fullPage: true });
+        }
+        await page.setViewportSize({ width: 1440, height: 900 });
+        await tabs.first().click();
+      }
       if (result.task === "composition") {
         const text = await subject.innerText();
         for (const expected of suite.compositionContent) assert(text.includes(expected), `Falta ${expected}`);
@@ -94,6 +139,7 @@ try {
         const h = await subject.locator("h1").boundingBox(), im = await image.boundingBox();
         assert(h && im && h.x < im.x && im.x - h.x > 100, "Composición de escritorio no transfiere las dos columnas");
       }
+      if (suite.id === "signature") await page.evaluate(() => window.scrollTo(0, 0));
       await page.setViewportSize({ width: 390, height: 844 });
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "Desborde móvil");
       await page.screenshot({ path: join(evaluation, result.id, "mobile.png"), fullPage: true });

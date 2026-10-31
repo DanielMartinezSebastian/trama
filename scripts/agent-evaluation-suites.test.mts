@@ -8,11 +8,17 @@ const oldTasks = [...historical.matchAll(/\{ id: "(composition|reference|booking
 assert.equal(oldTasks.length, 3);
 assert.deepEqual(evaluationSuite("salon").tasks, oldTasks, "P4 conserva exactamente sus encargos");
 for (const id of ["desconocida", "__proto__", "toString"]) assert.throws(() => evaluationSuite(id), /desconocida/);
-for (const suite of Object.values(EVALUATION_SUITES)) {
+for (const suite of [EVALUATION_SUITES.salon, EVALUATION_SUITES.boutique]) {
   assert.deepEqual(suite.tasks.map((t) => t.id), ["composition", "reference", "booking"]);
   assert(suite.tasks.every((task) => task.prompt.includes(`Guía ${suite.guide}`)));
   assert(suite.compositionContent.every((word) => suite.tasks[0].prompt.includes(word)));
   assert.match(suite.reference, /^\.refs3d\//);
   assert.match(suite.artSrc, /^\/images\/[a-z-]+\.svg$/);
 }
+const signature = evaluationSuite("signature");
+assert.deepEqual(signature.tasks.map((task) => task.id), ["webgl", "directions"]);
+assert.match(signature.tasks[0].prompt, /No sustituyas.*fotografía con filtro\/shader 2D/);
+assert.match(signature.tasks[0].prompt, /`@react-three\/fiber` y `three`/);
+assert.match(signature.tasks[1].prompt, /tres propuestas de homepage realmente distintas/);
+assert.match(signature.tasks[1].prompt, /solo cambies paleta\/tipo\/copy/);
 console.log("✓ suites de evaluación: encargos P4 conservados, selección estricta y criterios completos");

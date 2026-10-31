@@ -1,0 +1,10 @@
+import type { ReactNode } from "react";
+import { inter, newsreader, jetbrainsMono } from "trama-ui/fonts";
+import "trama-ui/styles.css";
+import "./signature-host.css";
+
+export const metadata = { title: "Signature evaluation", description: "Host neutro para evaluar fidelidad visual y variedad." };
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return <html lang="es" className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}><body>{children}</body></html>;
+}

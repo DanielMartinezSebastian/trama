@@ -61,6 +61,7 @@ const schema = join(out, "response-schema.json");
 writeFileSync(schema, JSON.stringify(schemaObject, null, 2));
 const suffix = (condition: string) => (condition === "proposed_skills" ? "pilot" : condition === "updated_documentation" ? "updated" : "docs");
 const total = tasks.length * conditionIds.length * 2;
+const usesVisualReference = (taskId: string) => taskId === "reference" || taskId === "webgl";
 cohort: for (let repetition = 1; repetition <= 2; repetition++) {
   for (const task of tasks) {
     // Orden rotado por repetición para no favorecer a una condición por caché.
@@ -83,15 +84,21 @@ cohort: for (let repetition = 1; repetition <= 2; repetition++) {
         for (const name of ["dist", "assets", "bin", "package.json", "README.md", "LICENSE"]) cpSync(join(source, name), join(dir, "node_modules/trama-ui", name), { recursive: true });
         writeFileSync(join(dir, "node_modules/trama-ui/CATALOG.md"), condition === "updated_documentation" ? readFileSync(join(source, "CATALOG.md"), "utf8") : legacy);
       }
-      const imageNote = task.id === "reference" && client === "claude" ? " La captura adjunta está en ./reference.png; léela con la herramienta de lectura." : "";
+      const imageNote = usesVisualReference(task.id) && client === "claude" ? " La captura adjunta está en ./reference.png; léela con la herramienta de lectura." : "";
       if (imageNote) cpSync(reference, join(dir, "reference.png"));
-      const prompt = `Encargo de evaluación independiente. Consulta solo ${dir}; no leas otros ensayos ni el repo padre. No instales dependencias, no uses red ni escribas archivos. El evaluador guardará tu respuesta y compilará/renderizará tu fuente con dependencias fijas.\n${condition === "proposed_skills" ? "Usa las skills Trama disponibles y las referencias de tu versión instalada, consultando solo lo necesario." : "Usa la documentación actual de node_modules/trama-ui/CATALOG.md y sus declaraciones públicas, buscando solo piezas relevantes."}${imageNote}\n\n${task.prompt}\n\nDevuelve únicamente un JSON con tsx (código para Result.tsx) y brief (Markdown de decisiones/límites). Export default un componente React con props {mode:'book'|'appointments';bookHref:string;appointmentsHref:string;storageKey:string;artSrc:string}. No crees rutas Next; el evaluador adapta estas props. Solo imports públicos de trama-ui y React; estilos inline y clases del kit, sin archivos CSS. Si necesitas interacción usa 'use client'. Pasa textos propios, usa CSS/GuideFrame del paquete y no copies assets internos de demos. Debe renderizar en 1440x900 y 390x844. Conserva fuentes conocidas (${suite.fonts}) de la guía; ya se cargan en el evaluador. Verifica tu fuente lo que permitan las herramientas de lectura, declara lo que no hayas probado y termina con ese JSON.`;
+      const contractPrompt = suite.id === "signature"
+        ? "Devuelve solo un JSON con tsx (código de `Result.tsx`) y brief (Markdown breve de decisiones/límites). Exporta un componente React por defecto, tipado para recibir props {mode:'book'|'appointments';bookHref:string;appointmentsHref:string;storageKey:string;artSrc:string}; puedes ignorarlas. No crees rutas ni archivos adicionales."
+        : "Devuelve únicamente un JSON con tsx (código para Result.tsx) y brief (Markdown de decisiones/límites). Export default un componente React con props {mode:'book'|'appointments';bookHref:string;appointmentsHref:string;storageKey:string;artSrc:string}. No crees rutas Next; el evaluador adapta estas props.";
+      const importPrompt = task.id === "webgl"
+        ? "Importa solo React, subrutas públicas de trama-ui, @react-three/fiber y three; no uses imports internos de Trama ni addons. El renderizador de la prueba aporta @react-three/fiber y three al compilar y ejecutar, aunque el directorio de generación sea de solo lectura y no debas instalar paquetes ni intentar compilar allí."
+        : "Solo imports públicos de trama-ui y React.";
+      const prompt = `Encargo de evaluación independiente. Consulta solo ${dir}; no leas otros ensayos ni el repo padre. No instales dependencias, no uses red ni escribas archivos. El evaluador guardará tu respuesta y compilará/renderizará tu fuente con dependencias fijas.\n${condition === "proposed_skills" ? "Usa las skills Trama disponibles y las referencias de tu versión instalada, consultando solo lo necesario." : "Usa la documentación actual de node_modules/trama-ui/CATALOG.md y sus declaraciones públicas, buscando solo piezas relevantes."}${imageNote}\n\n${task.prompt}\n\n${contractPrompt} ${importPrompt} Estilos inline y clases del kit, sin archivos CSS. Si necesitas interacción usa 'use client'. Pasa textos propios y no copies assets internos de demos. Debe renderizar en 1440x900 y 390x844. ${suite.id === "signature" ? "El host es neutro, sin GuideFrame ni tema heredado; carga Inter, Newsreader y JetBrains Mono." : `Conserva fuentes conocidas (${suite.fonts}) de la guía; ya se cargan en el evaluador.`} Verifica tu fuente lo que permitan las herramientas de lectura, declara lo que no hayas probado y termina con ese JSON.`;
       writeFileSync(join(dir, "prompt.txt"), prompt);
       const response = join(dir, "response.json");
       let args: string[];
       if (client === "codex") {
         args = [cli, "exec", "--sandbox", "read-only", "--config", 'approval_policy="never"', "--json", "--ephemeral", "--skip-git-repo-check", "--cd", dir, "--output-schema", schema, "--output-last-message", response];
-        if (task.id === "reference") args.push("--image", reference);
+        if (usesVisualReference(task.id)) args.push("--image", reference);
         args.push("--", prompt);
       } else {
         const tools = condition === "proposed_skills" ? ["Read", "Glob", "Grep", "Skill"] : ["Read", "Glob", "Grep"];
@@ -130,7 +137,7 @@ cohort: for (let repetition = 1; repetition <= 2; repetition++) {
       }
       const toolCalls = client === "claude" ? events.flatMap((e) => e.type === "assistant" ? (e.message?.content ?? []).filter((c: { type: string }) => c.type === "tool_use").map((c: { name: string }) => c.name) : []) : null;
       const record = { id, task: task.id, condition, repetition, startedAt: started, finishedAt: new Date().toISOString(), elapsedMs: Math.round(performance.now() - clock), exitCode,
-        usage, sourceManifestSha256: digest(join(source, "package.json")), sourceTreeSha256, suite: suite.id, contractSha256, referenceSha256: task.id === "reference" ? digest(reference) : null,
+        usage, sourceManifestSha256: digest(join(source, "package.json")), sourceTreeSha256, suite: suite.id, contractSha256, referenceSha256: usesVisualReference(task.id) ? digest(reference) : null,
         artifacts: { source: existsSync(join(dir, "Result.tsx")), brief: existsSync(join(dir, "brief.md")) }, terminalState: "pending-validation",
         ...(client === "claude" ? { turns, costUsd, toolCalls } : {}),
         configuration: { client: `${client}-cli`, version: clientVersion, model, modelOverride: client === "claude", sandbox: client === "codex" ? "read-only" : "tools-read-only", output: "json-schema", approval: client === "codex" ? "never" : "dontAsk", order: results.length + 1 },

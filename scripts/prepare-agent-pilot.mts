@@ -29,6 +29,11 @@ if (suite.id === "boutique") {
   writeFileSync(join(target, "app/page.tsx"), readFileSync(join(fixtures, "reference.tsx.txt")));
   writeFileSync(join(target, "app/boutique-host.css"), readFileSync(join(fixtures, "boutique-host.css.txt")));
   writeFileSync(join(target, "public/images/movimiento.svg"), readFileSync(join(fixtures, "movimiento.svg")));
+} else if (suite.id === "signature") {
+  const fixtures = "scripts/fixtures/evaluation-signature";
+  writeFileSync(join(target, "app/layout.tsx"), readFileSync(join(fixtures, "layout.tsx.txt")));
+  writeFileSync(join(target, "app/page.tsx"), readFileSync(join(fixtures, "page.tsx")));
+  writeFileSync(join(target, "app/signature-host.css"), readFileSync(join(fixtures, "signature-host.css")));
 }
 const pkg = JSON.parse(readFileSync(join(target, "package.json"), "utf8"));
 pkg.dependencies["trama-ui"] = "file:" + tarball.replace(/\\/g, "/");
