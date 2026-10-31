@@ -31,6 +31,7 @@ const TextmodeCanvas = dynamic(() => import("@/components/TextmodeCanvas"));
 const ThemedLanding = dynamic(() => import("@/components/ThemedLanding"));
 const ScrollStage = dynamic(() => import("@/components/ScrollStage"));
 const PortfolioLanding = dynamic(() => import("@/components/landings/ines-bruma/InesBrumaLanding"));
+const PolarisLanding = dynamic(() => import("@/components/landings/polaris/PolarisLanding"));
 
 const NAV_DEMOS = demos.filter((d) => d.family !== "landing");
 
@@ -83,7 +84,7 @@ export default function DemoViewer({ slug }: { slug: string }) {
       {KitLanding ? (
         <KitLanding key={`kit-${slug}`} hud={hud} />
       ) : render === "portfolio" ? (
-        <PortfolioLanding key={`portfolio-${slug}`} />
+        slug === "polaris-archivo" ? <PolarisLanding key={`portfolio-${slug}`} /> : <PortfolioLanding key={`portfolio-${slug}`} />
       ) : render === "asciify" ? (
         <AsciifyCanvas key={`canvas-${slug}`} slug={slug} />
       ) : render === "layers" ? (

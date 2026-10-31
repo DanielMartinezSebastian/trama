@@ -40,7 +40,8 @@ export function demoGroups(): DemoGroup[] {
   const of = (f: DemoMeta["family"]) => demos.filter((d) => d.family === f);
   return [
     { id: "landings", label: "Landings del kit", blurb: "Páginas completas construidas solo con components/ui/: la mejor referencia para montar una landing.", items: demos.filter(isKit).map(item) },
-    { id: "portfolios", label: "Portfolios editoriales", blurb: "Experiencias de autor con obra propia, archivo explorable y movimiento integrado en la narración.", items: demos.filter((d) => d.render === "portfolio").map(item) },
+    { id: "portfolios", label: "Portfolios editoriales", blurb: "Experiencias de autor con obra propia, archivo explorable y movimiento integrado en la narración.", items: demos.filter((d) => d.render === "portfolio" && d.slug !== "polaris-archivo").map(item) },
+    { id: "webgl", label: "Relatos WebGL", blurb: "Demos con escenas generativas, shaders y movimiento enlazado al recorrido.", items: demos.filter((d) => d.slug === "polaris-archivo").map(item) },
     {
       id: "webs",
       label: "Webs completas",
