@@ -1,5 +1,6 @@
 /** Metadatos de las demos (sin funciones, seguros para componentes de servidor). */
 import { kitLandingDemos } from "./demos-kit-landing";
+import { portfolioDemos } from "./demos-portfolio";
 import { scrollDemos } from "./demos-scroll";
 import { themeDemos } from "./demos-themes";
 import { textDemos } from "./demos-text";
@@ -28,7 +29,7 @@ export type DemoMeta = {
   /** Qué librería(s) renderizan; se muestra en la tarjeta */
   lib?: "textmode.js" | "asciify" | "ambas" | "three.js";
   /** Componente de render; por defecto se deduce de la familia. "kit" = landing construida con components/ui/ */
-  render?: "textmode" | "asciify" | "layers" | "kit";
+  render?: "textmode" | "asciify" | "layers" | "kit" | "portfolio";
   /** Selectores extra junto al cajón de texto (solo demos de texto) */
   controls?: ("font" | "effect")[];
   /** Muestra el cajón de texto aunque no sea de la familia texto */
@@ -270,6 +271,7 @@ export const demos: DemoMeta[] = [
   ...scrollDemos,
   ...themeDemos,
   ...kitLandingDemos,
+  ...portfolioDemos,
 ];
 
 export const getDemo = (slug: string) => demos.find((d) => d.slug === slug);

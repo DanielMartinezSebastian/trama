@@ -44,7 +44,7 @@ export default function DemosIndex({ groups }: { groups: DemoGroup[] }) {
       <header className="tr-page__head">
         <p className="tr-label">Demos · {total}</p>
         <h1 className="tr-statement">Todo lo que se ha construido con Trama.</h1>
-        <p className="tr-sec__lead">Landings y webs de referencia, fondos generativos, efectos de texto y páginas con scroll. Cada una se abre a pantalla completa, tal como se vería en producción.</p>
+        <p className="tr-sec__lead">Landings, portfolios editoriales y webs de referencia, además de fondos generativos, efectos de texto y páginas con scroll. Cada una se abre a pantalla completa, tal como se vería en producción.</p>
       </header>
 
       <div className="tr-filter">

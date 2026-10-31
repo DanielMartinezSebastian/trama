@@ -40,6 +40,7 @@ export function demoGroups(): DemoGroup[] {
   const of = (f: DemoMeta["family"]) => demos.filter((d) => d.family === f);
   return [
     { id: "landings", label: "Landings del kit", blurb: "Páginas completas construidas solo con components/ui/: la mejor referencia para montar una landing.", items: demos.filter(isKit).map(item) },
+    { id: "portfolios", label: "Portfolios editoriales", blurb: "Experiencias de autor con obra propia, archivo explorable y movimiento integrado en la narración.", items: demos.filter((d) => d.render === "portfolio").map(item) },
     {
       id: "webs",
       label: "Webs completas",
@@ -58,7 +59,7 @@ export function demoGroups(): DemoGroup[] {
         accent: r.acento,
       })),
     },
-    { id: "tematicas", label: "Landings temáticas", blurb: "Landings de 300vh con cards de efectos ASCII y fondos que cambian de escena, anteriores al kit.", items: of("landing").filter((d) => !isKit(d)).map(item) },
+    { id: "tematicas", label: "Landings temáticas", blurb: "Landings de 300vh con cards de efectos ASCII y fondos que cambian de escena, anteriores al kit.", items: of("landing").filter((d) => !isKit(d) && d.render !== "portfolio").map(item) },
     { id: "scroll", label: "Scroll", blurb: "Páginas de 300vh donde el scroll (GSAP ScrollTrigger) mueve el fondo: base para héroes y secciones.", items: of("scroll").map(item) },
     { id: "texto", label: "Texto", blurb: "Escribe tu texto y míralo cambiar en tiempo real con textmode.js, asciify-engine o las dos.", items: of("text").map(item) },
     { id: "textmode", label: "textmode.js", blurb: "Sketches generativos que dibujan directamente sobre la rejilla de caracteres.", items: of("textmode").map(item) },

@@ -30,6 +30,7 @@ const LayersCanvas = dynamic(() => import("@/components/LayersCanvas"));
 const TextmodeCanvas = dynamic(() => import("@/components/TextmodeCanvas"));
 const ThemedLanding = dynamic(() => import("@/components/ThemedLanding"));
 const ScrollStage = dynamic(() => import("@/components/ScrollStage"));
+const PortfolioLanding = dynamic(() => import("@/components/landings/ines-bruma/InesBrumaLanding"));
 
 const NAV_DEMOS = demos.filter((d) => d.family !== "landing");
 
@@ -66,6 +67,12 @@ export default function DemoViewer({ slug }: { slug: string }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [bare, router, next.slug, prev.slug, toggleFullscreen]);
 
+  useEffect(() => {
+    if (demo?.render !== "portfolio") return;
+    document.documentElement.classList.add("scrollable");
+    return () => document.documentElement.classList.remove("scrollable");
+  }, [demo?.render]);
+
   if (!demo) return null;
 
   const render = demo.render ?? (demo.family === "asciify" ? "asciify" : "textmode");
@@ -75,6 +82,8 @@ export default function DemoViewer({ slug }: { slug: string }) {
     <>
       {KitLanding ? (
         <KitLanding key={`kit-${slug}`} hud={hud} />
+      ) : render === "portfolio" ? (
+        <PortfolioLanding key={`portfolio-${slug}`} />
       ) : render === "asciify" ? (
         <AsciifyCanvas key={`canvas-${slug}`} slug={slug} />
       ) : render === "layers" ? (

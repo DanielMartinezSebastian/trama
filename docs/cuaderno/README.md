@@ -12,7 +12,7 @@
 | 2026-10-30 | [demo-rizo-empresa-tecnologica](demo-rizo-empresa-tecnologica.md) · RIZO, cinco experiencias para una empresa ficticia de software | demo | hecho | empresa, tecnología, marketing, eventos | electrico, tecnico, nocturno | `http://127.0.0.1:3441` |
 | 2026-10-30 | [demo-umbral-skills](demo-umbral-skills.md) · UMBRAL, festival ficticio compuesto con las skills de Trama | demo | hecho | cultura | lúdico | `http://127.0.0.1:3435` |
 | 2026-10-30 | [herramienta-mapa-decision-skills](herramienta-mapa-decision-skills.md) · Mapa interactivo de decisiones de las skills de Trama | herramienta | hecho |  |  | `http://127.0.0.1:3450/flujo-decision-skills.html` |
-| 2026-10-30 | [ines-bruma-ilustradora](ines-bruma-ilustradora.md) · Inés Bruma, portfolio de ilustradora digital | demo | hecho | ilustración, cultura | editorial | `http://127.0.0.1:3451/` |
+| 2026-10-30 | [ines-bruma-ilustradora](ines-bruma-ilustradora.md) · Inés Bruma, portfolio de ilustradora digital | demo | hecho | ilustración, cultura | editorial | `/demo/ines-bruma` |
 | 2026-10-30 | [umbral-tres-esteticas](umbral-tres-esteticas.md) · Tres estéticas para UMBRAL | demo | hecho | cultura | lúdico | `http://127.0.0.1:3436` |
 | 2026-10-29 | [demo-linde-agentes](demo-linde-agentes.md) · Linde, consumidor limpio para el piloto de agentes | demo | en curso | peluquería | salón editorial claro |  |
 | 2026-10-29 | [herramienta-conocimiento-agentes](herramienta-conocimiento-agentes.md) · Conocimiento generado y selectivo para agentes | herramienta | hecho | peluquería | salón editorial claro |  |

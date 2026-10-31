@@ -5,8 +5,8 @@ tipo: demo
 estado: hecho
 referencias: [https://www.granyon.com/work/aurelia-durand, https://www.aurelia-studio.com/, https://www.torebentsen.com/]
 fichas: [examples/demo-ines/README.md]
-ruta: http://127.0.0.1:3451/
-codigo: [examples/demo-ines/app/page.tsx.txt, examples/demo-ines/app/studio.css.txt, examples/demo-ines/public/images/ines-bruma-sheet.png, examples/demo-ines/public/images/ines-bruma-sheet.webp, examples/demo-ines/public/images/ines-bruma-night-garden.webp, examples/demo-ines/public/images/ines-bruma-rooftop-kite.webp]
+ruta: /demo/ines-bruma
+codigo: [components/landings/ines-bruma/InesBrumaLanding.tsx, components/landings/ines-bruma/ines-bruma.css, lib/demos-portfolio.ts, examples/demo-ines/app/page.tsx.txt, examples/demo-ines/app/studio.css.txt, public/images/ines-bruma/ines-bruma-sheet.webp, public/images/ines-bruma/ines-bruma-night-garden.webp, public/images/ines-bruma/ines-bruma-rooftop-kite.webp]
 colores: [#f4efdf, #202221, #b93228, #273f9b, #f2bd48]
 fuentes: [Instrument Serif, Instrument Sans, JetBrains Mono]
 sector: [ilustración, cultura]
@@ -38,6 +38,7 @@ Se revisaron el caso de estudio del estudio que diseñó el sitio de Aurélia Du
 - La escena expandida usa una ilustración distinta de la portada: dos personas remontan una cometa sobre los tejados junto al mar. La misma imagen cubre y desenfoca a 42 px todo el fondo del área sticky, de modo que llena el hueco que deja la tarjeta mientras crece; la obra frontal mantiene su proporción y queda nítida. El brillo del fondo se conserva para que la escena siga adaptándose a la imagen en vez de verse oscura.
 - Se guardaron los dos originales en PNG y se sirven como WebP de 367 KB y 450 KB para reducir la descarga de esas imágenes de 6,3 MB a unos 817 KB.
 - El preparador materializa un consumidor Next aislado en `.cache/demo-ines-review/`, copia dependencias locales y assets.
+- Se integró en la galería de Trama como portfolio editorial independiente, accesible desde `/demos` y directamente en `/demo/ines-bruma`; el CSS quedó limitado al marco `.ines-frame` y los medios se sirven desde el repositorio.
 
 ## Diferencias con la referencia
 
@@ -51,6 +52,12 @@ Se revisaron el caso de estudio del estudio que diseñó el sitio de Aurélia Du
 
 Una referencia específica vinculada al sector hace que el brief de estilo parta de evidencia contextual y no de una receta corporativa. La creación de arte original es crucial aquí: sin las ilustraciones el sistema editorial perdería su razón de ser. La primera pasada reveló dos errores de integración: `overflow:hidden` en el lienzo general cancelaba el sticky de ScrollExpand, y Reveal en modo self se ocultaba a su propio IntersectionObserver con clip-path. El lienzo pasó a `overflow:clip`; Reveal envuelve la imagen y anima su hijo, dejando intactos textos y controles. El recorte llega ahora a pantalla completa en móvil y escritorio. La revisión automática encontró texto blanco sobre el sello rojo y titulares rojos sobre fondo arena por debajo del umbral; se oscureció el rojo y quedaron en cero las infracciones de contraste en 320, 390, 768, 1024 y 1440 px. Axe no puede resolver el texto sobre el gradiente de la escena; las capturas de escritorio y móvil se inspeccionaron y el scrim conserva una lectura clara. La escena expandida tiene obra propia; la misma imagen ocupa, con blur, toda el área sticky detrás de la tarjeta y rellena el hueco durante su expansión, sin oscurecerlo. La revisión geométrica también marca cajas de titulares que se cruzan, pero las formas de las letras se leen sin tocarse. Filtros, ficha, Escape, retorno del foco, menú, formulario, shader en escritorio, fallback plano en tacto y movimiento reducido y ausencia de overflow se probaron en navegador.
 
+## Revisión con `trama-kit-evolution` (31 de octubre de 2026)
+
+Se volvió a clasificar la demo desde el catálogo público del kit. `ScrollExpand` ya cubre el movimiento principal; `DistortImage`, `Reveal`, `GuideFrame` y `Button` cubren las otras interacciones. El fondo borroso que llena el hueco es una composición del consumidor sobre `.ui-sxp__stage`, coherente con el patrón de fondo de `ProjectReel`, pero no hay un segundo uso que justifique todavía una prop pública o un componente nuevo. Se mantiene fuera del kit para evitar fijar en su API una dirección visual de una sola demo. Si aparece otro consumidor que necesite una superficie de fondo independiente de la tarjeta, volver a valorar una prop de fondo para `ScrollExpand`.
+
+La referencia de Aurélia Durand no pudo inspeccionarse de forma interactiva en esta sesión: `cine:web` falló con `ERR_NAME_NOT_RESOLVED`. Por ello, los rasgos atribuidos a la fuente siguen etiquetados como descripción publicada e inferencia, no como medición de movimiento. La captura local `http://127.0.0.1:3451/` pasó `npm run smoke` (200, sin errores ni sombras); se revisó además el estado expandido de escritorio en `.refs3d/ines-motion/adaptive/desktop-150.png`.
+
 ## Siguiente
 
-Valorar en `http://127.0.0.1:3451/` la nueva obra de la cometa al desplegarse y su reflejo desenfocado; la portada conserva la escena del jardín.
+Portfolio integrado en la galería: `/demos` → «Portfolios editoriales» → Inés Bruma, o directamente `/demo/ines-bruma`. La portada conserva el jardín nocturno y la escena expandida presenta la cometa con su reflejo desenfocado.
