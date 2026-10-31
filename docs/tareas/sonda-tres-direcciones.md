@@ -1,0 +1,11 @@
+# Tarea: SONDA en tres direcciones
+
+- Objetivo y criterio de aceptación: crear tres páginas de producto contrastadas para el mismo objeto ficticio; dos con WebGL real y una sin WebGL, cada una con una ruta de compra visible y funcional.
+- Rama / commit / worktree: `feat/evolucion-agentes` / worktree `C:/COMPARTIDO/trama-evolucion-agentes`.
+- Servidor y URL (si sigue activo): servidor de producción de Next activo en `0.0.0.0:3453`; Tailscale `drasw.tailf76b18.ts.net:3453`.
+- Cambios realizados y archivos: rutas `/producto/materia`, `/producto/ritual` y `/producto/esencial`; `components/producto/`; imágenes generadas en `public/images/sonda/`; grupo nuevo en `/demos`; ficha `docs/cuaderno/sonda-tres-direcciones.md`.
+- Decisiones y motivos: mismo altavoz ficticio SONDA 01 para aislar el efecto de dirección visual. Materia explica materiales; Ritual convierte gesto y escena en descubrimiento; Esencial prioriza imagen, información y compra. Se eligieron Floema, The Magic Bottle y Longbow como referencias con enfoques distintos. La sonda encontró Three en Magic Bottle pero no en Floema ni Longbow; por eso no se atribuye Three a Floema.
+- Comprobaciones ejecutadas y resultado: `npm run verify` y `npm run build` pasan. `npm run smoke -- <url> --auditar` pasa en las tres rutas (HTTP 200, sin errores de consola, sombras o controles muertos). `npm run qa:contrast` pasa sin infracciones ni revisión visual pendiente en 390, 768, 1080 y 1440 px. Capturas revisadas; Materia ajustada para enseñar el CTA en el primer encuadre de 1280×720.
+- Capturas o informes (ruta local; indicar si están ignorados): informes y capturas en `.refs3d/sonda/` (ignorado); imágenes originales en `public/images/sonda/`.
+- Fallos pendientes o limitaciones: contenido, reseñas, especificaciones y precio de demostración; el checkout no procesa pagos. El build mantiene avisos preexistentes de fuentes pixel y trazado dinámico de archivos del panel de cine.
+- Siguiente paso concreto: el usuario revisa las tres variantes y elige una para iterar.

@@ -42,6 +42,11 @@ export function demoGroups(): DemoGroup[] {
     { id: "landings", label: "Landings del kit", blurb: "Páginas completas construidas solo con components/ui/: la mejor referencia para montar una landing.", items: demos.filter(isKit).map(item) },
     { id: "portfolios", label: "Portfolios editoriales", blurb: "Experiencias de autor con obra propia, archivo explorable y movimiento integrado en la narración.", items: demos.filter((d) => d.render === "portfolio" && d.slug !== "polaris-archivo").map(item) },
     { id: "webgl", label: "Relatos WebGL", blurb: "Demos con escenas generativas, shaders y movimiento enlazado al recorrido.", items: demos.filter((d) => d.slug === "polaris-archivo").map(item) },
+    { id: "producto-sonda", label: "SONDA · tres direcciones de producto", blurb: "La misma oferta, tres narrativas de venta radicalmente distintas: materia, juego WebGL y comercio editorial directo.", items: [
+      { href: "/producto/materia", title: "SONDA · Materia", blurb: "Materiales, ensamblaje y producto explorable en WebGL. Inspiración: Floema.", meta: "WebGL · comercio narrativo", accent: "#b9d3a0" },
+      { href: "/producto/ritual", title: "SONDA · Ritual", blurb: "Una escena sensorial de interacción por gestos. Inspiración: The Magic Bottle.", meta: "WebGL · experiencia de objeto", accent: "#e7a36e" },
+      { href: "/producto/esencial", title: "SONDA · Esencial", blurb: "Fotografía original, ficha clara y compra directa, sin WebGL. Inspiración: Longbow.", meta: "Sin WebGL · comercio editorial", accent: "#bbc18c" },
+    ] },
     {
       id: "webs",
       label: "Webs completas",
