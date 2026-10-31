@@ -12,6 +12,10 @@ import { resolvePublicExport } from "./package-surface.mts";
 
 export const KNOWLEDGE_DIR = "docs/agents";
 const GENERATORS = ["scripts/agent-knowledge.mts", "scripts/build-catalog.mts", "scripts/package-surface.mts", "scripts/build-package.mts", "scripts/kit-lib.mts", "scripts/skill-context.mjs", "lib/catalog/schema.ts", "lib/catalog/catalog.tsx", "lib/catalog/sectores.ts", "package.json", "package-lock.json"];
+const REFERENCE_ATLAS = [
+  { id: "cinematic-webgl", name: "Firmas cinemáticas y WebGL", description: "Técnicas y casos contrastados para mantener la firma de una referencia WebGL/Three al crear una demo original.", source: "skills/trama-research/references/cinematic-atlas.md", file: "references/cinematic-webgl.md" },
+  { id: "design-directions", name: "Gramática visual y variedad", description: "Separa guía medida, composición, medio, interacción y firma; ayuda a escapar de la plantilla más reciente.", source: "skills/trama-style/references/design-directions.md", file: "references/design-directions.md" },
+];
 const utf8 = (path: string) => readFileSync(path, "utf8");
 const hash = (path: string) => createHash("sha256").update(readFileSync(path)).digest("hex");
 const sorted = (values: string[]) => [...new Set(values)].sort();
@@ -105,6 +109,10 @@ export function knowledgeOutputs(catalog: CatalogEntry[], recipes: RecetaSector[
   const files = closure([...entries.map((e) => e.path.replace(/^@\//, "") + ".tsx"), "lib/ui/fonts.ts"]);
   const declarations = declarationSnapshot(files.filter((f) => /\.tsx?$/.test(f)));
   const output = new Map<string, string>();
+  for (const reference of REFERENCE_ATLAS) {
+    if (!existsSync(reference.source)) throw new Error(`Atlas de referencia ausente: ${reference.source}`);
+    output.set(`${KNOWLEDGE_DIR}/${reference.file}`, utf8(reference.source).replace(/\r\n/g, "\n"));
+  }
   for (const [path, text] of declarations) output.set(`${KNOWLEDGE_DIR}/types/${path}`, text);
   const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const sourceDirty = !!execFileSync("git", ["status", "--porcelain", "--untracked-files=all"], { encoding: "utf8" }).trim();
@@ -214,13 +222,14 @@ export function knowledgeOutputs(catalog: CatalogEntry[], recipes: RecetaSector[
   }, [{ title: "Guía seleccionada", href: `../guides/${guide.id}.md` }, ...entries.map((e) => ({ title: e.component, href: `../components/${e.id}.md` }))]);
   const items = [
     ...[guide, ...guides.filter((x) => x.id !== guide.id)].map((g) => ({ kind: "guide", id: g.id, name: g.label, description: brief(g.note), file: `guides/${g.id}.json` })),
+    ...REFERENCE_ATLAS.map((reference) => ({ kind: "reference", id: reference.id, name: reference.name, description: reference.description, file: reference.file })),
     { kind: "recipe", id: recipe.id, name: recipe.sector, description: recipe.cuando, file: `recipes/${recipe.id}.json` },
     ...entries.map((e) => ({ kind: "component", id: e.id, name: e.component, description: brief(e.description), file: `components/${e.id}.json` })),
   ];
   add("index", {
-    ...common("index", "pilot", ["lib/catalog/sectores.ts", "lib/ui/guides.ts", ...entrySources]), name: "Conocimiento de Trama — piloto salon", scope: "pilot", items,
+    ...common("index", "pilot", ["lib/catalog/sectores.ts", "lib/ui/guides.ts", ...entrySources, ...REFERENCE_ATLAS.map((reference) => reference.source)]), name: "Conocimiento de Trama — guías, referencias y piloto salon", scope: "pilot", items,
     requirements: ["Abrir solo la guía, receta o piezas necesarias; las fichas enlazan declaraciones completas."], examples: [],
-    limitations: ["Selección parcial: todas las guías, pero solo la receta y las piezas de salon; no es inventario completo del paquete.", "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."],
+    limitations: ["Selección parcial: todas las guías, dos atlas de referencia y solo la receta/piezas de salon; no es inventario completo del paquete ni una galería exhaustiva de demos.", "El atlas orienta patrones, pero no acredita la fidelidad de una implementación concreta. Validar la firma con capturas y vídeo, no por parecido de guía o por completar la página.", "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."],
   }, items.map((item) => ({ title: `${item.kind}: ${item.name}`, href: `./${item.file.replace(/\.json$/, ".md")}` })));
   // Helpers autocontenidos de las skills, derivados de una única implementación.
   if (existsSync("skills")) for (const entry of readdirSync("skills", { withFileTypes: true }).filter((e) => e.isDirectory())) {

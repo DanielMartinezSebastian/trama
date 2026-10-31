@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "19d98eba56de6b4378975b9326481d607151665b",
-  "sourceDirty": false,
+  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
   "status": "pilot",
@@ -138,11 +138,11 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "db83ef05c91ade90b13bb389429b51ea7fc25c20c0bcb3677010c6d321e55b0b"
+      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
     },
     {
       "path": "scripts/build-catalog.mts",
-      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+      "sha256": "0633068d1b2f691b6df8a79745b903198b1b811bbbfceb8f428ec03ef994ae5a"
     },
     {
       "path": "scripts/build-package.mts",
@@ -159,6 +159,14 @@
     {
       "path": "scripts/skill-context.mjs",
       "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    },
+    {
+      "path": "skills/trama-research/references/cinematic-atlas.md",
+      "sha256": "9037fe757fefdc1200386bf55aa0a86966be13803b1bf609605405d32f130e34"
+    },
+    {
+      "path": "skills/trama-style/references/design-directions.md",
+      "sha256": "2b8433eae9fd5b79e8a43c015bfec92e721712c72506ca4f919147fc7b1513ff"
     }
   ],
   "validation": {
@@ -166,7 +174,7 @@
     "packageExamples": "not-certified-by-generation",
     "browserFlow": "not-certified-by-generation"
   },
-  "name": "Conocimiento de Trama — piloto salon",
+  "name": "Conocimiento de Trama — guías, referencias y piloto salon",
   "scope": "pilot",
   "items": [
     {
@@ -301,6 +309,20 @@
       "name": "Estudio en papel",
       "description": "Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante.",
       "file": "guides/papel.json"
+    },
+    {
+      "kind": "reference",
+      "id": "cinematic-webgl",
+      "name": "Firmas cinemáticas y WebGL",
+      "description": "Técnicas y casos contrastados para mantener la firma de una referencia WebGL/Three al crear una demo original.",
+      "file": "references/cinematic-webgl.md"
+    },
+    {
+      "kind": "reference",
+      "id": "design-directions",
+      "name": "Gramática visual y variedad",
+      "description": "Separa guía medida, composición, medio, interacción y firma; ayuda a escapar de la plantilla más reciente.",
+      "file": "references/design-directions.md"
     },
     {
       "kind": "recipe",
@@ -441,7 +463,8 @@
   ],
   "examples": [],
   "limitations": [
-    "Selección parcial: todas las guías, pero solo la receta y las piezas de salon; no es inventario completo del paquete.",
+    "Selección parcial: todas las guías, dos atlas de referencia y solo la receta/piezas de salon; no es inventario completo del paquete ni una galería exhaustiva de demos.",
+    "El atlas orienta patrones, pero no acredita la fidelidad de una implementación concreta. Validar la firma con capturas y vídeo, no por parecido de guía o por completar la página.",
     "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."
   ]
 }

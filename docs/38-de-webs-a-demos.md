@@ -109,6 +109,27 @@ Se monta con Secciones del kit (`Hero`, `FeatureGrid`, `PinnedSection`, `Chapter
 4. **Documentada**: un documento corto por demo (qué webs, qué conceptos, qué piezas, qué cifras) y su entrada en el
    panel.
 
+### 4a. Inspiración con firma y activos originales
+
+En este repo, «inspirada en», «basada en» o «pseudo-clona» una web premiada activa el modo **inspiración con fidelidad de firma**. Cambiar marca, tema, copy, modelos, fotografías y datos evita copiar propiedad intelectual; no justifica cambiar la mecánica central por una plantilla de landing.
+
+Antes de la página completa, crea una matriz por evidencia:
+
+| Eje | Qué conservar de la referencia | Qué inventar/cambiar |
+|---|---|---|
+| Medio | DOM, vídeo, canvas 2D, shader, Three/WebGL o WebGPU dominante | Sujetos, geometría, textura, marca y datos |
+| Composición | Escena a sangre, objeto como protagonista, distribución/posición del texto, densidad y ritmo | Tesis y contenido propios, sin copiar cada bloque decorativo |
+| Gesto | Scroll, rueda, puntero, arrastre, clic y su respuesta | La acción semántica concreta que activa la demo nueva |
+| Coreografía | Orden, aceleración, pausa/meseta, crecimiento, giro y desaparición | Las poses/transiciones que expresan la historia original |
+| Profundidad/acabado | Capas, escala, paralaje, atmósfera, partículas y posprocesado | Materiales y paleta propios compatibles con lectura |
+| Página/estados | Número de escenas, continuidad, acceso a contenido y transición | Rutas y acciones propias |
+
+El medio dominante es una decisión de diseño: escena Three con objeto y profundidad se implementa como escena Three; un shader que distorsiona una imagen solo corresponde si esa es la firma observada. Si hay límite de coste/API, deja constancia de la pérdida y da una alternativa reducida como degradación, no como equivalente.
+
+La guía de Trama informa paleta, tipografía o movimiento cuando sus medidas encajan; no decide por sí sola la composición. `GuideFrame` es optativo. Antes de fijar el layout, compara la tesis con tres demos recientes y registra qué separa sus cinco ejes: estructura, medio, interacción, jerarquía tipográfica y navegación. La muestra P4 de skills (salón/boutique) no acredita esta habilidad: hacen falta evaluaciones visuales de referencias WebGL y de varias propuestas estructuralmente distintas.
+
+Cierre específico: captura/vídeo sincronizados de la referencia y su prototipo propio; comparar el mismo viewport, gesto y tramo con Cine; inspeccionar la imagen por persona y añadir texto/estados HTML accesibles. No aprobar una demo por completar funciones y accesibilidad si la firma visual que motivó el encargo no aparece.
+
 ## 5. Ejemplo: tres webs ya mapeadas
 
 `npm run cine:sintesis -- .refs3d/webs/meermohsin https://lusion.co/ https://activetheory.net/` (resultado en

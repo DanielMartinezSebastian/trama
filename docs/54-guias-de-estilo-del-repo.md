@@ -16,6 +16,10 @@
    de la suya.
 3. **Cada guía tiene una hoja de estilo** en `/guias/<id>`. Junta todo lo que el repo sabe de ella: color con contraste,
    letra, espacio, movimiento, componentes del kit, familia del cuaderno, receta, páginas afines, reglas y código.
+4. **Una guía no es una plantilla de página ni un catálogo de firmas.** Mide una familia de decisiones visuales. Una
+   inspiración puede compartir paleta y letra con otra y seguir siendo radicalmente distinta por composición, medio,
+   interacción o ritmo. Para recrear una referencia, la matriz de firmas de docs/38 y el atlas
+   `knowledge/references/` gobiernan el gesto y el medio; `GuideFrame` solo entra si su marco ayuda a esa traducción.
 
 ## 1. Las fuentes de cada hoja
 
@@ -87,6 +91,8 @@ peso.
 ## 4. Cómo añadir o cambiar una guía
 
 1. Busca en `/guias` (tabla del repo) las páginas con poca afinidad. Si comparten fondo, letra y escala, son una guía.
+   La afinidad no mide composición, tecnología ni coreografía; una página WebGL puede no encajar con una guía visual y
+   aun así tener una firma que debe mantenerse en la demo.
 2. Mide esas páginas (`refs:probe <url…>`) y copia sus valores en una entrada nueva de `STYLE_GUIDES`, con:
    - `source`;
    - `refs`, con la página medida entre paréntesis;

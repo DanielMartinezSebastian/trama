@@ -203,7 +203,7 @@ for (const c of CATEGORIES) {
     if (e.notes?.length) md.push(...e.notes.map((n) => `- ${n}`), "");
   }
 }
-md.push("## Landings de referencia", "", "Componentes del kit que usa cada una, en orden de aparición. Pídelas como plantilla por su slug.", "");
+md.push("## Landings de referencia", "", "Componentes del kit que usa cada una, en orden de aparición. Úsalas como plantilla si el usuario cita esa demo; ante otra referencia, extrae su firma antes de elegir composición.", "");
 for (const l of landings) {
   md.push(`### ${l.title} — \`${l.url}\``, "", l.description, "", `Archivo: \`${l.file}\``, "", l.components.map((c) => `\`${c.component}\`${c.uses > 1 ? ` ×${c.uses}` : ""}`).join(" → "), "");
 }
@@ -242,7 +242,7 @@ for (const w of siteRecipes) {
 md.push(
   "## Inspiraciones",
   "",
-  "Webs premiadas estudiadas en el laboratorio y rehechas con el kit (`/inspiraciones/<slug>`, `components/inspiraciones/<slug>/`): marca, textos e imágenes propios, la estructura y la estética de la original. Cada una sigue una guía de estilo (su hoja en `/guias/<guía>`). Ábrelas para copiar estructura cuando el usuario cite la web original o un sector parecido.",
+  "Webs premiadas estudiadas en el laboratorio y rehechas con el kit (`/inspiraciones/<slug>`, `components/inspiraciones/<slug>/`): marca, textos e imágenes propios, con sus decisiones visuales y de interacción estudiadas. Ábrelas como evidencia cuando el usuario cite la web original; no reutilices automáticamente su estructura para otra referencia. La guía (`/guias/<guía>`) informa estilo medido, no es plantilla ni sustituto de la firma visual. Para otra web premiada conserva la clase de escena, gesto y coreografía y crea contenido/activos originales. El atlas técnico está en `knowledge/references/` cuando está disponible.",
   "",
   "| Inspiración | Basada en | Sector | Guía | Lo que la hace reconocible |",
   "|---|---|---|---|---|",

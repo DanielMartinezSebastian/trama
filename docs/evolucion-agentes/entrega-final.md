@@ -59,6 +59,8 @@ las seis con skills conservan la paleta medida. [Protocolo, resultados y límite
 
 Dos guías, dos clientes y paquetes distintos entre cohortes: no autoriza cifras generales ni un ahorro universal.
 
+La revisión posterior de POLARIS detectó un vacío que esas cohortes no miden: ninguna tarea de P4/P4c exige fidelidad de firma WebGL/Three ni evalúa diversidad entre varias direcciones. No se deben interpretar sus puntuaciones funcionales como evidencia de que las skills reproducen medios cinemáticos o generan estilos distintos. La corrección de proceso y los atlas nuevos están registrados en [docs/tareas/evolucion-agentes.md](../tareas/evolucion-agentes.md); falta una cohorte específica para medir su efecto con agentes frescos.
+
 ## P6: decisión
 
 No se añaden MCP, registro ni una consulta CLI nueva. Las cohortes iniciales fallaban por contraste, fuentes y tipos

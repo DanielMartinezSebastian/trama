@@ -39,4 +39,10 @@ assert.throws(() => invoke("skills", "install", "--client", "codex", "--project"
 assert.deepEqual(readdirSync(outside), []);
 const digest = (path: string) => createHash("sha256").update(readFileSync(path)).digest("hex");
 assert.equal(digest(join(pkgRoot, "knowledge/index.json")), digest("docs/agents/index.json"));
+for (const file of ["cinematic-webgl.md", "design-directions.md"]) {
+  const packaged = join(pkgRoot, "knowledge/references", file);
+  const source = resolve("docs/agents/references", file);
+  assert(existsSync(packaged), `Falta el atlas empaquetado: ${file}`);
+  assert(readFileSync(packaged).equals(readFileSync(source)), `Atlas distinto al knowledge generado: ${file}`);
+}
 console.log("✓ paquete instalado, knowledge exacto, contexto local, adaptadores Codex/Claude, idempotencia y conservación de cambios/instrucciones");

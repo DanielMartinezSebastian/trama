@@ -41,9 +41,11 @@ la solución final. Para el proceso completo, usa [docs/38-de-webs-a-demos.md](.
 
 1. Revisa `docs/CATALOG.md`, exports y declaraciones públicas; busca componentes, guías, técnicas y ejemplos que ya
    resuelvan el problema. Comprueba dependencias y límites de la versión exacta. No dupliques una pieza por desconocer
-   una API ya disponible.
+   una API ya disponible. Para WebGL/Cine, cruza el atlas de `knowledge/references/cinematic-webgl.md` (o demos/estudios
+   en el repositorio) con los motores `lib/` y el banco Cine; que no haya un componente con el nombre del efecto no
+   significa que falte la técnica.
 2. Formula la capacidad reusable y quién la usaría fuera de la referencia. Decide entre:
-   - **Composición local/demo** si el patrón es una firma singular o depende demasiado del contenido de una sola web.
+   - **Composición local/demo** si el patrón completo es una firma singular o depende demasiado del contenido de una sola web.
    - **Ajuste de componente existente** si el concepto encaja con una pieza pública y basta una mejora compatible.
    - **Componente público** si encapsula interacción o presentación útil en varios contextos y tiene API/configuración
      comprensible.
@@ -52,6 +54,10 @@ la solución final. Para el proceso completo, usa [docs/38-de-webs-a-demos.md](.
      `docs/37-conceptos.md`.
    - **Guía visual** solo si hay una familia coherente de decisiones de color, tipografía, espacio y movimiento que se
      pueda medir y aplicar; una paleta o una página aislada no basta por sí sola.
+   No concluyas que todo debe quedarse local porque la composición final sea singular: una técnica de cámara, partículas,
+   transición o material puede ser reusable aun cuando la escena, el relato y los activos sean únicos. En encargos de
+   referencia cinematográfica que pidan explícitamente evolucionar Trama, implementa la técnica reusable y deja la
+   composición/arte de una sola marca en la demo.
 3. Cuando la referencia revela un hueco pero no autoriza implementación, entrega la evidencia, las opciones de capa,
    sus ventajas y riesgos y el siguiente experimento. Si el usuario ya pidió evolucionar el kit, implementa la opción
    mínima bien sustentada sin pedir una aprobación rutinaria.

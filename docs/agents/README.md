@@ -1,4 +1,4 @@
-# Conocimiento de Trama — piloto salon
+# Conocimiento de Trama — guías, referencias y piloto salon
 
 > Generado por npm run catalog. No editar. Estado piloto; no acredita recorrido en navegador.
 
@@ -23,6 +23,8 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./in
 - [guide: Arcade pixel](./guides/pixel.md)
 - [guide: Matriz de puntos](./guides/puntos.md)
 - [guide: Estudio en papel](./guides/papel.md)
+- [reference: Firmas cinemáticas y WebGL](./references/cinematic-webgl.md)
+- [reference: Gramática visual y variedad](./references/design-directions.md)
 - [recipe: Peluquería y color, estética](./recipes/salon.md)
 - [component: ActionBar](./components/action-bar.md)
 - [component: AppointmentList](./components/appointment-list.md)
@@ -80,6 +82,8 @@ pilot
 | guide | pixel | Ciruela de noche, letra de píxel solo en los titulares, monoespaciada para leer, un amarillo de moneda y esquinas que no se redondean. |
 | guide | puntos | Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color. |
 | guide | papel | Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante. |
+| reference | cinematic-webgl | Técnicas y casos contrastados para mantener la firma de una referencia WebGL/Three al crear una demo original. |
+| reference | design-directions | Separa guía medida, composición, medio, interacción y firma; ayuda a escapar de la plantilla más reciente. |
 | recipe | salon | Un salón que vende oficio y calma: el equipo y los trabajos son el producto. |
 | component | action-bar | Llamar, WhatsApp, cómo llegar y la acción principal (reservar, pedir, pedir cita) fijos abajo en móvil, en la zona del pulgar: objetivos de 56 px, safe-area-inset-bottom y un hueco al final de la página para no tapar el… |
 | component | appointment-list | Las citas guardadas por BookingFlow en este navegador, por fecha: añadir al calendario, cambiar de día y anular con confirmación |
@@ -116,7 +120,8 @@ Sin ejemplo específico; consultar receta/guía y declaración completa.
 
 ```json
 [
-  "Selección parcial: todas las guías, pero solo la receta y las piezas de salon; no es inventario completo del paquete.",
+  "Selección parcial: todas las guías, dos atlas de referencia y solo la receta/piezas de salon; no es inventario completo del paquete ni una galería exhaustiva de demos.",
+  "El atlas orienta patrones, pero no acredita la fidelidad de una implementación concreta. Validar la firma con capturas y vídeo, no por parecido de guía o por completar la página.",
   "La generación no acredita instalación, descubrimiento del cliente ni recorrido. Los entornos/casos ensayados se documentan en la entrega; sin promesa universal de compatibilidad o ahorro."
 ]
 ```

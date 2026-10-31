@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "19d98eba56de6b4378975b9326481d607151665b",
-  "sourceDirty": false,
+  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceDirty": true,
   "kind": "recipe",
   "id": "salon",
   "status": "pilot",
@@ -138,11 +138,11 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "db83ef05c91ade90b13bb389429b51ea7fc25c20c0bcb3677010c6d321e55b0b"
+      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
     },
     {
       "path": "scripts/build-catalog.mts",
-      "sha256": "73b71fc6a21997d9dce751b8ad95b17f5da227b8f4aa505aeb79dbfafae3ffb9"
+      "sha256": "0633068d1b2f691b6df8a79745b903198b1b811bbbfceb8f428ec03ef994ae5a"
     },
     {
       "path": "scripts/build-package.mts",

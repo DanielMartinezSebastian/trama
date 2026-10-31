@@ -25,6 +25,22 @@ assert.equal(resolvePublicExport("trama-ui/fonts").types, "./dist/lib/ui/fonts.d
 assert.equal(resolvePublicExport("trama-ui/Button").types, "./dist/components/ui/Button.d.ts");
 
 const outputs = knowledgeOutputs(catalog, RECETAS_SECTOR, STYLE_GUIDES);
+const cinematic = outputs.get("docs/agents/references/cinematic-webgl.md")!;
+const directions = outputs.get("docs/agents/references/design-directions.md")!;
+const researchSkill = readFileSync("skills/trama-research/SKILL.md", "utf8");
+const buildSkill = readFileSync("skills/trama-build/SKILL.md", "utf8");
+const styleSkill = readFileSync("skills/trama-style/SKILL.md", "utf8");
+assert.match(cinematic, /falla de fidelidad cinemática/);
+assert.match(cinematic, /implementa Three\/R3F/);
+assert.match(directions, /Evitar el centro estadístico/);
+assert.match(researchSkill, /inspiración con fidelidad de firma/);
+assert.match(researchSkill, /matriz de traducción de firma/);
+assert.match(buildSkill, /momento de firma/);
+assert.match(buildSkill, /Three\/WebGL → escena 3D/);
+assert.match(styleSkill, /knowledge\/references\/design-directions\.md/);
+assert.match(styleSkill, /`GuideFrame` es opcional/);
+const index = JSON.parse(outputs.get("docs/agents/index.json")!);
+assert.deepEqual(index.items.filter((item: { kind: string }) => item.kind === "reference").map((item: { file: string }) => item.file).sort(), ["references/cinematic-webgl.md", "references/design-directions.md"]);
 const booking = outputs.get("docs/agents/types/components/ui/BookingFlow.d.ts")!;
 const commerce = outputs.get("docs/agents/types/lib/commerce/booking.d.ts")!;
 assert.match(booking, /onBooked\?: \(a: Appointment\) => void/);

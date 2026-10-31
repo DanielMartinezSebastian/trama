@@ -64,8 +64,10 @@
 ## 3. Cómo añadir una inspiración
 
 1. Estudia la web: `cine:web` o `refs:probe` (docs/50 y docs/53).
-2. Haz la réplica en `components/inspiraciones/<slug>/` con piezas del kit, con marca y textos propios. No uses la marca,
-   los clientes ni el texto de la original. Separa la portada del marco: `Sitio.tsx` exporta `Shell` (cabecera, menú
+2. Haz la réplica en `components/inspiraciones/<slug>/` con piezas del kit, con marca, textos, imágenes/datos y modelos
+   propios. Mantén la firma visual y de interacción observada: clase de medio, gesto, estructura del movimiento,
+   profundidad y transición; no la reduzcas a paleta/fuentes ni la cambies por la plantilla sectorial más cercana.
+   No uses la marca, los clientes ni el texto de la original. Separa la portada del marco: `Sitio.tsx` exporta `Shell` (cabecera, menú
    del móvil, estado y pie) y `Pagina({ ruta })`; los datos y `PAGINAS` van en `data.ts` (docs/56 §7).
 3. Regístrala:
    - en `registro.ts`, con su `guia`, su `acento`, `paginas` y `transicion`;
