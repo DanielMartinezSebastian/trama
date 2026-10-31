@@ -32,7 +32,7 @@ function ModeNav({ current }: { current: Version }) {
 }
 
 function Frame({ current, children }: { current: Version; children: ReactNode }) {
-  return <main className={`${styles.page} ${styles[current]}`}><div className={styles.demoRibbon}>ESTUDIO DE PRODUCTO · DEMO FICTICIA <span>01 / 03</span></div><header className={styles.topbar}><Link href="/producto/materia" className={styles.brand}>SONDA<span>®</span></Link><div className={styles.topMeta}><span>Escucha el espacio</span><a href="#comprar">Comprar <b>↗</b></a></div></header><ModeNav current={current} />{children}<footer className={styles.disclaimer}>Producto, especificaciones y precio ficticios. Esta experiencia es una demo; no se aceptan pagos.</footer></main>;
+  return <main data-scrollable className={`${styles.page} ${styles[current]}`}><div className={styles.demoRibbon}>ESTUDIO DE PRODUCTO · DEMO FICTICIA <span>01 / 03</span></div><header className={styles.topbar}><Link href="/producto/materia" className={styles.brand}>SONDA<span>®</span></Link><div className={styles.topMeta}><span>Escucha el espacio</span><a href="#comprar">Comprar <b>↗</b></a></div></header><ModeNav current={current} />{children}<footer className={styles.disclaimer}>Producto, especificaciones y precio ficticios. Esta experiencia es una demo; no se aceptan pagos.</footer></main>;
 }
 
 function MatterPage() {
