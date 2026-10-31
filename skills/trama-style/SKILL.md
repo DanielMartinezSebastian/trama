@@ -5,6 +5,10 @@ description: Elegir, aplicar, adaptar o revisar una guía visual de Trama en un 
 
 # Aplicar una dirección visual
 
+Esta skill elige y adapta una guía al proyecto consumidor. Para añadir o cambiar una guía global en el repositorio
+fuente (o una capacidad visual pública del kit), continúa con `trama-kit-evolution` y el procedimiento medido de
+`docs/54-guias-de-estilo-del-repo.md`.
+
 Resuelve la versión del consumidor con `node <directorio-de-esta-skill>/scripts/context.mjs --cwd <proyecto>`. Consulta el índice y la guía de esa instalación. Cada guía tiene ficha en `knowledge/guides/<id>` con tokens, fuentes y una tabla de contraste medida; úsala para decidir qué roles sirven para texto. Receta, piezas y ejemplos selectivos son solo los de salon. No copies valores de `main` a una dependencia antigua.
 
 Elige por público, contenido y acción principal; conserva una guía/adaptación ya definida salvo que el encargo pida cambiarla. Una guía es más que paleta: escala y peso tipográfico, espacio, medida de lectura, superficies y ritmo de movimiento. Aplica `GuideFrame` y clases `ui-g-*` donde corresponda, más `variant` en las piezas; tokens en un contenedor no rediseñan automáticamente su composición.

@@ -16,7 +16,7 @@ npx --no-install trama-ui skills install --client codex
 # Alternativa: --client claude
 ```
 
-El instalador copia las tres skills a `.agents/skills/` o `.claude/skills/` dentro del proyecto. Una instalación
+El instalador copia las cuatro skills a `.agents/skills/` o `.claude/skills/` dentro del proyecto. Una instalación
 idéntica es idempotente; un conflicto conserva la adaptación y falla antes de escribir el lote. No modifica `AGENTS.md`,
 `CLAUDE.md`, configuración global ni instrucciones del cliente. Usa el binario de tu dependencia, no `latest`.
 
@@ -24,17 +24,19 @@ La consulta pública documentada del 29-10-2026 devolvió `latest` 0.2.0, distin
 sin fijar versión no reproduce este piloto. No se ha publicado el paquete de esta evolución ni verificado el commit
 de una web de producción. [Matriz y evidencia](./evolucion-agentes/p0-matriz.md).
 
-## Tres capacidades, un mismo encargo
+## Cuatro capacidades, un mismo encargo
 
 | Skill | Cuándo aporta | Qué produce |
 | --- | --- | --- |
 | `trama-build` | Construir o modificar con la dependencia instalada | Composición, estados, integración explícita y validación |
 | `trama-style` | Elegir/aplicar/adaptar una guía | Dirección tipográfica, espacial y visual coherente |
 | `trama-research` | Interpretar una captura, URL o guía externa relevante | Evidencia, inferencias identificadas y brief construible |
+| `trama-kit-evolution` | Añadir o modificar capacidades reutilizables en el Trama fuente, por referencia o por petición directa | Decisión entre demo, componente/técnica y guía; implementación y validación del kit |
 
-En Codex se pueden invocar como `$trama-build`, `$trama-style` y `$trama-research`; el formato también permite
-descubrimiento por descripción. Instalación de archivos, descubrimiento del cliente y calidad del resultado son pruebas
-distintas. Consulta la [evidencia de entrega](./evolucion-agentes/entrega-final.md) para saber qué se ensayó realmente.
+En Codex se pueden invocar como `$trama-build`, `$trama-style`, `$trama-research` y `$trama-kit-evolution`; el formato
+también permite descubrimiento por descripción. `trama-kit-evolution` puede recibir el brief de research o empezar por
+un encargo directo, pero solo cambia el kit fuente si ese es el alcance autorizado. Instalación de archivos,
+descubrimiento del cliente y calidad del resultado son pruebas distintas. Consulta la [evidencia de entrega](./evolucion-agentes/entrega-final.md) para saber qué se ensayó realmente.
 
 Una petición reproducible para el consumidor piloto:
 

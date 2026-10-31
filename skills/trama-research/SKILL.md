@@ -16,3 +16,15 @@ Usa el [contrato de brief](references/brief.md) para guardar evidencia y decisio
 Por hallazgo distingue observado, inferido y decidido, con método y motivo de incertidumbre. Asigna a cada referencia su función al combinar fuentes. Declara fuentes/recursos sustituidos y permisos de uso; no dependas de URLs de assets ajenos como solución definitiva.
 
 Mapea guía y piezas a los exports de la versión disponible y anota composición local o capacidad ausente. Fija rutas, contenido, estados, recursos y comprobaciones de cierre. Si el encargo incluye construir, continúa con ese brief y valida la variante pedida; si solo pide investigación, entrega el expediente sin ampliar el alcance. Movimiento/3D requiere evidencia temporal y perfil de herramientas propio; una captura estática no lo acredita.
+
+En el repositorio fuente de Trama, para una referencia de web completa consulta el flujo de `docs/38-de-webs-a-demos.md`:
+`npm run cine:web -- <url>` mapea secciones, rutas y transiciones; `npm run refs:probe -- <url>` mide estilo; para
+varias referencias, `npm run cine:sintesis -- <mapa-o-url> …` distingue patrones comunes de firmas singulares. Usa
+captura/sonda de Cine solo para las escenas gráficas que decidan la propuesta. No infieras que cada hueco detectado pide
+una pieza nueva.
+
+Si el usuario pide explícitamente evolucionar la librería, o el brief debe continuar en una mejora reusable ya
+autorizada, traspasa evidencia, medidas, versión, estados y huecos observados a `trama-kit-evolution`. Esa skill decide
+si la solución pertenece a una demo, a un componente/técnica, o a una guía medida. Sin esa petición, limita el trabajo
+al análisis o a la demo solicitada; presenta opciones si detectas una oportunidad y no conviertas la investigación en
+un cambio del kit por iniciativa propia.

@@ -13,8 +13,9 @@ Requiere React 19. El piloto usa **Next.js App Router con Turbopack**; los compo
 Para transformar `trama-ui/fonts`, configura `transpilePackages: ['trama-ui']` y verifica build y fuentes en navegador.
 No se certifica compatibilidad universal con otros frameworks ni equivalencia con `latest` de npm.
 
-El paquete incluye `knowledge/index.json` y las skills experimentales `trama-build`, `trama-style` y `trama-research`.
-Instálalas por proyecto con `npx --no-install trama-ui skills install --client codex` (o `claude`). El instalador conserva
+El paquete incluye `knowledge/index.json` y las skills experimentales `trama-build`, `trama-style`, `trama-research` y
+`trama-kit-evolution` (para ampliar el kit fuente; las otras cubren construcción, estilo e investigación). Instálalas
+por proyecto con `npx --no-install trama-ui skills install --client codex` (o `claude`). El instalador conserva
 instrucciones y modificaciones locales. La CLI `knowledge` imprime el índice de esta versión, no consulta una versión remota.
 
 ## Uso

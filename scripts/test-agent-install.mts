@@ -13,7 +13,7 @@ for (const client of ["codex", "claude"]) {
   invoke("skills", "install", "--client", client);
   invoke("skills", "install", "--client", client); // Idempotencia real.
   const base = join(project, client === "codex" ? ".agents/skills" : ".claude/skills");
-  for (const name of ["trama-build", "trama-style", "trama-research"]) {
+  for (const name of ["trama-build", "trama-style", "trama-research", "trama-kit-evolution"]) {
     assert(readFileSync(join(base, name, "SKILL.md")).equals(readFileSync(join(pkgRoot, "skills", name, "SKILL.md"))));
     const context = JSON.parse(execFileSync(process.execPath, [join(base, name, "scripts/context.mjs"), "--cwd", project], { encoding: "utf8" }));
     assert.equal(context.version, "0.13.0");

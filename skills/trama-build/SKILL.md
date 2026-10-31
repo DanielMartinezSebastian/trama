@@ -5,6 +5,10 @@ description: Construir o modificar páginas React/Next.js con Trama, eligiendo c
 
 # Construir con Trama
 
+Esta skill cubre interfaces consumidoras de `trama-ui`, no el mantenimiento del repositorio fuente. Si el encargo pide
+añadir una capacidad pública, técnica reusable o guía al kit, usa `trama-kit-evolution`; para una demo inspirada en una
+referencia, mantén la solución en el proyecto salvo que el usuario autorice expresamente evolucionar la librería.
+
 Detecta el proyecto desde su directorio de trabajo: ejecuta `node <directorio-de-esta-skill>/scripts/context.mjs --cwd <proyecto>`. El resultado identifica paquete, versión, imports, conocimiento y límites. No uses `npx trama-ui@latest` para consultar una versión instalada ni actualices dependencias para hacer encajar un ejemplo. Si hay código copiado, revisa `.kit.json` y las adaptaciones locales.
 
 Abre el `knowledge/index.json` de esa instalación y después solo la receta, guía y piezas necesarias. La selección piloto es parcial: una pieza ausente del índice puede existir en el paquete; consulta su `CATALOG.md`, exports y declaraciones antes de concluir que falta. Si la instalación antigua no tiene knowledge, usa sus declaraciones y catálogo; no le apliques fichas de otra versión.

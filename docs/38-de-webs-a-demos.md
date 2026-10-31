@@ -38,6 +38,12 @@
 | **C. «Mejora la librería con lo que falte»** | componentes y técnicas nuevos con la lista de comprobación de versatilidad (docs/36 §1), catálogo, fichas de concepto | B + procedimiento completo (docs/35) por concepto | 2–5 h por concepto |
 | **D. «Créame demos funcionales basándote en estas webs»** | una web funcional (portada, secciones, páginas) en `/sitios/<demo>` o `/demo/<demo>`, con las piezas 3D a la altura de la referencia en **sensación y profundidad** | B + guía de estilo (docs/16) + fórmula (docs/07) + patrón 3D (docs/22) + banco y vueltas para cada pieza 3D | 1–3 días |
 
+**Relevo entre skills:** `trama-research` prepara evidencia y brief; `trama-build` y `trama-style` llevan la demo al
+consumidor con el kit que ya existe. Si C está autorizado directamente, o una tarea A/B/D pide explícitamente ampliar
+Trama, `trama-kit-evolution` decide si falta una guía, componente o técnica y aplica el procedimiento correspondiente.
+Una firma exclusiva de una referencia se queda en su demo; analizar una web o construir una demo no cambia por sí solo
+la librería.
+
 ## 2. Cómo capturar para inspirar webs completas
 
 Por orden; cada paso decide si hace falta el siguiente.
