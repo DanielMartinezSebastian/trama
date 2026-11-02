@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
+  "sourceDirty": true,
+  "kind": "guide",
+  "id": "varietes",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/styles/ui-guides.css",
+      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+    },
+    {
+      "path": "lib/ui/fonts.ts",
+      "sha256": "a1461ad5dab920100cc035ad5aa901240153196224906e8dd1f7ba44344257b0"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "15014ae2b7e8cb7f225752d06ca864c9df15c1bf460fb0048c017c9d04ba5429"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3aba27e27fdb8ffc02b077324dd20ade8af3ef0b671b7fd16ca79ccfa3ad95f0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "e60b07c16aea0b72d051773fd1b5e73ed45f71be9840ced4bb057d7ceda5a751"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "eabf3978797ed245e0a0cd37a323adf1306f139a070046d1b0d4eb8c29693197"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Cartel de varietés",
+  "guide": {
+    "id": "varietes",
+    "source": "repo",
+    "label": "Cartel de varietés",
+    "note": "Crema, rojo telón y oro viejo, letra de cartel gruesa con serifa y etiquetas estrechas muy espaciadas. Noche de función en un pueblo con historia.",
+    "sectors": "Restaurantes con espectáculo, teatros, tablaos, circos, salas de fiestas",
+    "refs": [
+      "La Tramoya (/sitios/la-tramoya)",
+      "Délice",
+      "Da Maria"
+    ],
+    "variant": "editorial",
+    "tokens": {
+      "bg": "#f3e7d0",
+      "fg": "#1c1420",
+      "mut": "#5a4d4d",
+      "acc": "#b3121f",
+      "acc2": "#8a6417",
+      "card": "#ecdcbd",
+      "ln": "rgba(28,20,32,0.24)",
+      "r": 2,
+      "font": "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
+      "display": "var(--font-ultra), Georgia, serif",
+      "accentFont": "var(--font-fraunces), Georgia, serif",
+      "glow": false
+    },
+    "fonts": {
+      "display": "var(--font-ultra), Georgia, serif",
+      "body": "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
+      "accent": "var(--font-fraunces), Georgia, serif",
+      "mono": "var(--font-antonio), var(--font-anton), \"Arial Narrow\", sans-serif"
+    },
+    "type": {
+      "brand": "clamp(3.5rem, 13vw, 12rem)",
+      "h1": "clamp(2.5rem, 7vw, 6.5rem)",
+      "h2": "clamp(1.75rem, 4vw, 3.5rem)",
+      "body": "1rem",
+      "label": "0.75rem",
+      "weight": 400,
+      "lineHeight": 0.96,
+      "tracking": -0.01,
+      "upper": false,
+      "labelUpper": true,
+      "labelTracking": 0.22,
+      "bodyLineHeight": 1.5
+    },
+    "space": {
+      "margin": "clamp(18px, 2.4vw, 34px)",
+      "gutter": "16px",
+      "cols": 12,
+      "section": "clamp(80px, 9vw, 130px)",
+      "header": "62px",
+      "measure": "28em"
+    },
+    "surface": {
+      "radius": 2,
+      "pill": false,
+      "shadow": false
+    },
+    "motion": {
+      "fast": 0.25,
+      "reveal": 0.9,
+      "page": 0.7,
+      "stagger": 0.08,
+      "ease": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+      "easeReveal": "cubic-bezier(0.19, 1, 0.22, 1)"
+    },
+    "heroes": [
+      "wordmark",
+      "split-video"
+    ],
+    "stories": [
+      "timeline",
+      "service"
+    ]
+  },
+  "application": {
+    "component": "GuideFrame",
+    "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"varietes\">",
+    "css": "trama-ui/styles.css",
+    "classes": [
+      "ui-g-body",
+      "ui-g-brand",
+      "ui-g-btn",
+      "ui-g-btn--ghost",
+      "ui-g-card",
+      "ui-g-grid",
+      "ui-g-h1",
+      "ui-g-h2",
+      "ui-g-header",
+      "ui-g-label",
+      "ui-g-line",
+      "ui-g-mono",
+      "ui-g-muted",
+      "ui-g-rise",
+      "ui-g-section",
+      "ui-g-wrap"
+    ],
+    "fontVariables": [
+      "--font-anton",
+      "--font-antonio",
+      "--font-fraunces",
+      "--font-manrope",
+      "--font-ultra"
+    ]
+  },
+  "contrast": [
+    {
+      "text": "fg",
+      "surface": "bg",
+      "ratio": 14.66,
+      "use": "texto normal"
+    },
+    {
+      "text": "fg",
+      "surface": "card",
+      "ratio": 13.28,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "bg",
+      "ratio": 6.59,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "card",
+      "ratio": 5.97,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "bg",
+      "ratio": 5.67,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "card",
+      "ratio": 5.14,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc2",
+      "surface": "bg",
+      "ratio": 4.38,
+      "use": "solo texto grande, iconos o bordes de control"
+    },
+    {
+      "text": "acc2",
+      "surface": "card",
+      "ratio": 3.97,
+      "use": "solo texto grande, iconos o bordes de control"
+    }
+  ],
+  "requirements": [
+    "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
+    "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
+    "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: GuideFrame textContrast calcula --mut-text/--acc-text para el texto del kit sobre --bg (sRGB opaco), conservando --mut/--acc decorativos. Consultar sus límites en la API; para otras superficies/estados o CSS propio, adaptar y medir el tema local."
+  ],
+  "examples": [],
+  "limitations": [
+    "La tabla de contraste mide tokens sobre fondos lisos; revisar la aplicación visual en cada proyecto (imágenes, transparencias, estados). Una guía no certifica accesibilidad.",
+    "Fotos, vídeos y fuentes Fontshare no se redistribuyen por esta ficha.",
+    "No se declara soporte universal de Next.js o de React genérico a partir de un consumidor piloto."
+  ]
+}

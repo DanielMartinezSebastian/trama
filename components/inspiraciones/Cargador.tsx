@@ -40,6 +40,16 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   q47: sitio(() => import("./q47/Sitio")),
   cenit: sitio(() => import("./cenit/Sitio")),
   brasa: sitio(() => import("./brasa/Sitio")),
+  polilla: sitio(() => import("./polilla/Sitio")),
+  "sesion-doble": sitio(() => import("./sesion-doble/Sitio")),
+  "casa-melosa": sitio(() => import("./casa-melosa/Sitio")),
+  "marejada": sitio(() => import("./marejada/Sitio")),
+  "alba": sitio(() => import("./alba/Sitio")),
+  "no-mires-abajo": sitio(() => import("./no-mires-abajo/Sitio")),
+  "cantera": sitio(() => import("./cantera/Sitio")),
+  "ultramar": sitio(() => import("./ultramar/Sitio")),
+  "zanco": sitio(() => import("./zanco/Sitio")),
+  "pulso-lento": sitio(() => import("./pulso-lento/Sitio")),
 };
 
 /**

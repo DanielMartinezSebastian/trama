@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "5410a6fb4bf83326384ae40ada9c95355998932f",
+  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
   "sourceDirty": true,
   "kind": "guide",
   "id": "autor",
@@ -22,15 +22,15 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
     },
     {
       "path": "lib/ui/fonts.ts",
-      "sha256": "10e14339fc907e6406d34accfe0c02e7de9d53dfcd5f493cc031a2efe1bc78b7"
+      "sha256": "a1461ad5dab920100cc035ad5aa901240153196224906e8dd1f7ba44344257b0"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "7f4cd5f876e5d1d4d49b5b5526ae13e5773b8d87ae05bf765fe304cff8a69b7e"
+      "sha256": "15014ae2b7e8cb7f225752d06ca864c9df15c1bf460fb0048c017c9d04ba5429"
     },
     {
       "path": "lib/ui/tokens.ts",
@@ -42,7 +42,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "e0a1fe6468a25288e5a431e5bd891c859d0f69bf5472188b86ac18729484be13"
+      "sha256": "e60b07c16aea0b72d051773fd1b5e73ed45f71be9840ced4bb057d7ceda5a751"
     },
     {
       "path": "scripts/agent-knowledge.mts",

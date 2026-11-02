@@ -1,0 +1,115 @@
+/* Pulso Lento (a partir de Paul Kalkbrenner, docs/58): blanco, gris #c5c5c5, negro, verde #a7ff9c y naranja #ff6831. ABC Diatype →
+   Inter Tight 700 con interlineado 0,8 y tracking −5 %; texto a 13,5 px; curva 0.625, 0.05, 0, 1. */
+.pu {
+  --bg: #fff; --fg: #000; --mut: #555; --acc: #000; --acc2: #ff6831; --card: #f0f0f0; --ln: #000; --r: 0px;
+  background: var(--bg); color: var(--fg); font: 500 14px/1.25 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; overflow-x: clip;
+}
+:where(.pu) a { color: inherit; text-decoration: none; }
+.pu h1, .pu h2 { margin: 0; font-weight: 700; letter-spacing: -0.05em; line-height: 0.9; }
+.pu button { font: inherit; }
+.pu-etq { margin: 0; font-size: 12px; }
+
+.pu-head { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 12px 8px; mix-blend-mode: difference; color: #fff; }
+.pu-sello { display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid currentColor; border-radius: 50%; }
+.pu-sello i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pu-head nav { display: flex; gap: 40px; }
+.pu-head nav a, .pu-head nav button { padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.pu-head nav a:hover, .pu-head nav button:hover { text-decoration: underline; }
+.pu-burger { display: none; }
+
+.pu-hero { display: grid; align-content: center; justify-items: center; gap: 30px; min-height: 100svh; padding: 8px; }
+.pu-hero h1 { display: flex; align-items: center; gap: 0.08em; font-size: clamp(3rem, 12.4vw, 13rem); }
+.pu-hero img { width: 0.95em; height: 0.74em; object-fit: cover; filter: grayscale(1); }
+.pu-hero p { max-width: 24em; margin: 0; text-align: center; }
+
+.pu-disco { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: #c5c5c5; }
+.pu-vinilo { position: relative; padding: 20px; aspect-ratio: 1; background: #fff; }
+.pu-vinilo img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; filter: grayscale(1) contrast(1.1); animation: pu-gira 18s linear infinite; }
+@keyframes pu-gira { to { rotate: 360deg; } }
+.pu-vinilo button { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 74px; height: 74px; border: 1px solid #000; border-radius: 50%; background: rgba(255, 255, 255, 0.9); cursor: pointer; translate: -50% -50%; transition: scale 0.35s cubic-bezier(0.625, 0.05, 0, 1); }
+.pu-vinilo button:hover { scale: 1.2; }
+.pu-vinilo i { width: 10px; height: 10px; border-radius: 50%; background: #000; }
+.pu-disco__txt { display: flex; flex-direction: column; gap: 16px; padding: 12px 8px 8px; }
+.pu-disco__txt nav { display: flex; gap: 40px; margin-bottom: auto; color: #4b4b4b; }
+.pu-disco__txt nav a[aria-current] { color: #000; }
+.pu-disco__txt nav a:last-child { margin-left: auto; color: #000; }
+.pu-disco__txt h2 { font-size: clamp(2.5rem, 6.6vw, 6.5rem); }
+.pu-disco__txt p { max-width: 26em; margin: 0; }
+.pu-dos { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border: 1px solid #000; }
+.pu-dos a, .pu-dos button { display: grid; place-items: center; min-height: 86px; padding: 10px; border: 0; border-right: 1px solid #000; background: none; color: inherit; font-size: 12px; text-align: center; text-transform: uppercase; cursor: pointer; transition: background 0.35s; }
+.pu-dos > :last-child { border-right: 0; }
+.pu-dos a:hover, .pu-dos button:hover { background: #a7ff9c; }
+
+.pu-ano { position: relative; min-height: 100vh; background-position: center; background-size: cover; background-color: #000; overflow: hidden; }
+.pu-ano p { position: absolute; left: 0; right: 0; bottom: -0.06em; margin: 0; color: #fff; font-size: 34vw; font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; text-align: center; mix-blend-mode: difference; }
+.pu-ano a { position: absolute; right: 8px; top: 50px; padding: 8px 12px; border-radius: 999px; background: #fff; }
+.pu-ano a:hover { background: #a7ff9c; }
+
+.pu-gira { display: grid; gap: 16px; padding: 60px 8px 90px; background: #a7ff9c; }
+.pu-gira h2 { font-size: clamp(3rem, 9.4vw, 10rem); }
+.pu-lineup { --fg: #000; --mut: #333; --ln: #000; --acc: #000; --card: transparent; }
+.pu-enlace { justify-self: start; text-decoration: underline; text-underline-offset: 3px; }
+
+.pu-cab { display: grid; gap: 12px; padding: 90px 8px 30px; }
+.pu-cab h1 { font-size: clamp(4rem, 15vw, 16rem); line-height: 0.8; }
+.pu-cab p { max-width: 30em; margin: 0; font-size: 19px; }
+.pu-marco { padding: 30px 8px 110px; }
+.pu-discos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 8px 8px 110px; }
+.pu-discos article { min-width: 0; }
+.pu-discos img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); transition: filter 0.35s; }
+.pu-discos a:hover img { filter: none; }
+.pu-discos article > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 8px 0; }
+.pu-discos b { flex: 1 1 100%; font-size: 22px; font-weight: 700; letter-spacing: -0.04em; }
+.pu-discos button { margin-left: auto; padding: 4px 10px; border: 1px solid #000; border-radius: 999px; background: none; cursor: pointer; }
+.pu-discos button:hover { background: #a7ff9c; }
+
+.pu-ficha { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; min-height: 100svh; padding: 56px 8px 110px; }
+.pu-ficha > img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); }
+.pu-ficha > div { display: grid; gap: 14px; align-content: start; }
+.pu-ficha h1 { font-size: clamp(3rem, 7vw, 7rem); }
+.pu-ficha p { max-width: 30em; margin: 0; font-size: 18px; }
+.pu-ficha ol { margin: 0; padding-left: 22px; font-size: 18px; }
+
+.pu-entrada { display: grid; gap: 14px; justify-items: start; }
+.pu-entrada p { margin: 0; font-size: 18px; }
+.pu-precio { font-size: 54px !important; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+.pu-boton { padding: 12px 22px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff; cursor: pointer; transition: background 0.35s, color 0.35s; }
+.pu-boton:hover { background: #a7ff9c; color: #000; }
+
+.pu-tramo { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 16px; align-items: end; min-height: 72vh; padding: 60px 8px 30px; overflow: hidden; }
+.pu-tramo p { margin: 0; font-size: clamp(6rem, 26vw, 28rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; }
+.pu-tramo h2 { margin-bottom: 8px; font-size: clamp(1.75rem, 3vw, 3rem); line-height: 1; }
+.pu-flujo { width: min(1000px, 100%); margin: 0 auto; padding: 20px 8px 110px; }
+
+.pu-pie { display: grid; gap: 10px; padding: 30px 8px 90px; background: #000; color: #fff; }
+.pu-pie p { margin: 0; font-size: clamp(3rem, 15vw, 16rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.85; }
+
+.pu-reproductor { position: fixed; left: 8px; bottom: 8px; z-index: 19; display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border: 1px solid #000; border-radius: 999px; background: #fff; }
+.pu-reproductor button { width: 32px; height: 32px; border: 0; border-radius: 50%; background: #000; color: #fff; font-size: 11px; cursor: pointer; }
+.pu-reproductor div { display: grid; }
+.pu-reproductor small { font-size: 11px; color: var(--mut); }
+.pu-barras { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+.pu-barras i { width: 3px; height: 3px; background: #000; }
+.pu-barras.is-on i { animation: pu-barra 0.5s ease-in-out infinite alternate; }
+.pu-barras i:nth-child(2) { animation-delay: 0.15s !important; }
+.pu-barras i:nth-child(3) { animation-delay: 0.3s !important; }
+@keyframes pu-barra { to { height: 14px; } }
+
+.pu :focus-visible { outline: 2px solid #ff6831; outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .pu-head { mix-blend-mode: normal; color: #000; }
+  .pu-head nav { display: none; }
+  .pu-burger { display: block; }
+  .pu-hero h1 { flex-direction: column; font-size: 27vw; }
+  .pu-hero img { width: 1.6em; height: 0.8em; }
+  .pu-disco, .pu-ficha { grid-template-columns: minmax(0, 1fr); }
+  .pu-disco__txt { gap: 26px; padding-bottom: 20px; }
+  .pu-disco__txt nav { gap: 18px; margin-bottom: 0; }
+  .pu-discos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pu-tramo { grid-template-columns: minmax(0, 1fr); min-height: 56vh; }
+  .pu-ano p { font-size: 40vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pu-vinilo img, .pu-barras.is-on i { animation: none; }
+}

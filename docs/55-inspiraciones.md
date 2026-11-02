@@ -6,7 +6,7 @@
 
 ## 0. Conclusiones
 
-1. **18 inspiraciones**:
+1. **28 inspiraciones**: las 10 de la tercera ronda están en docs/58. Las 18 primeras son:
    - las 16 réplicas de los estudios por sector (docs/50);
    - las dos webs 3D enteras del laboratorio de cine: **Cénit**, basada en Lusion (docs/43), y **Brasa**, basada en Meer
      Mohsin (docs/41).
@@ -46,6 +46,16 @@
 | Abuela Rosa | Peppa Sauce | `marca` |
 | Cénit | Lusion | `monocromo` |
 | Brasa | Meer Mohsin | `electrico` |
+| Polilla | Aardvark Book Club | `manchas` |
+| Sesión Doble | A24 de Ravi Klaassens | `filmoteca` |
+| Casa Melosa | House of Honey | `goloso` |
+| Marejada | Seasats | `sereno` |
+| Alba Residencia | ERA Residence | `burdeos` |
+| No mires abajo | Don't Look Up | `tinta` |
+| Cantera | Aspen Search | `baldosa` |
+| Ultramar | United Carriers | `orbital` |
+| Zanco | Noho | `catalogo` |
+| Pulso Lento | Paul Kalkbrenner | `cartel` |
 
 ## 2. Las imágenes
 

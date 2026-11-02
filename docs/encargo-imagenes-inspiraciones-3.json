@@ -1,0 +1,374 @@
+{
+ "sesion-doble": {
+  "estilo": "Fotos fijas de película: cada una es el fotograma de un film distinto, con un color dominante muy marcado y hueco arriba para el título. Formato cuadrado con el centro libre: se recorta en disco con agujero central.",
+  "ruta": "/inspiraciones/sesion-doble",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/planta-menos-uno.webp",
+    "px": "1000x1000",
+    "motivo": "Pasillo de oficina vacío, moqueta y fluorescentes amarillentos, terror silencioso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/la-invitada.webp",
+    "px": "1000x1000",
+    "motivo": "Mujer sola al fondo de una mesa de cena familiar, luz de velas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/la-apisonadora.webp",
+    "px": "1000x1000",
+    "motivo": "Boxeador retirado corpulento, retrato azul noche con luz lima"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/corazon-de-acero.webp",
+    "px": "1000x1000",
+    "motivo": "Arquitecto de espaldas ante una gran estructura de hormigón, blanco y negro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/campeon-de-barrio.webp",
+    "px": "1000x1000",
+    "motivo": "Joven con pala de ping-pong en un polideportivo de barrio, naranja"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/pajaro-dama.webp",
+    "px": "1000x1000",
+    "motivo": "Adolescente pelirroja de perfil, fondo amarillo pálido"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/maquina-ex.webp",
+    "px": "1000x1000",
+    "motivo": "Rostro de androide en penumbra, blanco y negro con un toque rojo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/marea-baja.webp",
+    "px": "1000x1000",
+    "motivo": "Ría gallega con marea baja y un coche oxidado en el fango, azul frío"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/hermanas-mayores.webp",
+    "px": "1000x1000",
+    "motivo": "Cuatro hermanas sesentonas en la barra de un bar de carretera, rosa cálido"
+   }
+  ]
+ },
+ "marejada": {
+  "estilo": "Fotografía de ingeniería naval en calma: mar plano al amanecer, tonos gris azulado, malva y verde musgo, drones marinos oscuros y discretos. Sensación de documental, nunca bélico.",
+  "ruta": "/inspiraciones/marejada",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/marejada/boqueron.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino pequeño de superficie, casco oscuro y panel solar, sobre mar en calma al amanecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/bonito.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino mediano y rápido, proa afilada, con estela suave"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/atun.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino grande de casco alto con mástil de sensores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-cables.webp",
+    "px": "1800x1200",
+    "motivo": "Mapa físico de un estrecho visto desde un puente de mando, con pantallas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-marea.webp",
+    "px": "1800x1200",
+    "motivo": "Bateas gallegas en una ría, agua teñida de rojo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-huracan.webp",
+    "px": "1800x1200",
+    "motivo": "Mar arbolado bajo un cielo de tormenta, un dron diminuto en la ola"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-berta.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de mujer de 55 años con chaqueta técnica en un muelle"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-iker.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de ingeniero de 40 años en un taller naval"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-samira.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de ingeniera de 35 años junto a un casco"
+   }
+  ]
+ },
+ "alba": {
+  "estilo": "Render arquitectónico mediterráneo de lujo: bloques blancos escalonados, terrazas con buganvillas y jazmín, palmeras, cielo azul limpio, piscina turquesa. Luz de mañana en la Costa del Sol. Sin personas reconocibles.",
+  "ruta": "/inspiraciones/alba",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/alba/portada-cielo.webp",
+    "px": "2400x1500",
+    "motivo": "Residencial blanco de tres plantas con terrazas verdes visto desde abajo, mucho cielo azul"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/piscina.webp",
+    "px": "2400x1400",
+    "motivo": "Piscina comunitaria entre palmeras y terrazas con buganvillas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/terraza.webp",
+    "px": "1600x1200",
+    "motivo": "Terraza con vistas al mar y cocina de verano"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/salon.webp",
+    "px": "1600x1200",
+    "motivo": "Salón luminoso abierto a la terraza"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/dormitorio.webp",
+    "px": "1600x1200",
+    "motivo": "Dormitorio con ventanal y vistas al mar"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/jardin.webp",
+    "px": "1600x1200",
+    "motivo": "Jardín privado con seto de jazmín"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/plaza.webp",
+    "px": "2400x1400",
+    "motivo": "Calle encalada de pueblo andaluz con geranios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-jardin.webp",
+    "px": "1500x2000",
+    "motivo": "Vivienda en planta baja con jardín privado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-terraza.webp",
+    "px": "1500x2000",
+    "motivo": "Fachada de planta intermedia con terraza amplia y plantas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-atico.webp",
+    "px": "1500x2000",
+    "motivo": "Ático con solárium y piscina de inmersión"
+   }
+  ]
+ },
+ "ultramar": {
+  "estilo": "Fotografía industrial de gran escala, fría y limpia: acero, contenedores, grúas y luz de atardecer. Sin marcas ni letreros legibles.",
+  "ruta": "/inspiraciones/ultramar",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/ultramar/maritimo.webp",
+    "px": "2000x1250",
+    "motivo": "Portacontenedores visto desde arriba en alta mar"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/aereo.webp",
+    "px": "2000x1250",
+    "motivo": "Avión de carga con el portón abierto al atardecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/carretera.webp",
+    "px": "2000x1250",
+    "motivo": "Camión blanco en una autopista vacía al amanecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/aduanas.webp",
+    "px": "2000x1250",
+    "motivo": "Terminal de contenedores con una persona de chaleco revisando documentos"
+   }
+  ]
+ },
+ "zanco": {
+  "estilo": "Fotografía de marca de mueble nórdico-gallego: fondos lisos de color arena, luz suave, plástico reciclado de colores vivos, sensación ligera y alegre.",
+  "ruta": "/inspiraciones/zanco",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/zanco/taller.webp",
+    "px": "2200x1300",
+    "motivo": "Taller de moldeado con sillas de colores apiladas y operarios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/zanco/casa.webp",
+    "px": "1800x1200",
+    "motivo": "Persona relajada recostada en una silla flexible amarilla, en un salón"
+   },
+   {
+    "archivo": "public/img/inspiraciones/zanco/material.webp",
+    "px": "1800x1200",
+    "motivo": "Montón de redes de pesca de colores, trituradas en primer plano"
+   }
+  ]
+ },
+ "pulso-lento": {
+  "estilo": "Fotografía documental en blanco y negro de un músico electrónico de 55 años, calvo y corpulento, grano de película y mucho contraste. Se muestra en gris en la web.",
+  "ruta": "/inspiraciones/pulso-lento",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/nombre.webp",
+    "px": "800x600",
+    "motivo": "Máquina de ritmos vieja sobre una mesa, plano cerrado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/retrato.webp",
+    "px": "1400x1400",
+    "motivo": "Retrato del músico mirando a cámara, centrado, sobre fondo gris"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/estudio.webp",
+    "px": "1800x1200",
+    "motivo": "Músico de espaldas en un estudio con sintetizadores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/directo.webp",
+    "px": "2200x1400",
+    "motivo": "Músico sentado con camiseta negra, luz dura lateral, muy cercano"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-esencia.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: cara en sombra, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-noche.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: autopista de noche con largas exposiciones, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-sur.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: nave industrial de hormigón, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/camiseta.webp",
+    "px": "1200x1200",
+    "motivo": "Camiseta negra lisa extendida sobre fondo gris"
+   }
+  ]
+ },
+ "casa-melosa": {
+  "estilo": "Fotografía de interiorismo editorial: luz natural cálida, casas habitadas, cal, madera y piezas de color. Mismo tono en todas, con presencia de rosa, teja y chocolate.",
+  "ruta": "/inspiraciones/casa-melosa",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/portada-salon.webp",
+    "px": "2400x1500",
+    "motivo": "Salón de techos altos con ventanal en arco, vigas de madera y sofá curvo crudo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/estudio-equipo.webp",
+    "px": "2000x1200",
+    "motivo": "Cuatro interioristas alrededor de una mesa de muestras de tela y madera"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos.webp",
+    "px": "1600x2000",
+    "motivo": "Patio andaluz encalado con naranjos y butacas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos-a.webp",
+    "px": "1600x2000",
+    "motivo": "Techo rosa y lámpara de latón sobre un comedor"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos-b.webp",
+    "px": "1600x2000",
+    "motivo": "Detalle de mesa con jarrón y tulipanes"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico.webp",
+    "px": "1600x2000",
+    "motivo": "Ático con cocina abierta de mármol y barra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico-a.webp",
+    "px": "1600x2000",
+    "motivo": "Rincón de lectura con otomana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico-b.webp",
+    "px": "1600x2000",
+    "motivo": "Mesa de madera junto a pared blanca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz.webp",
+    "px": "1600x2000",
+    "motivo": "Habitación de hotel mallorquín con manta de lana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz-a.webp",
+    "px": "1600x2000",
+    "motivo": "Bañera exenta frente a ventana con olivos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz-b.webp",
+    "px": "1600x2000",
+    "motivo": "Mesilla con flores secas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega.webp",
+    "px": "1600x2000",
+    "motivo": "Comedor largo bajo bóveda de piedra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega-a.webp",
+    "px": "1600x2000",
+    "motivo": "Mesa de roble con copas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega-b.webp",
+    "px": "1600x2000",
+    "motivo": "Estantería de botellas sin etiqueta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-lampara.webp",
+    "px": "1200x1200",
+    "motivo": "Lámpara de latón y seda plisada rosa, fondo liso rosa"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-butaca.webp",
+    "px": "1200x1200",
+    "motivo": "Butaca curva teja con patas de nogal, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-jarron.webp",
+    "px": "1200x1200",
+    "motivo": "Jarrón de gres color miel, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-manta.webp",
+    "px": "1200x1200",
+    "motivo": "Manta de lana doblada, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-mesa.webp",
+    "px": "1200x1200",
+    "motivo": "Mesa auxiliar de bola lacada chocolate, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-bandeja.webp",
+    "px": "1200x1200",
+    "motivo": "Bandeja de olivo con vasos, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-mesa.webp",
+    "px": "1800x1200",
+    "motivo": "Dos mesas distintas unidas para una cena con velas bajas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-sofa.webp",
+    "px": "1800x1200",
+    "motivo": "Sofá con funda de lino"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-techo.webp",
+    "px": "1800x1200",
+    "motivo": "Mujer pintando un techo de color rosa con brocha"
+   }
+  ]
+ }
+}

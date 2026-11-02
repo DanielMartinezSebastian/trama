@@ -23,6 +23,16 @@ import { PAGINAS as abuelaPaginas } from "./abuela-rosa/data";
 import { PAGINAS as q47Paginas } from "./q47/data";
 import { PAGINAS as cenitPaginas } from "./cenit/data";
 import { PAGINAS as brasaPaginas } from "./brasa/data";
+import { PAGINAS as polillaPaginas } from "./polilla/data";
+import { PAGINAS as sesionPaginas } from "./sesion-doble/data";
+import { PAGINAS as melosaPaginas } from "./casa-melosa/data";
+import { PAGINAS as marejadaPaginas } from "./marejada/data";
+import { PAGINAS as albaPaginas } from "./alba/data";
+import { PAGINAS as abajoPaginas } from "./no-mires-abajo/data";
+import { PAGINAS as canteraPaginas } from "./cantera/data";
+import { PAGINAS as ultramarPaginas } from "./ultramar/data";
+import { PAGINAS as zancoPaginas } from "./zanco/data";
+import { PAGINAS as pulsoPaginas } from "./pulso-lento/data";
 
 export type Replica = {
   slug: string;
@@ -32,7 +42,7 @@ export type Replica = {
   ref: string;
   url: string;
   ficha: string;
-  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo";
+  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música";
   /** lo que la hace reconocible, en una línea */
   firma: string;
   hecha: boolean;
@@ -73,6 +83,17 @@ export const REPLICAS: Replica[] = [
   // las dos anteriores, del laboratorio de cine (docs/41–43): webs 3D enteras
   { slug: "cenit", nombre: "Cénit", ref: "Lusion", url: "https://lusion.co/", ficha: "docs/43", sector: "estudio creativo", firma: "racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla", hecha: true, guia: "monocromo", acento: "#2f3cff", scroll: "cinematic", paginas: cenitPaginas, transicion: "fade" },
   { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
+  // tercera ronda (docs/58): sectores nuevos y estéticas lejos de las anteriores
+  { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "manchas", acento: "#ffd24a", scroll: "snappy", paginas: polillaPaginas, transicion: "wipe" },
+  { slug: "sesion-doble", nombre: "Sesión Doble", ref: "A24 de Ravi Klaassens", url: "https://a24.raviklaassens.com/", ficha: "docs/58", sector: "cine", firma: "catálogo en discos que giran y una didona apretada con estrellas", hecha: true, guia: "filmoteca", acento: "#c9c46a", paginas: sesionPaginas, transicion: "fade" },
+  { slug: "casa-melosa", nombre: "Casa Melosa", ref: "House of Honey", url: "https://www.houseofhoney.com/", ficha: "docs/58", sector: "interiorismo", firma: "rosa y chocolate, ultranegra de borde a borde cruzada por una caligráfica", hecha: true, guia: "goloso", acento: "#edccbe", scroll: "snappy", paginas: melosaPaginas, transicion: "wipe" },
+  { slug: "marejada", nombre: "Marejada", ref: "Seasats", url: "https://www.seasats.com/", ficha: "docs/58", sector: "robótica", firma: "web en tarjeta con columna de menú en degradado de arena a bosque y serifa fina sobre el mar", hecha: true, guia: "sereno", acento: "#6d7763", scroll: "snappy", paginas: marejadaPaginas, transicion: "fade" },
+  { slug: "alba", nombre: "Alba Residencia", ref: "ERA Residence", url: "https://www.era-residence.com/", ficha: "docs/58", sector: "inmobiliaria", firma: "burdeos con caligrafía fantasma, marco biselado que se abre y selector de viviendas", hecha: true, guia: "burdeos", acento: "#340c24", scroll: "snappy", paginas: albaPaginas, transicion: "fade" },
+  { slug: "no-mires-abajo", nombre: "No mires abajo", ref: "Don't Look Up", url: "https://www.dontlookup.app/", ficha: "docs/58", sector: "videojuego", firma: "juego satírico jugable a tinta: dos zapatos gigantes y una multitud que se enfada", hecha: true, guia: "tinta", acento: "#c0342a", paginas: abajoPaginas, transicion: "fade" },
+  { slug: "cantera", nombre: "Cantera", ref: "Aspen Search", url: "https://www.aspensearch.com/", ficha: "docs/58", sector: "selección de personal", firma: "mosaico de baldosas con semitono, menta y reloj de cada ciudad en la cabecera", hecha: true, guia: "baldosa", acento: "#a1ffcb", scroll: "snappy", paginas: canteraPaginas, transicion: "fade" },
+  { slug: "ultramar", nombre: "Ultramar", ref: "United Carriers", url: "https://unitedcarriers.com/", ficha: "docs/58", sector: "logística", firma: "globo de puntos con rutas, titular extendido y un contenedor que cruza al bajar", hecha: true, guia: "orbital", acento: "#ff6e28", scroll: "snappy", paginas: ultramarPaginas, transicion: "wipe" },
+  { slug: "zanco", nombre: "Zanco", ref: "Noho", url: "https://noho.ink/", ficha: "docs/58", sector: "mueble", firma: "muro escalonado de baldosas de color con muebles dibujados y tienda con color real", hecha: true, guia: "catalogo", acento: "#f4d21f", scroll: "snappy", paginas: zancoPaginas, transicion: "fade" },
+  { slug: "pulso-lento", nombre: "Pulso Lento", ref: "Paul Kalkbrenner", url: "https://www.paulkalkbrenner.net/", ficha: "docs/58", sector: "música", firma: "blanco suizo con foto dentro del nombre, vinilo que gira, años gigantes y reproductor que suena", hecha: true, guia: "cartel", acento: "#a7ff9c", scroll: "snappy", paginas: pulsoPaginas, transicion: "wipe" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

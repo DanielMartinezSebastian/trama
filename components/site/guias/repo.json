@@ -1,7 +1,99 @@
 {
- "fecha": "2026-10-27",
- "base": "http://localhost:3020",
+ "fecha": "2026-11-02",
+ "base": "http://localhost:3041",
  "paginas": [
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/ambar",
+   "guia": "ambar",
+   "titulo": "Ámbar nocturno",
+   "medidas": {
+    "fondo": "#11100f",
+    "paleta": [
+     [
+      "#11100f",
+      97
+     ],
+     [
+      "#1d1a17",
+      2
+     ],
+     [
+      "#f4ead9",
+      1
+     ],
+     [
+      "#b3a48e",
+      70
+     ],
+     [
+      "#f4ead9",
+      22
+     ],
+     [
+      "#11100f",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 7,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Geist",
+     "Fraunces"
+    ],
+    "margen": 58,
+    "radios": [
+     "2",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.45, 0, 0.55, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.7
+   },
+   "rasgos": {
+    "lum": 0.005242423046123999,
+    "sat": 0.19576719576719567,
+    "hue": 35.675675675675734,
+    "cat": "serifa",
+    "vw": 7,
+    "weight": 300,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 17,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "sereno",
+     "afinidad": 0.243
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.231
+    }
+   ]
+  },
   {
    "tipo": "guia",
    "ruta": "/guias/relato/autor",
@@ -77,16 +169,96 @@
    },
    "afinidad": [
     {
+     "guia": "ilustrado",
+     "afinidad": 0.262
+    },
+    {
+     "guia": "baldosa",
+     "afinidad": 0.252
+    },
+    {
      "guia": "rotulo",
      "afinidad": 0.251
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/baldosa",
+   "guia": "baldosa",
+   "titulo": "Mosaico de baldosas",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#232323",
+      1
+     ],
+     [
+      "#232323",
+      75
+     ],
+     [
+      "#5e5e5e",
+      21
+     ],
+     [
+      "#ffffff",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.2,
+     "peso": 450,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 14,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.16, 1, 0.3, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 4.2,
+    "weight": 450,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "tecnico",
+     "afinidad": 0.563
     },
     {
-     "guia": "ludico",
-     "afinidad": 0.245
+     "guia": "catalogo",
+     "afinidad": 0.418
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.242
+     "guia": "papel",
+     "afinidad": 0.414
     }
    ]
   },
@@ -169,16 +341,16 @@
    },
    "afinidad": [
     {
+     "guia": "tinta",
+     "afinidad": 0.32
+    },
+    {
      "guia": "electrico",
      "afinidad": 0.279
     },
     {
      "guia": "lujo",
      "afinidad": 0.244
-    },
-    {
-     "guia": "boutique",
-     "afinidad": 0.24
     }
    ]
   },
@@ -260,16 +432,105 @@
    },
    "afinidad": [
     {
+     "guia": "ilustrado",
+     "afinidad": 0.563
+    },
+    {
+     "guia": "sereno",
+     "afinidad": 0.325
+    },
+    {
      "guia": "lujo",
      "afinidad": 0.294
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/burdeos",
+   "guia": "burdeos",
+   "titulo": "Residencia burdeos",
+   "medidas": {
+    "fondo": "#340c24",
+    "paleta": [
+     [
+      "#340c24",
+      79
+     ],
+     [
+      "#47152f",
+      21
+     ],
+     [
+      "#f3f3ec",
+      1
+     ],
+     [
+      "#f3f3ec",
+      58
+     ],
+     [
+      "#c9b5bf",
+      36
+     ],
+     [
+      "#340c24",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Bodoni Moda",
+     "vw": 37.4,
+     "peso": 400,
+     "interlineado": 0.8,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Archivo",
+     "Bodoni Moda"
+    ],
+    "margen": 36,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.76, 0, 0.24, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6.8
+   },
+   "rasgos": {
+    "lum": 0.011203830079745887,
+    "sat": 0.625,
+    "hue": 324,
+    "cat": "serifa",
+    "vw": 37.4,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.8,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "pixel",
+     "afinidad": 0.261
     },
     {
-     "guia": "salon",
-     "afinidad": 0.285
+     "guia": "ambar",
+     "afinidad": 0.226
     },
     {
-     "guia": "papel",
-     "afinidad": 0.25
+     "guia": "calido",
+     "afinidad": 0.19
     }
    ]
   },
@@ -356,12 +617,284 @@
      "afinidad": 0.287
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.232
+     "guia": "festival",
+     "afinidad": 0.254
+    },
+    {
+     "guia": "cartel",
+     "afinidad": 0.245
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/cartel",
+   "guia": "cartel",
+   "titulo": "Cartel suizo",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      72
+     ],
+     [
+      "#c5c5c5",
+      27
+     ],
+     [
+      "#000000",
+      1
+     ],
+     [
+      "#555555",
+      60
+     ],
+     [
+      "#000000",
+      34
+     ],
+     [
+      "#ffffff",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 42.6,
+     "peso": 700,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.3,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 12,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.625, 0.05, 0, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.3
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 42.6,
+    "weight": 700,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "monocromo",
+     "afinidad": 0.574
     },
     {
      "guia": "escuela",
-     "afinidad": 0.224
+     "afinidad": 0.305
+    },
+    {
+     "guia": "varietes",
+     "afinidad": 0.271
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/catalogo",
+   "guia": "catalogo",
+   "titulo": "Catálogo de color",
+   "medidas": {
+    "fondo": "#f1eee9",
+    "paleta": [
+     [
+      "#f1eee9",
+      70
+     ],
+     [
+      "#e7e2da",
+      29
+     ],
+     [
+      "#3c3c3c",
+      1
+     ],
+     [
+      "#6e6a63",
+      50
+     ],
+     [
+      "#3c3c3c",
+      45
+     ],
+     [
+      "#f1eee9",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Sans",
+     "vw": 4.2,
+     "peso": 600,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.3,
+     "measureEm": 28
+    },
+    "familias": [
+     "Instrument Sans"
+    ],
+    "margen": 30,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4
+   },
+   "rasgos": {
+    "lum": 0.8573303574228076,
+    "sat": 0.21311475409836078,
+    "hue": 36.923076923076906,
+    "cat": "grotesca",
+    "vw": 4.2,
+    "weight": 600,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.579
+    },
+    {
+     "guia": "baldosa",
+     "afinidad": 0.418
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.397
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/cercano",
+   "guia": "cercano",
+   "titulo": "Aprendizaje cercano",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      71
+     ],
+     [
+      "#f6f5f3",
+      28
+     ],
+     [
+      "#121117",
+      1
+     ],
+     [
+      "#56535e",
+      49
+     ],
+     [
+      "#121117",
+      28
+     ],
+     [
+      "#ffffff",
+      23
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.4,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": -0.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 64,
+    "radios": [
+     "8"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 3.8
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.062146892655367256,
+    "hue": 256.3636363636364,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 700,
+    "ls": -0.5,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "baldosa",
+     "afinidad": 0.385
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.316
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.314
     }
    ]
   },
@@ -451,8 +984,8 @@
      "afinidad": 0.188
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.174
+     "guia": "burdeos",
+     "afinidad": 0.175
     }
    ]
   },
@@ -536,12 +1069,12 @@
      "afinidad": 0.279
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.213
+     "guia": "ambar",
+     "afinidad": 0.219
     },
     {
-     "guia": "club",
-     "afinidad": 0.191
+     "guia": "glaciar",
+     "afinidad": 0.214
     }
    ]
   },
@@ -624,12 +1157,454 @@
      "afinidad": 0.372
     },
     {
-     "guia": "calido",
-     "afinidad": 0.224
+     "guia": "varietes",
+     "afinidad": 0.325
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.206
+     "guia": "cartel",
+     "afinidad": 0.305
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/festival",
+   "guia": "festival",
+   "titulo": "Festival pastel",
+   "medidas": {
+    "fondo": "#f4d4d4",
+    "paleta": [
+     [
+      "#f4d4d4",
+      72
+     ],
+     [
+      "#fff7f0",
+      26
+     ],
+     [
+      "#2b1d1d",
+      1
+     ],
+     [
+      "#5e4545",
+      60
+     ],
+     [
+      "#2b1d1d",
+      34
+     ],
+     [
+      "#f4d4d4",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Bricolage Grotesque",
+     "vw": 41.2,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Instrument Sans",
+     "Bricolage Grotesque"
+    ],
+    "margen": 20,
+    "radios": [
+     "píldora",
+     "14"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.9
+   },
+   "rasgos": {
+    "lum": 0.7107352968013961,
+    "sat": 0.5925925925925928,
+    "hue": 0,
+    "cat": "redonda",
+    "vw": 41.2,
+    "weight": 500,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 17,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "monocromo",
+     "afinidad": 0.266
+    },
+    {
+     "guia": "calido",
+     "afinidad": 0.254
+    },
+    {
+     "guia": "varietes",
+     "afinidad": 0.252
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/filmoteca",
+   "guia": "filmoteca",
+   "titulo": "Filmoteca",
+   "medidas": {
+    "fondo": "#f2f2f2",
+    "paleta": [
+     [
+      "#f2f2f2",
+      99
+     ],
+     [
+      "#000000",
+      1
+     ],
+     [
+      "#595959",
+      54
+     ],
+     [
+      "#000000",
+      41
+     ],
+     [
+      "#f2f2f2",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Bodoni Moda",
+     "vw": 6.4,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Inter Tight",
+     "Bodoni Moda"
+    ],
+    "margen": 12,
+    "radios": [],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.87, 0, 0.13, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.3
+   },
+   "rasgos": {
+    "lum": 0.8879231178819662,
+    "sat": 0,
+    "hue": 0,
+    "cat": "serifa",
+    "vw": 6.4,
+    "weight": 400,
+    "ls": -4,
+    "upper": true,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "sereno",
+     "afinidad": 0.395
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.377
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.35
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/glaciar",
+   "guia": "glaciar",
+   "titulo": "Archivo glaciar",
+   "medidas": {
+    "fondo": "#101821",
+    "paleta": [
+     [
+      "#101821",
+      74
+     ],
+     [
+      "#1a2531",
+      25
+     ],
+     [
+      "#e9edf0",
+      1
+     ],
+     [
+      "#a3b1bd",
+      52
+     ],
+     [
+      "#e9edf0",
+      27
+     ],
+     [
+      "#ffffff",
+      16
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 6.4,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Inter",
+     "JetBrains Mono"
+    ],
+    "margen": 46,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 0.008732323976079745,
+    "sat": 0.30666666666666664,
+    "hue": 211.304347826087,
+    "cat": "grotesca",
+    "vw": 6.4,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.379
+    },
+    {
+     "guia": "ambar",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.247
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/goloso",
+   "guia": "goloso",
+   "titulo": "Rosa y chocolate",
+   "medidas": {
+    "fondo": "#edccbe",
+    "paleta": [
+     [
+      "#edccbe",
+      78
+     ],
+     [
+      "#f4dfd6",
+      21
+     ],
+     [
+      "#331917",
+      1
+     ],
+     [
+      "#331917",
+      58
+     ],
+     [
+      "#6a4438",
+      36
+     ],
+     [
+      "#edccbe",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo Black",
+     "vw": 27.1,
+     "peso": 400,
+     "interlineado": 0.8,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter",
+     "Archivo Black"
+    ],
+    "margen": 12,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.65, 0.05, 0.36, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6.3
+   },
+   "rasgos": {
+    "lum": 0.6490796172085183,
+    "sat": 0.5769230769230772,
+    "hue": 18,
+    "cat": "grotesca",
+    "vw": 27.1,
+    "weight": 400,
+    "ls": -4,
+    "upper": true,
+    "lh": 0.8,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "varietes",
+     "afinidad": 0.371
+    },
+    {
+     "guia": "escuela",
+     "afinidad": 0.3
+    },
+    {
+     "guia": "monocromo",
+     "afinidad": 0.271
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/ilustrado",
+   "guia": "ilustrado",
+   "titulo": "Papel ilustrado",
+   "medidas": {
+    "fondo": "#f4efdf",
+    "paleta": [
+     [
+      "#f4efdf",
+      99
+     ],
+     [
+      "#202221",
+      1
+     ],
+     [
+      "#202221",
+      57
+     ],
+     [
+      "#55564f",
+      39
+     ],
+     [
+      "#f4efdf",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 4.4,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Instrument Sans",
+     "Instrument Serif"
+    ],
+    "margen": 49,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.9
+   },
+   "rasgos": {
+    "lum": 0.8629381362513235,
+    "sat": 0.04242424242424244,
+    "hue": 68.57142857142867,
+    "cat": "serifa",
+    "vw": 4.4,
+    "weight": 400,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "boutique",
+     "afinidad": 0.563
+    },
+    {
+     "guia": "sereno",
+     "afinidad": 0.396
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.35
     }
    ]
   },
@@ -712,12 +1687,12 @@
      "afinidad": 0.245
     },
     {
-     "guia": "papel",
-     "afinidad": 0.24
+     "guia": "catalogo",
+     "afinidad": 0.243
     },
     {
-     "guia": "rotulo",
-     "afinidad": 0.208
+     "guia": "papel",
+     "afinidad": 0.24
     }
    ]
   },
@@ -800,16 +1775,108 @@
    },
    "afinidad": [
     {
+     "guia": "sereno",
+     "afinidad": 0.412
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.377
+    },
+    {
      "guia": "salon",
      "afinidad": 0.302
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/manchas",
+   "guia": "manchas",
+   "titulo": "Pop de manchas",
+   "medidas": {
+    "fondo": "#ffd24a",
+    "paleta": [
+     [
+      "#ffd24a",
+      69
+     ],
+     [
+      "#fffbe0",
+      30
+     ],
+     [
+      "#000000",
+      1
+     ],
+     [
+      "#3d2f00",
+      50
+     ],
+     [
+      "#000000",
+      45
+     ],
+     [
+      "#ffd24a",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Bowlby One",
+     "vw": 5,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.3,
+     "measureEm": 24
+    },
+    "familias": [
+     "Instrument Sans",
+     "Bowlby One"
+    ],
+    "margen": 15,
+    "radios": [
+     "24",
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.2
+   },
+   "rasgos": {
+    "lum": 0.6784759924081261,
+    "sat": 1,
+    "hue": 45.08287292817681,
+    "cat": "grotesca",
+    "vw": 5,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 17,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "mineral",
+     "afinidad": 0.424
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.294
+     "guia": "papel",
+     "afinidad": 0.334
     },
     {
-     "guia": "barberia",
-     "afinidad": 0.244
+     "guia": "catalogo",
+     "afinidad": 0.318
     }
    ]
   },
@@ -889,16 +1956,103 @@
    },
    "afinidad": [
     {
+     "guia": "orbital",
+     "afinidad": 0.239
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.221
     },
     {
-     "guia": "club",
-     "afinidad": 0.188
+     "guia": "glaciar",
+     "afinidad": 0.214
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/mineral",
+   "guia": "mineral",
+   "titulo": "Mineral y bosque",
+   "medidas": {
+    "fondo": "#d7d7c9",
+    "paleta": [
+     [
+      "#d7d7c9",
+      99
+     ],
+     [
+      "#24473b",
+      1
+     ],
+     [
+      "#42594f",
+      74
+     ],
+     [
+      "#24473b",
+      22
+     ],
+     [
+      "#d7d7c9",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Geist"
+    ],
+    "margen": 43,
+    "radios": [
+     "6",
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.5
+   },
+   "rasgos": {
+    "lum": 0.6726499650973266,
+    "sat": 0.32710280373831774,
+    "hue": 159.42857142857144,
+    "cat": "grotesca",
+    "vw": 6,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "manchas",
+     "afinidad": 0.424
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.182
+     "guia": "catalogo",
+     "afinidad": 0.397
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.39
     }
    ]
   },
@@ -975,16 +2129,16 @@
    },
    "afinidad": [
     {
+     "guia": "cartel",
+     "afinidad": 0.574
+    },
+    {
      "guia": "escuela",
      "afinidad": 0.372
     },
     {
-     "guia": "calido",
-     "afinidad": 0.287
-    },
-    {
-     "guia": "papel",
-     "afinidad": 0.23
+     "guia": "varietes",
+     "afinidad": 0.323
     }
    ]
   },
@@ -1063,16 +2217,104 @@
    },
    "afinidad": [
     {
+     "guia": "glaciar",
+     "afinidad": 0.379
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.334
+    },
+    {
      "guia": "puntos",
      "afinidad": 0.28
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/orbital",
+   "guia": "orbital",
+   "titulo": "Mando orbital",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      99
+     ],
+     [
+      "#ffffff",
+      1
+     ],
+     [
+      "#b8b8b8",
+      64
+     ],
+     [
+      "#ffffff",
+      33
+     ],
+     [
+      "#000000",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Unbounded",
+     "vw": 5.6,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 28
+    },
+    "familias": [
+     "Inter",
+     "Unbounded",
+     "Geist Mono"
+    ],
+    "margen": 33,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.2
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 5.6,
+    "weight": 700,
+    "ls": 0,
+    "upper": true,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.334
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.244
     },
     {
      "guia": "marca",
-     "afinidad": 0.221
-    },
-    {
-     "guia": "papel",
-     "afinidad": 0.215
+     "afinidad": 0.239
     }
    ]
   },
@@ -1155,16 +2397,16 @@
    },
    "afinidad": [
     {
-     "guia": "tecnico",
-     "afinidad": 0.338
+     "guia": "catalogo",
+     "afinidad": 0.579
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.25
+     "guia": "baldosa",
+     "afinidad": 0.414
     },
     {
-     "guia": "ludico",
-     "afinidad": 0.24
+     "guia": "mineral",
+     "afinidad": 0.39
     }
    ]
   },
@@ -1244,16 +2486,16 @@
    },
    "afinidad": [
     {
-     "guia": "puntos",
-     "afinidad": 0.186
+     "guia": "burdeos",
+     "afinidad": 0.261
     },
     {
-     "guia": "club",
-     "afinidad": 0.174
+     "guia": "glaciar",
+     "afinidad": 0.227
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.172
+     "guia": "ambar",
+     "afinidad": 0.209
     }
    ]
   },
@@ -1345,8 +2587,8 @@
      "afinidad": 0.245
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.186
+     "guia": "orbital",
+     "afinidad": 0.244
     }
    ]
   },
@@ -1427,12 +2669,12 @@
      "afinidad": 0.251
     },
     {
-     "guia": "ludico",
-     "afinidad": 0.208
+     "guia": "senal",
+     "afinidad": 0.248
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.2
+     "guia": "festival",
+     "afinidad": 0.245
     }
    ]
   },
@@ -1512,16 +2754,195 @@
    },
    "afinidad": [
     {
+     "guia": "sereno",
+     "afinidad": 0.45
+    },
+    {
      "guia": "lujo",
      "afinidad": 0.302
     },
     {
      "guia": "boutique",
      "afinidad": 0.285
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/senal",
+   "guia": "senal",
+   "titulo": "Señal corporativa",
+   "medidas": {
+    "fondo": "#f2f1eb",
+    "paleta": [
+     [
+      "#f2f1eb",
+      71
+     ],
+     [
+      "#d7ff39",
+      28
+     ],
+     [
+      "#151922",
+      1
+     ],
+     [
+      "#151922",
+      50
+     ],
+     [
+      "#555a66",
+      45
+     ],
+     [
+      "#f2f1eb",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Space Grotesk",
+     "vw": 15,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Instrument Sans",
+     "Space Grotesk"
+    ],
+    "margen": 43,
+    "radios": [
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.1
+   },
+   "rasgos": {
+    "lum": 0.8778599782190133,
+    "sat": 1.0000000000000002,
+    "hue": 72.12121212121212,
+    "cat": "grotesca",
+    "vw": 15,
+    "weight": 500,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "varietes",
+     "afinidad": 0.368
     },
     {
-     "guia": "autor",
-     "afinidad": 0.216
+     "guia": "baldosa",
+     "afinidad": 0.279
+    },
+    {
+     "guia": "manchas",
+     "afinidad": 0.276
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/sereno",
+   "guia": "sereno",
+   "titulo": "Ingeniería serena",
+   "medidas": {
+    "fondo": "#fffdfd",
+    "paleta": [
+     [
+      "#fffdfd",
+      99
+     ],
+     [
+      "#232323",
+      1
+     ],
+     [
+      "#5e5e58",
+      57
+     ],
+     [
+      "#ffffff",
+      30
+     ],
+     [
+      "#232323",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Newsreader",
+     "vw": 7.8,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 26
+    },
+    "familias": [
+     "Instrument Sans",
+     "Newsreader"
+    ],
+    "margen": 32,
+    "radios": [
+     "8"
+    ],
+    "curvas": [
+     "cubic-bezier(0.215, 0.61, 0.355, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 5.5
+   },
+   "rasgos": {
+    "lum": 0.9860240833322964,
+    "sat": 0.032967032967033,
+    "hue": 60,
+    "cat": "serifa",
+    "vw": 7.8,
+    "weight": 300,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "salon",
+     "afinidad": 0.45
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.412
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.396
     }
    ]
   },
@@ -1598,16 +3019,16 @@
    },
    "afinidad": [
     {
-     "guia": "papel",
-     "afinidad": 0.338
+     "guia": "baldosa",
+     "afinidad": 0.563
     },
     {
-     "guia": "autor",
-     "afinidad": 0.222
+     "guia": "catalogo",
+     "afinidad": 0.361
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.21
+     "guia": "mineral",
+     "afinidad": 0.357
     }
    ]
   },
@@ -1692,12 +3113,387 @@
      "afinidad": 0.245
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.207
+     "guia": "orbital",
+     "afinidad": 0.214
     },
     {
-     "guia": "marca",
-     "afinidad": 0.178
+     "guia": "nocturno",
+     "afinidad": 0.207
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/tinta",
+   "guia": "tinta",
+   "titulo": "Tinta a mano",
+   "medidas": {
+    "fondo": "#f4f3ef",
+    "paleta": [
+     [
+      "#f4f3ef",
+      88
+     ],
+     [
+      "#ffffff",
+      10
+     ],
+     [
+      "#14140f",
+      1
+     ],
+     [
+      "#14140f",
+      52
+     ],
+     [
+      "#55554d",
+      30
+     ],
+     [
+      "#f4f3ef",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Titan One",
+     "vw": 6.7,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Patrick Hand",
+     "Titan One"
+    ],
+    "margen": 18,
+    "radios": [
+     "píldora",
+     "12",
+     "50"
+    ],
+    "curvas": [
+     "ease-out"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.2
+   },
+   "rasgos": {
+    "lum": 0.8956627580202199,
+    "sat": 0.04938271604938272,
+    "hue": 60,
+    "cat": "grotesca",
+    "vw": 6.7,
+    "weight": 400,
+    "ls": 0,
+    "upper": true,
+    "lh": 0.9,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "barberia",
+     "afinidad": 0.32
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.307
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.28
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/varietes",
+   "guia": "varietes",
+   "titulo": "Cartel de varietés",
+   "medidas": {
+    "fondo": "#f3e7d0",
+    "paleta": [
+     [
+      "#f3e7d0",
+      75
+     ],
+     [
+      "#ecdcbd",
+      24
+     ],
+     [
+      "#1c1420",
+      1
+     ],
+     [
+      "#5a4d4d",
+      60
+     ],
+     [
+      "#1c1420",
+      34
+     ],
+     [
+      "#f3e7d0",
+      6
+     ]
+    ],
+    "titular": {
+     "letra": "Ultra",
+     "vw": 29.3,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 28
+    },
+    "familias": [
+     "Manrope",
+     "Ultra"
+    ],
+    "margen": 34,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "cubic-bezier(0.165, 0.84, 0.44, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.1
+   },
+   "rasgos": {
+    "lum": 0.807605807999466,
+    "sat": 0.5932203389830505,
+    "hue": 39.428571428571445,
+    "cat": "grotesca",
+    "vw": 29.3,
+    "weight": 400,
+    "ls": -4,
+    "upper": false,
+    "lh": 0.9,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "goloso",
+     "afinidad": 0.371
+    },
+    {
+     "guia": "senal",
+     "afinidad": 0.368
+    },
+    {
+     "guia": "escuela",
+     "afinidad": 0.325
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/ines-bruma",
+   "titulo": "ines-bruma",
+   "medidas": {
+    "fondo": "#202221",
+    "paleta": [
+     [
+      "#202221",
+      38
+     ],
+     [
+      "#f4efdf",
+      20
+     ],
+     [
+      "#e6d8bb",
+      11
+     ],
+     [
+      "#ece3dc",
+      7
+     ],
+     [
+      "#373f1d",
+      41
+     ],
+     [
+      "#30312e",
+      17
+     ],
+     [
+      "#494941",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 7.7,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -5.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.7,
+     "measureEm": 35
+    },
+    "familias": [
+     "Inter",
+     "JetBrains Mono",
+     "Arial",
+     "Instrument Serif"
+    ],
+    "margen": 78,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.2, 0.8, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 7.1
+   },
+   "rasgos": {
+    "lum": 0.01560936490487606,
+    "sat": 0.7707006369426752,
+    "hue": 38.677685950413206,
+    "cat": "serifa",
+    "vw": 7.7,
+    "weight": 400,
+    "ls": -5.5,
+    "upper": false,
+    "lh": 1,
+    "body": 17,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ambar",
+     "afinidad": 0.305
+    },
+    {
+     "guia": "burdeos",
+     "afinidad": 0.23
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.216
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/polaris-archivo",
+   "titulo": "polaris-archivo",
+   "medidas": {
+    "fondo": "#08131c",
+    "paleta": [
+     [
+      "#08131c",
+      56
+     ],
+     [
+      "#dce3e6",
+      36
+     ],
+     [
+      "#0c131a",
+      6
+     ],
+     [
+      "#182630",
+      1
+     ],
+     [
+      "#f0f6f7",
+      19
+     ],
+     [
+      "#e2edf0",
+      13
+     ],
+     [
+      "#435761",
+      13
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 10,
+     "peso": 420,
+     "interlineado": 0.8,
+     "tracking": -9.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.7,
+     "measureEm": 25
+    },
+    "familias": [
+     "JetBrains Mono",
+     "Inter",
+     "Arial",
+     "Newsreader"
+    ],
+    "margen": 144,
+    "radios": [
+     "3"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 4,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 5
+   },
+   "rasgos": {
+    "lum": 0.00601209013046094,
+    "sat": 1.0000000000000002,
+    "hue": 15.445544554455466,
+    "cat": "grotesca",
+    "vw": 10,
+    "weight": 420,
+    "ls": -9.5,
+    "upper": false,
+    "lh": 0.8,
+    "body": 17,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.236
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.184
+    },
+    {
+     "guia": "pixel",
+     "afinidad": 0.179
     }
    ]
   },
@@ -1791,8 +3587,8 @@
      "afinidad": 0.236
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.2
+     "guia": "orbital",
+     "afinidad": 0.207
     }
    ]
   },
@@ -1813,7 +3609,7 @@
      ],
      [
       "#e6e6e6",
-      47
+      46
      ],
      [
       "#8c8c8c",
@@ -1913,7 +3709,7 @@
      ],
      [
       "#de966f",
-      29
+      28
      ],
      [
       "#8fb3c9",
@@ -1926,7 +3722,7 @@
      "peso": 400,
      "interlineado": 0,
      "tracking": 12,
-     "mayusculas": false
+     "mayusculas": true
     },
     "texto": {
      "size": 20,
@@ -1959,7 +3755,7 @@
     "vw": 1,
     "weight": 400,
     "ls": 12,
-    "upper": false,
+    "upper": true,
     "lh": 0,
     "body": 20,
     "pill": false
@@ -1967,15 +3763,15 @@
    "afinidad": [
     {
      "guia": "puntos",
-     "afinidad": 0.103
+     "afinidad": 0.098
     },
     {
      "guia": "pixel",
-     "afinidad": 0.101
+     "afinidad": 0.097
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.094
+     "guia": "electrico",
+     "afinidad": 0.096
     }
    ]
   },
@@ -2070,12 +3866,12 @@
      "afinidad": 0.252
     },
     {
-     "guia": "terminal",
-     "afinidad": 0.211
+     "guia": "catalogo",
+     "afinidad": 0.219
     },
     {
-     "guia": "papel",
-     "afinidad": 0.197
+     "guia": "terminal",
+     "afinidad": 0.211
     }
    ]
   },
@@ -2117,7 +3913,7 @@
      "peso": 400,
      "interlineado": 0,
      "tracking": 12,
-     "mayusculas": false
+     "mayusculas": true
     },
     "texto": {
      "size": 20,
@@ -2145,7 +3941,7 @@
     "vw": 1,
     "weight": 400,
     "ls": 12,
-    "upper": false,
+    "upper": true,
     "lh": 0,
     "body": 20,
     "pill": false
@@ -2153,15 +3949,15 @@
    "afinidad": [
     {
      "guia": "puntos",
-     "afinidad": 0.103
+     "afinidad": 0.098
     },
     {
      "guia": "pixel",
-     "afinidad": 0.102
+     "afinidad": 0.097
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.095
+     "guia": "electrico",
+     "afinidad": 0.096
     }
    ]
   },
@@ -2203,7 +3999,7 @@
      "peso": 400,
      "interlineado": 0,
      "tracking": 12,
-     "mayusculas": false
+     "mayusculas": true
     },
     "texto": {
      "size": 20,
@@ -2231,23 +4027,23 @@
     "vw": 1,
     "weight": 400,
     "ls": 12,
-    "upper": false,
+    "upper": true,
     "lh": 0,
     "body": 20,
     "pill": false
    },
    "afinidad": [
     {
+     "guia": "electrico",
+     "afinidad": 0.095
+    },
+    {
      "guia": "pixel",
-     "afinidad": 0.1
+     "afinidad": 0.095
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.097
-    },
-    {
-     "guia": "nocturno",
-     "afinidad": 0.092
+     "guia": "ambar",
+     "afinidad": 0.093
     }
    ]
   },
@@ -2260,7 +4056,7 @@
     "paleta": [
      [
       "#071410",
-      72
+      71
      ],
      [
       "#06120f",
@@ -2346,8 +4142,107 @@
      "afinidad": 0.23
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.198
+     "guia": "orbital",
+     "afinidad": 0.202
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-parla",
+   "titulo": "PARLA · idiomas que conectan",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      34
+     ],
+     [
+      "#ff7aac",
+      29
+     ],
+     [
+      "#f6f5f3",
+      22
+     ],
+     [
+      "#121117",
+      8
+     ],
+     [
+      "#121117",
+      55
+     ],
+     [
+      "#56535e",
+      35
+     ],
+     [
+      "#ffffff",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.4,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": -0.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 31
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 64,
+    "radios": [
+     "6",
+     "píldora",
+     "9",
+     "7",
+     "4"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.5
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 1,
+    "hue": 337.4436090225564,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 700,
+    "ls": -0.5,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "cercano",
+     "afinidad": 0.406
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.301
+    },
+    {
+     "guia": "manchas",
+     "afinidad": 0.283
     }
    ]
   },
@@ -2422,8 +4317,294 @@
      "afinidad": 0.23
     },
     {
+     "guia": "orbital",
+     "afinidad": 0.192
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/producto/esencial",
+   "titulo": "esencial",
+   "medidas": {
+    "fondo": "#eae9e1",
+    "paleta": [
+     [
+      "#eae9e1",
+      52
+     ],
+     [
+      "#f6f5f1",
+      29
+     ],
+     [
+      "#252723",
+      12
+     ],
+     [
+      "#eeede7",
+      5
+     ],
+     [
+      "#20201e",
+      10
+     ],
+     [
+      "#626057",
+      9
+     ],
+     [
+      "#ffffff",
+      9
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 4.9,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -7.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.7,
+     "measureEm": 25
+    },
+    "familias": [
+     "Geist",
+     "Geist Mono",
+     "Arial"
+    ],
+    "margen": 144,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.1
+   },
+   "rasgos": {
+    "lum": 0.8120649478848382,
+    "sat": 0.17647058823529388,
+    "hue": 53.33333333333337,
+    "cat": "grotesca",
+    "vw": 4.9,
+    "weight": 500,
+    "ls": -7.5,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "baldosa",
+     "afinidad": 0.382
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.355
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.342
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/producto/materia",
+   "titulo": "materia",
+   "medidas": {
+    "fondo": "#202820",
+    "paleta": [
+     [
+      "#202820",
+      55
+     ],
+     [
+      "#111310",
+      23
+     ],
+     [
+      "#e4e3d8",
+      9
+     ],
+     [
+      "#f3f0e7",
+      6
+     ],
+     [
+      "#bdc2b4",
+      19
+     ],
+     [
+      "#a5a69e",
+      11
+     ],
+     [
+      "#4f5850",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 5.6,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": -8.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.7,
+     "measureEm": 23
+    },
+    "familias": [
+     "Geist",
+     "Geist Mono",
+     "Arial"
+    ],
+    "margen": 173,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 1,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 2.1
+   },
+   "rasgos": {
+    "lum": 0.019289442877084895,
+    "sat": 0.9386503067484663,
+    "hue": 74.50980392156862,
+    "cat": "grotesca",
+    "vw": 5.6,
+    "weight": 500,
+    "ls": -8.5,
+    "upper": false,
+    "lh": 0.9,
+    "body": 12,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.251
+    },
+    {
      "guia": "nocturno",
-     "afinidad": 0.167
+     "afinidad": 0.222
+    },
+    {
+     "guia": "manchas",
+     "afinidad": 0.172
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/producto/ritual",
+   "titulo": "ritual",
+   "medidas": {
+    "fondo": "#e9ded0",
+    "paleta": [
+     [
+      "#e9ded0",
+      39
+     ],
+     [
+      "#11100f",
+      28
+     ],
+     [
+      "#171311",
+      16
+     ],
+     [
+      "#0d0f0d",
+      6
+     ],
+     [
+      "#b1a69d",
+      18
+     ],
+     [
+      "#655e56",
+      9
+     ],
+     [
+      "#bfb3a7",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 6,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": -9,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Geist",
+     "Geist Mono",
+     "Arial"
+    ],
+    "margen": 84,
+    "radios": [
+     "2",
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 0,
+    "libs": [
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 1.5
+   },
+   "rasgos": {
+    "lum": 0.7412025678099557,
+    "sat": 0.9386503067484663,
+    "hue": 74.50980392156862,
+    "cat": "grotesca",
+    "vw": 6,
+    "weight": 500,
+    "ls": -9,
+    "upper": false,
+    "lh": 0.9,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "manchas",
+     "afinidad": 0.312
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.303
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.262
     }
    ]
   },
@@ -2444,7 +4625,7 @@
      ],
      [
       "#feeee2",
-      94
+      95
      ],
      [
       "#8f93b8",
@@ -2463,7 +4644,11 @@
      "tracking": 0,
      "mayusculas": true
     },
-    "texto": null,
+    "texto": {
+     "size": 12,
+     "lh": 1.2,
+     "measureEm": 23
+    },
     "familias": [
      "Space Grotesk",
      "Archivo"
@@ -2474,12 +4659,16 @@
      "50",
      "píldora"
     ],
-    "curvas": [],
-    "hover": 0,
+    "curvas": [
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 4,
     "libs": [
      "next"
     ],
-    "pantallas": 7.3
+    "pantallas": 7.6
    },
    "rasgos": {
     "lum": 0.0077456260227587595,
@@ -2491,21 +4680,21 @@
     "ls": 0,
     "upper": true,
     "lh": 0.7,
-    "body": 16,
+    "body": 12,
     "pill": true
    },
    "afinidad": [
     {
+     "guia": "orbital",
+     "afinidad": 0.369
+    },
+    {
      "guia": "nocturno",
-     "afinidad": 0.296
+     "afinidad": 0.282
     },
     {
      "guia": "marca",
-     "afinidad": 0.256
-    },
-    {
-     "guia": "terminal",
-     "afinidad": 0.214
+     "afinidad": 0.236
     }
    ]
   },
@@ -2518,27 +4707,27 @@
     "paleta": [
      [
       "#1a1a1a",
-      38
-     ],
-     [
-      "#ffffff",
-      26
+      35
      ],
      [
       "#ffe32b",
-      26
-     ],
-     [
-      "#ededed",
-      10
-     ],
-     [
-      "#1a1a1a",
-      60
+      28
      ],
      [
       "#ffffff",
-      23
+      27
+     ],
+     [
+      "#ededed",
+      11
+     ],
+     [
+      "#1a1a1a",
+      58
+     ],
+     [
+      "#ffffff",
+      24
      ],
      [
       "#999999",
@@ -2567,13 +4756,15 @@
     ],
     "curvas": [
      "ease",
-     "cubic-bezier(0.55, 0.1, 0.35, 1)"
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.55, 0.1, 0.35, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
     "hover": 5,
     "libs": [
      "next"
     ],
-    "pantallas": 8.4
+    "pantallas": 8.1
    },
    "rasgos": {
     "lum": 0.010329823029626936,
@@ -2594,12 +4785,471 @@
      "afinidad": 0.265
     },
     {
-     "guia": "marca",
+     "guia": "glaciar",
+     "afinidad": 0.26
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.232
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/alba",
+   "titulo": "Alba Residencia (réplica de ERA Residence)",
+   "medidas": {
+    "fondo": "#340c24",
+    "paleta": [
+     [
+      "#340c24",
+      75
+     ],
+     [
+      "#f3f3ec",
+      25
+     ],
+     [
+      "#f3f3ec",
+      53
+     ],
+     [
+      "#17233b",
+      43
+     ],
+     [
+      "#ffffff",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Pinyon Script",
+     "vw": 5,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Bodoni Moda",
+     "Archivo"
+    ],
+    "margen": 36,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.76, 0, 0.24, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 5.7
+   },
+   "rasgos": {
+    "lum": 0.011203830079745887,
+    "sat": 0.625,
+    "hue": 324,
+    "cat": "grotesca",
+    "vw": 5,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.404
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.336
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.247
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/brasa",
+   "titulo": "Brasa (réplica de Meer Mohsin)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      92
+     ],
+     [
+      "#a3000f",
+      8
+     ],
+     [
+      "#f2f2f2",
+      41
+     ],
+     [
+      "#f5f5f5",
+      30
+     ],
+     [
+      "#8a7a7a",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Stack Sans Headline",
+     "vw": 1.4,
+     "peso": 400,
+     "interlineado": 1.4,
+     "tracking": 18,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 13.2,
+     "lh": 1.2,
+     "measureEm": 23
+    },
+    "familias": [
+     "Stack Sans Headline",
+     "system-ui",
+     "Ruthie",
+     "ui-monospace"
+    ],
+    "margen": 1064,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
+    ],
+    "hover": 9,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 19.3
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 1,
+    "hue": 354.47852760736197,
+    "cat": "grotesca",
+    "vw": 1.4,
+    "weight": 400,
+    "ls": 18,
+    "upper": true,
+    "lh": 1.4,
+    "body": 13.2,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "orbital",
+     "afinidad": 0.111
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.107
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.105
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/cantera",
+   "titulo": "Cantera (réplica de Aspen Search)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      50
+     ],
+     [
+      "#232323",
+      37
+     ],
+     [
+      "#a1ffcb",
+      13
+     ],
+     [
+      "#232323",
+      70
+     ],
+     [
+      "#ffffff",
+      30
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 12.5,
+     "peso": 450,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 24,
+     "lh": 1.1,
+     "measureEm": 14
+    },
+    "familias": [
+     "Inter Tight",
+     "Geist Mono"
+    ],
+    "margen": 14,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 2.6
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 1,
+    "hue": 146.8085106382979,
+    "cat": "grotesca",
+    "vw": 12.5,
+    "weight": 450,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 24,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "senal",
+     "afinidad": 0.325
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.266
+    },
+    {
+     "guia": "manchas",
+     "afinidad": 0.255
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/casa-melosa",
+   "titulo": "Casa Melosa (réplica de House of Honey)",
+   "medidas": {
+    "fondo": "#331917",
+    "paleta": [
+     [
+      "#331917",
+      49
+     ],
+     [
+      "#edccbe",
+      25
+     ],
+     [
+      "#000000",
+      13
+     ],
+     [
+      "#fc72c4",
+      12
+     ],
+     [
+      "#edccbe",
+      64
+     ],
+     [
+      "#331917",
+      36
+     ]
+    ],
+    "titular": {
+     "letra": "Pinyon Script",
+     "vw": 12.5,
+     "peso": 400,
+     "interlineado": 0.6,
+     "tracking": 0,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Playfair Display",
+     "Inter"
+    ],
+    "margen": 8,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.65, 0.05, 0.36, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 4.4
+   },
+   "rasgos": {
+    "lum": 0.014609306670028875,
+    "sat": 0.9583333333333335,
+    "hue": 324.3478260869565,
+    "cat": "grotesca",
+    "vw": 12.5,
+    "weight": 400,
+    "ls": 0,
+    "upper": false,
+    "lh": 0.6,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.259
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.199
+    },
+    {
+     "guia": "burdeos",
+     "afinidad": 0.193
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/cenit",
+   "titulo": "Cénit (réplica de Lusion)",
+   "medidas": {
+    "fondo": "#f0f1fa",
+    "paleta": [
+     [
+      "#f0f1fa",
+      65
+     ],
+     [
+      "#111118",
+      16
+     ],
+     [
+      "#0f0f0f",
+      16
+     ],
+     [
+      "#000000",
+      2
+     ],
+     [
+      "#0b0b12",
+      63
+     ],
+     [
+      "#666666",
+      26
+     ],
+     [
+      "#555555",
+      9
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 1.8,
+     "peso": 700,
+     "interlineado": 0,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 28
+    },
+    "familias": [
+     "Inter Tight",
+     "IBM Plex Mono"
+    ],
+    "margen": 72,
+    "radios": [
+     "píldora",
+     "18"
+    ],
+    "curvas": [
+     "cubic-bezier(0.2, 0.8, 0.2, 1)",
+     "ease",
+     "linear"
+    ],
+    "hover": 2,
+    "libs": [
+     "lenis",
+     "three",
+     "next",
+     "canvas",
+     "video"
+    ],
+    "pantallas": 13
+   },
+   "rasgos": {
+    "lum": 0.88337986390044,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 1.8,
+    "weight": 700,
+    "ls": -4,
+    "upper": true,
+    "lh": 0,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "catalogo",
      "afinidad": 0.221
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.201
+     "guia": "papel",
+     "afinidad": 0.215
+    },
+    {
+     "guia": "baldosa",
+     "afinidad": 0.185
     }
    ]
   },
@@ -2616,7 +5266,7 @@
      ],
      [
       "#ffffff",
-      25
+      26
      ],
      [
       "#000000",
@@ -2628,11 +5278,11 @@
      ],
      [
       "#000000",
-      70
+      71
      ],
      [
       "#ffffff",
-      29
+      27
      ],
      [
       "#ff622b",
@@ -2654,8 +5304,8 @@
     },
     "familias": [
      "Inter",
-     "Playfair Display",
-     "IBM Plex Mono"
+     "IBM Plex Mono",
+     "Playfair Display"
     ],
     "margen": 20,
     "radios": [
@@ -2665,9 +5315,11 @@
      "13"
     ],
     "curvas": [
-     "ease"
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
-    "hover": 1,
+    "hover": 5,
     "libs": [
      "lenis",
      "next"
@@ -2693,12 +5345,12 @@
      "afinidad": 0.228
     },
     {
-     "guia": "calido",
-     "afinidad": 0.195
+     "guia": "manchas",
+     "afinidad": 0.212
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.194
+     "guia": "ilustrado",
+     "afinidad": 0.21
     }
    ]
   },
@@ -2727,7 +5379,7 @@
      ],
      [
       "#999999",
-      37
+      36
      ],
      [
       "#bbbbbb",
@@ -2763,7 +5415,7 @@
      "linear",
      "cubic-bezier(0.7, 0, 0.2, 1)"
     ],
-    "hover": 5,
+    "hover": 8,
     "libs": [
      "lenis",
      "next"
@@ -2793,8 +5445,8 @@
      "afinidad": 0.275
     },
     {
-     "guia": "club",
-     "afinidad": 0.204
+     "guia": "glaciar",
+     "afinidad": 0.233
     }
    ]
   },
@@ -2807,31 +5459,31 @@
     "paleta": [
      [
       "#1c1c1c",
-      37
+      40
      ],
      [
       "#e8e8e8",
-      34
+      33
      ],
      [
       "#000000",
-      18
+      17
      ],
      [
       "#ffffff",
-      5
+      4
      ],
      [
       "#1c1c1c",
-      43
+      40
      ],
      [
       "#ffffff",
-      22
+      24
      ],
      [
       "#e8e8e8",
-      15
+      14
      ]
     ],
     "titular": {
@@ -2858,13 +5510,14 @@
     "curvas": [
      "cubic-bezier(0.22, 1, 0.36, 1)",
      "ease",
-     "cubic-bezier(0.7, 0, 0.2, 1)"
+     "cubic-bezier(0.7, 0, 0.2, 1)",
+     "linear"
     ],
     "hover": 1,
     "libs": [
      "next"
     ],
-    "pantallas": 9.5
+    "pantallas": 9.9
    },
    "rasgos": {
     "lum": 0.011612245179743885,
@@ -2885,12 +5538,112 @@
      "afinidad": 0.336
     },
     {
-     "guia": "club",
-     "afinidad": 0.194
+     "guia": "orbital",
+     "afinidad": 0.241
     },
     {
-     "guia": "barberia",
-     "afinidad": 0.189
+     "guia": "club",
+     "afinidad": 0.194
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/marejada",
+   "titulo": "Marejada (réplica de Seasats)",
+   "medidas": {
+    "fondo": "#fffdfd",
+    "paleta": [
+     [
+      "#fffdfd",
+      92
+     ],
+     [
+      "#232323",
+      5
+     ],
+     [
+      "#b7c6b6",
+      1
+     ],
+     [
+      "#d5c5b6",
+      1
+     ],
+     [
+      "#232323",
+      46
+     ],
+     [
+      "#5e5e58",
+      22
+     ],
+     [
+      "#ffffff",
+      21
+     ]
+    ],
+    "titular": {
+     "letra": "Newsreader",
+     "vw": 8.6,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 18
+    },
+    "familias": [
+     "Instrument Sans",
+     "Newsreader",
+     "Geist Mono"
+    ],
+    "margen": 42,
+    "radios": [
+     "8",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.215, 0.61, 0.355, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 11,
+    "libs": [
+     "lenis",
+     "next",
+     "video"
+    ],
+    "pantallas": 4.2
+   },
+   "rasgos": {
+    "lum": 0.9860240833322964,
+    "sat": 0.032967032967033,
+    "hue": 60,
+    "cat": "serifa",
+    "vw": 8.6,
+    "weight": 300,
+    "ls": -2,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "sereno",
+     "afinidad": 0.847
+    },
+    {
+     "guia": "salon",
+     "afinidad": 0.416
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.403
     }
    ]
   },
@@ -2903,7 +5656,7 @@
     "paleta": [
      [
       "#feeec2",
-      27
+      28
      ],
      [
       "#ffffff",
@@ -2919,15 +5672,15 @@
      ],
      [
       "#1f1f1f",
-      46
+      49
      ],
      [
       "#868686",
-      34
+      32
      ],
      [
       "#ffffff",
-      12
+      11
      ]
     ],
     "titular": {
@@ -2947,20 +5700,21 @@
      "Manrope",
      "Cormorant Garamond"
     ],
-    "margen": 340,
+    "margen": 20,
     "radios": [
-     "50"
+     "50",
+     "píldora"
     ],
     "curvas": [
      "cubic-bezier(0.22, 1, 0.36, 1)",
      "ease",
      "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
-    "hover": 3,
+    "hover": 4,
     "libs": [
      "next"
     ],
-    "pantallas": 8.8
+    "pantallas": 8.9
    },
    "rasgos": {
     "lum": 0.8611494382835264,
@@ -2973,20 +5727,20 @@
     "upper": false,
     "lh": 1.1,
     "body": 24,
-    "pill": false
+    "pill": true
    },
    "afinidad": [
     {
-     "guia": "salon",
-     "afinidad": 0.34
-    },
-    {
      "guia": "boutique",
-     "afinidad": 0.271
+     "afinidad": 0.314
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.241
+     "guia": "salon",
+     "afinidad": 0.29
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.263
     }
    ]
   },
@@ -2999,7 +5753,7 @@
     "paleta": [
      [
       "#ffffff",
-      42
+      41
      ],
      [
       "#ffd5bf",
@@ -3007,7 +5761,7 @@
      ],
      [
       "#feede4",
-      25
+      26
      ],
      [
       "#963e13",
@@ -3050,13 +5804,15 @@
     ],
     "curvas": [
      "ease",
-     "cubic-bezier(0.22, 1, 0.36, 1)"
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
     ],
     "hover": 10,
     "libs": [
      "next"
     ],
-    "pantallas": 6.3
+    "pantallas": 6.5
    },
    "rasgos": {
     "lum": 1,
@@ -3077,12 +5833,98 @@
      "afinidad": 0.338
     },
     {
-     "guia": "salon",
-     "afinidad": 0.276
+     "guia": "sereno",
+     "afinidad": 0.307
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.251
+     "guia": "ilustrado",
+     "afinidad": 0.306
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/no-mires-abajo",
+   "titulo": "No mires abajo (réplica de Don't Look Up)",
+   "medidas": {
+    "fondo": "#f4f3ef",
+    "paleta": [
+     [
+      "#f4f3ef",
+      97
+     ],
+     [
+      "#ffffff",
+      2
+     ],
+     [
+      "#14140f",
+      1
+     ],
+     [
+      "#14140f",
+      96
+     ],
+     [
+      "#f4f3ef",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Titan One",
+     "vw": 12.2,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 19,
+     "lh": 1.3,
+     "measureEm": 24
+    },
+    "familias": [
+     "Patrick Hand"
+    ],
+    "margen": null,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease"
+    ],
+    "hover": 2,
+    "libs": [
+     "next",
+     "canvas"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0.8956627580202199,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 12.2,
+    "weight": 400,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.9,
+    "body": 19,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "tinta",
+     "afinidad": 0.476
+    },
+    {
+     "guia": "barberia",
+     "afinidad": 0.31
+    },
+    {
+     "guia": "escuela",
+     "afinidad": 0.268
     }
    ]
   },
@@ -3095,11 +5937,11 @@
     "paleta": [
      [
       "#744c32",
-      42
+      40
      ],
      [
       "#f7e7de",
-      22
+      24
      ],
      [
       "#25140c",
@@ -3111,15 +5953,15 @@
      ],
      [
       "#ffffff",
-      59
+      56
      ],
      [
       "#25140c",
-      25
+      26
      ],
      [
       "#7c5a48",
-      12
+      15
      ]
     ],
     "titular": {
@@ -3145,14 +5987,15 @@
     ],
     "curvas": [
      "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
      "ease"
     ],
-    "hover": 1,
+    "hover": 6,
     "libs": [
      "lenis",
      "next"
     ],
-    "pantallas": 4.7
+    "pantallas": 4.8
    },
    "rasgos": {
     "lum": 0.09112175921304226,
@@ -3173,12 +6016,12 @@
      "afinidad": 0.308
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.24
+     "guia": "ambar",
+     "afinidad": 0.301
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.213
+     "guia": "ilustrado",
+     "afinidad": 0.249
     }
    ]
   },
@@ -3191,11 +6034,11 @@
     "paleta": [
      [
       "#dedede",
-      36
+      35
      ],
      [
       "#f5f5f5",
-      26
+      27
      ],
      [
       "#dcdcdc",
@@ -3207,7 +6050,7 @@
      ],
      [
       "#121212",
-      86
+      87
      ],
      [
       "#5c5c5c",
@@ -3238,15 +6081,16 @@
     "radios": [],
     "curvas": [
      "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
      "linear",
-     "cubic-bezier(0.22, 1, 0.36, 1)"
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
-    "hover": 6,
+    "hover": 9,
     "libs": [
      "next",
      "canvas"
     ],
-    "pantallas": 4.6
+    "pantallas": 4.7
    },
    "rasgos": {
     "lum": 0.7304607400903537,
@@ -3263,16 +6107,16 @@
    },
    "afinidad": [
     {
-     "guia": "papel",
+     "guia": "manchas",
+     "afinidad": 0.088
+    },
+    {
+     "guia": "tinta",
+     "afinidad": 0.085
+    },
+    {
+     "guia": "cercano",
      "afinidad": 0.083
-    },
-    {
-     "guia": "tecnico",
-     "afinidad": 0.081
-    },
-    {
-     "guia": "autor",
-     "afinidad": 0.081
     }
    ]
   },
@@ -3301,11 +6145,11 @@
      ],
      [
       "#000000",
-      69
+      68
      ],
      [
       "#ffffff",
-      23
+      22
      ],
      [
       "#333333",
@@ -3314,7 +6158,7 @@
     ],
     "titular": {
      "letra": "Permanent Marker",
-     "vw": 3,
+     "vw": 2.1,
      "peso": 400,
      "interlineado": 0,
      "tracking": 2,
@@ -3338,7 +6182,9 @@
      "10"
     ],
     "curvas": [
-     "ease"
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
     "hover": 9,
     "libs": [
@@ -3351,7 +6197,7 @@
     "sat": 1,
     "hue": 48,
     "cat": "redonda",
-    "vw": 3,
+    "vw": 2.1,
     "weight": 400,
     "ls": 2,
     "upper": true,
@@ -3362,15 +6208,15 @@
    "afinidad": [
     {
      "guia": "electrico",
-     "afinidad": 0.131
+     "afinidad": 0.125
     },
     {
      "guia": "autor",
-     "afinidad": 0.13
+     "afinidad": 0.124
     },
     {
-     "guia": "terminal",
-     "afinidad": 0.127
+     "guia": "ambar",
+     "afinidad": 0.122
     }
    ]
   },
@@ -3387,11 +6233,11 @@
      ],
      [
       "#7e929c",
-      21
+      20
      ],
      [
       "#ffffff",
-      19
+      20
      ],
      [
       "#757171",
@@ -3403,7 +6249,7 @@
      ],
      [
       "#ffffff",
-      34
+      32
      ],
      [
       "#d8c08a",
@@ -3434,13 +6280,15 @@
     ],
     "curvas": [
      "ease",
-     "cubic-bezier(0.7, 0, 0.2, 1)"
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.7, 0, 0.2, 1)",
+     "linear"
     ],
-    "hover": 4,
+    "hover": 7,
     "libs": [
      "next"
     ],
-    "pantallas": 5.8
+    "pantallas": 5.9
    },
    "rasgos": {
     "lum": 0.8206032253691192,
@@ -3461,12 +6309,213 @@
      "afinidad": 0.392
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.222
+     "guia": "tinta",
+     "afinidad": 0.272
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.214
+     "guia": "electrico",
+     "afinidad": 0.222
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/polilla",
+   "titulo": "Polilla (réplica de Aardvark Book Club)",
+   "medidas": {
+    "fondo": "#ffd24a",
+    "paleta": [
+     [
+      "#ffd24a",
+      18
+     ],
+     [
+      "#ffffff",
+      15
+     ],
+     [
+      "#fd48f2",
+      15
+     ],
+     [
+      "#ffdbfd",
+      12
+     ],
+     [
+      "#000000",
+      58
+     ],
+     [
+      "#fff5c2",
+      8
+     ],
+     [
+      "#3b308f",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Bowlby One",
+     "vw": 8.3,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 18,
+     "lh": 1.3,
+     "measureEm": 18
+    },
+    "familias": [
+     "Instrument Sans",
+     "Bowlby One",
+     "Caveat"
+    ],
+    "margen": 15,
+    "radios": [
+     "24",
+     "18",
+     "píldora",
+     "2",
+     "8"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.34, 1.56, 0.64, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 4.8
+   },
+   "rasgos": {
+    "lum": 0.6784759924081261,
+    "sat": 1,
+    "hue": 45.08287292817681,
+    "cat": "grotesca",
+    "vw": 8.3,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 0.9,
+    "body": 18,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "manchas",
+     "afinidad": 0.569
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.364
+    },
+    {
+     "guia": "senal",
+     "afinidad": 0.297
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/pulso-lento",
+   "titulo": "Pulso Lento (réplica de Paul Kalkbrenner)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      34
+     ],
+     [
+      "#ffffff",
+      29
+     ],
+     [
+      "#c5c5c5",
+      20
+     ],
+     [
+      "#a7ff9c",
+      17
+     ],
+     [
+      "#000000",
+      64
+     ],
+     [
+      "#ffffff",
+      24
+     ],
+     [
+      "#333333",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 12.4,
+     "peso": 700,
+     "interlineado": 0.9,
+     "tracking": -5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.3,
+     "measureEm": 24
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 8,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.625, 0.05, 0, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 3.9
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 1,
+    "hue": 113.33333333333337,
+    "cat": "grotesca",
+    "vw": 12.4,
+    "weight": 700,
+    "ls": -5,
+    "upper": false,
+    "lh": 0.9,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.237
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.231
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.209
     }
    ]
   },
@@ -3483,7 +6532,11 @@
      ],
      [
       "#ffffff",
-      100
+      80
+     ],
+     [
+      "#9a9a9a",
+      20
      ]
     ],
     "titular": {
@@ -3517,7 +6570,7 @@
      "next",
      "video"
     ],
-    "pantallas": 1
+    "pantallas": 1.4
    },
    "rasgos": {
     "lum": 0,
@@ -3534,16 +6587,16 @@
    },
    "afinidad": [
     {
+     "guia": "orbital",
+     "afinidad": 0.33
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.28
     },
     {
      "guia": "electrico",
      "afinidad": 0.25
-    },
-    {
-     "guia": "marca",
-     "afinidad": 0.223
     }
    ]
   },
@@ -3560,11 +6613,11 @@
      ],
      [
       "#141618",
-      28
+      29
      ],
      [
       "#202428",
-      20
+      19
      ],
      [
       "#0f1112",
@@ -3576,11 +6629,11 @@
      ],
      [
       "#f2f0ed",
-      30
+      29
      ],
      [
-      "#c3c8cc",
-      6
+      "#e0b183",
+      5
      ]
     ],
     "titular": {
@@ -3592,7 +6645,7 @@
      "mayusculas": false
     },
     "texto": {
-     "size": 15,
+     "size": 17,
      "lh": 1.7,
      "measureEm": 33
     },
@@ -3606,13 +6659,15 @@
      "píldora"
     ],
     "curvas": [
-     "ease"
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
-    "hover": 7,
+    "hover": 8,
     "libs": [
      "next"
     ],
-    "pantallas": 8.2
+    "pantallas": 8.6
    },
    "rasgos": {
     "lum": 0.012026262356602799,
@@ -3624,21 +6679,21 @@
     "ls": 0.2,
     "upper": false,
     "lh": 1.1,
-    "body": 15,
+    "body": 17,
     "pill": true
    },
    "afinidad": [
     {
+     "guia": "ambar",
+     "afinidad": 0.266
+    },
+    {
      "guia": "nocturno",
-     "afinidad": 0.239
+     "afinidad": 0.23
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.215
-    },
-    {
-     "guia": "boutique",
-     "afinidad": 0.203
+     "guia": "orbital",
+     "afinidad": 0.224
     }
    ]
   },
@@ -3659,7 +6714,7 @@
      ],
      [
       "#39be91",
-      9
+      8
      ],
      [
       "#17191a",
@@ -3667,7 +6722,7 @@
      ],
      [
       "#17191a",
-      65
+      64
      ],
      [
       "#555555",
@@ -3703,14 +6758,16 @@
     ],
     "curvas": [
      "ease",
-     "cubic-bezier(0.55, 0.1, 0.35, 1)"
+     "cubic-bezier(0.55, 0.1, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
     "hover": 1,
     "libs": [
      "lenis",
      "next"
     ],
-    "pantallas": 11
+    "pantallas": 11.1
    },
    "rasgos": {
     "lum": 1,
@@ -3742,6 +6799,80 @@
   },
   {
    "tipo": "replica",
+   "ruta": "/lab/estudios/sesion-doble",
+   "titulo": "Sesión Doble (réplica de A24 de Ravi Klaassens)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      100
+     ],
+     [
+      "#000000",
+      92
+     ],
+     [
+      "#595959",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Bodoni Moda",
+     "vw": 2.1,
+     "peso": 400,
+     "interlineado": 1.1,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Bodoni Moda",
+     "Inter Tight"
+    ],
+    "margen": null,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 4,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 1
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "serifa",
+    "vw": 2.1,
+    "weight": 400,
+    "ls": -4,
+    "upper": true,
+    "lh": 1.1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "ambar",
+     "afinidad": 0.249
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.197
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.196
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
    "ruta": "/lab/estudios/talla",
    "titulo": "Talla (réplica de Skulpt Fitness)",
    "medidas": {
@@ -3765,11 +6896,11 @@
      ],
      [
       "#202020",
-      54
+      52
      ],
      [
       "#f5f5f5",
-      38
+      40
      ],
      [
       "#a9a9a9",
@@ -3827,12 +6958,103 @@
      "afinidad": 0.329
     },
     {
-     "guia": "marca",
-     "afinidad": 0.226
+     "guia": "orbital",
+     "afinidad": 0.254
     },
     {
-     "guia": "club",
-     "afinidad": 0.224
+     "guia": "marca",
+     "afinidad": 0.226
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/ultramar",
+   "titulo": "Ultramar (réplica de United Carriers)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      74
+     ],
+     [
+      "#ffffff",
+      26
+     ],
+     [
+      "#ffffff",
+      50
+     ],
+     [
+      "#111111",
+      24
+     ],
+     [
+      "#cfcfcf",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Unbounded",
+     "vw": 5.6,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter",
+     "Geist Mono",
+     "Unbounded"
+    ],
+    "margen": 33,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "lenis",
+     "next",
+     "canvas"
+    ],
+    "pantallas": 3.3
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 5.6,
+    "weight": 700,
+    "ls": 0,
+    "upper": true,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "orbital",
+     "afinidad": 1
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.334
+    },
+    {
+     "guia": "puntos",
+     "afinidad": 0.244
     }
    ]
   },
@@ -3861,15 +7083,15 @@
      ],
      [
       "#ffffff",
-      74
+      76
      ],
      [
       "#000000",
-      13
+      12
      ],
      [
       "#fb5607",
-      10
+      9
      ]
     ],
     "titular": {
@@ -3883,7 +7105,7 @@
     "texto": {
      "size": 12,
      "lh": 1.4,
-     "measureEm": 16
+     "measureEm": 20
     },
     "familias": [
      "Inter",
@@ -3897,7 +7119,9 @@
      "6"
     ],
     "curvas": [
-     "ease"
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
     "hover": 5,
     "libs": [
@@ -3934,6 +7158,95 @@
    ]
   },
   {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/zanco",
+   "titulo": "Zanco (réplica de Noho)",
+   "medidas": {
+    "fondo": "#e7e2da",
+    "paleta": [
+     [
+      "#e7e2da",
+      43
+     ],
+     [
+      "#f1eee9",
+      31
+     ],
+     [
+      "#3c3c3c",
+      20
+     ],
+     [
+      "#cdc0b0",
+      6
+     ],
+     [
+      "#3c3c3c",
+      80
+     ],
+     [
+      "#f1eee9",
+      20
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Sans",
+     "vw": 4.2,
+     "peso": 600,
+     "interlineado": 1,
+     "tracking": -4,
+     "mayusculas": false
+    },
+    "texto": null,
+    "familias": [
+     "Instrument Sans"
+    ],
+    "margen": 30,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.34, 1.56, 0.64, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 8,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 2.7
+   },
+   "rasgos": {
+    "lum": 0.7644359244431932,
+    "sat": 0.2248062015503877,
+    "hue": 33.103448275862036,
+    "cat": "grotesca",
+    "vw": 4.2,
+    "weight": 600,
+    "ls": -4,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "catalogo",
+     "afinidad": 0.797
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.551
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.439
+    }
+   ]
+  },
+  {
    "tipo": "web",
    "ruta": "/sitios/almibar",
    "titulo": "Almíbar · pastelería de obrador",
@@ -3954,7 +7267,7 @@
      ],
      [
       "#2a1d16",
-      48
+      49
      ],
      [
       "#6b5a4e",
@@ -4023,12 +7336,12 @@
      "afinidad": 0.218
     },
     {
-     "guia": "autor",
-     "afinidad": 0.168
+     "guia": "ilustrado",
+     "afinidad": 0.215
     },
     {
-     "guia": "papel",
-     "afinidad": 0.16
+     "guia": "autor",
+     "afinidad": 0.168
     }
    ]
   },
@@ -4057,7 +7370,7 @@
      ],
      [
       "#5b5148",
-      58
+      57
      ],
      [
       "#1d1a17",
@@ -4124,8 +7437,8 @@
      "afinidad": 0.249
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.222
+     "guia": "catalogo",
+     "afinidad": 0.234
     }
    ]
   },
@@ -4214,12 +7527,12 @@
      "afinidad": 0.219
     },
     {
-     "guia": "papel",
-     "afinidad": 0.173
+     "guia": "ilustrado",
+     "afinidad": 0.219
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.168
+     "guia": "papel",
+     "afinidad": 0.173
     }
    ]
   },
@@ -4306,12 +7619,12 @@
      "afinidad": 0.428
     },
     {
-     "guia": "autor",
-     "afinidad": 0.265
+     "guia": "cercano",
+     "afinidad": 0.33
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.239
+     "guia": "catalogo",
+     "afinidad": 0.329
     }
    ]
   },
@@ -4332,22 +7645,22 @@
      ],
      [
       "#a99a8f",
-      56
+      55
      ],
      [
       "#f2e9df",
-      36
+      35
      ],
      [
       "#ff7a1a",
-      7
+      9
      ]
     ],
     "titular": {
      "letra": "Inter",
-     "vw": 1.3,
-     "peso": 400,
-     "interlineado": 1.5,
+     "vw": 1.8,
+     "peso": 600,
+     "interlineado": 0,
      "tracking": 0,
      "mayusculas": false
     },
@@ -4363,7 +7676,8 @@
     "margen": 92,
     "radios": [
      "18",
-     "píldora"
+     "píldora",
+     "14"
     ],
     "curvas": [
      "ease",
@@ -4385,26 +7699,26 @@
     "sat": 1.0000000000000002,
     "hue": 25.152838427947586,
     "cat": "grotesca",
-    "vw": 1.3,
-    "weight": 400,
+    "vw": 1.8,
+    "weight": 600,
     "ls": 0,
     "upper": false,
-    "lh": 1.5,
+    "lh": 0,
     "body": 16,
     "pill": true
    },
    "afinidad": [
     {
      "guia": "nocturno",
-     "afinidad": 0.201
+     "afinidad": 0.184
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.14
+     "guia": "orbital",
+     "afinidad": 0.17
     },
     {
-     "guia": "papel",
-     "afinidad": 0.14
+     "guia": "glaciar",
+     "afinidad": 0.15
     }
    ]
   },
@@ -4493,16 +7807,16 @@
    },
    "afinidad": [
     {
+     "guia": "ambar",
+     "afinidad": 0.176
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.171
+    },
+    {
      "guia": "terminal",
      "afinidad": 0.169
-    },
-    {
-     "guia": "electrico",
-     "afinidad": 0.165
-    },
-    {
-     "guia": "nocturno",
-     "afinidad": 0.16
     }
    ]
   },
@@ -4586,16 +7900,16 @@
    },
    "afinidad": [
     {
+     "guia": "catalogo",
+     "afinidad": 0.237
+    },
+    {
      "guia": "papel",
      "afinidad": 0.236
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.169
-    },
-    {
-     "guia": "ludico",
-     "afinidad": 0.166
+     "guia": "baldosa",
+     "afinidad": 0.184
     }
    ]
   },
@@ -4608,7 +7922,7 @@
     "paleta": [
      [
       "#f6f4e9",
-      42
+      43
      ],
      [
       "#e8ecdc",
@@ -4663,7 +7977,7 @@
     "libs": [
      "next"
     ],
-    "pantallas": 4.8
+    "pantallas": 4.9
    },
    "rasgos": {
     "lum": 0.9017738970831055,
@@ -4680,16 +7994,16 @@
    },
    "afinidad": [
     {
+     "guia": "ilustrado",
+     "afinidad": 0.374
+    },
+    {
      "guia": "boutique",
      "afinidad": 0.357
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.246
-    },
-    {
-     "guia": "calido",
-     "afinidad": 0.238
+     "guia": "filmoteca",
+     "afinidad": 0.335
     }
    ]
   },
@@ -4772,16 +8086,16 @@
    },
    "afinidad": [
     {
+     "guia": "catalogo",
+     "afinidad": 0.326
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.296
+    },
+    {
      "guia": "papel",
      "afinidad": 0.266
-    },
-    {
-     "guia": "tecnico",
-     "afinidad": 0.246
-    },
-    {
-     "guia": "monocromo",
-     "afinidad": 0.197
     }
    ]
   },
@@ -4864,12 +8178,12 @@
      "afinidad": 0.333
     },
     {
-     "guia": "marca",
-     "afinidad": 0.22
+     "guia": "glaciar",
+     "afinidad": 0.301
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.198
+     "guia": "orbital",
+     "afinidad": 0.244
     }
    ]
   },
@@ -4902,7 +8216,7 @@
      ],
      [
       "#625d55",
-      38
+      39
      ],
      [
       "#eee8db",
@@ -4960,12 +8274,12 @@
      "afinidad": 0.464
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.229
+     "guia": "tinta",
+     "afinidad": 0.239
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.215
+     "guia": "electrico",
+     "afinidad": 0.229
     }
    ]
   },
@@ -5051,12 +8365,12 @@
      "afinidad": 0.28
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.248
+     "guia": "cercano",
+     "afinidad": 0.277
     },
     {
-     "guia": "autor",
-     "afinidad": 0.244
+     "guia": "baldosa",
+     "afinidad": 0.268
     }
    ]
   },
@@ -5147,12 +8461,12 @@
      "afinidad": 0.8
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.262
+     "guia": "glaciar",
+     "afinidad": 0.368
     },
     {
-     "guia": "marca",
-     "afinidad": 0.234
+     "guia": "orbital",
+     "afinidad": 0.325
     }
    ]
   },
@@ -5240,12 +8554,12 @@
      "afinidad": 0.299
     },
     {
-     "guia": "terminal",
-     "afinidad": 0.189
+     "guia": "glaciar",
+     "afinidad": 0.218
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.179
+     "guia": "ambar",
+     "afinidad": 0.213
     }
    ]
   },
@@ -5330,12 +8644,12 @@
      "afinidad": 0.189
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.136
+     "guia": "orbital",
+     "afinidad": 0.172
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.135
+     "guia": "glaciar",
+     "afinidad": 0.161
     }
    ]
   },
@@ -5423,12 +8737,12 @@
      "afinidad": 0.159
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.151
+     "guia": "ilustrado",
+     "afinidad": 0.154
     },
     {
-     "guia": "papel",
-     "afinidad": 0.149
+     "guia": "boutique",
+     "afinidad": 0.151
     }
    ]
   },
@@ -5441,7 +8755,7 @@
     "paleta": [
      [
       "#f7e6e9",
-      46
+      47
      ],
      [
       "#f2d6db",
@@ -5449,7 +8763,7 @@
      ],
      [
       "#2b2031",
-      15
+      14
      ],
      [
       "#2b2031",
@@ -5494,7 +8808,7 @@
     "libs": [
      "next"
     ],
-    "pantallas": 7.4
+    "pantallas": 7.5
    },
    "rasgos": {
     "lum": 0.8225097779305147,
@@ -5511,16 +8825,16 @@
    },
    "afinidad": [
     {
+     "guia": "sereno",
+     "afinidad": 0.382
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.36
+    },
+    {
      "guia": "lujo",
      "afinidad": 0.355
-    },
-    {
-     "guia": "boutique",
-     "afinidad": 0.324
-    },
-    {
-     "guia": "salon",
-     "afinidad": 0.265
     }
    ]
   },
@@ -5601,12 +8915,113 @@
      "afinidad": 0.367
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.24
+     "guia": "glaciar",
+     "afinidad": 0.286
     },
     {
-     "guia": "marca",
-     "afinidad": 0.216
+     "guia": "orbital",
+     "afinidad": 0.266
+    }
+   ]
+  },
+  {
+   "tipo": "web",
+   "ruta": "/sitios/la-tramoya",
+   "titulo": "La Tramoya · venta-teatro en Chiclana",
+   "medidas": {
+    "fondo": "#170a0e",
+    "paleta": [
+     [
+      "#170a0e",
+      70
+     ],
+     [
+      "#f3e7d0",
+      21
+     ],
+     [
+      "#fbf3e3",
+      8
+     ],
+     [
+      "#1c1420",
+      1
+     ],
+     [
+      "#5f5047",
+      24
+     ],
+     [
+      "#1c1420",
+      20
+     ],
+     [
+      "#f3e7d0",
+      14
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 6.4,
+     "peso": 600,
+     "interlineado": 1,
+     "tracking": -3.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.6,
+     "measureEm": 24
+    },
+    "familias": [
+     "Manrope",
+     "Fraunces",
+     "Antonio",
+     "Ultra"
+    ],
+    "margen": 48,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.2, 0.7, 0.2, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 11,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 13.3
+   },
+   "rasgos": {
+    "lum": 0.004309470607843843,
+    "sat": 0.6666666666666667,
+    "hue": 39.07894736842104,
+    "cat": "serifa",
+    "vw": 6.4,
+    "weight": 600,
+    "ls": -3.5,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ambar",
+     "afinidad": 0.311
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.249
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.231
     }
    ]
   },
@@ -5691,12 +9106,12 @@
      "afinidad": 0.373
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.285
+     "guia": "ilustrado",
+     "afinidad": 0.297
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.247
+     "guia": "boutique",
+     "afinidad": 0.285
     }
    ]
   },
@@ -5779,8 +9194,8 @@
      "afinidad": 0.201
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.172
+     "guia": "manchas",
+     "afinidad": 0.173
     }
    ]
   },
@@ -5837,6 +9252,7 @@
     ],
     "hover": 3,
     "libs": [
+     "lenis",
      "three",
      "next",
      "canvas"
@@ -5862,12 +9278,12 @@
      "afinidad": 0.224
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.172
+     "guia": "glaciar",
+     "afinidad": 0.176
     },
     {
-     "guia": "club",
-     "afinidad": 0.166
+     "guia": "burdeos",
+     "afinidad": 0.174
     }
    ]
   },
@@ -5960,12 +9376,12 @@
      "afinidad": 0.274
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.22
+     "guia": "glaciar",
+     "afinidad": 0.246
     },
     {
-     "guia": "marca",
-     "afinidad": 0.218
+     "guia": "orbital",
+     "afinidad": 0.227
     }
    ]
   },
@@ -6060,8 +9476,8 @@
      "afinidad": 0.211
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.19
+     "guia": "ambar",
+     "afinidad": 0.196
     }
    ]
   },
@@ -6091,7 +9507,7 @@
     ],
     "titular": {
      "letra": "Inter",
-     "vw": 1.2,
+     "vw": 1.3,
      "peso": 800,
      "interlineado": 0,
      "tracking": -3,
@@ -6130,7 +9546,7 @@
     "sat": 0.06741573033707865,
     "hue": 40,
     "cat": "grotesca",
-    "vw": 1.2,
+    "vw": 1.3,
     "weight": 800,
     "ls": -3,
     "upper": true,
@@ -6141,15 +9557,15 @@
    "afinidad": [
     {
      "guia": "papel",
-     "afinidad": 0.187
+     "afinidad": 0.19
     },
     {
-     "guia": "ludico",
-     "afinidad": 0.148
+     "guia": "catalogo",
+     "afinidad": 0.188
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.144
+     "guia": "tinta",
+     "afinidad": 0.168
     }
    ]
   },
@@ -6238,12 +9654,12 @@
      "afinidad": 0.323
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.205
+     "guia": "orbital",
+     "afinidad": 0.262
     },
     {
-     "guia": "papel",
-     "afinidad": 0.195
+     "guia": "glaciar",
+     "afinidad": 0.26
     }
    ]
   },
@@ -6326,8 +9742,8 @@
      "afinidad": 0.222
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.194
+     "guia": "burdeos",
+     "afinidad": 0.211
     }
    ]
   },
@@ -6412,16 +9828,16 @@
    },
    "afinidad": [
     {
+     "guia": "ambar",
+     "afinidad": 0.486
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.29
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.261
-    },
-    {
-     "guia": "puntos",
-     "afinidad": 0.225
+     "guia": "glaciar",
+     "afinidad": 0.286
     }
    ]
   },
@@ -6500,16 +9916,16 @@
    },
    "afinidad": [
     {
+     "guia": "ambar",
+     "afinidad": 0.229
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.165
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.157
-    },
-    {
-     "guia": "boutique",
-     "afinidad": 0.156
-    },
-    {
-     "guia": "terminal",
-     "afinidad": 0.144
     }
    ]
   },
@@ -6546,11 +9962,11 @@
      ]
     ],
     "titular": {
-     "letra": "Instrument Serif",
+     "letra": "Instrument Sans",
      "vw": 6.6,
-     "peso": 400,
+     "peso": 600,
      "interlineado": 1,
-     "tracking": -1,
+     "tracking": -4,
      "mayusculas": false
     },
     "texto": {
@@ -6580,10 +9996,10 @@
     "lum": 0.8359329407776989,
     "sat": 0.5409836065573771,
     "hue": 220,
-    "cat": "serifa",
+    "cat": "grotesca",
     "vw": 6.6,
-    "weight": 400,
-    "ls": -1,
+    "weight": 600,
+    "ls": -4,
     "upper": false,
     "lh": 1,
     "body": 20,
@@ -6591,16 +10007,16 @@
    },
    "afinidad": [
     {
-     "guia": "boutique",
-     "afinidad": 0.5
+     "guia": "catalogo",
+     "afinidad": 0.41
     },
     {
-     "guia": "salon",
-     "afinidad": 0.303
+     "guia": "mineral",
+     "afinidad": 0.394
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.283
+     "guia": "papel",
+     "afinidad": 0.334
     }
    ]
   },
@@ -6686,8 +10102,8 @@
      "afinidad": 0.265
     },
     {
-     "guia": "terminal",
-     "afinidad": 0.231
+     "guia": "orbital",
+     "afinidad": 0.258
     }
    ]
   },
@@ -6724,11 +10140,11 @@
      ]
     ],
     "titular": {
-     "letra": "Schibsted Grotesk",
+     "letra": "Bodoni Moda",
      "vw": 15.7,
-     "peso": 800,
+     "peso": 400,
      "interlineado": 0.9,
-     "tracking": -5,
+     "tracking": -3,
      "mayusculas": true
     },
     "texto": {
@@ -6761,10 +10177,10 @@
     "lum": 0.02356764911906527,
     "sat": 1,
     "hue": 70.58823529411768,
-    "cat": "grotesca",
+    "cat": "serifa",
     "vw": 15.7,
-    "weight": 800,
-    "ls": -5,
+    "weight": 400,
+    "ls": -3,
     "upper": true,
     "lh": 0.9,
     "body": 16,
@@ -6772,16 +10188,16 @@
    },
    "afinidad": [
     {
-     "guia": "marca",
-     "afinidad": 0.254
+     "guia": "burdeos",
+     "afinidad": 0.27
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.169
+     "guia": "ambar",
+     "afinidad": 0.244
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.167
+     "guia": "electrico",
+     "afinidad": 0.203
     }
    ]
   },
@@ -6860,211 +10276,16 @@
    },
    "afinidad": [
     {
-     "guia": "pixel",
-     "afinidad": 0.216
+     "guia": "ambar",
+     "afinidad": 0.403
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.203
+     "guia": "burdeos",
+     "afinidad": 0.281
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.193
-    }
-   ]
-  },
-  {
-   "tipo": "guia",
-   "ruta": "/guias/relato/cercano/service",
-   "guia": "cercano",
-   "titulo": "Aprendizaje cercano",
-   "fechaMedida": "2026-11-01",
-   "origenMedida": "http://localhost:3461/guias/relato/cercano/service",
-   "medidas": {
-    "fondo": "#ffffff",
-    "paleta": [
-     [
-      "#ffffff",
-      71
-     ],
-     [
-      "#f6f5f3",
-      28
-     ],
-     [
-      "#121117",
-      1
-     ],
-     [
-      "#56535e",
-      49
-     ],
-     [
-      "#121117",
-      28
-     ],
-     [
-      "#ffffff",
-      23
-     ]
-    ],
-    "titular": {
-     "letra": "Inter Tight",
-     "vw": 4.4,
-     "peso": 700,
-     "interlineado": 1.1,
-     "tracking": -0.5,
-     "mayusculas": false
-    },
-    "texto": {
-     "size": 16,
-     "lh": 1.5,
-     "measureEm": 26
-    },
-    "familias": [
-     "Inter",
-     "Inter Tight"
-    ],
-    "margen": 64,
-    "radios": [
-     "8"
-    ],
-    "curvas": [
-     "cubic-bezier(0.22, 1, 0.36, 1)"
-    ],
-    "hover": 1,
-    "libs": [
-     "next",
-     "video"
-    ],
-    "pantallas": 3.8
-   },
-   "rasgos": {
-    "lum": 1,
-    "sat": 0.062146892655367256,
-    "hue": 256.3636363636364,
-    "cat": "grotesca",
-    "vw": 4.4,
-    "weight": 700,
-    "ls": -0.5,
-    "upper": false,
-    "lh": 1.1,
-    "body": 16,
-    "pill": false
-   },
-   "afinidad": [
-    {
-     "guia": "tecnico",
-     "afinidad": 0.314
-    },
-    {
-     "guia": "papel",
-     "afinidad": 0.287
-    },
-    {
-     "guia": "autor",
-     "afinidad": 0.24
-    }
-   ]
-  },
-  {
-   "tipo": "landing",
-   "ruta": "/demo/th-parla",
-   "titulo": "PARLA · idiomas que conectan",
-   "fechaMedida": "2026-11-01",
-   "origenMedida": "http://localhost:3461/demo/th-parla",
-   "medidas": {
-    "fondo": "#ffffff",
-    "paleta": [
-     [
-      "#ffffff",
-      34
-     ],
-     [
-      "#ff7aac",
-      29
-     ],
-     [
-      "#f6f5f3",
-      22
-     ],
-     [
-      "#121117",
-      8
-     ],
-     [
-      "#121117",
-      55
-     ],
-     [
-      "#56535e",
-      35
-     ],
-     [
-      "#ffffff",
-      10
-     ]
-    ],
-    "titular": {
-     "letra": "Inter Tight",
-     "vw": 4.4,
-     "peso": 700,
-     "interlineado": 1.1,
-     "tracking": -0.5,
-     "mayusculas": false
-    },
-    "texto": {
-     "size": 16,
-     "lh": 1.5,
-     "measureEm": 31
-    },
-    "familias": [
-     "Inter",
-     "Inter Tight"
-    ],
-    "margen": 64,
-    "radios": [
-     "6",
-     "píldora",
-     "9",
-     "7",
-     "4"
-    ],
-    "curvas": [
-     "ease",
-     "cubic-bezier(0.22, 1, 0.36, 1)"
-    ],
-    "hover": 6,
-    "libs": [
-     "next"
-    ],
-    "pantallas": 4.5
-   },
-   "rasgos": {
-    "lum": 1,
-    "sat": 1,
-    "hue": 337.4436090225564,
-    "cat": "grotesca",
-    "vw": 4.4,
-    "weight": 700,
-    "ls": -0.5,
-    "upper": false,
-    "lh": 1.1,
-    "body": 16,
-    "pill": true
-   },
-   "afinidad": [
-    {
-     "guia": "cercano",
-     "afinidad": 0.406
-    },
-    {
-     "guia": "papel",
-     "afinidad": 0.273
-    },
-    {
-     "guia": "tecnico",
-     "afinidad": 0.228
+     "guia": "glaciar",
+     "afinidad": 0.265
     }
    ]
   }

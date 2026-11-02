@@ -2774,13 +2774,13 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 
 ### Guía de estilo (sistema visual completo) — `GuideFrame`
 
-Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
+Aplica una de las treinta y siete guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
 Envuelve contenido (`children`), p. ej.: `<h1 className="ui-g-h1">{"Luz que llega lejos"}</h1> <p className="ui-g-body">{"Diseñamos lámparas y espacios que aprovechan la luz del día."}</p>`
 
 | prop | tipo | default |
 |---|---|---|
-| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `terminal` · `pixel` · `puntos` · `papel` · `cercano` | "lujo" |
+| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `manchas` · `filmoteca` · `goloso` · `sereno` · `burdeos` · `tinta` · `baldosa` · `orbital` · `catalogo` · `cartel` · `mineral` · `ambar` · `glaciar` · `ilustrado` · `senal` · `festival` · `varietes` · `terminal` · `pixel` · `puntos` · `papel` · `cercano` | "lujo" |
 | `textContrast` | boolean | false |
 
 - Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
@@ -3475,6 +3475,16 @@ Webs premiadas estudiadas en el laboratorio y rehechas con el kit (`/inspiracion
 | [Q47](/inspiraciones/q47) · `components/inspiraciones/q47/` | K72 | agencia | `club` | menú de filas con marquesina y transición en escalera |
 | [Cénit](/inspiraciones/cenit) · `components/inspiraciones/cenit/` | Lusion | estudio creativo | `monocromo` | racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla |
 | [Brasa](/inspiraciones/brasa) · `components/inspiraciones/brasa/` | Meer Mohsin | estudio creativo | `electrico` | retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes |
+| [Polilla](/inspiraciones/polilla) · `components/inspiraciones/polilla/` | Aardvark Book Club | club de suscripción | `manchas` | amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll |
+| [Sesión Doble](/inspiraciones/sesion-doble) · `components/inspiraciones/sesion-doble/` | A24 de Ravi Klaassens | cine | `filmoteca` | catálogo en discos que giran y una didona apretada con estrellas |
+| [Casa Melosa](/inspiraciones/casa-melosa) · `components/inspiraciones/casa-melosa/` | House of Honey | interiorismo | `goloso` | rosa y chocolate, ultranegra de borde a borde cruzada por una caligráfica |
+| [Marejada](/inspiraciones/marejada) · `components/inspiraciones/marejada/` | Seasats | robótica | `sereno` | web en tarjeta con columna de menú en degradado de arena a bosque y serifa fina sobre el mar |
+| [Alba Residencia](/inspiraciones/alba) · `components/inspiraciones/alba/` | ERA Residence | inmobiliaria | `burdeos` | burdeos con caligrafía fantasma, marco biselado que se abre y selector de viviendas |
+| [No mires abajo](/inspiraciones/no-mires-abajo) · `components/inspiraciones/no-mires-abajo/` | Don't Look Up | videojuego | `tinta` | juego satírico jugable a tinta: dos zapatos gigantes y una multitud que se enfada |
+| [Cantera](/inspiraciones/cantera) · `components/inspiraciones/cantera/` | Aspen Search | selección de personal | `baldosa` | mosaico de baldosas con semitono, menta y reloj de cada ciudad en la cabecera |
+| [Ultramar](/inspiraciones/ultramar) · `components/inspiraciones/ultramar/` | United Carriers | logística | `orbital` | globo de puntos con rutas, titular extendido y un contenedor que cruza al bajar |
+| [Zanco](/inspiraciones/zanco) · `components/inspiraciones/zanco/` | Noho | mueble | `catalogo` | muro escalonado de baldosas de color con muebles dibujados y tienda con color real |
+| [Pulso Lento](/inspiraciones/pulso-lento) · `components/inspiraciones/pulso-lento/` | Paul Kalkbrenner | música | `cartel` | blanco suizo con foto dentro del nombre, vinilo que gira, años gigantes y reproductor que suena |
 
 ## Recetas por sector
 
@@ -3613,3 +3623,142 @@ La navegación es la firma: portada de una pantalla, menú y transición propios
 - **Llamada fija**: Las dos píldoras gigantes (trabajo, agencia).
 - **No olvidar**: el titular es ligero (300), no medio; el botón de menú se rellena al pasar (triggerHover="fill").
 - **Visto en**: `/inspiraciones/q47`
+
+### Club de suscripción, caja mensual — guía `manchas` (Pop de manchas)
+
+El producto llega cada mes y lo que se vende es pertenecer a algo.
+
+1. Portada con el objeto y una llamada: `Reveal`
+2. La selección del mes: `Marquee`
+3. Cómo funciona en cuatro pasos: `Reveal`
+4. Planes: `MembershipFlow`
+5. Preguntas: `FAQSection`
+
+- **Llamada fija**: Hazte socia, en la cabecera y tras cada sección.
+- **No olvidar**: el límite de la caja lo marca el plan; la fecha tope para cambiar o pausar; regalar es otra compra, con su carrito.
+- **Visto en**: `/inspiraciones/polilla`
+
+### Distribuidora, sello o catálogo cultural — guía `filmoteca` (Filmoteca)
+
+El catálogo es el producto y cada título merece su ficha.
+
+1. Catálogo que se recorre en una sola pantalla: `SmoothScroll`
+2. Índice filtrable: `FilterBar`
+3. Ficha técnica con críticas: `MetaTable`
+4. Sesiones y butacas: `SeatMap`
+
+- **Llamada fija**: Entradas, en cada ficha que esté en cartel.
+- **No olvidar**: teclado y flechas además de la rueda; qué pasa con lo que ya no está en salas; devolver una entrada.
+- **Visto en**: `/inspiraciones/sesion-doble`
+
+### Interiorismo y estudio con tienda — guía `goloso` (Rosa y chocolate)
+
+El estudio vende proyectos caros y también objetos pequeños.
+
+1. Marca de borde a borde y foto a sangre: `FitText`, `Parallax`
+2. Quiénes somos en una frase: `Reveal`
+3. Espacios: `ImageGallery`
+4. Tienda: `ProductCard`, `CartDrawer`
+5. Encargo: `BriefFlow`
+
+- **Llamada fija**: Hablemos, en la cabecera.
+- **No olvidar**: una voz propia: consultorio o columna; pie de foto con lugar y año; pedido aparte del encargo.
+- **Visto en**: `/inspiraciones/casa-melosa`
+
+### Robótica, hardware y tecnología física — guía `sereno` (Ingeniería serena)
+
+Hay que explicar una máquina sin parecer un folleto de defensa.
+
+1. Vídeo a sangre con una frase: `VideoPlayer`
+2. Qué permite ver o hacer: `Reveal`
+3. La flota o gama: `ProductCard`
+4. Comparador: `Table`
+5. Misiones reales: `ProjectList`
+6. Pedir demostración: `BriefFlow`
+
+- **Llamada fija**: Pedir demostración, en cada ficha.
+- **No olvidar**: ficha técnica comparable; casos con cifras; empleo y prensa: los miran inversores.
+- **Visto en**: `/inspiraciones/marejada`
+
+### Promoción residencial e inmobiliaria — guía `burdeos` (Residencia burdeos)
+
+Se vende una promoción concreta, sobre plano, a compradores que comparan.
+
+1. Entrada de marca que se abre a la foto: `ScrollExpand`
+2. Tipologías: `ImageGallery`
+3. Selector de viviendas: `FilterBar`
+4. Entorno y plazos: `Timeline`
+5. Reservar visita: `ContactForm`
+
+- **Llamada fija**: Reserva una visita, con la vivienda ya elegida.
+- **No olvidar**: estado de cada vivienda: libre, reservada, vendida; precio visible; fecha de entrega.
+- **Visto en**: `/inspiraciones/alba`
+
+### Videojuego de navegador — guía `tinta` (Tinta a mano)
+
+La web es el juego: se entra y se juega sin instalar.
+
+1. Pantalla de título jugable: `ExplorableCanvas`
+2. Cómo se juega: `Timeline`
+3. Partida: `Progress`
+4. Clasificación: `Table`
+
+- **Llamada fija**: Jugar, sin registro.
+- **No olvidar**: las dos formas de acabar; pausa; móvil con el marcador siempre visible.
+- **Visto en**: `/inspiraciones/no-mires-abajo`
+
+### Selección de personal y consultoría — guía `baldosa` (Mosaico de baldosas)
+
+Se vende criterio a dos públicos: empresas y candidatos.
+
+1. Mosaico con la propuesta: `CellGrid`
+2. Clientes: `LogoCloud`
+3. Opiniones: `TestimonialSection`
+4. Ofertas filtrables: `FilterBar`
+5. Para empresas: `BriefFlow`
+
+- **Llamada fija**: Hablemos para empresas; ofertas para candidatos.
+- **No olvidar**: guardar ofertas; salario visible; qué pasa si no hay resultados.
+- **Visto en**: `/inspiraciones/cantera`
+
+### Logística y operaciones globales — guía `orbital` (Mando orbital)
+
+Hay que transmitir alcance y control a clientes B2B.
+
+1. Globo con rutas: `PointCloud`
+2. Cifras grandes: `StatsSection`
+3. Servicios: `ProjectList`
+4. Seguimiento: `TextField`
+5. Presupuesto: `RangeSlider`
+
+- **Llamada fija**: Pide presupuesto y seguir un envío, juntos.
+- **No olvidar**: cinta de avisos de operativa; código de ejemplo en el seguimiento; cifra orientativa antes del formulario.
+- **Visto en**: `/inspiraciones/ultramar`
+
+### Mueble y tienda de diseño — guía `catalogo` (Catálogo de color)
+
+Pocos productos, muy diseñados, que cambian de color.
+
+1. Muro de producto: `BentoGrid`
+2. Destacados con muestras: `OptionPicker`
+3. Premios: `Table`
+4. Tienda: `ProductCard`, `CartDrawer`
+5. Pedido: `CheckoutFlow`
+
+- **Llamada fija**: Comprar, con el color elegido.
+- **No olvidar**: el color cambia la imagen; medidas y peso; devolución.
+- **Visto en**: `/inspiraciones/zanco`
+
+### Música y artistas — guía `cartel` (Cartel suizo)
+
+Un artista con discografía, gira y tienda.
+
+1. Nombre a pantalla completa: `FitText`
+2. Último disco: `AudioPlayer`
+3. Trayectoria: `Timeline`
+4. Gira: `EventLineup`
+5. Tienda: `CartDrawer`, `CheckoutFlow`
+
+- **Llamada fija**: Entradas, en cada fecha.
+- **No olvidar**: el reproductor persiste entre páginas; fechas agotadas; vinilo y CD como variantes.
+- **Visto en**: `/inspiraciones/pulso-lento`

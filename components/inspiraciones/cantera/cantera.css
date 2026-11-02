@@ -1,0 +1,122 @@
+/* Cantera (a partir de Aspen Search, docs/58): blanco, grafito #232323, gris #e0e0e0 y menta #a1ffcb. Suisse Intl → Inter Tight 450
+   muy apretada (−2 % en la marca, −8 % en el texto grande), Suisse Mono → Geist Mono. Baldosas de filete fino, sin radios. */
+.ct {
+  --bg: #fff; --fg: #232323; --mut: #5e5e5e; --acc: #232323; --acc2: #a1ffcb; --card: #f2f2f2; --ln: #232323; --r: 0px;
+  background: var(--bg); color: var(--fg); font: 450 16px/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; overflow-x: clip; transition: background 0.6s, color 0.6s;
+}
+.ct--noche { --bg: #161616; --fg: #f2f2f2; --mut: #a8a8a8; --card: #232323; --ln: #5a5a5a; }
+:where(.ct) a { color: inherit; text-decoration: none; }
+.ct h1, .ct h2 { margin: 0; font-weight: 450; }
+.ct-mono { margin: 0; font: 400 11px/1.3 var(--font-geist-mono), monospace; letter-spacing: 0.02em; text-transform: uppercase; }
+
+.ct-head { position: sticky; top: 0; z-index: 20; display: flex; align-items: stretch; height: 38px; border-bottom: 1px solid var(--ln); background: var(--bg); font-size: 13px; }
+.ct-logo { display: grid; place-items: center; width: 38px; border-right: 1px solid var(--ln); }
+.ct-horas { display: flex; align-items: center; gap: 14px; padding: 0 14px; flex: 1; }
+.ct-hora { font: 400 11px var(--font-geist-mono), monospace; white-space: nowrap; }
+.ct-head nav { display: flex; align-items: center; gap: 20px; padding: 0 20px; border-left: 1px solid var(--ln); }
+.ct-head nav a { position: relative; }
+.ct-head nav a[aria-current]::after, .ct-head nav a:hover::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: currentColor; }
+.ct-tema { align-self: center; width: 28px; height: 16px; margin: 0 14px; padding: 2px; border: 1px solid var(--ln); border-radius: 999px; background: none; cursor: pointer; }
+.ct-tema i { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--fg); transition: translate 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.ct--noche .ct-tema i { translate: 12px 0; }
+.ct-contacto { display: flex; align-items: center; gap: 24px; padding: 0 16px; background: #232323; color: #fff; transition: background 0.3s, color 0.3s; }
+.ct-contacto:hover { background: var(--acc2); color: #232323; }
+.ct-burger { display: none; }
+
+.ct-mosaico { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: minmax(260px, 42vh) minmax(260px, 46vh); border-bottom: 1px solid var(--ln); }
+.ct-b { position: relative; min-width: 0; overflow: hidden; }
+.ct-b canvas, .ct-ofertas-cta canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ct-b--marca { grid-column: span 2; display: flex; align-items: flex-end; padding: 0 8px 14px; }
+.ct-mosaico .ct-b--semi:nth-of-type(2) { grid-column: span 2; }
+.ct-mosaico .ct-b--semi:nth-of-type(3) { grid-column: span 2; }
+.ct-b--marca h1 { font-size: clamp(4.5rem, 12.5vw, 13rem); line-height: 1; letter-spacing: -0.04em; }
+.ct-b--negra { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 14px; background: #232323; color: #fff; }
+.ct-b--negra p, .ct-b--menta p { margin: 0; font-size: clamp(1.1rem, 1.7vw, 1.5rem); line-height: 1.1; letter-spacing: -0.04em; }
+.ct-b--negra a { display: flex; justify-content: space-between; font: 400 11px var(--font-geist-mono), monospace; text-transform: uppercase; }
+.ct-b--menta { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 14px; background: var(--acc2); color: #232323; }
+.ct-carrusel { display: flex; width: max-content; gap: 18px; padding-right: 18px; white-space: nowrap; font-weight: 600; animation: ct-pasa 16s linear infinite; }
+@keyframes ct-pasa { to { translate: -50% 0; } }
+
+.ct-manifiesto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 14px; padding: 90px 14px; }
+.ct-texto { margin: 0; max-width: 24em; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.08; letter-spacing: -0.03em; }
+
+.ct-clientes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); border-block: 1px solid var(--ln); }
+.ct-cli-txt { display: grid; gap: 14px; align-content: start; padding: 14px; border-right: 1px solid var(--ln); }
+.ct-cli-txt p { margin: 0; }
+.ct-boton { display: inline-flex; justify-content: space-between; gap: 22px; width: fit-content; padding: 10px 12px; border: 1px solid var(--ln); background: none; color: inherit; font: 400 11px var(--font-geist-mono), monospace; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
+.ct-boton:hover { background: var(--fg); color: var(--bg); }
+.ct-clientes ul { margin: 0; padding: 0; list-style: none; }
+.ct-clientes li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--ln); font-size: clamp(1.4rem, 2.6vw, 2.25rem); letter-spacing: -0.03em; }
+.ct-clientes li:last-child { border-bottom: 0; }
+.ct-clientes i { height: 40px; }
+.ct-clientes b { font-weight: 450; }
+
+.ct-opiniones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--ln); }
+.ct-opiniones figure { display: flex; flex-direction: column; justify-content: space-between; gap: 30px; margin: 0; padding: 14px; border-right: 1px solid var(--ln); }
+.ct-opiniones figure:last-child { border-right: 0; }
+.ct-opiniones .es-grande { grid-column: span 2; background: #232323; color: #fff; }
+.ct-opiniones blockquote { margin: 0; font-size: 20px; line-height: 1.12; }
+.ct-opiniones .es-grande blockquote { font-size: clamp(1.5rem, 2.6vw, 2.25rem); letter-spacing: -0.04em; }
+
+.ct-ofertas-cta { position: relative; height: 54vh; overflow: hidden; }
+.ct-ofertas-cta a { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 30px; padding: 14px 18px; background: var(--acc2); color: #232323; font-size: clamp(1.5rem, 3.4vw, 3rem); letter-spacing: -0.04em; transition: gap 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.ct-ofertas-cta a:hover { gap: 60px; }
+
+.ct-pag { display: grid; gap: 18px; min-height: 76vh; padding: 28px 14px 80px; }
+.ct-pag h1 { font-size: clamp(3.5rem, 11vw, 11rem); line-height: 1; letter-spacing: -0.04em; }
+.ct-pag .ct-h1-med { font-size: clamp(2.25rem, 6vw, 6rem); letter-spacing: -0.04em; }
+.ct-filtros { display: grid; gap: 8px; }
+.ct-filtros label { display: grid; gap: 4px; max-width: 420px; }
+.ct-filtros input { padding: 9px 10px; border: 1px solid var(--ln); border-radius: 0; background: none; color: inherit; font: inherit; }
+.ct-filtros div { display: flex; flex-wrap: wrap; gap: 4px; }
+.ct-filtros button { padding: 6px 10px; border: 1px solid var(--ln); background: none; color: inherit; font: inherit; font-size: 14px; cursor: pointer; }
+.ct-filtros button[aria-pressed="true"], .ct-filtros button:hover { background: var(--fg); color: var(--bg); }
+.ct-lista { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--ln); }
+.ct-fila { display: grid; grid-template-columns: minmax(0, 1fr) 40px; align-items: center; border-top: 1px solid var(--ln); transition: background 0.3s; }
+.ct-fila:hover { background: var(--acc2); color: #232323; }
+.ct-fila a { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) 120px; gap: 12px; align-items: baseline; padding: 12px 0 12px 4px; }
+.ct-fila b { font-size: clamp(1.15rem, 1.9vw, 1.6rem); font-weight: 450; letter-spacing: -0.03em; }
+.ct-fila button { height: 100%; border: 0; background: none; color: inherit; font-size: 20px; cursor: pointer; }
+.ct-nada { max-width: 34em; margin: 0; font-size: 20px; }
+.ct-nada a { text-decoration: underline; }
+.ct-oferta { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 30px; }
+.ct-oferta > div { display: grid; gap: 18px; justify-items: start; align-content: start; }
+.ct-oferta ul { margin: 0; padding-left: 18px; font-size: 19px; }
+.ct-oferta dl { margin: 0 0 22px; }
+.ct-oferta dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 7px 0; border-top: 1px solid var(--ln); }
+.ct-oferta dd { margin: 0; }
+.ct-volver:hover { text-decoration: underline; }
+.ct-flujo { width: min(900px, 100%); }
+.ct-equipo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ct-equipo article { display: grid; gap: 4px; min-width: 0; }
+.ct-equipo .ct-b { aspect-ratio: 3 / 4; margin-bottom: 6px; }
+.ct-equipo p { margin: 0; color: var(--mut); }
+
+.ct-pie { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; padding: 14px; background: #232323; color: #fff; }
+.ct-pie p { margin: 0; font-size: clamp(3.5rem, 12vw, 12rem); line-height: 0.9; letter-spacing: -0.04em; }
+.ct-pie div { display: grid; gap: 4px; justify-items: end; }
+
+.ct :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .ct-head nav, .ct-tema, .ct-contacto { display: none; }
+  .ct-horas { gap: 10px; padding: 0 10px; overflow: hidden; }
+  .ct-burger { display: grid; place-items: center; padding: 0 8px; }
+  .ct-mosaico { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
+  .ct-b--marca { grid-column: 1 / -1; padding-top: 70px; }
+  .ct-b--marca h1 { font-size: 27vw; }
+  .ct-mosaico .ct-b--semi:nth-of-type(2), .ct-mosaico .ct-b--semi:nth-of-type(3) { grid-column: span 1; height: 34vh; }
+  .ct-b--negra, .ct-b--menta { min-height: 240px; }
+  .ct-manifiesto, .ct-clientes, .ct-oferta { grid-template-columns: minmax(0, 1fr); }
+  .ct-cli-txt { border-right: 0; border-bottom: 1px solid var(--ln); }
+  .ct-clientes li { grid-template-columns: 34px minmax(0, 1fr); }
+  .ct-clientes li span { grid-column: 2; }
+  .ct-opiniones { grid-template-columns: minmax(0, 1fr); }
+  .ct-opiniones .es-grande { grid-column: auto; }
+  .ct-opiniones figure { border-right: 0; border-bottom: 1px solid var(--ln); }
+  .ct-fila a { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .ct-equipo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-carrusel { animation: none; }
+}
