@@ -27,6 +27,7 @@ export const DOC_GROUPS: DocGroup[] = [
   {
     label: "Guías",
     pages: [
+      { slug: "preply", file: "estudio-preply.md", title: "De Preply a Parla", blurb: "Inspección de Preply, guía Aprendizaje cercano y una demo de idiomas.", description: "Estudio de Preply: paleta, tipografía, composición e interacción. Guía Aprendizaje cercano y demo Parla con filtros, favoritos y clase de prueba simulada." },
       { slug: "guia", file: "02-guia-de-componentes.md", title: "Crear componentes", blurb: "Tokens, sistema de estilos, reglas y trampas conocidas.", description: "Guía para crear y ampliar componentes de Trama: tokens, sistema de estilos, variantes, accesibilidad, rendimiento y trampas conocidas." },
       { slug: "transiciones", file: "05-transiciones-de-pagina.md", title: "Transiciones de página", blurb: "Animar la ventana entera al navegar, un elemento suelto o uno que viaja entre rutas, con View Transitions.", description: "Cómo animar la navegación entre páginas de Next.js con PageTransition de Trama: la ventana entera con View Transitions, animaciones ASCII y CRT, cabecera fija, elementos sueltos y compartidos, elementos que viajan entre rutas sin desaparecer y accesibilidad." },
       { slug: "webs-completas", file: "03-webs-completas.md", title: "Webs completas", blurb: "Sitios de varias páginas: estructura y estado compartido.", description: "Cómo están hechas las webs completas de ejemplo de Trama: varias páginas, navegación sin recarga y estado compartido (carrito, chat)." },

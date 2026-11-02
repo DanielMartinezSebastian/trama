@@ -3,7 +3,7 @@ import { guide, guideToStyle, type StyleGuide } from "@/lib/ui/guides";
 import { textContrastStyle } from "@/lib/ui/text-contrast";
 
 export type GuideFrameProps = {
-  /** id de una guía de `STYLE_GUIDES` (`lujo`, `monocromo`, `tecnico`, `nocturno`, `electrico`, `rotulo`, `calido`, `ludico`, `salon`, `barberia`, `club`, `boutique`, `autor`, `escuela`, `marca`, `terminal`, `pixel`, `puntos`, `papel`; hoja de cada una en /guias/<id>) o una guía propia */
+  /** id de una guía de `STYLE_GUIDES` (incluye `cercano`, inspirada en Preply; hoja de cada una en /guias/<id>) o una guía propia */
   guide?: string | StyleGuide;
   /** Ajusta --mut-text/--acc-text a 4,5:1 sobre --bg (sRGB opaco); conserva --mut/--acc decorativos. Por defecto false. */
   textContrast?: boolean;

@@ -15,6 +15,7 @@ type LandingProps = { hud: boolean };
 
 /** Landings "kit" (construidas solo con components/ui/): una por slug, todas con la misma forma de props. */
 const KIT_LANDINGS: Record<string, React.ComponentType<LandingProps>> = {
+  "th-parla": dynamic<LandingProps>(() => import("@/components/landings/parla/ParlaLanding")),
   "th-ciphergrid": dynamic<LandingProps>(() => import("@/components/landings/CyberpunkLanding")),
   "th-mycel": dynamic<LandingProps>(() => import("@/components/landings/MycelLanding")),
   "th-folio": dynamic<LandingProps>(() => import("@/components/landings/FolioLanding")),

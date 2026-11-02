@@ -47,6 +47,12 @@ export function demoGroups(): DemoGroup[] {
       { href: "/producto/ritual", title: "SONDA · Ritual", blurb: "Una escena sensorial de interacción por gestos. Inspiración: The Magic Bottle.", meta: "WebGL · experiencia de objeto", accent: "#e7a36e" },
       { href: "/producto/esencial", title: "SONDA · Esencial", blurb: "Fotografía original, ficha clara y compra directa, sin WebGL. Inspiración: Longbow.", meta: "Sin WebGL · comercio editorial", accent: "#bbc18c" },
     ] },
+    { id: "lucero-variedad", label: "Lucero · cuatro conceptos, un encargo", blurb: "El mismo tren nocturno, con los mismos datos y la misma reserva, resuelto como tabla, dibujo, película y maqueta 3D.", items: [
+      { href: "/lucero/horario", title: "Lucero · Horario", blurb: "La página es la tabla: se elige tramo y plaza sobre el propio horario.", meta: "Sin imágenes · datos", accent: "#ffd60a" },
+      { href: "/lucero/vagon", title: "Lucero · Vagón", blurb: "El tren en corte lateral: se recorre de lado y se toca el asiento.", meta: "Dibujo CSS · scroll lateral", accent: "#d9482b" },
+      { href: "/lucero/ventanilla", title: "Lucero · Ventanilla", blurb: "Una sola toma: el scroll hace pasar las once horas de viaje.", meta: "WebGL · tiempo", accent: "#ffc58f" },
+      { href: "/lucero/maqueta", title: "Lucero · Maqueta", blurb: "Reinterpreta Night Train de pmndrs: las plazas libres se eligen en 3D.", meta: "R3F · Merged y ScrollControls", accent: "#f4b483" },
+    ] },
     {
       id: "webs",
       label: "Webs completas",

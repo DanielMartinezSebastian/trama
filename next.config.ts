@@ -51,6 +51,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Permite builds y previews aislados sin tocar la salida de otro trabajo.
+  distDir: process.env.TRAMA_DIST_DIR || ".next",
   reactStrictMode: true,
   // Probar el servidor de desarrollo desde otro dispositivo: la red privada de Tailscale (100.x.y.z, *.ts.net) y la red local
   // de casa (192.168.x.y). Sin esto, Next 16 bloquea las peticiones a /_next/… desde esas IP: la página llega sin JavaScript,

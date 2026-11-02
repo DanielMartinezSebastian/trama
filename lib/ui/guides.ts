@@ -432,6 +432,23 @@ export const STYLE_GUIDES: StyleGuide[] = [
     heroes: ["asym-editorial", "framed-object"],
     stories: ["chapters", "index"],
   },
+  {
+    id: "cercano",
+    source: "sectores",
+    label: "Aprendizaje cercano",
+    note: "Rosa vivo, tinta casi negra y retratos protagonistas. Titulares contundentes, controles rectangulares y una conversación como prueba del servicio.",
+    sectors: "Idiomas, formación individual, mentoría, plataformas de profesionales",
+    refs: ["Preply (https://preply.com/, inspección 01-11-2026)", "Parla (/demo/th-parla), interpretación con Trama"],
+    variant: "outline",
+    tokens: { bg: "#ffffff", fg: "#121117", mut: "#56535e", acc: "#ff7aac", acc2: "#c5b8f4", card: "#f6f5f3", ln: "#dcd9df", r: 8, font: f.inter, display: f.interTight, accentFont: f.interTight, glow: false },
+    fonts: { display: f.interTight, body: f.inter, accent: f.interTight, mono: f.geistMono },
+    type: { brand: "clamp(3rem, 8vw, 7rem)", h1: "clamp(2.5rem, 4.45vw, 4rem)", h2: "clamp(2rem, 3.35vw, 3rem)", body: "1rem", label: "0.875rem", weight: 700, lineHeight: 1.0625, tracking: -0.005, upper: false, labelUpper: false, labelTracking: 0, bodyLineHeight: 1.5 },
+    space: { margin: "clamp(20px, 4.45vw, 64px)", gutter: "24px", cols: 12, section: "clamp(64px, 7vw, 104px)", header: "80px", measure: "32em" },
+    surface: { radius: 8, pill: false, shadow: false },
+    motion: { fast: 0.22, reveal: 0.5, page: 0.4, stagger: 0.05, ease: E.quintOut, easeReveal: E.quintOut },
+    heroes: ["split-video", "collage-manifesto"],
+    stories: ["service", "product"],
+  },
 ];
 
 /**
@@ -457,6 +474,10 @@ export const GUIDE_RULES = [
  * hace reconocible. Cada una lleva su medida y la web donde se midió (docs/16 §5.1b); sin eso sería un fallo.
  */
 export const GUIDE_EXCEPTIONS: Record<string, { rule: (typeof GUIDE_RULES)[number]; why: string }[]> = {
+  cercano: [
+    { rule: "peso del titular 300–500 (o condensada/lúdica)", why: "Preply: Platform 700, medido a 64 px en escritorio el 01-11-2026. Inter Tight 700 conserva la contundencia con una fuente libre." },
+    { rule: "interlineado del titular 0,8–1", why: "Preply: titular a 64/68 px (1,0625), medido el 01-11-2026; las frases largas necesitan este aire." },
+  ],
   salon: [
     { rule: "interlineado del titular 0,8–1", why: "Il Colorista: Cormorant 200 a 1,11" },
     { rule: "texto 14–20 px", why: "Il Colorista: Karla 200 a 24 px" },

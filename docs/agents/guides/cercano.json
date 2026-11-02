@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "5410a6fb4bf83326384ae40ada9c95355998932f",
+  "sourceDirty": true,
+  "kind": "guide",
+  "id": "cercano",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/styles/ui-guides.css",
+      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+    },
+    {
+      "path": "lib/ui/fonts.ts",
+      "sha256": "10e14339fc907e6406d34accfe0c02e7de9d53dfcd5f493cc031a2efe1bc78b7"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "7f4cd5f876e5d1d4d49b5b5526ae13e5773b8d87ae05bf765fe304cff8a69b7e"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3aba27e27fdb8ffc02b077324dd20ade8af3ef0b671b7fd16ca79ccfa3ad95f0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "e0a1fe6468a25288e5a431e5bd891c859d0f69bf5472188b86ac18729484be13"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "eabf3978797ed245e0a0cd37a323adf1306f139a070046d1b0d4eb8c29693197"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Aprendizaje cercano",
+  "guide": {
+    "id": "cercano",
+    "source": "sectores",
+    "label": "Aprendizaje cercano",
+    "note": "Rosa vivo, tinta casi negra y retratos protagonistas. Titulares contundentes, controles rectangulares y una conversación como prueba del servicio.",
+    "sectors": "Idiomas, formación individual, mentoría, plataformas de profesionales",
+    "refs": [
+      "Preply (https://preply.com/, inspección 01-11-2026)",
+      "Parla (/demo/th-parla), interpretación con Trama"
+    ],
+    "variant": "outline",
+    "tokens": {
+      "bg": "#ffffff",
+      "fg": "#121117",
+      "mut": "#56535e",
+      "acc": "#ff7aac",
+      "acc2": "#c5b8f4",
+      "card": "#f6f5f3",
+      "ln": "#dcd9df",
+      "r": 8,
+      "font": "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "display": "var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "accentFont": "var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "glow": false
+    },
+    "fonts": {
+      "display": "var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "body": "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "accent": "var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "mono": "var(--font-geist-mono), ui-monospace, Consolas, monospace"
+    },
+    "type": {
+      "brand": "clamp(3rem, 8vw, 7rem)",
+      "h1": "clamp(2.5rem, 4.45vw, 4rem)",
+      "h2": "clamp(2rem, 3.35vw, 3rem)",
+      "body": "1rem",
+      "label": "0.875rem",
+      "weight": 700,
+      "lineHeight": 1.0625,
+      "tracking": -0.005,
+      "upper": false,
+      "labelUpper": false,
+      "labelTracking": 0,
+      "bodyLineHeight": 1.5
+    },
+    "space": {
+      "margin": "clamp(20px, 4.45vw, 64px)",
+      "gutter": "24px",
+      "cols": 12,
+      "section": "clamp(64px, 7vw, 104px)",
+      "header": "80px",
+      "measure": "32em"
+    },
+    "surface": {
+      "radius": 8,
+      "pill": false,
+      "shadow": false
+    },
+    "motion": {
+      "fast": 0.22,
+      "reveal": 0.5,
+      "page": 0.4,
+      "stagger": 0.05,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "easeReveal": "cubic-bezier(0.22, 1, 0.36, 1)"
+    },
+    "heroes": [
+      "split-video",
+      "collage-manifesto"
+    ],
+    "stories": [
+      "service",
+      "product"
+    ]
+  },
+  "application": {
+    "component": "GuideFrame",
+    "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"cercano\">",
+    "css": "trama-ui/styles.css",
+    "classes": [
+      "ui-g-body",
+      "ui-g-brand",
+      "ui-g-btn",
+      "ui-g-btn--ghost",
+      "ui-g-card",
+      "ui-g-grid",
+      "ui-g-h1",
+      "ui-g-h2",
+      "ui-g-header",
+      "ui-g-label",
+      "ui-g-line",
+      "ui-g-mono",
+      "ui-g-muted",
+      "ui-g-rise",
+      "ui-g-section",
+      "ui-g-wrap"
+    ],
+    "fontVariables": [
+      "--font-geist-mono",
+      "--font-inter",
+      "--font-inter-tight"
+    ]
+  },
+  "contrast": [
+    {
+      "text": "fg",
+      "surface": "bg",
+      "ratio": 18.78,
+      "use": "texto normal"
+    },
+    {
+      "text": "fg",
+      "surface": "card",
+      "ratio": 17.24,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "bg",
+      "ratio": 7.51,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "card",
+      "ratio": 6.9,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "bg",
+      "ratio": 2.43,
+      "use": "decorativo: no usar para texto ni controles"
+    },
+    {
+      "text": "acc",
+      "surface": "card",
+      "ratio": 2.23,
+      "use": "decorativo: no usar para texto ni controles"
+    },
+    {
+      "text": "acc2",
+      "surface": "bg",
+      "ratio": 1.82,
+      "use": "decorativo: no usar para texto ni controles"
+    },
+    {
+      "text": "acc2",
+      "surface": "card",
+      "ratio": 1.67,
+      "use": "decorativo: no usar para texto ni controles"
+    }
+  ],
+  "requirements": [
+    "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
+    "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
+    "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: GuideFrame textContrast calcula --mut-text/--acc-text para el texto del kit sobre --bg (sRGB opaco), conservando --mut/--acc decorativos. Consultar sus límites en la API; para otras superficies/estados o CSS propio, adaptar y medir el tema local."
+  ],
+  "examples": [],
+  "limitations": [
+    "La tabla de contraste mide tokens sobre fondos lisos; revisar la aplicación visual en cada proyecto (imágenes, transparencias, estados). Una guía no certifica accesibilidad.",
+    "Fotos, vídeos y fuentes Fontshare no se redistribuyen por esta ficha.",
+    "No se declara soporte universal de Next.js o de React genérico a partir de un consumidor piloto."
+  ]
+}

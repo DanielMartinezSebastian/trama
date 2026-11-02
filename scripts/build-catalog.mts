@@ -22,6 +22,7 @@ const errors: string[] = [];
 
 /** Landings «kit» (construidas solo con components/ui/): slug de la demo → archivo. */
 const KIT_LANDING_FILES: Record<string, string> = {
+  "th-parla": "components/landings/parla/ParlaLanding.tsx",
   "th-ciphergrid": "components/landings/CyberpunkLanding.tsx",
   "th-mycel": "components/landings/MycelLanding.tsx",
   "th-folio": "components/landings/FolioLanding.tsx",

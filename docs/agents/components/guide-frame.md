@@ -1,4 +1,4 @@
-# Guía de estilo (sistema completo de una web premiada)
+# Guía de estilo (sistema visual completo)
 
 > Generado por npm run catalog. No editar. Estado piloto; no acredita recorrido en navegador.
 
@@ -23,7 +23,7 @@ GuideFrame
 
 ## description
 
-Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
+Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
 ## category
 
@@ -73,7 +73,8 @@ import GuideFrame from "trama-ui/GuideFrame";
       "terminal",
       "pixel",
       "puntos",
-      "papel"
+      "papel",
+      "cercano"
     ],
     "labels": {
       "lujo": "Lujo tranquilo",
@@ -94,7 +95,8 @@ import GuideFrame from "trama-ui/GuideFrame";
       "terminal": "Terminal de neón",
       "pixel": "Arcade pixel",
       "puntos": "Matriz de puntos",
-      "papel": "Estudio en papel"
+      "papel": "Estudio en papel",
+      "cercano": "Aprendizaje cercano"
     }
   },
   {

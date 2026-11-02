@@ -10,11 +10,11 @@ export const guias: CatalogEntry[] = [
     id: "guide-frame",
     component: "GuideFrame",
     path: "@/components/ui/GuideFrame",
-    name: "Guía de estilo (sistema completo de una web premiada)",
+    name: "Guía de estilo (sistema visual completo)",
     category: "secciones",
     styles: ["editorial", "minimal", "outline", "retro"],
     description:
-      "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+      "Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
     stageHeight: 460,
     children: (p) => `<h1 className="ui-g-h1">{${JSON.stringify(p.title)}}</h1>\n<p className="ui-g-body">{${JSON.stringify(p.lead)}}</p>`,
     notes: [

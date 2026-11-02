@@ -1,0 +1,31 @@
+# Tarea: tres sitios completos para VeraVeda
+
+- Objetivo: tres propuestas radicalmente distintas usando Trama, conservando la información de veraveda.es.
+- Rama / worktree: feat/evolucion-agentes / C:/COMPARTIDO/trama-evolucion-agentes. Commit inicial 5410a6f. Había cambios ajenos en app/globals.css, manifiestos, mapa de skills, cuaderno y proyectos/circo-astorga; se conservan.
+- Proyecto propio: proyectos/veraveda. No se modifica el kit, Next, sus rutas ni `.next`. React y componentes reales del kit compilados con esbuild a 16 documentos HTML estáticos. Dependencias ya presentes, sin cambios al package.json raíz.
+- Servidor y URL: node proyectos/veraveda/server.mjs; http://localhost:3021/. Puerto propio. /herbario/, /pulso/, /marea/; cinco rutas por versión.
+- Skills: trama-research, trama-style, trama-build, frontend-design e imagegen; Sites leído por el encargo web y aplicado como resultado local dentro del repositorio solicitado.
+- Cambios: selector, tres portadas con arquitecturas distintas, servicios filtrados, escuela y recursos por correo, historia real, contacto y FAQ; CSS por tokens. Imágenes originales en WebP y dos ambientes generados. Evidencia de origen y decisiones en proyectos/veraveda/research/brief.md y /investigacion.html.
+- Decisiones: los textos originales se seleccionan y resumen; titulares de apertura y etiquetas son nuevos. Sin cifras, reseñas, credenciales, resultados, cursos o convocatorias inventadas. Reservas conservan siete destinos originales. El enlace roto de escuela y accesos gratuitos no verificados se sustituyen por petición al correo publicado. No agenda, pago ni inscripción simulados.
+- Comprobaciones: doctor correcto (avisos de recursos opcionales). Build estático correcto. Typecheck correcto. Smoke oficial de las tres portadas: 200, cero errores y cero sombras oscuras. QA de 15 páginas a 17 anchos; capturas 390/1440. Contraste y revisión visual con herramientas del repo en qa/. Informes y capturas ignorados por Git.
+- Verificación global: npm run verify se detiene en catalog:check por 39 fichas docs/agents desactualizadas; agents:test también señala el snapshot de conocimiento con commit y hashes anteriores a los manifiestos actuales. Sin cambios al catálogo por esta tarea. El fallo se documenta sin regenerar decenas de archivos ajenos. ui:test, check:shadows y cine:test pasan por separado.
+- Interacción adicional: 22 estados (menú, filtros, FAQ abiertas, hover, foco y elección Pulso) sin fallos de contraste; teclado de FAQ y 300 enlaces internos comprobados. El selector flotante inicial se traslada al pie para evitar superponerlo sobre el texto durante la lectura.
+- Cierre visual: herramientas oficiales de contraste en las 15 rutas y 11 anchos: cero violaciones y cero casos de fondo pendientes. Revisión de texto final sin colisiones entre bloques ni recortes; cinco avisos de proximidad en la portada Marea corresponden al lema grande separado de navegación por 20–23 px, revisados visualmente. Se conservan interlineados compactos de los titulares, sin mezclar letras de líneas distintas. Se corrigen min-width y palabras largas de escuela y la pregunta de Pulso a 320 px. Imagen de formación con contain para conservar las caras completas. Comparación de portadas en proyectos/veraveda/qa/tres-portadas.png.
+- Cuaderno: veraveda-herbario, veraveda-pulso y veraveda-marea; índice regenerado preservando las fichas previas.
+- Siguiente paso: revisión del usuario y elección de una dirección. Publicación no realizada. Confirmar accesos de escuela/recursos y documentación legal con la titular antes de una puesta en producción.
+
+## Revisión de imágenes · 1 de noviembre de 2026
+
+- Petición: mejorar con imagegen las imágenes cortadas, manteniendo las tres propuestas.
+- Se inspeccionan seis originales y se editan individualmente con la herramienta integrada: Mari, grupo de formación, manos, foto de viaje, bodegón Herbario y paisaje Marea. Se realiza una segunda pasada de limpieza para el recorte de Mari. Se verifica transparencia real: los colores de los píxeles con alfa cero que muestra el visor local no son un halo visible en navegador.
+- Salidas finales: proyectos/veraveda/ediciones-imagegen/*-v2.png; manifiesto y prompts en research/imagegen-edits.json y ediciones-imagegen/manifest.json. Copias WebP versionadas *-v2.webp; originales conservados.
+- Se integran en todas sus apariciones mediante asset() en App.tsx; alt y procedencia indican restauración con IA. Fondos reconstruidos de manos y viaje se identifican como ampliación generativa. La reconstrucción puede introducir variaciones de detalle respecto a los originales pequeños.
+- Ajustes: contain en personas y objetos, posición centrada, margen de seguridad, cambio de la máscara inferior del retrato Marea para que no corte los pies. Paisaje con la roca menor y centrada para el recorte móvil. No cambian servicios ni textos comerciales.
+- Comparación: http://localhost:3021/imagenes.html; enlace desde el selector de propuestas.
+- Validación específica: image-qa.mjs, 63 combinaciones de nueve páginas a siete anchos de 320 a 1920; seis recursos en alta resolución, dos con alfa, cero fallos. Build estático, typecheck y check:shadows pasan. Smoke de tres portadas, QA general de las quince rutas y herramientas oficiales de contraste/texto sobre las nueve rutas afectadas. Informes y capturas en qa/ ignorados.
+- verify global vuelve a detenerse en las mismas 39 fichas de catálogo de agentes desactualizadas. No se regeneran archivos ajenos a la mejora visual.
+- Cuaderno: veraveda-imagenes, enlazado con las tres propuestas. Servidor existente conservado en puerto 3021.
+
+## Recuperación de contenido y cuarta versión
+
+La revisión posterior del usuario pide recuperar las imágenes y los textos omitidos y añadir una versión fiel al original. Se completa en proyectos/veraveda, conservando las direcciones previas y añadiendo /origen/. Nuevo registro de tarea: docs/tareas/veraveda-origen.md. El estado anterior de tres propuestas y selección de textos queda superado: ahora hay cuatro propuestas, 21 páginas, 38 imágenes originales inventariadas y cobertura íntegra de las tres páginas públicas en las cuatro versiones. /contenido.html documenta el cotejo y las diferencias de lectura.

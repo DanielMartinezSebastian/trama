@@ -1,5 +1,9 @@
 # 54 · Guías de estilo sacadas de todo el repo
 
+> Ampliación 01-11-2026: 20 guías. **Aprendizaje cercano** (`cercano`) añade la familia de formación individual a partir
+> de la inspección de Preply: rosa y negro, retratos, titulares 700 y controles rectangulares. Estudio y decisiones en
+> [estudio-preply.md](./estudio-preply.md); aplicación en `/demo/th-parla` y ficha `demo-parla` del cuaderno.
+
 > 27-10-2026. Lo aprendido en los estudios, las réplicas y el cuaderno tiene que servir para generar guías de estilo.
 > El usuario pide que la página `/guias` incluya todo lo que hay en el repo, que ya es bastante grande para empezar a
 > construir guías.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceCommit": "5410a6fb4bf83326384ae40ada9c95355998932f",
   "sourceDirty": true,
   "kind": "guide",
   "id": "escuela",
@@ -30,7 +30,7 @@
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+      "sha256": "7f4cd5f876e5d1d4d49b5b5526ae13e5773b8d87ae05bf765fe304cff8a69b7e"
     },
     {
       "path": "lib/ui/tokens.ts",
@@ -38,11 +38,11 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "3eeb4b518bfcbd7561f16dd72ac7c9beda2e3513398fdaaeb7e7ac4fc8123f0c"
+      "sha256": "3aba27e27fdb8ffc02b077324dd20ade8af3ef0b671b7fd16ca79ccfa3ad95f0"
     },
     {
       "path": "package.json",
-      "sha256": "2ec279ef18c74fabb6d6a064d5cae64ff70ae92ead9dad016e6a695fb68d4654"
+      "sha256": "e0a1fe6468a25288e5a431e5bd891c859d0f69bf5472188b86ac18729484be13"
     },
     {
       "path": "scripts/agent-knowledge.mts",
@@ -50,7 +50,7 @@
     },
     {
       "path": "scripts/build-catalog.mts",
-      "sha256": "0633068d1b2f691b6df8a79745b903198b1b811bbbfceb8f428ec03ef994ae5a"
+      "sha256": "eabf3978797ed245e0a0cd37a323adf1306f139a070046d1b0d4eb8c29693197"
     },
     {
       "path": "scripts/build-package.mts",

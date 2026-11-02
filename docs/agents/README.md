@@ -23,6 +23,7 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./in
 - [guide: Arcade pixel](./guides/pixel.md)
 - [guide: Matriz de puntos](./guides/puntos.md)
 - [guide: Estudio en papel](./guides/papel.md)
+- [guide: Aprendizaje cercano](./guides/cercano.md)
 - [reference: Firmas cinemáticas y WebGL](./references/cinematic-webgl.md)
 - [reference: Gramática visual y variedad](./references/design-directions.md)
 - [recipe: Peluquería y color, estética](./recipes/salon.md)
@@ -82,6 +83,7 @@ pilot
 | guide | pixel | Ciruela de noche, letra de píxel solo en los titulares, monoespaciada para leer, un amarillo de moneda y esquinas que no se redondean. |
 | guide | puntos | Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color. |
 | guide | papel | Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante. |
+| guide | cercano | Rosa vivo, tinta casi negra y retratos protagonistas |
 | reference | cinematic-webgl | Técnicas y casos contrastados para mantener la firma de una referencia WebGL/Three al crear una demo original. |
 | reference | design-directions | Separa guía medida, composición, medio, interacción y firma; ayuda a escapar de la plantilla más reciente. |
 | recipe | salon | Un salón que vende oficio y calma: el equipo y los trabajos son el producto. |
@@ -91,7 +93,7 @@ pilot
 | component | before-after | Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido) |
 | component | booking-flow | Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al… |
 | component | footer | Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing. |
-| component | guide-frame | Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—,… |
+| component | guide-frame | Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las… |
 | component | image-gallery | Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas |
 | component | image-reveal | Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño |
 | component | menu-list | Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que… |

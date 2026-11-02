@@ -7,6 +7,16 @@ import type { DemoMeta } from "./demos";
  */
 export const kitLandingDemos: DemoMeta[] = [
   {
+    slug: "th-parla",
+    family: "landing",
+    render: "kit",
+    reactive: true,
+    title: "PARLA · idiomas que conectan",
+    blurb: "Una plataforma ficticia de idiomas inspirada en Preply: rosa vivo, retratos, profesores filtrables y una clase de prueba simulada. Estrena la guía Aprendizaje cercano.",
+    hint: "Elige un idioma, filtra profesores y prepara una clase de prueba",
+    accent: "#ff7aac",
+  },
+  {
     slug: "th-ciphergrid",
     family: "landing",
     render: "kit",

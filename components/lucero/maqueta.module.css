@@ -1,0 +1,50 @@
+.page {
+  --bg: #17171b; --fg: #efe9dc; --mut: #c4bdae; --acc: #f4b483; --acc2: #87cefa; --card: #1f1f25; --ln: #55555e; --r: 2px;
+  color-scheme: dark;
+  position: relative; height: 100svh; overflow: hidden; background: var(--bg); color: var(--fg);
+  font-family: var(--font-instrument-sans), system-ui, sans-serif; font-size: 16px; line-height: 1.4;
+}
+.escena { position: absolute; inset: 0; }
+
+.mandos { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--ln); padding: 4px; }
+.marca { padding: 0 12px 0 8px; font-weight: 700; }
+.mandos button { all: unset; cursor: pointer; display: grid; place-items: center; min-width: 40px; height: 40px; font-family: var(--font-geist-mono), monospace; font-size: 15px; color: var(--fg); }
+.mandos button:hover { background: #2c2c33; }
+.mandos button[aria-current="true"] { background: var(--acc); color: #17171b; }
+.mandos button:focus-visible { outline: 2px solid var(--fg); outline-offset: -2px; }
+.mandos .reservar { padding: 0 12px; font-family: inherit; font-weight: 600; }
+
+.panel {
+  position: absolute; top: 16px; right: 16px; bottom: 16px; z-index: 2; width: min(380px, calc(100vw - 32px)); overflow-y: auto;
+  background: var(--bg); border: 1px solid var(--ln); padding: 22px; display: flex; flex-direction: column; gap: 12px;
+}
+.panel h1 { margin: 0; font-size: 38px; line-height: 1.04; font-weight: 700; letter-spacing: -.02em; }
+.panel h2 { margin: 0; font-size: 44px; line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+.panel p { margin: 0; }
+.dato { font-family: var(--font-geist-mono), monospace; font-size: 14px; color: var(--mut); }
+.boton { all: unset; cursor: pointer; align-self: flex-start; padding: 11px 16px; background: var(--acc); color: #17171b; font-weight: 600; }
+.boton:hover { background: #ffd0a8; }
+.boton:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.seleccion { margin-top: auto !important; padding-top: 10px; border-top: 1px solid var(--ln); font-family: var(--font-geist-mono), monospace; font-size: 14px; }
+
+.panel dl { margin: 0; display: grid; gap: 8px; }
+.panel dt { font-weight: 700; }
+.panel dd { margin: 0; color: var(--mut); font-size: 15px; }
+
+.selectores { display: grid; gap: 8px; }
+.selectores label { display: grid; gap: 4px; font-size: 14px; }
+.selectores select { width: 100%; min-height: 40px; padding: 6px 8px; background: var(--card); color: var(--fg); border: 1px solid var(--ln); font: inherit; }
+.form { display: grid; gap: 8px; }
+.form small { font-size: 13px; color: var(--mut); }
+.form [data-lucero="localizador"] { font-family: var(--font-geist-mono), monospace; font-size: 40px; color: var(--acc); }
+.aviso { font-size: 13px; color: var(--mut); }
+.aviso a { color: inherit; }
+
+@media (max-width: 860px) {
+  .mandos { top: 8px; left: 8px; right: 8px; justify-content: space-between; }
+  .marca { display: none; }
+  .mandos button { min-width: 36px; }
+  .panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 46svh; padding: 16px; }
+  .panel h1 { font-size: 28px; }
+  .panel h2 { font-size: 32px; }
+}

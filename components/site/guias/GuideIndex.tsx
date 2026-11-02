@@ -12,7 +12,7 @@ import { nombreLetra } from "./GuideSheet";
 
 const GRUPOS = [
   { id: "premiadas", titulo: "De las webs premiadas", nota: "Constantes medidas en webs de Awwwards (docs/16)." },
-  { id: "sectores", titulo: "De los estudios por sector", nota: "Familias del cuaderno del laboratorio: réplicas medidas contra la web original (docs/50, docs/53)." },
+  { id: "sectores", titulo: "De los estudios por sector", nota: "Familias del cuaderno del laboratorio: referencias inspeccionadas, réplicas y demos inspiradas (docs/50, docs/53)." },
   { id: "repo", titulo: "De la estética propia de Trama", nota: "Lo que el repo ya hace y no tenía guía: ASCII, terminal, pixel, puntos (docs/54)." },
 ] as const;
 

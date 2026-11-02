@@ -16128,7 +16128,7 @@
     },
     {
       "id": "guide-frame",
-      "name": "Guía de estilo (sistema completo de una web premiada)",
+      "name": "Guía de estilo (sistema visual completo)",
       "component": "GuideFrame",
       "import": "import GuideFrame from \"@/components/ui/GuideFrame\";",
       "category": "secciones",
@@ -16138,7 +16138,7 @@
         "outline",
         "retro"
       ],
-      "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+      "description": "Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
       "props": [
         {
           "key": "guide",
@@ -16164,7 +16164,8 @@
             "terminal",
             "pixel",
             "puntos",
-            "papel"
+            "papel",
+            "cercano"
           ]
         },
         {
@@ -16185,6 +16186,55 @@
     }
   ],
   "landings": [
+    {
+      "slug": "th-parla",
+      "title": "PARLA · idiomas que conectan",
+      "url": "/demo/th-parla",
+      "file": "components/landings/parla/ParlaLanding.tsx",
+      "description": "Una plataforma ficticia de idiomas inspirada en Preply: rosa vivo, retratos, profesores filtrables y una clase de prueba simulada. Estrena la guía Aprendizaje cercano.",
+      "components": [
+        {
+          "component": "GuideFrame",
+          "id": "guide-frame",
+          "uses": 1
+        },
+        {
+          "component": "Button",
+          "id": "button",
+          "uses": 5
+        },
+        {
+          "component": "Hero",
+          "id": "hero",
+          "uses": 1
+        },
+        {
+          "component": "FeatureGrid",
+          "id": "feature-grid",
+          "uses": 1
+        },
+        {
+          "component": "FAQSection",
+          "id": "faq-section",
+          "uses": 1
+        },
+        {
+          "component": "CTASection",
+          "id": "cta-section",
+          "uses": 1
+        },
+        {
+          "component": "Footer",
+          "id": "footer",
+          "uses": 1
+        },
+        {
+          "component": "Modal",
+          "id": "modal",
+          "uses": 1
+        }
+      ]
+    },
     {
       "slug": "th-ciphergrid",
       "title": "CIPHERGRID · producto ciberpunk",

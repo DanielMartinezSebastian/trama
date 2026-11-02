@@ -6872,6 +6872,201 @@
      "afinidad": 0.193
     }
    ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/cercano/service",
+   "guia": "cercano",
+   "titulo": "Aprendizaje cercano",
+   "fechaMedida": "2026-11-01",
+   "origenMedida": "http://localhost:3461/guias/relato/cercano/service",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      71
+     ],
+     [
+      "#f6f5f3",
+      28
+     ],
+     [
+      "#121117",
+      1
+     ],
+     [
+      "#56535e",
+      49
+     ],
+     [
+      "#121117",
+      28
+     ],
+     [
+      "#ffffff",
+      23
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.4,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": -0.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 64,
+    "radios": [
+     "8"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 3.8
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.062146892655367256,
+    "hue": 256.3636363636364,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 700,
+    "ls": -0.5,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "tecnico",
+     "afinidad": 0.314
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.287
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.24
+    }
+   ]
+  },
+  {
+   "tipo": "landing",
+   "ruta": "/demo/th-parla",
+   "titulo": "PARLA · idiomas que conectan",
+   "fechaMedida": "2026-11-01",
+   "origenMedida": "http://localhost:3461/demo/th-parla",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      34
+     ],
+     [
+      "#ff7aac",
+      29
+     ],
+     [
+      "#f6f5f3",
+      22
+     ],
+     [
+      "#121117",
+      8
+     ],
+     [
+      "#121117",
+      55
+     ],
+     [
+      "#56535e",
+      35
+     ],
+     [
+      "#ffffff",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.4,
+     "peso": 700,
+     "interlineado": 1.1,
+     "tracking": -0.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.5,
+     "measureEm": 31
+    },
+    "familias": [
+     "Inter",
+     "Inter Tight"
+    ],
+    "margen": 64,
+    "radios": [
+     "6",
+     "píldora",
+     "9",
+     "7",
+     "4"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.5
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 1,
+    "hue": 337.4436090225564,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 700,
+    "ls": -0.5,
+    "upper": false,
+    "lh": 1.1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "cercano",
+     "afinidad": 0.406
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.273
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.228
+    }
+   ]
   }
  ],
  "fallidas": [

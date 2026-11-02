@@ -5,16 +5,16 @@ tipo: herramienta
 estado: hecho
 referencias: []
 fichas: [docs/57-agentes.md]
-ruta: http://127.0.0.1:3450/flujo-decision-skills.html
-codigo: [public/flujo-decision-skills.html, skills/trama-build/SKILL.md, skills/trama-style/SKILL.md]
-colores: [#f1efe8, #20231f, #2456a6, #7658b5, #c64d2d]
+ruta: http://127.0.0.1:3450/flujo-decision-skills
+codigo: [app/flujo-decision-skills/page.tsx, components/decision-map/decision-map.tsx, components/decision-map/decision-map.module.css, app/globals.css, package.json, public/flujo-decision-skills.html, skills/trama-build/SKILL.md, skills/trama-style/SKILL.md]
+colores: [#eeece4, #1d211d, #174f9e, #6848a6, #a63c20]
 fuentes: []
 sector: []
 guia: []
 tono: [analítico, transparente]
 paleta: [papel mineral, tinta, azul, violeta, naranja]
 tipografia: [serif editorial, monoespaciada técnica]
-patrones: [diagrama de decisiones, inspector interactivo, filtro por categoría, selector de escenario]
+patrones: [grafo React Flow, nodos seleccionables, inspector interactivo, filtro por categoría, selector de escenario, minimapa]
 movimiento: [cambios de estado sin animación obligatoria, movimiento reducido respetado]
 piezas: []
 piezas-nuevas: []
@@ -65,6 +65,24 @@ influyendo. Para valorar comportamiento real hace falta instrumentar ejecuciones
   operativos, cero overflow horizontal y errores de página). Captura móvil: `.refs3d/decision-map-390.png`.
 - **Siguiente:** si se necesita conocer qué skills se activan realmente en cada sesión, añadir telemetría explícita al
   orquestador y representar esas trazas como una capa separada del modelo de instrucciones.
+
+## Revisión 2026-10-31 · grafo React Flow
+
+- **Objetivo:** dar una vista espacial de las rutas, cruces y retornos del mapa para entender mejor cómo se pasa de una
+  decisión a otra.
+- **Cambios:** ruta `/flujo-decision-skills` en Next con React Flow; 22 nodos de decisión y 32 conexiones con etiquetas;
+  selección de nodos e inspector con ramas completas; escenarios, filtros, zoom, controles y minimapa. La URL anterior
+  `.html` redirige a la ruta nueva.
+- **Decisiones:** nodos agrupados por siete etapas y colocados manualmente para que los recorridos principales fluyan de
+  izquierda a derecha; se conserva la explicación de que las conexiones son modelo documentado y no telemetría.
+- **Comprobaciones:** `npm run build` correcto; `npm run smoke -- http://127.0.0.1:3450/flujo-decision-skills --auditar`
+  (200, sin errores, sombras ni interacciones/enlaces rotos); Playwright confirma 22 nodos, 32 conexiones, inspector,
+  filtros, seis escenarios, redirección antigua y cero overflow horizontal en móvil. `npm run verify` se detiene en
+  `catalog:check` por los 39 JSON de agentes ya pendientes; no se regeneraron.
+- **Ajuste posterior:** se forzó tinta oscura para botones no seleccionados y lima sobre tinta para los seleccionados;
+  revisión visual y valores computados confirmados en navegador.
+- **Siguiente:** revisar con usuarios qué ramas deberían ser enlaces directos o qué transiciones documentadas faltan;
+  para mostrar decisiones reales, añadir telemetría explícita al orquestador.
 
 ## Siguiente
 

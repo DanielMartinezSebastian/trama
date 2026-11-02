@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceCommit": "5410a6fb4bf83326384ae40ada9c95355998932f",
   "sourceDirty": true,
   "kind": "component",
   "id": "guide-frame",
@@ -10,7 +10,7 @@
   "sources": [
     {
       "path": "components/ui/GuideFrame.tsx",
-      "sha256": "38fdb4f4334553d0f4bc1631073bbc8d2bd9c5cb08ca36e7211ceeed1597d5c1"
+      "sha256": "9b87507bf5c24798baf51ee89af2a7eebd92b0a839729caef66c3550601a2186"
     },
     {
       "path": "lib/catalog/catalog.tsx",
@@ -18,7 +18,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "628aa3e6503ae49b578cb4c4cc099bbe3cd1e824ca8904d00ffa01c83076c48c"
+      "sha256": "f74fe91e451b3255bad4e99c5465f64f5b57721fdc99cb985d8f6b4412642e6f"
     },
     {
       "path": "lib/catalog/schema.ts",
@@ -30,7 +30,7 @@
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+      "sha256": "7f4cd5f876e5d1d4d49b5b5526ae13e5773b8d87ae05bf765fe304cff8a69b7e"
     },
     {
       "path": "lib/ui/text-contrast.ts",
@@ -42,11 +42,11 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "3eeb4b518bfcbd7561f16dd72ac7c9beda2e3513398fdaaeb7e7ac4fc8123f0c"
+      "sha256": "3aba27e27fdb8ffc02b077324dd20ade8af3ef0b671b7fd16ca79ccfa3ad95f0"
     },
     {
       "path": "package.json",
-      "sha256": "2ec279ef18c74fabb6d6a064d5cae64ff70ae92ead9dad016e6a695fb68d4654"
+      "sha256": "e0a1fe6468a25288e5a431e5bd891c859d0f69bf5472188b86ac18729484be13"
     },
     {
       "path": "scripts/agent-knowledge.mts",
@@ -54,7 +54,7 @@
     },
     {
       "path": "scripts/build-catalog.mts",
-      "sha256": "0633068d1b2f691b6df8a79745b903198b1b811bbbfceb8f428ec03ef994ae5a"
+      "sha256": "eabf3978797ed245e0a0cd37a323adf1306f139a070046d1b0d4eb8c29693197"
     },
     {
       "path": "scripts/build-package.mts",
@@ -82,9 +82,9 @@
     "packageExamples": "not-certified-by-generation",
     "browserFlow": "not-certified-by-generation"
   },
-  "name": "Guía de estilo (sistema completo de una web premiada)",
+  "name": "Guía de estilo (sistema visual completo)",
   "component": "GuideFrame",
-  "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+  "description": "Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
   "category": "secciones",
   "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
   "api": {
@@ -119,7 +119,8 @@
         "terminal",
         "pixel",
         "puntos",
-        "papel"
+        "papel",
+        "cercano"
       ],
       "labels": {
         "lujo": "Lujo tranquilo",
@@ -140,7 +141,8 @@
         "terminal": "Terminal de neón",
         "pixel": "Arcade pixel",
         "puntos": "Matriz de puntos",
-        "papel": "Estudio en papel"
+        "papel": "Estudio en papel",
+        "cercano": "Aprendizaje cercano"
       }
     },
     {

@@ -2772,15 +2772,15 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 - Una ventaja por línea: «Título|Texto|imagen|texto alternativo» (imagen: URL, ruta o gen:N).
 - En móvil la imagen va encima de la lista.
 
-### Guía de estilo (sistema completo de una web premiada) — `GuideFrame`
+### Guía de estilo (sistema visual completo) — `GuideFrame`
 
-Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
+Aplica una de las veinte guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
 Envuelve contenido (`children`), p. ej.: `<h1 className="ui-g-h1">{"Luz que llega lejos"}</h1> <p className="ui-g-body">{"Diseñamos lámparas y espacios que aprovechan la luz del día."}</p>`
 
 | prop | tipo | default |
 |---|---|---|
-| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `terminal` · `pixel` · `puntos` · `papel` | "lujo" |
+| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `terminal` · `pixel` · `puntos` · `papel` · `cercano` | "lujo" |
 | `textContrast` | boolean | false |
 
 - Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
@@ -3102,6 +3102,14 @@ Una baldosa 16×16 de la hoja de Kenney «Pixel UI»: flechas, casillas, puntero
 ## Landings de referencia
 
 Componentes del kit que usa cada una, en orden de aparición. Úsalas como plantilla si el usuario cita esa demo; ante otra referencia, extrae su firma antes de elegir composición.
+
+### PARLA · idiomas que conectan — `/demo/th-parla`
+
+Una plataforma ficticia de idiomas inspirada en Preply: rosa vivo, retratos, profesores filtrables y una clase de prueba simulada. Estrena la guía Aprendizaje cercano.
+
+Archivo: `components/landings/parla/ParlaLanding.tsx`
+
+`GuideFrame` → `Button` ×5 → `Hero` → `FeatureGrid` → `FAQSection` → `CTASection` → `Footer` → `Modal`
 
 ### CIPHERGRID · producto ciberpunk — `/demo/th-ciphergrid`
 

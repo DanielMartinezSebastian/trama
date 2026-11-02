@@ -75,7 +75,7 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
       </header>
 
       {/* portada de la guía: su escala real */}
-      <GuideFrame guide={g.id} className="gs-portada">
+      <GuideFrame guide={g.id} textContrast={g.id === "cercano"} className="gs-portada">
         <div className="ui-g-wrap">
           <p className="ui-g-label">{g.sectors.split(",")[0]}</p>
           <p className="ui-g-brand">{g.label.split(" ")[0]}</p>
@@ -123,7 +123,7 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
       </Seccion>
 
       <Seccion id="tipo" n="02" titulo="Tipografía">
-        <GuideFrame guide={g.id} className="gs-espec">
+        <GuideFrame guide={g.id} textContrast={g.id === "cercano"} className="gs-espec">
           <div className="ui-g-wrap">
             <p className="ui-g-label">marca · {vw(g.type.brand)} vw</p>
             <p className="ui-g-brand">Aa {g.label.split(" ")[0]}</p>
@@ -182,7 +182,7 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
             </>
           )}
         </dl>
-        <GuideFrame guide={g.id} className="gs-superficies">
+        <GuideFrame guide={g.id} textContrast={g.id === "cercano"} className="gs-superficies">
           <div className="ui-g-wrap gs-fila">
             <div className="ui-g-card" style={{ padding: 20 }}>
               <p className="ui-g-label">tarjeta</p>
@@ -220,11 +220,11 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
             </ul>
           </>
         )}
-        <GuideFrame guide={g.id} className="gs-gestos-vivos">
+        <GuideFrame guide={g.id} textContrast={g.id === "cercano"} className="gs-gestos-vivos">
           <div className="ui-g-wrap gs-fila">
             <span className="ui-g-body">Pasa el ratón:</span>
             <RollLink href="#movimiento" label="Texto que rueda" fade className="ui-g-btn ui-g-btn--ghost" />
-            <Marquee variant="minimal" text={`${g.label} · `} separator="" rows={1} duration={22} className="gs-cinta" />
+            <Marquee variant="minimal" tone={g.id === "cercano" ? "fg" : "acc"} text={`${g.label} · `} separator="" rows={1} duration={22} className="gs-cinta" />
           </div>
         </GuideFrame>
       </Seccion>
@@ -233,18 +233,18 @@ export default function GuideSheet({ d }: { d: DatosGuia }) {
         <p className="gs-nota">
           Cualquier pieza del kit lee los tokens de la guía. Variante sugerida: <code>variant=&quot;{g.variant}&quot;</code>.
         </p>
-        <GuideFrame guide={g.id} className="gs-kit">
+        <GuideFrame guide={g.id} textContrast={g.id === "cercano"} className="gs-kit">
           <NavBar brand={g.label.split(" ")[0]} links="Servicios; Equipo; Precios; Contacto" cta="Reservar" search="none" shape="contained" linkHover="underline" variant={g.variant} />
           <div className="ui-g-wrap gs-kit__fila">
             <Button label="Reservar" variant={g.variant} />
             <Button label="Ver más" variant={g.variant} emphasis="outline" />
-            <Badge text="Nuevo" variant={g.variant} />
-            <Badge text="Últimas plazas" intent="warning" variant={g.variant} />
+            <Badge text="Nuevo" intent={g.id === "cercano" ? "neutral" : "accent"} variant={g.variant} />
+            <Badge text="Últimas plazas" intent={g.id === "cercano" ? "neutral" : "warning"} variant={g.variant} />
           </div>
           <div className="ui-g-wrap gs-kit__fila">
             <TextField label="Correo" placeholder="tu@correo.com" hint="" variant={g.variant} />
           </div>
-          <PricingSection kicker="" title="Planes" subtitle="" layout="grid" cardLayout="compact" variant={g.variant} badge="" cta="Elegir" plans={"Básico|39 €|/ mes|no|Lo esencial;Sin permanencia\nCompleto|59 €|/ mes|si|Todo lo anterior;Sesión de prueba"} />
+          <PricingSection kicker="" title="Planes" subtitle="" layout="grid" cardLayout="compact" highlight={g.id === "cercano" ? "border" : "invert"} variant={g.variant} badge="" cta="Elegir" plans={"Básico|39 €|/ mes|no|Lo esencial;Sin permanencia\nCompleto|59 €|/ mes|si|Todo lo anterior;Sesión de prueba"} />
           <TestimonialSection kicker="" title="" layout="grid" perView={2} avatars={false} presentation="plain" variant={g.variant} items={"Me sentí en buenas manos desde el primer día.|Lucía Mar|Clienta\nLo recomiendo sin dudar: cercanos y serios.|Jon Ibarra|Cliente"} />
           <FAQSection kicker="" title="Preguntas" layout="split" presentation="lines" align="left" defaultOpen={-1} variant={g.variant} items={"¿Hay sesión de prueba?|Sí, la primera es gratis.\n¿Puedo cambiar de plan?|Cuando quieras, sin coste."} />
         </GuideFrame>

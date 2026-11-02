@@ -5,6 +5,7 @@
 | `nadir-semilla/` (GLB, planos y texturas) | Concepto Semilla del chat, geometría y texturas propias reproducibles con `npx tsx scripts/gen-nadir-semilla.mts` | La del repositorio |
 | `satelite.glb` | Geometría propia, generada con `node scripts/gen-satellite.mjs`; sin texturas ni recursos externos | La del repositorio |
 | `asteroide.gltf`, `turbina.obj`, `ciudad.glb` | Geometría propia, generada con `scripts/gen-retro-models.mts` | La del repositorio |
+| `night-train/` (`cabin.glb`, `seat.glb`) | Ejemplo *Night Train* de Paul Henschel en [pmndrs/examples](https://github.com/pmndrs/examples/tree/main/examples/night-train); sin compresión Draco para cumplir la CSP | [MIT](https://github.com/pmndrs/examples/blob/main/LICENSE) (licencia del repositorio de origen) |
 | `suzanne.glb` | *Suzanne*, © 2017 Norbert Nopper (UX3D), de [KhronosGroup/glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/Suzanne) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | `farol.glb` | *Lantern*, © 2017 Microsoft (sbtron), de [KhronosGroup/glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/Lantern) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
