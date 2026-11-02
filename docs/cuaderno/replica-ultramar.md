@@ -35,7 +35,7 @@ Marca, textos y datos propios; varias páginas, flujo de negocio y menú móvil 
 
 ## Diferencias con la referencia
 
-Las fotos son provisionales hasta que Codex entregue `docs/encargo-imagenes-inspiraciones-3.md`.
+Fotos definitivas de Codex (2f21270); los pares no cambian con ellas.
 
 ## Aprendido
 

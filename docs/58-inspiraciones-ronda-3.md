@@ -59,7 +59,7 @@ SONDA Esencial no tiene guía propia: su editorial neutra cae en `papel`.
 
 ## 3. Imágenes
 
-No hay generación de imágenes en esta sesión. Las páginas funcionan con provisionales recortadas de fotos del repo y `docs/encargo-imagenes-inspiraciones-3.md` pide 66 imágenes a Codex.
+Las 66 imágenes de `docs/encargo-imagenes-inspiraciones-3.md` son de Codex (2f21270) y sustituyen a los recortes provisionales.
 
 Polilla, No mires abajo y Cantera no necesitan fotos: sus visuales son CSS, lienzo o semitono. Zanco solo pide tres.
 
@@ -106,8 +106,7 @@ Diez recetas nuevas en `lib/catalog/sectores.ts`: suscripción, catálogo cultur
 
 ## 8. Pendiente
 
-- Encargo de 66 imágenes a Codex (§3) y revisión posterior.
-- Volver a medir los pares con las fotos reales. Con scroll suave, 02-11-2026: entre 8/19 (Alba) y 14/20 (Ultramar).
+- Los pares con fotos reales y scroll suave van de 8/19 (Alba) a 14/20 (Ultramar); las fotos no cambian ninguna medida. Lo que los separa es el largo de las portadas.
 - Decidir si las portadas crecen hacia el largo de las originales.
 
 Integrada en `feat/evolucion-agentes` el 02-11-2026 (5137d15), con la guía `cercano`: 37 guías. `proyectos/` sigue sin commit.
