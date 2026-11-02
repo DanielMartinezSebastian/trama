@@ -23,6 +23,7 @@ import { PAGINAS as abuelaPaginas } from "./abuela-rosa/data";
 import { PAGINAS as q47Paginas } from "./q47/data";
 import { PAGINAS as cenitPaginas } from "./cenit/data";
 import { PAGINAS as brasaPaginas } from "./brasa/data";
+import { PAGINAS as polillaPaginas } from "./polilla/data";
 
 export type Replica = {
   slug: string;
@@ -32,7 +33,7 @@ export type Replica = {
   ref: string;
   url: string;
   ficha: string;
-  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo";
+  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música";
   /** lo que la hace reconocible, en una línea */
   firma: string;
   hecha: boolean;
@@ -73,6 +74,8 @@ export const REPLICAS: Replica[] = [
   // las dos anteriores, del laboratorio de cine (docs/41–43): webs 3D enteras
   { slug: "cenit", nombre: "Cénit", ref: "Lusion", url: "https://lusion.co/", ficha: "docs/43", sector: "estudio creativo", firma: "racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla", hecha: true, guia: "monocromo", acento: "#2f3cff", scroll: "cinematic", paginas: cenitPaginas, transicion: "fade" },
   { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
+  // tercera ronda (docs/58): sectores nuevos y estéticas lejos de las anteriores
+  { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "marca", acento: "#ffd24a", paginas: polillaPaginas, transicion: "wipe" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);
