@@ -24,6 +24,7 @@ import { PAGINAS as q47Paginas } from "./q47/data";
 import { PAGINAS as cenitPaginas } from "./cenit/data";
 import { PAGINAS as brasaPaginas } from "./brasa/data";
 import { PAGINAS as polillaPaginas } from "./polilla/data";
+import { PAGINAS as sesionPaginas } from "./sesion-doble/data";
 
 export type Replica = {
   slug: string;
@@ -76,6 +77,7 @@ export const REPLICAS: Replica[] = [
   { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
   // tercera ronda (docs/58): sectores nuevos y estéticas lejos de las anteriores
   { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "marca", acento: "#ffd24a", paginas: polillaPaginas, transicion: "wipe" },
+  { slug: "sesion-doble", nombre: "Sesión Doble", ref: "A24 de Ravi Klaassens", url: "https://a24.raviklaassens.com/", ficha: "docs/58", sector: "cine", firma: "catálogo en discos que giran y una didona apretada con estrellas", hecha: true, guia: "monocromo", acento: "#c9c46a", paginas: sesionPaginas, transicion: "fade" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

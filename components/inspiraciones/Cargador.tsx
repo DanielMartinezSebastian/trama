@@ -41,6 +41,7 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   cenit: sitio(() => import("./cenit/Sitio")),
   brasa: sitio(() => import("./brasa/Sitio")),
   polilla: sitio(() => import("./polilla/Sitio")),
+  "sesion-doble": sitio(() => import("./sesion-doble/Sitio")),
 };
 
 /**
