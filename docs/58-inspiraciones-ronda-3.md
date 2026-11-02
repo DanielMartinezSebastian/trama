@@ -94,3 +94,19 @@ Diez recetas nuevas en `lib/catalog/sectores.ts`: suscripción, catálogo cultur
 - Un primer pedido a una ruta recién registrada puede dar 404 mientras Next recompila.
 - Un juego incremental necesita coste creciente: si no, una decisión barata anula la tensión.
 - Candidatas al kit si se repiten: selector de unidades de Alba y comparador de Marejada.
+
+## 7. Comprobaciones
+
+- `npm run verify` pasa y `npm run build` termina sin errores.
+- `smoke --auditar` en las 122 páginas de las diez: sin errores de consola ni sombras prohibidas.
+  - Avisos descartados: las puertas de Alba estaban desactivadas por el filtro «Solo libres» que el auditor acababa de pulsar (probado a mano); el botón del reproductor lo tapaba el distintivo de `next dev` (en producción no aparece).
+  - Aviso corregido: «Escuchar» ahora dice «Sonando» si ese disco ya suena.
+- Flujos probados en producción: color y bolsa de Zanco, caja de Polilla, compra y rueda de Sesión Doble, seguimiento de Ultramar con código bueno y malo, validación de la visita de Alba, reproductor que sigue sonando al navegar en Pulso Lento y las dos formas de acabar de No mires abajo.
+- `refs:probe --repo`: 72 páginas medidas, con 23 guías como la más afín de alguna página. 25 siguen por debajo de 0,25. Quilate sigue sin poder medirse (`Target crashed`).
+
+## 8. Pendiente
+
+- Encargo de 66 imágenes a Codex (§3) y revisión posterior.
+- Volver a medir los pares con las fotos reales y con el scroll suave.
+- Decidir si las portadas crecen hacia el largo de las originales.
+- Integrar `feat/inspiraciones-3` con `feat/evolucion-agentes`: tocan a la vez `lib/ui/guides.ts`, `lib/catalog/entries/guias.tsx` y los archivos generados; hay que añadir `cercano` y regenerar catálogo y `repo.json`.

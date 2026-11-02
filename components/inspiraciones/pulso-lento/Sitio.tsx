@@ -165,7 +165,7 @@ function Portada() {
           <div className="pu-dos">
             <a href={pulsoHref(`musica/${d.id}`)}>Vinilo y CD</a>
             <button type="button" onClick={() => poner(d)}>
-              Escuchar «{d.titulo}»
+              {sonando && disco.id === d.id ? "Sonando" : `Escuchar «${d.titulo}»`}
             </button>
           </div>
         </div>
