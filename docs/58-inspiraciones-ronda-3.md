@@ -107,6 +107,7 @@ Diez recetas nuevas en `lib/catalog/sectores.ts`: suscripción, catálogo cultur
 ## 8. Pendiente
 
 - Encargo de 66 imágenes a Codex (§3) y revisión posterior.
-- Volver a medir los pares con las fotos reales y con el scroll suave.
+- Volver a medir los pares con las fotos reales. Con scroll suave, 02-11-2026: entre 8/19 (Alba) y 14/20 (Ultramar).
 - Decidir si las portadas crecen hacia el largo de las originales.
-- Integrar `feat/inspiraciones-3` con `feat/evolucion-agentes`: tocan a la vez `lib/ui/guides.ts`, `lib/catalog/entries/guias.tsx` y los archivos generados; hay que añadir `cercano` y regenerar catálogo y `repo.json`.
+
+Integrada en `feat/evolucion-agentes` el 02-11-2026 (5137d15), con la guía `cercano`: 37 guías. `proyectos/` sigue sin commit.
