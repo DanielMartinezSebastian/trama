@@ -1,6 +1,6 @@
 # Encargo para Codex: imágenes de la tercera ronda de inspiraciones
 
-**58 imágenes** en 6 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-3.json`.
+**66 imágenes** en 7 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-3.json`.
 
 > Sesión de Claude, rama `feat/inspiraciones-3`, worktree `C:/COMPARTIDO/trama-inspiraciones` (docs/58). Cada archivo existe ya con una provisional recortada de una foto del repo: la página nunca se rompe.
 
@@ -81,6 +81,21 @@ Fotografía de marca de mueble nórdico-gallego: fondos lisos de color arena, lu
 | `taller.webp` | 2200x1300 | Taller de moldeado con sillas de colores apiladas y operarios |
 | `casa.webp` | 1800x1200 | Persona relajada recostada en una silla flexible amarilla, en un salón |
 | `material.webp` | 1800x1200 | Montón de redes de pesca de colores, trituradas en primer plano |
+
+## pulso-lento · 8 imágenes · /inspiraciones/pulso-lento
+
+Fotografía documental en blanco y negro de un músico electrónico de 55 años, calvo y corpulento, grano de película y mucho contraste. Se muestra en gris en la web.
+
+| Archivo | px | Motivo |
+|---|---|---|
+| `nombre.webp` | 800x600 | Máquina de ritmos vieja sobre una mesa, plano cerrado |
+| `retrato.webp` | 1400x1400 | Retrato del músico mirando a cámara, centrado, sobre fondo gris |
+| `estudio.webp` | 1800x1200 | Músico de espaldas en un estudio con sintetizadores |
+| `directo.webp` | 2200x1400 | Músico sentado con camiseta negra, luz dura lateral, muy cercano |
+| `disco-esencia.webp` | 1200x1200 | Portada de disco: cara en sombra, sin texto |
+| `disco-noche.webp` | 1200x1200 | Portada de disco: autopista de noche con largas exposiciones, sin texto |
+| `disco-sur.webp` | 1200x1200 | Portada de disco: nave industrial de hormigón, sin texto |
+| `camiseta.webp` | 1200x1200 | Camiseta negra lisa extendida sobre fondo gris |
 
 ## casa-melosa · 23 imágenes · /inspiraciones/casa-melosa
 

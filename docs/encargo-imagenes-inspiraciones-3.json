@@ -204,6 +204,52 @@
    }
   ]
  },
+ "pulso-lento": {
+  "estilo": "Fotografía documental en blanco y negro de un músico electrónico de 55 años, calvo y corpulento, grano de película y mucho contraste. Se muestra en gris en la web.",
+  "ruta": "/inspiraciones/pulso-lento",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/nombre.webp",
+    "px": "800x600",
+    "motivo": "Máquina de ritmos vieja sobre una mesa, plano cerrado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/retrato.webp",
+    "px": "1400x1400",
+    "motivo": "Retrato del músico mirando a cámara, centrado, sobre fondo gris"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/estudio.webp",
+    "px": "1800x1200",
+    "motivo": "Músico de espaldas en un estudio con sintetizadores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/directo.webp",
+    "px": "2200x1400",
+    "motivo": "Músico sentado con camiseta negra, luz dura lateral, muy cercano"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-esencia.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: cara en sombra, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-noche.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: autopista de noche con largas exposiciones, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/disco-sur.webp",
+    "px": "1200x1200",
+    "motivo": "Portada de disco: nave industrial de hormigón, sin texto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pulso-lento/camiseta.webp",
+    "px": "1200x1200",
+    "motivo": "Camiseta negra lisa extendida sobre fondo gris"
+   }
+  ]
+ },
  "casa-melosa": {
   "estilo": "Fotografía de interiorismo editorial: luz natural cálida, casas habitadas, cal, madera y piezas de color. Mismo tono en todas, con presencia de rosa, teja y chocolate.",
   "ruta": "/inspiraciones/casa-melosa",

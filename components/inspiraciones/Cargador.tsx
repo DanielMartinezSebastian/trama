@@ -49,6 +49,7 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   "cantera": sitio(() => import("./cantera/Sitio")),
   "ultramar": sitio(() => import("./ultramar/Sitio")),
   "zanco": sitio(() => import("./zanco/Sitio")),
+  "pulso-lento": sitio(() => import("./pulso-lento/Sitio")),
 };
 
 /**
