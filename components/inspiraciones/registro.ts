@@ -25,6 +25,7 @@ import { PAGINAS as cenitPaginas } from "./cenit/data";
 import { PAGINAS as brasaPaginas } from "./brasa/data";
 import { PAGINAS as polillaPaginas } from "./polilla/data";
 import { PAGINAS as sesionPaginas } from "./sesion-doble/data";
+import { PAGINAS as melosaPaginas } from "./casa-melosa/data";
 
 export type Replica = {
   slug: string;
@@ -78,6 +79,7 @@ export const REPLICAS: Replica[] = [
   // tercera ronda (docs/58): sectores nuevos y estéticas lejos de las anteriores
   { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "marca", acento: "#ffd24a", paginas: polillaPaginas, transicion: "wipe" },
   { slug: "sesion-doble", nombre: "Sesión Doble", ref: "A24 de Ravi Klaassens", url: "https://a24.raviklaassens.com/", ficha: "docs/58", sector: "cine", firma: "catálogo en discos que giran y una didona apretada con estrellas", hecha: true, guia: "monocromo", acento: "#c9c46a", paginas: sesionPaginas, transicion: "fade" },
+  { slug: "casa-melosa", nombre: "Casa Melosa", ref: "House of Honey", url: "https://www.houseofhoney.com/", ficha: "docs/58", sector: "interiorismo", firma: "rosa y chocolate, ultranegra de borde a borde cruzada por una caligráfica", hecha: true, guia: "boutique", acento: "#edccbe", paginas: melosaPaginas, transicion: "wipe" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

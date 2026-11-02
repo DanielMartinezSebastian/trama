@@ -26,7 +26,7 @@ y se eligieron 10 por distancia de sector y de estética.
 | `no-mires-abajo` | No mires abajo | Don't Look Up | videojuego de navegador | tinta a mano, sátira de gestión incremental | la partida entera |
 | `cantera` | Cantera | Aspen Search | selección de personal | mosaico de baldosas, semitono, relojes por ciudad | ofertas y candidatura |
 | `ultramar` | Ultramar | United Carriers | logística | globo de puntos con rutas, cifras gigantes | seguimiento de envío y presupuesto |
-| `cojo` | Cojo | Noho | mueble y tienda | catálogo de color, fichas con variantes, premios | tienda completa |
+| `zanco` | Zanco | Noho | mueble y tienda | catálogo de color, fichas con variantes, premios | tienda completa |
 | `pulso-lento` | Pulso Lento | Paul Kalkbrenner | música | blanco suizo, foto dentro del nombre, disco, gira | escucha, gira y entradas |
 
 ## 2. Estado

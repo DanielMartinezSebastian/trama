@@ -1,0 +1,174 @@
+{
+ "sesion-doble": {
+  "estilo": "Fotos fijas de película: cada una es el fotograma de un film distinto, con un color dominante muy marcado y hueco arriba para el título. Formato cuadrado con el centro libre: se recorta en disco con agujero central.",
+  "ruta": "/inspiraciones/sesion-doble",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/planta-menos-uno.webp",
+    "px": "1000x1000",
+    "motivo": "Pasillo de oficina vacío, moqueta y fluorescentes amarillentos, terror silencioso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/la-invitada.webp",
+    "px": "1000x1000",
+    "motivo": "Mujer sola al fondo de una mesa de cena familiar, luz de velas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/la-apisonadora.webp",
+    "px": "1000x1000",
+    "motivo": "Boxeador retirado corpulento, retrato azul noche con luz lima"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/corazon-de-acero.webp",
+    "px": "1000x1000",
+    "motivo": "Arquitecto de espaldas ante una gran estructura de hormigón, blanco y negro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/campeon-de-barrio.webp",
+    "px": "1000x1000",
+    "motivo": "Joven con pala de ping-pong en un polideportivo de barrio, naranja"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/pajaro-dama.webp",
+    "px": "1000x1000",
+    "motivo": "Adolescente pelirroja de perfil, fondo amarillo pálido"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/maquina-ex.webp",
+    "px": "1000x1000",
+    "motivo": "Rostro de androide en penumbra, blanco y negro con un toque rojo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/marea-baja.webp",
+    "px": "1000x1000",
+    "motivo": "Ría gallega con marea baja y un coche oxidado en el fango, azul frío"
+   },
+   {
+    "archivo": "public/img/inspiraciones/sesion-doble/hermanas-mayores.webp",
+    "px": "1000x1000",
+    "motivo": "Cuatro hermanas sesentonas en la barra de un bar de carretera, rosa cálido"
+   }
+  ]
+ },
+ "casa-melosa": {
+  "estilo": "Fotografía de interiorismo editorial: luz natural cálida, casas habitadas, cal, madera y piezas de color. Mismo tono en todas, con presencia de rosa, teja y chocolate.",
+  "ruta": "/inspiraciones/casa-melosa",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/portada-salon.webp",
+    "px": "2400x1500",
+    "motivo": "Salón de techos altos con ventanal en arco, vigas de madera y sofá curvo crudo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/estudio-equipo.webp",
+    "px": "2000x1200",
+    "motivo": "Cuatro interioristas alrededor de una mesa de muestras de tela y madera"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos.webp",
+    "px": "1600x2000",
+    "motivo": "Patio andaluz encalado con naranjos y butacas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos-a.webp",
+    "px": "1600x2000",
+    "motivo": "Techo rosa y lámpara de latón sobre un comedor"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/naranjos-b.webp",
+    "px": "1600x2000",
+    "motivo": "Detalle de mesa con jarrón y tulipanes"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico.webp",
+    "px": "1600x2000",
+    "motivo": "Ático con cocina abierta de mármol y barra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico-a.webp",
+    "px": "1600x2000",
+    "motivo": "Rincón de lectura con otomana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/atico-b.webp",
+    "px": "1600x2000",
+    "motivo": "Mesa de madera junto a pared blanca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz.webp",
+    "px": "1600x2000",
+    "motivo": "Habitación de hotel mallorquín con manta de lana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz-a.webp",
+    "px": "1600x2000",
+    "motivo": "Bañera exenta frente a ventana con olivos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/perdiz-b.webp",
+    "px": "1600x2000",
+    "motivo": "Mesilla con flores secas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega.webp",
+    "px": "1600x2000",
+    "motivo": "Comedor largo bajo bóveda de piedra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega-a.webp",
+    "px": "1600x2000",
+    "motivo": "Mesa de roble con copas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/bodega-b.webp",
+    "px": "1600x2000",
+    "motivo": "Estantería de botellas sin etiqueta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-lampara.webp",
+    "px": "1200x1200",
+    "motivo": "Lámpara de latón y seda plisada rosa, fondo liso rosa"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-butaca.webp",
+    "px": "1200x1200",
+    "motivo": "Butaca curva teja con patas de nogal, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-jarron.webp",
+    "px": "1200x1200",
+    "motivo": "Jarrón de gres color miel, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-manta.webp",
+    "px": "1200x1200",
+    "motivo": "Manta de lana doblada, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-mesa.webp",
+    "px": "1200x1200",
+    "motivo": "Mesa auxiliar de bola lacada chocolate, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/obj-bandeja.webp",
+    "px": "1200x1200",
+    "motivo": "Bandeja de olivo con vasos, fondo liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-mesa.webp",
+    "px": "1800x1200",
+    "motivo": "Dos mesas distintas unidas para una cena con velas bajas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-sofa.webp",
+    "px": "1800x1200",
+    "motivo": "Sofá con funda de lino"
+   },
+   {
+    "archivo": "public/img/inspiraciones/casa-melosa/carta-techo.webp",
+    "px": "1800x1200",
+    "motivo": "Mujer pintando un techo de color rosa con brocha"
+   }
+  ]
+ }
+}
