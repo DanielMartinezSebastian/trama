@@ -1,6 +1,6 @@
 # Encargo para Codex: imágenes de la tercera ronda de inspiraciones
 
-**55 imágenes** en 5 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-3.json`.
+**58 imágenes** en 6 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-3.json`.
 
 > Sesión de Claude, rama `feat/inspiraciones-3`, worktree `C:/COMPARTIDO/trama-inspiraciones` (docs/58). Cada archivo existe ya con una provisional recortada de una foto del repo: la página nunca se rompe.
 
@@ -71,6 +71,16 @@ Fotografía industrial de gran escala, fría y limpia: acero, contenedores, grú
 | `aereo.webp` | 2000x1250 | Avión de carga con el portón abierto al atardecer |
 | `carretera.webp` | 2000x1250 | Camión blanco en una autopista vacía al amanecer |
 | `aduanas.webp` | 2000x1250 | Terminal de contenedores con una persona de chaleco revisando documentos |
+
+## zanco · 3 imágenes · /inspiraciones/zanco
+
+Fotografía de marca de mueble nórdico-gallego: fondos lisos de color arena, luz suave, plástico reciclado de colores vivos, sensación ligera y alegre.
+
+| Archivo | px | Motivo |
+|---|---|---|
+| `taller.webp` | 2200x1300 | Taller de moldeado con sillas de colores apiladas y operarios |
+| `casa.webp` | 1800x1200 | Persona relajada recostada en una silla flexible amarilla, en un salón |
+| `material.webp` | 1800x1200 | Montón de redes de pesca de colores, trituradas en primer plano |
 
 ## casa-melosa · 23 imágenes · /inspiraciones/casa-melosa
 

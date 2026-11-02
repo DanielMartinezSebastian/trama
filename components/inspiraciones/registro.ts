@@ -31,6 +31,7 @@ import { PAGINAS as albaPaginas } from "./alba/data";
 import { PAGINAS as abajoPaginas } from "./no-mires-abajo/data";
 import { PAGINAS as canteraPaginas } from "./cantera/data";
 import { PAGINAS as ultramarPaginas } from "./ultramar/data";
+import { PAGINAS as zancoPaginas } from "./zanco/data";
 
 export type Replica = {
   slug: string;
@@ -90,6 +91,7 @@ export const REPLICAS: Replica[] = [
   { slug: "no-mires-abajo", nombre: "No mires abajo", ref: "Don't Look Up", url: "https://www.dontlookup.app/", ficha: "docs/58", sector: "videojuego", firma: "juego satírico jugable a tinta: dos zapatos gigantes y una multitud que se enfada", hecha: true, guia: "ludico", acento: "#c0342a", paginas: abajoPaginas, transicion: "fade" },
   { slug: "cantera", nombre: "Cantera", ref: "Aspen Search", url: "https://www.aspensearch.com/", ficha: "docs/58", sector: "selección de personal", firma: "mosaico de baldosas con semitono, menta y reloj de cada ciudad en la cabecera", hecha: true, guia: "monocromo", acento: "#a1ffcb", paginas: canteraPaginas, transicion: "fade" },
   { slug: "ultramar", nombre: "Ultramar", ref: "United Carriers", url: "https://unitedcarriers.com/", ficha: "docs/58", sector: "logística", firma: "globo de puntos con rutas, titular extendido y un contenedor que cruza al bajar", hecha: true, guia: "tecnico", acento: "#ff6e28", paginas: ultramarPaginas, transicion: "wipe" },
+  { slug: "zanco", nombre: "Zanco", ref: "Noho", url: "https://noho.ink/", ficha: "docs/58", sector: "mueble", firma: "muro escalonado de baldosas de color con muebles dibujados y tienda con color real", hecha: true, guia: "papel", acento: "#f4d21f", paginas: zancoPaginas, transicion: "fade" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

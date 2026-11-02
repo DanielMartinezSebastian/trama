@@ -183,6 +183,27 @@
    }
   ]
  },
+ "zanco": {
+  "estilo": "Fotografía de marca de mueble nórdico-gallego: fondos lisos de color arena, luz suave, plástico reciclado de colores vivos, sensación ligera y alegre.",
+  "ruta": "/inspiraciones/zanco",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/zanco/taller.webp",
+    "px": "2200x1300",
+    "motivo": "Taller de moldeado con sillas de colores apiladas y operarios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/zanco/casa.webp",
+    "px": "1800x1200",
+    "motivo": "Persona relajada recostada en una silla flexible amarilla, en un salón"
+   },
+   {
+    "archivo": "public/img/inspiraciones/zanco/material.webp",
+    "px": "1800x1200",
+    "motivo": "Montón de redes de pesca de colores, trituradas en primer plano"
+   }
+  ]
+ },
  "casa-melosa": {
   "estilo": "Fotografía de interiorismo editorial: luz natural cálida, casas habitadas, cal, madera y piezas de color. Mismo tono en todas, con presencia de rosa, teja y chocolate.",
   "ruta": "/inspiraciones/casa-melosa",
