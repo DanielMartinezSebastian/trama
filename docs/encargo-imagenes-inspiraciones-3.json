@@ -50,6 +50,139 @@
    }
   ]
  },
+ "marejada": {
+  "estilo": "Fotografía de ingeniería naval en calma: mar plano al amanecer, tonos gris azulado, malva y verde musgo, drones marinos oscuros y discretos. Sensación de documental, nunca bélico.",
+  "ruta": "/inspiraciones/marejada",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/marejada/boqueron.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino pequeño de superficie, casco oscuro y panel solar, sobre mar en calma al amanecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/bonito.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino mediano y rápido, proa afilada, con estela suave"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/atun.webp",
+    "px": "1600x1200",
+    "motivo": "Dron marino grande de casco alto con mástil de sensores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-cables.webp",
+    "px": "1800x1200",
+    "motivo": "Mapa físico de un estrecho visto desde un puente de mando, con pantallas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-marea.webp",
+    "px": "1800x1200",
+    "motivo": "Bateas gallegas en una ría, agua teñida de rojo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/mision-huracan.webp",
+    "px": "1800x1200",
+    "motivo": "Mar arbolado bajo un cielo de tormenta, un dron diminuto en la ola"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-berta.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de mujer de 55 años con chaqueta técnica en un muelle"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-iker.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de ingeniero de 40 años en un taller naval"
+   },
+   {
+    "archivo": "public/img/inspiraciones/marejada/equipo-samira.webp",
+    "px": "1200x900",
+    "motivo": "Retrato de ingeniera de 35 años junto a un casco"
+   }
+  ]
+ },
+ "alba": {
+  "estilo": "Render arquitectónico mediterráneo de lujo: bloques blancos escalonados, terrazas con buganvillas y jazmín, palmeras, cielo azul limpio, piscina turquesa. Luz de mañana en la Costa del Sol. Sin personas reconocibles.",
+  "ruta": "/inspiraciones/alba",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/alba/portada-cielo.webp",
+    "px": "2400x1500",
+    "motivo": "Residencial blanco de tres plantas con terrazas verdes visto desde abajo, mucho cielo azul"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/piscina.webp",
+    "px": "2400x1400",
+    "motivo": "Piscina comunitaria entre palmeras y terrazas con buganvillas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/terraza.webp",
+    "px": "1600x1200",
+    "motivo": "Terraza con vistas al mar y cocina de verano"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/salon.webp",
+    "px": "1600x1200",
+    "motivo": "Salón luminoso abierto a la terraza"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/dormitorio.webp",
+    "px": "1600x1200",
+    "motivo": "Dormitorio con ventanal y vistas al mar"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/jardin.webp",
+    "px": "1600x1200",
+    "motivo": "Jardín privado con seto de jazmín"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/plaza.webp",
+    "px": "2400x1400",
+    "motivo": "Calle encalada de pueblo andaluz con geranios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-jardin.webp",
+    "px": "1500x2000",
+    "motivo": "Vivienda en planta baja con jardín privado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-terraza.webp",
+    "px": "1500x2000",
+    "motivo": "Fachada de planta intermedia con terraza amplia y plantas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/alba/tipo-atico.webp",
+    "px": "1500x2000",
+    "motivo": "Ático con solárium y piscina de inmersión"
+   }
+  ]
+ },
+ "ultramar": {
+  "estilo": "Fotografía industrial de gran escala, fría y limpia: acero, contenedores, grúas y luz de atardecer. Sin marcas ni letreros legibles.",
+  "ruta": "/inspiraciones/ultramar",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/ultramar/maritimo.webp",
+    "px": "2000x1250",
+    "motivo": "Portacontenedores visto desde arriba en alta mar"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/aereo.webp",
+    "px": "2000x1250",
+    "motivo": "Avión de carga con el portón abierto al atardecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/carretera.webp",
+    "px": "2000x1250",
+    "motivo": "Camión blanco en una autopista vacía al amanecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/ultramar/aduanas.webp",
+    "px": "2000x1250",
+    "motivo": "Terminal de contenedores con una persona de chaleco revisando documentos"
+   }
+  ]
+ },
  "casa-melosa": {
   "estilo": "Fotografía de interiorismo editorial: luz natural cálida, casas habitadas, cal, madera y piezas de color. Mismo tono en todas, con presencia de rosa, teja y chocolate.",
   "ruta": "/inspiraciones/casa-melosa",
