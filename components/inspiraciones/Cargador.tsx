@@ -45,6 +45,7 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   "casa-melosa": sitio(() => import("./casa-melosa/Sitio")),
   "marejada": sitio(() => import("./marejada/Sitio")),
   "alba": sitio(() => import("./alba/Sitio")),
+  "no-mires-abajo": sitio(() => import("./no-mires-abajo/Sitio")),
 };
 
 /**
