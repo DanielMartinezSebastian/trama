@@ -26,6 +26,7 @@ import { PAGINAS as brasaPaginas } from "./brasa/data";
 import { PAGINAS as polillaPaginas } from "./polilla/data";
 import { PAGINAS as sesionPaginas } from "./sesion-doble/data";
 import { PAGINAS as melosaPaginas } from "./casa-melosa/data";
+import { PAGINAS as marejadaPaginas } from "./marejada/data";
 
 export type Replica = {
   slug: string;
@@ -80,6 +81,7 @@ export const REPLICAS: Replica[] = [
   { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "marca", acento: "#ffd24a", paginas: polillaPaginas, transicion: "wipe" },
   { slug: "sesion-doble", nombre: "Sesión Doble", ref: "A24 de Ravi Klaassens", url: "https://a24.raviklaassens.com/", ficha: "docs/58", sector: "cine", firma: "catálogo en discos que giran y una didona apretada con estrellas", hecha: true, guia: "monocromo", acento: "#c9c46a", paginas: sesionPaginas, transicion: "fade" },
   { slug: "casa-melosa", nombre: "Casa Melosa", ref: "House of Honey", url: "https://www.houseofhoney.com/", ficha: "docs/58", sector: "interiorismo", firma: "rosa y chocolate, ultranegra de borde a borde cruzada por una caligráfica", hecha: true, guia: "boutique", acento: "#edccbe", paginas: melosaPaginas, transicion: "wipe" },
+  { slug: "marejada", nombre: "Marejada", ref: "Seasats", url: "https://www.seasats.com/", ficha: "docs/58", sector: "robótica", firma: "web en tarjeta con columna de menú en degradado de arena a bosque y serifa fina sobre el mar", hecha: true, guia: "tecnico", acento: "#6d7763", paginas: marejadaPaginas, transicion: "fade" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);
