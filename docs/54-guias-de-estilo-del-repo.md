@@ -1,5 +1,7 @@
 # 54 · Guías de estilo sacadas de todo el repo
 
+> Ampliación 02-11-2026: 36 guías. Diez salen de la tercera ronda de inspiraciones y siete de las últimas webs del repo, elegidas por estar lejos de las anteriores: docs/58.
+
 > 27-10-2026. Lo aprendido en los estudios, las réplicas y el cuaderno tiene que servir para generar guías de estilo.
 > El usuario pide que la página `/guias` incluya todo lo que hay en el repo, que ya es bastante grande para empezar a
 > construir guías.

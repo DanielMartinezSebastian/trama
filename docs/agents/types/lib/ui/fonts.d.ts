@@ -78,5 +78,14 @@ export declare const rubikPixels: import("next/dist/compiled/@next/font").NextFo
 export declare const rubikIso: import("next/dist/compiled/@next/font").NextFontWithVariable;
 export declare const mozillaHeadline: import("next/dist/compiled/@next/font").NextFontWithVariable;
 export declare const rubikBrokenFax: import("next/dist/compiled/@next/font").NextFontWithVariable;
+/** Fuentes de la tercera ronda de inspiraciones (docs/58): ultranegras, caligráfica, a mano y extendida. */
+export declare const archivoBlack: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const bowlbyOne: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const pinyonScript: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const caveat: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const titanOne: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const patrickHand: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const ultra: import("next/dist/compiled/@next/font").NextFontWithVariable;
+export declare const unbounded: import("next/dist/compiled/@next/font").NextFontWithVariable;
 /** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
 export declare const fontVariables: string;

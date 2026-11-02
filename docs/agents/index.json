@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceCommit": "bd24749e83789574d095a0c04a7de2f50c7e7000",
   "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
@@ -46,7 +46,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "628aa3e6503ae49b578cb4c4cc099bbe3cd1e824ca8904d00ffa01c83076c48c"
+      "sha256": "a15eacf599084db5206842f2eba452dd63415f011d187679f50c50b165551406"
     },
     {
       "path": "lib/catalog/entries/interaccion.tsx",
@@ -106,7 +106,7 @@
     },
     {
       "path": "lib/catalog/entries/texto.tsx",
-      "sha256": "b3c66c50293f1e7ce7535590f30e5cd9b77c79fc85635d64fd22ba9ae4321092"
+      "sha256": "f85fb48f506013a3b5790d93c9f2d674b025eacf9795a26141c31b783e13e8d4"
     },
     {
       "path": "lib/catalog/entries/transiciones.tsx",
@@ -122,11 +122,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+      "sha256": "0d4f38bdb29d63f3d0c08c37cfb7df126bf1fa3ca60b4d88c4b2cdf962d0fe59"
     },
     {
       "path": "package-lock.json",
@@ -138,7 +138,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -284,6 +284,125 @@
     },
     {
       "kind": "guide",
+      "id": "manchas",
+      "name": "Pop de manchas",
+      "description": "Fondo de color pleno con manchas orgánicas, ultranegra enorme, tarjetas giradas y una manuscrita que comenta",
+      "file": "guides/manchas.json"
+    },
+    {
+      "kind": "guide",
+      "id": "filmoteca",
+      "name": "Filmoteca",
+      "description": "Gris plata y negro puro, didona muy apretada en mayúsculas, fichas técnicas a filete y críticas con estrellas",
+      "file": "guides/filmoteca.json"
+    },
+    {
+      "kind": "guide",
+      "id": "goloso",
+      "name": "Rosa y chocolate",
+      "description": "Rosa empolvado y chocolate alternando secciones, una ultranegra de borde a borde cruzada por una caligráfica y serifa en mayúsculas a tamaño de frase.",
+      "file": "guides/goloso.json"
+    },
+    {
+      "kind": "guide",
+      "id": "sereno",
+      "name": "Ingeniería serena",
+      "description": "La web cabe en una tarjeta con una columna de bloques de arena a bosque",
+      "file": "guides/sereno.json"
+    },
+    {
+      "kind": "guide",
+      "id": "burdeos",
+      "name": "Residencia burdeos",
+      "description": "Burdeos profundo y hueso, didona centrada, una caligrafía gigante casi invisible detrás, marco de esquinas biseladas y etiquetas muy espaciadas.",
+      "file": "guides/burdeos.json"
+    },
+    {
+      "kind": "guide",
+      "id": "tinta",
+      "name": "Tinta a mano",
+      "description": "Papel, tinta y un rojo para lo que va mal",
+      "file": "guides/tinta.json"
+    },
+    {
+      "kind": "guide",
+      "id": "baldosa",
+      "name": "Mosaico de baldosas",
+      "description": "La página es una rejilla de baldosas a filete fino: palabra enorme, semitono, una baldosa negra y otra menta",
+      "file": "guides/baldosa.json"
+    },
+    {
+      "kind": "guide",
+      "id": "orbital",
+      "name": "Mando orbital",
+      "description": "Negro espacial con un globo de datos, titular extendido en mayúsculas y cifras enormes sobre blanco",
+      "file": "guides/orbital.json"
+    },
+    {
+      "kind": "guide",
+      "id": "catalogo",
+      "name": "Catálogo de color",
+      "description": "Beige y arena con objetos de colores vivos en baldosas escalonadas, grotesca a 600 apretada y botones en píldora",
+      "file": "guides/catalogo.json"
+    },
+    {
+      "kind": "guide",
+      "id": "cartel",
+      "name": "Cartel suizo",
+      "description": "Blanco, negro y bloques planos de verde y naranja",
+      "file": "guides/cartel.json"
+    },
+    {
+      "kind": "guide",
+      "id": "mineral",
+      "name": "Mineral y bosque",
+      "description": "Gris mineral y verde bosque, Geist amplia, producto explorable y datos de materiales",
+      "file": "guides/mineral.json"
+    },
+    {
+      "kind": "guide",
+      "id": "ambar",
+      "name": "Ámbar nocturno",
+      "description": "Negro cálido y un ámbar que parece luz",
+      "file": "guides/ambar.json"
+    },
+    {
+      "kind": "guide",
+      "id": "glaciar",
+      "name": "Archivo glaciar",
+      "description": "Azul glaciar muy oscuro y hielo claro, grotesca contenida con serifa en cursiva, mono técnico y un naranja de expedición",
+      "file": "guides/glaciar.json"
+    },
+    {
+      "kind": "guide",
+      "id": "ilustrado",
+      "name": "Papel ilustrado",
+      "description": "Papel cálido, tomate, ultramar y mantequilla como tintas planas",
+      "file": "guides/ilustrado.json"
+    },
+    {
+      "kind": "guide",
+      "id": "senal",
+      "name": "Señal corporativa",
+      "description": "Papel mineral con azul eléctrico, lima y coral, grotesca de escala grande y datos monoespaciados",
+      "file": "guides/senal.json"
+    },
+    {
+      "kind": "guide",
+      "id": "festival",
+      "name": "Festival pastel",
+      "description": "Rosa pastel, azul real y amarillo, titular gigante de grotesca redonda y etiquetas en píxel",
+      "file": "guides/festival.json"
+    },
+    {
+      "kind": "guide",
+      "id": "varietes",
+      "name": "Cartel de varietés",
+      "description": "Crema, rojo telón y oro viejo, letra de cartel gruesa con serifa y etiquetas estrechas muy espaciadas",
+      "file": "guides/varietes.json"
+    },
+    {
+      "kind": "guide",
       "id": "terminal",
       "name": "Terminal de neón",
       "description": "Negro tintado del color del acento, todo en monoespaciada, titulares gruesos en mayúsculas y un solo neón para lo que se puede tocar.",
@@ -377,7 +496,7 @@
       "kind": "component",
       "id": "guide-frame",
       "name": "GuideFrame",
-      "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—,…",
+      "description": "Aplica una de las treinta y seis guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo…",
       "file": "components/guide-frame.json"
     },
     {

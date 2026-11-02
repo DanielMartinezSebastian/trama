@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceCommit": "bd24749e83789574d095a0c04a7de2f50c7e7000",
   "sourceDirty": true,
   "kind": "component",
   "id": "guide-frame",
@@ -18,7 +18,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "628aa3e6503ae49b578cb4c4cc099bbe3cd1e824ca8904d00ffa01c83076c48c"
+      "sha256": "a15eacf599084db5206842f2eba452dd63415f011d187679f50c50b165551406"
     },
     {
       "path": "lib/catalog/schema.ts",
@@ -26,11 +26,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "57c4e02e7ab3bb0a195af6de5381f634aea20a6997415e2409ca3f22406b36c6"
+      "sha256": "0d4f38bdb29d63f3d0c08c37cfb7df126bf1fa3ca60b4d88c4b2cdf962d0fe59"
     },
     {
       "path": "lib/ui/text-contrast.ts",
@@ -50,7 +50,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -62,7 +62,7 @@
     },
     {
       "path": "scripts/fixtures/agents/salon-style.tsx.txt",
-      "sha256": "8e601b29899027f61a301465af995e416a761668e0d0709a032ca2425b6e1702"
+      "sha256": "832c772833f00e93af73ebbfefba610c68fb4ef61cc838b11b24c198a43099f4"
     },
     {
       "path": "scripts/kit-lib.mts",
@@ -84,7 +84,7 @@
   },
   "name": "Guía de estilo (sistema completo de una web premiada)",
   "component": "GuideFrame",
-  "description": "Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+  "description": "Aplica una de las treinta y seis guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las diecinueve anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca— y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
   "category": "secciones",
   "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
   "api": {
@@ -116,6 +116,23 @@
         "autor",
         "escuela",
         "marca",
+        "manchas",
+        "filmoteca",
+        "goloso",
+        "sereno",
+        "burdeos",
+        "tinta",
+        "baldosa",
+        "orbital",
+        "catalogo",
+        "cartel",
+        "mineral",
+        "ambar",
+        "glaciar",
+        "ilustrado",
+        "senal",
+        "festival",
+        "varietes",
         "terminal",
         "pixel",
         "puntos",
@@ -137,6 +154,23 @@
         "autor": "Academia de autor",
         "escuela": "Escuela amarilla",
         "marca": "Producto de marca",
+        "manchas": "Pop de manchas",
+        "filmoteca": "Filmoteca",
+        "goloso": "Rosa y chocolate",
+        "sereno": "Ingeniería serena",
+        "burdeos": "Residencia burdeos",
+        "tinta": "Tinta a mano",
+        "baldosa": "Mosaico de baldosas",
+        "orbital": "Mando orbital",
+        "catalogo": "Catálogo de color",
+        "cartel": "Cartel suizo",
+        "mineral": "Mineral y bosque",
+        "ambar": "Ámbar nocturno",
+        "glaciar": "Archivo glaciar",
+        "ilustrado": "Papel ilustrado",
+        "senal": "Señal corporativa",
+        "festival": "Festival pastel",
+        "varietes": "Cartel de varietés",
         "terminal": "Terminal de neón",
         "pixel": "Arcade pixel",
         "puntos": "Matriz de puntos",

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "29671ea4a9c6aef6496b532731a33a6e3518d93d",
+  "sourceCommit": "bd24749e83789574d095a0c04a7de2f50c7e7000",
   "sourceDirty": true,
   "kind": "component",
   "id": "pricing-section",
@@ -78,7 +78,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4a37ccffdaf1c64617480dff1d698c7df52fd765d723cd1ded0117a3c8364f79"
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
     },
     {
       "path": "lib/ui/icons.ts",
@@ -110,7 +110,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",

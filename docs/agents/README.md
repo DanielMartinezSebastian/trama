@@ -19,6 +19,23 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./in
 - [guide: Academia de autor](./guides/autor.md)
 - [guide: Escuela amarilla](./guides/escuela.md)
 - [guide: Producto de marca](./guides/marca.md)
+- [guide: Pop de manchas](./guides/manchas.md)
+- [guide: Filmoteca](./guides/filmoteca.md)
+- [guide: Rosa y chocolate](./guides/goloso.md)
+- [guide: Ingeniería serena](./guides/sereno.md)
+- [guide: Residencia burdeos](./guides/burdeos.md)
+- [guide: Tinta a mano](./guides/tinta.md)
+- [guide: Mosaico de baldosas](./guides/baldosa.md)
+- [guide: Mando orbital](./guides/orbital.md)
+- [guide: Catálogo de color](./guides/catalogo.md)
+- [guide: Cartel suizo](./guides/cartel.md)
+- [guide: Mineral y bosque](./guides/mineral.md)
+- [guide: Ámbar nocturno](./guides/ambar.md)
+- [guide: Archivo glaciar](./guides/glaciar.md)
+- [guide: Papel ilustrado](./guides/ilustrado.md)
+- [guide: Señal corporativa](./guides/senal.md)
+- [guide: Festival pastel](./guides/festival.md)
+- [guide: Cartel de varietés](./guides/varietes.md)
 - [guide: Terminal de neón](./guides/terminal.md)
 - [guide: Arcade pixel](./guides/pixel.md)
 - [guide: Matriz de puntos](./guides/puntos.md)
@@ -78,6 +95,23 @@ pilot
 | guide | autor | Gris claro con dos acentos, todo en minúsculas, títulos entre paréntesis, garabatos a mano y botones con sombra dura: la marca es la persona. |
 | guide | escuela | Amarillo saturado y negro, una grotesca en mayúsculas siempre apretada, recuadros con borde y sombra dura; fotos documentales de las clases. |
 | guide | marca | Dos tintas como una serigrafía, grotesca estrecha y gruesa a tamaño de cartel, texto grande en mayúsculas y el producto fijo mientras pasa la página. |
+| guide | manchas | Fondo de color pleno con manchas orgánicas, ultranegra enorme, tarjetas giradas y una manuscrita que comenta |
+| guide | filmoteca | Gris plata y negro puro, didona muy apretada en mayúsculas, fichas técnicas a filete y críticas con estrellas |
+| guide | goloso | Rosa empolvado y chocolate alternando secciones, una ultranegra de borde a borde cruzada por una caligráfica y serifa en mayúsculas a tamaño de frase. |
+| guide | sereno | La web cabe en una tarjeta con una columna de bloques de arena a bosque |
+| guide | burdeos | Burdeos profundo y hueso, didona centrada, una caligrafía gigante casi invisible detrás, marco de esquinas biseladas y etiquetas muy espaciadas. |
+| guide | tinta | Papel, tinta y un rojo para lo que va mal |
+| guide | baldosa | La página es una rejilla de baldosas a filete fino: palabra enorme, semitono, una baldosa negra y otra menta |
+| guide | orbital | Negro espacial con un globo de datos, titular extendido en mayúsculas y cifras enormes sobre blanco |
+| guide | catalogo | Beige y arena con objetos de colores vivos en baldosas escalonadas, grotesca a 600 apretada y botones en píldora |
+| guide | cartel | Blanco, negro y bloques planos de verde y naranja |
+| guide | mineral | Gris mineral y verde bosque, Geist amplia, producto explorable y datos de materiales |
+| guide | ambar | Negro cálido y un ámbar que parece luz |
+| guide | glaciar | Azul glaciar muy oscuro y hielo claro, grotesca contenida con serifa en cursiva, mono técnico y un naranja de expedición |
+| guide | ilustrado | Papel cálido, tomate, ultramar y mantequilla como tintas planas |
+| guide | senal | Papel mineral con azul eléctrico, lima y coral, grotesca de escala grande y datos monoespaciados |
+| guide | festival | Rosa pastel, azul real y amarillo, titular gigante de grotesca redonda y etiquetas en píxel |
+| guide | varietes | Crema, rojo telón y oro viejo, letra de cartel gruesa con serifa y etiquetas estrechas muy espaciadas |
 | guide | terminal | Negro tintado del color del acento, todo en monoespaciada, titulares gruesos en mayúsculas y un solo neón para lo que se puede tocar. |
 | guide | pixel | Ciruela de noche, letra de píxel solo en los titulares, monoespaciada para leer, un amarillo de moneda y esquinas que no se redondean. |
 | guide | puntos | Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color. |
@@ -91,7 +125,7 @@ pilot
 | component | before-after | Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido) |
 | component | booking-flow | Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al… |
 | component | footer | Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing. |
-| component | guide-frame | Aplica una de las diecinueve guías de estilo (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—,… |
+| component | guide-frame | Aplica una de las treinta y seis guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo… |
 | component | image-gallery | Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas |
 | component | image-reveal | Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño |
 | component | menu-list | Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que… |

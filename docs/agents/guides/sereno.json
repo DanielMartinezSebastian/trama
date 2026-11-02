@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "bd24749e83789574d095a0c04a7de2f50c7e7000",
+  "sourceDirty": true,
+  "kind": "guide",
+  "id": "sereno",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/styles/ui-guides.css",
+      "sha256": "2a163b4287de8ab2644ca9d6da77292d574bde089381bcb39beed25e65e4253c"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+    },
+    {
+      "path": "lib/ui/fonts.ts",
+      "sha256": "a1461ad5dab920100cc035ad5aa901240153196224906e8dd1f7ba44344257b0"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "0d4f38bdb29d63f3d0c08c37cfb7df126bf1fa3ca60b4d88c4b2cdf962d0fe59"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3eeb4b518bfcbd7561f16dd72ac7c9beda2e3513398fdaaeb7e7ac4fc8123f0c"
+    },
+    {
+      "path": "package.json",
+      "sha256": "2ec279ef18c74fabb6d6a064d5cae64ff70ae92ead9dad016e6a695fb68d4654"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "0633068d1b2f691b6df8a79745b903198b1b811bbbfceb8f428ec03ef994ae5a"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Ingeniería serena",
+  "guide": {
+    "id": "sereno",
+    "source": "premiadas",
+    "label": "Ingeniería serena",
+    "note": "La web cabe en una tarjeta con una columna de bloques de arena a bosque. Serifa fina y clara sobre imagen a sangre, mono en los botones. Tecnología que no grita.",
+    "sectors": "Robótica, energía, clima, ciencia aplicada, defensa civil, hardware con propósito",
+    "refs": [
+      "Seasats",
+      "Marejada (/inspiraciones/marejada)"
+    ],
+    "variant": "minimal",
+    "tokens": {
+      "bg": "#fffdfd",
+      "fg": "#232323",
+      "mut": "#5e5e58",
+      "acc": "#2c3a24",
+      "acc2": "#6d7763",
+      "card": "#efeeea",
+      "ln": "rgba(35,35,35,0.16)",
+      "r": 8,
+      "font": "var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif",
+      "display": "var(--font-newsreader), Georgia, serif",
+      "accentFont": "var(--font-newsreader), Georgia, serif",
+      "glow": false
+    },
+    "fonts": {
+      "display": "var(--font-newsreader), Georgia, serif",
+      "body": "var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif",
+      "accent": "var(--font-newsreader), Georgia, serif",
+      "mono": "var(--font-geist-mono), ui-monospace, Consolas, monospace"
+    },
+    "type": {
+      "brand": "clamp(4rem, 12.5vw, 11rem)",
+      "h1": "clamp(3rem, 7.8vw, 7.75rem)",
+      "h2": "clamp(2.5rem, 5.6vw, 5rem)",
+      "body": "1rem",
+      "label": "0.75rem",
+      "weight": 300,
+      "lineHeight": 1,
+      "tracking": -0.02,
+      "upper": false,
+      "labelUpper": true,
+      "labelTracking": 0.04,
+      "bodyLineHeight": 1.4
+    },
+    "space": {
+      "margin": "clamp(16px, 2.2vw, 32px)",
+      "gutter": "10px",
+      "cols": 12,
+      "section": "clamp(90px, 9vw, 130px)",
+      "header": "24px",
+      "measure": "32em"
+    },
+    "surface": {
+      "radius": 8,
+      "pill": false,
+      "shadow": false
+    },
+    "motion": {
+      "fast": 0.4,
+      "reveal": 0.7,
+      "page": 0.6,
+      "stagger": 0.08,
+      "ease": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+      "easeReveal": "cubic-bezier(0.215, 0.61, 0.355, 1)"
+    },
+    "heroes": [
+      "split-video",
+      "framed-object"
+    ],
+    "stories": [
+      "object",
+      "product"
+    ]
+  },
+  "application": {
+    "component": "GuideFrame",
+    "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"sereno\">",
+    "css": "trama-ui/styles.css",
+    "classes": [
+      "ui-g-body",
+      "ui-g-brand",
+      "ui-g-btn",
+      "ui-g-btn--ghost",
+      "ui-g-card",
+      "ui-g-grid",
+      "ui-g-h1",
+      "ui-g-h2",
+      "ui-g-header",
+      "ui-g-label",
+      "ui-g-line",
+      "ui-g-mono",
+      "ui-g-muted",
+      "ui-g-rise",
+      "ui-g-section",
+      "ui-g-wrap"
+    ],
+    "fontVariables": [
+      "--font-geist-mono",
+      "--font-instrument-sans",
+      "--font-newsreader"
+    ]
+  },
+  "contrast": [
+    {
+      "text": "fg",
+      "surface": "bg",
+      "ratio": 15.51,
+      "use": "texto normal"
+    },
+    {
+      "text": "fg",
+      "surface": "card",
+      "ratio": 13.54,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "bg",
+      "ratio": 6.44,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "card",
+      "ratio": 5.62,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "bg",
+      "ratio": 11.92,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "card",
+      "ratio": 10.41,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc2",
+      "surface": "bg",
+      "ratio": 4.64,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc2",
+      "surface": "card",
+      "ratio": 4.05,
+      "use": "solo texto grande, iconos o bordes de control"
+    }
+  ],
+  "requirements": [
+    "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
+    "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
+    "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: GuideFrame textContrast calcula --mut-text/--acc-text para el texto del kit sobre --bg (sRGB opaco), conservando --mut/--acc decorativos. Consultar sus límites en la API; para otras superficies/estados o CSS propio, adaptar y medir el tema local."
+  ],
+  "examples": [],
+  "limitations": [
+    "La tabla de contraste mide tokens sobre fondos lisos; revisar la aplicación visual en cada proyecto (imágenes, transparencias, estados). Una guía no certifica accesibilidad.",
+    "Fotos, vídeos y fuentes Fontshare no se redistribuyen por esta ficha.",
+    "No se declara soporte universal de Next.js o de React genérico a partir de un consumidor piloto."
+  ]
+}

@@ -13,7 +13,7 @@
  * Fonts): usa `next/font/local` en este mismo archivo, exporta su variable igual
  * que las de abajo y regístrala en `FONT_PRESETS`. Ver guía §11.
  */
-import { Archivo_Black, Bowlby_One, Caveat, Patrick_Hand, Pinyon_Script, Titan_One, Unbounded } from "next/font/google";
+import { Archivo_Black, Bowlby_One, Caveat, Patrick_Hand, Pinyon_Script, Titan_One, Ultra, Unbounded } from "next/font/google";
 import { Fraunces, IBM_Plex_Mono, Inter, Instrument_Serif, JetBrains_Mono, Major_Mono_Display, Manrope, Share_Tech_Mono, Space_Grotesk, Space_Mono, Syne } from "next/font/google";
 
 export const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -147,11 +147,12 @@ export const pinyonScript = Pinyon_Script({ weight: "400", subsets: ["latin"], v
 export const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat", display: "swap", preload: false });
 export const titanOne = Titan_One({ weight: "400", subsets: ["latin"], variable: "--font-titan-one", display: "swap", preload: false });
 export const patrickHand = Patrick_Hand({ weight: "400", subsets: ["latin"], variable: "--font-patrick-hand", display: "swap", preload: false });
+export const ultra = Ultra({ weight: "400", subsets: ["latin"], variable: "--font-ultra", display: "swap", preload: false });
 export const unbounded = Unbounded({ subsets: ["latin"], variable: "--font-unbounded", display: "swap", preload: false });
 
 /** Todas las variables juntas, para aplicar una sola vez en `<html>` (ver `app/layout.tsx`). */
 export const fontVariables = [
-  archivoBlack, bowlbyOne, pinyonScript, caveat, titanOne, patrickHand, unbounded,
+  archivoBlack, bowlbyOne, pinyonScript, caveat, titanOne, patrickHand, unbounded, ultra,
   inter, manrope, spaceGrotesk, syne, fraunces, instrumentSerif, jetbrainsMono, spaceMono,
   interTight, instrumentSans, geist, schibstedGrotesk, bricolageGrotesque, newsreader, bodoniModa, cormorantGaramond, playfairDisplay, geistMono,
   anton, antonio, monaSans, onest, archivo, gloock, martianMono,
