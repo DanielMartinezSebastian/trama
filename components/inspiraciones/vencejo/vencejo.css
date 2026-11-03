@@ -8,7 +8,7 @@
   background: var(--bg); color: var(--fg); font: 400 14px/1.5 var(--font-inter), system-ui, sans-serif; overflow-x: clip;
 }
 :where(.ve) a { color: inherit; text-decoration: none; }
-.ve h1, .ve h2 { margin: 0; font: 500 clamp(2.2rem, 4vw, 3.6rem)/0.88 var(--ve-cond); letter-spacing: 0.04em; text-transform: uppercase; }
+.ve h1, .ve h2 { margin: 0; font: 500 clamp(2.2rem, 4vw, 3.6rem)/0.96 var(--ve-cond); letter-spacing: 0.04em; text-transform: uppercase; }
 .ve-sobre { margin: 0; font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
 .ve-boton { display: inline-block; padding: 10px 26px; border: 1px solid var(--fg); background: none; color: var(--fg); font: 600 9px/1 var(--font-inter); letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
 .ve-boton:hover { background: var(--fg); color: var(--bg); }
@@ -32,8 +32,8 @@
 /* portada */
 .ve-hero { position: relative; display: grid; place-items: center; height: 100svh; color: #fff; text-align: center; background: #0e2633; }
 .ve-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.72; }
-.ve-hero div { position: relative; display: grid; gap: 14px; justify-items: center; }
-.ve-hero h1 { max-width: 9em; font-size: clamp(2.8rem, 4.2vw, 4rem); }
+.ve-hero div { position: relative; display: grid; gap: 14px; justify-items: center; padding-inline: var(--ve-m); }
+.ve-hero h1 { max-width: 9em; font-size: clamp(2.4rem, 4.2vw, 4rem); }
 
 .ve-pasion { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 110px var(--ve-m); }
 .ve-pasion h2 { grid-column: 1 / -1; text-align: center; margin-bottom: 30px; }

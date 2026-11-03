@@ -47,8 +47,20 @@ quedaba en 6,6 vw) y el peso de `motor` baja a 500, el medido.
 ## 3. Imágenes
 
 101 imágenes en `docs/encargo-imagenes-inspiraciones-4.md` (y `.json`), generado por `.refs/encargo4.py` a partir de la lista
-de cada web. Hasta que lleguen las de Codex, cada archivo es un recorte de una foto del repo al tamaño exacto: la página no se
-rompe, pero muchas no enseñan lo que dicen (no hay fauna, coches ni platos en el repo).
+de cada web. Mientras tanto, cada archivo fue un recorte de una foto del repo al tamaño exacto.
+
+Codex las entregó el 03-11-2026 (commit `3c90d6c`): las 101, en WebP al tamaño exacto y por debajo de 300 KB. Rehízo nueve
+(letras en neumáticos, caracteres inventados en un vidrio, un segundo coche al fondo, recortes que cortaban caras o manos en
+móvil). Revisadas en hoja de contacto y en las portadas: cada web mantiene una sola sesión de fotos (Vencejo, el mismo coupé
+verde en todas; PLENO, retratos en blanco y negro).
+
+Las fotos reales destaparon tres fallos de la réplica, ya corregidos:
+
+- **Pausa**: la cabecera de la portada iba en blanco sobre la foto, que ahora es clara. En escritorio pasa a azul tinta; en
+  móvil, donde caía sobre el pelo, tiene fondo propio.
+- **Vencejo**: con interlineado 0,88, la tilde de «CAPÍTULO» y «MÁS» tocaba la línea de arriba; sube a 0,96. El titular de la
+  portada tocaba los bordes en móvil: margen lateral y 2,4 rem de mínimo.
+- **Solera**: la foto del estudio es más luminosa; el oscurecido baja de 0,82 a 0,68 para que se lean los textos de 12 px.
 
 ## 4. Pares
 
@@ -76,6 +88,9 @@ software y conferencia, cada una con su guía, secciones con piezas del kit, lla
 
 - Una marca inventada a partir de un logotipo geométrico se acerca demasiado al original sin querer: el primer logotipo de
   PLENO (círculo y barras) se leía como «OFFF» y se cambió por círculo, cuadrado, triángulo y píldora.
+- El texto blanco sobre una foto se decide con la foto definitiva: un recorte provisional oscuro escondió que la portada de
+  Pausa no se leía con la imagen real.
+- Las condensadas en mayúsculas con interlineado por debajo de 0,95 chocan en español: las tildes de las mayúsculas suben.
 - Las páginas claras dentro de una web oscura tienen que redefinir los tokens, no solo el color: las piezas del kit (BriefFlow)
   leen `--fg` y `--bg`, y en Nimbo salían con botones invisibles.
 - El rojo de Délice (#de2b2b) no llega a 4,5:1 con texto crema; Bocado usa #cc2629.
@@ -94,5 +109,4 @@ software y conferencia, cada una con su guía, secciones con piezas del kit, lla
 
 ## 8. Pendiente
 
-- Encargo de 101 imágenes a Codex (§3) y revisión posterior.
-- Volver a medir los pares con las fotos reales.
+- Alargar las portadas hacia el largo de las originales, la diferencia que más se repite en los pares.

@@ -24,7 +24,7 @@
 
 /* cabecera: logo, lema y navegación en una fila de letra diminuta */
 .pa-head { position: sticky; top: 0; z-index: 30; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; padding: 12px var(--pa-m); background: var(--bg); color: var(--fg); }
-.pa--inicio .pa-head { position: absolute; left: 0; right: 0; top: 50svh; translate: 0 -50%; background: none; color: #fff; }
+.pa--inicio .pa-head { position: absolute; left: 0; right: 0; top: 50svh; translate: 0 -50%; background: none; color: var(--fg); }
 .pa-logo { font: 400 22px/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; }
 .pa-head__lema { margin: 0; font-size: 12px; }
 .pa-head nav { display: flex; gap: 26px; font: 400 10px var(--font-inter), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -122,7 +122,7 @@
   .pa-head { grid-template-columns: 1fr auto; }
   .pa-head nav, .pa-head__lema { display: none; }
   .pa-burger { display: block; }
-  .pa--inicio .pa-head { top: 0; translate: none; }
+  .pa--inicio .pa-head { position: sticky; top: 0; translate: none; background: var(--bg); }
   .pa-intro, .pa-filosofia, .pa-metodo, .pa-enfoque, .pa-cat, .pa-ficha, .pa-preo { grid-template-columns: 1fr; }
   .pa-intro__foto { width: 40%; }
   .pa-razones__fila, .pa-cat ul, .pa-equipo { grid-template-columns: 1fr 1fr; }

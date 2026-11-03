@@ -35,7 +35,7 @@ Marca, textos y datos propios; varias páginas, flujo de negocio y menú móvil 
 
 ## Diferencias con la referencia
 
-`refs:probe --par`: 10 de 16 medidas cerca; la portada mide 3.3 pantallas frente a 1.6 de la original. Las fotos son provisionales hasta que Codex entregue `docs/encargo-imagenes-inspiraciones-4.md`.
+`refs:probe --par`: 10 de 16 medidas cerca; la portada mide 3.3 pantallas frente a 1.6 de la original. Medido otra vez con las fotos definitivas de Codex (commit 3c90d6c): mismo resultado.
 
 ## Aprendido
 
@@ -43,4 +43,4 @@ Ver docs/59 §6.
 
 ## Siguiente
 
-Volver a medir el par con las fotos reales.
+Alargar la portada hacia el largo de la original.
