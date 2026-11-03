@@ -49,7 +49,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <a href={nucleoHref("mi-cuenta")} className="nc-entrar">
           Mi cuenta
         </a>
-        <FullscreenMenu brand="Núcleo" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Calle de Jorge Juan 18 · Madrid" links={[{ label: "Inicio", href: nucleoHref() }, ...NAV.map(([p, l]) => ({ label: l, href: nucleoHref(p) })), { label: "Mi cuenta", href: nucleoHref("mi-cuenta") }]} className="nc-menu" />
+        <FullscreenMenu trigger="plus" layout="sheet" size="md" rules brand="Núcleo" openLabel="Menú" closeLabel="Cerrar" note="Calle de Jorge Juan 18 · Madrid" links={[{ label: "Inicio", href: nucleoHref() }, ...NAV.map(([p, l]) => ({ label: l, href: nucleoHref(p) })), { label: "Mi cuenta", href: nucleoHref("mi-cuenta") }]} className="nc-menu" />
       </header>
       {children}
       <footer className="nc-pie">

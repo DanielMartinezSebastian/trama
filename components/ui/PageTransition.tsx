@@ -41,6 +41,8 @@ export type PageTransitionProps = {
   tone?: PageTransitionTone;
   /** tipo de transición → animación, p. ej. `{ "abrir-ficha": "iris" }`; tiene prioridad sobre los tipos automáticos */
   types?: Record<string, PageTransitionAnimation | PageTransitionKind>;
+  /** selector del contenedor del tema de la página (sus `--acc`, `--fg`, fondo…); sin él, se toma el del centro de la ventana */
+  themeFrom?: string;
   children: ReactNode;
 };
 
@@ -49,13 +51,13 @@ export type PageTransitionProps = {
  * en un `layout`, que no se vuelve a montar). La animación la decide la página de DESTINO. No añade nodos al DOM.
  * Sin soporte (React sin `ViewTransition` o navegador sin la API), la página cambia sin animar.
  */
-export default function PageTransition({ kind = "fade", direction, pace = "normal", tone = "acc", types, children }: PageTransitionProps) {
+export default function PageTransition({ kind = "fade", direction, pace = "normal", tone = "acc", types, themeFrom, children }: PageTransitionProps) {
   if (!ViewTransition) return <Fragment>{children}</Fragment>;
   // El `<ViewTransition>` con todas las clases a "none" no captura nada por su cuenta: solo hace que React envuelva la
   // navegación en `document.startViewTransition` (se monta un boundary). La animación es la de la raíz.
   return (
     <ViewTransition enter="none" exit="none" update="none" share="none" default="none">
-      <PageTransitionRoot kind={kind} direction={direction} pace={pace} tone={tone} types={types} />
+      <PageTransitionRoot kind={kind} direction={direction} pace={pace} tone={tone} types={types} themeFrom={themeFrom} />
       {children}
     </ViewTransition>
   );

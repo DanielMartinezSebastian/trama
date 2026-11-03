@@ -88,7 +88,7 @@ export function Shell({ children }: { children: ReactNode }) {
             Bolsa ({carrito.count})
           </button>
           <div className="zn-burger">
-            <FullscreenMenu brand="zanco" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Muebles con patas largas" links={links} />
+            <FullscreenMenu trigger="pill" layout="sheet" tone="acc" reveal="slide" size="md" numbered brand="zanco" openLabel="Menú" closeLabel="Cerrar" note="Muebles con patas largas" links={links} />
           </div>
         </header>
         {children}

@@ -49,7 +49,7 @@ export function Shell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <Whatsapp />
-        <FullscreenMenu brand="Raíz" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Calle del Doctor Sumsi 14 · Valencia" links={[{ label: "Inicio", href: raizHref() }, ...NAV.map(([p, l]) => ({ label: l, href: raizHref(p) }))]} footer={[{ label: "WhatsApp", href: WHATSAPP() }]} className="rz-menu" />
+        <FullscreenMenu trigger="burger" layout="split" reveal="circle" aside={<img src="/img/inspiraciones/raiz/proceso-manos.webp" alt="" />} brand="Raíz" openLabel="Menú" closeLabel="Cerrar" note="Calle del Doctor Sumsi 14 · Valencia" links={[{ label: "Inicio", href: raizHref() }, ...NAV.map(([p, l]) => ({ label: l, href: raizHref(p) }))]} footer={[{ label: "WhatsApp", href: WHATSAPP() }]} className="rz-menu" />
       </header>
       {children}
       <footer className="rz-pie" id="contacto">

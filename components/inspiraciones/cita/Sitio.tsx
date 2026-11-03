@@ -55,10 +55,10 @@ export function Shell({ children }: { children: ReactNode }) {
             Reservar
           </a>
         </nav>
-        <FullscreenMenu
+        <FullscreenMenu trigger="plus" tone="acc" reveal="circle" align="center"
           className="ci-menu"
           brand="Cita Barbers"
-          trigger="burger"
+         
           openLabel="Menú"
           closeLabel="Cerrar"
           links={[{ label: "Inicio", href: citaHref() }, ...NAV, { label: "Reservar", href: citaHref("reservar") }]}

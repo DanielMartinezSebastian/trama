@@ -168,7 +168,7 @@
 @media (max-width: 760px) { .of .of-lema__frase { font-size: 28px; } }
 
 /* páginas (docs/56): cabecera de página, ficha del programa con recuadro de módulos, mentores, legal y el menú del móvil */
-.of-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.of-head .ui-fsm__btn { display: none; }
 .of-pag { display: grid; gap: 40px; padding: 60px 42px 120px; }
 .of-pag > * { min-width: 0; }
 .of-pag > h2 { text-align: left; }
@@ -201,7 +201,7 @@
 .of-legal .of-boton { justify-self: start; }
 .of-pie span a { text-decoration: underline; }
 @media (max-width: 760px) {
-  .of-head .ui-fsm__btn--burger { display: inline-flex; margin-left: auto; }
+  .of-head .ui-fsm__btn { display: inline-flex; margin-left: auto; }
   .of-head > .of-boton { display: none; }
   .of-pag { padding: 40px 20px 80px; }
   .of-ficha { grid-template-columns: 1fr; }

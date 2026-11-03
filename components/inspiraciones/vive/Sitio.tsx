@@ -40,7 +40,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <a href={viveHref("mi-cuenta")} className="vv-unete">
           Mi cuenta [+]
         </a>
-        <FullscreenMenu brand="Vive" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="4 clubes · de 6:00 a 23:00" links={[{ label: "Inicio", href: viveHref() }, ...NAV.map(([p, l]) => ({ label: l, href: viveHref(p) })), { label: "Mi cuenta", href: viveHref("mi-cuenta") }]} className="vv-menu" />
+        <FullscreenMenu trigger="burger" tone="acc" reveal="slide" linkHover="marquee" brand="Vive" openLabel="Menú" closeLabel="Cerrar" note="4 clubes · de 6:00 a 23:00" links={[{ label: "Inicio", href: viveHref() }, ...NAV.map(([p, l]) => ({ label: l, href: viveHref(p) })), { label: "Mi cuenta", href: viveHref("mi-cuenta") }]} className="vv-menu" />
       </header>
       {children}
       <footer className="vv-pie">

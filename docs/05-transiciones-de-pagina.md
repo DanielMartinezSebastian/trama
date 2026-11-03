@@ -373,15 +373,20 @@ productora es un retrato dentro de un `sticky` y en contacto, una píldora dentr
 
 ## Tema
 
-Los pseudo-elementos de la transición cuelgan de `<html>`, no del contenedor donde pones el tema: leen los tokens de
-`:root`. Si defines `--bg`, `--acc`… en `:root`, no hay nada que hacer. Si tu tema vive en un contenedor (un `<div>`
-con `style={tokensToStyle(…)}`), repite en `:root` al menos el acento y el fondo:
+Los pseudo-elementos de la transición cuelgan de `<html>`, no del contenedor donde pones el tema. Por eso
+`PageTransition` copia en `<html>`, mientras dura cada navegación, el tema de la página nueva: `--acc`, `--acc2`, `--fg` y
+`--mut` como `--ui-vt-acc`… y el fondo pintado como `--ui-vt-bg`. Los lee en el elemento que ocupa el centro de la
+ventana; si ahí no está tu contenedor (por ejemplo, un vídeo a pantalla completa que vive fuera), indícalo con
+`themeFrom=".mi-web"`. Al terminar, `<html>` queda como estaba. Antes (hasta el 03-11-2026) había que repetir el tema en
+`:root` y una web con tema propio dentro del sitio barría con el color del sitio.
+
+Si fijas el fondo a mano, sigue mandando:
 
 ```css
-:root { --acc: #ff3b3b; --acc2: #8a8a8a; --ui-vt-page: #000; }
+:root { --ui-vt-page: #000; }
 ```
 
-`--ui-vt-page` (por defecto `--bg`) es el color de fondo de la página: queda debajo de la animación de la raíz y hace
+`--ui-vt-page` (por defecto, el fondo leído o `--bg`) es el color de fondo de la página: queda debajo de la animación de la raíz y hace
 opaca la página nueva en los efectos que la tapan (`wipe`, `scan`, `stack`, `blinds`, `stairs`, `pixelate`, `scanline`, `iris`, `curtain`,
 `terminal`); en `stack`, además, es el color de los huecos entre barras.
 

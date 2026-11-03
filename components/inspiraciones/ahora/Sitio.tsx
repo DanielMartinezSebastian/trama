@@ -76,7 +76,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </a>
           ))}
         </nav>
-        <FullscreenMenu brand="AHORA" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Cursos en Madrid y en línea" links={[{ label: "Inicio", href: ahoraHref() }, ...NAV.map(([p, l]) => ({ label: l, href: ahoraHref(p) }))]} className="ah-menu" />
+        <FullscreenMenu trigger="pill" layout="island" tone="acc" size="sm" numbered brand="AHORA" openLabel="Menú" closeLabel="Cerrar" note="Cursos en Madrid y en línea" links={[{ label: "Inicio", href: ahoraHref() }, ...NAV.map(([p, l]) => ({ label: l, href: ahoraHref(p) }))]} className="ah-menu" />
       </header>
       {children}
       <footer className="ah-pie" id="boletin">

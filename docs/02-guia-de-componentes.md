@@ -447,8 +447,10 @@ conviene saber al ampliarlo:
   `DIRECTIONAL_TRANSITION_KINDS` si lleva dirección: entonces el CSS es por `ui-vt-<animación>-<dirección>`). Ojo: en la raíz vieja y
   nueva comparten grupo (el fondo del grupo queda *debajo* de la vieja: el aro del iris, por ejemplo, agujerea la
   vieja para verse), y en un elemento son grupos distintos.
-- Los pseudo-elementos heredan de `<html>`: los tokens se leen de `:root` (no del contenedor del tema). Los efectos que
-  tapan la página vieja pintan la nueva sobre `--ui-vt-page` (por defecto `--bg`).
+- Los pseudo-elementos heredan de `<html>`, no del contenedor del tema: `PageTransition` copia en `<html>` el tema de la
+  página nueva durante la navegación (`--ui-vt-acc`, `--ui-vt-acc2`, `--ui-vt-fg`, `--ui-vt-mut`, `--ui-vt-bg`) y el CSS
+  los usa antes que los de `:root`. Un color nuevo en el CSS de transiciones = `var(--ui-vt-x, var(--x))`, nunca `var(--x)`
+  a secas. Los efectos que tapan la página vieja pintan la nueva sobre `--ui-vt-page` (por defecto `--ui-vt-bg` o `--bg`).
 - Lo que tiene que interpolar un valor propio (banda del barrido, radio del iris, bloques de `pixelate`) usa
   `@property`; sin él, el efecto salta a mitad en lugar de romperse.
 - Nada de destellos repetidos (WCAG 2.3.1): lo que aparece no vuelve a ocultarse, y con `prefers-reduced-motion` todo

@@ -54,7 +54,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <span>Calle de Ponzano 41 · 28003 Madrid</span>
         </div>
         <RollLink href={impulsoHref("reservar?servicio=prueba")} label="Empiezo" className="im-pildora" />
-        <FullscreenMenu brand="Impulso" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Calle de Ponzano 41 · Madrid" links={[{ label: "Inicio", href: impulsoHref() }, ...NAV.map(([p, l]) => ({ label: l, href: impulsoHref(p) })), { label: "Reservar", href: impulsoHref("reservar") }, { label: "Mi cuenta", href: impulsoHref("mi-cuenta") }]} className="im-menu" />
+        <FullscreenMenu trigger="burger" tone="fg" reveal="slide" numbered brand="Impulso" openLabel="Menú" closeLabel="Cerrar" note="Calle de Ponzano 41 · Madrid" links={[{ label: "Inicio", href: impulsoHref() }, ...NAV.map(([p, l]) => ({ label: l, href: impulsoHref(p) })), { label: "Reservar", href: impulsoHref("reservar") }, { label: "Mi cuenta", href: impulsoHref("mi-cuenta") }]} className="im-menu" />
       </header>
       {children}
       <footer className="im-pie">

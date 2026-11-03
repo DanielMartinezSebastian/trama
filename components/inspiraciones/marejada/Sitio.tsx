@@ -35,7 +35,7 @@ export function Shell({ children }: { children: ReactNode }) {
         MAREJADA
       </a>
       <div className="mj-burger">
-        <FullscreenMenu brand="Marejada" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Autonomía oceánica" links={links} />
+        <FullscreenMenu trigger="burger" layout="sheet" reveal="slide" size="sm" numbered brand="Marejada" openLabel="Menú" closeLabel="Cerrar" note="Autonomía oceánica" links={links} />
       </div>
       <nav className="mj-columna" aria-label="Principal">
         {COLUMNA.map((c) => (

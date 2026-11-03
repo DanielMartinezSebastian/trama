@@ -139,7 +139,7 @@
 .ci-nav a:not(.ci-boton):hover::after, .ci-nav a[aria-current="page"]::after { scale: 1 1; transform-origin: left; }
 .ci-nav .ci-boton { padding: 9px 18px; transition: background-color 0.25s, color 0.25s; }
 .ci-nav .ci-boton:hover { background: var(--acc); color: #000 !important; }
-.ci-head .ui-fsm__btn--burger { display: none; }
+.ci-head .ui-fsm__btn { display: none; }
 .ci-boton { transition: background-color 0.25s, color 0.25s, translate 0.25s; }
 .ci-boton:hover { translate: 0 -2px; }
 .ci-boton--grande { padding: 16px 28px; font-size: 15px; justify-self: start; }
@@ -209,7 +209,7 @@
 
 @media (max-width: 860px) {
   .ci-nav { display: none; }
-  .ci-head .ui-fsm__btn--burger { display: inline-flex; }
+  .ci-head .ui-fsm__btn { display: inline-flex; }
   .ci-pagina { padding: 110px 16px 120px; }
   .ci-ficha-mini, .ci-local-pag__rejilla { grid-template-columns: 1fr; }
   .ci-local-pag__foto { position: static; aspect-ratio: 4 / 3; }

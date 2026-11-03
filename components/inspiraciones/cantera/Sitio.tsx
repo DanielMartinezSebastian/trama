@@ -69,7 +69,7 @@ export function Shell({ children }: { children: ReactNode }) {
           Hablemos <span aria-hidden>→</span>
         </a>
         <div className="ct-burger">
-          <FullscreenMenu brand="Cantera" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Selección técnica" links={[{ label: "Inicio", href: canteraHref() }, ...nav.map(([p, l]) => ({ label: l, href: canteraHref(p) }))]} />
+          <FullscreenMenu trigger="plus" layout="drop" size="sm" numbered rules brand="Cantera" openLabel="Menú" closeLabel="Cerrar" note="Selección técnica" links={[{ label: "Inicio", href: canteraHref() }, ...nav.map(([p, l]) => ({ label: l, href: canteraHref(p) }))]} />
         </div>
       </header>
       {children}

@@ -8,10 +8,12 @@
      `::view-transition-old/new(root)` —todo el viewport— reciben la animación. Vieja y nueva están en el MISMO grupo:
      la nueva siempre encima, sin mezcla aditiva.
    · ui-vt-in / ui-vt-out: un elemento suelto que entra o sale (ElementTransition); son grupos distintos.
-   · Los pseudo-elementos heredan de <html>, no del contenedor del tema: los tokens (--bg, --acc, --acc2, --fg) se leen
-     de :root. Si el tema vive en un contenedor, repite en :root al menos --acc y el fondo (o --ui-vt-page).
+   · Los pseudo-elementos heredan de <html>, no del contenedor del tema. Por eso PageTransition copia en <html>, mientras
+     dura la navegación, los tokens del tema de la página nueva (--ui-vt-acc, --ui-vt-acc2, --ui-vt-fg, --ui-vt-mut y
+     --ui-vt-bg, este con el fondo pintado): los lee en el centro de la ventana o en el contenedor de `themeFrom`. Sin
+     ellos, se usan los de :root.
    · --ui-vt-page: color de fondo de la página: tapa los huecos de los efectos de cobertura (wipe, scan, stack, blinds,
-     pixelate, iris, terminal, scanline) y separa las barras de stack. Por defecto, --bg.
+     pixelate, iris, terminal, scanline) y separa las barras de stack. Por defecto, el fondo leído (--ui-vt-bg) o --bg.
    · --ui-vt-to: sentido de los degradados de scan y stack (`to bottom`, `to left`…); lo pone el grupo según la
      dirección y lo heredan la vieja y la nueva.
    ===================================================================== */
@@ -46,15 +48,15 @@
 ::view-transition-group(.ui-vt-morph) {
   --ui-vt-d: 380ms;
   --ui-vt-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ui-vt-c: var(--acc);
-  --ui-vt-c2: var(--acc2);
+  --ui-vt-c: var(--ui-vt-acc, var(--acc));
+  --ui-vt-c2: var(--ui-vt-acc2, var(--acc2));
   --ui-vt-x: 0px;
   --ui-vt-y: 0px;
 }
 ::view-transition-group(.ui-vt--fast) { --ui-vt-d: 240ms; }
 ::view-transition-group(.ui-vt--slow) { --ui-vt-d: 560ms; }
-::view-transition-group(.ui-vt--acc2) { --ui-vt-c: var(--acc2); --ui-vt-c2: var(--acc); }
-::view-transition-group(.ui-vt--fg) { --ui-vt-c: var(--fg); --ui-vt-c2: var(--mut); }
+::view-transition-group(.ui-vt--acc2) { --ui-vt-c: var(--ui-vt-acc2, var(--acc2)); --ui-vt-c2: var(--ui-vt-acc, var(--acc)); }
+::view-transition-group(.ui-vt--fg) { --ui-vt-c: var(--ui-vt-fg, var(--fg)); --ui-vt-c2: var(--ui-vt-mut, var(--mut)); }
 /* la página que entra, siempre encima de la que sale (los efectos de cobertura dependen de ello) */
 ::view-transition-group(.ui-vt-out) { z-index: 1; }
 ::view-transition-group(.ui-vt-in) { z-index: 2; }
@@ -64,7 +66,7 @@
    deja huecos transparentes. ---------- */
 ::view-transition-old(.ui-vt-root),
 ::view-transition-new(.ui-vt-root) { mix-blend-mode: normal; }
-:root[data-ui-vt]::view-transition { background: var(--ui-vt-page, var(--bg)); }
+:root[data-ui-vt]::view-transition { background: var(--ui-vt-page, var(--ui-vt-bg, var(--bg))); }
 /* none: cambio instantáneo de la ventana (los elementos persistentes y compartidos siguen a lo suyo) */
 ::view-transition-group(.ui-vt-root.ui-vt-none),
 ::view-transition-new(.ui-vt-root.ui-vt-none) { animation: none; }
@@ -95,7 +97,7 @@
 ::view-transition-new(.ui-vt-scanline),
 ::view-transition-new(.ui-vt-iris),
 ::view-transition-new(.ui-vt-curtain),
-::view-transition-new(.ui-vt-terminal) { background: var(--ui-vt-page, var(--bg)); }
+::view-transition-new(.ui-vt-terminal) { background: var(--ui-vt-page, var(--ui-vt-bg, var(--bg))); }
 ::view-transition-old(.ui-vt-blinds),
 ::view-transition-old(.ui-vt-stairs),
 ::view-transition-old(.ui-vt-pixelate),
@@ -222,13 +224,13 @@
     var(--ui-vt-to),
     transparent var(--ui-vt-t),
     var(--ui-vt-c) 0 calc(var(--ui-vt-b1) - var(--ui-vt-g)),
-    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b1),
+    var(--ui-vt-page, var(--ui-vt-bg, var(--bg))) 0 var(--ui-vt-b1),
     var(--ui-vt-c2) 0 calc(var(--ui-vt-b2) - var(--ui-vt-g)),
-    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b2),
+    var(--ui-vt-page, var(--ui-vt-bg, var(--bg))) 0 var(--ui-vt-b2),
     color-mix(in srgb, var(--ui-vt-c) 50%, var(--ui-vt-c2)) 0 calc(var(--ui-vt-b3) - var(--ui-vt-g)),
-    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b3),
+    var(--ui-vt-page, var(--ui-vt-bg, var(--bg))) 0 var(--ui-vt-b3),
     var(--ui-vt-c) 0 calc(var(--ui-vt-b4) - var(--ui-vt-g)),
-    var(--ui-vt-page, var(--bg)) 0 var(--ui-vt-b4),
+    var(--ui-vt-page, var(--ui-vt-bg, var(--bg))) 0 var(--ui-vt-b4),
     var(--ui-vt-c2) 0 var(--ui-vt-b5),
     transparent 0
   );

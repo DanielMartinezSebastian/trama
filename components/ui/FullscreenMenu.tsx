@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { getLenis, lockScroll } from "@/lib/motion/lenis";
 import { themeSnapshot } from "@/lib/ui/themeSnapshot";
@@ -27,9 +27,10 @@ export type FullscreenMenuProps = {
   footer?: { label: string; href: string }[];
   /** texto libre a la izquierda del pie (ciudad, hora…) */
   note?: string;
-  /** el botón: label = `[menu]` / `[close]` (editorial) · burger = dos rayas que se cruzan en ✕ al abrir (los textos
+  /** el botón: label = `[menu]` / `[close]` (editorial) · burger = dos rayas que se cruzan en ✕ al abrir · plus = una cruz que
+   * gira a ✕ · pill = píldora del acento con el texto y dos rayas (los textos
    * quedan como nombre accesible) */
-  trigger?: "label" | "burger";
+  trigger?: "label" | "burger" | "plus" | "pill";
   /** el botón al pasar el ratón: none = cambia de color · fill = un relleno del acento baja desde arriba y el contenido pasa
    * al color del fondo (el botón de K72, medido con `refs:probe --par`: 0,15 s, easeOutCubic; docs/53 §5) */
   triggerHover?: "none" | "fill";
@@ -44,8 +45,21 @@ export type FullscreenMenuProps = {
   /** al pasar por un enlace: color = cambia al acento · marquee = la fila gira y se vuelve una banda del acento con una
    * marquesina de su `marquee` o su `meta` y sus `images` (K72, docs/50 §3.9) */
   linkHover?: "color" | "marquee";
-  /** cómo se abre: curtain = una cortina que baja · stairs = cinco columnas que bajan en escalera desde la derecha (K72) */
-  reveal?: "curtain" | "stairs";
+  /** cómo se abre: curtain = una cortina que baja · stairs = cinco columnas que bajan en escalera desde la derecha (K72) ·
+   * circle = un círculo que crece desde el botón · slide = el panel entra desde su borde · fade = aparece y se asienta */
+  reveal?: "curtain" | "stairs" | "circle" | "slide" | "fade";
+  /** forma: full = toda la ventana · sheet = panel lateral a la derecha con la página velada detrás · drop = persiana bajo la
+   * cabecera, del alto de los enlaces · island = tarjeta flotante con margen y esquinas (abajo en el móvil) · split = dos
+   * columnas, enlaces y `aside` (en el móvil, `aside` va entre los enlaces y el pie) */
+  layout?: "full" | "sheet" | "drop" | "island" | "split";
+  /** color del panel: bg = el fondo del tema · acc = el acento, con el texto que mejor se lea encima · fg = invertido */
+  tone?: "bg" | "acc" | "fg";
+  /** tamaño de los enlaces: lg = gigantes · md = grandes · sm = de lista (por defecto, lg en full y split, sm en el resto) */
+  size?: "sm" | "md" | "lg";
+  /** número de orden (01, 02…) delante de cada enlace */
+  numbered?: boolean;
+  /** contenido propio del menú: una foto, una dirección, una llamada a la acción… */
+  aside?: ReactNode;
   /** controlado desde fuera (opcional) */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -53,6 +67,31 @@ export type FullscreenMenuProps = {
 };
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/** Luminancia relativa de un color CSS cualquiera (lo resuelve el navegador). */
+function luminance(color: string) {
+  const el = document.createElement("i");
+  el.style.color = color;
+  document.body.appendChild(el);
+  const m = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) ?? [0, 0, 0];
+  el.remove();
+  const [r, g, b] = m.slice(0, 3).map((v) => (v / 255 <= 0.03928 ? v / 255 / 12.92 : ((v / 255 + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** De los candidatos, el que más contrasta con `bg` (tone="acc": el texto sobre el acento). Los primeros son los del
+ * tema y ganan salvo que otro contraste claramente más. */
+function inkOn(bg: string, candidates: (string | undefined)[]) {
+  const lb = luminance(bg);
+  let best = "#000", score = 0;
+  for (const c of candidates) {
+    if (!c) continue;
+    const l = luminance(c);
+    const r = (Math.max(l, lb) + 0.05) / (Math.min(l, lb) + 0.05);
+    if (r > score + (score >= 4.5 ? 3 : 0)) { best = c; score = r; }
+  }
+  return best;
+}
 
 /** El enlace lleva a la página en la que ya estás (sin ancla): en vez de «navegar» a lo mismo, se sube al principio. */
 function isHere(href: string) {
@@ -102,7 +141,7 @@ function inertAround(keep: Element, portal: Element | null) {
  * Cierra con `Esc` y al elegir un enlace, pausa el scroll (sin que salte la página: ver `lockScroll`) y deja inerte el
  * resto de la página para que el teclado no llegue a lo que queda tapado. Se pinta en un portal con los tokens de tu tema.
  */
-export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", triggerHover = "none", cover = false, backdrop = "solid", align = "start", rules = false, linkHover = "color", reveal = "curtain", open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
+export default function FullscreenMenu({ links, brand = "", openLabel = "menu", closeLabel = "close", footer = [], note = "", trigger = "label", triggerHover = "none", cover = false, backdrop = "solid", align = "start", rules = false, linkHover = "color", reveal = "curtain", layout = "full", tone = "bg", size, numbered = false, aside, open: controlled, onOpenChange, className = "" }: FullscreenMenuProps) {
   const uid = useId();
   const [inner, setInner] = useState(false);
   const open = controlled ?? inner;
@@ -112,6 +151,17 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
   const [top, setTop] = useState<number | null>(null);
   const btn = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
+  // reveal="circle": centro del botón, relativo al panel (el círculo crece desde ahí)
+  const [origin, setOrigin] = useState<string | null>(null);
+  // trigger="pill": el texto sobre el acento, el color del tema que mejor se lee
+  const [pillInk, setPillInk] = useState<string>();
+  useEffect(() => {
+    if (trigger !== "pill" || !btn.current) return;
+    const cs = getComputedStyle(btn.current);
+    const acc = cs.getPropertyValue("--acc").trim();
+    if (acc) setPillInk(inkOn(acc, [cs.getPropertyValue("--bg").trim(), cs.getPropertyValue("--fg").trim(), "#fff", "#000"]));
+  }, [trigger]);
   // la cabecera se queda por encima del menú también mientras se cierra (la cortina tarda 0,8 s en recogerse): su z-index
   // original se devuelve al terminar, y si se vuelve a abrir antes, se cancela
   const hostZ = useRef<string | null>(null);
@@ -132,7 +182,11 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
     if (!open) return;
     const trigger = btn.current;
     const p = panel.current;
-    if (trigger) setTheme(themeSnapshot(trigger));
+    if (trigger) {
+      const t = themeSnapshot(trigger) as Record<string, string>;
+      if (tone === "acc" && t["--acc"]) t["--fsm-ink"] = inkOn(t["--acc"], [t["--bg"], t["--fg"], "#fff", "#000"]);
+      setTheme(t as CSSProperties);
+    }
     const host = trigger?.closest<HTMLElement>('header, [role="banner"]') ?? null;
     setTop(host ? Math.round(host.getBoundingClientRect().bottom) : null);
     const unlock = lockScroll();
@@ -145,7 +199,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
     if (host) {
       if (hostZ.current === null) hostZ.current = host.style.zIndex;
       host.style.zIndex = "9001";
-      restoreInert = inertAround(host, p ?? null);
+      restoreInert = inertAround(host, root.current ?? p ?? null);
     }
     const t = host ? 0 : window.setTimeout(() => p?.querySelector<HTMLElement>(".ui-fsm__close")?.focus(), 50);
 
@@ -174,10 +228,14 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       unlock();
       trigger?.focus({ preventScroll: true });
     };
-  }, [open, set]);
+  }, [open, set, tone]);
 
   const hosted = top !== null;
+  const linkSize = size ?? (layout === "full" || layout === "split" ? "lg" : "sm");
+  const veiled = layout === "sheet" || layout === "drop" || layout === "island";
   const overlay = (
+    <div ref={root} className="ui-fsm-root" style={{ ...theme, ...(hosted ? { "--fsm-top": `${top}px` } : null), ...(origin ? { "--fsm-o": origin } : null) } as CSSProperties}>
+      {veiled && <div className="ui-fsm__veil" data-open={open ? "" : undefined} data-host={hosted ? "" : undefined} data-cover={hosted && cover ? "" : undefined} aria-hidden onClick={() => set(false)} />}
     <div
       ref={panel}
       id={`${uid}-menu`}
@@ -190,12 +248,15 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       data-rules={rules ? "" : undefined}
       data-hover={linkHover}
       data-reveal={reveal}
+      data-layout={layout}
+      data-tone={tone}
+      data-size={linkSize}
+      data-numbered={numbered ? "" : undefined}
       role="dialog"
       aria-modal={hosted ? undefined : true}
       aria-label={brand ? `Menú de ${brand}` : "Menú"}
       aria-hidden={!open}
       inert={!open}
-      style={{ ...theme, ...(hosted ? { "--fsm-top": `${top}px` } : null) } as CSSProperties}
     >
       {reveal === "stairs" && (
         <span className="ui-fsm__stairs" aria-hidden>
@@ -225,6 +286,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
                 if (here) setTimeout(() => { const lenis = getLenis(); if (lenis) lenis.scrollTo(0, { duration: 1.2 }); else scrollTo({ top: 0, behavior: "smooth" }); }, 80);
               }}
             >
+              {numbered && <em className="ui-fsm__num" aria-hidden>{String(i + 1).padStart(2, "0")}</em>}
               <span>{l.label}</span>
               {l.meta && <small>{l.meta}</small>}
             </a>
@@ -248,6 +310,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
           </div>
         ))}
       </nav>
+      {aside != null && <div className="ui-fsm__aside">{aside}</div>}
       <div className="ui-fsm__foot">
         <span>{note}</span>
         <span style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
@@ -257,13 +320,32 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
         </span>
       </div>
     </div>
+    </div>
   );
+
+  // el centro del botón respecto al panel, para que el círculo crezca desde él (el panel ya tiene su caja aunque esté oculto)
+  const aim = () => {
+    if (reveal !== "circle") return;
+    const b = btn.current?.getBoundingClientRect();
+    const p = panel.current?.getBoundingClientRect();
+    if (b && p) setOrigin(`${Math.round(b.left + b.width / 2 - p.left)}px ${Math.round(b.top + b.height / 2 - p.top)}px`);
+  };
 
   return (
     <>
-      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} data-hover={triggerHover === "none" ? undefined : triggerHover} aria-label={trigger === "burger" ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); } set(!open); }}>
+      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} style={pillInk ? ({ "--fsm-pill-ink": pillInk } as CSSProperties) : undefined} data-hover={triggerHover === "none" ? undefined : triggerHover} aria-label={trigger === "burger" || trigger === "plus" ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); requestAnimationFrame(aim); } else aim(); set(!open); }}>
         {trigger === "burger" ? (
           <span className="ui-fsm__burger" aria-hidden><i /><i /></span>
+        ) : trigger === "plus" ? (
+          <span className="ui-fsm__plus" aria-hidden><i /><i /></span>
+        ) : trigger === "pill" ? (
+          <>
+            <span className="ui-fsm__lbl">
+              <span style={{ visibility: open ? "hidden" : "visible" }} aria-hidden={open || undefined}>{openLabel}</span>
+              <span style={{ visibility: open ? "visible" : "hidden" }} aria-hidden={!open || undefined}>{closeLabel}</span>
+            </span>
+            <span className="ui-fsm__burger" aria-hidden><i /><i /></span>
+          </>
         ) : (
           // el botón es el mismo abierto y cerrado y no cambia de tamaño: los dos textos ocupan la misma celda y solo se ve uno
           <span className="ui-fsm__lbl">

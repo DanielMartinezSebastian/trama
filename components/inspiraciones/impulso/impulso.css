@@ -182,7 +182,7 @@
 @media (max-width: 760px) { .im-marca { font-size: 15.2vw; } }
 
 /* ---------- varias páginas (docs/56) ---------- */
-.im-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.im-head .ui-fsm__btn { display: none; color: var(--fg); }
 .im-head__datos a:hover, .im-pie a:hover { text-decoration: underline; }
 .im-activo { color: var(--fg); }
 .im-ficha { display: block; color: inherit; }
@@ -216,7 +216,7 @@
 .im-contacto-pag p { margin: 0; }
 
 @media (max-width: 760px) {
-  .im-head .ui-fsm__btn--burger { display: inline-flex; }
+  .im-head .ui-fsm__btn { display: inline-flex; }
   .im-head > .im-pildora { display: none; }
   .im-pag { padding: 30px 16px 100px; }
   .im-bloque, .im-contacto-pag { grid-template-columns: 1fr; }

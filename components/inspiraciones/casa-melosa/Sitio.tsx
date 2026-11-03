@@ -72,7 +72,7 @@ export function Shell({ children }: { children: ReactNode }) {
             Hablemos <span aria-hidden>→</span>
           </a>
           <div className="cm-burger">
-            <FullscreenMenu brand="Casa Melosa" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Interiores, objetos y ambientes" links={links} />
+            <FullscreenMenu trigger="burger" layout="split" tone="fg" align="center" aside={<img src="/img/inspiraciones/casa-melosa/portada-salon.webp" alt="" />} brand="Casa Melosa" openLabel="Menú" closeLabel="Cerrar" note="Interiores, objetos y ambientes" links={links} />
           </div>
         </header>
         {children}

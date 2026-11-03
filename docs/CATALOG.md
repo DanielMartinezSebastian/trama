@@ -861,7 +861,7 @@ Envuelve contenido (`children`), p. ej.: `{/* contenido de la página */}`
 - `scan`: una línea brillante del color `tone` recorre la pantalla (de arriba abajo por defecto) y deja detrás la página nueva, sin apagado CRT. `stack`: una pila de barras de grandes a pequeñas (--acc, --acc2 y su mezcla) tapa la página, se comprime y se va por el lado de `direction`.
 - Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria (`slide`, `wipe`, `scan`, `stack`; sin `direction` —«auto» en este catálogo—, `down` en scan y `left` en el resto); `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType("glitch")`) elige la animación de esa navegación; `types={{ "mi-tipo": "iris" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`.
 - Cabecera, barra o cualquier elemento fijo que deba quedarse quieto: envuélvelo en `<PageTransitionPersist name="cabecera">` (un `name` único por elemento).
-- Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).
+- Los pseudo-elementos de la transición heredan de <html>, no del contenedor del tema: PageTransition copia en <html>, mientras dura la navegación, el tema de la página nueva (acento, texto y fondo pintado), leído en el centro de la ventana o en el contenedor de themeFrom. Así una web con tema propio dentro del sitio barre con su color. --ui-vt-page fija el fondo a mano.
 - Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar.
 
 ### Transición de elemento — `ElementTransition`
@@ -1439,7 +1439,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), triggerHover="fill" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), triggerHover="fill" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Formas (layout): full (toda la ventana), sheet (panel lateral con la página velada), drop (persiana bajo la cabecera), island (tarjeta flotante, abajo en el móvil) y split (enlaces y un aside con foto o datos). También reveal circle (círculo desde el botón), slide y fade; tone acc (panel del acento con el texto que mejor se lee) o fg (invertido); size lg/md/sm; numbered (01, 02…); y los botones plus (cruz que gira) y pill (píldora del acento). Combinadas, cada web tiene un menú móvil propio. Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1447,13 +1447,17 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `openLabel` | text | "menu" |
 | `closeLabel` | text | "close" |
 | `note` | text | "Madrid, ES" |
-| `trigger` | `label` · `burger` | "label" |
+| `layout` | `full` · `sheet` · `drop` · `island` · `split` | "full" |
+| `tone` | `bg` · `acc` · `fg` | "bg" |
+| `size` | `lg` · `md` · `sm` | "lg" |
+| `numbered` | boolean | false |
+| `trigger` | `label` · `burger` · `plus` · `pill` | "label" |
 | `triggerHover` | `none` · `fill` | "none" |
 | `backdrop` | `solid` · `blur` | "solid" |
 | `align` | `start` · `center` | "start" |
 | `rules` | boolean | false |
 | `linkHover` | `color` · `marquee` | "color" |
-| `reveal` | `curtain` · `stairs` | "curtain" |
+| `reveal` | `curtain` · `stairs` · `circle` · `slide` · `fade` | "curtain" |
 
 ### Cabecera que se esconde al bajar — `HideOnScroll`
 

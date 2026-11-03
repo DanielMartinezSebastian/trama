@@ -55,7 +55,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <a href={albaHref("visita")}>Reserva y llama</a>
         </div>
         <div className="al-burger">
-          <FullscreenMenu brand="Alba Residencia" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Nerja, Costa del Sol" links={links} />
+          <FullscreenMenu trigger="label" layout="split" reveal="fade" align="center" aside={<img src="/img/inspiraciones/alba/portada-cielo.webp" alt="" />} brand="Alba Residencia" openLabel="Menú" closeLabel="Cerrar" note="Nerja, Costa del Sol" links={links} />
         </div>
       </header>
       {children}

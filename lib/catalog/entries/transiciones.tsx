@@ -265,7 +265,7 @@ export const transiciones: CatalogEntry[] = [
       "`scan`: una línea brillante del color `tone` recorre la pantalla (de arriba abajo por defecto) y deja detrás la página nueva, sin apagado CRT. `stack`: una pila de barras de grandes a pequeñas (--acc, --acc2 y su mezcla) tapa la página, se comprime y se va por el lado de `direction`.",
       "Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria (`slide`, `wipe`, `scan`, `stack`; sin `direction` —«auto» en este catálogo—, `down` en scan y `left` en el resto); `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType(\"glitch\")`) elige la animación de esa navegación; `types={{ \"mi-tipo\": \"iris\" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`.",
       "Cabecera, barra o cualquier elemento fijo que deba quedarse quieto: envuélvelo en `<PageTransitionPersist name=\"cabecera\">` (un `name` único por elemento).",
-      "Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).",
+      "Los pseudo-elementos de la transición heredan de <html>, no del contenedor del tema: PageTransition copia en <html>, mientras dura la navegación, el tema de la página nueva (acento, texto y fondo pintado), leído en el centro de la ventana o en el contenedor de themeFrom. Así una web con tema propio dentro del sitio barre con su color. --ui-vt-page fija el fondo a mano.",
       "Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar.",
     ],
     props: [

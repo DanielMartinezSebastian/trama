@@ -127,7 +127,7 @@
 .ar-head nav a:hover, .ar-pie a:hover { color: var(--acc2); }
 .ar-bolsa { padding: 8px 16px; border: 1px solid var(--fg); border-radius: 999px; background: none; color: var(--fg); font: inherit; cursor: pointer; }
 .ar-bolsa:hover { background: var(--fg); color: var(--bg); }
-.ar-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.ar-head .ui-fsm__btn { display: none; }
 .ar-mas { display: inline-flex; margin-top: 16px; border-bottom: 2px solid currentColor; font-weight: 800; }
 .ar-maridajes > .ar-mas { justify-self: center; }
 .ar-pie { display: grid; justify-items: center; gap: 14px; padding: 60px 16px 40px; border-top: 1px solid var(--fg); text-align: center; }
@@ -181,7 +181,7 @@
 .ar-flujo { max-width: 1100px; width: 100%; justify-self: center; }
 @media (max-width: 760px) {
   .ar-head nav { display: none; }
-  .ar-head .ui-fsm__btn--burger { display: inline-flex; }
+  .ar-head .ui-fsm__btn { display: inline-flex; }
   .ar-bolsa { margin-left: auto; }
   .ar-pag__cab .ar-gigante { font-size: 15vw; }
   .ar-ficha { grid-template-columns: 1fr; }

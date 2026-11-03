@@ -74,7 +74,7 @@
 .nc p { font-size: 18px; line-height: 1.39; }
 
 /* ---------- varias páginas (docs/56) ---------- */
-.nc-head .ui-fsm__btn--burger { display: none; }
+.nc-head .ui-fsm__btn { display: none; }
 .nc-head--pag { position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 94%, transparent); color: var(--fg); border-bottom: 1px solid var(--ln); }
 .nc-nav a { position: relative; }
 .nc-nav a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: currentColor; transition: width 0.3s; }
@@ -108,7 +108,7 @@
 .nc-contacto p { margin: 0; }
 
 @media (max-width: 760px) {
-  .nc-head .ui-fsm__btn--burger { display: inline-flex; margin-left: auto; }
+  .nc-head .ui-fsm__btn { display: inline-flex; margin-left: auto; }
   .nc-head > .nc-entrar { display: none; }
   .nc-pag { padding: 50px 16px 100px; }
   .nc-equipo, .nc-contacto { grid-template-columns: 1fr; }

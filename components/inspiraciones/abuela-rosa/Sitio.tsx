@@ -95,7 +95,7 @@ export function Shell({ children }: { children: ReactNode }) {
             <button type="button" className="ar-bolsa" onClick={() => setBolsa(true)}>
               BOLSA ({carrito.count})
             </button>
-            <FullscreenMenu brand="ABUELA ROSA" trigger="burger" openLabel="MENÚ" closeLabel="CERRAR" note="MOJO A MORTERO DESDE 1976" links={links} className="ar-menu" />
+            <FullscreenMenu trigger="pill" tone="acc" reveal="circle" size="md" brand="ABUELA ROSA" openLabel="MENÚ" closeLabel="CERRAR" note="MOJO A MORTERO DESDE 1976" links={links} className="ar-menu" />
           </div>
         </header>
         {children}

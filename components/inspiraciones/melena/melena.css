@@ -102,7 +102,7 @@
 }
 
 /* ---------- varias páginas (docs/56): cabecera con bolsa y menú del móvil, y páginas interiores ---------- */
-.me-head .ui-fsm__btn--burger { display: none; }
+.me-head .ui-fsm__btn { display: none; }
 .me-bolsa { padding: 0; border: 0; background: none; color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
 .me-bolsa:hover { color: var(--acc2); }
 .me-nav a[aria-current="page"] { color: var(--acc2); }
@@ -159,7 +159,7 @@
 .me-flujo .ui-book__summary { background: var(--card); border-top-color: var(--acc2); }
 
 @media (max-width: 760px) {
-  .me-head .ui-fsm__btn--burger { display: inline-flex; }
+  .me-head .ui-fsm__btn { display: inline-flex; }
   .me-head > .me-pildora, .me-bolsa { display: none; }
   .me-pag { padding: 40px 16px 160px; gap: 40px; }
   .me-precios li { grid-template-columns: 1fr auto; }

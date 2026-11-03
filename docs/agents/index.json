@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
+  "sourceCommit": "e97aaa50f91512571936f8a9c67e07988f4d783f",
   "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
@@ -58,7 +58,7 @@
     },
     {
       "path": "lib/catalog/entries/movimiento.tsx",
-      "sha256": "28e1c69d784612d2cab4b142de42432aa0f3fa23e6c22944d29e6529273208fa"
+      "sha256": "13935019f04e98ab53f2909202b8dd87e4c3b58fbca5ffd79621c38418dcdb51"
     },
     {
       "path": "lib/catalog/entries/navegacion.tsx",
@@ -110,7 +110,7 @@
     },
     {
       "path": "lib/catalog/entries/transiciones.tsx",
-      "sha256": "3d37447d67399a09e588050a35da69ded3ea95ddcdd059809a68c51c428cdbac"
+      "sha256": "383ba804e1072bbe0e09f5681f15223a07775051bd2c2d1e4adab89cbdd73d97"
     },
     {
       "path": "lib/catalog/entries/webgl.tsx",

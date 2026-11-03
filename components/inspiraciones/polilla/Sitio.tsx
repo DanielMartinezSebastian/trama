@@ -113,7 +113,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </a>
           </nav>
           <div className="pl-menu">
-            <FullscreenMenu brand="Polilla" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Libros a tu puerta" links={links} />
+            <FullscreenMenu trigger="pill" layout="island" tone="fg" reveal="slide" size="md" brand="Polilla" openLabel="Menú" closeLabel="Cerrar" note="Libros a tu puerta" links={links} />
           </div>
         </header>
         {children}

@@ -127,7 +127,7 @@
 
 /* páginas (docs/56): cabecera de página, filtro de formato, ficha del curso con temario y profesores, profesores, pasos de
    la formación a medida, diario, contacto, el boletín con respuesta y el menú del móvil */
-.ah-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.ah-head .ui-fsm__btn { display: none; color: var(--fg); }
 .ah-pag { display: grid; gap: 50px; padding: 150px 36px 120px; }
 .ah-pag > * { min-width: 0; }
 .ah-pag__cab { display: grid; gap: 20px; }
@@ -174,7 +174,7 @@
 .ah-pie__nav { display: grid; gap: 6px; align-content: start; margin-left: auto; color: #fff; text-transform: uppercase; font-size: 13px; }
 .ah-pie form [role="status"] { color: var(--acc); }
 @media (max-width: 760px) {
-  .ah-head .ui-fsm__btn--burger { display: inline-flex; }
+  .ah-head .ui-fsm__btn { display: inline-flex; }
   .ah-pag { padding: 120px 16px 80px; }
   .ah-pag__cab h1 { font-size: 11vw; }
   .ah-pag__cab p { font-size: 20px; }

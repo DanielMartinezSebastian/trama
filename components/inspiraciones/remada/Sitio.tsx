@@ -66,7 +66,7 @@ export function Shell({ children }: { children: ReactNode }) {
         • escríbeme
       </a>
       <div className="rm-movil">
-        <FullscreenMenu brand="remada" trigger="burger" openLabel="menú" closeLabel="cerrar" note="viajes de surf de autora" links={links} className="rm-menu" />
+        <FullscreenMenu trigger="label" layout="sheet" reveal="fade" size="sm" brand="remada" openLabel="menú" closeLabel="cerrar" note="viajes de surf de autora" links={links} className="rm-menu" />
       </div>
       {children}
       <footer className="rm-pie">

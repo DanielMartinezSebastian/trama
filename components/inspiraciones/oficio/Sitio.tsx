@@ -52,7 +52,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <a href={oficioHref("programas")} className="of-boton">
           Inscríbete
         </a>
-        <FullscreenMenu brand="OFICIO" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Formación práctica en Madrid" links={[{ label: "Inicio", href: oficioHref() }, ...NAV.map(([p, l]) => ({ label: l, href: enlace(p) }))]} className="of-menu" />
+        <FullscreenMenu trigger="pill" layout="drop" tone="acc" size="sm" numbered rules brand="OFICIO" openLabel="Menú" closeLabel="Cerrar" note="Formación práctica en Madrid" links={[{ label: "Inicio", href: oficioHref() }, ...NAV.map(([p, l]) => ({ label: l, href: enlace(p) }))]} className="of-menu" />
       </header>
       {children}
       <footer className="of-pie">

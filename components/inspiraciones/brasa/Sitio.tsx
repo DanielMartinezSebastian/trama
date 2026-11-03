@@ -28,7 +28,7 @@ const NAV: [string, string][] = [
 
 export function Shell({ children }: { children: ReactNode }) {
   const portada = usePathname() === brasaHref();
-  const menu = <FullscreenMenu brand="BRASA" trigger="burger" openLabel="MENÚ" closeLabel="CERRAR" note="DISEÑO Y DESARROLLO WEB 3D" links={[{ label: "INICIO", href: brasaHref() }, ...NAV.map(([p, l]) => ({ label: l, href: brasaHref(p) }))]} className="br-menu" />;
+  const menu = <FullscreenMenu trigger="burger" tone="acc" reveal="stairs" linkHover="marquee" brand="BRASA" openLabel="MENÚ" closeLabel="CERRAR" note="DISEÑO Y DESARROLLO WEB 3D" links={[{ label: "INICIO", href: brasaHref() }, ...NAV.map(([p, l]) => ({ label: l, href: brasaHref(p) }))]} className="br-menu" />;
   if (portada)
     return (
       <div className={`br ${ruthie.variable} ${stack.variable}`} id="top">

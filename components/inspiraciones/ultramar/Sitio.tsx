@@ -46,7 +46,7 @@ export function Shell({ children }: { children: ReactNode }) {
           Trabaja con nosotros
         </a>
         <div className="um-burger">
-          <FullscreenMenu brand="Ultramar" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Cada tramo del viaje" links={[{ label: "Inicio", href: ultramarHref() }, ...NAV.map(([p, l]) => ({ label: l, href: ultramarHref(p) }))]} />
+          <FullscreenMenu trigger="plus" layout="island" reveal="circle" size="sm" numbered brand="Ultramar" openLabel="Menú" closeLabel="Cerrar" note="Cada tramo del viaje" links={[{ label: "Inicio", href: ultramarHref() }, ...NAV.map(([p, l]) => ({ label: l, href: ultramarHref(p) }))]} />
         </div>
       </header>
       {children}

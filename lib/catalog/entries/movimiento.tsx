@@ -238,20 +238,24 @@ export const movimiento: CatalogEntry[] = [
     category: "navegacion",
     styles: ["minimal", "solid", "outline"],
     description:
-      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), triggerHover=\"fill\" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
+      "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), triggerHover=\"fill\" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Formas (layout): full (toda la ventana), sheet (panel lateral con la página velada), drop (persiana bajo la cabecera), island (tarjeta flotante, abajo en el móvil) y split (enlaces y un aside con foto o datos). También reveal circle (círculo desde el botón), slide y fade; tone acc (panel del acento con el texto que mejor se lee) o fg (invertido); size lg/md/sm; numbered (01, 02…); y los botones plus (cruz que gira) y pill (píldora del acento). Combinadas, cada web tiene un menú móvil propio. Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
     stageHeight: 200,
     props: [
       { key: "brand", label: "Marca", type: "text", default: "Estudio" },
       { key: "openLabel", label: "Texto abrir", type: "text", default: "menu" },
       { key: "closeLabel", label: "Texto cerrar", type: "text", default: "close" },
       { key: "note", label: "Nota del pie", type: "text", default: "Madrid, ES" },
-      { key: "trigger", label: "Botón", type: "select", default: "label", options: ["label", "burger"], labels: { label: "[menu]", burger: "hamburguesa" } },
+      { key: "layout", label: "Forma", type: "select", default: "full", options: ["full", "sheet", "drop", "island", "split"], labels: { full: "pantalla completa", sheet: "panel lateral", drop: "persiana", island: "isla flotante", split: "dos columnas" } },
+      { key: "tone", label: "Color del panel", type: "select", default: "bg", options: ["bg", "acc", "fg"], labels: { bg: "fondo", acc: "acento", fg: "invertido" } },
+      { key: "size", label: "Tamaño", type: "select", default: "lg", options: ["lg", "md", "sm"], labels: { lg: "gigante", md: "grande", sm: "de lista" } },
+      { key: "numbered", label: "Numerado", type: "boolean", default: false },
+      { key: "trigger", label: "Botón", type: "select", default: "label", options: ["label", "burger", "plus", "pill"], labels: { label: "[menu]", burger: "hamburguesa", plus: "cruz", pill: "píldora" } },
       { key: "triggerHover", label: "Botón al pasar", type: "select", default: "none", options: ["none", "fill"], labels: { none: "color", fill: "relleno que baja" } },
       { key: "backdrop", label: "Fondo", type: "select", default: "solid", options: ["solid", "blur"], labels: { solid: "sólido", blur: "vidrio" } },
       { key: "align", label: "Enlaces", type: "select", default: "start", options: ["start", "center"], labels: { start: "a la izquierda", center: "centrados" } },
       { key: "rules", label: "Filetes", type: "boolean", default: false },
       { key: "linkHover", label: "Al pasar", type: "select", default: "color", options: ["color", "marquee"], labels: { color: "color", marquee: "banda con marquesina" } },
-      { key: "reveal", label: "Apertura", type: "select", default: "curtain", options: ["curtain", "stairs"], labels: { curtain: "cortina", stairs: "escalera" } },
+      { key: "reveal", label: "Apertura", type: "select", default: "curtain", options: ["curtain", "stairs", "circle", "slide", "fade"], labels: { curtain: "cortina", stairs: "escalera", circle: "círculo", slide: "deslizar", fade: "fundido" } },
     ],
     render: (p) => (
       <div className="ui-center">
@@ -263,6 +267,11 @@ export const movimiento: CatalogEntry[] = [
           rules={p.rules as boolean}
           linkHover={p.linkHover as never}
           reveal={p.reveal as never}
+          layout={p.layout as never}
+          tone={p.tone as never}
+          size={p.layout === "full" || p.layout === "split" ? (p.size as never) : p.size === "lg" ? undefined : (p.size as never)}
+          numbered={p.numbered as boolean}
+          aside={p.layout === "split" ? <img src="/img/estudio/04-workspace-unsplash.jpg" alt="" /> : undefined}
           brand={p.brand as string}
           openLabel={p.openLabel as string}
           closeLabel={p.closeLabel as string}

@@ -60,7 +60,7 @@ export function Shell({ children }: { children: ReactNode }) {
           </a>
         </nav>
         <div className="sd-burger">
-          <FullscreenMenu brand="Sesión Doble" trigger="burger" openLabel="Menú" closeLabel="Cerrar" note="Distribuidora" links={links} />
+          <FullscreenMenu trigger="label" layout="drop" align="center" size="md" rules brand="Sesión Doble" openLabel="Menú" closeLabel="Cerrar" note="Distribuidora" links={links} />
         </div>
       </header>
       {children}

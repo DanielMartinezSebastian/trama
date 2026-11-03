@@ -3849,7 +3849,7 @@
         "`scan`: una línea brillante del color `tone` recorre la pantalla (de arriba abajo por defecto) y deja detrás la página nueva, sin apagado CRT. `stack`: una pila de barras de grandes a pequeñas (--acc, --acc2 y su mezcla) tapa la página, se comprime y se va por el lado de `direction`.",
         "Tipos de navegación: `nav-forward` usa `kind` con `direction` y `nav-back` la dirección contraria (`slide`, `wipe`, `scan`, `stack`; sin `direction` —«auto» en este catálogo—, `down` en scan y `left` en el resto); `trama-<animación>` (p. ej. `trama-glitch`, o `pageTransitionType(\"glitch\")`) elige la animación de esa navegación; `types={{ \"mi-tipo\": \"iris\" }}` añade los tuyos. En Next: `<Link transitionTypes={[NAV_FORWARD]}>`.",
         "Cabecera, barra o cualquier elemento fijo que deba quedarse quieto: envuélvelo en `<PageTransitionPersist name=\"cabecera\">` (un `name` único por elemento).",
-        "Los pseudo-elementos de la transición heredan de <html>: los tokens (--acc, --acc2, --fg, --bg) se leen de :root. Si tu tema vive en un contenedor, repite ahí --acc y el fondo (--ui-vt-page).",
+        "Los pseudo-elementos de la transición heredan de <html>, no del contenedor del tema: PageTransition copia en <html>, mientras dura la navegación, el tema de la página nueva (acento, texto y fondo pintado), leído en el centro de la ventana o en el contenedor de themeFrom. Así una web con tema propio dentro del sitio barre con su color. --ui-vt-page fija el fondo a mano.",
         "Con «reducir movimiento», solo un fundido de 120 ms. Sin soporte (React sin ViewTransition, navegador sin la API) la página cambia sin animar."
       ],
       "example": "import PageTransition from \"@/components/ui/PageTransition\";\n\n<PageTransition>\n  {/* contenido de la página */}\n</PageTransition>",
@@ -11658,7 +11658,7 @@
         "solid",
         "outline"
       ],
-      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), triggerHover=\"fill\" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
+      "description": "Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger=\"burger\" (icono que se cruza en ✕), triggerHover=\"fill\" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop=\"blur\" (vidrio), align=\"center\" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover=\"marquee\" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal=\"stairs\" (se abre en escalera). Formas (layout): full (toda la ventana), sheet (panel lateral con la página velada), drop (persiana bajo la cabecera), island (tarjeta flotante, abajo en el móvil) y split (enlaces y un aside con foto o datos). También reveal circle (círculo desde el botón), slide y fade; tone acc (panel del acento con el texto que mejor se lee) o fg (invertido); size lg/md/sm; numbered (01, 02…); y los botones plus (cruz que gira) y pill (píldora del acento). Combinadas, cada web tiene un menú móvil propio. Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.",
       "props": [
         {
           "key": "brand",
@@ -11685,13 +11685,56 @@
           "label": "Nota del pie"
         },
         {
+          "key": "layout",
+          "type": "select",
+          "default": "full",
+          "label": "Forma",
+          "options": [
+            "full",
+            "sheet",
+            "drop",
+            "island",
+            "split"
+          ]
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "default": "bg",
+          "label": "Color del panel",
+          "options": [
+            "bg",
+            "acc",
+            "fg"
+          ]
+        },
+        {
+          "key": "size",
+          "type": "select",
+          "default": "lg",
+          "label": "Tamaño",
+          "options": [
+            "lg",
+            "md",
+            "sm"
+          ]
+        },
+        {
+          "key": "numbered",
+          "type": "boolean",
+          "default": false,
+          "label": "Numerado"
+        },
+        {
           "key": "trigger",
           "type": "select",
           "default": "label",
           "label": "Botón",
           "options": [
             "label",
-            "burger"
+            "burger",
+            "plus",
+            "pill"
           ]
         },
         {
@@ -11747,7 +11790,10 @@
           "label": "Apertura",
           "options": [
             "curtain",
-            "stairs"
+            "stairs",
+            "circle",
+            "slide",
+            "fade"
           ]
         }
       ],

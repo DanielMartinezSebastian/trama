@@ -245,7 +245,78 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm[data-open] .ui-fsm__stairs i { scale: 1 1; transform-origin: top; transition-delay: calc(var(--k) * 0.07s); }
 .ui-fsm[data-reveal="stairs"] > :not(.ui-fsm__stairs) { opacity: 0; transition: opacity 0.25s linear; }
 .ui-fsm[data-reveal="stairs"][data-open] > :not(.ui-fsm__stairs) { opacity: 1; transition-delay: 0.45s; }
-@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link, .ui-fsm__burger i, .ui-fsm__btn[data-hover]::after, .ui-fsm__stairs i, .ui-fsm__band, .ui-fsm[data-rules] .ui-fsm__item::after { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
+/* El portal: un nodo sin caja que lleva los tokens del tema a la capa que vela la página y al panel */
+.ui-fsm-root { display: contents; }
+/* layout sheet / drop / island: la página sigue a la vista, velada; un clic en el velo cierra */
+.ui-fsm__veil { position: fixed; inset: 0; z-index: 8999; background: color-mix(in srgb, var(--fg) 40%, transparent); opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-io), visibility 0s linear 0.5s; }
+.ui-fsm__veil[data-host]:not([data-cover]) { top: var(--fsm-top, 0); }
+.ui-fsm__veil[data-open] { opacity: 1; visibility: visible; transition-delay: 0s; }
+/* tone: el color del panel. Sobre el acento, el texto es el del tema que mejor se lee (--fsm-ink, calculado al abrir) y el
+   enlace activo se subraya en vez de cambiar a un acento que ya es el fondo */
+.ui-fsm[data-tone="acc"]:not([data-reveal="stairs"]) { background: var(--acc); }
+.ui-fsm[data-tone="fg"]:not([data-reveal="stairs"]) { background: var(--fg); }
+.ui-fsm[data-tone="acc"] { color: var(--fsm-ink, var(--bg)); --mut: color-mix(in srgb, var(--fsm-ink, var(--bg)) 72%, transparent); --mut-text: var(--mut); --ln: color-mix(in srgb, var(--fsm-ink, var(--bg)) 28%, transparent); }
+.ui-fsm[data-tone="fg"] { color: var(--bg); --mut: color-mix(in srgb, var(--bg) 68%, transparent); --mut-text: var(--mut); --ln: color-mix(in srgb, var(--bg) 24%, transparent); }
+.ui-fsm[data-tone="acc"] .ui-fsm__stairs i { background: var(--acc); }
+.ui-fsm[data-tone="fg"] .ui-fsm__stairs i { background: var(--fg); }
+.ui-fsm:is([data-tone="acc"], [data-tone="fg"]) .ui-fsm__link:is(:hover, :focus-visible) { color: inherit; text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.14em; }
+.ui-fsm:is([data-tone="acc"], [data-tone="fg"]) .ui-fsm__btn:focus-visible { outline-color: currentColor; }
+/* size: md = grandes · sm = de lista, más juntos y arriba */
+.ui-fsm[data-size="md"] :is(.ui-fsm__link, .ui-fsm__track > span) { font-size: clamp(32px, 6.4vw, 76px); }
+.ui-fsm[data-size="sm"] :is(.ui-fsm__link, .ui-fsm__track > span) { font-size: clamp(24px, 4.4vw, 34px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.18; }
+.ui-fsm[data-size="sm"] .ui-fsm__nav { gap: 0; align-content: start; }
+.ui-fsm[data-size="sm"] .ui-fsm__item { padding-block: 0.22em; }
+/* numbered: 01, 02… a la altura de la cabeza del enlace */
+.ui-fsm__num { align-self: flex-start; min-width: 2.4em; margin-top: 0.55em; font: 500 12px/1 var(--mono, ui-monospace, monospace); font-style: normal; letter-spacing: 0.08em; color: var(--mut-text, var(--mut)); font-variant-numeric: tabular-nums; }
+.ui-fsm[data-size="lg"] .ui-fsm__num { margin-top: 1.1em; }
+/* aside: contenido propio (foto, dirección, llamada); entra un poco después de los enlaces */
+.ui-fsm__aside { min-width: 0; min-height: 0; opacity: 0; translate: 0 12px; transition: opacity 0.5s linear, translate 0.8s var(--ease-out); }
+.ui-fsm[data-open] .ui-fsm__aside { opacity: 1; translate: 0 0; transition-delay: 0.45s; }
+.ui-fsm__aside :is(img, video) { display: block; width: 100%; height: 100%; max-height: 30svh; object-fit: cover; border-radius: var(--r, 0); }
+/* layout="sheet": panel a la derecha */
+.ui-fsm[data-layout="sheet"] { left: auto; width: min(460px, 88vw); }
+/* layout="drop": persiana del alto de su contenido, bajo la cabecera */
+.ui-fsm[data-layout="drop"] { bottom: auto; max-height: calc(100svh - var(--fsm-top, 0px)); grid-template-rows: auto; border-bottom: 1px solid var(--ln); }
+.ui-fsm[data-layout="drop"] .ui-fsm__nav { padding-block: 8px 20px; }
+/* layout="island": tarjeta flotante; abajo en el móvil, junto al botón arriba a la derecha en escritorio */
+.ui-fsm[data-layout="island"], .ui-fsm[data-layout="island"][data-host], .ui-fsm[data-layout="island"][data-host][data-cover] { top: auto; inset: auto 12px 12px; padding: 22px 22px 18px; max-height: calc(100svh - var(--fsm-top, 0px) - 24px); grid-template-rows: auto; border: 1px solid var(--ln); border-radius: calc(var(--r, 10px) + 10px); }
+.ui-fsm[data-layout="island"] .ui-fsm__nav { padding-block: 4px 18px; }
+@media (min-width: 761px) {
+  .ui-fsm[data-layout="island"], .ui-fsm[data-layout="island"][data-host], .ui-fsm[data-layout="island"][data-host][data-cover] { inset: calc(var(--fsm-top, 0px) + 12px) 16px auto auto; width: min(400px, 42vw); }
+  /* layout="split": enlaces a la izquierda y `aside` a toda altura a la derecha */
+  .ui-fsm[data-layout="split"] { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: clamp(24px, 4vw, 72px); }
+  .ui-fsm[data-layout="split"] > :not(.ui-fsm__aside, .ui-fsm__stairs) { grid-column: 1; }
+  .ui-fsm[data-layout="split"] .ui-fsm__aside { grid-column: 2; grid-row: 1 / -1; }
+  .ui-fsm[data-layout="split"] .ui-fsm__aside :is(img, video) { max-height: none; }
+}
+/* reveal="circle": crece desde el botón (--fsm-o, relativo al panel) */
+.ui-fsm[data-reveal="circle"] { clip-path: circle(0 at var(--fsm-o, 100% 0)); transition: clip-path 0.75s var(--ease-io), visibility 0s linear 0.75s; }
+.ui-fsm[data-reveal="circle"][data-open] { clip-path: circle(160vmax at var(--fsm-o, 100% 0)); transition-delay: 0s; }
+/* reveal="slide": entra desde su borde (arriba; la hoja, por la derecha; la isla, por abajo en el móvil) */
+.ui-fsm[data-reveal="slide"] { clip-path: none; translate: 0 -100%; transition: translate 0.7s var(--ease-io), visibility 0s linear 0.7s; }
+.ui-fsm[data-reveal="slide"][data-layout="sheet"] { translate: 100% 0; }
+.ui-fsm[data-reveal="slide"][data-layout="island"] { translate: 0 calc(100% + 24px); }
+@media (min-width: 761px) { .ui-fsm[data-reveal="slide"][data-layout="island"] { translate: calc(100% + 24px) 0; } }
+.ui-fsm[data-reveal="slide"][data-open] { translate: 0 0; transition-delay: 0s; }
+/* reveal="fade": aparece y se asienta */
+.ui-fsm[data-reveal="fade"] { clip-path: none; opacity: 0; scale: 0.985; transition: opacity 0.4s linear, scale 0.6s var(--ease-out), visibility 0s linear 0.4s; }
+.ui-fsm[data-reveal="fade"][data-open] { opacity: 1; scale: 1; transition-delay: 0s; }
+/* trigger="plus": cruz que gira a ✕ */
+.ui-fsm__btn--plus { padding: 10px 8px; }
+.ui-fsm__plus { position: relative; display: block; width: 18px; height: 18px; }
+.ui-fsm__plus i { position: absolute; left: 0; right: 0; top: 8.25px; height: 1.5px; border-radius: 2px; background: currentColor; transition: transform 0.5s var(--ease-io); }
+.ui-fsm__plus i + i { transform: rotate(90deg); }
+.ui-fsm__btn[aria-expanded="true"] .ui-fsm__plus i { transform: rotate(45deg); }
+.ui-fsm__btn[aria-expanded="true"] .ui-fsm__plus i + i { transform: rotate(135deg); }
+/* trigger="pill": píldora del acento con el texto y dos rayas; el texto, el color del tema que mejor se lee encima */
+.ui-fsm__btn--pill { gap: 0.75em; padding: 10px 16px 10px 18px; border-radius: 999px; background: var(--acc); color: var(--fsm-pill-ink, var(--bg)); font-weight: 600; letter-spacing: 0.02em; text-transform: none; transition: scale 0.3s var(--ease-out); }
+.ui-fsm__btn--pill:active { scale: 0.96; }
+.ui-fsm__btn--pill .ui-fsm__burger { width: 16px; height: 10px; }
+.ui-fsm__btn--pill .ui-fsm__burger i { top: 1px; }
+.ui-fsm__btn--pill .ui-fsm__burger i + i { top: 7.5px; }
+.ui-fsm__btn--pill[aria-expanded="true"] .ui-fsm__burger i { top: 4.25px; }
+.ui-fsm__btn--pill:focus-visible { outline-color: var(--fg); }
+@media (prefers-reduced-motion: reduce) { .ui-fsm, .ui-fsm__link, .ui-fsm__burger i, .ui-fsm__plus i, .ui-fsm__veil, .ui-fsm__aside, .ui-fsm__btn[data-hover]::after, .ui-fsm__stairs i, .ui-fsm__band, .ui-fsm[data-rules] .ui-fsm__item::after { transition-duration: 0.01s !important; transition-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .ui-fsm__track { animation: none; } }
 
 /* ---------- LocalTime ---------- */
