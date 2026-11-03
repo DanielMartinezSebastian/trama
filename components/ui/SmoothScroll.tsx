@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { setLenis } from "@/lib/motion/lenis";
+import { getLenis, setLenis } from "@/lib/motion/lenis";
 import { installAnchorScroll, type AnchorScrollOptions } from "@/lib/motion/anchors";
 import { prefersReducedMotion } from "@/lib/ui/useReducedMotion";
 import { SCROLL_FEELS, type ScrollFeelName } from "@/lib/motion/scroll-feel";
@@ -28,14 +28,39 @@ export type SmoothScrollProps = {
   syncGsap?: boolean;
   /** apaga el scroll suave sin quitar el componente (p. ej. según el tamaño de pantalla) */
   enabled?: boolean;
+  /**
+   * al ir a otra ruta, la página nueva empieza arriba: corta la inercia que quedara y sube sin animar. Sin esto, si se
+   * pulsa un enlace mientras la página aún se desliza, el router sube al principio pero Lenis la devuelve a la altura
+   * que perseguía. No actúa al volver atrás o adelante (esa posición la decide el navegador), ni con un `#ancla`, ni si
+   * solo cambia la consulta (`?filtro=`)
+   */
+  resetOnNavigate?: boolean;
 };
+
+/** Al cambiar de ruta con `history.pushState` (lo que hace el router al pintar la página nueva), sube al principio. */
+function installNavigateReset() {
+  const push = history.pushState;
+  const patched: typeof history.pushState = function (this: History, ...args) {
+    const before = location.pathname;
+    push.apply(this, args);
+    if (location.pathname === before || location.hash) return;
+    getLenis()?.scrollTo(0, { immediate: true, force: true });
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
+  history.pushState = patched;
+  return () => {
+    // solo si nadie lo ha vuelto a envolver después
+    if (history.pushState === patched) history.pushState = push;
+  };
+}
 
 /**
  * Scroll con inercia de toda la página (Lenis). No pinta nada: colócalo una vez, en el marco de la web.
  * Se apaga solo con `prefers-reduced-motion` y en pantallas táctiles (donde el scroll nativo ya es suave).
  * `useLenis`-style: la instancia activa está en `getLenis()` (`@/lib/motion/lenis`) y `lockScroll()` la pausa.
  */
-export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wheelProp, anchors = true, syncGsap = true, enabled = true }: SmoothScrollProps) {
+export default function SmoothScroll({ feel, lerp: lerpProp, wheelMultiplier: wheelProp, anchors = true, syncGsap = true, enabled = true, resetOnNavigate = true }: SmoothScrollProps) {
+  useEffect(() => (resetOnNavigate ? installNavigateReset() : undefined), [resetOnNavigate]);
   const lerp = lerpProp ?? (feel ? SCROLL_FEELS[feel].lerp : 0.1);
   const wheelMultiplier = wheelProp ?? (feel ? SCROLL_FEELS[feel].wheelMultiplier : 1);
   // la sensación se publica aunque el scroll suave no se active (táctil, movimiento reducido): las mesetas y las curvas
