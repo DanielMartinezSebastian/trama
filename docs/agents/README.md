@@ -49,6 +49,7 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./in
 - [guide: Matriz de puntos](./guides/puntos.md)
 - [guide: Estudio en papel](./guides/papel.md)
 - [guide: Aprendizaje cercano](./guides/cercano.md)
+- [guide: Bloque nocturno](./guides/bloque.md)
 - [reference: Firmas cinemáticas y WebGL](./references/cinematic-webgl.md)
 - [reference: Gramática visual y variedad](./references/design-directions.md)
 - [recipe: Peluquería y color, estética](./recipes/salon.md)
@@ -122,7 +123,7 @@ pilot
 | guide | festival | Rosa pastel, azul real y amarillo, titular gigante de grotesca redonda y etiquetas en píxel |
 | guide | varietes | Crema, rojo telón y oro viejo, letra de cartel gruesa con serifa y etiquetas estrechas muy espaciadas |
 | guide | sabana | Crema y verde oliva, una serifa finísima en mayúsculas para titulares enormes y párrafos de serifa grandes; fotos de naturaleza sueltas que flotan a distinta velocidad. |
-| guide | trattoria | Bloques de color pleno que se suceden (rojo, turquesa, verde botella, granate) sobre crema; serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones. |
+| guide | trattoria | Rojo pleno de fondo con texto crema, y bloques de color que se suceden (turquesa, verde botella, granate); serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones. |
 | guide | clinica | Marfil y azul tinta; una serifa de libro para todo lo que se lee, con sangría en los párrafos grandes, y una grotesca diminuta en mayúsculas para navegar |
 | guide | terracota | Blanco y negro con una grotesca neutra sin negritas y cinco colores tierra (taupe, óxido, azul pálido, salvia, salmón), uno por línea de trabajo, en paneles que se ensanchan. |
 | guide | motor | Penumbra azul petróleo en la portada y blanco después; condensada en mayúsculas con algo de aire entre letras y botones rectangulares con letra diminuta |
@@ -134,6 +135,7 @@ pilot
 | guide | puntos | Negro puro, titulares de puntos como un panel de leds, texto en mono gris y un rojo de piloto encendido como único color. |
 | guide | papel | Papel crudo y tinta casi negra, grotesca ajustada a medio peso, filetes finos en vez de cajas y un solo color de óxido para lo importante. |
 | guide | cercano | Rosa vivo, tinta casi negra y retratos protagonistas |
+| guide | bloque | Negro carbón y un solo acento saturado; titulares de palo muy pesado en mayúsculas que llenan la pantalla palabra a palabra, con fotos metidas entre las líneas |
 | reference | cinematic-webgl | Técnicas y casos contrastados para mantener la firma de una referencia WebGL/Three al crear una demo original. |
 | reference | design-directions | Separa guía medida, composición, medio, interacción y firma; ayuda a escapar de la plantilla más reciente. |
 | recipe | salon | Un salón que vende oficio y calma: el equipo y los trabajos son el producto. |
@@ -143,7 +145,7 @@ pilot
 | component | before-after | Comparador de dos imágenes (o de dos contenidos cualesquiera): un corte que se arrastra, accesible como deslizador (flechas, Inicio, Fin), o un botón que alterna entre los dos (día/noche, apagado/encendido) |
 | component | booking-flow | Reserva de cita en pasos (peluquería, barbería, estética, consulta): local si hay varios, servicio y profesional (o «me da igual»); día y hueco con DatePicker; datos con validación; y confirmación con «Añadir al… |
 | component | footer | Marca, columnas de enlaces, redes y línea de copyright: el cierre habitual de cualquier landing. |
-| component | guide-frame | Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro),… |
+| component | guide-frame | Aplica una de las cuarenta y seis guías de estilo: la de la quinta ronda (bloque nocturno: negro carbón y titulares de palo muy pesados que llenan la pantalla), las de la cuarta ronda (sabana tranquila, trattoria de… |
 | component | image-gallery | Ocho presentaciones de las mismas fotos: imagen grande con miniaturas, coverflow 3D, baraja, fundido, cubo, creativa, tira libre y mosaico de dos filas |
 | component | image-reveal | Imagen que se abre con una máscara (clip-path) mientras se asienta de una ampliación a su tamaño |
 | component | menu-list | Carta en HTML con secciones, precios con puntos guía, etiquetas, los 14 alérgenos del Reglamento UE 1169/2011 (abreviatura visible y nombre para el lector de pantalla), filtro «Sin gluten / sin leche…» que oculta lo que… |

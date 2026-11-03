@@ -6,7 +6,7 @@
 
 ## 0. Conclusiones
 
-1. **36 inspiraciones**: las 8 de la cuarta ronda están en docs/59 y las 10 de la tercera, en docs/58. Las 18 primeras son:
+1. **44 inspiraciones**: las 8 de la quinta ronda están en docs/60, las 8 de la cuarta en docs/59 y las 10 de la tercera, en docs/58. Las 18 primeras son:
    - las 16 réplicas de los estudios por sector (docs/50);
    - las dos webs 3D enteras del laboratorio de cine: **Cénit**, basada en Lusion (docs/43), y **Brasa**, basada en Meer
      Mohsin (docs/41).

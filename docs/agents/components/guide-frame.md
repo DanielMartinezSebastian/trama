@@ -23,7 +23,7 @@ GuideFrame
 
 ## description
 
-Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
+Aplica una de las cuarenta y seis guías de estilo: la de la quinta ronda (bloque nocturno: negro carbón y titulares de palo muy pesados que llenan la pantalla), las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
 ## category
 
@@ -99,7 +99,8 @@ import GuideFrame from "trama-ui/GuideFrame";
       "pixel",
       "puntos",
       "papel",
-      "cercano"
+      "cercano",
+      "bloque"
     ],
     "labels": {
       "lujo": "Lujo tranquilo",
@@ -146,7 +147,8 @@ import GuideFrame from "trama-ui/GuideFrame";
       "pixel": "Arcade pixel",
       "puntos": "Matriz de puntos",
       "papel": "Estudio en papel",
-      "cercano": "Aprendizaje cercano"
+      "cercano": "Aprendizaje cercano",
+      "bloque": "Bloque nocturno"
     }
   },
   {

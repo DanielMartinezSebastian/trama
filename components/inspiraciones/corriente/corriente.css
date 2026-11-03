@@ -34,8 +34,8 @@
 .nc-head__nav a[aria-current], .nc-head__nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .nc-head .ui-fsm__btn { display: none; }
 .nc-menu .ui-fsm__link { font-family: var(--serif); font-weight: 300; text-transform: uppercase; }
-.nc-vertical { position: fixed; right: 4px; top: 50%; z-index: 20; margin: 0; writing-mode: vertical-rl; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); translate: 0 -50%; }
-.nc-firma { position: fixed; right: var(--nc-m); bottom: 10px; z-index: 20; margin: 0; font: 400 1.25rem/1 var(--font-inter); letter-spacing: 0.04em; text-transform: uppercase; rotate: 180deg; mix-blend-mode: difference; color: #fff; }
+.nc-vertical { position: fixed; right: 4px; top: 50%; z-index: 20; margin: 0; writing-mode: vertical-rl; padding: 8px 3px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: #111; color: #fff; translate: 0 -50%; }
+.nc-firma { position: fixed; right: var(--nc-m); bottom: 10px; z-index: 20; margin: 0; font: 400 1.25rem/1 var(--font-inter); letter-spacing: 0.04em; text-transform: uppercase; rotate: 180deg; padding: 4px 8px; background: #111; color: #fff; }
 .nc-firma i { font: italic 300 1.6rem/1 var(--serif); text-transform: none; }
 
 .nc-hero { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--nc-m); min-height: 92svh; padding: 9vh var(--nc-m) 60px; }

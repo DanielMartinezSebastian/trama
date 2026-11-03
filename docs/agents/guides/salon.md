@@ -35,10 +35,10 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./sa
   "tokens": {
     "bg": "#ffffff",
     "fg": "#1f1f1f",
-    "mut": "#868686",
+    "mut": "#5a5a5a",
     "acc": "#f5a490",
     "acc2": "#963e13",
-    "card": "#f4f4f4",
+    "card": "#f9d3c5",
     "ln": "rgba(31,31,31,0.14)",
     "r": 0,
     "font": "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
@@ -136,13 +136,13 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./sa
 | Texto | Fondo | Ratio | Uso |
 | --- | --- | --- | --- |
 | --fg | --bg | 16,48:1 | texto normal |
-| --fg | --card | 14,99:1 | texto normal |
-| --mut | --bg | 3,64:1 | solo texto grande, iconos o bordes de control |
-| --mut | --card | 3,31:1 | solo texto grande, iconos o bordes de control |
+| --fg | --card | 11,89:1 | texto normal |
+| --mut | --bg | 6,90:1 | texto normal |
+| --mut | --card | 4,98:1 | texto normal |
 | --acc | --bg | 1,98:1 | decorativo: no usar para texto ni controles |
-| --acc | --card | 1,80:1 | decorativo: no usar para texto ni controles |
+| --acc | --card | 1,43:1 | decorativo: no usar para texto ni controles |
 | --acc2 | --bg | 7,01:1 | texto normal |
-| --acc2 | --card | 6,37:1 | texto normal |
+| --acc2 | --card | 5,06:1 | texto normal |
 
 ## requirements
 

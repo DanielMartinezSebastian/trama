@@ -30,8 +30,8 @@ export const PUBLICOS = [
 
 export const USOS = [
   { n: "Tiendas y hostelería", c: "#e8b33c" },
-  { n: "Casa", c: "#2f8f86" },
-  { n: "Investigación y aulas", c: "#c4553f" },
+  { n: "Casa", c: "#23756d" },
+  { n: "Investigación y aulas", c: "#b34a35" },
   { n: "Ocio y experiencias", c: "#d97aa8" },
 ];
 

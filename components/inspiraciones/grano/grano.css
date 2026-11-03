@@ -38,7 +38,7 @@
 .gr-mitad--abajo { --desde: inset(0 0 100% 0); }
 @keyframes gr-entra { from { clip-path: var(--desde); } to { clip-path: inset(0); } }
 @keyframes gr-zoom { from { scale: 1.12; } to { scale: 1; } }
-.gr-muro__enlace { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; text-align: center; padding: 0 4vw; }
+.gr-muro__enlace { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: clamp(14px, 1.8vw, 34px); text-align: center; padding: 0 4vw; }
 .gr-muro__tipo, .gr-muro__ver { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
 .gr-muro__ver { opacity: 0; translate: 0 6px; transition: opacity 0.3s, translate 0.3s; }
 .gr-muro__enlace:hover .gr-muro__ver, .gr-muro__enlace:focus-visible .gr-muro__ver { opacity: 1; translate: 0 0; }

@@ -55,7 +55,7 @@
 .tu-universal__t { position: relative; z-index: 1; margin: 0; text-align: center; font: 500 clamp(3rem, 7vw, 7.5rem)/0.92 var(--font-inter-tight); letter-spacing: -0.05em; }
 .tu-efimera span { position: absolute; display: grid; place-items: center; min-width: 4.4em; padding: 0.4em 0.6em; font: 800 clamp(1.4rem, 3vw, 2.6rem)/1 var(--font-inter-tight); letter-spacing: -0.03em; rotate: calc(-18deg + var(--k) * 11deg); }
 .tu-efimera span:nth-child(1) { top: 12%; left: 10%; background: #2f6fe4; }
-.tu-efimera span:nth-child(2) { top: 18%; right: 14%; background: #26a65b; }
+.tu-efimera span:nth-child(2) { top: 18%; right: 14%; background: #26a65b; color: #111; }
 .tu-efimera span:nth-child(3) { bottom: 16%; left: 18%; background: #ffd23f; color: #111; }
 .tu-efimera span:nth-child(4) { bottom: 22%; right: 10%; background: #f0523a; color: #111; }
 .tu-efimera span:nth-child(5) { top: 46%; left: 4%; background: #e91e63; }
@@ -66,7 +66,7 @@
 .tu-carta ol { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); height: clamp(320px, 42vw, 620px); margin: 0; padding: 0; list-style: none; }
 .tu-carta li { position: relative; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 12px 0; background: var(--c); color: #111; transition: flex-grow 0.3s; }
 .tu-carta li:last-child { color: #f1ead9; }
-.tu-carta li:nth-child(n + 6):not(:last-child) { color: #fff; }
+.tu-carta li:nth-child(n + 5):not(:last-child) { color: #fff; }
 .tu-carta li span { writing-mode: vertical-rl; rotate: 180deg; font: var(--w) clamp(1.3rem, 2.6vw, 2.6rem)/1 var(--font-inter-tight); letter-spacing: -0.03em; }
 .tu-carta li small { font-size: 11px; font-weight: 600; }
 

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceCommit": "a40737d5bdef2ee1cf0aaaa3586a856973719a2c",
   "sourceDirty": true,
   "kind": "guide",
   "id": "salon",
@@ -10,7 +10,7 @@
   "sources": [
     {
       "path": "components/ui/styles/ui-guides.css",
-      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
+      "sha256": "2a163b4287de8ab2644ca9d6da77292d574bde089381bcb39beed25e65e4253c"
     },
     {
       "path": "lib/catalog/catalog.tsx",
@@ -22,7 +22,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+      "sha256": "ce4d612b2ae77aa9cc897075a8f66a803ec6e45f627f4bf9571bace2008f2b93"
     },
     {
       "path": "lib/ui/fonts.ts",
@@ -30,7 +30,7 @@
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
+      "sha256": "0558a1fab32ce1fc68bdce7ef06d92cd5c4d2552bdc2af7452ba400247f310ee"
     },
     {
       "path": "lib/ui/tokens.ts",
@@ -46,7 +46,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -66,7 +66,7 @@
     },
     {
       "path": "scripts/fixtures/agents/salon-style.tsx.txt",
-      "sha256": "8e601b29899027f61a301465af995e416a761668e0d0709a032ca2425b6e1702"
+      "sha256": "832c772833f00e93af73ebbfefba610c68fb4ef61cc838b11b24c198a43099f4"
     },
     {
       "path": "scripts/kit-lib.mts",
@@ -102,10 +102,10 @@
     "tokens": {
       "bg": "#ffffff",
       "fg": "#1f1f1f",
-      "mut": "#868686",
+      "mut": "#5a5a5a",
       "acc": "#f5a490",
       "acc2": "#963e13",
-      "card": "#f4f4f4",
+      "card": "#f9d3c5",
       "ln": "rgba(31,31,31,0.14)",
       "r": 0,
       "font": "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
@@ -201,20 +201,20 @@
     {
       "text": "fg",
       "surface": "card",
-      "ratio": 14.99,
+      "ratio": 11.89,
       "use": "texto normal"
     },
     {
       "text": "mut",
       "surface": "bg",
-      "ratio": 3.64,
-      "use": "solo texto grande, iconos o bordes de control"
+      "ratio": 6.9,
+      "use": "texto normal"
     },
     {
       "text": "mut",
       "surface": "card",
-      "ratio": 3.31,
-      "use": "solo texto grande, iconos o bordes de control"
+      "ratio": 4.98,
+      "use": "texto normal"
     },
     {
       "text": "acc",
@@ -225,7 +225,7 @@
     {
       "text": "acc",
       "surface": "card",
-      "ratio": 1.8,
+      "ratio": 1.43,
       "use": "decorativo: no usar para texto ni controles"
     },
     {
@@ -237,7 +237,7 @@
     {
       "text": "acc2",
       "surface": "card",
-      "ratio": 6.37,
+      "ratio": 5.06,
       "use": "texto normal"
     }
   ],

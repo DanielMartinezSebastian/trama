@@ -27,11 +27,11 @@ export const PESOS: { n: string; w: number; c: string }[] = [
   { n: "Thin", w: 150, c: "#ffd23f" },
   { n: "Extralight", w: 200, c: "#ff9f1c" },
   { n: "Light", w: 300, c: "#f4511e" },
-  { n: "Book", w: 350, c: "#e91e63" },
+  { n: "Book", w: 350, c: "#d81b60" },
   { n: "Regular", w: 400, c: "#8e44ad" },
   { n: "Medium", w: 500, c: "#3f51b5" },
-  { n: "Semibold", w: 600, c: "#1e88e5" },
-  { n: "Bold", w: 700, c: "#26a65b" },
+  { n: "Semibold", w: 600, c: "#1565c0" },
+  { n: "Bold", w: 700, c: "#1b7f44" },
   { n: "Black", w: 900, c: "#111111" },
 ];
 

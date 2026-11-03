@@ -899,13 +899,14 @@ export const STYLE_GUIDES: StyleGuide[] = [
     sectors: "Logística y producción de eventos, productoras, agencias de marca, deporte, música, festivales",
     refs: ["Truck'N Roll (https://trucknroll.com/)", "Glitch&Grit (https://glitchandgrit.com/)", "K72 (Brasa)", "Essor Fitness (Impulso)", "Bolo (/inspiraciones/bolo)", "Grano (/inspiraciones/grano)"],
     variant: "editorial",
-    tokens: { bg: "#131313", fg: "#f3f2ee", mut: "#a3a19b", acc: "#7a64ff", acc2: "#9be59a", card: "#1d1d1d", ln: "rgba(243,242,238,0.2)", r: 2, font: f.interTight, display: f.archivoBlack, accentFont: f.archivoBlack },
-    fonts: { display: f.archivoBlack, body: f.interTight, accent: f.archivoBlack, mono: f.geistMono },
-    type: { brand: "clamp(5rem, 22vw, 22rem)", h1: "clamp(3.4rem, 12vw, 13rem)", h2: "clamp(2.4rem, 6vw, 6rem)", body: "1rem", label: "0.75rem", weight: 400, lineHeight: 0.84, tracking: -0.02, upper: true, labelUpper: false, labelTracking: 0, bodyLineHeight: 1.4 },
+    // las tarjetas en violeta: en Truck'N Roll el acento es superficie (la barra de llamada, el pie), no un detalle
+    tokens: { bg: "#131313", fg: "#f3f2ee", mut: "#c4c1ba", acc: "#7a64ff", acc2: "#9be59a", card: "#3d2bb8", ln: "rgba(243,242,238,0.2)", r: 2, font: f.interTight, display: f.archivo, accentFont: f.archivo },
+    fonts: { display: f.archivo, body: f.interTight, accent: f.archivo, mono: f.geistMono },
+    type: { brand: "clamp(5rem, 22vw, 22rem)", h1: "clamp(3.4rem, 12vw, 13rem)", h2: "clamp(2.4rem, 6vw, 6rem)", body: "1rem", label: "0.75rem", weight: 900, lineHeight: 0.84, tracking: -0.02, upper: true, labelUpper: false, labelTracking: 0, bodyLineHeight: 1.4 },
     space: { margin: "clamp(14px, 1.6vw, 24px)", gutter: "clamp(14px, 1.6vw, 24px)", cols: 12, section: "clamp(90px, 10vw, 150px)", header: "64px", measure: "30em" },
     surface: { radius: 2, pill: false, shadow: false },
     motion: { fast: 0.15, reveal: 0.7, page: 0.6, stagger: 0.06, ease: E.standard, easeReveal: E.expoOut },
-    heroes: ["asym-editorial", "wordmark"],
+    heroes: ["split-video", "wordmark"],
     stories: ["product", "chapters"],
   },
 ];
@@ -940,6 +941,7 @@ export const GUIDE_EXCEPTIONS: Record<string, { rule: (typeof GUIDE_RULES)[numbe
   ],
   catalogo: [{ rule: "peso del titular 300–500 (o condensada/lúdica)", why: "Noho: Switzer 600 a 60 px" }],
   cartel: [{ rule: "peso del titular 300–500 (o condensada/lúdica)", why: "Paul Kalkbrenner: ABC Diatype 700 a 150 px" }],
+  bloque: [{ rule: "peso del titular 300–500 (o condensada/lúdica)", why: "Truck'N Roll: National 2 Condensed 900 a 200 px; Glitch&Grit: Elza 900 a 160 px. El peso extremo es lo que define la familia" }],
   tinta: [{ rule: "sombras ≤ 2 (salvo lúdico o sombra dura)", why: "Don't Look Up: los botones llevan sombra dura de viñeta, es parte del dibujo" }],
   festival: [{ rule: "sombras ≤ 2 (salvo lúdico o sombra dura)", why: "UMBRAL: sombra dura en carteles y botones" }],
   cercano: [

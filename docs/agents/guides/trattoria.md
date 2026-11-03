@@ -24,7 +24,7 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./tr
   "id": "trattoria",
   "source": "premiadas",
   "label": "Trattoria de barrio",
-  "note": "Bloques de color pleno que se suceden (rojo, turquesa, verde botella, granate) sobre crema; serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones.",
+  "note": "Rojo pleno de fondo con texto crema, y bloques de color que se suceden (turquesa, verde botella, granate); serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones.",
   "sectors": "Restaurantes, pizzerías, bares, cafeterías, panaderías, mercados",
   "refs": [
     "Délice",
@@ -32,13 +32,13 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./tr
   ],
   "variant": "editorial",
   "tokens": {
-    "bg": "#f8efdc",
-    "fg": "#2a1a14",
-    "mut": "#6e5a4c",
-    "acc": "#cc2629",
+    "bg": "#b8202a",
+    "fg": "#f8efdc",
+    "mut": "#f3d2c0",
+    "acc": "#f8efdc",
     "acc2": "#7cc3bd",
-    "card": "#f1e4c8",
-    "ln": "rgba(42,26,20,0.18)",
+    "card": "#9e1b24",
+    "ln": "rgba(248,239,220,0.3)",
     "r": 0,
     "font": "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
     "display": "var(--font-fraunces), Georgia, serif",
@@ -134,14 +134,14 @@ Paquete: trama-ui@0.13.0 · esquema 1. [Ficha JSON y hashes de procedencia](./tr
 
 | Texto | Fondo | Ratio | Uso |
 | --- | --- | --- | --- |
-| --fg | --bg | 14,62:1 | texto normal |
-| --fg | --card | 13,27:1 | texto normal |
-| --mut | --bg | 5,69:1 | texto normal |
-| --mut | --card | 5,16:1 | texto normal |
-| --acc | --bg | 4,74:1 | texto normal |
-| --acc | --card | 4,30:1 | solo texto grande, iconos o bordes de control |
-| --acc2 | --bg | 1,77:1 | decorativo: no usar para texto ni controles |
-| --acc2 | --card | 1,60:1 | decorativo: no usar para texto ni controles |
+| --fg | --bg | 5,60:1 | texto normal |
+| --fg | --card | 6,97:1 | texto normal |
+| --mut | --bg | 4,51:1 | texto normal |
+| --mut | --card | 5,61:1 | texto normal |
+| --acc | --bg | 5,60:1 | texto normal |
+| --acc | --card | 6,97:1 | texto normal |
+| --acc2 | --bg | 3,17:1 | solo texto grande, iconos o bordes de control |
+| --acc2 | --card | 3,94:1 | solo texto grande, iconos o bordes de control |
 
 ## requirements
 

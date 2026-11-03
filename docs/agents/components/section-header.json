@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceCommit": "a40737d5bdef2ee1cf0aaaa3586a856973719a2c",
   "sourceDirty": true,
   "kind": "component",
   "id": "section-header",
@@ -26,7 +26,7 @@
     },
     {
       "path": "lib/catalog/entries/texto.tsx",
-      "sha256": "b3c66c50293f1e7ce7535590f30e5cd9b77c79fc85635d64fd22ba9ae4321092"
+      "sha256": "f85fb48f506013a3b5790d93c9f2d674b025eacf9795a26141c31b783e13e8d4"
     },
     {
       "path": "lib/catalog/schema.ts",
@@ -34,7 +34,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+      "sha256": "ce4d612b2ae77aa9cc897075a8f66a803ec6e45f627f4bf9571bace2008f2b93"
     },
     {
       "path": "package-lock.json",
@@ -46,7 +46,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -58,7 +58,7 @@
     },
     {
       "path": "scripts/fixtures/agents/salon-style.tsx.txt",
-      "sha256": "8e601b29899027f61a301465af995e416a761668e0d0709a032ca2425b6e1702"
+      "sha256": "832c772833f00e93af73ebbfefba610c68fb4ef61cc838b11b24c198a43099f4"
     },
     {
       "path": "scripts/kit-lib.mts",

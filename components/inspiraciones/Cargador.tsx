@@ -10,7 +10,7 @@ import { replica } from "./registro";
 /*
  * Cada inspiración se carga por separado: abrir una no descarga las demás. Las que tienen varias páginas (docs/56) exportan
  * desde su `Sitio.tsx` un `Shell` (marco que persiste al navegar: cabecera, menú, estado del carrito o la reserva, pie) y una
- * `Pagina` según la ruta (la portada, cuando la ruta está vacía). Las 36 tienen ya varias páginas.
+ * `Pagina` según la ruta (la portada, cuando la ruta está vacía). Las 44 tienen ya varias páginas.
  */
 type Shell = ComponentType<{ children: ReactNode }>;
 type Pagina = ComponentType<{ ruta: string[] }>;

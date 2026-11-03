@@ -26,3 +26,12 @@
 1. Rehacer `bloque` para que su relato muestre un titular de 12 vw y peso 900 y el acento en superficie; decidir guía de color pleno (Turia, Llave, Cita) y guías de majo, corriente, tueste y trocha según `.refs/ronda-5/afin2.mts`.
 2. Pares, `qa:contrast` y `qa:visual-text` con todos los anchos; `refs:probe --repo` final.
 3. Catálogo, docs/60, 54, 55, AGENTS, recetas, fichas del cuaderno, encargo de imágenes y prompt para Codex; verify y build.
+
+## Cierre
+
+- `bloque` rehecha (portada con foto, Archivo 900, tarjetas violeta): Bolo 0,54, Grano 0,45, Glitch&Grit 0,40 y Truck'N Roll 0,25, todas con `bloque` como la más afín.
+- Guías asignadas: Llave → `manchas`, Majo y Trocha → `papel`, Nada Corriente → `sabana`, Tueste → `monocromo`, Turia → `cartel` (afinidad baja: hueco de color pleno sin segunda fuente).
+- Medida final del repo: 91 páginas medibles; 13 por debajo de 0,25 (al empezar, 28 de 80) y 49 por encima de 0,35 (27). Réplicas más cerca de otra guía: 20 de 44 (22 de 36).
+- `qa:contrast` (11 anchos) sin fallos reales tras corregir colores; lo que queda son elementos a media animación. `qa:visual-text` (11 anchos): solo líneas pegadas de un mismo titular, por diseño; se separó el enlace del muro de Grano.
+- `verify`: todo pasa salvo el cuaderno, por fichas de `proyectos/` (carpeta sin seguimiento que este worktree no tiene).
+- Pendiente: imágenes de Codex (`docs/encargo-imagenes-inspiraciones-5.md`, 92) y volver a medir los pares.

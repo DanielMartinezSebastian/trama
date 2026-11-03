@@ -1,0 +1,510 @@
+{
+ "bolo": {
+  "estilo": "Fotografía documental nocturna de logística de giras: camiones de gira, muelles de carga y carretera, con luz de faros, sodio y neón violeta, mucho negro y grano fino. Gente real del oficio (conductoras, jefes de muelle) en ropa de trabajo oscura, sin posar. Los camiones, sin logotipos, matrículas ni rótulos legibles.",
+  "ruta": "/inspiraciones/bolo",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/bolo/portada.webp",
+    "px": "1600x1200",
+    "motivo": "Frontal de un camión de gira con los faros encendidos en la niebla, de noche"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/muelle.webp",
+    "px": "1600x1200",
+    "motivo": "Un técnico con chaqueta oscura guía con el brazo la marcha atrás de un tráiler en un muelle iluminado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/remolque.webp",
+    "px": "1600x900",
+    "motivo": "Interior vacío de un tráiler con las puertas abiertas, luz cálida al fondo, perspectiva central"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/cabina.webp",
+    "px": "1600x900",
+    "motivo": "Conductor dentro de la cabina de un camión, de noche, iluminado por el salpicadero, visto desde fuera por la ventanilla"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/faros.webp",
+    "px": "1200x800",
+    "motivo": "Detalle del morro y un faro de un camión oscuro, reflejos violetas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/noche.webp",
+    "px": "1200x800",
+    "motivo": "Flight cases negros apilados en la rampa de un camión, luz de linterna"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/conductora.webp",
+    "px": "1200x800",
+    "motivo": "Conductora de unos cuarenta años junto a su camión en un área de servicio de noche"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/equipo.webp",
+    "px": "2400x1400",
+    "motivo": "Dos jefes de muelle de pie delante de un camión en penumbra, mirando a cámara con calma, cazadoras oscuras"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/flota.webp",
+    "px": "1600x900",
+    "motivo": "Tres camiones idénticos aparcados en fila con los faros encendidos, de frente, en un muelle de noche"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/carretera.webp",
+    "px": "1600x1200",
+    "motivo": "Un tráiler en una autopista vacía al atardecer, cielo violeta y luces rojas traseras"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bolo/almacen.webp",
+    "px": "1600x900",
+    "motivo": "Almacén alto con estanterías de flight cases y estructuras de escenario, luz fría"
+   }
+  ]
+ },
+ "grano": {
+  "estilo": "Fotogramas de una productora de contenidos: cine documental y publicidad de autor, luz natural, color con carácter pero sin saturar, grano de película. Cada proyecto tiene dos fotogramas que funcionan en pareja (a la izquierda y a la derecha de la pantalla): un plano general y un detalle o un retrato. Personas reales, nada de stock. Sin texto, logos ni marcas en ropa o escaparates.",
+  "ruta": "/inspiraciones/grano",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/grano/ulla-a.webp",
+    "px": "1200x1500",
+    "motivo": "Floristería de barrio de madrugada: una florista carga cubos de flores frescas en una furgoneta blanca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/ulla-b.webp",
+    "px": "1200x1500",
+    "motivo": "Detalle de manos atando un ramo de flores silvestres sobre un mostrador de madera"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/mar-a.webp",
+    "px": "1200x1500",
+    "motivo": "Pequeño barco de pesca de bajura saliendo del puerto con mar gris de invierno"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/mar-b.webp",
+    "px": "1200x1500",
+    "motivo": "Retrato de un pescador mayor con chubasquero, mirando fuera de cámara"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/talento-a.webp",
+    "px": "1200x1500",
+    "motivo": "Retrato de una artista joven sentada en el suelo de un estudio vacío, luz lateral"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/talento-b.webp",
+    "px": "1200x1500",
+    "motivo": "Patio de una casa de pueblo con una silla de plástico al sol, plano general tranquilo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/pizarra-a.webp",
+    "px": "1200x1500",
+    "motivo": "Aula de colegio con luz de tarde, pupitres y una pizarra verde sin nada escrito"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/pizarra-b.webp",
+    "px": "1200x1500",
+    "motivo": "Ilustración plana de bocadillos de conversación y una tablet sobre fondo verde oscuro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/corre-a.webp",
+    "px": "1200x1500",
+    "motivo": "Corredora atravesando un paso de cebra al amanecer en un barrio de ladrillo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/corre-b.webp",
+    "px": "1200x1500",
+    "motivo": "Detalle de zapatillas de correr sin marca pisando una pista de atletismo roja"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/cancha-a.webp",
+    "px": "1200x1500",
+    "motivo": "Canasta de baloncesto de barrio sobre fondo verde ácido, plano de abajo arriba"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/cancha-b.webp",
+    "px": "1200x1500",
+    "motivo": "Ilustración de un astronauta botando un balón de baloncesto, colores azul y naranja"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/persiana-a.webp",
+    "px": "1200x1500",
+    "motivo": "Un tendero mayor sube la persiana metálica de su tienda por la mañana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/persiana-b.webp",
+    "px": "1200x1500",
+    "motivo": "Escaparate de una mercería antigua con hilos de colores ordenados, sin rótulos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/rail-a.webp",
+    "px": "1200x1500",
+    "motivo": "Público de un concierto dentro de una estación de tren abandonada, luces de colores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/rail-b.webp",
+    "px": "1200x1500",
+    "motivo": "Cantante en el escenario de noche, contraluz y humo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/estudio.webp",
+    "px": "1200x1500",
+    "motivo": "Sala de montaje de una productora: dos monitores, mesa de madera, luz de ventana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/grano/equipo.webp",
+    "px": "2400x1030",
+    "motivo": "El equipo de una productora (doce personas) en el patio de su estudio, de pie, relajados"
+   }
+  ]
+ },
+ "turia": {
+  "estilo": "Fotografía de viaje de los años sesenta y setenta revisitada: Valencia con colores de diapositiva (naranjas, azules de cielo, verdes de persiana), luz de mediodía, encuadres de postal. Nada de texto legible: letreros, rótulos y carteles desenfocados o de espaldas.",
+  "ruta": "/inspiraciones/turia",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/turia/portada.webp",
+    "px": "1600x1200",
+    "motivo": "Calle estrecha del barrio del Carmen con un tranvía amarillo y balcones con persianas verdes, color de diapositiva"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/banderas.webp",
+    "px": "2400x1400",
+    "motivo": "Muchas banderas de países ondeando en mástiles en un puerto, gente paseando, cielo azul de los setenta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/mercado.webp",
+    "px": "1200x1500",
+    "motivo": "Puestos de fruta del Mercado Central bajo la cúpula de hierro y cristal, sin letreros legibles"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/metro.webp",
+    "px": "1200x1500",
+    "motivo": "Andén de metro con baldosas de colores y un tren entrando, desenfoque de movimiento"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/postal-1.webp",
+    "px": "1200x800",
+    "motivo": "Postal antigua de la playa de la Malvarrosa con sombrillas de colores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/postal-2.webp",
+    "px": "1200x800",
+    "motivo": "Postal antigua de las Torres de Serranos al atardecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/turia/postal-3.webp",
+    "px": "1200x800",
+    "motivo": "Postal antigua de un campo de naranjos con una alquería blanca"
+   }
+  ]
+ },
+ "majo": {
+  "estilo": "Fotografía cálida y luminosa de un robot doméstico amable: el robot (un mismo modelo en todas) es de poco más de un metro, cuerpo redondeado color arena con detalles mostaza, y una cara de pantalla con dos ojos redondos. Luz natural de interior, paredes crema, madera clara; gente real y diversa que convive con él sin aspavientos. Sin logotipos ni texto.",
+  "ruta": "/inspiraciones/majo",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/majo/portada.webp",
+    "px": "2400x1050",
+    "motivo": "Un programador joven trabaja en su portátil en una oficina luminosa; a su lado el robot sostiene una taza"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/cara.webp",
+    "px": "2400x1050",
+    "motivo": "Primer plano de la cara del robot: una pantalla oscura con dos ojos redondos y un botón de reproducir debajo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/taller.webp",
+    "px": "2400x1050",
+    "motivo": "El robot de cuerpo entero en un taller limpio, con banco de trabajo y herramientas ordenadas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/tienda.webp",
+    "px": "1600x1000",
+    "motivo": "El robot lleva una bandeja con dos cafés a una mesa en una cafetería de barrio"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/aula.webp",
+    "px": "1600x1000",
+    "motivo": "Niños de primaria alrededor del robot en un aula, uno le enseña un dibujo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/ciudad.webp",
+    "px": "1600x1000",
+    "motivo": "El robot asomado a la barandilla de una azotea de Barcelona, ciudad al fondo al atardecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/casa.webp",
+    "px": "900x1200",
+    "motivo": "El robot recoge juguetes del suelo de un salón con alfombra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/juego.webp",
+    "px": "900x1200",
+    "motivo": "Una niña juega con el robot a un juego de mesa de fichas de colores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/majo/equipo.webp",
+    "px": "2400x1050",
+    "motivo": "El equipo (diez personas de varias edades) en su taller con dos robots en medio"
+   }
+  ]
+ },
+ "corriente": {
+  "estilo": "Fotografía de arquitectura e interiorismo residencial mediterráneo: viviendas nuevas de diseño contemporáneo, madera clara, lino, piedra, plantas, luz cálida de tarde que entra en diagonal. Encuadres limpios y frontales, sin personas o con alguna de espaldas. Sin texto, logotipos ni cuadros con letras.",
+  "ruta": "/inspiraciones/corriente",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/corriente/salon.webp",
+    "px": "1600x2000",
+    "motivo": "Salón con sofá de lino crudo, mesa baja de madera y ventanal al jardín, luz de tarde"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/cocina.webp",
+    "px": "1600x2000",
+    "motivo": "Cocina abierta con isla de madera clara, encimera de piedra y taburetes"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/terraza.webp",
+    "px": "1600x1200",
+    "motivo": "Terraza cubierta con pérgola de madera, sillones y vistas a la huerta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/piscina.webp",
+    "px": "1600x1200",
+    "motivo": "Piscina comunitaria entre jardines de casas pareadas, tumbonas blancas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/dormitorio.webp",
+    "px": "1600x2000",
+    "motivo": "Dormitorio sereno con cama de lino y luz de mañana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/fachada.webp",
+    "px": "1600x2000",
+    "motivo": "Fachada de casas pareadas blancas con celosías de madera entre pinos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/bano.webp",
+    "px": "1600x2000",
+    "motivo": "Baño con lavabo de piedra, grifería negra y ventana alta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/corriente/jardin.webp",
+    "px": "1600x2000",
+    "motivo": "Jardín mediterráneo con olivo y camino de piedra hacia una casa"
+   }
+  ]
+ },
+ "tueste": {
+  "estilo": "Fotografía industrial cuidada de un fabricante de tostadoras de café: máquinas de acero negro mate y latón sobre fondo gris claro liso (las de catálogo, como un bodegón de producto, centradas y con sombra suave), la nave de montaje con luz cenital, y granos y cacao en primer plano con luz cálida. Sin logotipos, placas ni texto en las máquinas.",
+  "ruta": "/inspiraciones/tueste",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/tueste/portada.webp",
+    "px": "1200x1500",
+    "motivo": "Una tostadora de café industrial negra en penumbra, con la tolva arriba, luz lateral dura"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/fundador.webp",
+    "px": "1200x1500",
+    "motivo": "Retrato de un fundador de unos sesenta años, pelo cano, sonriendo en el taller"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/cafe.webp",
+    "px": "1200x1200",
+    "motivo": "Granos de café recién tostados en la bandeja de enfriamiento, vista cenital"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/cacao.webp",
+    "px": "1200x1200",
+    "motivo": "Habas de cacao tostadas en un montón, luz cálida, fondo oscuro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/frutos.webp",
+    "px": "1200x1200",
+    "motivo": "Almendras y avellanas tostadas en primer plano, fondo oscuro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/fabrica.webp",
+    "px": "1600x1200",
+    "motivo": "Nave de montaje con tres tostadoras a medio montar y luz cenital"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/blog-1.webp",
+    "px": "1600x1000",
+    "motivo": "Mano de un tostador comprobando el color de los granos con el probador"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/blog-2.webp",
+    "px": "1600x1000",
+    "motivo": "Una pequeña tostadora en el rincón de una cafetería de barrio"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/blog-3.webp",
+    "px": "1600x1000",
+    "motivo": "Chimenea de una tostadora con el aire limpio contra el cielo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/t5.webp",
+    "px": "1200x1200",
+    "motivo": "Tostadora pequeña de 5 kg, negra con detalles de latón, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/t12.webp",
+    "px": "1200x1200",
+    "motivo": "Tostadora de 12 kg, negra mate, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/o30.webp",
+    "px": "1200x1200",
+    "motivo": "Tostadora de 30 kg con enfriador redondo grande, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/o60.webp",
+    "px": "1200x1200",
+    "motivo": "Tostadora de 60 kg con dos tolvas, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/i120.webp",
+    "px": "1200x1200",
+    "motivo": "Línea industrial de 120 kg con carga automática, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/i240.webp",
+    "px": "1200x1200",
+    "motivo": "Línea industrial de 240 kg, varias piezas, bodegón sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tueste/e12.webp",
+    "px": "1200x1200",
+    "motivo": "Tostadora eléctrica de 12 kg, compacta, blanca y acero, bodegón sobre fondo gris claro"
+   }
+  ]
+ },
+ "trocha": {
+  "estilo": "Fotografía de producto y de campo de una moto eléctrica de enduro (la misma en todas): carenado amarillo intenso con negro, chasis gris y ruedas de tacos, sin logotipos ni texto. Las de campo, en bosques de pinos y pistas de tierra del norte, con luz suave y algo de barro. Las vistas del visor, sobre fondo gris claro liso (#f6f5f1), la moto entera centrada, sin sombra dura.",
+  "ruta": "/inspiraciones/trocha",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/trocha/portada.webp",
+    "px": "2400x1400",
+    "motivo": "La moto amarilla aparcada sobre su caballete en un bosque de pinos con helechos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/motor.webp",
+    "px": "2400x1400",
+    "motivo": "Primer plano del motor eléctrico y el radiador de la moto, metal gris y carenado amarillo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/barro.webp",
+    "px": "2400x1400",
+    "motivo": "Un piloto derrapa con la moto en una pista de tierra, nube de polvo, luz de tarde"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/piloto.webp",
+    "px": "2400x1050",
+    "motivo": "Una piloto con casco y ropa de enduro de pie junto a la moto en el bosque"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/modos.webp",
+    "px": "1600x1000",
+    "motivo": "La moto en la cima de una loma al amanecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/cargador.webp",
+    "px": "1200x900",
+    "motivo": "Base de carga de la batería, con ruedas, sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/bateria.webp",
+    "px": "1200x900",
+    "motivo": "Batería grande de la moto, curva, carcasa gris, sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/bateria-s.webp",
+    "px": "1200x900",
+    "motivo": "Batería pequeña de la moto, curva, carcasa gris, sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/pantalla.webp",
+    "px": "1200x1500",
+    "motivo": "Detalle de la pequeña pantalla del manillar con la batería y el modo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/guantes.webp",
+    "px": "1200x1500",
+    "motivo": "Guantes de enduro dejados en el hueco de guardado de la moto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/vista-lateral.webp",
+    "px": "1800x900",
+    "motivo": "La moto de perfil derecho entera, fondo gris claro liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/vista-frontal.webp",
+    "px": "1800x900",
+    "motivo": "La moto vista de frente a tres cuartos, fondo gris claro liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/vista-trasera.webp",
+    "px": "1800x900",
+    "motivo": "La moto vista desde atrás a tres cuartos, fondo gris claro liso"
+   },
+   {
+    "archivo": "public/img/inspiraciones/trocha/vista-detalle.webp",
+    "px": "1800x900",
+    "motivo": "La moto con el asiento levantado mostrando el hueco de la batería, fondo gris claro"
+   }
+  ]
+ },
+ "llave": {
+  "estilo": "Fotografía luminosa y alegre de residencias de estudiantes nuevas: interiores con muebles de colores primarios (azul, amarillo, naranja, verde), luz de día, estudiantes reales y diversos de unos veinte años haciendo vida normal (estudiar, cocinar, charlar), sin posar. Sin logotipos ni texto en camisetas o paredes.",
+  "ruta": "/inspiraciones/llave",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/llave/portada.webp",
+    "px": "2000x1500",
+    "motivo": "Sala común con sofás de colores, techo azul con luces redondas y estudiantes charlando"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/habitacion.webp",
+    "px": "1200x900",
+    "motivo": "Habitación individual con cama de 135, escritorio de madera clara y ventana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/cocina.webp",
+    "px": "1200x900",
+    "motivo": "Cocina compartida luminosa con dos estudiantes preparando la cena"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/estudio.webp",
+    "px": "1200x900",
+    "motivo": "Sala de estudio silenciosa con mesas largas y lámparas, estudiantes con portátiles"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/comun.webp",
+    "px": "1200x900",
+    "motivo": "Grupo de estudiantes cenando juntos en una mesa larga"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/cerradura.webp",
+    "px": "1200x900",
+    "motivo": "Mano acercando un móvil a una cerradura electrónica negra en una puerta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/app.webp",
+    "px": "1200x900",
+    "motivo": "Mano sujetando un móvil con una app de colores entre plantas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/gimnasio.webp",
+    "px": "1200x900",
+    "motivo": "Gimnasio pequeño y luminoso de la residencia con dos estudiantes entrenando"
+   },
+   {
+    "archivo": "public/img/inspiraciones/llave/oferta.webp",
+    "px": "1200x750",
+    "motivo": "Estudiante leyendo en un sofá naranja junto a la ventana mientras otra abre la nevera"
+   }
+  ]
+ }
+}

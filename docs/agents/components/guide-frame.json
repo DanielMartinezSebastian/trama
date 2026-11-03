@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceCommit": "a40737d5bdef2ee1cf0aaaa3586a856973719a2c",
   "sourceDirty": true,
   "kind": "component",
   "id": "guide-frame",
@@ -18,7 +18,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "51201f485af0b09fbfcbb9edcf4055f29e1c96e5c4f4234b410b5c2becbec68c"
+      "sha256": "8519a7457b49c10ac3da6a761a294e6304dffd506479d18615b47adfa2fa060d"
     },
     {
       "path": "lib/catalog/schema.ts",
@@ -26,11 +26,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+      "sha256": "ce4d612b2ae77aa9cc897075a8f66a803ec6e45f627f4bf9571bace2008f2b93"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
+      "sha256": "0558a1fab32ce1fc68bdce7ef06d92cd5c4d2552bdc2af7452ba400247f310ee"
     },
     {
       "path": "lib/ui/text-contrast.ts",
@@ -50,7 +50,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -62,7 +62,7 @@
     },
     {
       "path": "scripts/fixtures/agents/salon-style.tsx.txt",
-      "sha256": "8e601b29899027f61a301465af995e416a761668e0d0709a032ca2425b6e1702"
+      "sha256": "832c772833f00e93af73ebbfefba610c68fb4ef61cc838b11b24c198a43099f4"
     },
     {
       "path": "scripts/kit-lib.mts",
@@ -84,7 +84,7 @@
   },
   "name": "Guía de estilo (sistema visual completo)",
   "component": "GuideFrame",
-  "description": "Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+  "description": "Aplica una de las cuarenta y seis guías de estilo: la de la quinta ronda (bloque nocturno: negro carbón y titulares de palo muy pesados que llenan la pantalla), las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
   "category": "secciones",
   "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
   "api": {
@@ -145,7 +145,8 @@
         "pixel",
         "puntos",
         "papel",
-        "cercano"
+        "cercano",
+        "bloque"
       ],
       "labels": {
         "lujo": "Lujo tranquilo",
@@ -192,7 +193,8 @@
         "pixel": "Arcade pixel",
         "puntos": "Matriz de puntos",
         "papel": "Estudio en papel",
-        "cercano": "Aprendizaje cercano"
+        "cercano": "Aprendizaje cercano",
+        "bloque": "Bloque nocturno"
       }
     },
     {

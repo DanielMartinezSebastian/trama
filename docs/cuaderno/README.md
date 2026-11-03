@@ -3,22 +3,33 @@
 > Generado por `npm run lab:cuaderno` a partir de las fichas de esta carpeta; no se edita a mano. Método y plantilla
 > en [docs/53](../53-cuaderno-del-laboratorio.md). En local se lee en `/lab/cuaderno`.
 
-88 fichas.
+99 fichas.
 
 ## Fichas
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
+| 2026-11-03 | [concepto-guias-revisadas-ronda-5](concepto-guias-revisadas-ronda-5.md) · Guías revisadas contra sus originales y la guía bloque nocturno | concepto | hecho |  | bloque nocturno, salón editorial claro, trattoria de barrio | `/guias` |
+| 2026-11-03 | [herramienta-afinidad-de-guias](herramienta-afinidad-de-guias.md) · La afinidad entre páginas y guías, medida como se ve | herramienta | hecho |  |  | `/guias` |
 | 2026-11-03 | [pieza-botones-de-menu](pieza-botones-de-menu.md) · Botones de menú móvil sin corchetes y efectos de enlace nuevos | pieza | hecho |  |  | `/componentes` |
 | 2026-11-03 | [pieza-menus-y-transiciones-con-tema](pieza-menus-y-transiciones-con-tema.md) · Menús móviles distintos y transiciones con el color de cada web | pieza | hecho |  |  | `/componentes` |
+| 2026-11-03 | [pieza-pago-digital-y-carrito-sincronizado](pieza-pago-digital-y-carrito-sincronizado.md) · Pago de productos digitales y carrito sincronizado entre instancias | pieza | hecho | tipografía, robótica, residencia |  | `/componentes` |
 | 2026-11-03 | [pieza-scroll-arriba-al-navegar](pieza-scroll-arriba-al-navegar.md) · La página nueva empieza arriba y la anterior recupera su altura al volver | pieza | hecho |  |  | `/inspiraciones` |
 | 2026-11-03 | [replica-bocado](replica-bocado.md) · Bocado, a partir de Délice | réplica | hecho | restaurante | trattoria de barrio | `/inspiraciones/bocado` |
+| 2026-11-03 | [replica-bolo](replica-bolo.md) · Bolo, a partir de Truck'N Roll | réplica | hecho | logística, eventos | bloque nocturno | `/inspiraciones/bolo` |
+| 2026-11-03 | [replica-corriente](replica-corriente.md) · Nada Corriente, a partir de Normal is Boring | réplica | hecho | inmobiliaria | sabana tranquila | `/inspiraciones/corriente` |
+| 2026-11-03 | [replica-grano](replica-grano.md) · Grano, a partir de Glitch&Grit | réplica | hecho | estudio creativo, audiovisual | bloque nocturno | `/inspiraciones/grano` |
+| 2026-11-03 | [replica-llave](replica-llave.md) · Llave, a partir de Units | réplica | hecho | residencia, vivienda | pop de manchas | `/inspiraciones/llave` |
+| 2026-11-03 | [replica-majo](replica-majo.md) · Majo, a partir de Fauna Robotics | réplica | hecho | robótica, hardware | estudio en papel | `/inspiraciones/majo` |
 | 2026-11-03 | [replica-nacar](replica-nacar.md) · Nácar, a partir de Moto | réplica | hecho | finanzas | obsidiana | `/inspiraciones/nacar` |
 | 2026-11-03 | [replica-nimbo](replica-nimbo.md) · Nimbo, a partir de Cerebrium | réplica | hecho | software | cinta de luz | `/inspiraciones/nimbo` |
 | 2026-11-03 | [replica-pausa](replica-pausa.md) · Pausa, a partir de Odyssée | réplica | hecho | clínica, salud | clínica serena | `/inspiraciones/pausa` |
 | 2026-11-03 | [replica-pleno](replica-pleno.md) · PLENO, a partir de OFFF Forum | réplica | hecho | conferencia, cultura | foro en blanco y negro | `/inspiraciones/pleno` |
 | 2026-11-03 | [replica-solera](replica-solera.md) · Solera Arquitectura, a partir de LPAS | réplica | hecho | arquitectura | estudio en tierras | `/inspiraciones/solera` |
 | 2026-11-03 | [replica-tierra-ancha](replica-tierra-ancha.md) · Tierra Ancha, a partir de Tengile MalaMala | réplica | hecho | safari, hotel | sabana tranquila | `/inspiraciones/tierra-ancha` |
+| 2026-11-03 | [replica-trocha](replica-trocha.md) · Trocha, a partir de Radian | réplica | hecho | automoción, vehículo eléctrico | estudio en papel | `/inspiraciones/trocha` |
+| 2026-11-03 | [replica-tueste](replica-tueste.md) · Tueste, a partir de CoffeeTech | réplica | hecho | maquinaria, industria | monocromo de agencia | `/inspiraciones/tueste` |
+| 2026-11-03 | [replica-turia](replica-turia.md) · Turia Grotesk, a partir de PP Neue Montreal | réplica | hecho | tipografía, producto digital | cartel suizo | `/inspiraciones/turia` |
 | 2026-11-03 | [replica-vencejo](replica-vencejo.md) · Vencejo, a partir de Spyker | réplica | hecho | automoción | motor artesano | `/inspiraciones/vencejo` |
 | 2026-11-02 | [lucero-cuatro-conceptos](lucero-cuatro-conceptos.md) · Lucero, cuatro conceptos para un mismo encargo | demo | en curso | transporte |  | `/lucero/horario · /lucero/vagon · /lucero/ventanilla · /lucero/maqueta` |
 | 2026-11-02 | [replica-alba](replica-alba.md) · Alba Residencia, a partir de ERA Residence | réplica | hecho | inmobiliaria | residencia burdeos | `/inspiraciones/alba` |
@@ -104,13 +115,13 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 
 ### salón editorial claro
 
-- Fichas: [demo-linde-agentes](demo-linde-agentes.md), [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
-- Colores: `#ffffff` `#1f1f1f` `#963e13` `#f5a490` `#2b2b2b` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
-- Letras: Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
+- Fichas: [concepto-guias-revisadas-ronda-5](concepto-guias-revisadas-ronda-5.md), [demo-linde-agentes](demo-linde-agentes.md), [replica-matiz](replica-matiz.md), [replica-melena](replica-melena.md), [replica-nura](replica-nura.md), [demo-hebra](demo-hebra.md)
+- Colores: `#131313` `#3d2bb8` `#b8202a` `#f9d3c5` `#ffffff` `#1f1f1f` `#963e13` `#f5a490` `#2b2b2b` `#f8c4b6` `#1e1e1e` `#2c2c2c` `#feede4` `#ffd5bf` `#e9875a` `#f5f5f5` `#121212` `#5c5c5c` `#dedede` `#2b2031` `#f2d6db` `#d2b0c0` `#765c70`
+- Letras: Archivo, Cormorant Garamond, Manrope, DM Serif Display, Lora, Geist, Inter, Instrument Serif, Syne
 - Tipografía: serif con cursiva (2), serif fina (2), grotesca en mayúsculas, minúsculas, una sola letra
 - Paleta: fondo claro (3), pastel cálido (3), fondo oscuro, grises con grano
 - Tono: cálido (4), editorial (4), artesanal, artístico, comercial, sobrio
-- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos, logos de marcas
+- Patrones: carta de servicios (2), collage de fotos (2), equipo en filas (2), palabra de fondo (2), reserva por persona (2), academia, afinidad de guía, arco detrás del titular, barra inferior fija, carrusel de tratamientos, consulta gratis, equipo con fotos
 
 ### club de alto contraste
 
@@ -162,6 +173,36 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: cálido (2), cercano (2), sereno (2), editorial, lujo discreto, natural
 - Patrones: horario de clases (2), acordeón con foto fija, cinta de cifras, equipo con fotos, foto a sangre, foto fija, galería editorial, lista gigante de nombres, portada partida, relato por scroll, reserva propia, tarjetas de sesión
 
+### bloque nocturno
+
+- Fichas: [concepto-guias-revisadas-ronda-5](concepto-guias-revisadas-ronda-5.md), [replica-bolo](replica-bolo.md), [replica-grano](replica-grano.md)
+- Colores: `#131313` `#3d2bb8` `#b8202a` `#f9d3c5` `#f3f2ee` `#5a3ff2` `#f6f5f1` `#050505` `#f1f0ec` `#9be59a` `#c7aaff` `#86a4ff` `#ffb56e`
+- Letras: Archivo, Archivo (anchura 62 %), Inter Tight
+- Tipografía: condensada de 900 en mayúsculas, grotesca de 900 en mayúsculas
+- Paleta: negro, negro carbón, pasteles por proyecto, violeta eléctrico
+- Tono: contundente, creativo, de oficio, directo
+- Patrones: afinidad de guía, cintas cruzadas, fotos entre las palabras del titular, frase fantasma, mitades por proyecto, muro de proyectos fijado al scroll, navegación en las cuatro esquinas, paréntesis gigantes, pegatina girada
+
+### estudio en papel
+
+- Fichas: [replica-majo](replica-majo.md), [replica-trocha](replica-trocha.md), [concepto-guias-del-repo](concepto-guias-del-repo.md)
+- Colores: `#f4eee5` `#2a2622` `#e8572f` `#e8b33c` `#2f8f86` `#c4553f` `#efeee9` `#161614` `#f2d21b` `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
+- Letras: Inter Tight, Inter, JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono
+- Tipografía: grotesca de 500 centrada, grotesca de 500 contenida
+- Paleta: amarillo, crema cálido y cuatro colores de formas, gris cálido, negro
+- Tono: amable, aventurero, cercano, técnico
+- Patrones: arcos de usos, carrusel, ecosistema en tarjetas, ficha sobre foto, figuras de formas geométricas, pestañas por público, tarjetas muy redondeadas, visor por ángulos con puntos de detalle
+
+### cartel suizo
+
+- Fichas: [replica-turia](replica-turia.md), [replica-pulso-lento](replica-pulso-lento.md)
+- Colores: `#f0523a` `#111111` `#f1ead9` `#ffffff` `#000000` `#c5c5c5` `#a7ff9c` `#ff6831`
+- Letras: Inter Tight
+- Tipografía: grotesca 700, grotesca de 700 a toda la anchura, interlineado cerrado
+- Paleta: blanco, bloques planos, crema y diez colores de peso, negro, rojo anaranjado
+- Tono: alegre, austero, editorial, potente
+- Patrones: años gigantes, carta de pesos en franjas, cintas de acentos, foto dentro del nombre, glifos gigantes, guía de viaje, postales y billetes, reproductor fijo, vinilo que gira
+
 ### escuela amarilla
 
 - Fichas: [replica-ahora](replica-ahora.md), [replica-oficio](replica-oficio.md)
@@ -182,6 +223,36 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: sereno (2), cercano, personal
 - Patrones: galería editorial (2), relato por scroll
 
+### pop de manchas
+
+- Fichas: [replica-llave](replica-llave.md), [replica-polilla](replica-polilla.md)
+- Colores: `#f2efe8` `#2f5bea` `#ffd31a` `#ff6a1f` `#e8442d` `#1fa34a` `#8a4fff` `#ffd24a` `#faed8f` `#fd48f2` `#a4f6f8` `#3b308f`
+- Letras: Titan One, Onest, Bowlby One, Instrument Sans, Caveat
+- Tipografía: display gruesa y redonda, manuscrita, ultranegra
+- Paleta: crema y seis colores plenos, fondo saturado, varios acentos
+- Tono: alegre (2), descarado, joven
+- Patrones: aviso de oferta que se recuerda, comentario a mano, lateral de pestañas, manchas orgánicas, objeto que cae, rejilla de tarjetas de color, tarjetas giradas
+
+### sabana tranquila
+
+- Fichas: [replica-corriente](replica-corriente.md), [replica-tierra-ancha](replica-tierra-ancha.md)
+- Colores: `#ffffff` `#111111` `#e4685a` `#bcd0ea` `#f2efe9` `#f5eee9` `#373f1d` `#8b5a2b` `#c8b48a`
+- Letras: Cormorant Garamond, Inter, Bodoni Moda, Inter Tight
+- Tipografía: serifa finísima en mayúsculas, serifa ultrafina en mayúsculas
+- Paleta: azul claro, blanco, coral, crema, negro, verde oliva
+- Tono: sereno (2), cálido, editorial
+- Patrones: cartas de alojamiento, cita grande, collage suelto, marca partida entre esquinas, palabras gigantes cortadas, texto vertical, titular desplazado, titular escalonado
+
+### trattoria de barrio
+
+- Fichas: [concepto-guias-revisadas-ronda-5](concepto-guias-revisadas-ronda-5.md), [replica-bocado](replica-bocado.md)
+- Colores: `#131313` `#3d2bb8` `#b8202a` `#f9d3c5` `#f8efdc` `#cc2629` `#7cc3bd` `#2d3e2b` `#6b1d24`
+- Letras: Archivo, Fraunces, Manrope
+- Tipografía: sans redonda en mayúsculas, serifa blanda con cursiva
+- Paleta: crema, rojo, turquesa, verde botella
+- Tono: alegre, cercano
+- Patrones: afinidad de guía, bloques de color, platos en círculo, programación, título en arco
+
 ### aprendizaje cercano
 
 - Fichas: [demo-parla](demo-parla.md)
@@ -201,16 +272,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: 
 - Tono: 
 - Patrones: 
-
-### cartel suizo
-
-- Fichas: [replica-pulso-lento](replica-pulso-lento.md)
-- Colores: `#ffffff` `#000000` `#c5c5c5` `#a7ff9c` `#ff6831`
-- Letras: Inter Tight
-- Tipografía: grotesca 700, interlineado cerrado
-- Paleta: blanco, bloques planos
-- Tono: austero, potente
-- Patrones: años gigantes, foto dentro del nombre, reproductor fijo, vinilo que gira
 
 ### catálogo de color
 
@@ -261,16 +322,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: azul eléctrico, coral, lima, papel mineral, tinta
 - Tono: cinemático, estratégico, experimental
 - Patrones: archivo filtrable, dashboard filtrable, diagnóstico interactivo, ficha de iniciativa, programa interactivo, relato de campaña, reserva local
-
-### estudio en papel
-
-- Fichas: [concepto-guias-del-repo](concepto-guias-del-repo.md)
-- Colores: `#08020f` `#ff2fd0` `#140b26` `#ffcc4d` `#000000` `#ff3b3b` `#f2efe9` `#b9501d`
-- Letras: JetBrains Mono, Silkscreen, Space Mono, Doto, IBM Plex Mono, Inter Tight, Inter
-- Tipografía: 
-- Paleta: 
-- Tono: 
-- Patrones: 
 
 ### estudio en tierras
 
@@ -332,6 +383,16 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: 
 - Patrones: 
 
+### monocromo de agencia
+
+- Fichas: [replica-tueste](replica-tueste.md)
+- Colores: `#141414` `#ebe7e1` `#e0552b` `#dedad3`
+- Letras: Inter Tight
+- Tipografía: grotesca de 500 enorme
+- Paleta: crema, naranja quemado, negro
+- Tono: de oficio, técnico
+- Patrones: opinión con número gigante, pilares con flecha, portada negra con titular centrado, sobretítulos entre corchetes
+
 ### mosaico de baldosas
 
 - Fichas: [replica-cantera](replica-cantera.md)
@@ -371,16 +432,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: negro piedra, plata
 - Tono: discreto, exclusivo
 - Patrones: galería en profundidad, niebla de cifras, objeto metálico en 3D, red por pestañas
-
-### pop de manchas
-
-- Fichas: [replica-polilla](replica-polilla.md)
-- Colores: `#ffd24a` `#faed8f` `#fd48f2` `#a4f6f8` `#3b308f`
-- Letras: Bowlby One, Instrument Sans, Caveat
-- Tipografía: manuscrita, ultranegra
-- Paleta: fondo saturado, varios acentos
-- Tono: alegre, descarado
-- Patrones: comentario a mano, manchas orgánicas, objeto que cae, tarjetas giradas
 
 ### producto de marca
 
@@ -432,16 +483,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Tono: goloso, seguro
 - Patrones: alternancia de color, consultorio, foto a sangre, marca de borde a borde
 
-### sabana tranquila
-
-- Fichas: [replica-tierra-ancha](replica-tierra-ancha.md)
-- Colores: `#f5eee9` `#373f1d` `#8b5a2b` `#c8b48a`
-- Letras: Cormorant Garamond, Inter Tight
-- Tipografía: serifa finísima en mayúsculas
-- Paleta: crema, verde oliva
-- Tono: cálido, sereno
-- Patrones: cartas de alojamiento, cita grande, collage suelto, titular desplazado
-
 ### tecnico
 
 - Fichas: [demo-rizo-empresa-tecnologica](demo-rizo-empresa-tecnologica.md)
@@ -471,16 +512,6 @@ Lo que reúne cada familia: la semilla de su guía de estilo (docs/16).
 - Paleta: papel, tinta, un rojo
 - Tono: gamberro, satírico
 - Patrones: bocadillos, juego en lienzo, multitud dibujada, sombra de viñeta
-
-### trattoria de barrio
-
-- Fichas: [replica-bocado](replica-bocado.md)
-- Colores: `#f8efdc` `#cc2629` `#7cc3bd` `#2d3e2b` `#6b1d24`
-- Letras: Fraunces, Manrope
-- Tipografía: sans redonda en mayúsculas, serifa blanda con cursiva
-- Paleta: crema, rojo, turquesa, verde botella
-- Tono: alegre, cercano
-- Patrones: bloques de color, platos en círculo, programación, título en arco
 
 ## Patrones que van juntos
 
@@ -535,35 +566,35 @@ Las etiquetas usadas, por campo y por número de fichas. Antes de inventar una, 
 
 ### Sector (`sector`)
 
-peluquería (18) · gimnasio (13) · cultura (10) · academia (9) · agencia (6) · barbería (6) · bienestar (6) · eventos (6) · producto (3) · ciencia (2) · restaurante (2) · arquitectura (1) · audio (1) · automoción (1) · cine (1) · clínica (1) · club de suscripción (1) · conferencia (1) · empresa (1) · estudio boutique (1) · estudio creativo (1) · exploración (1) · finanzas (1) · hotel (1) · ilustración (1) · inmobiliaria (1) · interiorismo (1) · libros (1) · logística (1) · marketing (1) · mueble (1) · música (1) · robótica (1) · safari (1) · salud (1) · selección de personal (1) · software (1) · tecnología (1) · transporte (1) · videojuego (1)
+peluquería (18) · gimnasio (13) · cultura (10) · academia (9) · eventos (7) · agencia (6) · barbería (6) · bienestar (6) · producto (3) · robótica (3) · automoción (2) · ciencia (2) · estudio creativo (2) · inmobiliaria (2) · logística (2) · residencia (2) · restaurante (2) · tipografía (2) · arquitectura (1) · audio (1) · audiovisual (1) · cine (1) · clínica (1) · club de suscripción (1) · conferencia (1) · empresa (1) · estudio boutique (1) · exploración (1) · finanzas (1) · hardware (1) · hotel (1) · ilustración (1) · industria (1) · interiorismo (1) · libros (1) · maquinaria (1) · marketing (1) · mueble (1) · música (1) · producto digital (1) · safari (1) · salud (1) · selección de personal (1) · software (1) · tecnología (1) · transporte (1) · vehículo eléctrico (1) · videojuego (1) · vivienda (1)
 
 ### Familia de estilo (`guia`)
 
-salón editorial claro (10) · club de alto contraste (7) · lúdico (7) · academia de autor (5) · barbería de carácter (5) · estudio boutique (5) · escuela amarilla (2) · lujo tranquilo (2) · aprendizaje cercano (1) · arcade pixel (1) · cartel suizo (1) · catálogo de color (1) · cinta de luz (1) · clínica serena (1) · editorial (1) · electrico (1) · estudio en papel (1) · estudio en tierras (1) · filmoteca (1) · foro en blanco y negro (1) · ingeniería serena (1) · mando orbital (1) · matriz de puntos (1) · mosaico de baldosas (1) · motor artesano (1) · nocturno (1) · obsidiana (1) · pop de manchas (1) · producto de marca (1) · producto en tres actos (1) · producto nocturno (1) · residencia burdeos (1) · rosa y chocolate (1) · sabana tranquila (1) · tecnico (1) · terminal de neón (1) · tinta a mano (1) · trattoria de barrio (1)
+salón editorial claro (11) · club de alto contraste (7) · lúdico (7) · academia de autor (5) · barbería de carácter (5) · estudio boutique (5) · bloque nocturno (3) · estudio en papel (3) · cartel suizo (2) · escuela amarilla (2) · lujo tranquilo (2) · pop de manchas (2) · sabana tranquila (2) · trattoria de barrio (2) · aprendizaje cercano (1) · arcade pixel (1) · catálogo de color (1) · cinta de luz (1) · clínica serena (1) · editorial (1) · electrico (1) · estudio en tierras (1) · filmoteca (1) · foro en blanco y negro (1) · ingeniería serena (1) · mando orbital (1) · matriz de puntos (1) · monocromo de agencia (1) · mosaico de baldosas (1) · motor artesano (1) · nocturno (1) · obsidiana (1) · producto de marca (1) · producto en tres actos (1) · producto nocturno (1) · residencia burdeos (1) · rosa y chocolate (1) · tecnico (1) · terminal de neón (1) · tinta a mano (1)
 
 ### Tono (`tono`)
 
-cálido (10) · editorial (10) · cercano (9) · familiar (7) · cinemático (6) · enérgico (6) · seguro (6) · sereno (6) · festivo (5) · lúdico (4) · personal (4) · artesanal (3) · comercial (3) · con humor (3) · descarado (3) · directo (3) · técnico (3) · alegre (2) · clásico (2) · lujo discreto (2) · lujoso (2) · nocturno (2) · preciso (2) · sobrio (2) · urbano (2) · abierto (1) · analítico (1) · artístico (1) · austero (1) · cívico (1) · contemplativo (1) · culto (1) · cultural (1) · curioso (1) · de barrio (1) · discreto (1) · documental (1) · especialista (1) · estratégico (1) · exclusivo (1) · experimental (1) · exploratorio (1) · gamberro (1) · global (1) · goloso (1) · humano (1) · institucional (1) · íntimo (1) · juguetón (1) · limpio (1) · material (1) · médico (1) · natural (1) · popular (1) · potente (1) · profesional (1) · rápido (1) · satírico (1) · sensorial (1) · transparente (1)
+editorial (12) · cálido (10) · cercano (10) · familiar (7) · sereno (7) · cinemático (6) · enérgico (6) · seguro (6) · festivo (5) · técnico (5) · alegre (4) · directo (4) · lúdico (4) · personal (4) · artesanal (3) · comercial (3) · con humor (3) · descarado (3) · clásico (2) · de oficio (2) · lujo discreto (2) · lujoso (2) · nocturno (2) · preciso (2) · sobrio (2) · urbano (2) · abierto (1) · amable (1) · analítico (1) · artístico (1) · austero (1) · aventurero (1) · cívico (1) · contemplativo (1) · contundente (1) · creativo (1) · culto (1) · cultural (1) · curioso (1) · de barrio (1) · discreto (1) · documental (1) · especialista (1) · estratégico (1) · exclusivo (1) · experimental (1) · exploratorio (1) · gamberro (1) · global (1) · goloso (1) · humano (1) · institucional (1) · íntimo (1) · joven (1) · juguetón (1) · limpio (1) · material (1) · médico (1) · natural (1) · popular (1) · potente (1) · profesional (1) · rápido (1) · satírico (1) · sensorial (1) · transparente (1)
 
 ### Paleta (`paleta`)
 
-fondo claro (23) · fondo oscuro (13) · acento rojo (6) · acento único saturado (6) · pastel cálido (6) · blanco y negro (4) · acento azul (3) · acento verde (3) · blanco (3) · tinta (3) · tonos tierra (3) · acento amarillo (2) · amarillo y negro (2) · apagada (2) · crema (2) · naranja (2) · papel cálido (2) · papel mineral (2) · acento metálico (1) · acento rosa (1) · amarillo de horario (1) · amarillo mantequilla (1) · arena a bosque (1) · atardecer a amanecer (1) · azul (1) · azul eléctrico (1) · azul glaciar oscuro (1) · azul petróleo (1) · azul tinta (1) · azul ultramar (1) · beige (1) · bloques planos (1) · burdeos (1) · chocolate (1) · cielo (1) · colores tierra (1) · colores vivos (1) · coral (1) · degradado de marca (1) · dos acentos (1) · dos tintas (1) · editorial neutra (1) · fondo saturado (1) · grafito (1) · gris claro (1) · gris plata (1) · grises con grano (1) · hielo claro (1) · hueso (1) · ilustración plana (1) · lima (1) · magenta (1) · marfil (1) · menta (1) · mineral y bosque (1) · naranja de expedición (1) · naranja sobre azul noche (1) · negro cálido y ámbar (1) · negro espacial (1) · negro piedra (1) · negro puro (1) · negro violáceo (1) · oro (1) · papel (1) · plata (1) · rojo (1) · rosa empolvado (1) · tomate (1) · turquesa (1) · un rojo (1) · varios acentos (1) · verde (1) · verde botella (1) · verde oliva (1) · violeta (1)
+fondo claro (23) · fondo oscuro (13) · acento rojo (6) · acento único saturado (6) · pastel cálido (6) · negro (5) · blanco (4) · blanco y negro (4) · acento azul (3) · acento verde (3) · crema (3) · tinta (3) · tonos tierra (3) · acento amarillo (2) · amarillo y negro (2) · apagada (2) · coral (2) · naranja (2) · papel cálido (2) · papel mineral (2) · acento metálico (1) · acento rosa (1) · amarillo (1) · amarillo de horario (1) · amarillo mantequilla (1) · arena a bosque (1) · atardecer a amanecer (1) · azul (1) · azul claro (1) · azul eléctrico (1) · azul glaciar oscuro (1) · azul petróleo (1) · azul tinta (1) · azul ultramar (1) · beige (1) · bloques planos (1) · burdeos (1) · chocolate (1) · cielo (1) · colores tierra (1) · colores vivos (1) · crema cálido y cuatro colores de formas (1) · crema y diez colores de peso (1) · crema y seis colores plenos (1) · degradado de marca (1) · dos acentos (1) · dos tintas (1) · editorial neutra (1) · fondo saturado (1) · grafito (1) · gris cálido (1) · gris claro (1) · gris plata (1) · grises con grano (1) · hielo claro (1) · hueso (1) · ilustración plana (1) · lima (1) · magenta (1) · marfil (1) · menta (1) · mineral y bosque (1) · naranja de expedición (1) · naranja quemado (1) · naranja sobre azul noche (1) · negro cálido y ámbar (1) · negro carbón (1) · negro espacial (1) · negro piedra (1) · negro puro (1) · negro violáceo (1) · oro (1) · papel (1) · pasteles por proyecto (1) · plata (1) · rojo (1) · rojo anaranjado (1) · rosa empolvado (1) · tomate (1) · turquesa (1) · un rojo (1) · varios acentos (1) · verde (1) · verde botella (1) · verde oliva (1) · violeta (1) · violeta eléctrico (1)
 
 ### Tipografía (`tipografia`)
 
-titular gigante (22) · serif con cursiva (18) · condensada en mayúsculas (6) · grotesca en mayúsculas (4) · caligráfica (2) · espaciado negativo (2) · etiquetas pixel (2) · gótica condensada (2) · grotesca ancha (2) · grotesca apretada (2) · manuscrita (2) · máquina de escribir (2) · minúsculas (2) · mono (2) · serif editorial (2) · serif fina (2) · ultranegra (2) · una sola letra (2) · brocha (1) · cifras tabulares gigantes (1) · datos monoespaciados (1) · didona apretada (1) · didona estrecha (1) · espaciado abierto (1) · etiquetas espaciadas (1) · extendida en mayúsculas (1) · ficha de compra legible (1) · gorda de cómic (1) · grotesca (1) · grotesca 500 en mayúsculas (1) · grotesca 600 apretada (1) · grotesca 700 (1) · grotesca con carácter (1) · grotesca contenida (1) · grotesca diminuta en mayúsculas (1) · grotesca fina grande (1) · grotesca neutra sin negritas (1) · interlineado cerrado (1) · letra de contorno (1) · mayúsculas (1) · mono en botones (1) · mono en mayúsculas (1) · mono en metadatos (1) · mono técnica (1) · mono técnico (1) · monoespaciada técnica (1) · sans fina (1) · sans geométrica (1) · sans redonda en mayúsculas (1) · serif cursiva de subtítulo (1) · serif en cursiva (1) · serif expresiva en titulares (1) · serifa blanda con cursiva (1) · serifa de libro (1) · serifa en mayúsculas (1) · serifa en mayúsculas centrada (1) · serifa fina (1) · serifa finísima en mayúsculas (1) · slab de cartel (1) · titular grande (1) · titular partido en cursiva (1) · titulares de escala (1) · titulares de escala expresiva (1) · títulos entre paréntesis (1)
+titular gigante (22) · serif con cursiva (18) · condensada en mayúsculas (6) · grotesca en mayúsculas (4) · caligráfica (2) · espaciado negativo (2) · etiquetas pixel (2) · gótica condensada (2) · grotesca ancha (2) · grotesca apretada (2) · manuscrita (2) · máquina de escribir (2) · minúsculas (2) · mono (2) · serif editorial (2) · serif fina (2) · ultranegra (2) · una sola letra (2) · brocha (1) · cifras tabulares gigantes (1) · condensada de 900 en mayúsculas (1) · datos monoespaciados (1) · didona apretada (1) · didona estrecha (1) · display gruesa y redonda (1) · espaciado abierto (1) · etiquetas espaciadas (1) · extendida en mayúsculas (1) · ficha de compra legible (1) · gorda de cómic (1) · grotesca (1) · grotesca 500 en mayúsculas (1) · grotesca 600 apretada (1) · grotesca 700 (1) · grotesca con carácter (1) · grotesca contenida (1) · grotesca de 500 centrada (1) · grotesca de 500 contenida (1) · grotesca de 500 enorme (1) · grotesca de 700 a toda la anchura (1) · grotesca de 900 en mayúsculas (1) · grotesca diminuta en mayúsculas (1) · grotesca fina grande (1) · grotesca neutra sin negritas (1) · interlineado cerrado (1) · letra de contorno (1) · mayúsculas (1) · mono en botones (1) · mono en mayúsculas (1) · mono en metadatos (1) · mono técnica (1) · mono técnico (1) · monoespaciada técnica (1) · sans fina (1) · sans geométrica (1) · sans redonda en mayúsculas (1) · serif cursiva de subtítulo (1) · serif en cursiva (1) · serif expresiva en titulares (1) · serifa blanda con cursiva (1) · serifa de libro (1) · serifa en mayúsculas (1) · serifa en mayúsculas centrada (1) · serifa fina (1) · serifa finísima en mayúsculas (1) · serifa ultrafina en mayúsculas (1) · slab de cartel (1) · titular grande (1) · titular partido en cursiva (1) · titulares de escala (1) · titulares de escala expresiva (1) · títulos entre paréntesis (1)
 
 ### Patrones (`patrones`)
 
-galería editorial (10) · relato por scroll (10) · preguntas frecuentes (7) · cinta de texto (6) · equipo con fotos (6) · horario de clases (6) · collage de fotos (5) · filtro por categoría (5) · menú a pantalla completa (5) · reserva por persona (5) · reserva propia (5) · testimonios (5) · cinta de cifras (4) · programas por convocatoria (4) · retratos B/N (4) · sombra dura desplazada (4) · tienda (4) · archivo filtrable (3) · carta de servicios (3) · cifras (3) · clase de prueba gratis (3) · disciplinas en tarjetas de retrato (3) · entrada con QR (3) · equipo en filas (3) · formulario de contacto (3) · foto a sangre (3) · lista gigante de nombres (3) · menú lateral (3) · muro de profesores (3) · noticias en rejilla (3) · palabra de fondo (3) · palabra gigante de sección (3) · planes con conmutador (3) · portada partida (3) · primera clase gratis (3) · reserva en pasos (3) · reserva fija (3) · titular con palabra en cursiva (3) · billete troquelado (2) · botones en óvalo (2) · cartelera por fechas (2) · mapa de clubes (2) · mosaico de formas (2) · píldoras de contorno (2) · portada sin scroll (2) · portal geométrico (2) · programa filtrable (2) · reseñas (2) · sello circular (2) · sellos de valoración (2) · servicios numerados (2) · academia (1) · acordeón (1) · acordeón con foto fija (1) · alta de socio (1) · alternancia de color (1) · antes y después (1) · años gigantes (1) · app con QR (1) · arco detrás del titular (1) · autor como marca fija (1) · bandas de foto (1) · barra 3D (1) · barra de accesos unida (1) · barra del proyecto en vista (1) · barra inferior fija (1) · barras comparativas (1) · blog (1) · bloques de color (1) · bocadillos (1) · boletín (1) · bordes de sección curvos (1) · botón de menú (1) · boutique (1) · caligrafía fantasma (1) · cambio de cámara (1) · carrusel de tratamientos (1) · cartas de alojamiento (1) · cartel tipográfico (1) · carteles a duotono (1) · catálogo en discos (1) · cifras gigantes (1) · cinta de avisos (1) · cinta de compra fija (1) · cinta de luz (1) · cinta que corre (1) · círculo de llamada (1) · cita grande (1) · clips verticales (1) · código con pestañas (1) · collage asimétrico (1) · collage suelto (1) · columna de navegación en degradado (1) · comentario a mano (1) · comparación (1) · comparador (1) · comparador de direcciones (1) · compra en pasos (1) · compra junto a producto (1) · confirmación con referencia (1) · consulta gratis (1) · consultorio (1) · contacto local (1) · contenedor que cruza (1) · corte lateral del producto (1) · críticas con estrellas (1) · damero de fotos y círculos (1) · dashboard filtrable (1) · detalles dispersos (1) · diagnóstico interactivo (1) · diplomas (1) · duotono que recupera el color (1) · el dueño como marca (1) · enlaces con corchetes (1) · entrada que se abre (1) · escena Three.js procedural (1) · eventos privados (1) · fechas en recuadro (1) · ficha de función (1) · ficha de iniciativa (1) · ficha de obra modal (1) · ficha modal (1) · ficha técnica a filete (1) · fichas numeradas (1) · filas numeradas (1) · final en negro (1) · foto dentro del nombre (1) · foto en el titular (1) · foto fija (1) · fotos de escenario que se funden (1) · franja de degradado (1) · franja de próximas funciones (1) · frase con humor (1) · galería en profundidad (1) · galería horizontal (1) · globo de puntos (1) · gráfica en directo (1) · grafo React Flow (1) · herencia en blanco y negro (1) · hora local (1) · horario de apertura (1) · ilustración de línea (1) · inspector interactivo (1) · isla flotante (1) · juego en lienzo (1) · lanzamos pronto (1) · lectura en capas (1) · lema en latín (1) · letra gigante de líneas (1) · lista con foto fija (1) · lista de cursos a todo el ancho (1) · lista de espera (1) · lista de premios (1) · lo que no (1) · locales en tarjetas (1) · logos de marcas (1) · logos de socios (1) · logotipo de formas (1) · manchas orgánicas (1) · manifiesto con retratos (1) · mapa de puntos (1) · maqueta 3D (1) · marca de borde a borde (1) · marco biselado (1) · marcos de etiqueta (1) · menú en columnas verticales (1) · menú en isla (1) · minimapa (1) · modo noche (1) · muebles dibujados (1) · muestras de color (1) · multitud dibujada (1) · muro de la fama (1) · muro de logos (1) · muro escalonado (1) · navegación entre páginas (1) · neobrutalismo (1) · niebla de cifras (1) · nodos seleccionables (1) · nota con estrellas (1) · notas al pie como condiciones (1) · noticias en filas (1) · objeto 3D explorable (1) · objeto metálico en 3D (1) · objeto que cae (1) · oferta numerada (1) · origen y familia (1) · palabras gigantes con ilustración (1) · palabras tachadas (1) · panel lateral (1) · paneles por sector que se ensanchan (1) · partículas en profundidad (1) · pestaña de reseñas fija (1) · petición de propuesta (1) · pie con foto (1) · pie con lema (1) · pizarra con personajes (1) · plano de sala (1) · plano fijo con el tiempo en el scroll (1) · platos en círculo (1) · portfolio asimétrico (1) · preocupaciones (1) · principios con foto (1) · producto fijo (1) · programa de mano (1) · programa interactivo (1) · programa por días (1) · programación (1) · prueba social (1) · prueba social ficticia señalada (1) · razones en tarjetas (1) · razones numeradas (1) · recuadros con borde (1) · red por pestañas (1) · reel de vídeo (1) · rejilla de baldosas (1) · rejilla de proyectos (1) · rejilla de trabajos (1) · rejilla filtrable (1) · relato de campaña (1) · relojes por ciudad (1) · reproductor fijo (1) · reserva externa (1) · reserva local (1) · reserva por salón (1) · reserva por WhatsApp (1) · resumen lateral (1) · retrato recortado (1) · sala de exposición (1) · sangría (1) · scroll lateral (1) · selección de plaza en la escena (1) · selector de escenario (1) · selector de viviendas (1) · semitono (1) · servicios con óvalo central (1) · solicitud de plaza (1) · sombra de viñeta (1) · tabla como interfaz (1) · talleres (1) · tarifas en tarjetas (1) · tarjetas de sesión (1) · tarjetas giradas (1) · tarjetas ladeadas (1) · tarjetas solapadas (1) · tira de instagram (1) · titular a todo el ancho (1) · titular desplazado (1) · titular gigante (1) · título en arco (1) · ventajas con foto (1) · vídeo a sangre (1) · vídeo en el titular (1) · vídeo que crece (1) · vinilo que gira (1) · vlogs (1) · web en tarjeta (1)
+galería editorial (10) · relato por scroll (10) · preguntas frecuentes (7) · cinta de texto (6) · equipo con fotos (6) · horario de clases (6) · collage de fotos (5) · filtro por categoría (5) · menú a pantalla completa (5) · reserva por persona (5) · reserva propia (5) · testimonios (5) · cinta de cifras (4) · programas por convocatoria (4) · retratos B/N (4) · sombra dura desplazada (4) · tienda (4) · archivo filtrable (3) · carta de servicios (3) · cifras (3) · clase de prueba gratis (3) · disciplinas en tarjetas de retrato (3) · entrada con QR (3) · equipo en filas (3) · formulario de contacto (3) · foto a sangre (3) · lista gigante de nombres (3) · menú lateral (3) · muro de profesores (3) · noticias en rejilla (3) · palabra de fondo (3) · palabra gigante de sección (3) · planes con conmutador (3) · portada partida (3) · primera clase gratis (3) · reserva en pasos (3) · reserva fija (3) · titular con palabra en cursiva (3) · afinidad de guía (2) · billete troquelado (2) · botones en óvalo (2) · cartelera por fechas (2) · mapa de clubes (2) · mosaico de formas (2) · píldoras de contorno (2) · portada sin scroll (2) · portal geométrico (2) · programa filtrable (2) · reseñas (2) · sello circular (2) · sellos de valoración (2) · servicios numerados (2) · academia (1) · acordeón (1) · acordeón con foto fija (1) · alta de socio (1) · alternancia de color (1) · antes y después (1) · años gigantes (1) · app con QR (1) · arco detrás del titular (1) · arcos de usos (1) · autor como marca fija (1) · aviso de oferta que se recuerda (1) · bandas de foto (1) · barra 3D (1) · barra de accesos unida (1) · barra del proyecto en vista (1) · barra inferior fija (1) · barras comparativas (1) · blog (1) · bloques de color (1) · bocadillos (1) · boletín (1) · bordes de sección curvos (1) · botón de menú (1) · boutique (1) · caligrafía fantasma (1) · cambio de cámara (1) · carrusel (1) · carrusel de tratamientos (1) · carta de pesos en franjas (1) · cartas de alojamiento (1) · cartel tipográfico (1) · carteles a duotono (1) · catálogo en discos (1) · cifras gigantes (1) · cinta de avisos (1) · cinta de compra fija (1) · cinta de luz (1) · cinta que corre (1) · cintas cruzadas (1) · cintas de acentos (1) · círculo de llamada (1) · cita grande (1) · clips verticales (1) · código con pestañas (1) · collage asimétrico (1) · collage suelto (1) · columna de navegación en degradado (1) · comentario a mano (1) · comparación (1) · comparador (1) · comparador de direcciones (1) · compra en pasos (1) · compra junto a producto (1) · confirmación con referencia (1) · consulta gratis (1) · consultorio (1) · contacto local (1) · contenedor que cruza (1) · corte lateral del producto (1) · críticas con estrellas (1) · damero de fotos y círculos (1) · dashboard filtrable (1) · detalles dispersos (1) · diagnóstico interactivo (1) · diplomas (1) · duotono que recupera el color (1) · ecosistema en tarjetas (1) · el dueño como marca (1) · enlaces con corchetes (1) · entrada que se abre (1) · escena Three.js procedural (1) · eventos privados (1) · fechas en recuadro (1) · ficha de función (1) · ficha de iniciativa (1) · ficha de obra modal (1) · ficha modal (1) · ficha sobre foto (1) · ficha técnica a filete (1) · fichas numeradas (1) · figuras de formas geométricas (1) · filas numeradas (1) · final en negro (1) · foto dentro del nombre (1) · foto en el titular (1) · foto fija (1) · fotos de escenario que se funden (1) · fotos entre las palabras del titular (1) · franja de degradado (1) · franja de próximas funciones (1) · frase con humor (1) · frase fantasma (1) · galería en profundidad (1) · galería horizontal (1) · glifos gigantes (1) · globo de puntos (1) · gráfica en directo (1) · grafo React Flow (1) · guía de viaje (1) · herencia en blanco y negro (1) · hora local (1) · horario de apertura (1) · ilustración de línea (1) · inspector interactivo (1) · isla flotante (1) · juego en lienzo (1) · lanzamos pronto (1) · lateral de pestañas (1) · lectura en capas (1) · lema en latín (1) · letra gigante de líneas (1) · lista con foto fija (1) · lista de cursos a todo el ancho (1) · lista de espera (1) · lista de premios (1) · lo que no (1) · locales en tarjetas (1) · logos de marcas (1) · logos de socios (1) · logotipo de formas (1) · manchas orgánicas (1) · manifiesto con retratos (1) · mapa de puntos (1) · maqueta 3D (1) · marca de borde a borde (1) · marca partida entre esquinas (1) · marco biselado (1) · marcos de etiqueta (1) · menú en columnas verticales (1) · menú en isla (1) · minimapa (1) · mitades por proyecto (1) · modo noche (1) · muebles dibujados (1) · muestras de color (1) · multitud dibujada (1) · muro de la fama (1) · muro de logos (1) · muro de proyectos fijado al scroll (1) · muro escalonado (1) · navegación en las cuatro esquinas (1) · navegación entre páginas (1) · neobrutalismo (1) · niebla de cifras (1) · nodos seleccionables (1) · nota con estrellas (1) · notas al pie como condiciones (1) · noticias en filas (1) · objeto 3D explorable (1) · objeto metálico en 3D (1) · objeto que cae (1) · oferta numerada (1) · opinión con número gigante (1) · origen y familia (1) · palabras gigantes con ilustración (1) · palabras gigantes cortadas (1) · palabras tachadas (1) · panel lateral (1) · paneles por sector que se ensanchan (1) · paréntesis gigantes (1) · partículas en profundidad (1) · pedido (1) · pegatina girada (1) · pestaña de reseñas fija (1) · pestañas por público (1) · petición de propuesta (1) · pie con foto (1) · pie con lema (1) · pilares con flecha (1) · pizarra con personajes (1) · plano de sala (1) · plano fijo con el tiempo en el scroll (1) · platos en círculo (1) · portada negra con titular centrado (1) · portfolio asimétrico (1) · postales y billetes (1) · preocupaciones (1) · principios con foto (1) · producto fijo (1) · programa de mano (1) · programa interactivo (1) · programa por días (1) · programación (1) · prueba social (1) · prueba social ficticia señalada (1) · razones en tarjetas (1) · razones numeradas (1) · recuadros con borde (1) · red por pestañas (1) · reel de vídeo (1) · rejilla de baldosas (1) · rejilla de proyectos (1) · rejilla de tarjetas de color (1) · rejilla de trabajos (1) · rejilla filtrable (1) · relato de campaña (1) · relojes por ciudad (1) · reproductor fijo (1) · reserva externa (1) · reserva local (1) · reserva por salón (1) · reserva por WhatsApp (1) · resumen lateral (1) · retrato recortado (1) · sala de exposición (1) · sangría (1) · scroll lateral (1) · selección de plaza en la escena (1) · selector de escenario (1) · selector de viviendas (1) · semitono (1) · señal de reserva (1) · servicios con óvalo central (1) · sobretítulos entre corchetes (1) · solicitud de plaza (1) · sombra de viñeta (1) · tabla como interfaz (1) · talleres (1) · tarifas en tarjetas (1) · tarjetas de sesión (1) · tarjetas giradas (1) · tarjetas ladeadas (1) · tarjetas muy redondeadas (1) · tarjetas solapadas (1) · texto vertical (1) · tira de instagram (1) · titular a todo el ancho (1) · titular desplazado (1) · titular escalonado (1) · titular gigante (1) · título en arco (1) · ventajas con foto (1) · vídeo a sangre (1) · vídeo en el titular (1) · vídeo que crece (1) · vinilo que gira (1) · visor por ángulos con puntos de detalle (1) · vlogs (1) · web en tarjeta (1)
 
 ### Movimiento (`movimiento`)
 
-movimiento reducido respetado (17) · cinta que corre (9) · scroll suavizado (6) · subrayado que crece (4) · texto que rueda (4) · transición de página (4) · transición en escalera (3) · trazo que se dibuja (3) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · marquesina lenta (2) · acercamiento lento (1) · andares (1) · cámara con profundidad y paralaje de puntero (1) · cámara coreografiada (1) · cambios de estado sin animación obligatoria (1) · capítulos por gesto (1) · cinta de clientes (1) · cinta que se dibuja (1) · círculo desde el botón (1) · color al pasar (1) · color de fondo que cambia con el carrusel (1) · color del coche que cambia (1) · corte de luz entre capítulos (1) · desenfoque al bajar (1) · desplazamiento lateral (1) · día y noche por scroll (1) · enlaces que suben escalonados (1) · escena expandida con scroll (1) · fotos que se acercan al bajar (1) · frases que se encienden (1) · fundido entre fotos (1) · galería fotográfica (1) · giro ligado al desplazamiento (1) · globo que gira (1) · gráfica que se mueve (1) · hover de color (1) · icono que se cruza (1) · malla de fragmentos instanciados que se abre con scroll (1) · menú que cae (1) · núcleo 3D (1) · órbitas animadas (1) · palabras que asoman (1) · paneles que crecen al pasar (1) · parallax (1) · parallax a distintas velocidades (1) · parallax de objetos (1) · partículas en volumen (1) · píldora al pasar (1) · producto fijo (1) · rebote (1) · rebote al pasar (1) · recorte ligado al scroll (1) · reflejo desenfocado de la escena (1) · relleno que baja (1) · revelado por recorte (1) · rotación de producto WebGL (1) · rueda que arrastra (1) · rutas animadas (1) · salto según el enfado (1) · scroll suave (1) · semitono que reacciona al puntero (1) · shader WebGL en hover (1) · sin movimiento (1) · tarjeta que sigue al puntero (1) · titular por líneas (1) · titular que cruza (1) · transición entre páginas (1) · tren instanciado con ScrollControls (1) · vídeos que se suceden (1) · vinilo ligado a la reproducción (1)
+movimiento reducido respetado (17) · cinta que corre (9) · scroll suavizado (6) · subrayado que crece (4) · texto que rueda (4) · transición de página (4) · transición en escalera (3) · trazo que se dibuja (3) · aparición suave (2) · crecer con el scroll (2) · fila que gira a marquesina (2) · filetes que se dibujan (2) · foto fija (2) · fotos que se disuelven (2) · marquesina lenta (2) · acercamiento lento (1) · andares (1) · cámara con profundidad y paralaje de puntero (1) · cámara coreografiada (1) · cambios de estado sin animación obligatoria (1) · capítulos por gesto (1) · carrusel (1) · cinta de clientes (1) · cinta que se dibuja (1) · cintas en bucle (1) · círculo desde el botón (1) · color al pasar (1) · color de fondo que cambia con el carrusel (1) · color del coche que cambia (1) · corte de luz entre capítulos (1) · desenfoque al bajar (1) · desplazamiento lateral (1) · día y noche por scroll (1) · enlaces que suben escalonados (1) · escena expandida con scroll (1) · fotos que se acercan al bajar (1) · fotos que se solapan (1) · frases que se encienden (1) · fundido entre fotos (1) · galería fotográfica (1) · giro del visor (1) · giro ligado al desplazamiento (1) · globo que gira (1) · gráfica que se mueve (1) · hover de color (1) · icono que se cruza (1) · malla de fragmentos instanciados que se abre con scroll (1) · menú que cae (1) · mitades que se recortan (1) · nombre con glitch (1) · núcleo 3D (1) · órbitas animadas (1) · palabras que asoman (1) · paneles que crecen al pasar (1) · parallax (1) · parallax a distintas velocidades (1) · parallax de objetos (1) · partículas en volumen (1) · píldora al pasar (1) · producto fijo (1) · rebote (1) · rebote al pasar (1) · recorte ligado al scroll (1) · reflejo desenfocado de la escena (1) · relleno que baja (1) · revelado por recorte (1) · rotación de producto WebGL (1) · rueda que arrastra (1) · rutas animadas (1) · salto según el enfado (1) · scroll suave (1) · sello que gira (1) · semitono que reacciona al puntero (1) · shader WebGL en hover (1) · sin movimiento (1) · tarjeta que sigue al puntero (1) · tarjetas que crecen al aparecer (1) · titular por líneas (1) · titular que cruza (1) · transición entre páginas (1) · tren instanciado con ScrollControls (1) · vídeos que se suceden (1) · vinilo ligado a la reproducción (1)
 
 ### Piezas del kit (`piezas`)
 
-FullscreenMenu (34) · ContactForm (18) · FAQSection (17) · BookingFlow (16) · AppointmentList (15) · Button (14) · GuideFrame (13) · Marquee (13) · CheckoutFlow (12) · OpeningHours (12) · Reveal (12) · BriefFlow (11) · PricingSection (10) · CartDrawer (9) · QuantityStepper (9) · TeamSection (9) · ActionBar (8) · Hero (8) · ClassSchedule (7) · EnrollmentFlow (7) · MembershipFlow (7) · SmoothScroll (7) · Accordion (6) · MemberArea (6) · QRCode (6) · SectionHeader (6) · EventLineup (5) · OptionPicker (5) · PageTransition (5) · TextField (5) · FeatureGrid (4) · Footer (4) · TestimonialSection (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · PricingCard (3) · RollLink (3) · Stepper (3) · Alert (2) · Carousel (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · Modal (2) · Parallax (2) · ProductCard (2) · ScrollExpand (2) · SeatMap (2) · ShapeMosaic (2) · BeforeAfter (1) · ChatWidget (1) · CookieBanner (1) · CTASection (1) · DeviceMockup (1) · DistortImage (1) · FeatureExplorer (1) · FitText (1) · fonts (1) · GradientField (1) · guides (1) · HorizontalScroll (1) · ImageTrail (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollProgress (1) · ShowBookingFlow (1) · VideoPlayer (1) · viewTransitions (1)
+FullscreenMenu (42) · ContactForm (21) · Reveal (20) · CheckoutFlow (17) · FAQSection (17) · BookingFlow (16) · AppointmentList (15) · BriefFlow (14) · Button (14) · GuideFrame (14) · Marquee (13) · OpeningHours (12) · CartDrawer (10) · PricingSection (10) · QuantityStepper (9) · TeamSection (9) · ActionBar (8) · Hero (8) · ClassSchedule (7) · EnrollmentFlow (7) · MembershipFlow (7) · SmoothScroll (7) · Accordion (6) · MemberArea (6) · QRCode (6) · SectionHeader (6) · EventLineup (5) · OptionPicker (5) · PageTransition (5) · TextField (5) · FeatureGrid (4) · Footer (4) · TestimonialSection (4) · CohortList (3) · LineDraw (3) · LogoCloud (3) · PricingCard (3) · RollLink (3) · Stepper (3) · Alert (2) · Carousel (2) · Chart (2) · DatePicker (2) · ImageReveal (2) · Modal (2) · Parallax (2) · ProductCard (2) · ScrollExpand (2) · SeatMap (2) · ShapeMosaic (2) · BeforeAfter (1) · ChatWidget (1) · CookieBanner (1) · CTASection (1) · DeviceMockup (1) · DistortImage (1) · FeatureExplorer (1) · FitText (1) · fonts (1) · GradientField (1) · guides (1) · HorizontalScroll (1) · ImageTrail (1) · LocalTime (1) · MenuList (1) · NavBar (1) · ProjectList (1) · RetroCanvas (1) · RetroModel (1) · ScrollProgress (1) · ShowBookingFlow (1) · VideoPlayer (1) · viewTransitions (1)
 
 ### Piezas nuevas o ampliadas (`piezas-nuevas`)
 

@@ -39,9 +39,9 @@ más un sitio que la enseña. Dos tipos de tarea:
    Para un **negocio de un sector** (peluquería, barbería, gimnasio, estudio boutique, academia, producto de marca,
    agencia), parte de «Recetas por sector» de `CATALOG.md`: guía de estilo, orden de secciones con sus piezas, llamada
    fija y lo que no hay que olvidar, medido en las réplicas del laboratorio.
-   Si el usuario cita una **web premiada** (Lusion, K72, Rendezvous…), mira «Inspiraciones» en `CATALOG.md`: 36 webs
+   Si el usuario cita una **web premiada** (Lusion, K72, Rendezvous…), mira «Inspiraciones» en `CATALOG.md`: 44 webs
    rehechas con el kit en `/inspiraciones/<slug>` (`components/inspiraciones/`, `docs/55-inspiraciones.md`).
-   Para el **estilo** (colores, letra, escala, espacio, movimiento), elige una de las 45 guías con `GuideFrame` y abre su
+   Para el **estilo** (colores, letra, escala, espacio, movimiento), elige una de las 46 guías con `GuideFrame` y abre su
    hoja en `/guias/<id>`: valores medidos, contraste, componentes con la guía, páginas del repo afines y código
    (`docs/54-guias-de-estilo-del-repo.md`).
 4. **Pasa siempre las props de texto**: los defaults son copy de demostración (escuela de surf…). Pasa `""` para

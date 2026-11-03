@@ -1,5 +1,9 @@
 # 54 · Guías de estilo sacadas de todo el repo
 
+> Revisión 03-11-2026 (docs/60): 46 guías. La sonda medía mal la afinidad (titular de las portadas con foto, marca de
+> los relatos, serifas de fundición, fondo de la primera pantalla) y se corrigió: las páginas sin guía bajan de 28 a 14.
+> Se ajustan `salon` y `trattoria` a sus originales y se crea `bloque`, de una familia que no tenía guía.
+
 > Ampliación 03-11-2026: 45 guías. Ocho salen de la cuarta ronda de inspiraciones, una por sector nuevo (safari, restaurante, clínica, arquitectura, automoción, tarjeta, software y festival): docs/59.
 
 > Ampliación 02-11-2026: 37 guías. Diez salen de la tercera ronda de inspiraciones y siete de las últimas webs del repo, elegidas por estar lejos de las anteriores: docs/58.
@@ -65,6 +69,14 @@ npm run refs:probe -- --repo http://localhost:3020 --no-shots --limite 120 --out
     - tamaño del texto;
     - píldoras.
   - Pesos de la distancia: el fondo pesa 3, la letra 1,5 y el resto entre 0,5 y 1.
+  - Cuatro correcciones (docs/60 §2):
+    - si lo mayor de la primera pantalla mide menos de 2,5 vw (una portada con foto o escena), el titular es lo mayor de
+      las tres primeras pantallas, sin el pie;
+    - en las guías, el titular es el `h1` (o `h2`) del relato y la marca (`.ui-g-brand`), un segundo tamaño: la página
+      se compara con el más cercano de los dos;
+    - la categoría de la letra usa también la familia genérica de su pila CSS (`serif`, `monospace`), para las letras de
+      fundición cuyo nombre no lo dice;
+    - el fondo se compara con el de la página y con el de su primera pantalla, el más cercano.
   - Afinidad = `1 / (1 + distancia)`.
 - **Lectura.**
   - Por encima de 0,35, la página es claramente de esa guía.

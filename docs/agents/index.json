@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "dde33dfa33c20bd94b48526baa8685d40aa4efa1",
+  "sourceCommit": "a40737d5bdef2ee1cf0aaaa3586a856973719a2c",
   "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
@@ -14,7 +14,7 @@
     },
     {
       "path": "lib/catalog/entries/comercio.tsx",
-      "sha256": "bc2ed7e45bddfad52167d6d5aa4800befe99c2993221eef49d564fdd5d1280da"
+      "sha256": "f2f987ac762840260c33bf598a3fd8b6418dd5c4cc4383f3175d9b5a2dc7641b"
     },
     {
       "path": "lib/catalog/entries/contenido.tsx",
@@ -46,7 +46,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "51201f485af0b09fbfcbb9edcf4055f29e1c96e5c4f4234b410b5c2becbec68c"
+      "sha256": "8519a7457b49c10ac3da6a761a294e6304dffd506479d18615b47adfa2fa060d"
     },
     {
       "path": "lib/catalog/entries/interaccion.tsx",
@@ -58,7 +58,7 @@
     },
     {
       "path": "lib/catalog/entries/movimiento.tsx",
-      "sha256": "761af5621bef804cd6e18e33dad77517f1a92908aa4af231c84ce021437608ad"
+      "sha256": "1be53b0a8a7bbb9e03bb3e649a86c24733990e303c162096d97b425203651b65"
     },
     {
       "path": "lib/catalog/entries/navegacion.tsx",
@@ -106,7 +106,7 @@
     },
     {
       "path": "lib/catalog/entries/texto.tsx",
-      "sha256": "b3c66c50293f1e7ce7535590f30e5cd9b77c79fc85635d64fd22ba9ae4321092"
+      "sha256": "f85fb48f506013a3b5790d93c9f2d674b025eacf9795a26141c31b783e13e8d4"
     },
     {
       "path": "lib/catalog/entries/transiciones.tsx",
@@ -122,11 +122,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+      "sha256": "ce4d612b2ae77aa9cc897075a8f66a803ec6e45f627f4bf9571bace2008f2b93"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
+      "sha256": "0558a1fab32ce1fc68bdce7ef06d92cd5c4d2552bdc2af7452ba400247f310ee"
     },
     {
       "path": "package-lock.json",
@@ -138,7 +138,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",
@@ -412,7 +412,7 @@
       "kind": "guide",
       "id": "trattoria",
       "name": "Trattoria de barrio",
-      "description": "Bloques de color pleno que se suceden (rojo, turquesa, verde botella, granate) sobre crema; serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones.",
+      "description": "Rojo pleno de fondo con texto crema, y bloques de color que se suceden (turquesa, verde botella, granate); serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones.",
       "file": "guides/trattoria.json"
     },
     {
@@ -493,6 +493,13 @@
       "file": "guides/cercano.json"
     },
     {
+      "kind": "guide",
+      "id": "bloque",
+      "name": "Bloque nocturno",
+      "description": "Negro carbón y un solo acento saturado; titulares de palo muy pesado en mayúsculas que llenan la pantalla palabra a palabra, con fotos metidas entre las líneas",
+      "file": "guides/bloque.json"
+    },
+    {
       "kind": "reference",
       "id": "cinematic-webgl",
       "name": "Firmas cinemáticas y WebGL",
@@ -559,7 +566,7 @@
       "kind": "component",
       "id": "guide-frame",
       "name": "GuideFrame",
-      "description": "Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro),…",
+      "description": "Aplica una de las cuarenta y seis guías de estilo: la de la quinta ronda (bloque nocturno: negro carbón y titulares de palo muy pesados que llenan la pantalla), las de la cuarta ronda (sabana tranquila, trattoria de…",
       "file": "components/guide-frame.json"
     },
     {

@@ -92,8 +92,8 @@
      "afinidad": 0.314
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.287
+     "guia": "trattoria",
+     "afinidad": 0.313
     }
    ]
   },
@@ -368,6 +368,101 @@
   },
   {
    "tipo": "guia",
+   "ruta": "/guias/relato/bloque",
+   "guia": "bloque",
+   "titulo": "Bloque nocturno",
+   "medidas": {
+    "fondo": "#131313",
+    "fondoHero": "#131313",
+    "paleta": [
+     [
+      "#131313",
+      65
+     ],
+     [
+      "#3d2bb8",
+      34
+     ],
+     [
+      "#f3f2ee",
+      1
+     ],
+     [
+      "#c4c1ba",
+      46
+     ],
+     [
+      "#f3f2ee",
+      28
+     ],
+     [
+      "#ffffff",
+      21
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 12,
+     "peso": 900,
+     "interlineado": 0.8,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 16,
+     "lh": 1.4,
+     "measureEm": 26
+    },
+    "familias": [
+     "Inter Tight",
+     "Archivo"
+    ],
+    "margen": 23,
+    "radios": [
+     "2"
+    ],
+    "curvas": [
+     "cubic-bezier(0.4, 0, 0.2, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 0.006512090792594475,
+    "lumHero": 0.006512090792594475,
+    "sat": 0.6211453744493393,
+    "hue": 247.6595744680851,
+    "cat": "grotesca",
+    "vw": 12,
+    "weight": 900,
+    "ls": -2,
+    "upper": true,
+    "lh": 0.8,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.303
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.231
+    },
+    {
+     "guia": "orbital",
+     "afinidad": 0.221
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
    "ruta": "/guias/relato/boutique",
    "guia": "boutique",
    "titulo": "Estudio boutique",
@@ -544,12 +639,12 @@
      "afinidad": 0.403
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.258
+     "guia": "trattoria",
+     "afinidad": 0.377
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.245
+     "guia": "glaciar",
+     "afinidad": 0.258
     }
    ]
   },
@@ -1572,8 +1667,8 @@
      "afinidad": 0.377
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.368
+     "guia": "ilustrado",
+     "afinidad": 0.35
     }
    ]
   },
@@ -2123,12 +2218,12 @@
      "afinidad": 0.412
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.383
-    },
-    {
      "guia": "filmoteca",
      "afinidad": 0.377
+    },
+    {
+     "guia": "sabana",
+     "afinidad": 0.355
     }
    ]
   },
@@ -2306,16 +2401,16 @@
    },
    "afinidad": [
     {
+     "guia": "bloque",
+     "afinidad": 0.303
+    },
+    {
      "guia": "orbital",
      "afinidad": 0.239
     },
     {
      "guia": "club",
      "afinidad": 0.225
-    },
-    {
-     "guia": "nocturno",
-     "afinidad": 0.221
     }
    ]
   },
@@ -3348,7 +3443,7 @@
       68
      ],
      [
-      "#f4f4f4",
+      "#f9d3c5",
       31
      ],
      [
@@ -3356,7 +3451,7 @@
       1
      ],
      [
-      "#868686",
+      "#5a5a5a",
       62
      ],
      [
@@ -3400,8 +3495,8 @@
    "rasgos": {
     "lum": 1,
     "lumHero": 1,
-    "sat": 0,
-    "hue": 0,
+    "sat": 0.8124999999999998,
+    "hue": 16.153846153846132,
     "cat": "serifa",
     "vw": 7.6,
     "weight": 300,
@@ -3414,15 +3509,15 @@
    "afinidad": [
     {
      "guia": "sereno",
-     "afinidad": 0.45
+     "afinidad": 0.336
+    },
+    {
+     "guia": "varietes",
+     "afinidad": 0.3
     },
     {
      "guia": "clinica",
-     "afinidad": 0.315
-    },
-    {
-     "guia": "lujo",
-     "afinidad": 0.302
+     "afinidad": 0.294
     }
    ]
   },
@@ -3599,16 +3694,16 @@
    },
    "afinidad": [
     {
-     "guia": "salon",
-     "afinidad": 0.45
-    },
-    {
      "guia": "clinica",
      "afinidad": 0.416
     },
     {
      "guia": "lujo",
      "afinidad": 0.412
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.396
     }
    ]
   },
@@ -3983,31 +4078,31 @@
    "guia": "trattoria",
    "titulo": "Trattoria de barrio",
    "medidas": {
-    "fondo": "#f8efdc",
-    "fondoHero": "#f8efdc",
+    "fondo": "#b8202a",
+    "fondoHero": "#b8202a",
     "paleta": [
      [
-      "#f8efdc",
+      "#b8202a",
       70
      ],
      [
-      "#f1e4c8",
+      "#9e1b24",
       29
      ],
      [
-      "#2a1a14",
+      "#f8efdc",
       1
      ],
      [
-      "#6e5a4c",
+      "#f3d2c0",
       52
      ],
      [
-      "#2a1a14",
+      "#f8efdc",
       43
      ],
      [
-      "#f8efdc",
+      "#b8202a",
       5
      ]
     ],
@@ -4041,10 +4136,10 @@
     "pantallas": 4.2
    },
    "rasgos": {
-    "lum": 0.8685676956690889,
-    "lumHero": 0.8685676956690889,
-    "sat": 0.5942028985507247,
-    "hue": 40.97560975609758,
+    "lum": 0.11390538090522073,
+    "lumHero": 0.11390538090522073,
+    "sat": 0.7081081081081082,
+    "hue": 355.87786259541986,
     "cat": "serifa",
     "vw": 7.4,
     "weight": 400,
@@ -4056,16 +4151,16 @@
    },
    "afinidad": [
     {
+     "guia": "burdeos",
+     "afinidad": 0.377
+    },
+    {
+     "guia": "ambar",
+     "afinidad": 0.313
+    },
+    {
      "guia": "varietes",
-     "afinidad": 0.431
-    },
-    {
-     "guia": "sereno",
-     "afinidad": 0.4
-    },
-    {
-     "guia": "lujo",
-     "afinidad": 0.383
+     "afinidad": 0.241
     }
    ]
   },
@@ -4155,12 +4250,12 @@
      "afinidad": 0.438
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.417
-    },
-    {
      "guia": "ilustrado",
      "afinidad": 0.405
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.388
     }
    ]
   },
@@ -4252,7 +4347,7 @@
    "afinidad": [
     {
      "guia": "trattoria",
-     "afinidad": 0.326
+     "afinidad": 0.308
     },
     {
      "guia": "burdeos",
@@ -4360,8 +4455,8 @@
      "afinidad": 0.209
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.184
+     "guia": "bloque",
+     "afinidad": 0.189
     }
    ]
   },
@@ -5223,12 +5318,12 @@
      "afinidad": 0.23
     },
     {
-     "guia": "club",
-     "afinidad": 0.212
+     "guia": "bloque",
+     "afinidad": 0.227
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.192
+     "guia": "club",
+     "afinidad": 0.212
     }
    ]
   },
@@ -5899,16 +5994,114 @@
    },
    "afinidad": [
     {
+     "guia": "trattoria",
+     "afinidad": 0.593
+    },
+    {
      "guia": "burdeos",
      "afinidad": 0.303
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.293
-    },
-    {
      "guia": "ambar",
      "afinidad": 0.262
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/bolo",
+   "titulo": "Bolo (réplica de Truck'N Roll)",
+   "medidas": {
+    "fondo": "#f6f5f1",
+    "fondoHero": "#131313",
+    "paleta": [
+     [
+      "#f6f5f1",
+      42
+     ],
+     [
+      "#131313",
+      41
+     ],
+     [
+      "#5a3ff2",
+      17
+     ],
+     [
+      "#9c9a94",
+      43
+     ],
+     [
+      "#f3f2ee",
+      25
+     ],
+     [
+      "#ffffff",
+      14
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 13,
+     "peso": 900,
+     "interlineado": 0.8,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 12,
+     "lh": 1.4,
+     "measureEm": 17
+    },
+    "familias": [
+     "Inter Tight",
+     "Archivo"
+    ],
+    "margen": 23,
+    "radios": [
+     "4",
+     "2"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear",
+     "ease"
+    ],
+    "hover": 4,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 7.8
+   },
+   "rasgos": {
+    "lum": 0.9124851954625077,
+    "lumHero": 0.006512090792594475,
+    "sat": 0.873170731707317,
+    "hue": 249.050279329609,
+    "cat": "grotesca",
+    "vw": 13,
+    "weight": 900,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.8,
+    "body": 12,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "bloque",
+     "afinidad": 0.535
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.25
+    },
+    {
+     "guia": "escuela",
+     "afinidad": 0.209
     }
    ]
   },
@@ -6394,7 +6587,7 @@
    "afinidad": [
     {
      "guia": "trattoria",
-     "afinidad": 0.232
+     "afinidad": 0.272
     },
     {
      "guia": "boutique",
@@ -6403,6 +6596,189 @@
     {
      "guia": "calido",
      "afinidad": 0.221
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/corriente",
+   "titulo": "Nada Corriente (réplica de Normal is Boring)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "fondoHero": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      36
+     ],
+     [
+      "#f2efe9",
+      26
+     ],
+     [
+      "#e4685a",
+      15
+     ],
+     [
+      "#0d0d0d",
+      12
+     ],
+     [
+      "#111111",
+      43
+     ],
+     [
+      "#555555",
+      33
+     ],
+     [
+      "#f4f1ea",
+      24
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 3.6,
+     "peso": 300,
+     "interlineado": 0.9,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 13,
+     "lh": 1.5,
+     "measureEm": 20
+    },
+    "familias": [
+     "Inter",
+     "Cormorant Garamond"
+    ],
+    "margen": 29,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 3,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 7.8
+   },
+   "rasgos": {
+    "lum": 1,
+    "lumHero": 1,
+    "sat": 0.7187500000000001,
+    "hue": 6.0869565217391255,
+    "cat": "serifa",
+    "vw": 3.6,
+    "weight": 300,
+    "ls": -1,
+    "upper": true,
+    "lh": 0.9,
+    "body": 13,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "sabana",
+     "afinidad": 0.406
+    },
+    {
+     "guia": "foro",
+     "afinidad": 0.399
+    },
+    {
+     "guia": "varietes",
+     "afinidad": 0.304
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/grano",
+   "titulo": "Grano (réplica de Glitch&Grit)",
+   "medidas": {
+    "fondo": "#050505",
+    "fondoHero": "#050505",
+    "paleta": [
+     [
+      "#050505",
+      100
+     ],
+     [
+      "#f1f0ec",
+      56
+     ],
+     [
+      "#a3a29d",
+      28
+     ],
+     [
+      "#9be59a",
+      11
+     ]
+    ],
+    "titular": {
+     "letra": "Archivo",
+     "vw": 10,
+     "peso": 900,
+     "interlineado": 0.9,
+     "tracking": -3.5,
+     "mayusculas": true
+    },
+    "titularPagina": null,
+    "texto": null,
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 20,
+    "radios": [],
+    "curvas": [
+     "linear",
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 6.9
+   },
+   "rasgos": {
+    "lum": 0.0015176349177441874,
+    "lumHero": 0.0015176349177441874,
+    "sat": 0.5905511811023624,
+    "hue": 119.19999999999999,
+    "cat": "grotesca",
+    "vw": 10,
+    "weight": 900,
+    "ls": -3.5,
+    "upper": true,
+    "lh": 0.9,
+    "body": 16,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "bloque",
+     "afinidad": 0.449
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.291
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.246
     }
    ]
   },
@@ -6502,6 +6878,108 @@
     {
      "guia": "club",
      "afinidad": 0.273
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/llave",
+   "titulo": "Llave (réplica de Units)",
+   "medidas": {
+    "fondo": "#f2efe8",
+    "fondoHero": "#ffd31a",
+    "paleta": [
+     [
+      "#f2efe8",
+      26
+     ],
+     [
+      "#2f5bea",
+      19
+     ],
+     [
+      "#ffd31a",
+      17
+     ],
+     [
+      "#e8442d",
+      10
+     ],
+     [
+      "#111111",
+      80
+     ],
+     [
+      "#ffffff",
+      10
+     ],
+     [
+      "#c9c5bb",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Titan One",
+     "vw": 6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -1,
+     "mayusculas": false
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 14,
+     "lh": 1.4,
+     "measureEm": 45
+    },
+    "familias": [
+     "Onest",
+     "Titan One"
+    ],
+    "margen": 14,
+    "radios": [
+     "píldora",
+     "14",
+     "22",
+     "8"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 1.6
+   },
+   "rasgos": {
+    "lum": 0.8643644469277999,
+    "lumHero": 0.6792311251053972,
+    "sat": 1.0000000000000002,
+    "hue": 48.47161572052403,
+    "cat": "grotesca",
+    "vw": 6,
+    "weight": 400,
+    "ls": -1,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "manchas",
+     "afinidad": 0.54
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.377
+    },
+    {
+     "guia": "papel",
+     "afinidad": 0.345
     }
    ]
   },
@@ -6607,6 +7085,107 @@
   },
   {
    "tipo": "replica",
+   "ruta": "/lab/estudios/majo",
+   "titulo": "Majo (réplica de Fauna Robotics)",
+   "medidas": {
+    "fondo": "#f4eee5",
+    "fondoHero": "#f4eee5",
+    "paleta": [
+     [
+      "#f4eee5",
+      57
+     ],
+     [
+      "#ffffff",
+      20
+     ],
+     [
+      "#ebe3d6",
+      8
+     ],
+     [
+      "#23756d",
+      4
+     ],
+     [
+      "#2a2622",
+      60
+     ],
+     [
+      "#5f5850",
+      34
+     ],
+     [
+      "#ffffff",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 3.4,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 17
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 29,
+    "radios": [
+     "24",
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "ease",
+     "linear"
+    ],
+    "hover": 4,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6.8
+   },
+   "rasgos": {
+    "lum": 0.8603931075542016,
+    "lumHero": 0.8603931075542016,
+    "sat": 0.7889908256880733,
+    "hue": 41.51162790697674,
+    "cat": "grotesca",
+    "vw": 3.4,
+    "weight": 500,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.463
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.445
+    },
+    {
+     "guia": "senal",
+     "afinidad": 0.431
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
    "ruta": "/lab/estudios/marejada",
    "titulo": "Marejada (réplica de Seasats)",
    "medidas": {
@@ -6699,12 +7278,12 @@
      "afinidad": 0.847
     },
     {
-     "guia": "salon",
-     "afinidad": 0.416
-    },
-    {
      "guia": "lujo",
      "afinidad": 0.403
+    },
+    {
+     "guia": "clinica",
+     "afinidad": 0.387
     }
    ]
   },
@@ -6796,7 +7375,7 @@
    "afinidad": [
     {
      "guia": "salon",
-     "afinidad": 0.31
+     "afinidad": 0.393
     },
     {
      "guia": "boutique",
@@ -6896,16 +7475,16 @@
    },
    "afinidad": [
     {
+     "guia": "salon",
+     "afinidad": 0.353
+    },
+    {
      "guia": "varietes",
      "afinidad": 0.348
     },
     {
      "guia": "boutique",
      "afinidad": 0.335
-    },
-    {
-     "guia": "trattoria",
-     "afinidad": 0.314
     }
    ]
   },
@@ -8664,8 +9243,307 @@
      "afinidad": 0.383
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.38
+     "guia": "filmoteca",
+     "afinidad": 0.353
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/trocha",
+   "titulo": "Trocha (réplica de Radian)",
+   "medidas": {
+    "fondo": "#efeee9",
+    "fondoHero": "#efeee9",
+    "paleta": [
+     [
+      "#efeee9",
+      47
+     ],
+     [
+      "#f6f5f1",
+      26
+     ],
+     [
+      "#e3e1da",
+      14
+     ],
+     [
+      "#161614",
+      12
+     ],
+     [
+      "#ffffff",
+      32
+     ],
+     [
+      "#161614",
+      28
+     ],
+     [
+      "#5d5b55",
+      26
+     ]
+    ],
+    "titular": {
+     "letra": "Inter",
+     "vw": 2.2,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "titularPagina": {
+     "letra": "Inter",
+     "vw": 3,
+     "peso": 500,
+     "texto": "Par instantáneo.Hecha para no parar."
+    },
+    "texto": null,
+    "familias": [
+     "Inter",
+     "Arial"
+    ],
+    "margen": 23,
+    "radios": [
+     "píldora",
+     "6",
+     "4"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.2, 0.7, 0.2, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 6.3
+   },
+   "rasgos": {
+    "lum": 0.8538298594247967,
+    "lumHero": 0.8538298594247967,
+    "sat": 0.1935483870967744,
+    "hue": 44.99999999999994,
+    "cat": "grotesca",
+    "vw": 3,
+    "weight": 500,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "papel",
+     "afinidad": 0.607
+    },
+    {
+     "guia": "catalogo",
+     "afinidad": 0.525
+    },
+    {
+     "guia": "monocromo",
+     "afinidad": 0.518
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/tueste",
+   "titulo": "Tueste (réplica de CoffeeTech)",
+   "medidas": {
+    "fondo": "#141414",
+    "fondoHero": "#141414",
+    "paleta": [
+     [
+      "#141414",
+      48
+     ],
+     [
+      "#ebe7e1",
+      41
+     ],
+     [
+      "#dedad3",
+      11
+     ],
+     [
+      "#141414",
+      64
+     ],
+     [
+      "#f4f1ec",
+      14
+     ],
+     [
+      "#5c5852",
+      14
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 13,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": -5,
+     "mayusculas": false
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 16.8,
+     "lh": 1.5,
+     "measureEm": 21
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 26,
+    "radios": [
+     "2",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 5,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 6
+   },
+   "rasgos": {
+    "lum": 0.006995410187265386,
+    "lumHero": 0.006995410187265386,
+    "sat": 0.14285714285714307,
+    "hue": 38.18181818181813,
+    "cat": "grotesca",
+    "vw": 13,
+    "weight": 500,
+    "ls": -5,
+    "upper": false,
+    "lh": 0.9,
+    "body": 16.8,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.323
+    },
+    {
+     "guia": "glaciar",
+     "afinidad": 0.292
+    },
+    {
+     "guia": "marca",
+     "afinidad": 0.288
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/turia",
+   "titulo": "Turia Grotesk (réplica de PP Neue Montreal)",
+   "medidas": {
+    "fondo": "#111111",
+    "fondoHero": "#f0523a",
+    "paleta": [
+     [
+      "#111111",
+      38
+     ],
+     [
+      "#f1ead9",
+      21
+     ],
+     [
+      "#f0523a",
+      20
+     ],
+     [
+      "#ff9f1c",
+      4
+     ],
+     [
+      "#111111",
+      64
+     ],
+     [
+      "#4f4a42",
+      20
+     ],
+     [
+      "#ffffff",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 12.5,
+     "peso": 700,
+     "interlineado": 0.9,
+     "tracking": -5.5,
+     "mayusculas": false
+    },
+    "titularPagina": null,
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 27
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 23,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 4,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 8.9
+   },
+   "rasgos": {
+    "lum": 0.005605391624202723,
+    "lumHero": 0.24865339988486196,
+    "sat": 1,
+    "hue": 34.62555066079295,
+    "cat": "grotesca",
+    "vw": 12.5,
+    "weight": 700,
+    "ls": -5.5,
+    "upper": false,
+    "lh": 0.9,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "marca",
+     "afinidad": 0.247
+    },
+    {
+     "guia": "cartel",
+     "afinidad": 0.244
+    },
+    {
+     "guia": "goloso",
+     "afinidad": 0.239
     }
    ]
   },
@@ -9075,11 +9953,11 @@
      ],
      [
       "#2a1d16",
-      49
+      48
      ],
      [
       "#6b5a4e",
-      46
+      47
      ],
      [
       "#b8344f",
@@ -9186,11 +10064,11 @@
      ],
      [
       "#5b5148",
-      57
+      58
      ],
      [
       "#1d1a17",
-      40
+      39
      ],
      [
       "#f3eee4",
@@ -9858,12 +10736,12 @@
      "afinidad": 0.374
     },
     {
-     "guia": "trattoria",
-     "afinidad": 0.361
-    },
-    {
      "guia": "boutique",
      "afinidad": 0.352
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.335
     }
    ]
   },
@@ -10083,7 +10961,7 @@
      ],
      [
       "#625d55",
-      38
+      39
      ],
      [
       "#eee8db",
@@ -10727,16 +11605,16 @@
    },
    "afinidad": [
     {
-     "guia": "trattoria",
-     "afinidad": 0.709
-    },
-    {
      "guia": "varietes",
      "afinidad": 0.389
     },
     {
      "guia": "sereno",
      "afinidad": 0.382
+    },
+    {
+     "guia": "clinica",
+     "afinidad": 0.372
     }
    ]
   },
@@ -10928,8 +11806,8 @@
      "afinidad": 0.298
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.249
+     "guia": "trattoria",
+     "afinidad": 0.285
     }
    ]
   },
@@ -11196,16 +12074,16 @@
    },
    "afinidad": [
     {
+     "guia": "bloque",
+     "afinidad": 0.301
+    },
+    {
      "guia": "marca",
      "afinidad": 0.224
     },
     {
      "guia": "club",
      "afinidad": 0.177
-    },
-    {
-     "guia": "glaciar",
-     "afinidad": 0.176
     }
    ]
   },
@@ -11781,8 +12659,8 @@
      "afinidad": 0.376
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.29
+     "guia": "trattoria",
+     "afinidad": 0.291
     }
    ]
   },
@@ -12154,12 +13032,12 @@
      "afinidad": 0.292
     },
     {
-     "guia": "ambar",
-     "afinidad": 0.244
+     "guia": "trattoria",
+     "afinidad": 0.288
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.203
+     "guia": "ambar",
+     "afinidad": 0.244
     }
    ]
   },
@@ -12249,8 +13127,8 @@
      "afinidad": 0.399
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.265
+     "guia": "trattoria",
+     "afinidad": 0.385
     }
    ]
   }

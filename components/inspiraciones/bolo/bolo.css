@@ -96,7 +96,7 @@
 .bo-fantasma div p { margin: 0; font-size: 12px; color: var(--mut); max-width: 28ch; }
 
 /* pie violeta: dos cintas cruzadas con el lema y la pegatina */
-.bo-pie { position: relative; display: grid; gap: 50px; padding: 0 var(--bo-m) 20px; background: var(--acc); color: #fff; overflow: clip; --mut: rgba(255, 255, 255, 0.78); }
+.bo-pie { position: relative; display: grid; gap: 50px; padding: 0 var(--bo-m) 20px; background: var(--acc); color: #fff; overflow: clip; --mut: #ebe6ff; }
 .bo-cintas { position: relative; height: clamp(160px, 20vw, 280px); margin: 0 calc(-1 * var(--bo-m)); }
 .bo-cinta { position: absolute; left: -5%; right: -5%; top: 30%; overflow: hidden; background: var(--acc); border-block: 1px solid rgba(255, 255, 255, 0.4); }
 .bo-cinta--0 { rotate: -4deg; }

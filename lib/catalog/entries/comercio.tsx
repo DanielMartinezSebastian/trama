@@ -206,7 +206,7 @@ export const comercio: CatalogEntry[] = [
     styles: EDITORIAL,
     description: "Líneas con cantidad y quitar, subtotal, barra de envío gratis y botón de pedir. Diálogo modal: atrapa el foco, Esc y el fondo cierran, devuelve el foco. Pensado para usarse con useCart.",
     stageHeight: 200,
-    notes: ["El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta."],
+    notes: ["El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta.", "Varias llamadas a useCart con la misma clave (el contador de la cabecera y la página de la tienda) se mantienen al día solas, también entre pestañas."],
     props: [
       { key: "freeShippingFrom", label: "Envío gratis desde (0 = sin barra)", type: "number", default: 60, min: 0, max: 300, step: 5 },
       { key: "empty", label: "Carrito vacío", type: "boolean", default: false },
@@ -224,15 +224,16 @@ export const comercio: CatalogEntry[] = [
     name: "Cierre del pedido",
     category: "formularios",
     styles: EDITORIAL,
-    description: "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
+    description: "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda; sin este paso si es digital) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
     stageHeight: 640,
     notes: [
       "Las líneas vienen de useCart (como CartDrawer): `lines`, `onQty` y `onClear`. Pon su página en el `checkoutHref` del carrito.",
       "Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.",
+      "`delivery=\"digital\"` para lo que no se envía (licencias, archivos, señales de reserva): dos pasos, sin gastos de envío y la entrega por correo. Ver /inspiraciones/turia/licencias y /inspiraciones/trocha/reservar (docs/60).",
       "Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56.",
     ],
     props: [
-      { key: "delivery", label: "Entrega", type: "select", default: "both", options: ["both", "shipping", "pickup"], labels: { both: "envío o recogida", shipping: "solo envío", pickup: "solo recogida" } },
+      { key: "delivery", label: "Entrega", type: "select", default: "both", options: ["both", "shipping", "pickup", "digital"], labels: { both: "envío o recogida", shipping: "solo envío", pickup: "solo recogida", digital: "digital" } },
       { key: "freeShippingFrom", label: "Envío gratis desde", type: "number", default: 50, min: 0, max: 200, step: 5 },
     ],
     render: (p) => (
@@ -243,7 +244,7 @@ export const comercio: CatalogEntry[] = [
   },
 ];
 
-function CheckoutDemo({ delivery, free }: { delivery: "both" | "shipping" | "pickup"; free: number }) {
+function CheckoutDemo({ delivery, free }: { delivery: "both" | "shipping" | "pickup" | "digital"; free: number }) {
   const cart = useCart("trama:catalogo:pedido");
   const llenar = () => {
     cart.add({ id: "taza", title: "Taza Alba", price: 18, meta: "Esmalte azul" }, 2);

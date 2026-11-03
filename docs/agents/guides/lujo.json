@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceCommit": "a40737d5bdef2ee1cf0aaaa3586a856973719a2c",
   "sourceDirty": true,
   "kind": "guide",
   "id": "lujo",
@@ -10,7 +10,7 @@
   "sources": [
     {
       "path": "components/ui/styles/ui-guides.css",
-      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
+      "sha256": "2a163b4287de8ab2644ca9d6da77292d574bde089381bcb39beed25e65e4253c"
     },
     {
       "path": "lib/catalog/catalog.tsx",
@@ -22,7 +22,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+      "sha256": "ce4d612b2ae77aa9cc897075a8f66a803ec6e45f627f4bf9571bace2008f2b93"
     },
     {
       "path": "lib/ui/fonts.ts",
@@ -30,7 +30,7 @@
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
+      "sha256": "0558a1fab32ce1fc68bdce7ef06d92cd5c4d2552bdc2af7452ba400247f310ee"
     },
     {
       "path": "lib/ui/tokens.ts",
@@ -46,7 +46,7 @@
     },
     {
       "path": "scripts/agent-knowledge.mts",
-      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+      "sha256": "036eefb3302165997030e1116b603ed2bd32834a20316101c543ee90b088750d"
     },
     {
       "path": "scripts/build-catalog.mts",

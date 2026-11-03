@@ -14014,7 +14014,8 @@
         }
       ],
       "notes": [
-        "El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta."
+        "El estado del carrito lo trae useCart (de trama-ui), con persistencia en localStorage; este componente solo lo pinta.",
+        "Varias llamadas a useCart con la misma clave (el contador de la cabecera y la página de la tienda) se mantienen al día solas, también entre pestañas."
       ],
       "example": "import CartDrawer from \"@/components/ui/CartDrawer\";\n\n<CartDrawer />",
       "preview": "/componentes#cart-drawer"
@@ -14030,7 +14031,7 @@
         "minimal",
         "solid"
       ],
-      "description": "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
+      "description": "El pedido en pasos: datos, entrega (envío a casa con dirección o recogida en tienda; sin este paso si es digital) y pago, con un resumen al lado que deja cambiar cantidades. El pago se simula con validación de verdad: titular, número de tarjeta (Luhn), caducidad futura y CVC, o «pagar al recoger». Confirma con número de pedido y vacía el carrito. No cobra: conecta onOrder a tu pasarela.",
       "props": [
         {
           "key": "delivery",
@@ -14040,7 +14041,8 @@
           "options": [
             "both",
             "shipping",
-            "pickup"
+            "pickup",
+            "digital"
           ]
         },
         {
@@ -14055,6 +14057,7 @@
       "notes": [
         "Las líneas vienen de useCart (como CartDrawer): `lines`, `onQty` y `onClear`. Pon su página en el `checkoutHref` del carrito.",
         "Para probar: tarjeta 4242 4242 4242 4242, cualquier caducidad futura y un CVC de tres cifras.",
+        "`delivery=\"digital\"` para lo que no se envía (licencias, archivos, señales de reserva): dos pasos, sin gastos de envío y la entrega por correo. Ver /inspiraciones/turia/licencias y /inspiraciones/trocha/reservar (docs/60).",
         "Ver /inspiraciones/patron/tienda (bolsa, ficha y pedido) y docs/56."
       ],
       "example": "import CheckoutFlow from \"@/components/ui/CheckoutFlow\";\n\n<CheckoutFlow />",
@@ -16191,7 +16194,7 @@
         "outline",
         "retro"
       ],
-      "description": "Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+      "description": "Aplica una de las cuarenta y seis guías de estilo: la de la quinta ronda (bloque nocturno: negro carbón y titulares de palo muy pesados que llenan la pantalla), las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
       "props": [
         {
           "key": "guide",
@@ -16243,7 +16246,8 @@
             "pixel",
             "puntos",
             "papel",
-            "cercano"
+            "cercano",
+            "bloque"
           ]
         },
         {
