@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "ddca809c821eb2f2fcfe99a74496255fc9cb18af",
+  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
   "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
@@ -46,7 +46,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "017d30c319c2d63430dd7f4f5dd1e342a4deee23044b42db5ba9225af8fd7820"
+      "sha256": "51201f485af0b09fbfcbb9edcf4055f29e1c96e5c4f4234b410b5c2becbec68c"
     },
     {
       "path": "lib/catalog/entries/interaccion.tsx",
@@ -122,11 +122,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "15014ae2b7e8cb7f225752d06ca864c9df15c1bf460fb0048c017c9d04ba5429"
+      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
     },
     {
       "path": "package-lock.json",
@@ -403,6 +403,62 @@
     },
     {
       "kind": "guide",
+      "id": "sabana",
+      "name": "Sabana tranquila",
+      "description": "Crema y verde oliva, una serifa finísima en mayúsculas para titulares enormes y párrafos de serifa grandes; fotos de naturaleza sueltas que flotan a distinta velocidad.",
+      "file": "guides/sabana.json"
+    },
+    {
+      "kind": "guide",
+      "id": "trattoria",
+      "name": "Trattoria de barrio",
+      "description": "Bloques de color pleno que se suceden (rojo, turquesa, verde botella, granate) sobre crema; serifa blanda con cursiva para los subtítulos y una sans redonda en mayúsculas para botones.",
+      "file": "guides/trattoria.json"
+    },
+    {
+      "kind": "guide",
+      "id": "clinica",
+      "name": "Clínica serena",
+      "description": "Marfil y azul tinta; una serifa de libro para todo lo que se lee, con sangría en los párrafos grandes, y una grotesca diminuta en mayúsculas para navegar",
+      "file": "guides/clinica.json"
+    },
+    {
+      "kind": "guide",
+      "id": "terracota",
+      "name": "Estudio en tierras",
+      "description": "Blanco y negro con una grotesca neutra sin negritas y cinco colores tierra (taupe, óxido, azul pálido, salvia, salmón), uno por línea de trabajo, en paneles que se ensanchan.",
+      "file": "guides/terracota.json"
+    },
+    {
+      "kind": "guide",
+      "id": "motor",
+      "name": "Motor artesano",
+      "description": "Penumbra azul petróleo en la portada y blanco después; condensada en mayúsculas con algo de aire entre letras y botones rectangulares con letra diminuta",
+      "file": "guides/motor.json"
+    },
+    {
+      "kind": "guide",
+      "id": "obsidiana",
+      "name": "Obsidiana",
+      "description": "Piedra casi negra y gris plata; grotesca de peso medio en mayúsculas con interlineado 1, píldoras grises y un objeto metálico en 3D",
+      "file": "guides/obsidiana.json"
+    },
+    {
+      "kind": "guide",
+      "id": "cinta",
+      "name": "Cinta de luz",
+      "description": "Negro violáceo con una cinta de luz magenta y gris claro con azul marino para la parte técnica; grotesca fina grande, mono en mayúsculas para etiquetas y tarjetas blancas con datos vivos.",
+      "file": "guides/cinta.json"
+    },
+    {
+      "kind": "guide",
+      "id": "foro",
+      "name": "Foro en blanco y negro",
+      "description": "Blanco y negro, fotos de escenario a sangre bajo un titular centrado en serifa de mayúsculas, un logotipo de formas ultranegras y fechas en un recuadro de filete fino",
+      "file": "guides/foro.json"
+    },
+    {
+      "kind": "guide",
       "id": "terminal",
       "name": "Terminal de neón",
       "description": "Negro tintado del color del acento, todo en monoespaciada, titulares gruesos en mayúsculas y un solo neón para lo que se puede tocar.",
@@ -503,7 +559,7 @@
       "kind": "component",
       "id": "guide-frame",
       "name": "GuideFrame",
-      "description": "Aplica una de las treinta y siete guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo…",
+      "description": "Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro),…",
       "file": "components/guide-frame.json"
     },
     {

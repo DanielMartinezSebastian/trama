@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
+  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
   "sourceDirty": true,
   "kind": "component",
   "id": "guide-frame",
@@ -18,7 +18,7 @@
     },
     {
       "path": "lib/catalog/entries/guias.tsx",
-      "sha256": "017d30c319c2d63430dd7f4f5dd1e342a4deee23044b42db5ba9225af8fd7820"
+      "sha256": "51201f485af0b09fbfcbb9edcf4055f29e1c96e5c4f4234b410b5c2becbec68c"
     },
     {
       "path": "lib/catalog/schema.ts",
@@ -26,11 +26,11 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "15014ae2b7e8cb7f225752d06ca864c9df15c1bf460fb0048c017c9d04ba5429"
+      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
     },
     {
       "path": "lib/ui/text-contrast.ts",
@@ -84,7 +84,7 @@
   },
   "name": "Guía de estilo (sistema visual completo)",
   "component": "GuideFrame",
-  "description": "Aplica una de las treinta y siete guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
+  "description": "Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.",
   "category": "secciones",
   "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
   "api": {
@@ -133,6 +133,14 @@
         "senal",
         "festival",
         "varietes",
+        "sabana",
+        "trattoria",
+        "clinica",
+        "terracota",
+        "motor",
+        "obsidiana",
+        "cinta",
+        "foro",
         "terminal",
         "pixel",
         "puntos",
@@ -172,6 +180,14 @@
         "senal": "Señal corporativa",
         "festival": "Festival pastel",
         "varietes": "Cartel de varietés",
+        "sabana": "Sabana tranquila",
+        "trattoria": "Trattoria de barrio",
+        "clinica": "Clínica serena",
+        "terracota": "Estudio en tierras",
+        "motor": "Motor artesano",
+        "obsidiana": "Obsidiana",
+        "cinta": "Cinta de luz",
+        "foro": "Foro en blanco y negro",
         "terminal": "Terminal de neón",
         "pixel": "Arcade pixel",
         "puntos": "Matriz de puntos",

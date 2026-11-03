@@ -1,5 +1,7 @@
 # 54 · Guías de estilo sacadas de todo el repo
 
+> Ampliación 03-11-2026: 45 guías. Ocho salen de la cuarta ronda de inspiraciones, una por sector nuevo (safari, restaurante, clínica, arquitectura, automoción, tarjeta, software y festival): docs/59.
+
 > Ampliación 02-11-2026: 37 guías. Diez salen de la tercera ronda de inspiraciones y siete de las últimas webs del repo, elegidas por estar lejos de las anteriores: docs/58.
 >
 > Ampliación 01-11-2026: 20 guías. **Aprendizaje cercano** (`cercano`) añade la familia de formación individual a partir

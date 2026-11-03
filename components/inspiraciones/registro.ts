@@ -33,6 +33,14 @@ import { PAGINAS as canteraPaginas } from "./cantera/data";
 import { PAGINAS as ultramarPaginas } from "./ultramar/data";
 import { PAGINAS as zancoPaginas } from "./zanco/data";
 import { PAGINAS as pulsoPaginas } from "./pulso-lento/data";
+import { PAGINAS as anchaPaginas } from "./tierra-ancha/data";
+import { PAGINAS as bocadoPaginas } from "./bocado/data";
+import { PAGINAS as pausaPaginas } from "./pausa/data";
+import { PAGINAS as soleraPaginas } from "./solera/data";
+import { PAGINAS as vencejoPaginas } from "./vencejo/data";
+import { PAGINAS as nacarPaginas } from "./nacar/data";
+import { PAGINAS as nimboPaginas } from "./nimbo/data";
+import { PAGINAS as plenoPaginas } from "./pleno/data";
 
 export type Replica = {
   slug: string;
@@ -42,7 +50,7 @@ export type Replica = {
   ref: string;
   url: string;
   ficha: string;
-  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música";
+  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música" | "safari" | "restaurante" | "clínica" | "arquitectura" | "automoción" | "finanzas" | "software" | "conferencia";
   /** lo que la hace reconocible, en una línea */
   firma: string;
   hecha: boolean;
@@ -94,6 +102,15 @@ export const REPLICAS: Replica[] = [
   { slug: "ultramar", nombre: "Ultramar", ref: "United Carriers", url: "https://unitedcarriers.com/", ficha: "docs/58", sector: "logística", firma: "globo de puntos con rutas, titular extendido y un contenedor que cruza al bajar", hecha: true, guia: "orbital", acento: "#ff6e28", scroll: "snappy", paginas: ultramarPaginas, transicion: "wipe" },
   { slug: "zanco", nombre: "Zanco", ref: "Noho", url: "https://noho.ink/", ficha: "docs/58", sector: "mueble", firma: "muro escalonado de baldosas de color con muebles dibujados y tienda con color real", hecha: true, guia: "catalogo", acento: "#f4d21f", scroll: "snappy", paginas: zancoPaginas, transicion: "fade" },
   { slug: "pulso-lento", nombre: "Pulso Lento", ref: "Paul Kalkbrenner", url: "https://www.paulkalkbrenner.net/", ficha: "docs/58", sector: "música", firma: "blanco suizo con foto dentro del nombre, vinilo que gira, años gigantes y reproductor que suena", hecha: true, guia: "cartel", acento: "#a7ff9c", scroll: "snappy", paginas: pulsoPaginas, transicion: "wipe" },
+  // cuarta ronda (docs/59): ocho sectores más
+  { slug: "tierra-ancha", nombre: "Tierra Ancha", ref: "Tengile MalaMala Collection", url: "https://tengilemalamala.com/", ficha: "docs/59", sector: "safari", firma: "crema y oliva, serifa finísima en mayúsculas y un collage de fauna que flota a distintas velocidades", hecha: true, guia: "sabana", acento: "#8b5a2b", scroll: "editorial", paginas: anchaPaginas, transicion: "fade" },
+  { slug: "bocado", nombre: "Bocado", ref: "Délice", url: "https://delice.ca/", ficha: "docs/59", sector: "restaurante", firma: "bloques de rojo, turquesa, verde y granate, serifa blanda y platos del día en círculos bajo un título en arco", hecha: true, guia: "trattoria", acento: "#cc2629", scroll: "snappy", paginas: bocadoPaginas, transicion: "wipe" },
+  { slug: "pausa", nombre: "Pausa", ref: "Odyssée", url: "https://www.odysseeclinic.com.au/", ficha: "docs/59", sector: "clínica", firma: "marfil y azul tinta, fotos en duotono que recuperan el color al pasar y párrafos de serifa con sangría", hecha: true, guia: "clinica", acento: "#1e305e", scroll: "editorial", paginas: pausaPaginas, transicion: "fade" },
+  { slug: "solera", nombre: "Solera Arquitectura", ref: "LPAS", url: "https://lpas.com/", ficha: "docs/59", sector: "arquitectura", firma: "fila de cinco paneles por sector, foto arriba y color tierra abajo, que se ensanchan al pasar", hecha: true, guia: "terracota", acento: "#a65232", scroll: "snappy", paginas: soleraPaginas, transicion: "slide" },
+  { slug: "vencejo", nombre: "Vencejo", ref: "Spyker Cars", url: "https://www.spykercars.com/", ficha: "docs/59", sector: "automoción", firma: "penumbra azul petróleo, condensada en mayúsculas, detalles dispersos y un configurador con el coche dibujado", hecha: true, guia: "motor", acento: "#1f4a4f", scroll: "cinematic", paginas: vencejoPaginas, transicion: "fade" },
+  { slug: "nacar", nombre: "Nácar", ref: "Moto", url: "https://www.moto-card.com/", ficha: "docs/59", sector: "finanzas", firma: "piedra negra, tarjeta de acero en 3D sobre un pedestal y una galería que se recorre en profundidad", hecha: true, guia: "obsidiana", acento: "#e1e5e5", scroll: "cinematic", paginas: nacarPaginas, transicion: "fade" },
+  { slug: "nimbo", nombre: "Nimbo", ref: "Cerebrium", url: "https://cerebrium.ai/", ficha: "docs/59", sector: "software", firma: "negro violáceo con una cinta de luz magenta que se dibuja sola y tarjetas blancas con barras, mapa y gráfica en directo", hecha: true, guia: "cinta", acento: "#ff3d8b", scroll: "snappy", paginas: nimboPaginas, transicion: "fade" },
+  { slug: "pleno", nombre: "PLENO", ref: "OFFF Forum", url: "https://www.offforum.com/", ficha: "docs/59", sector: "conferencia", firma: "blanco y negro, fotos de escenario que se funden bajo un titular en serifa mayúscula y un logotipo de formas ultranegras", hecha: true, guia: "foro", acento: "#000000", paginas: plenoPaginas, transicion: "stairs" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

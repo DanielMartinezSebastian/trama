@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "packageName": "trama-ui",
+  "packageVersion": "0.13.0",
+  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceDirty": true,
+  "kind": "guide",
+  "id": "terracota",
+  "status": "pilot",
+  "sources": [
+    {
+      "path": "components/ui/styles/ui-guides.css",
+      "sha256": "23dd4dd7e71d6bc04eec6e1f9dfd4c8c66f050bc16b4c87393a74a3b2edf773b"
+    },
+    {
+      "path": "lib/catalog/catalog.tsx",
+      "sha256": "f8353f18d6f136e7e87dbc54cb858ca2e66dd7e7b7a2cdbb664981278e82f503"
+    },
+    {
+      "path": "lib/catalog/schema.ts",
+      "sha256": "b2b5380b7e15ca08a3e0014b36d22cc249ba9215102f4fc08487a9c9ccb5b63c"
+    },
+    {
+      "path": "lib/catalog/sectores.ts",
+      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
+    },
+    {
+      "path": "lib/ui/fonts.ts",
+      "sha256": "a1461ad5dab920100cc035ad5aa901240153196224906e8dd1f7ba44344257b0"
+    },
+    {
+      "path": "lib/ui/guides.ts",
+      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
+    },
+    {
+      "path": "lib/ui/tokens.ts",
+      "sha256": "3af7043f0066f4f2daeecf851edad78f56b17f5deb72ac0277afbe1c7216884e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3aba27e27fdb8ffc02b077324dd20ade8af3ef0b671b7fd16ca79ccfa3ad95f0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "e60b07c16aea0b72d051773fd1b5e73ed45f71be9840ced4bb057d7ceda5a751"
+    },
+    {
+      "path": "scripts/agent-knowledge.mts",
+      "sha256": "34b15e0012c9a6558acda78af787f5e9f58ea1b51a0a22084670027194466904"
+    },
+    {
+      "path": "scripts/build-catalog.mts",
+      "sha256": "eabf3978797ed245e0a0cd37a323adf1306f139a070046d1b0d4eb8c29693197"
+    },
+    {
+      "path": "scripts/build-package.mts",
+      "sha256": "e2f9d88c0c24dc4a34c14ed8f074a5880fb4322acbf2cd0dc6c7bb81e0246d5f"
+    },
+    {
+      "path": "scripts/kit-lib.mts",
+      "sha256": "acda866a0035898550f04779a807b091f0cccef7b75fa1ea836a867ef34cb203"
+    },
+    {
+      "path": "scripts/package-surface.mts",
+      "sha256": "34a99c7ed27411b40b8c1c6d3838a6e2517d4a560776449acaec1f14c0620bb8"
+    },
+    {
+      "path": "scripts/skill-context.mjs",
+      "sha256": "3cd02984d5ce8dbde56aba2a55902c9bd8dfce1b685ef5e5b748cc8c3d2b0be3"
+    }
+  ],
+  "validation": {
+    "publicTypes": "generated-from-source",
+    "packageExamples": "not-certified-by-generation",
+    "browserFlow": "not-certified-by-generation"
+  },
+  "name": "Estudio en tierras",
+  "guide": {
+    "id": "terracota",
+    "source": "premiadas",
+    "label": "Estudio en tierras",
+    "note": "Blanco y negro con una grotesca neutra sin negritas y cinco colores tierra (taupe, óxido, azul pálido, salvia, salmón), uno por línea de trabajo, en paneles que se ensanchan.",
+    "sectors": "Arquitectura, ingeniería, urbanismo, constructoras, interiorismo de contrato",
+    "refs": [
+      "LPAS",
+      "Solera Arquitectura (/inspiraciones/solera)"
+    ],
+    "variant": "minimal",
+    "tokens": {
+      "bg": "#ffffff",
+      "fg": "#000000",
+      "mut": "#6b6b6b",
+      "acc": "#a65232",
+      "acc2": "#c9d6e3",
+      "card": "#f2f2f0",
+      "ln": "rgba(0,0,0,0.14)",
+      "r": 4,
+      "font": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "display": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "accentFont": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif"
+    },
+    "fonts": {
+      "display": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "body": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "accent": "var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+      "mono": "var(--font-geist-mono), ui-monospace, Consolas, monospace"
+    },
+    "type": {
+      "brand": "clamp(3.4rem, 9vw, 9rem)",
+      "h1": "clamp(2.4rem, 4.6vw, 4.4rem)",
+      "h2": "clamp(1.6rem, 2.4vw, 2.2rem)",
+      "body": "0.9375rem",
+      "label": "0.75rem",
+      "weight": 400,
+      "lineHeight": 1,
+      "tracking": -0.03,
+      "upper": false,
+      "labelUpper": false,
+      "labelTracking": 0,
+      "bodyLineHeight": 1.4
+    },
+    "space": {
+      "margin": "clamp(16px, 2.2vw, 32px)",
+      "gutter": "12px",
+      "cols": 12,
+      "section": "clamp(80px, 10vw, 120px)",
+      "header": "56px",
+      "measure": "34em"
+    },
+    "surface": {
+      "radius": 4,
+      "pill": false,
+      "shadow": false
+    },
+    "motion": {
+      "fast": 0.3,
+      "reveal": 0.7,
+      "page": 0.6,
+      "stagger": 0.05,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "easeReveal": "cubic-bezier(0.22, 1, 0.36, 1)"
+    },
+    "heroes": [
+      "split-video",
+      "marquee-window"
+    ],
+    "stories": [
+      "index",
+      "object"
+    ]
+  },
+  "application": {
+    "component": "GuideFrame",
+    "import": "import GuideFrame from \"trama-ui/GuideFrame\";",
+    "usage": "<GuideFrame guide=\"terracota\">",
+    "css": "trama-ui/styles.css",
+    "classes": [
+      "ui-g-body",
+      "ui-g-brand",
+      "ui-g-btn",
+      "ui-g-btn--ghost",
+      "ui-g-card",
+      "ui-g-grid",
+      "ui-g-h1",
+      "ui-g-h2",
+      "ui-g-header",
+      "ui-g-label",
+      "ui-g-line",
+      "ui-g-mono",
+      "ui-g-muted",
+      "ui-g-rise",
+      "ui-g-section",
+      "ui-g-wrap"
+    ],
+    "fontVariables": [
+      "--font-geist",
+      "--font-geist-mono",
+      "--font-inter"
+    ]
+  },
+  "contrast": [
+    {
+      "text": "fg",
+      "surface": "bg",
+      "ratio": 21,
+      "use": "texto normal"
+    },
+    {
+      "text": "fg",
+      "surface": "card",
+      "ratio": 18.73,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "bg",
+      "ratio": 5.33,
+      "use": "texto normal"
+    },
+    {
+      "text": "mut",
+      "surface": "card",
+      "ratio": 4.75,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "bg",
+      "ratio": 5.42,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc",
+      "surface": "card",
+      "ratio": 4.84,
+      "use": "texto normal"
+    },
+    {
+      "text": "acc2",
+      "surface": "bg",
+      "ratio": 1.48,
+      "use": "decorativo: no usar para texto ni controles"
+    },
+    {
+      "text": "acc2",
+      "surface": "card",
+      "ratio": 1.32,
+      "use": "decorativo: no usar para texto ni controles"
+    }
+  ],
+  "requirements": [
+    "En Next.js: fuentes requeridas desde trama-ui/fonts en layout de servidor, transpilePackages: ['trama-ui']; verificar build y carga con next/font/google.",
+    "Usar las clases ui-g-* para escala y composición; pasar variante sugerida a las piezas que la admitan.",
+    "Nombrar las fuentes por su variable (`var(--font-cormorant-garamond)`, ver fontVariables) o heredarlas de ui-g-*; el nombre literal ('Cormorant') no coincide con la familia que registra next/font y cae a una fuente del sistema.",
+    "Los pares de `contrast` por debajo de 4,5:1 no sirven para texto normal tal cual: GuideFrame textContrast calcula --mut-text/--acc-text para el texto del kit sobre --bg (sRGB opaco), conservando --mut/--acc decorativos. Consultar sus límites en la API; para otras superficies/estados o CSS propio, adaptar y medir el tema local."
+  ],
+  "examples": [],
+  "limitations": [
+    "La tabla de contraste mide tokens sobre fondos lisos; revisar la aplicación visual en cada proyecto (imágenes, transparencias, estados). Una guía no certifica accesibilidad.",
+    "Fotos, vídeos y fuentes Fontshare no se redistribuyen por esta ficha.",
+    "No se declara soporte universal de Next.js o de React genérico a partir de un consumidor piloto."
+  ]
+}

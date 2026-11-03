@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
+  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
   "sourceDirty": true,
   "kind": "component",
   "id": "before-after",
@@ -34,7 +34,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
     },
     {
       "path": "package-lock.json",

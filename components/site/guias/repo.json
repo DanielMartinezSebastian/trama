@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-02",
- "base": "http://localhost:3041",
+ "fecha": "2026-11-03",
+ "base": "http://localhost:3000",
  "paginas": [
   {
    "tipo": "guia",
@@ -81,16 +81,16 @@
    },
    "afinidad": [
     {
+     "guia": "cinta",
+     "afinidad": 0.314
+    },
+    {
      "guia": "glaciar",
      "afinidad": 0.287
     },
     {
      "guia": "sereno",
      "afinidad": 0.243
-    },
-    {
-     "guia": "nocturno",
-     "afinidad": 0.231
     }
    ]
   },
@@ -173,12 +173,12 @@
      "afinidad": 0.262
     },
     {
-     "guia": "baldosa",
-     "afinidad": 0.252
+     "guia": "terracota",
+     "afinidad": 0.262
     },
     {
-     "guia": "rotulo",
-     "afinidad": 0.251
+     "guia": "baldosa",
+     "afinidad": 0.252
     }
    ]
   },
@@ -249,16 +249,16 @@
    },
    "afinidad": [
     {
+     "guia": "terracota",
+     "afinidad": 0.667
+    },
+    {
      "guia": "tecnico",
      "afinidad": 0.563
     },
     {
      "guia": "catalogo",
      "afinidad": 0.418
-    },
-    {
-     "guia": "papel",
-     "afinidad": 0.414
     }
    ]
   },
@@ -349,8 +349,8 @@
      "afinidad": 0.279
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.244
+     "guia": "motor",
+     "afinidad": 0.255
     }
    ]
   },
@@ -436,12 +436,12 @@
      "afinidad": 0.563
     },
     {
-     "guia": "sereno",
-     "afinidad": 0.325
+     "guia": "clinica",
+     "afinidad": 0.411
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.294
+     "guia": "trattoria",
+     "afinidad": 0.387
     }
    ]
   },
@@ -613,16 +613,16 @@
    },
    "afinidad": [
     {
+     "guia": "foro",
+     "afinidad": 0.422
+    },
+    {
      "guia": "monocromo",
      "afinidad": 0.287
     },
     {
      "guia": "festival",
      "afinidad": 0.254
-    },
-    {
-     "guia": "cartel",
-     "afinidad": 0.245
     }
    ]
   },
@@ -889,12 +889,192 @@
      "afinidad": 0.385
     },
     {
-     "guia": "catalogo",
-     "afinidad": 0.316
+     "guia": "terracota",
+     "afinidad": 0.384
     },
     {
-     "guia": "tecnico",
+     "guia": "catalogo",
+     "afinidad": 0.316
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/cinta",
+   "guia": "cinta",
+   "titulo": "Cinta de luz",
+   "medidas": {
+    "fondo": "#07030c",
+    "paleta": [
+     [
+      "#07030c",
+      71
+     ],
+     [
+      "#1a1024",
+      28
+     ],
+     [
+      "#f2eef8",
+      1
+     ],
+     [
+      "#a79fb6",
+      50
+     ],
+     [
+      "#f2eef8",
+      30
+     ],
+     [
+      "#ffffff",
+      15
+     ]
+    ],
+    "titular": {
+     "letra": "Mona Sans",
+     "vw": 6,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Mona Sans",
+     "Geist Mono"
+    ],
+    "margen": 32,
+    "radios": [
+     "14"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.9
+   },
+   "rasgos": {
+    "lum": 0.0013684001816159906,
+    "sat": 0.13609467455621307,
+    "hue": 260.86956521739125,
+    "cat": "grotesca",
+    "vw": 6,
+    "weight": 300,
+    "ls": -2.5,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "glaciar",
+     "afinidad": 0.533
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.417
+    },
+    {
+     "guia": "ambar",
      "afinidad": 0.314
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/clinica",
+   "guia": "clinica",
+   "titulo": "Clínica serena",
+   "medidas": {
+    "fondo": "#fffcf8",
+    "paleta": [
+     [
+      "#fffcf8",
+      72
+     ],
+     [
+      "#f4f1ea",
+      27
+     ],
+     [
+      "#1e305e",
+      1
+     ],
+     [
+      "#5a6584",
+      49
+     ],
+     [
+      "#1e305e",
+      28
+     ],
+     [
+      "#ffffff",
+      19
+     ]
+    ],
+    "titular": {
+     "letra": "Newsreader",
+     "vw": 5,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -1.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 17,
+     "lh": 1.4,
+     "measureEm": 24
+    },
+    "familias": [
+     "Newsreader"
+    ],
+    "margen": 32,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 4.1
+   },
+   "rasgos": {
+    "lum": 0.9765811812876042,
+    "sat": 0.5161290322580645,
+    "hue": 223.125,
+    "cat": "serifa",
+    "vw": 5,
+    "weight": 400,
+    "ls": -1.5,
+    "upper": false,
+    "lh": 1,
+    "body": 17,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "trattoria",
+     "afinidad": 0.446
+    },
+    {
+     "guia": "sereno",
+     "afinidad": 0.416
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.411
     }
    ]
   },
@@ -1069,12 +1249,12 @@
      "afinidad": 0.279
     },
     {
-     "guia": "ambar",
-     "afinidad": 0.219
+     "guia": "obsidiana",
+     "afinidad": 0.243
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.214
+     "guia": "ambar",
+     "afinidad": 0.219
     }
    ]
   },
@@ -1336,8 +1516,96 @@
      "afinidad": 0.377
     },
     {
-     "guia": "ilustrado",
-     "afinidad": 0.35
+     "guia": "trattoria",
+     "afinidad": 0.374
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/foro",
+   "guia": "foro",
+   "titulo": "Foro en blanco y negro",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      98
+     ],
+     [
+      "#000000",
+      2
+     ],
+     [
+      "#5e5e5e",
+      55
+     ],
+     [
+      "#000000",
+      38
+     ],
+     [
+      "#ffffff",
+      7
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 44.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.4,
+     "measureEm": 33
+    },
+    "familias": [
+     "Inter",
+     "Instrument Serif"
+    ],
+    "margen": 20,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.6
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "serifa",
+    "vw": 44.6,
+    "weight": 400,
+    "ls": -4,
+    "upper": true,
+    "lh": 0.9,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "calido",
+     "afinidad": 0.422
+    },
+    {
+     "guia": "monocromo",
+     "afinidad": 0.29
+    },
+    {
+     "guia": "cartel",
+     "afinidad": 0.263
     }
    ]
   },
@@ -1419,16 +1687,16 @@
    },
    "afinidad": [
     {
+     "guia": "cinta",
+     "afinidad": 0.533
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.379
     },
     {
      "guia": "ambar",
      "afinidad": 0.287
-    },
-    {
-     "guia": "mineral",
-     "afinidad": 0.247
     }
    ]
   },
@@ -1599,12 +1867,12 @@
      "afinidad": 0.563
     },
     {
-     "guia": "sereno",
-     "afinidad": 0.396
+     "guia": "sabana",
+     "afinidad": 0.411
     },
     {
-     "guia": "filmoteca",
-     "afinidad": 0.35
+     "guia": "trattoria",
+     "afinidad": 0.407
     }
    ]
   },
@@ -1783,8 +2051,8 @@
      "afinidad": 0.377
     },
     {
-     "guia": "salon",
-     "afinidad": 0.302
+     "guia": "sabana",
+     "afinidad": 0.355
     }
    ]
   },
@@ -1964,8 +2232,8 @@
      "afinidad": 0.221
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.214
+     "guia": "obsidiana",
+     "afinidad": 0.221
     }
    ]
   },
@@ -2144,6 +2412,97 @@
   },
   {
    "tipo": "guia",
+   "ruta": "/guias/relato/motor",
+   "guia": "motor",
+   "titulo": "Motor artesano",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      97
+     ],
+     [
+      "#f3f3f2",
+      2
+     ],
+     [
+      "#141414",
+      1
+     ],
+     [
+      "#6b6b6b",
+      70
+     ],
+     [
+      "#141414",
+      22
+     ],
+     [
+      "#ffffff",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 4.2,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": 4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 32
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 35,
+    "radios": [
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.45, 0, 0.55, 1)"
+    ],
+    "hover": 2,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.4
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "condensada",
+    "vw": 4.2,
+    "weight": 500,
+    "ls": 4,
+    "upper": true,
+    "lh": 0.9,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "barberia",
+     "afinidad": 0.255
+    },
+    {
+     "guia": "tinta",
+     "afinidad": 0.204
+    },
+    {
+     "guia": "autor",
+     "afinidad": 0.203
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
    "ruta": "/guias/relato/nocturno",
    "guia": "nocturno",
    "titulo": "Producto nocturno",
@@ -2217,16 +2576,108 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.499
+    },
+    {
+     "guia": "cinta",
+     "afinidad": 0.417
+    },
+    {
      "guia": "glaciar",
      "afinidad": 0.379
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/obsidiana",
+   "guia": "obsidiana",
+   "titulo": "Obsidiana",
+   "medidas": {
+    "fondo": "#080808",
+    "paleta": [
+     [
+      "#080808",
+      97
+     ],
+     [
+      "#141515",
+      2
+     ],
+     [
+      "#e1e5e5",
+      1
+     ],
+     [
+      "#8d9393",
+      70
+     ],
+     [
+      "#e1e5e5",
+      22
+     ],
+     [
+      "#080808",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Inter Tight",
+     "vw": 4.4,
+     "peso": 500,
+     "interlineado": 1,
+     "tracking": -1,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 30
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 29,
+    "radios": [
+     "píldora",
+     "18",
+     "50"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 5.2
+   },
+   "rasgos": {
+    "lum": 0.0024282158683907,
+    "sat": 0.07142857142857165,
+    "hue": 180,
+    "cat": "grotesca",
+    "vw": 4.4,
+    "weight": 500,
+    "ls": -1,
+    "upper": true,
+    "lh": 1,
+    "body": 14,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "nocturno",
+     "afinidad": 0.499
     },
     {
      "guia": "orbital",
-     "afinidad": 0.334
+     "afinidad": 0.401
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.28
+     "guia": "cinta",
+     "afinidad": 0.301
     }
    ]
   },
@@ -2305,16 +2756,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.401
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.334
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.244
-    },
-    {
-     "guia": "marca",
-     "afinidad": 0.239
+     "guia": "cinta",
+     "afinidad": 0.246
     }
    ]
   },
@@ -2680,6 +3131,93 @@
   },
   {
    "tipo": "guia",
+   "ruta": "/guias/relato/sabana",
+   "guia": "sabana",
+   "titulo": "Sabana tranquila",
+   "medidas": {
+    "fondo": "#f5eee9",
+    "paleta": [
+     [
+      "#f5eee9",
+      92
+     ],
+     [
+      "#ece3d9",
+      7
+     ],
+     [
+      "#373f1d",
+      2
+     ],
+     [
+      "#6b6a52",
+      43
+     ],
+     [
+      "#373f1d",
+      43
+     ],
+     [
+      "#f5eee9",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 3.1,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": null,
+    "familias": [
+     "Inter Tight",
+     "Cormorant Garamond"
+    ],
+    "margen": 48,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)"
+    ],
+    "hover": 1,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.5
+   },
+   "rasgos": {
+    "lum": 0.8644474092157354,
+    "sat": 0.3695652173913044,
+    "hue": 74.11764705882354,
+    "cat": "serifa",
+    "vw": 3.1,
+    "weight": 300,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.411
+    },
+    {
+     "guia": "lujo",
+     "afinidad": 0.355
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.354
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
    "ruta": "/guias/relato/salon",
    "guia": "salon",
    "titulo": "Salón editorial claro",
@@ -2758,12 +3296,12 @@
      "afinidad": 0.45
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.302
+     "guia": "clinica",
+     "afinidad": 0.315
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.285
+     "guia": "lujo",
+     "afinidad": 0.302
     }
    ]
   },
@@ -2937,12 +3475,12 @@
      "afinidad": 0.45
     },
     {
-     "guia": "lujo",
-     "afinidad": 0.412
+     "guia": "clinica",
+     "afinidad": 0.416
     },
     {
-     "guia": "ilustrado",
-     "afinidad": 0.396
+     "guia": "lujo",
+     "afinidad": 0.412
     }
    ]
   },
@@ -3019,16 +3557,16 @@
    },
    "afinidad": [
     {
+     "guia": "terracota",
+     "afinidad": 0.566
+    },
+    {
      "guia": "baldosa",
      "afinidad": 0.563
     },
     {
      "guia": "catalogo",
      "afinidad": 0.361
-    },
-    {
-     "guia": "mineral",
-     "afinidad": 0.357
     }
    ]
   },
@@ -3113,12 +3651,100 @@
      "afinidad": 0.245
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.214
+     "guia": "obsidiana",
+     "afinidad": 0.232
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.207
+     "guia": "orbital",
+     "afinidad": 0.214
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/terracota",
+   "guia": "terracota",
+   "titulo": "Estudio en tierras",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      99
+     ],
+     [
+      "#000000",
+      1
+     ],
+     [
+      "#ffffff",
+      43
+     ],
+     [
+      "#6b6b6b",
+      34
+     ],
+     [
+      "#000000",
+      23
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 4.6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 28
+    },
+    "familias": [
+     "Geist"
+    ],
+    "margen": 32,
+    "radios": [
+     "4"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 1,
+    "libs": [
+     "next",
+     "video"
+    ],
+    "pantallas": 3.5
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0,
+    "hue": 0,
+    "cat": "grotesca",
+    "vw": 4.6,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "baldosa",
+     "afinidad": 0.667
+    },
+    {
+     "guia": "tecnico",
+     "afinidad": 0.566
+    },
+    {
+     "guia": "cercano",
+     "afinidad": 0.384
     }
    ]
   },
@@ -3206,8 +3832,97 @@
      "afinidad": 0.307
     },
     {
-     "guia": "papel",
-     "afinidad": 0.28
+     "guia": "terracota",
+     "afinidad": 0.291
+    }
+   ]
+  },
+  {
+   "tipo": "guia",
+   "ruta": "/guias/relato/trattoria",
+   "guia": "trattoria",
+   "titulo": "Trattoria de barrio",
+   "medidas": {
+    "fondo": "#f8efdc",
+    "paleta": [
+     [
+      "#f8efdc",
+      70
+     ],
+     [
+      "#f1e4c8",
+      29
+     ],
+     [
+      "#2a1a14",
+      1
+     ],
+     [
+      "#6e5a4c",
+      52
+     ],
+     [
+      "#2a1a14",
+      43
+     ],
+     [
+      "#f8efdc",
+      5
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 4.9,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 28
+    },
+    "familias": [
+     "Manrope",
+     "Fraunces"
+    ],
+    "margen": 56,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 4.2
+   },
+   "rasgos": {
+    "lum": 0.8685676956690889,
+    "sat": 0.5942028985507247,
+    "hue": 40.97560975609758,
+    "cat": "serifa",
+    "vw": 4.9,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 1,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "clinica",
+     "afinidad": 0.446
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.407
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.387
     }
    ]
   },
@@ -3488,12 +4203,12 @@
      "afinidad": 0.236
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.184
+     "guia": "cinta",
+     "afinidad": 0.209
     },
     {
-     "guia": "pixel",
-     "afinidad": 0.179
+     "guia": "nocturno",
+     "afinidad": 0.184
     }
    ]
   },
@@ -3587,8 +4302,8 @@
      "afinidad": 0.236
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.207
+     "guia": "obsidiana",
+     "afinidad": 0.224
     }
    ]
   },
@@ -3609,7 +4324,7 @@
      ],
      [
       "#e6e6e6",
-      46
+      47
      ],
      [
       "#8c8c8c",
@@ -3766,12 +4481,12 @@
      "afinidad": 0.098
     },
     {
-     "guia": "pixel",
+     "guia": "obsidiana",
      "afinidad": 0.097
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.096
+     "guia": "pixel",
+     "afinidad": 0.097
     }
    ]
   },
@@ -3870,7 +4585,7 @@
      "afinidad": 0.219
     },
     {
-     "guia": "terminal",
+     "guia": "sabana",
      "afinidad": 0.211
     }
    ]
@@ -3948,16 +4663,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.098
+    },
+    {
      "guia": "puntos",
      "afinidad": 0.098
     },
     {
      "guia": "pixel",
      "afinidad": 0.097
-    },
-    {
-     "guia": "electrico",
-     "afinidad": 0.096
     }
    ]
   },
@@ -4038,12 +4753,12 @@
      "afinidad": 0.095
     },
     {
-     "guia": "pixel",
+     "guia": "obsidiana",
      "afinidad": 0.095
     },
     {
-     "guia": "ambar",
-     "afinidad": 0.093
+     "guia": "pixel",
+     "afinidad": 0.095
     }
    ]
   },
@@ -4142,8 +4857,8 @@
      "afinidad": 0.23
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.202
+     "guia": "obsidiana",
+     "afinidad": 0.221
     }
    ]
   },
@@ -4408,12 +5123,12 @@
      "afinidad": 0.382
     },
     {
-     "guia": "catalogo",
-     "afinidad": 0.355
+     "guia": "terracota",
+     "afinidad": 0.361
     },
     {
-     "guia": "tecnico",
-     "afinidad": 0.342
+     "guia": "catalogo",
+     "afinidad": 0.355
     }
    ]
   },
@@ -4505,12 +5220,12 @@
      "afinidad": 0.251
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.222
+     "guia": "cinta",
+     "afinidad": 0.226
     },
     {
-     "guia": "manchas",
-     "afinidad": 0.172
+     "guia": "nocturno",
+     "afinidad": 0.222
     }
    ]
   },
@@ -4625,7 +5340,7 @@
      ],
      [
       "#feeee2",
-      95
+      94
      ],
      [
       "#8f93b8",
@@ -4660,8 +5375,8 @@
      "píldora"
     ],
     "curvas": [
-     "cubic-bezier(0.65, 0, 0.35, 1)",
      "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
      "linear"
     ],
     "hover": 4,
@@ -4685,16 +5400,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.373
+    },
+    {
      "guia": "orbital",
      "afinidad": 0.369
     },
     {
      "guia": "nocturno",
      "afinidad": 0.282
-    },
-    {
-     "guia": "marca",
-     "afinidad": 0.236
     }
    ]
   },
@@ -4781,16 +5496,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.271
+    },
+    {
      "guia": "nocturno",
      "afinidad": 0.265
     },
     {
      "guia": "glaciar",
      "afinidad": 0.26
-    },
-    {
-     "guia": "orbital",
-     "afinidad": 0.232
     }
    ]
   },
@@ -4811,7 +5526,7 @@
      ],
      [
       "#f3f3ec",
-      53
+      52
      ],
      [
       "#17233b",
@@ -4819,7 +5534,7 @@
      ],
      [
       "#ffffff",
-      4
+      5
      ]
     ],
     "titular": {
@@ -4844,7 +5559,7 @@
     "curvas": [
      "cubic-bezier(0.22, 1, 0.36, 1)",
      "cubic-bezier(0.76, 0, 0.24, 1)",
-     "cubic-bezier(0.65, 0, 0.35, 1)"
+     "linear"
     ],
     "hover": 2,
     "libs": [
@@ -4872,12 +5587,111 @@
      "afinidad": 0.404
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.336
+     "guia": "cinta",
+     "afinidad": 0.374
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.247
+     "guia": "nocturno",
+     "afinidad": 0.336
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/bocado",
+   "titulo": "Bocado (réplica de Délice)",
+   "medidas": {
+    "fondo": "#cc2629",
+    "paleta": [
+     [
+      "#cc2629",
+      26
+     ],
+     [
+      "#f8efdc",
+      23
+     ],
+     [
+      "#6b1d24",
+      18
+     ],
+     [
+      "#2d3e2b",
+      15
+     ],
+     [
+      "#f8efdc",
+      65
+     ],
+     [
+      "#2a1a14",
+      15
+     ],
+     [
+      "#6e5a4c",
+      12
+     ]
+    ],
+    "titular": {
+     "letra": "Fraunces",
+     "vw": 7.6,
+     "peso": 400,
+     "interlineado": 0.9,
+     "tracking": -3,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.5,
+     "measureEm": 26
+    },
+    "familias": [
+     "Manrope",
+     "Fraunces"
+    ],
+    "margen": 56,
+    "radios": [
+     "50",
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    ],
+    "hover": 8,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 6.9
+   },
+   "rasgos": {
+    "lum": 0.14383691127912782,
+    "sat": 0.6859504132231404,
+    "hue": 358.9156626506024,
+    "cat": "serifa",
+    "vw": 7.6,
+    "weight": 400,
+    "ls": -3,
+    "upper": false,
+    "lh": 0.9,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ambar",
+     "afinidad": 0.262
+    },
+    {
+     "guia": "trattoria",
+     "afinidad": 0.25
+    },
+    {
+     "guia": "boutique",
+     "afinidad": 0.233
     }
    ]
   },
@@ -4932,9 +5746,9 @@
     "radios": [],
     "curvas": [
      "ease",
-     "cubic-bezier(0.22, 1, 0.36, 1)",
      "cubic-bezier(0.65, 0, 0.35, 1)",
-     "linear"
+     "linear",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
     ],
     "hover": 9,
     "libs": [
@@ -4960,16 +5774,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.117
+    },
+    {
      "guia": "orbital",
      "afinidad": 0.111
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.107
-    },
-    {
-     "guia": "nocturno",
-     "afinidad": 0.105
+     "guia": "cinta",
+     "afinidad": 0.109
     }
    ]
   },
@@ -5024,8 +5838,8 @@
     ],
     "curvas": [
      "cubic-bezier(0.22, 1, 0.36, 1)",
-     "ease",
      "cubic-bezier(0.65, 0, 0.35, 1)",
+     "ease",
      "cubic-bezier(0.34, 1.56, 0.64, 1)"
     ],
     "hover": 5,
@@ -5143,12 +5957,12 @@
      "afinidad": 0.259
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.199
+     "guia": "cinta",
+     "afinidad": 0.23
     },
     {
-     "guia": "burdeos",
-     "afinidad": 0.193
+     "guia": "nocturno",
+     "afinidad": 0.199
     }
    ]
   },
@@ -5164,16 +5978,12 @@
       65
      ],
      [
+      "#000000",
+      18
+     ],
+     [
       "#111118",
       16
-     ],
-     [
-      "#0f0f0f",
-      16
-     ],
-     [
-      "#000000",
-      2
      ],
      [
       "#0b0b12",
@@ -5345,12 +6155,12 @@
      "afinidad": 0.228
     },
     {
-     "guia": "manchas",
-     "afinidad": 0.212
+     "guia": "trattoria",
+     "afinidad": 0.219
     },
     {
-     "guia": "ilustrado",
-     "afinidad": 0.21
+     "guia": "manchas",
+     "afinidad": 0.212
     }
    ]
   },
@@ -5542,8 +6352,8 @@
      "afinidad": 0.241
     },
     {
-     "guia": "club",
-     "afinidad": 0.194
+     "guia": "obsidiana",
+     "afinidad": 0.202
     }
    ]
   },
@@ -5844,6 +6654,195 @@
   },
   {
    "tipo": "replica",
+   "ruta": "/lab/estudios/nacar",
+   "titulo": "Nácar (réplica de Moto)",
+   "medidas": {
+    "fondo": "#080808",
+    "paleta": [
+     [
+      "#080808",
+      100
+     ],
+     [
+      "#e1e5e5",
+      60
+     ],
+     [
+      "#8d9393",
+      32
+     ],
+     [
+      "#101111",
+      4
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 3.8,
+     "peso": 400,
+     "interlineado": 0,
+     "tracking": 0,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 16,
+     "lh": 1.7,
+     "measureEm": 38
+    },
+    "familias": [
+     "Inter Tight"
+    ],
+    "margen": 29,
+    "radios": [
+     "píldora",
+     "50"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "ease-out"
+    ],
+    "hover": 5,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 9
+   },
+   "rasgos": {
+    "lum": 0.0024282158683907,
+    "sat": 0.07142857142857165,
+    "hue": 180,
+    "cat": "serifa",
+    "vw": 3.8,
+    "weight": 400,
+    "ls": 0,
+    "upper": true,
+    "lh": 0,
+    "body": 16,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "obsidiana",
+     "afinidad": 0.203
+    },
+    {
+     "guia": "ambar",
+     "afinidad": 0.19
+    },
+    {
+     "guia": "electrico",
+     "afinidad": 0.186
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/nimbo",
+   "titulo": "Nimbo (réplica de Cerebrium)",
+   "medidas": {
+    "fondo": "#eef0f5",
+    "paleta": [
+     [
+      "#eef0f5",
+      62
+     ],
+     [
+      "#07030c",
+      24
+     ],
+     [
+      "#ffffff",
+      12
+     ],
+     [
+      "#120a1c",
+      2
+     ],
+     [
+      "#172b76",
+      60
+     ],
+     [
+      "#a79fb6",
+      10
+     ],
+     [
+      "#f2eef8",
+      10
+     ]
+    ],
+    "titular": {
+     "letra": "Mona Sans",
+     "vw": 6,
+     "peso": 300,
+     "interlineado": 1,
+     "tracking": -2.5,
+     "mayusculas": false
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 28
+    },
+    "familias": [
+     "Mona Sans",
+     "Geist Mono",
+     "monospace"
+    ],
+    "margen": 32,
+    "radios": [
+     "4",
+     "10",
+     "14",
+     "3",
+     "6"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "linear",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 9,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 6
+   },
+   "rasgos": {
+    "lum": 0.8708989147976766,
+    "sat": 0.6737588652482269,
+    "hue": 227.36842105263156,
+    "cat": "grotesca",
+    "vw": 6,
+    "weight": 300,
+    "ls": -2.5,
+    "upper": false,
+    "lh": 1,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "tecnico",
+     "afinidad": 0.428
+    },
+    {
+     "guia": "terracota",
+     "afinidad": 0.389
+    },
+    {
+     "guia": "mineral",
+     "afinidad": 0.33
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
    "ruta": "/lab/estudios/no-mires-abajo",
    "titulo": "No mires abajo (réplica de Don't Look Up)",
    "medidas": {
@@ -6115,8 +7114,8 @@
      "afinidad": 0.085
     },
     {
-     "guia": "cercano",
-     "afinidad": 0.083
+     "guia": "motor",
+     "afinidad": 0.085
     }
    ]
   },
@@ -6207,16 +7206,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.127
+    },
+    {
      "guia": "electrico",
      "afinidad": 0.125
     },
     {
      "guia": "autor",
      "afinidad": 0.124
-    },
-    {
-     "guia": "ambar",
-     "afinidad": 0.122
     }
    ]
   },
@@ -6313,8 +7312,185 @@
      "afinidad": 0.272
     },
     {
-     "guia": "electrico",
-     "afinidad": 0.222
+     "guia": "motor",
+     "afinidad": 0.238
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/pausa",
+   "titulo": "Pausa (réplica de Odyssée)",
+   "medidas": {
+    "fondo": "#a9b4d6",
+    "paleta": [
+     [
+      "#a9b4d6",
+      56
+     ],
+     [
+      "#fffcf8",
+      44
+     ],
+     [
+      "#1e305e",
+      92
+     ],
+     [
+      "#5a6584",
+      6
+     ],
+     [
+      "#ffffff",
+      2
+     ]
+    ],
+    "titular": {
+     "letra": "Newsreader",
+     "vw": 1.5,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": 6,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 12,
+     "lh": 1.5,
+     "measureEm": 24
+    },
+    "familias": [
+     "Inter",
+     "Newsreader"
+    ],
+    "margen": 32,
+    "radios": [],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
+    ],
+    "hover": 4,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 5.7
+   },
+   "rasgos": {
+    "lum": 0.45932572176323877,
+    "sat": 0.5161290322580645,
+    "hue": 223.125,
+    "cat": "serifa",
+    "vw": 1.5,
+    "weight": 400,
+    "ls": 6,
+    "upper": true,
+    "lh": 1,
+    "body": 12,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "clinica",
+     "afinidad": 0.18
+    },
+    {
+     "guia": "sabana",
+     "afinidad": 0.178
+    },
+    {
+     "guia": "motor",
+     "afinidad": 0.167
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/pleno",
+   "titulo": "PLENO (réplica de OFFF Forum)",
+   "medidas": {
+    "fondo": "#000000",
+    "paleta": [
+     [
+      "#000000",
+      55
+     ],
+     [
+      "#ffffff",
+      45
+     ],
+     [
+      "#000000",
+      68
+     ],
+     [
+      "#5e5e5e",
+      20
+     ],
+     [
+      "#ffffff",
+      12
+     ]
+    ],
+    "titular": {
+     "letra": "Instrument Serif",
+     "vw": 4.6,
+     "peso": 400,
+     "interlineado": 1,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 30
+    },
+    "familias": [
+     "Inter",
+     "Instrument Serif"
+    ],
+    "margen": 20,
+    "radios": [
+     "píldora"
+    ],
+    "curvas": [
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "linear"
+    ],
+    "hover": 6,
+    "libs": [
+     "next"
+    ],
+    "pantallas": 3.4
+   },
+   "rasgos": {
+    "lum": 0,
+    "sat": 0,
+    "hue": 0,
+    "cat": "serifa",
+    "vw": 4.6,
+    "weight": 400,
+    "ls": -2,
+    "upper": true,
+    "lh": 1,
+    "body": 15,
+    "pill": true
+   },
+   "afinidad": [
+    {
+     "guia": "ambar",
+     "afinidad": 0.308
+    },
+    {
+     "guia": "obsidiana",
+     "afinidad": 0.303
+    },
+    {
+     "guia": "nocturno",
+     "afinidad": 0.276
     }
    ]
   },
@@ -6446,7 +7622,7 @@
      ],
      [
       "#000000",
-      64
+      63
      ],
      [
       "#ffffff",
@@ -6587,16 +7763,16 @@
    },
    "afinidad": [
     {
+     "guia": "obsidiana",
+     "afinidad": 0.35
+    },
+    {
      "guia": "orbital",
      "afinidad": 0.33
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.28
-    },
-    {
-     "guia": "electrico",
-     "afinidad": 0.25
+     "guia": "cinta",
+     "afinidad": 0.289
     }
    ]
   },
@@ -6661,7 +7837,8 @@
     "curvas": [
      "ease",
      "cubic-bezier(0.22, 1, 0.36, 1)",
-     "cubic-bezier(0.65, 0, 0.35, 1)"
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
     ],
     "hover": 8,
     "libs": [
@@ -6802,10 +7979,10 @@
    "ruta": "/lab/estudios/sesion-doble",
    "titulo": "Sesión Doble (réplica de A24 de Ravi Klaassens)",
    "medidas": {
-    "fondo": "#000000",
+    "fondo": "#f2f2f2",
     "paleta": [
      [
-      "#000000",
+      "#f2f2f2",
       100
      ],
      [
@@ -6834,8 +8011,8 @@
     "radios": [],
     "curvas": [
      "ease",
-     "cubic-bezier(0.65, 0, 0.35, 1)",
-     "cubic-bezier(0.22, 1, 0.36, 1)"
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
     ],
     "hover": 4,
     "libs": [
@@ -6844,7 +8021,7 @@
     "pantallas": 1
    },
    "rasgos": {
-    "lum": 0,
+    "lum": 0.8879231178819662,
     "sat": 0,
     "hue": 0,
     "cat": "serifa",
@@ -6858,16 +8035,112 @@
    },
    "afinidad": [
     {
-     "guia": "ambar",
-     "afinidad": 0.249
-    },
-    {
-     "guia": "glaciar",
-     "afinidad": 0.197
-    },
-    {
      "guia": "filmoteca",
-     "afinidad": 0.196
+     "afinidad": 0.438
+    },
+    {
+     "guia": "sabana",
+     "afinidad": 0.321
+    },
+    {
+     "guia": "ilustrado",
+     "afinidad": 0.295
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/solera",
+   "titulo": "Solera Arquitectura (réplica de LPAS)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      61
+     ],
+     [
+      "#111111",
+      24
+     ],
+     [
+      "#6e625a",
+      3
+     ],
+     [
+      "#a65232",
+      3
+     ],
+     [
+      "#000000",
+      56
+     ],
+     [
+      "#6b6b6b",
+      11
+     ],
+     [
+      "#f2f2f2",
+      8
+     ]
+    ],
+    "titular": {
+     "letra": "Geist",
+     "vw": 1.2,
+     "peso": 400,
+     "interlineado": 1.4,
+     "tracking": 4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 15,
+     "lh": 1.4,
+     "measureEm": 45
+    },
+    "familias": [
+     "Geist"
+    ],
+    "margen": 32,
+    "radios": [
+     "4"
+    ],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)"
+    ],
+    "hover": 0,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 4.7
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.5833333333333333,
+    "hue": 21.428571428571445,
+    "cat": "grotesca",
+    "vw": 1.2,
+    "weight": 400,
+    "ls": 4,
+    "upper": true,
+    "lh": 1.4,
+    "body": 15,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "terracota",
+     "afinidad": 0.182
+    },
+    {
+     "guia": "motor",
+     "afinidad": 0.182
+    },
+    {
+     "guia": "cercano",
+     "afinidad": 0.179
     }
    ]
   },
@@ -6969,6 +8242,97 @@
   },
   {
    "tipo": "replica",
+   "ruta": "/lab/estudios/tierra-ancha",
+   "titulo": "Tierra Ancha (réplica de Tengile MalaMala Collection)",
+   "medidas": {
+    "fondo": "#f5eee9",
+    "paleta": [
+     [
+      "#f5eee9",
+      52
+     ],
+     [
+      "#373f1d",
+      31
+     ],
+     [
+      "#ece3d9",
+      17
+     ],
+     [
+      "#373f1d",
+      52
+     ],
+     [
+      "#6b6a52",
+      19
+     ],
+     [
+      "#c5c3a8",
+      13
+     ]
+    ],
+    "titular": {
+     "letra": "Cormorant Garamond",
+     "vw": 9.2,
+     "peso": 300,
+     "interlineado": 0.9,
+     "tracking": -2,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 13,
+     "lh": 1.5,
+     "measureEm": 23
+    },
+    "familias": [
+     "Inter Tight",
+     "Cormorant Garamond"
+    ],
+    "margen": 48,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "linear"
+    ],
+    "hover": 0,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 7.4
+   },
+   "rasgos": {
+    "lum": 0.8644474092157354,
+    "sat": 0.3695652173913044,
+    "hue": 74.11764705882354,
+    "cat": "serifa",
+    "vw": 9.2,
+    "weight": 300,
+    "ls": -2,
+    "upper": true,
+    "lh": 0.9,
+    "body": 13,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "lujo",
+     "afinidad": 0.658
+    },
+    {
+     "guia": "sereno",
+     "afinidad": 0.383
+    },
+    {
+     "guia": "filmoteca",
+     "afinidad": 0.353
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
    "ruta": "/lab/estudios/ultramar",
    "titulo": "Ultramar (réplica de United Carriers)",
    "medidas": {
@@ -7049,12 +8413,104 @@
      "afinidad": 1
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.334
+     "guia": "obsidiana",
+     "afinidad": 0.401
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.244
+     "guia": "nocturno",
+     "afinidad": 0.334
+    }
+   ]
+  },
+  {
+   "tipo": "replica",
+   "ruta": "/lab/estudios/vencejo",
+   "titulo": "Vencejo (réplica de Spyker Cars)",
+   "medidas": {
+    "fondo": "#ffffff",
+    "paleta": [
+     [
+      "#ffffff",
+      50
+     ],
+     [
+      "#0e2633",
+      44
+     ],
+     [
+      "#f3f3f2",
+      6
+     ],
+     [
+      "#141414",
+      49
+     ],
+     [
+      "#6b6b6b",
+      27
+     ],
+     [
+      "#ffffff",
+      16
+     ]
+    ],
+    "titular": {
+     "letra": "Antonio",
+     "vw": 4.2,
+     "peso": 500,
+     "interlineado": 0.9,
+     "tracking": 4,
+     "mayusculas": true
+    },
+    "texto": {
+     "size": 14,
+     "lh": 1.5,
+     "measureEm": 34
+    },
+    "familias": [
+     "Inter",
+     "Antonio"
+    ],
+    "margen": 35,
+    "radios": [],
+    "curvas": [
+     "cubic-bezier(0.22, 1, 0.36, 1)",
+     "ease",
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "linear"
+    ],
+    "hover": 1,
+    "libs": [
+     "lenis",
+     "next"
+    ],
+    "pantallas": 5.9
+   },
+   "rasgos": {
+    "lum": 1,
+    "sat": 0.5692307692307693,
+    "hue": 201.08108108108104,
+    "cat": "condensada",
+    "vw": 4.2,
+    "weight": 500,
+    "ls": 4,
+    "upper": true,
+    "lh": 0.9,
+    "body": 14,
+    "pill": false
+   },
+   "afinidad": [
+    {
+     "guia": "motor",
+     "afinidad": 0.637
+    },
+    {
+     "guia": "barberia",
+     "afinidad": 0.223
+    },
+    {
+     "guia": "clinica",
+     "afinidad": 0.196
     }
    ]
   },
@@ -7120,8 +8576,8 @@
     ],
     "curvas": [
      "ease",
-     "cubic-bezier(0.22, 1, 0.36, 1)",
-     "cubic-bezier(0.65, 0, 0.35, 1)"
+     "cubic-bezier(0.65, 0, 0.35, 1)",
+     "cubic-bezier(0.22, 1, 0.36, 1)"
     ],
     "hover": 5,
     "libs": [
@@ -7182,11 +8638,11 @@
      ],
      [
       "#3c3c3c",
-      80
+      79
      ],
      [
       "#f1eee9",
-      20
+      21
      ]
     ],
     "titular": {
@@ -7340,8 +8796,8 @@
      "afinidad": 0.215
     },
     {
-     "guia": "autor",
-     "afinidad": 0.168
+     "guia": "sabana",
+     "afinidad": 0.205
     }
    ]
   },
@@ -7531,8 +8987,8 @@
      "afinidad": 0.219
     },
     {
-     "guia": "papel",
-     "afinidad": 0.173
+     "guia": "sabana",
+     "afinidad": 0.208
     }
    ]
   },
@@ -7645,15 +9101,15 @@
      ],
      [
       "#a99a8f",
-      55
+      57
      ],
      [
       "#f2e9df",
-      35
+      32
      ],
      [
       "#ff7a1a",
-      9
+      8
      ]
     ],
     "titular": {
@@ -7676,8 +9132,7 @@
     "margen": 92,
     "radios": [
      "18",
-     "píldora",
-     "14"
+     "píldora"
     ],
     "curvas": [
      "ease",
@@ -7713,12 +9168,12 @@
      "afinidad": 0.184
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.17
+     "guia": "obsidiana",
+     "afinidad": 0.176
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.15
+     "guia": "orbital",
+     "afinidad": 0.17
     }
    ]
   },
@@ -7811,12 +9266,12 @@
      "afinidad": 0.176
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.171
+     "guia": "obsidiana",
+     "afinidad": 0.174
     },
     {
-     "guia": "terminal",
-     "afinidad": 0.169
+     "guia": "sabana",
+     "afinidad": 0.172
     }
    ]
   },
@@ -7994,16 +9449,16 @@
    },
    "afinidad": [
     {
+     "guia": "trattoria",
+     "afinidad": 0.381
+    },
+    {
      "guia": "ilustrado",
      "afinidad": 0.374
     },
     {
      "guia": "boutique",
      "afinidad": 0.357
-    },
-    {
-     "guia": "filmoteca",
-     "afinidad": 0.335
     }
    ]
   },
@@ -8182,8 +9637,8 @@
      "afinidad": 0.301
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.244
+     "guia": "cinta",
+     "afinidad": 0.263
     }
    ]
   },
@@ -8216,7 +9671,7 @@
      ],
      [
       "#625d55",
-      39
+      38
      ],
      [
       "#eee8db",
@@ -8365,12 +9820,12 @@
      "afinidad": 0.28
     },
     {
-     "guia": "cercano",
-     "afinidad": 0.277
+     "guia": "terracota",
+     "afinidad": 0.279
     },
     {
-     "guia": "baldosa",
-     "afinidad": 0.268
+     "guia": "cercano",
+     "afinidad": 0.277
     }
    ]
   },
@@ -8461,12 +9916,12 @@
      "afinidad": 0.8
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.368
+     "guia": "obsidiana",
+     "afinidad": 0.443
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.325
+     "guia": "cinta",
+     "afinidad": 0.377
     }
    ]
   },
@@ -8644,12 +10099,12 @@
      "afinidad": 0.189
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.172
+     "guia": "obsidiana",
+     "afinidad": 0.182
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.161
+     "guia": "orbital",
+     "afinidad": 0.172
     }
    ]
   },
@@ -8741,8 +10196,8 @@
      "afinidad": 0.154
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.151
+     "guia": "clinica",
+     "afinidad": 0.153
     }
    ]
   },
@@ -8825,16 +10280,16 @@
    },
    "afinidad": [
     {
+     "guia": "trattoria",
+     "afinidad": 0.517
+    },
+    {
      "guia": "sereno",
      "afinidad": 0.382
     },
     {
-     "guia": "filmoteca",
-     "afinidad": 0.36
-    },
-    {
-     "guia": "lujo",
-     "afinidad": 0.355
+     "guia": "clinica",
+     "afinidad": 0.372
     }
    ]
   },
@@ -8915,12 +10370,12 @@
      "afinidad": 0.367
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.286
+     "guia": "obsidiana",
+     "afinidad": 0.306
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.266
+     "guia": "glaciar",
+     "afinidad": 0.286
     }
    ]
   },
@@ -9110,8 +10565,8 @@
      "afinidad": 0.297
     },
     {
-     "guia": "boutique",
-     "afinidad": 0.285
+     "guia": "foro",
+     "afinidad": 0.295
     }
    ]
   },
@@ -9654,12 +11109,12 @@
      "afinidad": 0.323
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.262
+     "guia": "obsidiana",
+     "afinidad": 0.264
     },
     {
-     "guia": "glaciar",
-     "afinidad": 0.26
+     "guia": "orbital",
+     "afinidad": 0.262
     }
    ]
   },
@@ -9924,8 +11379,8 @@
      "afinidad": 0.165
     },
     {
-     "guia": "nocturno",
-     "afinidad": 0.157
+     "guia": "cinta",
+     "afinidad": 0.165
     }
    ]
   },
@@ -10098,12 +11553,12 @@
      "afinidad": 0.344
     },
     {
-     "guia": "puntos",
-     "afinidad": 0.265
+     "guia": "obsidiana",
+     "afinidad": 0.296
     },
     {
-     "guia": "orbital",
-     "afinidad": 0.258
+     "guia": "puntos",
+     "afinidad": 0.265
     }
    ]
   },

@@ -1,0 +1,131 @@
+/* PLENO (a partir de OFFF Forum, docs/59): blanco y negro. Forvm 400 en mayúsculas (45 px, interlineado 0,95, −0,9 px) →
+   Instrument Serif 400; Baikal → Inter 11–13 px en mayúsculas. Botones píldora blancos con filete; logotipo de formas
+   ultranegras junto a la palabra en serifa. */
+.pl {
+  --bg: #ffffff; --fg: #000000; --mut: #5e5e5e; --acc: #000000; --acc2: #ff3b1f; --card: #f2f2f2; --ln: rgba(0, 0, 0, 0.85); --r: 999px;
+  --serif: var(--font-instrument-serif), Georgia, serif;
+  --pl-m: clamp(12px, 1.4vw, 20px);
+  background: var(--bg); color: var(--fg); font: 400 13px/1.4 var(--font-inter), system-ui, sans-serif; overflow-x: clip;
+}
+:where(.pl) a { color: inherit; text-decoration: none; }
+.pl h1, .pl h2 { margin: 0; font: 400 clamp(2rem, 3.4vw, 3rem)/0.95 var(--serif); letter-spacing: -0.02em; text-transform: uppercase; }
+.pl-sobre { margin: 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+.pl-boton { display: inline-block; padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; background: none; color: inherit; font: 500 10px/1.2 var(--font-inter); letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 0.25s, color 0.25s; }
+.pl-boton:hover { background: var(--fg); color: var(--bg); }
+.pl-boton--blanco { background: #fff; color: #000; border-color: #fff; }
+.pl-boton--blanco:hover { background: #000; color: #fff; }
+.pl-boton--negro { background: #000; color: #fff; }
+.pl-boton--negro:hover { background: #fff; color: #000; }
+.pl-boton:disabled { opacity: 0.4; cursor: not-allowed; }
+.pl-margen { margin: 0 var(--pl-m); }
+
+.pl-marca { display: inline-flex; align-items: center; gap: 0.18em; font: 400 1em/1 var(--serif); }
+.pl-marca svg { height: 0.78em; width: auto; fill: currentColor; }
+.pl-marca span { letter-spacing: -0.02em; }
+
+.pl-head { position: sticky; top: 0; z-index: 30; display: grid; grid-template-columns: auto auto 1fr; align-items: start; gap: 20px; padding: 10px var(--pl-m); background: var(--bg); }
+.pl--inicio .pl-head { position: absolute; left: 0; right: 0; background: none; color: #fff; }
+.pl-head__marca { font-size: clamp(2.2rem, 4.6vw, 4.2rem); }
+.pl-fechas { display: grid; grid-template-columns: auto auto; gap: 2px 12px; margin: 4px 0 0; padding: 6px 8px; border: 1px solid currentColor; font-size: 10px; text-transform: uppercase; }
+.pl-fechas div { display: contents; }
+.pl-fechas dt { font-weight: 600; }
+.pl-fechas dd { margin: 0; }
+.pl-fechas__lugar dd { grid-column: 1 / -1; padding-top: 4px; }
+.pl-head nav { display: flex; justify-content: flex-end; gap: 14px; padding-top: 6px; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+.pl-head nav a { border-bottom: 1px solid transparent; }
+.pl-head nav a:hover, .pl-head nav a[aria-current] { border-color: currentColor; }
+.pl-burger { display: none; justify-self: end; }
+.pl-menu .ui-fsm__link { font-family: var(--serif); font-weight: 400; text-transform: uppercase; letter-spacing: -0.01em; }
+
+/* portada */
+.pl-hero { position: relative; display: grid; place-items: center; height: 100svh; color: #fff; text-align: center; background: #000; overflow: hidden; }
+.pl-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s; filter: brightness(0.72); }
+.pl-hero img.is-on { opacity: 1; }
+.pl-hero div { position: relative; display: grid; gap: 18px; justify-items: center; padding: 0 var(--pl-m); }
+.pl-hero h1 { max-width: 15em; font-size: clamp(2rem, 3.4vw, 3.2rem); }
+
+.pl-ponentes { padding: 80px var(--pl-m); }
+.pl-ponentes header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--ln); }
+.pl-ponentes > div { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.pl-ponentes a { display: grid; gap: 4px; }
+.pl-ponentes img { width: 100%; aspect-ratio: 9 / 11; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter 0.4s; }
+.pl-ponentes a:hover img { filter: grayscale(0); }
+.pl-ponentes b { font: 400 1.25rem/1 var(--serif); text-transform: uppercase; }
+.pl-ponentes span { font-size: 11px; color: var(--mut); text-transform: uppercase; }
+.pl-ponentes--pag { padding-top: 0; }
+.pl-ponentes--pag > div { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; }
+
+.pl-dos { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--ln); }
+.pl-dos article { display: grid; gap: 14px; align-content: start; padding: 50px var(--pl-m) 70px; }
+.pl-dos article + article { border-left: 1px solid var(--ln); }
+.pl-dos h2 { font-size: clamp(3.4rem, 8vw, 7.6rem); line-height: 0.85; }
+.pl-dos article > p:not(.pl-sobre) { max-width: 30em; margin: 0; font-size: 15px; }
+.pl-dos--pag { border-top: 0; }
+.pl-dos--pag h2 { font-size: 2.4rem; }
+
+.pl-banda { position: relative; display: grid; place-items: center; height: 70svh; }
+.pl-banda img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.7); }
+.pl-banda a { position: relative; }
+
+.pl-pie { display: grid; gap: 40px; padding: 30px var(--pl-m) 16px; border-top: 1px solid var(--ln); }
+.pl-pie__fila { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 30px; }
+.pl-pie__boletin { display: grid; gap: 12px; max-width: 520px; }
+.pl-pie__boletin h2 { font: 500 clamp(1.1rem, 1.6vw, 1.4rem)/1.15 var(--font-inter); text-transform: none; letter-spacing: -0.01em; }
+.pl-pie nav { display: grid; gap: 4px; align-content: start; font-size: 11px; text-transform: uppercase; }
+.pl-pie__marca { font-size: clamp(4rem, 17vw, 16rem); line-height: 1; }
+.pl-pie small { font-size: 10px; color: var(--mut); }
+
+/* páginas */
+.pl-pag { padding-bottom: 80px; }
+.pl-cab { display: grid; gap: 12px; padding: clamp(50px, 7vw, 100px) var(--pl-m) 30px; }
+.pl-cab h1 { font-size: clamp(3rem, 8vw, 7.4rem); line-height: 0.85; }
+.pl-cab p { margin: 0; max-width: 34em; font-size: 15px; }
+.pl-programa { padding: 0 var(--pl-m); }
+.pl-tabs { display: flex; flex-wrap: wrap; border-top: 1px solid var(--ln); border-bottom: 1px solid var(--ln); }
+.pl-tabs button { flex: 1 1 160px; padding: 14px 10px; border: 0; border-right: 1px solid var(--ln); background: none; color: inherit; font: 400 1.2rem var(--serif); text-transform: uppercase; cursor: pointer; }
+.pl-tabs button:last-child { border-right: 0; }
+.pl-tabs button[aria-selected="true"] { background: #000; color: #fff; }
+.pl-filtro { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px 0; }
+.pl-filtro button { padding: 5px 12px; border: 1px solid #000; border-radius: 999px; background: none; color: inherit; font: 500 10px var(--font-inter); text-transform: uppercase; cursor: pointer; }
+.pl-filtro button[aria-pressed="true"] { background: #000; color: #fff; }
+.pl-sesiones { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ln); }
+.pl-sesiones li { display: grid; grid-template-columns: 150px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--ln); }
+.pl-sesiones__hora { font: 400 1.5rem var(--serif); }
+.pl-sesiones li > div { display: grid; gap: 4px; }
+.pl-sesiones b { font: 400 clamp(1.3rem, 2vw, 1.8rem)/1 var(--serif); text-transform: uppercase; }
+.pl-sesiones span { font-size: 11px; text-transform: uppercase; color: var(--mut); }
+.pl-sesiones span a { text-decoration: underline; }
+.pl-sesiones button { width: 40px; height: 40px; border: 1px solid #000; border-radius: 50%; background: none; color: inherit; font-size: 18px; cursor: pointer; }
+.pl-sesiones button[aria-pressed="true"] { background: #000; color: #fff; }
+.pl-vacio { display: block !important; color: var(--mut); }
+.pl-ficha { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 80px); padding: 50px var(--pl-m) 40px; }
+.pl-ficha img { width: 100%; aspect-ratio: 9 / 11; object-fit: cover; filter: grayscale(1); }
+.pl-ficha > div { display: grid; gap: 18px; align-content: start; justify-items: start; }
+.pl-ficha h1 { font-size: clamp(3rem, 7vw, 6rem); line-height: 0.85; }
+.pl-ficha > div > p:not(.pl-sobre):not(.pl-ficha__sesion) { margin: 0; max-width: 32em; font-size: 16px; }
+.pl-ficha__sesion { display: grid; gap: 2px; margin: 0; padding: 12px 0; border-top: 1px solid var(--ln); width: 100%; }
+.pl-ficha__sesion b { font: 400 1.4rem var(--serif); text-transform: uppercase; }
+.pl-ficha__sesion span { font-size: 11px; text-transform: uppercase; color: var(--mut); }
+.pl-entradas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ln); border-bottom: 1px solid var(--ln); margin: 0 var(--pl-m); }
+.pl-entradas article { display: grid; gap: 12px; align-content: start; padding: 22px 16px; }
+.pl-entradas article + article { border-left: 1px solid var(--ln); }
+.pl-entradas h2 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); }
+.pl-entradas b { font: 400 2rem var(--serif); }
+.pl-entradas ul { margin: 0; padding-left: 16px; display: grid; gap: 4px; font-size: 12px; }
+.pl-total { display: flex; justify-content: flex-end; align-items: center; gap: 20px; padding: 20px var(--pl-m); font-size: 15px; }
+.pl-ancha { display: block; width: calc(100% - 2 * var(--pl-m)); margin: 0 var(--pl-m); aspect-ratio: 16 / 7; object-fit: cover; filter: grayscale(1); }
+.pl-descargas { margin: 0 var(--pl-m); padding: 0; list-style: none; border-top: 1px solid var(--ln); }
+.pl-descargas li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--ln); font: 400 1.4rem var(--serif); text-transform: uppercase; }
+.pl-descargas a { font: 500 10px var(--font-inter); text-decoration: underline; align-self: center; }
+
+@media (max-width: 860px) {
+  .pl-head { grid-template-columns: 1fr auto; }
+  .pl-head nav, .pl-fechas { display: none; }
+  .pl--inicio .pl-fechas { display: grid; position: absolute; left: var(--pl-m); top: 70px; }
+  .pl-burger { display: block; }
+  .pl-ponentes > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pl-dos, .pl-ficha, .pl-pie__fila, .pl-entradas { grid-template-columns: 1fr; }
+  .pl-dos article + article, .pl-entradas article + article { border-left: 0; border-top: 1px solid var(--ln); }
+  .pl-sesiones li { grid-template-columns: 1fr auto; }
+  .pl-sesiones__hora { grid-column: 1 / -1; font-size: 1.1rem; }
+}

@@ -2778,13 +2778,13 @@ Lista de píldoras con «+» (páginas de producto de Apple): la elegida se abre
 
 ### Guía de estilo (sistema visual completo) — `GuideFrame`
 
-Aplica una de las treinta y siete guías de estilo: las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
+Aplica una de las cuarenta y cinco guías de estilo: las de la cuarta ronda (sabana tranquila, trattoria de barrio, clínica serena, estudio en tierras, motor artesano, obsidiana, cinta de luz, foro en blanco y negro), las de la tercera ronda (pop de manchas, filmoteca, rosa y chocolate, ingeniería serena, residencia burdeos, tinta a mano, mosaico de baldosas, mando orbital, catálogo de color, cartel suizo) y las de las últimas webs del repo (mineral y bosque, ámbar nocturno, archivo glaciar, papel ilustrado, señal corporativa, festival pastel, cartel de varietés) se suman a las veinte anteriores (las ocho de las webs premiadas —lujo tranquilo, monocromo de agencia, técnico de producto, producto nocturno, acento eléctrico, rótulo cinético, editorial cálido, lúdico—, las siete de los estudios por sector —salón editorial claro, barbería de carácter, club de alto contraste, estudio boutique, academia de autor, escuela amarilla, producto de marca—, la guía de aprendizaje cercano inspirada en Preply y las cuatro de la estética propia del repo —terminal de neón, arcade pixel, matriz de puntos, estudio en papel—) a un contenedor: tema, par tipográfico, escala en dos escalones (marca y titular), margen y rejilla, superficies y movimiento, con los valores medidos en las webs premiadas. Dentro, las clases ui-g-* y cualquier componente del kit siguen la guía. Cada guía tiene su hoja de estilo en /guias/<id>; compara guías, portadas y relatos en /guias.
 
 Envuelve contenido (`children`), p. ej.: `<h1 className="ui-g-h1">{"Luz que llega lejos"}</h1> <p className="ui-g-body">{"Diseñamos lámparas y espacios que aprovechan la luz del día."}</p>`
 
 | prop | tipo | default |
 |---|---|---|
-| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `manchas` · `filmoteca` · `goloso` · `sereno` · `burdeos` · `tinta` · `baldosa` · `orbital` · `catalogo` · `cartel` · `mineral` · `ambar` · `glaciar` · `ilustrado` · `senal` · `festival` · `varietes` · `terminal` · `pixel` · `puntos` · `papel` · `cercano` | "lujo" |
+| `guide` | `lujo` · `monocromo` · `tecnico` · `nocturno` · `electrico` · `rotulo` · `calido` · `ludico` · `salon` · `barberia` · `club` · `boutique` · `autor` · `escuela` · `marca` · `manchas` · `filmoteca` · `goloso` · `sereno` · `burdeos` · `tinta` · `baldosa` · `orbital` · `catalogo` · `cartel` · `mineral` · `ambar` · `glaciar` · `ilustrado` · `senal` · `festival` · `varietes` · `sabana` · `trattoria` · `clinica` · `terracota` · `motor` · `obsidiana` · `cinta` · `foro` · `terminal` · `pixel` · `puntos` · `papel` · `cercano` | "lujo" |
 | `textContrast` | boolean | false |
 
 - Clases: ui-g-brand, ui-g-h1, ui-g-h2 (titulares), ui-g-body, ui-g-label, ui-g-mono, ui-g-btn (+ --ghost), ui-g-grid, ui-g-wrap, ui-g-section, ui-g-header, ui-g-card, ui-g-line y ui-g-rise (entrada escalonada; cada hijo lleva --i).
@@ -3489,6 +3489,14 @@ Webs premiadas estudiadas en el laboratorio y rehechas con el kit (`/inspiracion
 | [Ultramar](/inspiraciones/ultramar) · `components/inspiraciones/ultramar/` | United Carriers | logística | `orbital` | globo de puntos con rutas, titular extendido y un contenedor que cruza al bajar |
 | [Zanco](/inspiraciones/zanco) · `components/inspiraciones/zanco/` | Noho | mueble | `catalogo` | muro escalonado de baldosas de color con muebles dibujados y tienda con color real |
 | [Pulso Lento](/inspiraciones/pulso-lento) · `components/inspiraciones/pulso-lento/` | Paul Kalkbrenner | música | `cartel` | blanco suizo con foto dentro del nombre, vinilo que gira, años gigantes y reproductor que suena |
+| [Tierra Ancha](/inspiraciones/tierra-ancha) · `components/inspiraciones/tierra-ancha/` | Tengile MalaMala Collection | safari | `sabana` | crema y oliva, serifa finísima en mayúsculas y un collage de fauna que flota a distintas velocidades |
+| [Bocado](/inspiraciones/bocado) · `components/inspiraciones/bocado/` | Délice | restaurante | `trattoria` | bloques de rojo, turquesa, verde y granate, serifa blanda y platos del día en círculos bajo un título en arco |
+| [Pausa](/inspiraciones/pausa) · `components/inspiraciones/pausa/` | Odyssée | clínica | `clinica` | marfil y azul tinta, fotos en duotono que recuperan el color al pasar y párrafos de serifa con sangría |
+| [Solera Arquitectura](/inspiraciones/solera) · `components/inspiraciones/solera/` | LPAS | arquitectura | `terracota` | fila de cinco paneles por sector, foto arriba y color tierra abajo, que se ensanchan al pasar |
+| [Vencejo](/inspiraciones/vencejo) · `components/inspiraciones/vencejo/` | Spyker Cars | automoción | `motor` | penumbra azul petróleo, condensada en mayúsculas, detalles dispersos y un configurador con el coche dibujado |
+| [Nácar](/inspiraciones/nacar) · `components/inspiraciones/nacar/` | Moto | finanzas | `obsidiana` | piedra negra, tarjeta de acero en 3D sobre un pedestal y una galería que se recorre en profundidad |
+| [Nimbo](/inspiraciones/nimbo) · `components/inspiraciones/nimbo/` | Cerebrium | software | `cinta` | negro violáceo con una cinta de luz magenta que se dibuja sola y tarjetas blancas con barras, mapa y gráfica en directo |
+| [PLENO](/inspiraciones/pleno) · `components/inspiraciones/pleno/` | OFFF Forum | conferencia | `foro` | blanco y negro, fotos de escenario que se funden bajo un titular en serifa mayúscula y un logotipo de formas ultranegras |
 
 ## Recetas por sector
 
@@ -3766,3 +3774,115 @@ Un artista con discografía, gira y tienda.
 - **Llamada fija**: Entradas, en cada fecha.
 - **No olvidar**: el reproductor persiste entre páginas; fechas agotadas; vinilo y CD como variantes.
 - **Visto en**: `/inspiraciones/pulso-lento`
+
+### Hotel de naturaleza, safari y turismo rural de lujo — guía `sabana` (Sabana tranquila)
+
+Se venden pocas camas en un lugar extraordinario y el viaje se prepara a medida.
+
+1. Foto a sangre con titular desplazado: `Reveal`
+2. Párrafo grande en serifa: `Reveal`
+3. Collage de fauna que flota: `Parallax`
+4. Alojamientos: `ImageGallery`
+5. Planificar la estancia: `QuantityStepper`, `DatePicker`
+
+- **Llamada fija**: Planifica tu estancia, con presupuesto al momento.
+- **No olvidar**: precio por noche visible; quién te acompaña: guías con nombre; qué parte del dinero va a la conservación.
+- **Visto en**: `/inspiraciones/tierra-ancha`
+
+### Restaurante, pizzería o bar de barrio — guía `trattoria` (Trattoria de barrio)
+
+La gente vuelve por la comida, el precio y el ambiente; hay que reservar o pedir en dos toques.
+
+1. Portada de color con los cuatro botones: `Button`
+2. Platos del día en carrusel: `Tabs`
+3. Programación de noches: `EventLineup`
+4. Salones privados: `BriefFlow`
+5. Pedido a domicilio: `QuantityStepper`, `CheckoutFlow`
+
+- **Llamada fija**: Reservar mesa y pedir online, siempre a la vista.
+- **No olvidar**: horario por servicio: comedor, barra, reparto; días cerrados en la reserva; tarjeta regalo.
+- **Visto en**: `/inspiraciones/bocado`
+
+### Clínica de medicina estética o salud privada — guía `clinica` (Clínica serena)
+
+Hay que transmitir rigor médico y calma, y llevar a una consulta.
+
+1. Retrato a sangre: `Reveal`
+2. Por qué la clínica, en cuatro pasos: `Tabs`
+3. Preocupaciones y tratamientos: `FilterBar`
+4. Ficha con preguntas: `FAQSection`
+5. Reservar consulta: `BookingFlow`
+
+- **Llamada fija**: Reservar consulta, con tratamiento y profesional.
+- **No olvidar**: recuperación y sesiones en cada ficha; precio desde; aviso de que no es consejo médico.
+- **Visto en**: `/inspiraciones/pausa`
+
+### Estudio de arquitectura o ingeniería — guía `terracota` (Estudio en tierras)
+
+Se enseña obra construida a clientes públicos y privados, por sectores.
+
+1. Foto del estudio: `Reveal`
+2. Sectores en paneles de color: `BentoGrid`
+3. Proyectos filtrables: `FilterBar`, `ProjectList`
+4. Ficha de proyecto: `Table`
+5. Contacto por oficina: `ContactForm`
+
+- **Llamada fija**: Hablemos de tu proyecto, con la oficina más cercana.
+- **No olvidar**: cliente, superficie y año en cada proyecto; qué pasa si un sector no tiene obra; empleo.
+- **Visto en**: `/inspiraciones/solera`
+
+### Automoción de lujo y producto de alta gama — guía `motor` (Motor artesano)
+
+Se vende un objeto caro y deseado, que se configura antes de pedir precio.
+
+1. Portada en penumbra con titular condensado: `Reveal`
+2. Detalles dispersos: `ImageGallery`
+3. Herencia: `Timeline`
+4. Configurador: `OptionPicker`
+5. Boutique: `CartDrawer`, `CheckoutFlow`
+
+- **Llamada fija**: Configura el tuyo y pide presupuesto.
+- **No olvidar**: el configurador cambia la imagen; precio total al momento; registro para novedades.
+- **Visto en**: `/inspiraciones/vencejo`
+
+### Banca privada, tarjeta o club de socios — guía `obsidiana` (Obsidiana)
+
+Se vende pertenencia y tranquilidad, con acceso limitado.
+
+1. Objeto metálico en 3D: `Reveal`
+2. Galería en profundidad: `Parallax`
+3. Ventajas de la red: `Tabs`
+4. Preguntas: `FAQSection`
+5. Solicitar acceso: `Progress`
+
+- **Llamada fija**: Solicitar acceso, siempre en la cabecera.
+- **No olvidar**: cuota anual clara; lista de espera y plazo de revisión; aviso legal de que no es entidad financiera si es una demo.
+- **Visto en**: `/inspiraciones/nacar`
+
+### Software, API e infraestructura — guía `cinta` (Cinta de luz)
+
+El público es técnico: quiere ver rendimiento, precio y código antes de registrarse.
+
+1. Portada oscura con titular y dos botones: `Button`
+2. Pruebas con datos: `Chart`, `StatsSection`
+3. Código copiable: `CodeBlock`
+4. Ejemplos por tipo: `Tabs`
+5. Calculadora de precio: `RangeSlider`
+
+- **Llamada fija**: Pruébalo gratis y habla con ingeniería.
+- **No olvidar**: precio por uso calculado al momento; documentación a un clic; seguridad y cumplimiento.
+- **Visto en**: `/inspiraciones/nimbo`
+
+### Festival, congreso o semana cultural — guía `foro` (Foro en blanco y negro)
+
+Hay fechas, cartel y entradas; el programa decide la compra.
+
+1. Fotos de escenario bajo el titular: `Reveal`
+2. Ponentes: `ImageGallery`
+3. Programa con agenda propia: `Tabs`, `FilterBar`
+4. Entradas: `QuantityStepper`, `CheckoutFlow`
+5. Preguntas: `FAQSection`
+
+- **Llamada fija**: Consigue tu entrada, con las fechas siempre visibles.
+- **No olvidar**: agenda que se guarda; sala y hora de cada sesión; sala de prensa.
+- **Visto en**: `/inspiraciones/pleno`

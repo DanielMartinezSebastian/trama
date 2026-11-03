@@ -1,0 +1,122 @@
+/* Solera (a partir de LPAS, docs/59): blanco y negro con cinco colores tierra, uno por sector (taupe, óxido, azul pálido,
+   salvia, salmón). Aeonik 400 → Geist 400 en todo, de 12 a 48 px; ninguna negrita. Píldora oscura para el menú. */
+.so {
+  --bg: #ffffff; --fg: #000000; --mut: #6b6b6b; --acc: #a65232; --acc2: #c9d6e3; --card: #f2f2f0; --ln: rgba(0, 0, 0, 0.14); --r: 4px;
+  --so-m: clamp(16px, 2.2vw, 32px);
+  background: var(--bg); color: var(--fg); font: 400 15px/1.4 var(--font-geist), system-ui, sans-serif; overflow-x: clip;
+}
+:where(.so) a { color: inherit; text-decoration: none; }
+.so h1, .so h2, .so b { margin: 0; font-weight: 400; }
+.so-chico { margin: 0; font-size: 12px; line-height: 1.35; }
+.so-grande { margin: 0; font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.25; letter-spacing: -0.01em; }
+.so-flecha { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+.so-flecha span { display: grid; place-items: center; width: 20px; height: 20px; border: 1px solid var(--ln); border-radius: 50%; font-size: 11px; transition: background 0.3s, color 0.3s; }
+.so-flecha:hover span { background: var(--fg); color: var(--bg); }
+.so-solo { margin: 0 var(--so-m) 80px; }
+
+.so-head { position: sticky; top: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center; padding: 14px var(--so-m); background: var(--bg); }
+.so--inicio .so-head { position: absolute; left: 0; right: 0; background: none; color: #fff; }
+.so-logo { font-size: 17px; letter-spacing: 0.04em; }
+.so-logo i { font-style: normal; display: inline-block; transform: skewX(-12deg); }
+.so-head .ui-fsm__btn--pill { padding: 7px 10px 7px 12px; background: #222; color: #fff; font-size: 11px; font-weight: 400; border-radius: 4px; }
+.so-menu .ui-fsm__link { font-weight: 400; letter-spacing: -0.01em; }
+.so-menu .ui-fsm__link small { font-size: 10px; }
+
+/* portada */
+.so-hero { position: relative; height: 100svh; color: #fff; }
+.so-hero img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); }
+.so-hero p { position: absolute; margin: 0; font-size: 12px; }
+.so-hero__a { left: var(--so-m); top: 50%; }
+.so-hero__b { left: 50%; top: 50%; translate: -50% 0; }
+.so-hero__c { left: var(--so-m); bottom: 20px; }
+.so-hero__d { right: var(--so-m); bottom: 20px; }
+.so-intro { display: grid; grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr); gap: 24px; padding: 40px var(--so-m) 120px; }
+.so-intro > div { display: grid; gap: 22px; justify-items: start; max-width: 680px; }
+.so-intro p { margin: 0; }
+
+.so-paneles { display: flex; gap: 0; height: clamp(520px, 78svh, 760px); }
+.so-panel { position: relative; flex: 1 1 0; display: grid; grid-template-rows: 1fr auto; min-width: 0; color: var(--t); transition: flex-grow 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.so-panel:hover, .so-panel:focus-visible { flex-grow: 2.4; }
+.so-panel img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+.so-panel > div { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 8px; height: 46%; min-height: 230px; padding: 20px; background: var(--c); }
+.so-panel .so-mas { position: absolute; right: 18px; top: 18px; display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid currentColor; border-radius: 50%; font-size: 15px; }
+.so-panel b { grid-column: 1; font-size: clamp(1.5rem, 2.1vw, 2.6rem); line-height: 1; letter-spacing: -0.02em; white-space: nowrap; }
+.so-panel small { grid-column: 1; font-size: 10px; }
+.so-panel em { grid-column: 2; grid-row: 1 / span 2; align-self: end; max-width: 9em; font-style: normal; font-size: 12px; text-align: right; opacity: 0; transition: opacity 0.4s; }
+.so-panel:hover em, .so-panel:focus-visible em { opacity: 1; }
+
+.so-lema { padding: 120px var(--so-m); }
+.so-lema p { max-width: 22em; margin: 0; font-size: clamp(1.8rem, 3.4vw, 3.2rem); line-height: 1.12; letter-spacing: -0.02em; }
+.so-lema span { color: #a7a7a7; }
+
+.so-seleccion { padding: 0 var(--so-m) 120px; }
+.so-seleccion h2 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); padding-bottom: 16px; }
+.so-filtro { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; padding: 14px 0; border-top: 1px solid var(--ln); }
+.so-filtro button { padding: 4px 0; border: 0; border-bottom: 1px solid transparent; background: none; color: var(--mut); font: inherit; font-size: 12px; cursor: pointer; }
+.so-filtro button[aria-pressed="true"] { color: var(--fg); border-color: currentColor; }
+.so-filtro sup { font-size: 8px; }
+.so-rejilla { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 12px; padding-top: 18px; }
+.so-rejilla a { display: grid; gap: 6px; align-content: start; }
+.so-rejilla img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: opacity 0.3s; }
+.so-rejilla a:hover img { opacity: 0.85; }
+.so-rejilla b { font-size: 13px; }
+.so-rejilla span { font-size: 11px; color: var(--mut); }
+.so-rejilla__grande { grid-column: span 2; grid-row: span 2; }
+.so-rejilla__grande img { aspect-ratio: auto; height: 100%; min-height: 300px; }
+.so-rejilla--pag { padding: 0 var(--so-m) 60px; }
+
+.so-noticias { display: grid; gap: 18px; justify-items: start; padding: 0 var(--so-m) 120px; }
+.so-noticias h2 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); }
+.so-noticias ul, .so-lista-noticias { display: grid; width: 100%; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ln); }
+.so-noticias li, .so-lista-noticias li { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--ln); font-size: 13px; }
+.so-noticias li span, .so-lista-noticias li span { color: var(--mut); }
+.so-lista-noticias { width: calc(100% - 2 * var(--so-m)); margin: 0 var(--so-m) 80px; }
+
+.so-pie { display: grid; gap: 50px; padding: 70px var(--so-m) 22px; background: #111; color: #f2f2f2; }
+.so-pie__ciudades { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.so-pie__ciudades div { display: grid; gap: 4px; font-size: 13px; }
+.so-pie__ciudades b { font-size: clamp(2rem, 4vw, 3.6rem); letter-spacing: -0.02em; }
+.so-pie nav { display: flex; flex-wrap: wrap; gap: 20px; font-size: 13px; }
+.so-pie small { font-size: 11px; color: #9a9a9a; }
+.so-pie__ciudades--pag div { color: var(--fg); }
+
+/* páginas */
+.so-pag { padding-bottom: 40px; }
+.so-cab { display: grid; gap: 14px; padding: clamp(60px, 8vw, 110px) var(--so-m) 40px; }
+.so-cab h1 { max-width: 16em; font-size: clamp(2.4rem, 4.6vw, 4.4rem); line-height: 1; letter-spacing: -0.03em; }
+.so-cab > p:last-child:not(.so-chico) { margin: 0; max-width: 34em; color: var(--mut); }
+.so-ancha { display: block; width: calc(100% - 2 * var(--so-m)); margin: 0 var(--so-m); aspect-ratio: 16 / 8; object-fit: cover; }
+.so-ficha { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 80px); padding: 50px var(--so-m) 80px; }
+.so-ficha dl { margin: 0; border-top: 1px solid var(--ln); }
+.so-ficha dl div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ln); font-size: 13px; }
+.so-ficha dt { color: var(--mut); }
+.so-ficha dd { margin: 0; }
+.so-ficha > img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.so-otros { padding: 0 var(--so-m) 60px; }
+.so-otros .so-rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.so-sector { display: grid; gap: 20px; min-height: 60svh; align-content: end; padding: 120px var(--so-m) 40px; margin-bottom: 40px; background: var(--c); color: var(--t); }
+.so-sector h1 { font-size: clamp(3.4rem, 9vw, 9rem); line-height: 0.9; letter-spacing: -0.04em; }
+.so-sector .so-grande { max-width: 26em; }
+.so-sectores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.so-sectores a { display: flex; align-items: flex-end; height: 160px; padding: 18px; font-size: clamp(1.4rem, 2.2vw, 2rem); transition: height 0.4s; }
+.so-sectores a:hover { height: 200px; }
+.so-valores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding: 70px var(--so-m) 0; }
+.so-valores div { display: grid; gap: 8px; align-content: start; padding-top: 12px; border-top: 1px solid var(--fg); }
+.so-valores small { font-size: 11px; color: var(--mut); }
+.so-valores b { font-size: 1.6rem; }
+.so-valores p { margin: 0; font-size: 13px; color: var(--mut); }
+
+@media (max-width: 860px) {
+  .so-hero__b { left: var(--so-m); translate: none; top: calc(50% + 24px); }
+  .so-intro, .so-ficha { grid-template-columns: 1fr; }
+  .so-paneles { flex-direction: column; height: auto; }
+  .so-panel { grid-template-columns: 0.9fr 1fr; grid-template-rows: none; min-height: 150px; }
+  .so-panel:hover { flex-grow: 1; }
+  .so-panel > div { height: auto; min-height: 0; }
+  .so-panel em { opacity: 1; grid-column: 1; grid-row: auto; text-align: left; }
+  .so-rejilla, .so-otros .so-rejilla { grid-template-columns: 1fr 1fr; }
+  .so-rejilla__grande { grid-column: span 2; grid-row: auto; }
+  .so-filtro { justify-content: flex-start; }
+  .so-pie__ciudades, .so-sectores, .so-valores { grid-template-columns: 1fr 1fr; }
+  .so-noticias li, .so-lista-noticias li { grid-template-columns: 1fr; gap: 2px; }
+}

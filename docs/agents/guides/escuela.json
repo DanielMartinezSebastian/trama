@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "291bbe5fb4094a24352cb18df3c147dea49e60f0",
+  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
   "sourceDirty": true,
   "kind": "guide",
   "id": "escuela",
@@ -22,7 +22,7 @@
     },
     {
       "path": "lib/catalog/sectores.ts",
-      "sha256": "e17aa72a9376db8d685749fa01f0d391d9bb8ec9dd76b70ad7f7d5ec3c07ecfa"
+      "sha256": "4341ab4d451936b41a5d18de941c40ddc02eb896c988b614617bd5d06a0b5944"
     },
     {
       "path": "lib/ui/fonts.ts",
@@ -30,7 +30,7 @@
     },
     {
       "path": "lib/ui/guides.ts",
-      "sha256": "15014ae2b7e8cb7f225752d06ca864c9df15c1bf460fb0048c017c9d04ba5429"
+      "sha256": "93ecb856e24806f65118b4708231c5e27e58392ccf89eb002f6e90ff6d31b115"
     },
     {
       "path": "lib/ui/tokens.ts",

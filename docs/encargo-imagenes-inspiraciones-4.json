@@ -1,0 +1,555 @@
+{
+ "tierra-ancha": {
+  "estilo": "Fotografía de safari documental y cálida: luz baja de mañana o de tarde, polvo dorado, verdes secos y ocres, nada saturado. Encuadres amplios con mucho aire; en los retratos, gente real del equipo del campamento, sin posar. Nunca animales en cautividad ni escenas de caza.",
+  "ruta": "/inspiraciones/tierra-ancha",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/portada.webp",
+    "px": "2400x1400",
+    "motivo": "Manada de elefantes cruzando una charca al atardecer, un lodge de madera apenas visible entre los árboles"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/leopardo.webp",
+    "px": "1200x1500",
+    "motivo": "Leopardo tumbado en la rama de una marula, mirando a cámara"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/lodge-marula.webp",
+    "px": "1600x1100",
+    "motivo": "Lodge de madera y lona sobre pilotes junto a un río de arena, terraza con sillones"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/campamento-baobab.webp",
+    "px": "1600x1100",
+    "motivo": "Tiendas de lona blanca bajo un baobab enorme, sombrillas y tumbonas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/casa-kopje.webp",
+    "px": "1600x1100",
+    "motivo": "Casa de piedra encaramada a un kopje (colina de rocas), piscina de borde infinito sobre la sabana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/campamento-arenas.webp",
+    "px": "1600x1100",
+    "motivo": "Campamento clásico de los años 30 con porche, mosquiteras y faroles"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/suite.webp",
+    "px": "1600x1100",
+    "motivo": "Interior de una suite: cama con dosel de mosquitera, madera oscura y ventanal abierto a la sabana"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/todoterreno.webp",
+    "px": "1600x1100",
+    "motivo": "Todoterreno abierto de safari con una guía al volante y viajeros con prismáticos, polvo al trasluz"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/guia.webp",
+    "px": "1200x1500",
+    "motivo": "Retrato de una guía de safari de unos 40 años, camisa caqui, sonriendo de verdad"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/rastreador.webp",
+    "px": "1200x1500",
+    "motivo": "Rastreador mayor agachado leyendo huellas en la arena"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/abejaruco.webp",
+    "px": "900x1100",
+    "motivo": "Abejaruco carmín posado en una rama seca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/tortuga.webp",
+    "px": "800x800",
+    "motivo": "Tortuga leopardo caminando sobre hierba seca, a ras de suelo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/jirafas.webp",
+    "px": "1600x1100",
+    "motivo": "Tres jirafas entre acacias al amanecer, bruma"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/rio-aereo.webp",
+    "px": "1200x1500",
+    "motivo": "Vista aérea de un río de arena serpenteando entre bosque de ribera verde"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/boma.webp",
+    "px": "1600x1100",
+    "motivo": "Cena al aire libre en una boma: mesa larga, fuego en el centro, faroles, noche cerrada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/guardas.webp",
+    "px": "1600x1100",
+    "motivo": "Dos guardas de la reserva caminando con mochilas por un camino de tierra, de espaldas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/tierra-ancha/escuela.webp",
+    "px": "1600x1100",
+    "motivo": "Aula de una escuela de la comunidad vecina, niñas y niños atentos, luz de ventana"
+   }
+  ]
+ },
+ "bocado": {
+  "estilo": "Fotografía de restaurante familiar, alegre y cercana: comida real, abundante y apetecible, luz cálida de sala, nada de emplatado de autor. Los platos de la sección «Placeres del día» van vistos desde arriba sobre madera, centrados, para recortarse en círculo. Gente de verdad, comiendo y riendo.",
+  "ruta": "/inspiraciones/bocado",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/bocado/portada.webp",
+    "px": "1600x1200",
+    "motivo": "Plato de entrecot a la brasa con patatas fritas y salsa, visto desde arriba en mesa de madera; una mano coge una patata"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/happy-hour.webp",
+    "px": "900x900",
+    "motivo": "Tres cócteles y un vermú sobre una bandeja redonda de madera, desde arriba, centrados"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/mediodia.webp",
+    "px": "900x900",
+    "motivo": "Plato de pasta con verduras y queso, desde arriba sobre madera, centrado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/mejillones.webp",
+    "px": "900x900",
+    "motivo": "Olla de mejillones al vapor con limón, desde arriba, centrada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/vino.webp",
+    "px": "900x900",
+    "motivo": "Cubitera con hielo y tres botellas de vino sin etiqueta, desde arriba, centrada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/cocina.webp",
+    "px": "1600x1100",
+    "motivo": "Dos cocineros riendo en la cocina abierta, uno saltea en una sartén con llama"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/horno.webp",
+    "px": "900x900",
+    "motivo": "Pizza saliendo de un horno de leña en pala de madera, de cerca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/salon.webp",
+    "px": "1200x1500",
+    "motivo": "Salón privado con mesa larga puesta, sillas mostaza, cortinas y lámparas de globo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/terraza.webp",
+    "px": "1600x1100",
+    "motivo": "Terraza llena al atardecer, mesas con mantel de cuadros rojos y guirnaldas de luces"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/pizza.webp",
+    "px": "800x800",
+    "motivo": "Pizza margarita entera desde arriba sobre madera"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/pasta.webp",
+    "px": "800x800",
+    "motivo": "Plato de lasaña gratinada humeante, de cerca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/carne.webp",
+    "px": "800x800",
+    "motivo": "Costillas a la brasa con ensalada de col"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/postre.webp",
+    "px": "800x800",
+    "motivo": "Tarta de queso con frutos rojos y una cuchara"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/concierto.webp",
+    "px": "1200x800",
+    "motivo": "Grupo de soul tocando en un rincón del restaurante, público cenando, luz cálida"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/karaoke.webp",
+    "px": "1200x800",
+    "motivo": "Mesa de amigos cantando con un micrófono y riendo, luces de colores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/bocado/tarjeta.webp",
+    "px": "1200x900",
+    "motivo": "Tarjeta regalo de cartulina roja sin texto sobre una mesa con un lazo"
+   }
+  ]
+ },
+ "pausa": {
+  "estilo": "Fotografía de clínica estética sobria y luminosa: piel real con textura (sin retoque plástico), fondos gris perla o marfil, luz suave de ventana, gestos tranquilos. Paleta fría y desaturada que se lleva bien con el duotono azul de la web. Texturas de producto (gel, suero, agua) en macro, limpias.",
+  "ruta": "/inspiraciones/pausa",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/pausa/portada.webp",
+    "px": "2400x1400",
+    "motivo": "Mujer de unos 35 años apoyada en sus antebrazos sobre una superficie blanca, mirada tranquila a cámara, hombros desnudos, luz lateral suave"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/hombre.webp",
+    "px": "900x1200",
+    "motivo": "Hombre de unos 40 años de perfil, hombros desnudos, fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/gel.webp",
+    "px": "1000x1000",
+    "motivo": "Macro de una gota de gel transparente sobre cristal"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/gota.webp",
+    "px": "1000x1000",
+    "motivo": "Gota de suero cayendo de un gotero de cristal, fondo blanco"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/agua.webp",
+    "px": "1000x1000",
+    "motivo": "Burbujas finas en agua clara, macro, tono frío"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/piel.webp",
+    "px": "1000x1000",
+    "motivo": "Primer plano de un hombro y cuello con la piel natural, una mano apoyada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/preocupaciones.webp",
+    "px": "1200x1200",
+    "motivo": "Mujer tocándose la mandíbula con la yema de los dedos, ojos cerrados, fondo neutro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/tratamientos.webp",
+    "px": "1200x1200",
+    "motivo": "Mujer de pelo rizado mirando a cámara, mano en la nuca, luz suave"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/labios.webp",
+    "px": "1400x1000",
+    "motivo": "Primer plano de unos labios naturales e hidratados, ligeramente entreabiertos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/serum.webp",
+    "px": "800x1000",
+    "motivo": "Frasco de cristal sin etiqueta con gotero sobre una piedra clara"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/doctor.webp",
+    "px": "1000x1200",
+    "motivo": "Médico de unos 45 años con bata blanca sentado en un sofá gris de la clínica, sonrisa tranquila"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/doctora.webp",
+    "px": "1000x1200",
+    "motivo": "Doctora de unos 40 años con bata, de pie junto a una ventana, brazos relajados"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/enfermera.webp",
+    "px": "1000x1200",
+    "motivo": "Enfermera de unos 30 años, uniforme gris claro, retrato cercano"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pausa/sala.webp",
+    "px": "1600x1100",
+    "motivo": "Sala de tratamiento minimalista: camilla blanca, lámpara de brazo, cortina de lino y luz de mañana"
+   }
+  ]
+ },
+ "solera": {
+  "estilo": "Fotografía de arquitectura profesional y luminosa: edificios reales de escala media (viviendas, colegios, centros cívicos, oficinas), cielos limpios o luz de atardecer, materiales visibles (ladrillo, madera, hormigón, celosías). Interiores habitados pero sin gente posando. Sin retoque llamativo.",
+  "ruta": "/inspiraciones/solera",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/solera/portada.webp",
+    "px": "2400x1400",
+    "motivo": "Oficina del estudio en una nave rehabilitada: ladrillo visto, ventanales industriales, mesas largas y cocina abierta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/vivienda.webp",
+    "px": "1200x900",
+    "motivo": "Bloque de vivienda asequible de ladrillo rojo y grandes ventanales, calle con árboles"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/interiores.webp",
+    "px": "1200x900",
+    "motivo": "Zona común de una residencia: techo de lamas de madera, chimenea, sofás bajos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/educacion.webp",
+    "px": "1200x900",
+    "motivo": "Edificio universitario con fachada de vidrio y celosía, estudiantes al fondo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/civico.webp",
+    "px": "1200x900",
+    "motivo": "Centro cívico de dos plantas con fachada de vidrio y pilares, plaza delante al anochecer"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/comercial.webp",
+    "px": "1200x900",
+    "motivo": "Edificio de oficinas con fachada de chapa cobriza y cielo rosado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-rectorado.webp",
+    "px": "1600x1100",
+    "motivo": "Edificio académico blanco con escalera exterior roja y gente subiendo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-huerta.webp",
+    "px": "1600x1100",
+    "motivo": "Viviendas en hilera de dos plantas con piscina comunitaria y jardín"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-centro-salud.webp",
+    "px": "1600x1100",
+    "motivo": "Centro de salud de ladrillo claro y vidrio al atardecer, luces encendidas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-biblioteca.webp",
+    "px": "1600x1100",
+    "motivo": "Interior de biblioteca municipal con estanterías de madera y luz cenital"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-cooperativa.webp",
+    "px": "1600x1100",
+    "motivo": "Cooperativa de viviendas con galerías de madera y vegetación en los balcones"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/p-coworking.webp",
+    "px": "1600x1100",
+    "motivo": "Oficina de coworking con plantas colgantes, mesas largas y lucernarios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/equipo.webp",
+    "px": "1600x1100",
+    "motivo": "Equipo de arquitectas y arquitectos revisando maquetas sobre una mesa, vista cenital"
+   },
+   {
+    "archivo": "public/img/inspiraciones/solera/maqueta.webp",
+    "px": "1200x1500",
+    "motivo": "Maqueta blanca de cartón pluma de un edificio, luz lateral, manos ajustando una pieza"
+   }
+  ]
+ },
+ "vencejo": {
+  "estilo": "Fotografía de automoción artesanal y cinematográfica: penumbra de taller o hangar, reflejos largos sobre carrocería oscura, cuero coñac, aluminio pulido. Ningún logotipo, emblema ni matrícula legible. Las fotos de historia, en blanco y negro con grano de época.",
+  "ruta": "/inspiraciones/vencejo",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/vencejo/portada.webp",
+    "px": "2400x1400",
+    "motivo": "Coupé deportivo biplaza de líneas clásicas en penumbra dentro de un hangar, visto de tres cuartos trasero, luz rasante azulada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/tapon.webp",
+    "px": "1000x1200",
+    "motivo": "Tapón de combustible de aluminio pulido con tornillos vistos sobre carrocería verde petróleo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/piloto.webp",
+    "px": "1600x1000",
+    "motivo": "Piloto trasero redondo encendido en rojo con efecto túnel, en la oscuridad"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/rueda.webp",
+    "px": "1000x1200",
+    "motivo": "Llanta de radios finos y pinza de freno cobriza, de cerca"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/interior.webp",
+    "px": "1600x1100",
+    "motivo": "Habitáculo con volante de tres radios, cuero coñac y palanca de cambios de aluminio con rejilla vista"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/hangar-1911.webp",
+    "px": "1600x1100",
+    "motivo": "Foto de época en blanco y negro: hangar con un biplano de tela y mecánicos con bata"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/carreras-1934.webp",
+    "px": "1600x1100",
+    "motivo": "Foto de época en blanco y negro: coche de carreras de los años treinta con su piloto y mecánicos posando"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/taller-1999.webp",
+    "px": "1600x1100",
+    "motivo": "Taller artesanal de los noventa: chasis de aluminio sobre caballetes, dos operarios"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/maqueta.webp",
+    "px": "1000x1000",
+    "motivo": "Maqueta a escala 1:18 de un coupé oscuro sobre peana de madera, fondo gris"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/gorra.webp",
+    "px": "1000x1000",
+    "motivo": "Gorra de lona verde petróleo sin logotipo, sobre fondo gris claro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/libro.webp",
+    "px": "1000x1000",
+    "motivo": "Libro de gran formato con tapa de tela oscura, cerrado, sobre mesa de nogal"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/llavero.webp",
+    "px": "1000x1000",
+    "motivo": "Llavero de cuero coñac con pieza de aluminio pulido, sobre fondo gris"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/concurso.webp",
+    "px": "1600x1100",
+    "motivo": "Coupé en un concurso de elegancia sobre césped, gente elegante alrededor, día nublado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/vencejo/feria.webp",
+    "px": "1600x1100",
+    "motivo": "Stand en una feria de coches de lujo: el coupé iluminado sobre una tarima negra"
+   }
+  ]
+ },
+ "nacar": {
+  "estilo": "Fotografía nocturna y mineral, casi monocroma: negros profundos, piedra, humo, reflejos plateados, una sola fuente de luz. Lujo discreto, nada ostentoso: espacios vacíos, siluetas de espaldas, materiales nobles. Ningún logotipo, tarjeta con texto ni marca reconocible.",
+  "ruta": "/inspiraciones/nacar",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/nacar/piedra.webp",
+    "px": "2400x1400",
+    "motivo": "Interior de una cueva de piedra negra con una luz cenital fría que cae en el centro, suelo pulido"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/hotel.webp",
+    "px": "900x1200",
+    "motivo": "Vestíbulo de hotel en penumbra: mostrador de piedra, lámpara baja, nadie"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/mesa.webp",
+    "px": "900x1200",
+    "motivo": "Mesa de restaurante a la luz de una vela, dos copas, mantel oscuro"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/avion.webp",
+    "px": "900x1200",
+    "motivo": "Cabina de avión privado de noche, asientos de cuero gris, ventanilla con luces de ciudad"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/spa.webp",
+    "px": "900x1200",
+    "motivo": "Piscina interior de un spa en penumbra, vapor sobre el agua, muros de piedra"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/abrigo.webp",
+    "px": "900x1200",
+    "motivo": "Persona de espaldas con abrigo largo negro caminando por un pasillo de hormigón"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/yate.webp",
+    "px": "900x1200",
+    "motivo": "Cubierta de madera de un velero al anochecer, mar plano y gris"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/suite.webp",
+    "px": "900x1200",
+    "motivo": "Suite de hotel con ventanal a una ciudad nocturna, cama baja, luz de lectura"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/galeria.webp",
+    "px": "900x1200",
+    "motivo": "Sala de una galería de arte vacía con una escultura iluminada"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/conserje.webp",
+    "px": "1600x1100",
+    "motivo": "Mano con guante de piel sujetando un teléfono en una calle mojada de noche, reflejos"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nacar/luna.webp",
+    "px": "1600x1100",
+    "motivo": "Montaña de roca oscura bajo una luna llena entre nubes"
+   }
+  ]
+ },
+ "nimbo": {
+  "estilo": "Renders abstractos en 3D, oscuros y luminosos: cintas y lazos de luz magenta y violeta sobre negro, con brillo suave y profundidad de campo; ningún texto ni icono. La foto de equipo, real y natural, con luz de oficina.",
+  "ruta": "/inspiraciones/nimbo",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/nimbo/blog-voz.webp",
+    "px": "1200x800",
+    "motivo": "Render abstracto: una cinta de luz magenta que forma una onda de sonido sobre fondo negro violáceo"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nimbo/blog-costes.webp",
+    "px": "1200x800",
+    "motivo": "Render abstracto: lazos de luz rosa entrelazados alrededor de una esfera de cristal oscura"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nimbo/blog-seguridad.webp",
+    "px": "1200x800",
+    "motivo": "Render abstracto: un cubo de cristal oscuro atravesado por un haz magenta"
+   },
+   {
+    "archivo": "public/img/inspiraciones/nimbo/equipo.webp",
+    "px": "1600x1100",
+    "motivo": "Equipo de ingeniería de seis personas en una oficina luminosa, de pie junto a una pizarra con diagramas, ambiente relajado"
+   }
+  ]
+ },
+ "pleno": {
+  "estilo": "Fotografía de festival de diseño, de reportaje: escenarios con luz de color saturada, ponentes gesticulando con micrófono, público a contraluz, talleres con las manos en primer plano. Grano y contraste, nada de banco de imágenes. Los retratos de ponentes, en blanco y negro sobre fondo neutro.",
+  "ruta": "/inspiraciones/pleno",
+  "imagenes": [
+   {
+    "archivo": "public/img/inspiraciones/pleno/escenario-1.webp",
+    "px": "2400x1400",
+    "motivo": "Ponente en un escenario oscuro levantando una mano abierta, luces azules y una gran letra roja proyectada detrás"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/escenario-2.webp",
+    "px": "2400x1400",
+    "motivo": "Ponente con micrófono de mano sonriendo, fondo rojo con tipografía gigante borrosa"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/escenario-3.webp",
+    "px": "2400x1400",
+    "motivo": "Público sentado en gradas a contraluz mirando una pantalla enorme con un vídeo de colores"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/escenario-4.webp",
+    "px": "2400x1400",
+    "motivo": "Taller de cerámica y código: manos modelando arcilla junto a un portátil, mesa larga"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/nave.webp",
+    "px": "1600x1100",
+    "motivo": "Nave industrial rehabilitada con un escenario montado, cerchas metálicas y luces colgadas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-1.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de una diseñadora de unos 40 años con flequillo, mirada directa"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-2.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de un artista digital de unos 30 años con gafas"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-3.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de una tipógrafa de unos 50 años, pelo canoso corto"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-4.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de un ilustrador de unos 35 años con barba"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-5.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de una directora creativa de unos 45 años con pelo rizado"
+   },
+   {
+    "archivo": "public/img/inspiraciones/pleno/ponente-6.webp",
+    "px": "900x1100",
+    "motivo": "Retrato en blanco y negro de un programador creativo de unos 28 años con gorra"
+   }
+  ]
+ }
+}
