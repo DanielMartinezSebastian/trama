@@ -247,9 +247,9 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 .ui-fsm[data-reveal="stairs"][data-open] > :not(.ui-fsm__stairs) { opacity: 1; transition-delay: 0.45s; }
 /* El portal: un nodo sin caja que lleva los tokens del tema a la capa que vela la página y al panel */
 .ui-fsm-root { display: contents; }
-/* layout sheet / drop / island: la página sigue a la vista, velada; un clic en el velo cierra */
+/* layout sheet / drop / island: la página sigue a la vista, velada de arriba abajo (cabecera incluida, sin cortes); un clic
+   en el velo cierra. El panel trae su propia fila de marca y cierre */
 .ui-fsm__veil { position: fixed; inset: 0; z-index: 8999; background: color-mix(in srgb, var(--fg) 40%, transparent); opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-io), visibility 0s linear 0.5s; }
-.ui-fsm__veil[data-host]:not([data-cover]) { top: var(--fsm-top, 0); }
 .ui-fsm__veil[data-open] { opacity: 1; visibility: visible; transition-delay: 0s; }
 /* tone: el color del panel. Sobre el acento, el texto es el del tema que mejor se lee (--fsm-ink, calculado al abrir) y el
    enlace activo se subraya en vez de cambiar a un acento que ya es el fondo */
@@ -276,13 +276,15 @@ html.ui-ccur-native :is(input, textarea, select, [contenteditable="true"]), html
 /* layout="sheet": panel a la derecha */
 .ui-fsm[data-layout="sheet"] { left: auto; width: min(460px, 88vw); }
 /* layout="drop": persiana del alto de su contenido, bajo la cabecera */
-.ui-fsm[data-layout="drop"] { bottom: auto; max-height: calc(100svh - var(--fsm-top, 0px)); grid-template-rows: auto; border-bottom: 1px solid var(--ln); }
+.ui-fsm[data-layout="drop"] { bottom: auto; max-height: 100svh; grid-template-rows: auto; border-bottom: 1px solid var(--ln); }
+/* la fila propia de marca y cierre, más ceñida en las formas pequeñas */
+.ui-fsm:is([data-layout="drop"], [data-layout="island"]) .ui-fsm__top { padding-bottom: 6px; }
 .ui-fsm[data-layout="drop"] .ui-fsm__nav { padding-block: 8px 20px; }
 /* layout="island": tarjeta flotante; abajo en el móvil, junto al botón arriba a la derecha en escritorio */
-.ui-fsm[data-layout="island"], .ui-fsm[data-layout="island"][data-host], .ui-fsm[data-layout="island"][data-host][data-cover] { top: auto; inset: auto 12px 12px; padding: 22px 22px 18px; max-height: calc(100svh - var(--fsm-top, 0px) - 24px); grid-template-rows: auto; border: 1px solid var(--ln); border-radius: calc(var(--r, 10px) + 10px); }
+.ui-fsm[data-layout="island"] { inset: auto 12px 12px; padding: 22px 22px 18px; max-height: calc(100svh - 24px); grid-template-rows: auto; border: 1px solid var(--ln); border-radius: calc(var(--r, 10px) + 10px); }
 .ui-fsm[data-layout="island"] .ui-fsm__nav { padding-block: 4px 18px; }
 @media (min-width: 761px) {
-  .ui-fsm[data-layout="island"], .ui-fsm[data-layout="island"][data-host], .ui-fsm[data-layout="island"][data-host][data-cover] { inset: calc(var(--fsm-top, 0px) + 12px) 16px auto auto; width: min(400px, 42vw); }
+  .ui-fsm[data-layout="island"] { inset: 12px 16px auto auto; width: min(400px, 42vw); }
   /* layout="split": enlaces a la izquierda y `aside` a toda altura a la derecha */
   .ui-fsm[data-layout="split"] { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: clamp(24px, 4vw, 72px); }
   .ui-fsm[data-layout="split"] > :not(.ui-fsm__aside, .ui-fsm__stairs) { grid-column: 1; }

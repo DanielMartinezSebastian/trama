@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "e97aaa50f91512571936f8a9c67e07988f4d783f",
+  "sourceCommit": "ddca809c821eb2f2fcfe99a74496255fc9cb18af",
   "sourceDirty": true,
   "kind": "recipe",
   "id": "salon",
@@ -58,7 +58,7 @@
     },
     {
       "path": "lib/catalog/entries/movimiento.tsx",
-      "sha256": "13935019f04e98ab53f2909202b8dd87e4c3b58fbca5ffd79621c38418dcdb51"
+      "sha256": "fea6948f23efdc10aa49d478408014b94da30d75293294e2ce200713baf2e439"
     },
     {
       "path": "lib/catalog/entries/navegacion.tsx",

@@ -59,6 +59,9 @@ No hay una referencia única: cada menú sale de la estética de su web, no de m
   tarjeta.
 - Una web que fuerza `color` en el botón del menú anula la tinta calculada de `pill`. Les pasaba a Abuela Rosa y
   Oficio.
+- Un velo que empieza debajo de la cabecera deja un corte: arriba la página se ve clara y debajo, oscurecida. El usuario
+  lo vio en el móvil. Los menús que dejan ver la página (sheet, drop, island) velan ahora la ventana entera y llevan su
+  propia fila de cierre. Los opacos, como el de Casa Melosa, siguen abriendo bajo la cabecera.
 
 ## Siguiente
 

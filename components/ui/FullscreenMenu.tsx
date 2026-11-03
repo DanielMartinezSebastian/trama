@@ -48,9 +48,10 @@ export type FullscreenMenuProps = {
   /** cómo se abre: curtain = una cortina que baja · stairs = cinco columnas que bajan en escalera desde la derecha (K72) ·
    * circle = un círculo que crece desde el botón · slide = el panel entra desde su borde · fade = aparece y se asienta */
   reveal?: "curtain" | "stairs" | "circle" | "slide" | "fade";
-  /** forma: full = toda la ventana · sheet = panel lateral a la derecha con la página velada detrás · drop = persiana bajo la
-   * cabecera, del alto de los enlaces · island = tarjeta flotante con margen y esquinas (abajo en el móvil) · split = dos
-   * columnas, enlaces y `aside` (en el móvil, `aside` va entre los enlaces y el pie) */
+  /** forma: full = toda la ventana · sheet = panel lateral a la derecha · drop = persiana desde arriba, del alto de los
+   * enlaces · island = tarjeta flotante con margen y esquinas (abajo en el móvil) · split = dos columnas, enlaces y `aside`
+   * (en el móvil, `aside` va entre los enlaces y el pie). sheet, drop e island velan la ventana entera, cabecera incluida,
+   * y traen su propia fila de marca y cierre */
   layout?: "full" | "sheet" | "drop" | "island" | "split";
   /** color del panel: bg = el fondo del tema · acc = el acento, con el texto que mejor se lea encima · fg = invertido */
   tone?: "bg" | "acc" | "fg";
@@ -167,6 +168,10 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
   const hostZ = useRef<string | null>(null);
   const zTimer = useRef(0);
   const set = useCallback((v: boolean) => { setInner(v); onOpenChange?.(v); }, [onOpenChange]);
+  // sheet, drop e island dejan ver la página, velada. El velo cubre la ventana entera, cabecera incluida: si la cabecera
+  // quedara fuera, se vería un corte entre lo oscurecido y lo que no. Por eso no se abren debajo de la cabecera, sino
+  // por encima de todo, con su propia fila de marca y cierre
+  const veiled = layout === "sheet" || layout === "drop" || layout === "island";
 
   // dónde se pinta: en `document.body`, salvo con `cover` y cabecera: entonces junto a la cabecera, en su mismo contexto de
   // apilamiento (si la cabecera vive dentro de uno, como un contenedor con `isolation`, el menú del body la taparía).
@@ -175,8 +180,8 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
   useEffect(() => {
     setMounted(true);
     const h = btn.current?.closest<HTMLElement>('header, [role="banner"]') ?? null;
-    setTarget(cover && h?.parentElement && !trapsFixed(h.parentElement) ? h.parentElement : document.body);
-  }, [cover]);
+    setTarget(cover && !veiled && h?.parentElement && !trapsFixed(h.parentElement) ? h.parentElement : document.body);
+  }, [cover, veiled]);
 
   useEffect(() => {
     if (!open) return;
@@ -187,7 +192,7 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       if (tone === "acc" && t["--acc"]) t["--fsm-ink"] = inkOn(t["--acc"], [t["--bg"], t["--fg"], "#fff", "#000"]);
       setTheme(t as CSSProperties);
     }
-    const host = trigger?.closest<HTMLElement>('header, [role="banner"]') ?? null;
+    const host = veiled ? null : trigger?.closest<HTMLElement>('header, [role="banner"]') ?? null;
     setTop(host ? Math.round(host.getBoundingClientRect().bottom) : null);
     const unlock = lockScroll();
     // aviso a lo fijo de la página (la barra de acciones se aparta mientras el menú está abierto)
@@ -228,14 +233,13 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       unlock();
       trigger?.focus({ preventScroll: true });
     };
-  }, [open, set, tone]);
+  }, [open, set, tone, veiled]);
 
-  const hosted = top !== null;
+  const hosted = top !== null && !veiled;
   const linkSize = size ?? (layout === "full" || layout === "split" ? "lg" : "sm");
-  const veiled = layout === "sheet" || layout === "drop" || layout === "island";
   const overlay = (
     <div ref={root} className="ui-fsm-root" style={{ ...theme, ...(hosted ? { "--fsm-top": `${top}px` } : null), ...(origin ? { "--fsm-o": origin } : null) } as CSSProperties}>
-      {veiled && <div className="ui-fsm__veil" data-open={open ? "" : undefined} data-host={hosted ? "" : undefined} data-cover={hosted && cover ? "" : undefined} aria-hidden onClick={() => set(false)} />}
+      {veiled && <div className="ui-fsm__veil" data-open={open ? "" : undefined} aria-hidden onClick={() => set(false)} />}
     <div
       ref={panel}
       id={`${uid}-menu`}
