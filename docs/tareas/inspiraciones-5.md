@@ -34,4 +34,9 @@
 - Medida final del repo: 91 páginas medibles; 13 por debajo de 0,25 (al empezar, 28 de 80) y 49 por encima de 0,35 (27). Réplicas más cerca de otra guía: 20 de 44 (22 de 36).
 - `qa:contrast` (11 anchos) sin fallos reales tras corregir colores; lo que queda son elementos a media animación. `qa:visual-text` (11 anchos): solo líneas pegadas de un mismo titular, por diseño; se separó el enlace del muro de Grano.
 - `verify`: todo pasa salvo el cuaderno, por fichas de `proyectos/` (carpeta sin seguimiento que este worktree no tiene).
-- Pendiente: imágenes de Codex (`docs/encargo-imagenes-inspiraciones-5.md`, 92) y volver a medir los pares.
+- Imágenes (03-11-2026): Codex se quedó sin cuota a mitad. Se aprovecharon 59 de 92, todas con formato, tamaño y peso
+  correctos y fieles a su motivo (commit `71476e4`): Bolo, Grano, Turia, Majo y Nada Corriente completas y 6 de Tueste.
+  `tueste/t5` se reencuadró: la máquina ocupaba un tercio del cuadro y desentonaba en el catálogo. Los pares de las cinco
+  webs completas no cambian (11/20, 8/14, 10/20, 13/20, 10/20): la sonda mide estructura, letra y color de superficie, no
+  el contenido de las fotos.
+- Pendiente: 33 imágenes provisionales (Tueste 10, Trocha 14, Llave 9) y medir los pares de esas tres webs.
