@@ -72,7 +72,7 @@ export function Shell({ children }: { children: ReactNode }) {
               </a>
             ))}
           </nav>
-          <FullscreenMenu trigger="burger" backdrop="blur" reveal="fade" align="center" size="md" brand="Nura" openLabel="Menú" closeLabel="Cerrar" note="Calle del Espíritu Santo 12 · Madrid" links={[{ label: "Inicio", href: nuraHref() }, ...NAV.map(([p, l]) => ({ label: l, href: nuraHref(p) }))]} className="nu-menu" />
+          <FullscreenMenu trigger="ring" backdrop="blur" reveal="fade" align="center" size="md" brand="Nura" openLabel="Menú" closeLabel="Cerrar" note="Calle del Espíritu Santo 12 · Madrid" links={[{ label: "Inicio", href: nuraHref() }, ...NAV.map(([p, l]) => ({ label: l, href: nuraHref(p) }))]} className="nu-menu" />
         </header>
       )}
       {children}

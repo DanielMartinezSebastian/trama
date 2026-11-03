@@ -1439,7 +1439,7 @@ Cuánto se ha leído de la página o de un contenedor con scroll. Se ancla a cua
 
 ### Menú a pantalla completa — `FullscreenMenu`
 
-Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), triggerHover="fill" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Formas (layout): full (toda la ventana), sheet (panel lateral), drop (persiana desde arriba), island (tarjeta flotante, abajo en el móvil); las tres velan la ventana entera, cabecera incluida, y traen su fila de cierre y split (enlaces y un aside con foto o datos). También reveal circle (círculo desde el botón), slide y fade; tone acc (panel del acento con el texto que mejor se lee) o fg (invertido); size lg/md/sm; numbered (01, 02…); y los botones plus (cruz que gira) y pill (píldora del acento). Combinadas, cada web tiene un menú móvil propio. Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
+Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enlaces suben uno a uno. Si el botón está en un <header>, la cabecera NO se mueve: el menú se abre debajo y el mismo botón pasa a [close] sin cambiar de sitio ni de tamaño. Cierra con Esc, pausa el scroll sin que salte la página y deja inerte lo que queda tapado. Opciones: trigger="burger" (icono que se cruza en ✕), triggerHover="fill" (el acento baja desde arriba al pasar, como el botón de K72), cover (llega hasta arriba aunque haya cabecera, que queda encima), backdrop="blur" (vidrio), align="center" (enlaces centrados en la tipografía de titulares), rules (filetes que se dibujan), linkHover="marquee" (la fila gira a una banda del acento con su frase corriendo, como K72) y reveal="stairs" (se abre en escalera). Formas (layout): full (toda la ventana), sheet (panel lateral), drop (persiana desde arriba), island (tarjeta flotante, abajo en el móvil); las tres velan la ventana entera, cabecera incluida, y traen su fila de cierre y split (enlaces y un aside con foto o datos). También reveal circle (círculo desde el botón), slide y fade; tone acc (panel del acento con el texto que mejor se lee) o fg (invertido); size lg/md/sm; numbered (01, 02…); y los botones text (el texto sin corchetes, que rueda al cambiar), count (texto con el número de enlaces volado), lines (tres rayas desiguales), dots (nueve puntos que se quedan en ✕), plus (cruz que gira), ring (rayas en un círculo fino) y pill (píldora del acento); el cierre de la fila propia del menú repite el mismo botón. Al pasar por un enlace, además de color y marquee: slide (se desplaza y asoma una flecha) y dim (se apagan los demás). Combinadas, cada web tiene un menú móvil propio. Un enlace a la página actual («Inicio» en la portada) cierra y sube al principio; con el menú abierto, la ActionBar fija se aparta.
 
 | prop | tipo | default |
 |---|---|---|
@@ -1451,12 +1451,12 @@ Botón [menu] que abre un menú de pantalla completa: la cortina baja y los enla
 | `tone` | `bg` · `acc` · `fg` | "bg" |
 | `size` | `lg` · `md` · `sm` | "lg" |
 | `numbered` | boolean | false |
-| `trigger` | `label` · `burger` · `plus` · `pill` | "label" |
+| `trigger` | `label` · `text` · `count` · `burger` · `lines` · `dots` · `plus` · `ring` · `pill` | "label" |
 | `triggerHover` | `none` · `fill` | "none" |
 | `backdrop` | `solid` · `blur` | "solid" |
 | `align` | `start` · `center` | "start" |
 | `rules` | boolean | false |
-| `linkHover` | `color` · `marquee` | "color" |
+| `linkHover` | `color` · `marquee` · `slide` · `dim` | "color" |
 | `reveal` | `curtain` · `stairs` · `circle` · `slide` · `fade` | "curtain" |
 
 ### Cabecera que se esconde al bajar — `HideOnScroll`

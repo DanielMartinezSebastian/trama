@@ -80,7 +80,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <a href={melenaHref("reservar")} className="me-pildora">
             Reserva
           </a>
-          <FullscreenMenu trigger="label" layout="island" reveal="fade" size="sm" brand="Melena" openLabel="Menú" closeLabel="Cerrar" note="Gran Vía 31 · Arenal 9 · Madrid" links={[{ label: "Inicio", href: melenaHref() }, ...NAV.map(([p, l]) => ({ label: l, href: melenaHref(p) })), { label: "Reservar", href: melenaHref("reservar") }, { label: "Mis citas", href: melenaHref("mis-citas") }]} className="me-menu" />
+          <FullscreenMenu trigger="count" layout="island" reveal="fade" size="sm" brand="Melena" openLabel="Menú" closeLabel="Cerrar" note="Gran Vía 31 · Arenal 9 · Madrid" links={[{ label: "Inicio", href: melenaHref() }, ...NAV.map(([p, l]) => ({ label: l, href: melenaHref(p) })), { label: "Reservar", href: melenaHref("reservar") }, { label: "Mis citas", href: melenaHref("mis-citas") }]} className="me-menu" />
         </header>
         {children}
         <footer className="me-pie" id="contacto">

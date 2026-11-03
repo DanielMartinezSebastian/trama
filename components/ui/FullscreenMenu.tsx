@@ -27,10 +27,12 @@ export type FullscreenMenuProps = {
   footer?: { label: string; href: string }[];
   /** texto libre a la izquierda del pie (ciudad, hora…) */
   note?: string;
-  /** el botón: label = `[menu]` / `[close]` (editorial) · burger = dos rayas que se cruzan en ✕ al abrir · plus = una cruz que
-   * gira a ✕ · pill = píldora del acento con el texto y dos rayas (los textos
-   * quedan como nombre accesible) */
-  trigger?: "label" | "burger" | "plus" | "pill";
+  /** el botón: label = `[menu]` / `[close]` (editorial) · text = el texto sin corchetes, que rueda hacia arriba al cambiar ·
+   * count = el texto con el número de enlaces volado · burger = dos rayas que se cruzan en ✕ al abrir · lines = tres rayas
+   * desiguales que se igualan al pasar y se cruzan en ✕ · dots = rejilla de nueve puntos que se queda en ✕ · plus = una
+   * cruz que gira a ✕ · ring = dos rayas dentro de un círculo fino · pill = píldora del acento con el texto y dos rayas
+   * (en los de icono, los textos quedan como nombre accesible). El cierre de la fila propia del menú usa el mismo botón */
+  trigger?: "label" | "text" | "count" | "burger" | "lines" | "dots" | "plus" | "ring" | "pill";
   /** el botón al pasar el ratón: none = cambia de color · fill = un relleno del acento baja desde arriba y el contenido pasa
    * al color del fondo (el botón de K72, medido con `refs:probe --par`: 0,15 s, easeOutCubic; docs/53 §5) */
   triggerHover?: "none" | "fill";
@@ -43,8 +45,9 @@ export type FullscreenMenuProps = {
   /** filetes entre los enlaces, que se dibujan de izquierda a derecha al abrir (Il Colorista, docs/50 §3.1) */
   rules?: boolean;
   /** al pasar por un enlace: color = cambia al acento · marquee = la fila gira y se vuelve una banda del acento con una
-   * marquesina de su `marquee` o su `meta` y sus `images` (K72, docs/50 §3.9) */
-  linkHover?: "color" | "marquee";
+   * marquesina de su `marquee` o su `meta` y sus `images` (K72, docs/50 §3.9) · slide = se desplaza y asoma una flecha ·
+   * dim = los demás enlaces se apagan */
+  linkHover?: "color" | "marquee" | "slide" | "dim";
   /** cómo se abre: curtain = una cortina que baja · stairs = cinco columnas que bajan en escalera desde la derecha (K72) ·
    * circle = un círculo que crece desde el botón · slide = el panel entra desde su borde · fade = aparece y se asienta */
   reveal?: "curtain" | "stairs" | "circle" | "slide" | "fade";
@@ -236,6 +239,43 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
   }, [open, set, tone, veiled]);
 
   const hosted = top !== null && !veiled;
+  const iconOnly = trigger === "burger" || trigger === "lines" || trigger === "dots" || trigger === "plus" || trigger === "ring";
+  const inkStyle = pillInk ? ({ "--fsm-pill-ink": pillInk } as CSSProperties) : undefined;
+  // el contenido del botón; el abierto se pinta también en el cierre de la fila propia del menú
+  const face = (isOpen: boolean) => {
+    // el botón es el mismo abierto y cerrado y no cambia de tamaño: los dos textos ocupan la misma celda y solo se ve uno
+    const swap = (a: string, b: string) => (
+      <span className="ui-fsm__lbl">
+        <span style={{ visibility: isOpen ? "hidden" : "visible" }} aria-hidden={isOpen || undefined}>{a}</span>
+        <span style={{ visibility: isOpen ? "visible" : "hidden" }} aria-hidden={!isOpen || undefined}>{b}</span>
+      </span>
+    );
+    switch (trigger) {
+      case "burger":
+      case "ring":
+        return <span className="ui-fsm__burger" aria-hidden><i /><i /></span>;
+      case "lines":
+        return <span className="ui-fsm__lines" aria-hidden><i /><i /><i /></span>;
+      case "dots":
+        return <span className="ui-fsm__dots" aria-hidden>{Array.from({ length: 9 }, (_, k) => <i key={k} />)}</span>;
+      case "plus":
+        return <span className="ui-fsm__plus" aria-hidden><i /><i /></span>;
+      case "pill":
+        return <>{swap(openLabel, closeLabel)}<span className="ui-fsm__burger" aria-hidden><i /><i /></span></>;
+      case "text":
+        // los dos textos en una columna que rueda: sube el que se va y entra el otro desde abajo
+        return (
+          <span className="ui-fsm__roll">
+            <span aria-hidden={isOpen || undefined}>{openLabel}</span>
+            <span aria-hidden={!isOpen || undefined}>{closeLabel}</span>
+          </span>
+        );
+      case "count":
+        return <>{swap(openLabel, closeLabel)}<sup className="ui-fsm__count" aria-hidden>{links.length}</sup></>;
+      default:
+        return swap(`[${openLabel}]`, `[${closeLabel}]`);
+    }
+  };
   const linkSize = size ?? (layout === "full" || layout === "split" ? "lg" : "sm");
   const overlay = (
     <div ref={root} className="ui-fsm-root" style={{ ...theme, ...(hosted ? { "--fsm-top": `${top}px` } : null), ...(origin ? { "--fsm-o": origin } : null) } as CSSProperties}>
@@ -272,7 +312,9 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
       {!hosted && (
         <div className="ui-fsm__top">
           <span>{brand}</span>
-          <button type="button" className="ui-fsm__btn ui-fsm__close" onClick={() => set(false)}>[{closeLabel}]</button>
+          <button type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger} ui-fsm__close`} style={inkStyle} aria-label={iconOnly ? closeLabel : undefined} onClick={() => set(false)}>
+            {face(true)}
+          </button>
         </div>
       )}
       <nav className="ui-fsm__nav" aria-label="Principal">
@@ -337,26 +379,8 @@ export default function FullscreenMenu({ links, brand = "", openLabel = "menu", 
 
   return (
     <>
-      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} style={pillInk ? ({ "--fsm-pill-ink": pillInk } as CSSProperties) : undefined} data-hover={triggerHover === "none" ? undefined : triggerHover} aria-label={trigger === "burger" || trigger === "plus" ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); requestAnimationFrame(aim); } else aim(); set(!open); }}>
-        {trigger === "burger" ? (
-          <span className="ui-fsm__burger" aria-hidden><i /><i /></span>
-        ) : trigger === "plus" ? (
-          <span className="ui-fsm__plus" aria-hidden><i /><i /></span>
-        ) : trigger === "pill" ? (
-          <>
-            <span className="ui-fsm__lbl">
-              <span style={{ visibility: open ? "hidden" : "visible" }} aria-hidden={open || undefined}>{openLabel}</span>
-              <span style={{ visibility: open ? "visible" : "hidden" }} aria-hidden={!open || undefined}>{closeLabel}</span>
-            </span>
-            <span className="ui-fsm__burger" aria-hidden><i /><i /></span>
-          </>
-        ) : (
-          // el botón es el mismo abierto y cerrado y no cambia de tamaño: los dos textos ocupan la misma celda y solo se ve uno
-          <span className="ui-fsm__lbl">
-            <span style={{ visibility: open ? "hidden" : "visible" }} aria-hidden={open || undefined}>[{openLabel}]</span>
-            <span style={{ visibility: open ? "visible" : "hidden" }} aria-hidden={!open || undefined}>[{closeLabel}]</span>
-          </span>
-        )}
+      <button ref={btn} type="button" className={`ui-fsm__btn ui-fsm__btn--${trigger}`} style={inkStyle} data-hover={triggerHover === "none" ? undefined : triggerHover} aria-label={iconOnly ? (open ? closeLabel : openLabel) : undefined} aria-expanded={open} aria-controls={`${uid}-menu`} aria-haspopup="dialog" onClick={() => { if (!open) { const h = btn.current?.closest<HTMLElement>('header, [role="banner"]'); setTop(h ? Math.round(h.getBoundingClientRect().bottom) : null); requestAnimationFrame(aim); } else aim(); set(!open); }}>
+        {face(open)}
       </button>
       {mounted && target ? createPortal(overlay, target) : null}
     </>

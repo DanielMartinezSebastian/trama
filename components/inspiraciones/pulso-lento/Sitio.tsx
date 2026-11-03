@@ -99,7 +99,7 @@ export function Shell({ children }: { children: ReactNode }) {
               </button>
             </nav>
             <div className="pu-burger">
-              <FullscreenMenu trigger="label" tone="fg" reveal="slide" numbered rules brand="Pulso Lento" openLabel="Menú" closeLabel="Cerrar" note="Madrid" links={links} />
+              <FullscreenMenu trigger="lines" linkHover="slide" tone="fg" reveal="slide" numbered rules brand="Pulso Lento" openLabel="Menú" closeLabel="Cerrar" note="Madrid" links={links} />
             </div>
           </header>
           {children}

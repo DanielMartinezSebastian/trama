@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "trama-ui",
   "packageVersion": "0.13.0",
-  "sourceCommit": "c993f9133df7f506ba2ad7c8fc6ff2e4f1b49192",
+  "sourceCommit": "dde33dfa33c20bd94b48526baa8685d40aa4efa1",
   "sourceDirty": true,
   "kind": "index",
   "id": "pilot",
@@ -58,7 +58,7 @@
     },
     {
       "path": "lib/catalog/entries/movimiento.tsx",
-      "sha256": "fea6948f23efdc10aa49d478408014b94da30d75293294e2ce200713baf2e439"
+      "sha256": "761af5621bef804cd6e18e33dad77517f1a92908aa4af231c84ce021437608ad"
     },
     {
       "path": "lib/catalog/entries/navegacion.tsx",

@@ -50,7 +50,8 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
         <div className="ni-burger">
           <FullscreenMenu
-            trigger="label"
+            trigger="ring"
+            linkHover="slide"
             layout="drop"
             tone="fg"
             reveal="slide"

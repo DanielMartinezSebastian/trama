@@ -141,7 +141,7 @@
 .vv-precios .ui-price--hl { --fg: #000; --mut: #555; --bg: #fff; --acc: #fb5607; background: #fff !important; color: #000; }
 
 /* ---------- varias páginas (docs/56) ---------- */
-.vv-head .ui-fsm__btn--burger { display: none; color: var(--fg); }
+.vv-head .ui-fsm__btn { display: none; color: var(--fg); }
 .vv-isla a[aria-current="page"] { background: #fff; color: #000; border-radius: 999px; }
 .vv-pin { position: absolute; width: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 8px rgb(251 86 7 / 0.25); translate: -50% -50%; cursor: pointer; transition: box-shadow 0.3s, scale 0.3s; }
 .vv-pin span { position: absolute; left: 50%; top: -30px; translate: -50% 0; padding: 2px 8px; background: #000; color: #fff; font: 700 12px var(--vv-cond); white-space: nowrap; opacity: 0; transition: opacity 0.2s; }
@@ -183,7 +183,7 @@
 .vv-flujo legend, .vv-flujo h2, .vv-flujo h3, .vv-cuenta h3 { font-family: var(--vv-cond); text-transform: uppercase; }
 
 @media (max-width: 760px) {
-  .vv-head .ui-fsm__btn--burger { display: inline-flex; }
+  .vv-head .ui-fsm__btn { display: inline-flex; }
   .vv-head > .vv-unete { display: none; }
   .vv-ventajas-lista li { grid-template-columns: 1fr; }
 }

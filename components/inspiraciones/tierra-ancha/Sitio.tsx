@@ -41,7 +41,8 @@ export function Shell({ children }: { children: ReactNode }) {
           <small>colección</small>
         </a>
         <FullscreenMenu
-          trigger="label"
+          trigger="text"
+          linkHover="slide"
           layout="split"
           reveal="fade"
           size="md"

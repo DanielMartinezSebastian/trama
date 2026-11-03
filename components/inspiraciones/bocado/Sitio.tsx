@@ -58,7 +58,7 @@ export function Shell({ children }: { children: ReactNode }) {
         </nav>
         <div className="bo-burger">
           <FullscreenMenu
-            trigger="burger"
+            trigger="lines"
             layout="sheet"
             tone="acc"
             reveal="circle"
