@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|---|
 | 2026-11-03 | [pieza-botones-de-menu](pieza-botones-de-menu.md) · Botones de menú móvil sin corchetes y efectos de enlace nuevos | pieza | hecho |  |  | `/componentes` |
 | 2026-11-03 | [pieza-menus-y-transiciones-con-tema](pieza-menus-y-transiciones-con-tema.md) · Menús móviles distintos y transiciones con el color de cada web | pieza | hecho |  |  | `/componentes` |
-| 2026-11-03 | [pieza-scroll-arriba-al-navegar](pieza-scroll-arriba-al-navegar.md) · La página nueva empieza arriba aunque se navegue a media inercia | pieza | hecho |  |  | `/inspiraciones` |
+| 2026-11-03 | [pieza-scroll-arriba-al-navegar](pieza-scroll-arriba-al-navegar.md) · La página nueva empieza arriba y la anterior recupera su altura al volver | pieza | hecho |  |  | `/inspiraciones` |
 | 2026-11-03 | [replica-bocado](replica-bocado.md) · Bocado, a partir de Délice | réplica | hecho | restaurante | trattoria de barrio | `/inspiraciones/bocado` |
 | 2026-11-03 | [replica-nacar](replica-nacar.md) · Nácar, a partir de Moto | réplica | hecho | finanzas | obsidiana | `/inspiraciones/nacar` |
 | 2026-11-03 | [replica-nimbo](replica-nimbo.md) · Nimbo, a partir de Cerebrium | réplica | hecho | software | cinta de luz | `/inspiraciones/nimbo` |

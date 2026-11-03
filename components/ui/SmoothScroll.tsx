@@ -31,26 +31,78 @@ export type SmoothScrollProps = {
   /**
    * al ir a otra ruta, la página nueva empieza arriba: corta la inercia que quedara y sube sin animar. Sin esto, si se
    * pulsa un enlace mientras la página aún se desliza, el router sube al principio pero Lenis la devuelve a la altura
-   * que perseguía. No actúa al volver atrás o adelante (esa posición la decide el navegador), ni con un `#ancla`, ni si
-   * solo cambia la consulta (`?filtro=`)
+   * que perseguía. Al volver atrás o adelante, la página recupera la altura en la que se dejó. No actúa con un `#ancla`
+   * ni si solo cambia la consulta (`?filtro=`)
    */
   resetOnNavigate?: boolean;
 };
 
-/** Al cambiar de ruta con `history.pushState` (lo que hace el router al pintar la página nueva), sube al principio. */
+const jump = (y: number) => {
+  getLenis()?.scrollTo(y, { immediate: true, force: true });
+  window.scrollTo({ top: y, left: 0, behavior: "instant" });
+};
+
+/**
+ * Al cambiar de ruta con `history.pushState` (lo que hace el router al pintar la página nueva), sube al principio; al volver
+ * atrás o adelante, devuelve cada dirección a la altura en la que se dejó. La restauración del navegador no sirve aquí:
+ * llega antes de que el router pinte la página anterior, cuando aún está la que se deja, y se pierde.
+ */
 function installNavigateReset() {
+  const key = () => location.pathname + location.search;
+  const heights = new Map<string, number>();
+  let current = key();
+  let restoring = 0;
+  const onScroll = () => heights.set(current, Math.round(window.scrollY));
   const push = history.pushState;
+  const replace = history.replaceState;
   const patched: typeof history.pushState = function (this: History, ...args) {
     const before = location.pathname;
+    heights.set(current, Math.round(window.scrollY));
+    cancelAnimationFrame(restoring);
     push.apply(this, args);
+    current = key();
     if (location.pathname === before || location.hash) return;
-    getLenis()?.scrollTo(0, { immediate: true, force: true });
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    jump(0);
   };
+  const patchedReplace: typeof history.replaceState = function (this: History, ...args) {
+    replace.apply(this, args);
+    current = key();
+  };
+  // la página anterior tarda unos fotogramas en pintarse (y sus imágenes, en darle alto): se insiste hasta llegar a la
+  // altura guardada o durante 1,5 s, y se suelta en cuanto el usuario se mueve
+  const onPop = () => {
+    current = key();
+    const y = heights.get(current) ?? 0;
+    cancelAnimationFrame(restoring);
+    if (location.hash) return;
+    // al menos 0,4 s: si la página que se deja ya tiene alto, la altura se alcanza antes de que llegue la otra
+    const start = performance.now();
+    let held = 0;
+    const step = () => {
+      jump(y);
+      held = Math.abs(window.scrollY - y) < 2 ? held + 1 : 0;
+      const t = performance.now() - start;
+      if ((held < 6 || t < 400) && t < 1500) restoring = requestAnimationFrame(step);
+    };
+    restoring = requestAnimationFrame(step);
+  };
+  const stop = () => cancelAnimationFrame(restoring);
+  const prevRestoration = history.scrollRestoration;
+  history.scrollRestoration = "manual";
   history.pushState = patched;
+  history.replaceState = patchedReplace;
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("popstate", onPop);
+  for (const ev of ["wheel", "touchstart", "keydown"]) addEventListener(ev, stop, { passive: true });
   return () => {
-    // solo si nadie lo ha vuelto a envolver después
+    stop();
+    history.scrollRestoration = prevRestoration;
+    // solo si nadie los ha vuelto a envolver después
     if (history.pushState === patched) history.pushState = push;
+    if (history.replaceState === patchedReplace) history.replaceState = replace;
+    removeEventListener("scroll", onScroll);
+    removeEventListener("popstate", onPop);
+    for (const ev of ["wheel", "touchstart", "keydown"]) removeEventListener(ev, stop);
   };
 }
 
