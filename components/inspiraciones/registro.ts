@@ -41,6 +41,14 @@ import { PAGINAS as vencejoPaginas } from "./vencejo/data";
 import { PAGINAS as nacarPaginas } from "./nacar/data";
 import { PAGINAS as nimboPaginas } from "./nimbo/data";
 import { PAGINAS as plenoPaginas } from "./pleno/data";
+import { PAGINAS as boloPaginas } from "./bolo/data";
+import { PAGINAS as granoPaginas } from "./grano/data";
+import { PAGINAS as turiaPaginas } from "./turia/data";
+import { PAGINAS as majoPaginas } from "./majo/data";
+import { PAGINAS as corrientePaginas } from "./corriente/data";
+import { PAGINAS as tuestePaginas } from "./tueste/data";
+import { PAGINAS as trochaPaginas } from "./trocha/data";
+import { PAGINAS as llavePaginas } from "./llave/data";
 
 export type Replica = {
   slug: string;
@@ -50,7 +58,7 @@ export type Replica = {
   ref: string;
   url: string;
   ficha: string;
-  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música" | "safari" | "restaurante" | "clínica" | "arquitectura" | "automoción" | "finanzas" | "software" | "conferencia";
+  sector: "peluquería" | "gimnasio" | "academia" | "producto" | "agencia" | "estudio creativo" | "club de suscripción" | "cine" | "interiorismo" | "robótica" | "inmobiliaria" | "videojuego" | "selección de personal" | "logística" | "mueble" | "música" | "safari" | "restaurante" | "clínica" | "arquitectura" | "automoción" | "finanzas" | "software" | "conferencia" | "tipografía" | "maquinaria" | "residencia";
   /** lo que la hace reconocible, en una línea */
   firma: string;
   hecha: boolean;
@@ -79,7 +87,7 @@ export const REPLICAS: Replica[] = [
   { slug: "raiz", nombre: "Raíz", ref: "Marco Ambrosi", url: "https://www.marcoambrosi.salon/", ficha: "§3.2", sector: "peluquería", firma: "oscuro y cobre, antes y después", hecha: true, guia: "barberia", acento: "#b87333", paginas: raizPaginas, transicion: "fade" },
   { slug: "patron", nombre: "Patrón", ref: "Don Barber & Groom", url: "https://don-barber.gr/en", ficha: "§3.2", sector: "peluquería", firma: "gótica condensada, cinta y la familia", hecha: true, guia: "barberia", acento: "#c9a227", paginas: patronPaginas, transicion: "slide" },
   { slug: "nucleo", nombre: "Núcleo", ref: "Core Atelier Pilates", url: "https://coreatelierpilates.com/", ficha: "§3.4", sector: "gimnasio", firma: "acordeón de aparatos con la foto fija", hecha: true, guia: "boutique", acento: "#744c32", scroll: "snappy", paginas: nucleoPaginas, transicion: "fade" },
-  { slug: "impulso", nombre: "Impulso", ref: "Essor Fitness", url: "https://coachsportifecublens.com/", ficha: "§3.4", sector: "gimnasio", firma: "negro absoluto y titular a todo el ancho", hecha: true, guia: "club", acento: "#f2f2f2", scroll: "snappy", paginas: impulsoPaginas, transicion: "slide" },
+  { slug: "impulso", nombre: "Impulso", ref: "Essor Fitness", url: "https://coachsportifecublens.com/", ficha: "§3.4", sector: "gimnasio", firma: "negro absoluto y titular a todo el ancho", hecha: true, guia: "bloque", acento: "#f2f2f2", scroll: "snappy", paginas: impulsoPaginas, transicion: "slide" },
   { slug: "vive", nombre: "Vive", ref: "FIT AND YOU", url: "https://fit-and-you.webflow.io/", ficha: "§3.4", sector: "gimnasio", firma: "condensada naranja, damero y tarjetas ladeadas", hecha: true, guia: "club", acento: "#ff6a1a", paginas: vivePaginas, transicion: "wipe" },
   { slug: "talla", nombre: "Talla", ref: "Skulpt Fitness", url: "https://www.skulptfitness.nl", ficha: "§3.4", sector: "gimnasio", firma: "lima, bordes curvos y menú en columnas verticales", hecha: true, guia: "club", acento: "#cef952", paginas: tallaPaginas, transicion: "stack" },
   { slug: "lobo", nombre: "Lobo", ref: "Fenriz Gym", url: "https://www.fenriz-gym.com/", ficha: "§3.4", sector: "gimnasio", firma: "B/N con un degradado de marca", hecha: true, guia: "club", acento: "#e2462b", paginas: loboPaginas, transicion: "slide" },
@@ -90,7 +98,7 @@ export const REPLICAS: Replica[] = [
   { slug: "q47", nombre: "Q47", ref: "K72", url: "https://k72.ca/en", ficha: "§3.9", sector: "agencia", firma: "menú de filas con marquesina y transición en escalera", hecha: true, guia: "club", acento: "#ffffff", paginas: q47Paginas, transicion: "stairs" },
   // las dos anteriores, del laboratorio de cine (docs/41–43): webs 3D enteras
   { slug: "cenit", nombre: "Cénit", ref: "Lusion", url: "https://lusion.co/", ficha: "docs/43", sector: "estudio creativo", firma: "racimo de cruces en 3D, cintas que se dibujan con el scroll y un reel que crece hasta llenar la pantalla", hecha: true, guia: "monocromo", acento: "#2f3cff", scroll: "cinematic", paginas: cenitPaginas, transicion: "fade" },
-  { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "electrico", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
+  { slug: "brasa", nombre: "Brasa", ref: "Meer Mohsin", url: "https://www.meermohsin.me/", ficha: "docs/41", sector: "estudio creativo", firma: "retrato en rojo, llamas que suben con el scroll y palabras caligráficas gigantes", hecha: true, guia: "bloque", acento: "#e60000", scroll: "cinematic", paginas: brasaPaginas, transicion: "fade" },
   // tercera ronda (docs/58): sectores nuevos y estéticas lejos de las anteriores
   { slug: "polilla", nombre: "Polilla", ref: "Aardvark Book Club", url: "https://aardvarkbookclub.com/", ficha: "docs/58", sector: "club de suscripción", firma: "amarillo con manchas orgánicas, ultranegra y libros con volumen que caen con el scroll", hecha: true, guia: "manchas", acento: "#ffd24a", scroll: "snappy", paginas: polillaPaginas, transicion: "wipe" },
   { slug: "sesion-doble", nombre: "Sesión Doble", ref: "A24 de Ravi Klaassens", url: "https://a24.raviklaassens.com/", ficha: "docs/58", sector: "cine", firma: "catálogo en discos que giran y una didona apretada con estrellas", hecha: true, guia: "filmoteca", acento: "#c9c46a", paginas: sesionPaginas, transicion: "fade" },
@@ -111,6 +119,14 @@ export const REPLICAS: Replica[] = [
   { slug: "nacar", nombre: "Nácar", ref: "Moto", url: "https://www.moto-card.com/", ficha: "docs/59", sector: "finanzas", firma: "piedra negra, tarjeta de acero en 3D sobre un pedestal y una galería que se recorre en profundidad", hecha: true, guia: "obsidiana", acento: "#e1e5e5", scroll: "cinematic", paginas: nacarPaginas, transicion: "fade" },
   { slug: "nimbo", nombre: "Nimbo", ref: "Cerebrium", url: "https://cerebrium.ai/", ficha: "docs/59", sector: "software", firma: "negro violáceo con una cinta de luz magenta que se dibuja sola y tarjetas blancas con barras, mapa y gráfica en directo", hecha: true, guia: "cinta", acento: "#ff3d8b", scroll: "snappy", paginas: nimboPaginas, transicion: "fade" },
   { slug: "pleno", nombre: "PLENO", ref: "OFFF Forum", url: "https://www.offforum.com/", ficha: "docs/59", sector: "conferencia", firma: "blanco y negro, fotos de escenario que se funden bajo un titular en serifa mayúscula y un logotipo de formas ultranegras", hecha: true, guia: "foro", acento: "#000000", paginas: plenoPaginas, transicion: "stairs" },
+  { slug: "bolo", nombre: "Bolo", ref: "Truck'N Roll", url: "https://trucknroll.com/", ficha: "docs/60", sector: "logística", firma: "negro carbón, condensada de 900 a toda la pantalla con fotos entre las palabras, pegatina girada y pie violeta con cintas cruzadas", hecha: true, guia: "bloque", acento: "#5a3ff2", scroll: "snappy", paginas: boloPaginas, transicion: "wipe" },
+  { slug: "grano", nombre: "Grano", ref: "Glitch&Grit", url: "https://glitchandgrit.com/", ficha: "docs/60", sector: "estudio creativo", firma: "muro de proyectos fijado al scroll: dos mitades por proyecto y su nombre en grotesca de 900 y color pastel que salta con un glitch", hecha: true, guia: "bloque", acento: "#9be59a", scroll: "snappy", paginas: granoPaginas, transicion: "blinds" },
+  { slug: "turia", nombre: "Turia Grotesk", ref: "PP Neue Montreal", url: "https://neuemontreal.com/", ficha: "docs/60", sector: "tipografía", firma: "una tipografía presentada como guía de viaje: bloques de color pleno, el nombre a todo lo ancho, carta de pesos en franjas de colores y cintas de acentos", hecha: true, guia: "senal", acento: "#f0523a", scroll: "snappy", paginas: turiaPaginas, transicion: "slide" },
+  { slug: "majo", nombre: "Majo", ref: "Fauna Robotics", url: "https://faunarobotics.com", ficha: "docs/60", sector: "robótica", firma: "crema cálido, titulares centrados en grotesca de 500, tarjetas muy redondeadas y figuras de formas geométricas de colores", hecha: true, guia: "papel", acento: "#e8572f", paginas: majoPaginas, transicion: "fade" },
+  { slug: "corriente", nombre: "Nada Corriente", ref: "Normal is Boring", url: "https://normalisboring.es/", ficha: "docs/60", sector: "inmobiliaria", firma: "serifa editorial ultrafina en mayúsculas escalonada por la pantalla, marca partida entre dos esquinas, bloques azul claro y coral y palabras gigantes cortadas", hecha: true, guia: "tinta", acento: "#e4685a", scroll: "editorial", paginas: corrientePaginas, transicion: "fade" },
+  { slug: "tueste", nombre: "Tueste", ref: "CoffeeTech", url: "https://coffee-tech.com/", ficha: "docs/60", sector: "maquinaria", firma: "portada negra con grotesca enorme, cuerpo crema con catálogo de máquinas en tarjetas grises, sobretítulos entre corchetes y naranja solo en las llamadas", hecha: true, guia: "senal", acento: "#e0552b", paginas: tuestePaginas, transicion: "slide" },
+  { slug: "trocha", nombre: "Trocha", ref: "Radian", url: "https://www.rideradian.com/", ficha: "docs/60", sector: "automoción", firma: "gris cálido y fotos de campo a sangre, grotesca contenida y un amarillo de reserva; visor de la moto en cuatro ángulos con puntos de detalle", hecha: true, guia: "nocturno", acento: "#f2d21b", scroll: "snappy", paginas: trochaPaginas, transicion: "fade" },
+  { slug: "llave", nombre: "Llave", ref: "Units", url: "https://units.gr/en/homepage/", ficha: "docs/60", sector: "residencia", firma: "rejilla de tarjetas de color pleno muy redondeadas, letra gruesa y redonda, lateral de pestañas de colores y aviso amarillo de oferta", hecha: true, guia: "manchas", acento: "#2f5bea", paginas: llavePaginas, transicion: "iris" },
 ];
 
 export const replica = (slug: string) => REPLICAS.find((r) => r.slug === slug);

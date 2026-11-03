@@ -1,0 +1,98 @@
+/* Llave (a partir de Units, docs/60): rejilla de tarjetas de color pleno (azul, amarillo, naranja, rojo, verde, morado)
+   sobre crema, radio de 22 px. Bunch, gruesa y redonda, a 3–6 vw → Titan One; Aeonik → Onest para el texto a 14 px.
+   Un lateral fijo de pestañas de colores en escritorio. */
+.ll {
+  --bg: #f2efe8; --fg: #111111; --mut: #4c4a45; --acc: #2f5bea; --acc2: #ffd31a; --card: #ffffff; --ln: rgba(17, 17, 17, 0.14); --r: 22px;
+  --ll-m: clamp(10px, 1vw, 14px);
+  display: grid; grid-template-columns: 74px minmax(0, 1fr); background: var(--bg); color: var(--fg); font: 400 14px/1.4 var(--font-onest), system-ui, sans-serif; overflow-x: clip;
+}
+:where(.ll) a { color: inherit; text-decoration: none; }
+.ll h1, .ll h2 { margin: 0; }
+.ll-t { margin: 0; font: 400 clamp(1.6rem, 2.8vw, 2.8rem)/0.98 var(--font-titan-one), "Arial Black", sans-serif; letter-spacing: -0.01em; }
+.ll-t--hero { font-size: clamp(2.6rem, 6vw, 6.4rem); }
+.ll-t--pag { font-size: clamp(2.4rem, 5vw, 5rem); }
+.ll-etq { margin: 0; display: inline-block; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); color: #111; font-size: 12px; font-weight: 500; justify-self: start; }
+.ll-boton { display: inline-flex; justify-content: center; padding: 11px 18px; border-radius: 999px; background: #111; color: #fff; font: 600 13px/1 var(--font-onest); border: 0; cursor: pointer; transition: scale 0.2s; }
+.ll-boton:hover { scale: 1.04; }
+.ll-boton--blanco { background: #fff; color: #111; }
+.ll-precio { font: 400 clamp(1.8rem, 3vw, 2.8rem)/1 var(--font-titan-one); }
+
+/* el lateral: pestañas de colores a lo alto */
+.ll-lado { position: sticky; top: 0; height: 100svh; display: grid; grid-template-rows: auto 1fr; gap: 8px; padding: var(--ll-m) 0 var(--ll-m) var(--ll-m); }
+.ll-lado__marca { font: 400 1.25rem/1 var(--font-titan-one); }
+.ll-lado nav { display: grid; gap: 6px; }
+.ll-lado nav a { display: grid; place-items: center; border-radius: 14px; background: var(--c); color: var(--t); transition: filter 0.2s; }
+.ll-lado nav a:hover { filter: brightness(1.08); }
+.ll-lado nav a[aria-current] { outline: 3px solid #111; outline-offset: -3px; }
+.ll-lado nav span { writing-mode: vertical-rl; rotate: 180deg; font: 400 14px/1 var(--font-titan-one); }
+.ll-movil { display: none; }
+.ll-cuerpo { min-width: 0; }
+
+/* la rejilla de la portada */
+.ll-bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(220px, auto); gap: var(--ll-m); padding: var(--ll-m); }
+.ll-tarjeta { position: relative; display: grid; gap: 12px; align-content: start; padding: 18px; border-radius: var(--r); background: var(--c); overflow: hidden; }
+.ll-tarjeta img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: calc(var(--r) - 8px); }
+.ll-tarjeta p:not(.ll-etq):not(.ll-t) { margin: 0; }
+.ll-tarjeta--hero { grid-column: 1 / 3; grid-row: span 2; align-content: end; padding: 0; color: #fff; }
+.ll-tarjeta--hero img { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; border-radius: 0; filter: brightness(0.62); }
+.ll-tarjeta--hero h1 { position: relative; padding: 24px; }
+.ll-tarjeta--mapa { grid-column: 3 / 5; }
+.ll-tarjeta--mapa ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ll-tarjeta--mapa a { display: grid; grid-template-columns: 7em 1fr; gap: 10px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.65); }
+.ll-tarjeta--universo { grid-column: 3 / 5; color: #111; align-content: space-between; }
+.ll-tarjeta--universo .ll-boton { justify-self: start; }
+/* el texto de cada tarjeta, el que pasa de 4,5:1 sobre su color */
+.ll-tarjeta--b0, .ll-tarjeta--b1, .ll-tarjeta--b2, .ll-tarjeta--b3 { color: #111; }
+.ll-tarjeta--b4, .ll-tarjeta--b5 { color: #fff; }
+.ll-tarjeta--incluido { grid-column: span 2; }
+.ll-tarjeta--incluido ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ll-tarjeta--incluido li { padding: 8px 12px; border-radius: 999px; background: #fff; font-size: 13px; }
+
+.ll-pie { display: grid; gap: 14px; margin: var(--ll-m); padding: 30px; border-radius: var(--r); background: #111; color: #f2efe8; }
+.ll-pie div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; font-size: 12px; color: #c9c5bb; }
+
+/* el aviso de la oferta, abajo a la derecha */
+.ll-aviso { position: fixed; right: 20px; bottom: 20px; z-index: 60; display: grid; gap: 10px; justify-items: start; width: min(320px, calc(100vw - 40px)); padding: 12px 12px 18px; border-radius: var(--r); background: #ffd31a; color: #111; animation: ll-sube 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes ll-sube { from { opacity: 0; translate: 0 20px; } to { opacity: 1; translate: 0 0; } }
+.ll-aviso img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 14px; }
+.ll-aviso__x { position: absolute; right: 18px; top: 18px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: #fff; color: #111; font: 400 20px/1 var(--font-onest); cursor: pointer; }
+.ll-aviso__etq { margin: 0; padding: 4px 8px; border-radius: 8px; background: #fff; font-size: 12px; }
+.ll-aviso .ll-t { font-size: 1.6rem; }
+
+/* páginas internas */
+.ll-pag { display: grid; gap: var(--ll-m); padding: var(--ll-m); }
+.ll-pag > .ll-t--pag { padding: 30px 8px 10px; }
+.ll-lista { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ll-m); }
+.ll-lista .ll-tarjeta { min-height: 260px; }
+.ll-ficha__cab { min-height: 260px; align-content: end; }
+.ll-habs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ll-m); }
+.ll-habs .ll-boton { justify-self: start; }
+.ll-reserva { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.1fr); gap: var(--ll-m); align-items: start; }
+.ll-reserva fieldset { display: grid; gap: 8px; margin: 0; padding: 14px; border: 0; border-radius: var(--r); background: #fff; }
+.ll-reserva legend { float: left; margin-bottom: 6px; font: 400 1.1rem/1 var(--font-titan-one); }
+.ll-reserva fieldset button { display: grid; gap: 2px; padding: 12px 14px; border: 2px solid transparent; border-radius: 14px; background: var(--bg); color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.ll-reserva fieldset button[aria-pressed="true"] { border-color: #111; }
+.ll-reserva fieldset button[style] { background: var(--c); color: var(--t); }
+.ll-reserva fieldset small { opacity: 0.85; }
+.ll-reserva__total { position: sticky; top: 14px; }
+.ll-reserva__total .ll-boton { justify-self: start; }
+.ll-checkout { --bg: #f2efe8; --card: #ffffff; --acc: #111111; }
+
+@media (max-width: 900px) {
+  .ll { grid-template-columns: 1fr; }
+  .ll-lado { display: none; }
+  .ll-movil { position: sticky; top: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); }
+  .ll-bento { grid-template-columns: 1fr 1fr; }
+  .ll-tarjeta--hero, .ll-tarjeta--mapa, .ll-tarjeta--universo, .ll-tarjeta--incluido { grid-column: 1 / -1; }
+  .ll-tarjeta--hero { grid-row: auto; min-height: 70svh; }
+  .ll-tarjeta--mapa a { grid-template-columns: 1fr; }
+  .ll-lista, .ll-habs, .ll-reserva { grid-template-columns: 1fr; }
+  .ll-reserva__total { position: static; }
+}
+@media (max-width: 520px) {
+  .ll-bento { grid-template-columns: 1fr; }
+  .ll-tarjeta--hero, .ll-tarjeta--mapa, .ll-tarjeta--universo, .ll-tarjeta--incluido { grid-column: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ll-aviso { animation: none; }
+}

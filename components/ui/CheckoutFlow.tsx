@@ -11,7 +11,7 @@ import TextField from "./TextField";
 import { vcls, type Variant } from "./variants";
 
 export type CheckoutPickup = { id: string; name: string; address?: string };
-export type CheckoutOrder = { code: string; total: number; delivery: "shipping" | "pickup"; place?: string; name: string; email: string };
+export type CheckoutOrder = { code: string; total: number; delivery: "shipping" | "pickup" | "digital"; place?: string; name: string; email: string };
 
 export type CheckoutFlowProps = {
   /** las líneas del carrito (`useCart`) */
@@ -19,8 +19,9 @@ export type CheckoutFlowProps = {
   onQty: (id: string, qty: number) => void;
   /** vacía el carrito al confirmar */
   onClear: () => void;
-  /** formas de entrega que ofreces: envío a casa, recogida en tienda o las dos */
-  delivery?: "shipping" | "pickup" | "both";
+  /** formas de entrega que ofreces: envío a casa, recogida en tienda, las dos, o digital (licencias, archivos, entradas: sin
+   * paso de entrega ni gastos de envío; se entrega por correo al confirmar) */
+  delivery?: "shipping" | "pickup" | "both" | "digital";
   /** coste del envío y a partir de qué importe es gratis */
   shippingCost?: number;
   freeShippingFrom?: number;
@@ -38,7 +39,7 @@ export type CheckoutFlowProps = {
 };
 
 /**
- * Cierre de un pedido en pasos: datos, entrega (envío a casa o recogida en tienda) y pago, con un resumen al lado que
+ * Cierre de un pedido en pasos: datos, entrega (envío a casa o recogida en tienda; sin este paso si es digital) y pago, con un resumen al lado que
  * deja cambiar cantidades. El pago se simula: valida titular, número (Luhn), caducidad y CVC, o «pagas al recoger». La
  * confirmación da un número de pedido y vacía el carrito. No cobra ni envía nada: conecta `onOrder` a tu pasarela.
  */
@@ -67,10 +68,13 @@ export default function CheckoutFlow({
   const [error, setError] = useState("");
   const [hecho, setHecho] = useState<CheckoutOrder | null>(null);
 
+  const digital = delivery === "digital";
   const subtotal = lines.reduce((n, l) => n + l.price * l.qty, 0);
-  const envio = entrega === "pickup" || subtotal >= freeShippingFrom ? 0 : shippingCost;
+  const envio = digital || entrega === "pickup" || subtotal >= freeShippingFrom ? 0 : shippingCost;
   const total = Math.round((subtotal + envio) * 100) / 100;
-  const pasos = "Tus datos, Entrega, Pago";
+  const pasos = digital ? "Tus datos, Pago" : "Tus datos, Entrega, Pago";
+  // el paso del pago: el segundo en un pedido digital, el tercero en los demás
+  const PAGO = digital ? 1 : 2;
 
   if (hecho)
     return (
@@ -81,7 +85,7 @@ export default function CheckoutFlow({
           </p>
           <h2>{hecho.code}</h2>
           <p>
-            {hecho.delivery === "pickup" ? `Te lo apartamos en ${pickups.find((p) => p.id === hecho.place)?.name ?? "la tienda"}: te avisamos cuando esté listo.` : "Lo preparamos hoy y te escribimos cuando salga."} Total {money(hecho.total)}.
+            {hecho.delivery === "digital" ? `Te lo mandamos ahora mismo a ${hecho.email}, con la factura.` : hecho.delivery === "pickup" ? `Te lo apartamos en ${pickups.find((p) => p.id === hecho.place)?.name ?? "la tienda"}: te avisamos cuando esté listo.` : "Lo preparamos hoy y te escribimos cuando salga."} Total {money(hecho.total)}.
           </p>
           <p className="ui-book__note">Hemos enviado el resumen a {hecho.email} (demostración: no sale nada).</p>
           <div className="ui-book__actions">
@@ -114,14 +118,15 @@ export default function CheckoutFlow({
     if (paso === 1 && entrega === "pickup" && !punto) return setError("Elige dónde lo recoges.");
     setPaso(paso + 1);
   };
+  const tarjetaObligada = digital || pago === "card" || entrega === "shipping";
   const pagar = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (pago === "card" || entrega === "shipping") {
+    if (tarjetaObligada) {
       const e = cardError(tarjeta);
       if (e) return setError(e);
     }
-    const o: CheckoutOrder = { code: `${orderPrefix}-${String(1000 + ((Date.now() / 1000) % 9000) | 0)}`, total, delivery: entrega, place: entrega === "pickup" ? punto : undefined, name: datos.name.trim(), email: datos.email.trim() };
+    const o: CheckoutOrder = { code: `${orderPrefix}-${String(1000 + ((Date.now() / 1000) % 9000) | 0)}`, total, delivery: digital ? "digital" : entrega, place: !digital && entrega === "pickup" ? punto : undefined, name: datos.name.trim(), email: datos.email.trim() };
     setHecho(o);
     onClear();
     onOrder?.(o);
@@ -138,7 +143,7 @@ export default function CheckoutFlow({
             <TextField label="Teléfono (opcional)" type="tel" value={datos.phone} onChange={(v) => setDatos({ ...datos, phone: v })} autoComplete="tel" variant={variant} />
           </div>
         )}
-        {paso === 1 && (
+        {paso === 1 && !digital && (
           <div className="ui-book__step">
             {delivery === "both" && (
               <fieldset className="ui-book__group">
@@ -184,9 +189,9 @@ export default function CheckoutFlow({
             )}
           </div>
         )}
-        {paso === 2 && (
+        {paso === PAGO && (
           <form className="ui-book__step ui-book__form" onSubmit={pagar} noValidate>
-            {entrega === "pickup" && (
+            {!digital && entrega === "pickup" && (
               <div className="ui-book__choices">
                 <button type="button" aria-pressed={pago === "card"} onClick={() => setPago("card")}>
                   <b>Pagar ahora con tarjeta</b>
@@ -196,7 +201,7 @@ export default function CheckoutFlow({
                 </button>
               </div>
             )}
-            {pago === "card" || entrega === "shipping" ? (
+            {tarjetaObligada ? (
               <>
                 <TextField label="Titular" value={tarjeta.holder} onChange={(v) => setTarjeta({ ...tarjeta, holder: v })} autoComplete="cc-name" required variant={variant} />
                 <TextField label="Número de tarjeta" value={tarjeta.number} onChange={(v) => setTarjeta({ ...tarjeta, number: v.replace(/[^\d ]/g, "").slice(0, 23) })} autoComplete="cc-number" placeholder="4242 4242 4242 4242" required variant={variant} />
@@ -215,12 +220,12 @@ export default function CheckoutFlow({
               </p>
             )}
             <div className="ui-book__actions">
-              <Button label="Atrás" onClick={() => { setError(""); setPaso(1); }} emphasis="outline" variant={variant} />
+              <Button label="Atrás" onClick={() => { setError(""); setPaso(PAGO - 1); }} emphasis="outline" variant={variant} />
               <Button label={`Pagar ${money(total)}`} type="submit" variant={variant} />
             </div>
           </form>
         )}
-        {paso < 2 && (
+        {paso < PAGO && (
           <>
             {error && (
               <p className="ui-book__error" role="alert">
@@ -249,8 +254,8 @@ export default function CheckoutFlow({
           ))}
         </ul>
         <p className="ui-checkout__linea">
-          <span>Envío</span>
-          <span>{envio ? money(envio) : "gratis"}</span>
+          <span>{digital ? "Entrega" : "Envío"}</span>
+          <span>{digital ? "por correo, al momento" : envio ? money(envio) : "gratis"}</span>
         </p>
         <p className="ui-checkout__linea ui-checkout__total">
           <span>Total</span>

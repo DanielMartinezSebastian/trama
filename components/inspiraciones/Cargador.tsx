@@ -58,6 +58,14 @@ const SITIOS: Record<string, { Shell: Shell; Pagina: Pagina }> = {
   "nacar": sitio(() => import("./nacar/Sitio")),
   "nimbo": sitio(() => import("./nimbo/Sitio")),
   "pleno": sitio(() => import("./pleno/Sitio")),
+  "bolo": sitio(() => import("./bolo/Sitio")),
+  "grano": sitio(() => import("./grano/Sitio")),
+  "turia": sitio(() => import("./turia/Sitio")),
+  "majo": sitio(() => import("./majo/Sitio")),
+  "corriente": sitio(() => import("./corriente/Sitio")),
+  "tueste": sitio(() => import("./tueste/Sitio")),
+  "trocha": sitio(() => import("./trocha/Sitio")),
+  "llave": sitio(() => import("./llave/Sitio")),
 };
 
 /**

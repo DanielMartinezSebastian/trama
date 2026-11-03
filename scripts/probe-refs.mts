@@ -27,7 +27,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
 import { GUIDE_EXCEPTIONS, STYLE_GUIDES } from "../lib/ui/guides";
-import { afinidades, rasgos, type Medida } from "./guias-afinidad.mts";
+import { TITULAR_MIN_VW, afinidades, rasgos, type Medida } from "./guias-afinidad.mts";
 import { chromiumPath } from "./chromium-path.mts";
 import { aceptarCookies } from "./cine/navegador.mts";
 
@@ -90,6 +90,8 @@ function probe() {
   const inc = (m: Record<string, number>, k: string | number, v = 1) => (m[k] = (m[k] || 0) + v);
   const top = (m: Record<string, number>, n = 6) => Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, n);
   const fam = (s: string) => s.split(",")[0].replace(/["']/g, "").trim();
+  // la familia genérica de la pila (`"PP Fragment", serif`): clasifica letras de fundición cuyo nombre no lo dice
+  const generica = (s: string) => (s.match(/(?:^|,)\s*(serif|sans-serif|monospace|cursive|system-ui)\s*(?=,|$)/g) ?? []).pop()?.replace(/[,\s]/g, "") ?? "";
   const w = window as unknown as Record<string, any>;
 
   const libs = {
@@ -150,8 +152,37 @@ function probe() {
     .slice(0, 3)
     .map(({ el, cs }) => {
       const s = parseFloat(cs.fontSize) * escalaPintada(el);
-      return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || 0), ls: r1((parseFloat(cs.letterSpacing) / parseFloat(cs.fontSize)) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily) };
+      return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || 0), ls: r1((parseFloat(cs.letterSpacing) / parseFloat(cs.fontSize)) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily), generic: generica(cs.fontFamily) };
     });
+  const texto = (el: Element) => {
+    const cs = getComputedStyle(el);
+    const s = parseFloat(cs.fontSize) * escalaPintada(el);
+    return { text: el.textContent!.trim().slice(0, 40), size: r1(s), vw: r1((s / W) * 100), weight: Number(cs.fontWeight), lh: r1(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || 0), ls: r1((parseFloat(cs.letterSpacing) / parseFloat(cs.fontSize)) * 100 || 0), upper: cs.textTransform === "uppercase" || (/\p{Lu}/u.test(el.textContent!) && el.textContent!.trim() === el.textContent!.trim().toLocaleUpperCase()), family: fam(cs.fontFamily), generic: generica(cs.fontFamily) };
+  };
+  // el titular de la página: lo mayor de las tres primeras pantallas, sin el pie (su marca de borde a borde no cuenta).
+  // Lo usa la afinidad cuando la primera pantalla es una foto o una escena y lo mayor en ella es la navegación (docs/60 §2)
+  const biggestPage = [...seen]
+    .filter((el) => {
+      const r = el.getBoundingClientRect();
+      const visible = (el as Element & { checkVisibility?: (o: object) => boolean }).checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) ?? true;
+      return visible && !el.closest("footer, [role=contentinfo], [aria-hidden=true]") && r.width > 4 && r.height > 4 && r.top < H * 3 && r.bottom > 0 && r.left < W && r.right > 0;
+    })
+    .map((el) => ({ el, cs: getComputedStyle(el), k: escalaPintada(el) }))
+    .sort((a, b) => parseFloat(b.cs.fontSize) * b.k - parseFloat(a.cs.fontSize) * a.k)
+    .slice(0, 1)
+    .map(({ el }) => texto(el));
+  // en las páginas hechas con las clases de las guías (sus relatos en /guias), la marca (`.ui-g-brand`) y el titular
+  // (`.ui-g-h1`, `h1`) por separado: un relato que abre con la marca de borde a borde (club, foro, burdeos…) daba como
+  // titular la marca, a 27–47 vw, y sus webs, con titulares de 5–14 vw, no se le parecían (docs/60 §2)
+  const enVista = (el: Element, pantallas: number) => {
+    const r = el.getBoundingClientRect();
+    const visible = (el as Element & { checkVisibility?: (o: object) => boolean }).checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) ?? true;
+    return visible && !el.closest("[aria-hidden=true]") && r.width > 4 && r.height > 4 && r.top < H * pantallas && r.bottom > 0;
+  };
+  const mayor = (els: Element[]) => els.map((el) => ({ el, s: parseFloat(getComputedStyle(el).fontSize) * escalaPintada(el) })).sort((a, b) => b.s - a.s)[0]?.el;
+  const marcaEl = mayor([...document.querySelectorAll(".ui-g-brand")].filter((el) => enVista(el, 1)));
+  const titularEl = mayor([...document.querySelectorAll(".ui-g-h1, h1, .ui-g-h2, h2")].filter((el) => !el.closest(".ui-g-brand") && enVista(el, 2)));
+  const guia = marcaEl || document.querySelector(".ui-g-h1") ? { marca: marcaEl ? texto(marcaEl) : null, titular: titularEl ? texto(titularEl) : null } : null;
   // texto: el tamaño más repetido entre los párrafos largos (un párrafo con estilo de titular no cuenta)
   const paras = [...document.querySelectorAll("p")].filter((e) => (e.textContent?.trim().length ?? 0) > 60 && e.getBoundingClientRect().width > 0 && parseFloat(getComputedStyle(e).fontSize) <= 24);
   const bySize: Record<string, number> = {};
@@ -173,6 +204,8 @@ function probe() {
   const fixed: string[] = [];
   // paleta por superficie (docs/53 §3): fondos por área visible en la página y textos por caracteres; radios y curvas
   const fondos: Record<string, number> = {};
+  // los de la primera pantalla aparte: una portada oscura sobre una página clara (Cerebrium) o al revés (docs/60 §2)
+  const fondosHero: Record<string, number> = {};
   const tintas: Record<string, number> = {};
   const radios: Record<string, number> = {};
   const curvas: Record<string, number> = {};
@@ -192,6 +225,7 @@ function probe() {
   });
   const bodyBg = cubre.length ? hex(getComputedStyle(cubre[cubre.length - 1]).backgroundColor)! : "#ffffff";
   inc(fondos, bodyBg, docW * docH * 0.2);
+  inc(fondosHero, bodyBg, docW * H * 0.2);
   document.querySelectorAll("body *").forEach((el) => {
     const cs = getComputedStyle(el);
     if (cs.boxShadow !== "none") shadows++;
@@ -209,7 +243,11 @@ function probe() {
     const area = Math.max(0, Math.min(r.right, docW) - Math.max(r.left, 0)) * Math.max(0, r.height);
     if (area < 400) return;
     const bg = hex(cs.backgroundColor);
-    if (bg && !cubre.includes(el)) inc(fondos, bg, area);
+    if (bg && !cubre.includes(el)) {
+      inc(fondos, bg, area);
+      const enHero = Math.max(0, Math.min(r.right, docW) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, H) - Math.max(r.top, 0));
+      if (enHero >= 400) inc(fondosHero, bg, enHero);
+    }
     const rad = parseFloat(cs.borderTopLeftRadius);
     if (rad > 0 && (bg || cs.borderTopStyle !== "none" || el.tagName === "IMG" || el.tagName === "VIDEO")) inc(radios, rad >= Math.min(r.width, r.height) / 2 - 1 ? "píldora" : `${Math.round(rad)}`);
   });
@@ -229,6 +267,8 @@ function probe() {
     families: [...new Map(top(fams, 6).filter(([, n]) => n > 50).map(([f]) => [f.toLowerCase(), f])).values()].slice(0, 5),
     typeScale: top(sizes, 8).map(([s, n]) => [Number(s), Math.round((n / Math.max(chars, 1)) * 100)]),
     biggest,
+    biggestPage,
+    guia,
     body: pcs ? { size: r1(parseFloat(pcs.fontSize)), lh: r1(parseFloat(pcs.lineHeight) / parseFloat(pcs.fontSize) || 0), measureEm: Math.round(p!.getBoundingClientRect().width / parseFloat(pcs.fontSize)) } : null,
     // margen lateral: el menor desplazamiento izquierdo que se repite (≥ 3 bloques de texto alineados ahí)
     margin: Math.min(...Object.entries(lefts).filter(([x, n]) => n >= 3 && Number(x) > 0).map(([x]) => Number(x)), 9999),
@@ -236,7 +276,7 @@ function probe() {
     surfaces: { shadows, blend, gridCols, fixed: fixed.length },
     transitions: top(durs, 4).map(([d]) => d),
     /** [color, % de la superficie] y [color, % de los caracteres] */
-    palette: { fondos: reparto(fondos, 8), tintas: reparto(tintas, 6) },
+    palette: { fondos: reparto(fondos, 8), tintas: reparto(tintas, 6), fondosHero: reparto(fondosHero, 3) },
     radii: top(radios, 5).map(([k]) => k),
     easings: top(curvas, 4).map(([k]) => k),
     hover: [] as Hover[],
@@ -516,11 +556,13 @@ if (par) {
 } else if (repoBase) {
   // afinidad de cada página del repo con cada guía, medidas contra medidas (docs/54)
   const ok = (d: unknown): d is Data => !!d && !("error" in (d as object));
-  const guias = results.filter((r) => r.tipo === "guia" && ok(r.desk)).map((r) => ({ id: r.label as string, r: rasgos(r.desk as unknown as Medida)! })).filter((g) => g.r);
+  const guias = results.filter((r) => r.tipo === "guia" && ok(r.desk)).map((r) => ({ id: r.label as string, r: rasgos(r.desk as unknown as Medida, true)! })).filter((g) => g.r);
   const resumen = (d: Data) => ({
     fondo: d.palette.fondos[0]?.[0] ?? null,
+    fondoHero: d.palette.fondosHero?.[0]?.[0] ?? null,
     paleta: [...d.palette.fondos.slice(0, 4), ...d.palette.tintas.slice(0, 3)].map(([c, p]) => [c, p]),
     titular: d.biggest[0] ? { letra: d.biggest[0].family, vw: d.biggest[0].vw, peso: d.biggest[0].weight, interlineado: d.biggest[0].lh, tracking: d.biggest[0].ls, mayusculas: d.biggest[0].upper } : null,
+    titularPagina: d.biggestPage?.[0] && d.biggest[0] && d.biggest[0].vw < TITULAR_MIN_VW ? { letra: d.biggestPage[0].family, vw: d.biggestPage[0].vw, peso: d.biggestPage[0].weight, texto: d.biggestPage[0].text } : null,
     texto: d.body,
     familias: d.families,
     margen: d.margin >= 9999 ? null : d.margin,
@@ -534,7 +576,7 @@ if (par) {
     .filter((r) => ok(r.desk))
     .map((r) => {
       const d = r.desk as Data;
-      const rg = rasgos(d as unknown as Medida);
+      const rg = rasgos(d as unknown as Medida, r.tipo === "guia");
       return { tipo: r.tipo, ruta: String(r.label).startsWith("/") ? r.label : `/guias/relato/${r.label}`, guia: r.tipo === "guia" ? r.label : undefined, titulo: r.titulo, medidas: resumen(d), rasgos: rg, afinidad: rg ? afinidades(rg, guias.filter((g) => g.id !== r.label)) : [] };
     })
     .sort((a, b) => String(a.tipo).localeCompare(String(b.tipo)) || String(a.ruta).localeCompare(String(b.ruta)));

@@ -1,0 +1,119 @@
+/* Grano (a partir de Glitch&Grit, docs/60): negro. Elza 900 en mayúsculas a 9–11 vw, interlineado 0,86, −3 % → Archivo
+   900 a anchura normal; el texto pequeño, Inter Tight 500 en mayúsculas a 10–11 px. Cada proyecto tiene su color pastel
+   (verde, lila, azul, naranja, rosa, cian, amarillo) y es lo único de color de la página. */
+.gr {
+  --bg: #050505; --fg: #f1f0ec; --mut: #a3a29d; --acc: #9be59a; --acc2: #c7aaff; --card: #121212; --ln: rgba(241, 240, 236, 0.18); --r: 0px;
+  --gr-m: clamp(14px, 1.4vw, 22px);
+  background: var(--bg); color: var(--fg); font: 500 13px/1.4 var(--font-inter-tight), system-ui, sans-serif; overflow-x: clip;
+}
+:where(.gr) a { color: inherit; text-decoration: none; }
+.gr h1, .gr h2 { margin: 0; }
+.gr-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.gr-titular, .gr-nombre { margin: 0; font: 900 clamp(3.4rem, 10vw, 10.5rem)/0.86 var(--font-archivo), sans-serif; letter-spacing: -0.035em; text-transform: uppercase; }
+.gr-grande { margin: 0; font: 500 clamp(1.3rem, 2.2vw, 2.1rem)/1.08 var(--font-inter-tight); letter-spacing: -0.03em; max-width: 30ch; }
+.gr-grande a { text-decoration: underline; text-underline-offset: 4px; }
+.gr-boton { display: inline-flex; padding: 12px 18px; border: 1px solid var(--fg); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s, color 0.2s; }
+.gr-boton:hover { background: var(--fg); color: var(--bg); }
+
+/* la navegación en las cuatro esquinas, fija y en mayúsculas pequeñas */
+.gr-esquinas { position: fixed; inset: 0; z-index: 40; pointer-events: none; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; mix-blend-mode: difference; color: #fff; }
+.gr-esquinas > * { position: absolute; pointer-events: auto; padding: 4px 0; }
+.gr-esquinas a[aria-current] { text-decoration: underline; text-underline-offset: 3px; }
+.gr-esquinas__a { left: var(--gr-m); top: 12px; }
+.gr-esquinas__b { left: 50%; top: 12px; translate: -50% 0; }
+.gr-esquinas__c { right: var(--gr-m); top: 12px; }
+.gr-esquinas__d { left: var(--gr-m); bottom: 12px; }
+.gr-esquinas__e { left: 50%; bottom: 12px; translate: -50% 0; }
+.gr-esquinas__f { right: var(--gr-m); bottom: 12px; }
+.gr-movil { display: none; }
+
+/* el muro: una sección alta con el escenario fijado; cada proyecto, dos mitades y su nombre encima */
+.gr-muro { position: relative; }
+.gr-muro__fijo { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+.gr-mitad { position: relative; overflow: hidden; animation: gr-entra 0.7s cubic-bezier(0.7, 0, 0.2, 1) both; }
+.gr-mitad img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55) saturate(0.9); animation: gr-zoom 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.gr-mitad--a { --desde: inset(0 0 100% 0); }
+.gr-mitad--b { --desde: inset(100% 0 0 0); animation-delay: 0.08s; }
+.gr-mitad--arriba { --desde: inset(100% 0 0 0); }
+.gr-mitad--abajo { --desde: inset(0 0 100% 0); }
+@keyframes gr-entra { from { clip-path: var(--desde); } to { clip-path: inset(0); } }
+@keyframes gr-zoom { from { scale: 1.12; } to { scale: 1; } }
+.gr-muro__enlace { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; text-align: center; padding: 0 4vw; }
+.gr-muro__tipo, .gr-muro__ver { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.gr-muro__ver { opacity: 0; translate: 0 6px; transition: opacity 0.3s, translate 0.3s; }
+.gr-muro__enlace:hover .gr-muro__ver, .gr-muro__enlace:focus-visible .gr-muro__ver { opacity: 1; translate: 0 0; }
+.gr-muro__indice { position: absolute; right: var(--gr-m); top: 50%; translate: 0 -50%; display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.gr-muro__indice li { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); transition: background 0.3s, scale 0.3s; }
+.gr-muro__indice li[aria-current] { background: var(--c); scale: 1.6; }
+
+/* el nombre: su color, y al aparecer dos copias desplazadas que se recolocan (el glitch) */
+.gr-nombre { position: relative; color: var(--c); max-width: 11ch; animation: gr-sube 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.gr-nombre::before, .gr-nombre::after { content: attr(data-text); position: absolute; inset: 0; color: var(--c); pointer-events: none; }
+.gr-nombre::before { clip-path: inset(0 0 55% 0); animation: gr-glitch-a 0.5s steps(2) both; }
+.gr-nombre::after { clip-path: inset(55% 0 0 0); animation: gr-glitch-b 0.5s steps(2) both; }
+@keyframes gr-sube { from { opacity: 0; translate: 0 0.12em; } to { opacity: 1; translate: 0 0; } }
+@keyframes gr-glitch-a { 0% { translate: -0.08em 0; opacity: 1; } 60% { translate: 0.05em 0; } 100% { translate: 0 0; opacity: 0; } }
+@keyframes gr-glitch-b { 0% { translate: 0.1em 0; opacity: 1; } 60% { translate: -0.04em 0; } 100% { translate: 0 0; opacity: 0; } }
+
+.gr-cierre { display: grid; justify-items: start; gap: 30px; padding: 22vh var(--gr-m) 18vh; }
+
+.gr-pie { display: grid; gap: 30px; padding: 60px var(--gr-m) 60px; border-top: 1px solid var(--ln); }
+.gr-pie__marca { margin: 0; font: 900 clamp(4rem, 17vw, 18rem)/0.8 var(--font-archivo); letter-spacing: -0.05em; text-transform: uppercase; color: #9be59a; }
+.gr-pie__marca span { color: #c7aaff; }
+.gr-pie div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 30px; font-size: 11px; color: var(--mut); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* páginas internas */
+.gr-pag { display: grid; gap: 60px; padding: 70px var(--gr-m) 0; }
+.gr-cab { display: grid; gap: 26px; }
+.gr-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.gr-filtro button { padding: 8px 12px; border: 1px solid var(--ln); background: none; color: inherit; font: 500 11px/1 var(--font-inter-tight); letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.gr-filtro button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.gr-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 50px var(--gr-m); margin: 0; padding: 0; list-style: none; }
+.gr-lista a { display: grid; gap: 10px; }
+.gr-lista__fotos { display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 16 / 9; overflow: hidden; }
+.gr-lista__fotos img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.gr-lista a:hover img { scale: 1.05; }
+.gr-lista b { font: 900 clamp(1.8rem, 3.4vw, 3.2rem)/0.9 var(--font-archivo); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c); }
+.gr-lista small { font-size: 11px; color: var(--mut); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.gr-ficha { padding-top: 0; }
+.gr-ficha__fotos { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: 100svh; margin: 0 calc(-1 * var(--gr-m)); }
+.gr-ficha__fotos img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55) saturate(0.9); }
+.gr-ficha__fotos .gr-nombre { position: absolute; inset: 50% auto auto 50%; translate: -50% -50%; text-align: center; animation-name: none; }
+.gr-ficha__txt { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px var(--gr-m); }
+.gr-ficha__txt dl { display: grid; margin: 0; }
+.gr-ficha__txt dl div { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--ln); }
+.gr-ficha__txt dt { color: var(--mut); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+.gr-ficha__txt dd { margin: 0; }
+.gr-siguiente { display: grid; gap: 10px; justify-items: center; padding: 80px 0; text-align: center; border-top: 1px solid var(--ln); }
+.gr-siguiente small { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mut); }
+.gr-siguiente span { font: 900 clamp(2.6rem, 7vw, 7rem)/0.86 var(--font-archivo); letter-spacing: -0.035em; text-transform: uppercase; color: var(--c); }
+
+.gr-info { display: grid; grid-template-columns: 1fr 1fr; gap: 40px var(--gr-m); align-items: start; }
+.gr-info img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.gr-info > div { display: grid; gap: 40px; }
+.gr-servicios { display: grid; margin: 0; padding: 0; list-style: none; }
+.gr-servicios li { display: grid; grid-template-columns: 9em 1fr; gap: 14px; padding: 14px 0; border-top: 1px solid var(--ln); }
+.gr-servicios b { color: var(--c); text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; }
+.gr-servicios span { color: var(--mut); }
+.gr-clientes { display: grid; gap: 20px; }
+.gr-clientes h2 { font-size: 11px; color: var(--mut); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.gr-clientes ul { display: flex; flex-wrap: wrap; gap: 0.2em 0.6em; margin: 0; padding: 0; list-style: none; font: 900 clamp(1.8rem, 4vw, 3.6rem)/1 var(--font-archivo); letter-spacing: -0.03em; text-transform: uppercase; }
+.gr-clientes li:nth-child(odd) { color: #c7aaff; }
+.gr-clientes li:nth-child(3n) { color: #9be59a; }
+.gr-equipo { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; }
+.gr-flujo { --bg: #121212; --card: #1b1b1b; --acc: #9be59a; max-width: 1000px; }
+
+@media (max-width: 860px) {
+  .gr-esquinas { display: none; }
+  .gr-movil { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 10px var(--gr-m); mix-blend-mode: difference; color: #fff; }
+  .gr-movil__marca { font: 900 1.3rem/1 var(--font-archivo); text-transform: uppercase; letter-spacing: -0.02em; }
+  .gr-muro__fijo { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .gr-nombre { font-size: clamp(2.4rem, 12.5vw, 5rem); }
+  .gr-lista, .gr-info, .gr-ficha__txt { grid-template-columns: 1fr; }
+  .gr-ficha__fotos { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: 90svh; }
+  .gr-servicios li { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gr-mitad, .gr-mitad img, .gr-nombre, .gr-nombre::before, .gr-nombre::after { animation: none; }
+}
