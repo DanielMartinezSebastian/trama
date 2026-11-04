@@ -176,6 +176,19 @@ html:has(.tr:not(.tr--app)) body { height: auto; overflow-x: clip; overflow-y: v
 /* ---------- Páginas interiores (demos) ---------- */
 .tr-page { position: relative; z-index: 5; max-width: 1400px; margin-inline: auto; padding: calc(var(--tr-nav-h) + clamp(48px, 8vw, 110px)) var(--gutter) clamp(72px, 10vw, 120px); }
 .tr-page__head { display: grid; gap: 22px; margin-bottom: clamp(36px, 6vw, 64px); }
+/* vistas de /demos: por sector y técnicas */
+.tr-views { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+.tr-view {
+  display: grid; gap: 8px; padding: 16px 18px; text-align: left; cursor: pointer; color: var(--mut);
+  background: transparent; border: var(--dots); border-radius: 0; transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.tr-view:hover { color: var(--fg); border: 1px solid var(--mut); }
+.tr-view.is-on { color: var(--bg); background: var(--fg); border: 1px solid var(--fg); }
+.tr-view__label { font-size: clamp(18px, 2vw, 24px); font-weight: 800; letter-spacing: -0.02em; }
+.tr-view__label small { margin-left: 6px; font: 500 11px/1 var(--mono); letter-spacing: 0.1em; }
+.tr-view__lead { font-size: 13px; line-height: 1.5; }
+.tr-view:focus-visible { outline-offset: 2px; }
+@media (max-width: 560px) { .tr-views { grid-template-columns: minmax(0, 1fr); } }
 .tr-filter {
   position: sticky; top: var(--tr-nav-h); z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 0; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: var(--dots);
