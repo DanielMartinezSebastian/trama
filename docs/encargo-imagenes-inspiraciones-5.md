@@ -1,6 +1,6 @@
 # Encargo para Codex: imágenes de la quinta ronda de inspiraciones
 
-**92 imágenes** en 8 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-5.json`.
+**93 imágenes** en 8 inspiraciones. Lo mismo, para recorrerlo con un script: `docs/encargo-imagenes-inspiraciones-5.json`.
 
 > Rama `feat/inspiraciones-5`, worktree `C:/COMPARTIDO/trama-inspiraciones-5` (docs/60). Cada archivo existe ya con una provisional recortada de una foto del repo: la página nunca se rompe.
 
@@ -123,13 +123,14 @@ Fotografía industrial cuidada de un fabricante de tostadoras de café: máquina
 | `i240.webp` | 1200x1200 | Línea industrial de 240 kg, varias piezas, bodegón sobre fondo gris claro |
 | `e12.webp` | 1200x1200 | Tostadora eléctrica de 12 kg, compacta, blanca y acero, bodegón sobre fondo gris claro |
 
-## trocha · 14 imágenes · /inspiraciones/trocha
+## trocha · 15 imágenes · /inspiraciones/trocha
 
 Fotografía de producto y de campo de una moto eléctrica de enduro (la misma en todas): carenado amarillo intenso con negro, chasis gris y ruedas de tacos, sin logotipos ni texto. Las de campo, en bosques de pinos y pistas de tierra del norte, con luz suave y algo de barro. Las vistas del visor, sobre fondo gris claro liso (#f6f5f1), la moto entera centrada, sin sombra dura.
 
 | Archivo | px | Motivo |
 |---|---|---|
 | `portada.webp` | 2400x1400 | La moto amarilla aparcada sobre su caballete en un bosque de pinos con helechos |
+| `portada-movil.webp` | 1200x2400 | La misma escena que portada.webp en vertical para el móvil: la moto entera, más pequeña, en el tercio central; pinos arriba y suelo de tierra oscuro abajo, donde va el texto |
 | `motor.webp` | 2400x1400 | Primer plano del motor eléctrico y el radiador de la moto, metal gris y carenado amarillo |
 | `barro.webp` | 2400x1400 | Un piloto derrapa con la moto en una pista de tierra, nube de polvo, luz de tarde |
 | `piloto.webp` | 2400x1050 | Una piloto con casco y ropa de enduro de pie junto a la moto en el bosque |

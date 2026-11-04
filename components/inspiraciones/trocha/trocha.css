@@ -128,12 +128,11 @@
   .tr-eco > div, .tr-modos ul, .tr-ficha, .tr-dos, .tr-config { grid-template-columns: 1fr; }
   .tr-config__vista { position: static; }
 }
-/* en vertical, una foto apaisada a pantalla completa deja ver un tercio de la moto: va entera en una banda 4:3 y el
-   texto sale de la foto. El motor es un detalle y aguanta el recorte */
+/* en vertical, una foto apaisada a pantalla completa deja ver un tercio de la moto. La portada tiene su foto vertical
+   (portada-movil); el barro va entero en una banda 4:3 con el texto fuera. El motor es un detalle y aguanta el recorte */
 @media (max-width: 860px) and (orientation: portrait) {
-  .tr-hero, .tr-oscura--barro { display: grid; align-content: center; gap: 28px; height: auto; min-height: 100svh; padding: 76px 0 40px; background: #161614; }
-  .tr-hero img, .tr-oscura--barro img { position: static; height: auto; aspect-ratio: 4 / 3; object-position: 55% 50%; filter: none; }
-  .tr-hero__txt { position: static; padding: 0 var(--tr-m); }
+  .tr-oscura--barro { display: grid; align-content: center; gap: 28px; min-height: 100svh; padding: 76px 0 40px; background: #161614; }
+  .tr-oscura--barro img { position: static; height: auto; aspect-ratio: 4 / 3; object-position: 55% 50%; filter: none; }
   .tr-oscura--barro .tr-oscura__txt { order: -1; min-height: 0; padding: 0 var(--tr-m); }
 }
 @media (prefers-reduced-motion: reduce) {

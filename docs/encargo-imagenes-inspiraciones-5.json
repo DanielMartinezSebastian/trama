@@ -390,6 +390,11 @@
     "motivo": "La moto amarilla aparcada sobre su caballete en un bosque de pinos con helechos"
    },
    {
+    "archivo": "public/img/inspiraciones/trocha/portada-movil.webp",
+    "px": "1200x2400",
+    "motivo": "La misma escena que portada.webp en vertical para el móvil: la moto entera, más pequeña, en el tercio central; pinos arriba y suelo de tierra oscuro abajo, donde va el texto"
+   },
+   {
     "archivo": "public/img/inspiraciones/trocha/motor.webp",
     "px": "2400x1400",
     "motivo": "Primer plano del motor eléctrico y el radiador de la moto, metal gris y carenado amarillo"

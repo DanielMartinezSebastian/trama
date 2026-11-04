@@ -5,6 +5,8 @@ const I = "/img/inspiraciones/trocha/";
 
 export const FOTOS = {
   portada: `${I}portada.webp`,
+  /** la portada en vertical, para el móvil */
+  portadaMovil: `${I}portada-movil.webp`,
   motor: `${I}motor.webp`,
   barro: `${I}barro.webp`,
   piloto: `${I}piloto.webp`,

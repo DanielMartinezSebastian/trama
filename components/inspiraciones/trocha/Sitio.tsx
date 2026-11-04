@@ -135,8 +135,11 @@ function Portada() {
   return (
     <main>
       <section className="tr-hero">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={FOTOS.portada} alt="La Trocha amarilla aparcada en un bosque de pinos" />
+        <picture>
+          <source media="(max-width: 860px) and (orientation: portrait)" srcSet={FOTOS.portadaMovil} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={FOTOS.portada} alt="La Trocha amarilla aparcada en un bosque de pinos" />
+        </picture>
         <div className="tr-hero__txt">
           <h1>Trocha EXR</h1>
           <dl>
