@@ -44,5 +44,8 @@
 - Visor de Trocha: los puntos estaban colocados sobre las fotos provisionales y se recolocaron sobre las nuevas. En móvil
   la escena pasa a 4:3 y la foto queda con bandas, así que los puntos van en una capa con la proporción de la foto (2:1).
   La vista «detalle» enseña el hueco de la batería y su primer punto pasa a ser ese.
-- Pendiente: `tueste/e12`. El prompt de Codex la describía mal («línea industrial completa») y salió una línea enorme
-  para la tostadora eléctrica compacta de 12 kg. Hay que rehacerla como pide el encargo.
+- `tueste/e12` rehecha por Codex (`fcddec7`): el primer prompt la describía mal («línea industrial completa»). Ahora es la
+  tostadora eléctrica compacta, blanca y de acero; se aclaró su fondo de 225 a 233 para igualarlo al resto del catálogo.
+- Cruz de los puntos del visor de Trocha dibujada con dos trazos para que quede centrada (`7561daf`).
+- Pendiente: rehacer `trocha/pantalla` y `trocha/guantes`, que tienen una perspectiva imposible (manillar visto desde el
+  piloto sobre una moto de perfil; asiento abierto por la punta y hueco en el sitio de la batería).
