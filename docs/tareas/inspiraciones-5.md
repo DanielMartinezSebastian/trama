@@ -50,4 +50,7 @@
 - `trocha/pantalla` y `trocha/guantes` rehechas (`74871b3`): tenían una perspectiva imposible (manillar visto desde el
   piloto sobre una moto de perfil; asiento abierto por la punta y hueco en el sitio de la batería). Ahora, el manillar desde
   el puesto del piloto y un compartimento con tapa delante del asiento.
-- Imágenes cerradas: las 92 son definitivas. Queda subir la rama cuando se pida.
+- Imágenes cerradas: las 92 son definitivas.
+- Trocha en móvil vertical: las portadas apaisadas a pantalla completa solo dejaban ver un tercio de la moto. La portada
+  tiene ahora su foto vertical (`portada-movil.webp`, 1200x2400, `638d094`) con `<picture>`; la foto del barro va entera en
+  una banda 4:3 con el texto fuera (`717e2ad`); la del motor aguanta el recorte. El encargo pasa a 93 imágenes.
