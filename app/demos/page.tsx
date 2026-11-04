@@ -5,7 +5,7 @@ import { demoGroups } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "Demos · Trama",
-  description: "Landings y webs de referencia, fondos generativos, efectos de texto y páginas con scroll hechas con Trama.",
+  description: "Webs y landings hechas con Trama por sector (peluquería, gimnasio, restaurante, tienda, academia…) y demos técnicas: fondos generativos, efectos de texto y scroll.",
   alternates: { canonical: "/demos" },
 };
 
