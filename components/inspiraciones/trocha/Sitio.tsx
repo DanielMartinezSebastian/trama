@@ -94,17 +94,20 @@ function Visor() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img key={a.id} src={a.img} alt={`La Trocha, vista ${a.n.toLowerCase()}`} draggable={false} />
-        {a.puntos.map((p, k) => (
-          <button key={p.t} type="button" className="tr-punto" style={{ left: `${p.x}%`, top: `${p.y}%` }} aria-expanded={punto === k} aria-label={p.t} onClick={() => setPunto(punto === k ? null : k)}>
-            <span aria-hidden>+</span>
-          </button>
-        ))}
-        {punto !== null && (
-          <div className="tr-detalle" role="status" style={{ left: `${Math.min(70, a.puntos[punto].x)}%`, top: `${a.puntos[punto].y + 6}%` }}>
-            <b>{a.puntos[punto].t}</b>
-            <span>{a.puntos[punto].texto}</span>
-          </div>
-        )}
+        {/* los puntos van en % de la foto: la capa tiene su proporción aunque la escena cambie en móvil */}
+        <div className="tr-visor__capa">
+          {a.puntos.map((p, k) => (
+            <button key={p.t} type="button" className="tr-punto" style={{ left: `${p.x}%`, top: `${p.y}%` }} aria-expanded={punto === k} aria-label={p.t} onClick={() => setPunto(punto === k ? null : k)}>
+              <span aria-hidden>+</span>
+            </button>
+          ))}
+          {punto !== null && (
+            <div className="tr-detalle" role="status" style={{ left: `${Math.min(70, a.puntos[punto].x)}%`, top: `${a.puntos[punto].y + 6}%` }}>
+              <b>{a.puntos[punto].t}</b>
+              <span>{a.puntos[punto].texto}</span>
+            </div>
+          )}
+        </div>
       </div>
       <div className="tr-visor__mandos">
         <div className="tr-puntos" role="tablist" aria-label="Ángulo">

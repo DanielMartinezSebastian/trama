@@ -39,4 +39,10 @@
   `tueste/t5` se reencuadró: la máquina ocupaba un tercio del cuadro y desentonaba en el catálogo. Los pares de las cinco
   webs completas no cambian (11/20, 8/14, 10/20, 13/20, 10/20): la sonda mide estructura, letra y color de superficie, no
   el contenido de las fotos.
-- Pendiente: 33 imágenes provisionales (Tueste 10, Trocha 14, Llave 9) y medir los pares de esas tres webs.
+- Las 33 restantes llegaron en `1fc4d3e`: las 92 cumplen formato, tamaño y peso, y no queda ninguna rota en las ocho
+  webs (1440 y 390 px). Pares de Tueste, Trocha y Llave sin cambios (12/20, 10/17, 11/20).
+- Visor de Trocha: los puntos estaban colocados sobre las fotos provisionales y se recolocaron sobre las nuevas. En móvil
+  la escena pasa a 4:3 y la foto queda con bandas, así que los puntos van en una capa con la proporción de la foto (2:1).
+  La vista «detalle» enseña el hueco de la batería y su primer punto pasa a ser ese.
+- Pendiente: `tueste/e12`. El prompt de Codex la describía mal («línea industrial completa») y salió una línea enorme
+  para la tostadora eléctrica compacta de 12 kg. Hay que rehacerla como pide el encargo.

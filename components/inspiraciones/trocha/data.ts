@@ -31,10 +31,10 @@ export const DATOS = [
 
 /** los ángulos del visor, cada uno con sus puntos de detalle (posición en % de la imagen) */
 export const ANGULOS: { id: string; n: string; img: string; puntos: { x: number; y: number; t: string; texto: string }[] }[] = [
-  { id: "lateral", n: "Lateral", img: `${I}vista-lateral.webp`, puntos: [{ x: 47, y: 56, t: "Motor de 16 kW", texto: "Par instantáneo desde parado y sin embrague." }, { x: 20, y: 70, t: "Suspensión de 300 mm", texto: "Horquilla y amortiguador regulables a mano." }, { x: 62, y: 38, t: "Asiento a 920 mm", texto: "Más bajo que una de gasolina equivalente." }] },
-  { id: "frontal", n: "Frontal", img: `${I}vista-frontal.webp`, puntos: [{ x: 50, y: 30, t: "Faro de 4.000 lúmenes", texto: "Para salir de madrugada y volver de noche." }, { x: 50, y: 62, t: "Batería extraíble", texto: "Sale por arriba en treinta segundos." }] },
-  { id: "trasera", n: "Trasera", img: `${I}vista-trasera.webp`, puntos: [{ x: 55, y: 48, t: "Freno regenerativo", texto: "Recupera energía en cada bajada." }, { x: 35, y: 70, t: "Transmisión por correa", texto: "Sin cadena que engrasar ni tensar." }] },
-  { id: "detalle", n: "Detalle", img: `${I}vista-detalle.webp`, puntos: [{ x: 40, y: 45, t: "Pantalla mínima", texto: "Batería, modo y nada más." }, { x: 70, y: 60, t: "Guardabarros flexible", texto: "Se dobla en vez de romperse." }] },
+  { id: "lateral", n: "Lateral", img: `${I}vista-lateral.webp`, puntos: [{ x: 46, y: 62, t: "Motor de 16 kW", texto: "Par instantáneo desde parado y sin embrague." }, { x: 38, y: 50, t: "Suspensión de 300 mm", texto: "Horquilla y amortiguador regulables a mano." }, { x: 36, y: 24, t: "Asiento a 920 mm", texto: "Más bajo que una de gasolina equivalente." }] },
+  { id: "frontal", n: "Frontal", img: `${I}vista-frontal.webp`, puntos: [{ x: 64, y: 21, t: "Faro de 4.000 lúmenes", texto: "Para salir de madrugada y volver de noche." }, { x: 46, y: 44, t: "Batería extraíble", texto: "Sale por arriba en treinta segundos." }] },
+  { id: "trasera", n: "Trasera", img: `${I}vista-trasera.webp`, puntos: [{ x: 26, y: 68, t: "Freno regenerativo", texto: "Recupera energía en cada bajada." }, { x: 39, y: 63, t: "Transmisión por correa", texto: "Sin cadena que engrasar ni tensar." }] },
+  { id: "detalle", n: "Detalle", img: `${I}vista-detalle.webp`, puntos: [{ x: 44, y: 30, t: "Hueco de la batería", texto: "El asiento se levanta sin herramientas." }, { x: 81, y: 34, t: "Guardabarros flexible", texto: "Se dobla en vez de romperse." }] },
 ];
 
 export const FUNCIONES = [
