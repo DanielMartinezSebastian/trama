@@ -113,7 +113,9 @@ export function revisar(f: Ficha, todas: Ficha[], raiz = process.cwd()): string[
       const base = n.split(" ")[0];
       if (!existsSync(join(raiz, "components/ui", `${base}.tsx`)) && !existsSync(join(raiz, "lib/ui", `${base}.ts`))) p.push(`${k}: «${base}» no está en components/ui ni lib/ui`);
     }
-  for (const c of f.codigo) if (!existsSync(join(raiz, c))) p.push(`código «${c}» no existe`);
+  // proyectos/<nombre>/ son proyectos de clientes fuera de git: solo se comprueban en el worktree que los tiene
+  const ajeno = (c: string) => /^proyectos\/[^/]+\//.test(c) && !existsSync(join(raiz, c.split("/").slice(0, 2).join("/")));
+  for (const c of f.codigo) if (!ajeno(c) && !existsSync(join(raiz, c))) p.push(`código «${c}» no existe`);
   for (const s of ["## Concepto", "## Aprendido"]) if (!f.cuerpo.includes(s)) p.push(`falta la sección «${s}»`);
   return p;
 }

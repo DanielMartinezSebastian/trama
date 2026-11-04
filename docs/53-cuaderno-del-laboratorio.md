@@ -52,7 +52,8 @@ Una captura no sustituye a mirar: el par da números, y las capturas lado a lado
 
 - **Fichas**: `docs/cuaderno/<id>.md`. Se versionan y viajan con la rama.
 - **Índice generado**: `docs/cuaderno/README.md`. Lo escribe `npm run lab:cuaderno`; `npm run verify` comprueba que esté
-  al día y que las fichas sean válidas.
+  al día y que las fichas sean válidas. Las rutas de `codigo` bajo `proyectos/<nombre>/` (proyectos de clientes, fuera de
+  git) solo se comprueban en el worktree que tiene esa carpeta.
 - **Lectura en local**: `/lab/cuaderno`, con filtro por etiqueta (`?f=campo:valor`), familias con sus colores, patrones que
   van juntos y vocabulario. Cada ficha está en `/lab/cuaderno/<id>`, con sus etiquetas enlazadas, las fichas
   relacionadas y las parecidas.
