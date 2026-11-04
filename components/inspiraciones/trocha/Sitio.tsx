@@ -98,7 +98,6 @@ function Visor() {
         <div className="tr-visor__capa">
           {a.puntos.map((p, k) => (
             <button key={p.t} type="button" className="tr-punto" style={{ left: `${p.x}%`, top: `${p.y}%` }} aria-expanded={punto === k} aria-label={p.t} onClick={() => setPunto(punto === k ? null : k)}>
-              <span aria-hidden>+</span>
             </button>
           ))}
           {punto !== null && (

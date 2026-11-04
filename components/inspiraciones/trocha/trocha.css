@@ -50,6 +50,9 @@
 .tr-visor__capa { position: absolute; inset: 50% 0 auto; aspect-ratio: 2 / 1; translate: 0 -50%; }
 @keyframes tr-gira { from { opacity: 0; translate: 3% 0; } to { opacity: 1; translate: 0 0; } }
 .tr-punto { position: absolute; display: grid; place-items: center; width: 28px; height: 28px; translate: -50% -50%; border: 1px solid #161614; border-radius: 50%; background: #fff; color: #161614; font: 400 16px/1 var(--font-inter); cursor: pointer; transition: background 0.2s, rotate 0.3s; }
+/* la cruz con dos trazos, no con el glifo «+», que la letra desplaza del centro */
+.tr-punto::before, .tr-punto::after { content: ""; position: absolute; inset: 50% auto auto 50%; width: 12px; height: 1.5px; translate: -50% -50%; border-radius: 1px; background: currentColor; }
+.tr-punto::after { rotate: 90deg; }
 .tr-punto[aria-expanded="true"] { background: var(--acc); rotate: 45deg; }
 .tr-detalle { position: absolute; display: grid; gap: 4px; max-width: 240px; padding: 12px 14px; border-radius: var(--r); background: #161614; color: #fff; font-size: 12px; translate: -10% 0; }
 .tr-visor__mandos { display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 12px; }
