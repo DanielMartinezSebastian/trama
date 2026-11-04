@@ -47,5 +47,7 @@
 - `tueste/e12` rehecha por Codex (`fcddec7`): el primer prompt la describía mal («línea industrial completa»). Ahora es la
   tostadora eléctrica compacta, blanca y de acero; se aclaró su fondo de 225 a 233 para igualarlo al resto del catálogo.
 - Cruz de los puntos del visor de Trocha dibujada con dos trazos para que quede centrada (`7561daf`).
-- Pendiente: rehacer `trocha/pantalla` y `trocha/guantes`, que tienen una perspectiva imposible (manillar visto desde el
-  piloto sobre una moto de perfil; asiento abierto por la punta y hueco en el sitio de la batería).
+- `trocha/pantalla` y `trocha/guantes` rehechas (`74871b3`): tenían una perspectiva imposible (manillar visto desde el
+  piloto sobre una moto de perfil; asiento abierto por la punta y hueco en el sitio de la batería). Ahora, el manillar desde
+  el puesto del piloto y un compartimento con tapa delante del asiento.
+- Imágenes cerradas: las 92 son definitivas. Queda subir la rama cuando se pida.
