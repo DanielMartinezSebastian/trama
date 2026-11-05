@@ -54,4 +54,5 @@
 - 2026-11-04: nueva dirección pedida: parecida a la web actual, neofuturista y con 3D del kit → **Neo**
   (`/propuestas/neo`): `SiteChrome` actual, Archivo expandida, negro azulado + lima + ultramar, `ObjectStage`,
   `CrossCluster`, `DeviceMockup3D` (web del sector en vivo) y `TypeField`. Contraste 0 incumplimientos.
-- Siguiente: valoración de Neo por el usuario; si se aprueba, fases 1–6 del plan sobre esa dirección.
+- 2026-11-05: el usuario decide no cambiar de momento el aspecto de la web. Las cuatro propuestas, Neo incluida,
+  quedan como demos en `/demos` → Técnicas → «Propuestas para la web de Trama». Plan de la web completa en pausa.

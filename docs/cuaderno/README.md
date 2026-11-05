@@ -9,7 +9,7 @@
 
 | Fecha | Ficha | Tipo | Estado | Sector | Familia de estilo | Dónde |
 |---|---|---|---|---|---|---|
-| 2026-11-04 | [web-nueva-propuestas](web-nueva-propuestas.md) · Web de Trama nueva, cuatro propuestas de portada (Neo, Telar, Escaparate, Consola) | concepto | en curso | tecnología |  | `http://localhost:3011/propuestas/neo` |
+| 2026-11-04 | [web-nueva-propuestas](web-nueva-propuestas.md) · Web de Trama nueva, cuatro propuestas de portada (Neo, Telar, Escaparate, Consola) | concepto | hecho | tecnología |  | `http://localhost:3011/propuestas/neo` |
 | 2026-11-03 | [concepto-guias-revisadas-ronda-5](concepto-guias-revisadas-ronda-5.md) · Guías revisadas contra sus originales y la guía bloque nocturno | concepto | hecho |  | bloque nocturno, salón editorial claro, trattoria de barrio | `/guias` |
 | 2026-11-03 | [herramienta-afinidad-de-guias](herramienta-afinidad-de-guias.md) · La afinidad entre páginas y guías, medida como se ve | herramienta | hecho |  |  | `/guias` |
 | 2026-11-03 | [pieza-botones-de-menu](pieza-botones-de-menu.md) · Botones de menú móvil sin corchetes y efectos de enlace nuevos | pieza | hecho |  |  | `/componentes` |

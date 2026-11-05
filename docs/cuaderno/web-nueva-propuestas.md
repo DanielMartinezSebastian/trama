@@ -2,7 +2,7 @@
 titulo: Web de Trama nueva, cuatro propuestas de portada (Neo, Telar, Escaparate, Consola)
 fecha: 2026-11-04
 tipo: concepto
-estado: en curso
+estado: hecho
 referencias: []
 fichas: [docs/tareas/web-nueva.md, proyectos/web-nueva/imagenes.md]
 ruta: http://localhost:3011/propuestas/neo
@@ -55,5 +55,5 @@ Sin referencia externa: la referencia es la web actual de Trama, de la que Neo c
 
 ## Siguiente
 
-Si Neo se elige, extenderla a `/`, `/demos`, `/componentes`, `/docs`, `/guias` y `/lab` según el plan de
+La web no cambia de aspecto por ahora (05-11-2026): las cuatro quedan como demos. Si se retoma, plan en
 `docs/tareas/web-nueva.md`.
