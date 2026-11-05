@@ -1,0 +1,97 @@
+/* Propuesta «Telar»: lino crudo, tinta y un hilo bermellón. Serifa blanda para titular, grotesca para leer. */
+.tel {
+  --bg: #efe8da; --fg: #1c1915; --mut: #5b5348; --acc: #942508; --acc2: #2f4a6b; --card: #f7f2e8; --ln: #c9bb9f; --r: 0px;
+  min-height: 100vh; background: var(--bg); color: var(--fg);
+  font: 400 17px/1.6 var(--font-instrument-sans), system-ui, sans-serif;
+}
+.tel a:not(.ui-button) { color: inherit; }
+.tel h1, .tel h2 { font-family: var(--font-fraunces), Georgia, serif; font-weight: 400; letter-spacing: -0.02em; margin: 0; }
+.tel code { font: 500 0.88em var(--font-jetbrains-mono), monospace; }
+
+.tel-top {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+  padding: 14px clamp(16px, 4vw, 56px); background: var(--bg); border-bottom: 1px solid var(--ln);
+}
+.tel-brand { font: italic 400 26px/1 var(--font-fraunces), serif; text-decoration: none; }
+.tel-top nav { display: flex; gap: 22px; font-size: 15px; }
+.tel-top nav a { text-decoration: none; color: var(--mut); }
+.tel-top nav a:hover { color: var(--acc); }
+@media (max-width: 700px) { .tel-top nav { display: none; } }
+
+/* portada: la tela ocupa la sección; la tarjeta opaca asegura el contraste del texto */
+.tel-hero { position: relative; min-height: min(92vh, 900px); display: grid; align-items: end; padding: clamp(16px, 4vw, 56px); overflow: hidden; }
+.tel-hero__weave { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.tel-hero__card { position: relative; max-width: 640px; padding: clamp(22px, 3vw, 40px); background: var(--bg); border: 1px solid var(--fg); }
+.tel-kicker, .tel-num { margin: 0 0 12px; font: 500 13px/1.4 var(--font-jetbrains-mono), monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mut); }
+.tel-hero h1 { font-size: clamp(72px, 12vw, 168px); line-height: 0.85; letter-spacing: -0.045em; }
+.tel-hero h1 span { color: var(--acc); }
+.tel-hero__lead { margin: 18px 0 24px; max-width: 44ch; color: var(--mut); }
+.tel-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.tel-sec { padding: clamp(64px, 9vw, 140px) clamp(16px, 4vw, 56px) 0; }
+.tel-sec__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 48px; align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
+.tel-sec__head .tel-num { grid-column: 1 / -1; }
+.tel-sec__head h2 { font-size: clamp(36px, 5vw, 72px); line-height: 1; }
+.tel-sec__head p:not(.tel-num) { margin: 0; color: var(--mut); max-width: 50ch; }
+@media (max-width: 800px) { .tel-sec__head { grid-template-columns: minmax(0, 1fr); } }
+
+/* 01 · urdimbre: cada token es un hilo vertical */
+.tel-urdimbre__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(24px, 4vw, 56px); align-items: stretch; }
+@media (max-width: 900px) { .tel-urdimbre__grid { grid-template-columns: minmax(0, 1fr); } }
+.tel-hilos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; min-height: 420px; }
+.tel-hilos li { display: grid; grid-template-rows: 1fr auto auto; justify-items: center; gap: 6px; text-align: center; font-size: 13px; }
+.tel-hilo { width: 10px; height: 100%; min-height: 260px; background: var(--hilo); border: 1px solid var(--fg); }
+.tel-hilos code { font-size: 12px; }
+.tel-hilos li > span:last-child { color: var(--mut); font-size: 12px; line-height: 1.3; }
+@media (max-width: 560px) {
+  .tel-hilos { grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 0; row-gap: 18px; }
+  .tel-hilo { min-height: 120px; }
+}
+.tel-foto { margin: 0; display: grid; gap: 8px; }
+.tel-foto img { width: 100%; height: 100%; min-height: 360px; max-height: 560px; object-fit: cover; display: block; background: var(--ln); }
+.tel-foto figcaption, .tel-banda figcaption { font-size: 13px; color: var(--mut); }
+.tel-scrub { max-width: 900px; margin-top: clamp(40px, 6vw, 80px); font: 400 clamp(24px, 2.8vw, 38px)/1.25 var(--font-fraunces), serif; }
+
+/* 02 · trama: cada acabado es una pasada que cruza la página */
+.tel-pasada {
+  display: grid; grid-template-columns: 44px minmax(90px, 160px) auto auto 1fr; align-items: center; gap: 18px;
+  padding: 14px 18px; border-top: 1px solid var(--ln); background: var(--card);
+}
+.tel-pasada:nth-child(even) { background: var(--bg); }
+.tel-pasada[data-oscura] { --bg: #1c1915; --fg: #efe8da; --mut: #b5ab99; --acc: #ff7a52; --card: #26221c; --ln: #4a4338; background: #1c1915; color: #efe8da; }
+.tel-pasada__n { font: 500 13px/1 var(--font-jetbrains-mono), monospace; color: var(--mut); }
+@media (max-width: 520px) { .tel-pasada { grid-template-columns: 32px minmax(0, 1fr) auto; } .tel-pasada .ui-badge { display: none; } }
+
+/* 03 · tejidos: una muestra de ligamento por sector */
+.tel-banda { margin: 0 0 24px; }
+.tel-banda img { width: 100%; height: clamp(200px, 30vw, 380px); object-fit: cover; display: block; background: var(--ln); }
+.tel-muestras { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; }
+.tel-muestras a { display: grid; gap: 4px; text-decoration: none; padding-bottom: 6px; }
+.tel-muestras a:hover strong { color: var(--acc); }
+.tel-muestras strong { font: 400 21px/1.2 var(--font-fraunces), serif; }
+.tel-muestras a > span:last-child { color: var(--mut); font-size: 14px; }
+.tel-lig { display: block; aspect-ratio: 1; margin-bottom: 8px; border: 1px solid var(--fg); --a: #1c1915; --b: #efe8da; }
+.tel-lig--tafetan { background: repeating-conic-gradient(var(--a) 0 25%, var(--b) 0 50%) 0 0 / 10px 10px; }
+.tel-lig--sarga { background: repeating-linear-gradient(45deg, var(--a) 0 4px, var(--b) 4px 9px); }
+.tel-lig--espiga { --a: #2f4a6b; background: repeating-linear-gradient(45deg, var(--a) 0 4px, var(--b) 4px 8px) 0 0 / 100% 20px, repeating-linear-gradient(-45deg, var(--a) 0 4px, var(--b) 4px 8px); background-blend-mode: multiply; }
+.tel-lig--cuadro { --a: #3d6b45; background: repeating-linear-gradient(0deg, transparent 0 12px, color-mix(in srgb, var(--a) 70%, transparent) 12px 20px), repeating-linear-gradient(90deg, var(--b) 0 12px, var(--a) 12px 20px); }
+.tel-lig--rizo { --a: #d2391b; background: radial-gradient(circle at 50% 50%, var(--a) 0 3px, transparent 3.5px) 0 0 / 9px 9px, var(--b); }
+.tel-lig--punto { background: radial-gradient(circle, var(--a) 0 1.6px, transparent 2px) 0 0 / 8px 8px, #d9cfbb; }
+.tel-lig--gasa { background: repeating-linear-gradient(90deg, rgba(28, 25, 21, 0.18) 0 1px, transparent 1px 6px), repeating-linear-gradient(0deg, rgba(28, 25, 21, 0.18) 0 1px, transparent 1px 6px), #f7f2e8; }
+.tel-lig--tweed { --a: #6b4a2f; background: repeating-linear-gradient(60deg, var(--a) 0 2px, transparent 2px 5px), repeating-linear-gradient(-60deg, #1c1915 0 1px, transparent 1px 6px), #b9a27f; }
+.tel-lig--canale { --a: #8a7f6e; background: repeating-linear-gradient(90deg, var(--a) 0 6px, var(--b) 6px 8px); }
+.tel-lig--rombo { --a: #b0300f; background: conic-gradient(from 45deg, var(--a) 0 25%, var(--b) 0 50%, var(--a) 0 75%, var(--b) 0) 0 0 / 18px 18px; }
+.tel-lig--listado { background: repeating-linear-gradient(0deg, #1c1915 0 3px, #efe8da 3px 9px, #d2391b 9px 11px, #efe8da 11px 17px); }
+
+/* 04 · muestrario: las guías como una carta de colores */
+.tel-guias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); gap: 0; border: 1px solid var(--fg); }
+.tel-guias a { position: relative; display: flex; align-items: flex-end; min-height: 96px; padding: 12px 12px 12px 26px; text-decoration: none; outline-offset: -3px; }
+.tel-guia__acc { position: absolute; left: 10px; top: 12px; bottom: 12px; width: 6px; }
+.tel-guia__label { font-size: 15px; font-weight: 600; line-height: 1.2; }
+
+.tel-fin { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding-bottom: clamp(64px, 9vw, 140px); }
+.tel-fin h2 { font-size: clamp(36px, 5vw, 72px); line-height: 1; margin-bottom: 24px; }
+@media (max-width: 900px) { .tel-fin { grid-template-columns: minmax(0, 1fr); } }
+
+.tel-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 24px clamp(16px, 4vw, 56px); border-top: 1px solid var(--fg); font-size: 14px; color: var(--mut); }
+.tel :is(a, button):focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }

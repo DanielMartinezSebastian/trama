@@ -112,6 +112,11 @@ export function demoGroups(): DemoGroup[] {
   const sectorGroups: DemoGroup[] = SECTORS.map((s) => ({ ...s, kind: "sector" as const, items: bySector.get(s.id) ?? [] }));
   const techGroups: DemoGroup[] = [
     { id: "landings", label: "Landings del kit", blurb: "Páginas completas construidas solo con components/ui/: cada una exhibe una variante y un fondo del kit.", items: demos.filter((d) => isKit(d) && !DEMO_SECTOR[d.slug]).map(item) },
+    { id: "propuestas", label: "Propuestas para la web de Trama", blurb: "Tres portadas distintas para la propia librería: la misma información contada como tela que se teje, como escaparate por negocio y como consola de órdenes.", items: [
+      { href: "/propuestas/telar", title: "Telar", blurb: "Los tokens son la urdimbre y los componentes la trama: un lienzo teje la tela con el scroll y las guías son un muestrario.", meta: "Canvas 2D · scroll y puntero", accent: "#d2391b" },
+      { href: "/propuestas/escaparate", title: "Escaparate", blurb: "Eliges negocio y acabado y la web se monta en vivo con piezas reales del kit; debajo, el código exacto.", meta: "Configurador · fotos por sector", accent: "#1d6647" },
+      { href: "/propuestas/consola", title: "Consola", blurb: "Escritorio de texto con órdenes que responden con el catálogo y las demos, agentes trabajando y monitor ASCII.", meta: "Teclado · ASCII", accent: "#c5f06a" },
+    ] },
     { id: "relatos", label: "Relatos 3D y WebGL", blurb: "Historias interactivas con escenas generativas, shaders, piezas 3D que viajan entre rutas y movimiento enlazado al recorrido.", items: [
       ...demos.filter((d) => d.slug === "polaris-archivo").map(item),
       ...sites.filter((s) => TECH_SITES.includes(s.slug)).map((s) => ({ ...siteItem(s), meta: `${s.tag} · ${s.routes.length} páginas` })),

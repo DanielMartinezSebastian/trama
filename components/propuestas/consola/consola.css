@@ -1,0 +1,70 @@
+/* Propuesta «Consola»: negro, fósforo lima y todo en monoespaciada. Sin halos: el color basta. */
+.con {
+  --bg: #0c0d0b; --fg: #e6e8df; --mut: #9a9f92; --acc: #c5f06a; --acc2: #7fd6c2; --card: #141612; --ln: #2c3028; --r: 0px;
+  min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--fg);
+  font: 400 15px/1.6 var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+.con a:not(.ui-button) { color: var(--acc); text-underline-offset: 3px; }
+.con code { color: var(--acc); }
+.con-dim { color: var(--mut); }
+
+.con-bar {
+  position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 24px; padding: 10px clamp(16px, 3vw, 28px);
+  background: var(--bg); border-bottom: 1px solid var(--ln); font-size: 14px;
+}
+.con-bar__brand { color: var(--acc); font-weight: 700; }
+.con-bar nav { display: flex; gap: 18px; margin-right: auto; }
+.con-bar nav a { color: var(--fg); text-decoration: none; }
+.con-bar nav a:hover { color: var(--acc); }
+.con-bar__hint { color: var(--mut); font-size: 13px; }
+@media (max-width: 760px) { .con-bar nav { display: none; } .con-bar__brand { margin-right: auto; } }
+
+.con-desk {
+  flex: 1; display: grid; gap: 14px; padding: 14px clamp(16px, 3vw, 28px);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); grid-template-rows: auto auto auto; align-items: start;
+}
+.con-win--main { grid-row: span 3; }
+@media (max-width: 980px) { .con-desk { grid-template-columns: minmax(0, 1fr); } .con-win--main { grid-row: auto; } }
+
+.con-win { min-width: 0; background: var(--card); border: 1px solid var(--ln); }
+.con-win__title {
+  display: flex; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 13px;
+  color: var(--bg); background: var(--acc);
+}
+.con-win:not(.con-win--main) .con-win__title { color: var(--fg); background: var(--ln); }
+.con-win__body { padding: clamp(14px, 2vw, 24px); }
+.con-win__body--flush { padding: 0; }
+.con-win__body--flush .ui-terminal, .con-win__body--flush > * { border: 0 !important; border-radius: 0 !important; }
+
+.con-win--main h1 { margin: 22px 0 10px; max-width: 34ch; font-size: clamp(20px, 2.1vw, 28px); line-height: 1.3; font-weight: 700; }
+.con-win--main > .con-win__body > p { max-width: 62ch; margin: 0 0 18px; }
+.con-win--main .ui-bitmap, .con-win--main pre:first-child { overflow-x: auto; max-width: 100%; }
+
+.con-log { display: grid; gap: 14px; max-height: 46vh; overflow-y: auto; margin-bottom: 10px; }
+.con-out { border-left: 2px solid var(--ln); padding-left: 12px; }
+.con-out__cmd { margin: 0 0 6px; color: var(--mut); }
+.con-out__cmd span { color: var(--acc); }
+.con-out p { margin: 0; }
+.con-out__list { list-style: none; margin: 0; padding: 0; white-space: pre; overflow-x: auto; }
+.con-out__list button, .con-dir button { font: inherit; color: var(--acc); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.con-out__variants { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; background: #f2f2ec; --bg: #f2f2ec; --fg: #151513; --mut: #55574f; --acc: #3d5a00; --acc2: #00594c; --card: #ffffff; --ln: #cfd0c6; --r: 6px; }
+/* neon está pensado para fondo oscuro: su muestra lleva los tokens de la consola */
+.con-var--dark { display: inline-flex; padding: 6px; background: #0c0d0b; --bg: #0c0d0b; --fg: #e6e8df; --mut: #9a9f92; --acc: #c5f06a; --acc2: #7fd6c2; --card: #141612; --ln: #2c3028; }
+.con-out__pre { margin: 0; padding: 12px; background: var(--bg); border: 1px solid var(--ln); overflow-x: auto; color: var(--fg); }
+
+.con-prompt { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--acc); background: var(--bg); }
+.con-prompt label { color: var(--acc); white-space: nowrap; }
+.con-prompt input { flex: 1; min-width: 0; font: inherit; color: var(--fg); background: transparent; border: 0; outline: none; caret-color: var(--acc); }
+.con-prompt input::placeholder { color: var(--mut); }
+.con-prompt:focus-within { outline: 2px solid var(--acc); outline-offset: 2px; }
+.con-sug { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.con-sug button { font: inherit; font-size: 13px; padding: 4px 10px; cursor: pointer; color: var(--fg); background: transparent; border: 1px solid var(--ln); }
+.con-sug button:hover { border-color: var(--acc); color: var(--acc); }
+.con button:focus-visible, .con a:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+.con-dir { list-style: none; margin: 0; padding: 0; }
+.con-dir button { display: flex; justify-content: space-between; width: 100%; gap: 12px; padding: 6px 0; text-align: left; text-decoration: none; color: var(--fg); border-bottom: 1px dotted var(--ln); }
+.con-dir button:hover span:first-child { color: var(--acc); }
+.con-dir button span:last-child { color: var(--mut); }
+
+.con-foot { display: flex; justify-content: space-between; gap: 12px; padding: 10px clamp(16px, 3vw, 28px); border-top: 1px solid var(--ln); font-size: 13px; color: var(--mut); }
